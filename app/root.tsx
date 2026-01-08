@@ -5,10 +5,14 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useNavigate,
 } from "react-router";
 
 import type { Route } from "./+types/root";
 import "./app.css";
+import { ReduxProvider } from "./context-reduct/redux-provider";
+import { Toaster } from "sonner";
+
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -23,6 +27,15 @@ export const links: Route.LinksFunction = () => [
   },
 ];
 
+export const meta: Route.MetaFunction = ({matches})=>{
+  
+  return [
+    {
+      title: 'Edurasa ' 
+    }
+  ]
+}
+
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
@@ -32,17 +45,25 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body>
+      <body className="font-sans antialiased scrol-h-custom">
         {children}
         <ScrollRestoration />
-        <Scripts />
+        <Scripts/>
+        
       </body>
     </html>
   );
 }
 
 export default function App() {
-  return <Outlet />;
+  return (
+    <>
+      <ReduxProvider>
+          <Outlet />
+          <Toaster/>
+      </ReduxProvider>
+    </>
+  );
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
@@ -60,16 +81,37 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
     details = error.message;
     stack = error.stack;
   }
-
+  let navigate = useNavigate();
   return (
-    <main className="pt-16 p-4 container mx-auto">
-      <h1>{message}</h1>
-      <p>{details}</p>
-      {stack && (
-        <pre className="w-full p-4 overflow-x-auto">
-          <code>{stack}</code>
-        </pre>
-      )}
-    </main>
+    <div className="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0" role="main">
+      <div className="max-w-xl mx-auto sm:px-6 lg:px-8">
+        <div className="flex items-center pt-8 sm:justify-start sm:pt-0">
+          <h1 className="px-4 text-lg dark:text-gray-300 text-gray-700 border-r border-gray-400 tracking-wider">{message}</h1>
+          <div className="ml-4 text-lg dark:text-gray-300 text-gray-700 uppercase tracking-wider">
+            {details}
+            {stack && (
+              <pre className="w-full p-4 overflow-x-auto">
+                <code>{stack}</code>
+              </pre>
+            )}
+            </div>
+        </div>
+            <button onClick={() => navigate(-1)}>
+              Kembali
+            </button>
+      </div>
+    </div>
   );
 }
+
+export function HydrateFallback() {
+  return (<div className="bg-sky-200/10 h-screen w-full flex justify-center items-center">
+      <h1>Mohon tunggu sebentar</h1>
+      
+  </div>
+      );
+}
+
+
+// This will set light / dark mode on load...
+// initializeTheme();

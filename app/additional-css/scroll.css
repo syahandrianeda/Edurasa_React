@@ -1,0 +1,113 @@
+@layer utilities {
+  /* ================================
+     SCROLL H & V CUSTOM
+  ================================= */
+
+  .scrol-h-custom::-webkit-scrollbar,
+  .scrol-v-custom::-webkit-scrollbar {
+    height: 5px;
+    width: 7px;
+  }
+
+  .scrol-h-custom::-webkit-scrollbar-track,
+  .scrol-v-custom::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scrol-h-custom::-webkit-scrollbar-thumb,
+  .scrol-v-custom::-webkit-scrollbar-thumb {
+    background: #39aad3;
+    border-radius: 5px;
+    cursor:move;
+    box-shadow:
+      inset 2px 2px 2px hsla(0, 0%, 100%, 0.25),
+      inset -2px -2px 2px rgba(0, 0, 0, 0.25);
+    margin: 5px 0;
+    transition: background 2.5s ease;
+  }
+
+  .scrol-h-custom::-webkit-scrollbar-thumb:hover,
+  .scrol-v-custom::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(to bottom, #cae1ff 51%, #39aad3 100%);
+  }
+
+  .scrol-h-custom::-webkit-scrollbar-button:horizontal:start:decrement,
+  .scrol-v-custom::-webkit-scrollbar-button:horizontal:start:decrement {
+    background-image:
+      url("../images/scroll/horizontal-decrement-arrow.png"),
+      linear-gradient(to bottom, #cae1ff 51%, #39aad3 100%);
+    background-repeat: no-repeat, repeat-x;
+    background-position: center, 0 0;
+    background-size: contain, cover;
+  }
+
+  .scrol-h-custom::-webkit-scrollbar-button:horizontal:end:increment,
+  .scrol-v-custom::-webkit-scrollbar-button:horizontal:end:increment {
+    background-image:
+      url("../images/scroll/horizontal-increment-arrow.png"),
+      linear-gradient(to top, #cae1ff 51%, #39aad3 100%);
+    background-repeat: no-repeat, repeat-x;
+    background-position: center, 0 0;
+    background-size: contain, cover;
+  }
+
+  /* ================================
+     SCROLL CONTAINER OVERLAY
+  ================================= */
+
+  .scroll-container {
+    position: relative;
+  }
+
+  .scroll-container::before,
+  .scroll-container::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 10px;
+    background: rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+  }
+
+  .scroll-container::before {
+    left: 0;
+  }
+
+  .scroll-container::after {
+    right: 0;
+  }
+
+  .scroll-container:hover::before,
+  .scroll-container:hover::after {
+    opacity: 1;
+  }
+
+  /* ================================
+     SCROLL MODAL TAB
+  ================================= */
+
+  .scrol-modal-tab::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  .scrol-modal-tab::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scrol-modal-tab::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, #cae1ff 51%, #39aad3 100%);
+    border-radius: 5px;
+    box-shadow:
+      inset 2px 2px 2px hsla(0, 0%, 100%, 0.25),
+      inset -2px -2px 2px rgba(0, 0, 0, 0.25);
+    margin: 5px 0;
+    transition: background 0.5s ease;
+  }
+
+  .scrol-modal-tab::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(to top, #cae1ff 51%, #39aad3 100%);
+  }
+}

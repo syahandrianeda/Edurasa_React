@@ -1,13 +1,29 @@
 import type { Route } from "./+types/home";
-import { Welcome } from "../welcome/welcome";
+import HomePage from "~/pages/home";
 
-export function meta({}: Route.MetaArgs) {
+
+export function meta({matches}: Route.MetaArgs) {
+  
   return [
-    { title: "New React Router App" },
-    { name: "description", content: "Welcome to React Router!" },
+    { title: "Edurasa" },
+    { 
+      name: "description", 
+      content: "Welcome to React Router!" 
+    },
   ];
 }
 
-export default function Home() {
-  return <Welcome />;
+export default function Home({
+  loaderData,
+  actionData,
+  params,
+  matches,
+}: Route.ComponentProps){
+    // console.log('loaderData',loaderData,
+    //   '\nactionData:\n',actionData, 
+    //   '\nparams:\n',params, 
+    //   '\nmatch\n', matches
+    // );
+    
+  return <HomePage />;
 }

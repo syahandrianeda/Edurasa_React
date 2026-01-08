@@ -1,0 +1,512 @@
+{
+    "t_2526_s_2": { "email"         :"databaseadeandriansyah@gmail.com",
+        "exec_user"     :"AKfycbz0tQfvKxtM02GVb_bj6uFR645cjBkNftFzmvwox6WrnT4ruTYKRLebKZhAWKlvoJBC",
+        "ss_user"       :"1xQUBegolorHnpiHp5iWz-56WE8iUfWburWzHyHNbLBw",
+        "trial_ss_user" :"1RRb9wlZ7F3KDS_kCYT1d-8J8hadNvvVoElOKYuosXLI",
+        
+        "prefix_nilai"  :"nilai_raport_",
+        "exec_kalender" :"AKfycbz6RVKOSqZT9CtFNbYFbVmQ3VI_tpzG7p19qPqWUllG19y5Tpe1HAD5I1JPpUkro5sr",
+        "ss_kalender"   :"1d0JHONeMIb3pfPv_rR0LclW0YH4YGwPpURC3Ow-8LwY",
+        "trial_ss_kalender"   :"1fQ1AE5toz5Y1DigZecHpvmlmTBTc7eyJR-xmEpOi7TA",
+
+        "exec_kepsek"   :"AKfycbzGWqSC4ZU4mZrt1vVkfPhA5UeaNtfXVN9H1I1Zbaz7bB7csAXxkzw3GHyvgsA8bwyt",
+        "ss_kepsek"     :"1NED5-NA0u07czRspGfc2nJtxiKytSJyioaFqXJkyFrM",
+        "trial_ss_kepsek"     :"16OR6CMkvEfI-kPWFlG-IwQfUzDzVqyS3JGkczEzspWQ",
+        
+        "ss_materi"     :"1FBCutBl7WlkPV-PcxAfvS8zjc4Zv2TvV_nXB5fVQsuU",
+        "trial_ss_materi"     :"1KRA6enYuWLbArZ3ir8VJxiAm-ZoQIqssP1SPc0l9_z4",
+
+        "absen_1"       :"",
+        "absen_2"       :"",
+        "absen_3"       :"",
+        "absen_4"       :"",
+        "absen_5"       :"",
+        "absen_6"       :"",
+        
+        "ss_absen_1"    :"1J4wHlINuLG6eUnSRLp079WMl41y_ZFSU77zHmpYIlKk",
+        "ss_absen_2"    :"121uOIxMvyeHTNaeTz2x5y-hsT29efCJCIgN35OSuh6k",
+        "ss_absen_3"    :"1CWr_rmPOuI4y6QK1JHM4frUXmmV8lUdbvucoIlfRwUc",
+        "ss_absen_4"    :"1UDx5lK9gVgUu-R4JsomC1GTolx_OjBlJJ6duEXt69Jg",
+        "ss_absen_5"    :"1TB1P8w1up_1nFH5_O6_Grasz7p3mgZ05OyTmqxsysgg",
+        "ss_absen_6"    :"12U7nl7J9oNxJbqd84rQbdBQjDoAjL4fTG59VOKTdDV0",
+
+        "trial_ss_absen_1"    :"1CHWQQlyFYK7ex-OGiL3ZZUyY-lFeQJNgjunToIe57X8",
+        "trial_ss_absen_2"    :"1VmdOiZEKYaYqi5unv2gwmW0wAsndqIAdpgXjzPxrVZg",
+        "trial_ss_absen_3"    :"1xef3X_-V3hCdsSAT2kU_JBVPQkeApOc2CLBuSMcRrtw",
+        "trial_ss_absen_4"    :"1zKmJGG9dTJM4iA_sLwfvMjxG1FtOShs6VWRlYmzovig",
+        "trial_ss_absen_5"    :"15x1j1yxV4Qb79ReIZvOHlKJjRlY-5IZ61Ourptvdmh8",
+        "trial_ss_absen_6"    :"1GQyEg9CYE833WUF_u9DqiUzJmkEMCrwsxmtOLqNHTTk",
+        
+
+        "ss_nilai_1"    :"1LBISROQ3g360cXZoF9edu9NRddO2ST6ZGp2KvKDLGJs",
+        "ss_nilai_2"    :"1u43VZoQiZ1zOhLwCtyfhu-kx8sNNxPBXfHLcWJUN_0k",
+        "ss_nilai_3"    :"1MyeRaH5mr5wzqmRR2U_GtSlK-l1mzradhSXXqqV2Uog",
+        "ss_nilai_4"    :"1n4v1AF1jXEkwq0Pjg-M_0zoiDkAyxbZpwde0fjMdCuI",
+        "ss_nilai_5"    :"1ewv4kDefmfjD_m2fO4Rmv2JudN7_0KvnIsepW__wzus",
+        "ss_nilai_6"    :"1YDHVS19wZLSm4tHG1WXgdAgxeMhLrO6Zv9to0V-BMWE",
+
+        
+        "trial_ss_nilai_1"    :"1pe6E_j-0KtIF9HOFr0sfTHbkEHvn4FhJ5L6qF-VxyJA",
+        "trial_ss_nilai_2"    :"1mf21z0Q7zGN2426RsdDe5PtczJCsIApBqCUsPcmTTSk",
+        "trial_ss_nilai_3"    :"1HK18yRp_jx_mA8y3eumL23X_iIdKntiotv-Hk3ZbFIQ",
+        "trial_ss_nilai_4"    :"1b6pKHK8s_fgRfLb5Lik8865xAiR0p_IMaaJLVLhBCak",
+        "trial_ss_nilai_5"    :"1SP6TGqLx1i4fewS5jD8JCg9oUvxvucU7NTz6Ne0fWy4",
+        "trial_ss_nilai_6"    :"1jrwOii5wa3D3UHV4ICc57JdkiDg76f2_rTKK1NpuGv0",
+        
+        "exec_crud"     :"AKfycbxIpHLJ4TZs22XxAEdGIseZzrqdcF2DYLT4F1BHtg8CoVI6jorp6h34JL325aUbQzOt"
+    },
+    "t_2526_s_1": { 
+        "email"         :"databaseadeandriansyah@gmail.com",
+        "exec_user"     :"AKfycbz0tQfvKxtM02GVb_bj6uFR645cjBkNftFzmvwox6WrnT4ruTYKRLebKZhAWKlvoJBC",
+        "ss_user"       :"1xQUBegolorHnpiHp5iWz-56WE8iUfWburWzHyHNbLBw",
+        "trial_ss_user" :"1RRb9wlZ7F3KDS_kCYT1d-8J8hadNvvVoElOKYuosXLI",
+        
+        "prefix_nilai"  :"nilai_raport_",
+        "exec_kalender" :"AKfycbz6RVKOSqZT9CtFNbYFbVmQ3VI_tpzG7p19qPqWUllG19y5Tpe1HAD5I1JPpUkro5sr",
+        "ss_kalender"   :"1BXbVFKvJ-J3mn1MqWq6KfpdKfWTrsJkHi6oiOwYOHGk",
+        "trial_ss_kalender"   :"1fQ1AE5toz5Y1DigZecHpvmlmTBTc7eyJR-xmEpOi7TA",
+
+        "exec_kepsek"   :"AKfycbzGWqSC4ZU4mZrt1vVkfPhA5UeaNtfXVN9H1I1Zbaz7bB7csAXxkzw3GHyvgsA8bwyt",
+        "ss_kepsek"     :"1NED5-NA0u07czRspGfc2nJtxiKytSJyioaFqXJkyFrM",
+        "trial_ss_kepsek"     :"16OR6CMkvEfI-kPWFlG-IwQfUzDzVqyS3JGkczEzspWQ",
+        
+        "ss_materi"     :"153JIR3tasyvogfL3_egnSt5PxCPl_0XhfM2b8xB1pKA",
+        "trial_ss_materi"     :"1KRA6enYuWLbArZ3ir8VJxiAm-ZoQIqssP1SPc0l9_z4",
+
+        "absen_1"       :"",
+        "absen_2"       :"",
+        "absen_3"       :"",
+        "absen_4"       :"",
+        "absen_5"       :"",
+        "absen_6"       :"",
+        
+        "ss_absen_1"    :"1J4wHlINuLG6eUnSRLp079WMl41y_ZFSU77zHmpYIlKk",
+        "ss_absen_2"    :"121uOIxMvyeHTNaeTz2x5y-hsT29efCJCIgN35OSuh6k",
+        "ss_absen_3"    :"1CWr_rmPOuI4y6QK1JHM4frUXmmV8lUdbvucoIlfRwUc",
+        "ss_absen_4"    :"1UDx5lK9gVgUu-R4JsomC1GTolx_OjBlJJ6duEXt69Jg",
+        "ss_absen_5"    :"1TB1P8w1up_1nFH5_O6_Grasz7p3mgZ05OyTmqxsysgg",
+        "ss_absen_6"    :"12U7nl7J9oNxJbqd84rQbdBQjDoAjL4fTG59VOKTdDV0",
+
+        "trial_ss_absen_1"    :"1CHWQQlyFYK7ex-OGiL3ZZUyY-lFeQJNgjunToIe57X8",
+        "trial_ss_absen_2"    :"1VmdOiZEKYaYqi5unv2gwmW0wAsndqIAdpgXjzPxrVZg",
+        "trial_ss_absen_3"    :"1xef3X_-V3hCdsSAT2kU_JBVPQkeApOc2CLBuSMcRrtw",
+        "trial_ss_absen_4"    :"1zKmJGG9dTJM4iA_sLwfvMjxG1FtOShs6VWRlYmzovig",
+        "trial_ss_absen_5"    :"15x1j1yxV4Qb79ReIZvOHlKJjRlY-5IZ61Ourptvdmh8",
+        "trial_ss_absen_6"    :"1GQyEg9CYE833WUF_u9DqiUzJmkEMCrwsxmtOLqNHTTk",
+        
+
+        "ss_nilai_1"    :"1LBISROQ3g360cXZoF9edu9NRddO2ST6ZGp2KvKDLGJs",
+        "ss_nilai_2"    :"1u43VZoQiZ1zOhLwCtyfhu-kx8sNNxPBXfHLcWJUN_0k",
+        "ss_nilai_3"    :"1MyeRaH5mr5wzqmRR2U_GtSlK-l1mzradhSXXqqV2Uog",
+        "ss_nilai_4"    :"1n4v1AF1jXEkwq0Pjg-M_0zoiDkAyxbZpwde0fjMdCuI",
+        "ss_nilai_5"    :"1ewv4kDefmfjD_m2fO4Rmv2JudN7_0KvnIsepW__wzus",
+        "ss_nilai_6"    :"1YDHVS19wZLSm4tHG1WXgdAgxeMhLrO6Zv9to0V-BMWE",
+
+        
+        "trial_ss_nilai_1"    :"1pe6E_j-0KtIF9HOFr0sfTHbkEHvn4FhJ5L6qF-VxyJA",
+        "trial_ss_nilai_2"    :"1mf21z0Q7zGN2426RsdDe5PtczJCsIApBqCUsPcmTTSk",
+        "trial_ss_nilai_3"    :"1HK18yRp_jx_mA8y3eumL23X_iIdKntiotv-Hk3ZbFIQ",
+        "trial_ss_nilai_4"    :"1b6pKHK8s_fgRfLb5Lik8865xAiR0p_IMaaJLVLhBCak",
+        "trial_ss_nilai_5"    :"1SP6TGqLx1i4fewS5jD8JCg9oUvxvucU7NTz6Ne0fWy4",
+        "trial_ss_nilai_6"    :"1jrwOii5wa3D3UHV4ICc57JdkiDg76f2_rTKK1NpuGv0",
+        
+        "exec_crud"     :"AKfycbxIpHLJ4TZs22XxAEdGIseZzrqdcF2DYLT4F1BHtg8CoVI6jorp6h34JL325aUbQzOt"
+    },
+    "t_2425_s_2":{ 
+                "email":"databaseadeandriansyah@gmail.com",
+                "exec_user"     :"AKfycbz0tQfvKxtM02GVb_bj6uFR645cjBkNftFzmvwox6WrnT4ruTYKRLebKZhAWKlvoJBC",
+                "ss_user"       :"1WjyLiEvjuGbyho9h0o4MQ74SNZ5OFzAzIQq3vgXwj3Q",
+                "trial_ss_user" :"1RRb9wlZ7F3KDS_kCYT1d-8J8hadNvvVoElOKYuosXLI",
+                
+                "prefix_nilai"  :"nilai_raport_",
+                "exec_kalender" :"AKfycbz1C_d342y6TzjOEV-7eZkfdo0wMYHmXsioDjrmqAkjVTF4KmiArY72MfvB_riIDdsi",
+                "ss_kalender"   :"1SAeo4Wga52-BRLVZ8JZu1f9aWph_UlyamTAN12MjaDs",
+                "trial_ss_kalender"   :"1fQ1AE5toz5Y1DigZecHpvmlmTBTc7eyJR-xmEpOi7TA",
+
+                "exec_kepsek"   :"AKfycbysBOYTu-n3H0yNPGoD-SWAeyZzEEBaKHYRG7xrrpFaDxNbNWK3DlKf-vY47NWW9NAd2g",
+                "ss_kepsek"     :"18vLm5qLHKNXLbzbh6zggTgWz5I8wlD2Rp3YUA4PiL4Y",
+                "trial_ss_kepsek"     :"16OR6CMkvEfI-kPWFlG-IwQfUzDzVqyS3JGkczEzspWQ",
+                
+                "ss_materi"     :"1hNO9r0QeQ2qB596alR6bfbtCtPwf_iCS9Oycy9loJNw",
+                "trial_ss_materi"     :"1KRA6enYuWLbArZ3ir8VJxiAm-ZoQIqssP1SPc0l9_z4",
+
+                "absen_1"       :"",
+                "absen_2"       :"",
+                "absen_3"       :"",
+                "absen_4"       :"",
+                "absen_5"       :"",
+                "absen_6"       :"",
+                
+                "ss_absen_1"    :"182rPFaeciat1s4pmkIqiZ12t00hdI0_9-W5SrZQUBEQ",
+                "ss_absen_2"    :"1fVnID69-aqdKStNQQ0y4M4L9cjgrZse2JJhonhcR8HE",
+                "ss_absen_3"    :"1y16XDWRPCzTXhq1UlBI8WKSawkbYz-2jqNfxaWwWlOo",
+                "ss_absen_4"    :"1Ah5n35zMN4NI4jsg2db1-7pNhhzZ2BJXG9BOEGstxNU",
+                "ss_absen_5"    :"1PfUbdOK0xnVv9LO-s5AJPEvWsc-hFaYYjxcg6DMpVjg",
+                "ss_absen_6"    :"1ED6KgvPjPSs7VrpUk7bnolThJvudf6tX8KoNHHFTNIo",
+
+                "trial_ss_absen_1"    :"1CHWQQlyFYK7ex-OGiL3ZZUyY-lFeQJNgjunToIe57X8",
+                "trial_ss_absen_2"    :"1VmdOiZEKYaYqi5unv2gwmW0wAsndqIAdpgXjzPxrVZg",
+                "trial_ss_absen_3"    :"1xef3X_-V3hCdsSAT2kU_JBVPQkeApOc2CLBuSMcRrtw",
+                "trial_ss_absen_4"    :"1zKmJGG9dTJM4iA_sLwfvMjxG1FtOShs6VWRlYmzovig",
+                "trial_ss_absen_5"    :"15x1j1yxV4Qb79ReIZvOHlKJjRlY-5IZ61Ourptvdmh8",
+                "trial_ss_absen_6"    :"1GQyEg9CYE833WUF_u9DqiUzJmkEMCrwsxmtOLqNHTTk",
+                
+
+                "ss_nilai_1"    :"1kBte2MzbmKZ2-VcG4qXKiwme1sW3jY5yYTGqAmH-FfQ",
+                "ss_nilai_2"    :"1PcerhnaxM8TDAEmGEqIo7G74l6wpKdx41E_UNX4loI8",
+                "ss_nilai_3"    :"1AX5NGMh0G5Iad7_JPtZbrBRAIK0xnluZfu_yIKdBUew",
+                "ss_nilai_4"    :"1jr-Ur9o4p01qgKgpDLAxZf33ZMK2Ps1gR0uAYbiETuI",
+                "ss_nilai_5"    :"1_Gyo9IlcngVluGemCe5JEyIlmBAkYb6Mhx4_ZkFFrOM",
+                "ss_nilai_6"    :"1Nv6MFOoAaFOghQIVg-PP-mYsUKRLvX4EPhkzl2yYNF0",
+
+                
+                "trial_ss_nilai_1"    :"1pe6E_j-0KtIF9HOFr0sfTHbkEHvn4FhJ5L6qF-VxyJA",
+                "trial_ss_nilai_2"    :"1mf21z0Q7zGN2426RsdDe5PtczJCsIApBqCUsPcmTTSk",
+                "trial_ss_nilai_3"    :"1HK18yRp_jx_mA8y3eumL23X_iIdKntiotv-Hk3ZbFIQ",
+                "trial_ss_nilai_4"    :"1b6pKHK8s_fgRfLb5Lik8865xAiR0p_IMaaJLVLhBCak",
+                "trial_ss_nilai_5"    :"1SP6TGqLx1i4fewS5jD8JCg9oUvxvucU7NTz6Ne0fWy4",
+                "trial_ss_nilai_6"    :"1jrwOii5wa3D3UHV4ICc57JdkiDg76f2_rTKK1NpuGv0",
+                
+                "exec_crud"     :"AKfycbxIpHLJ4TZs22XxAEdGIseZzrqdcF2DYLT4F1BHtg8CoVI6jorp6h34JL325aUbQzOt"
+    },
+    "t_2425_s_1":{ 
+                "email":"databaseadeandriansyah@gmail.com",
+                "exec_user"     :"AKfycbz0tQfvKxtM02GVb_bj6uFR645cjBkNftFzmvwox6WrnT4ruTYKRLebKZhAWKlvoJBC",
+                "ss_user"       :"1WjyLiEvjuGbyho9h0o4MQ74SNZ5OFzAzIQq3vgXwj3Q",
+                "trial_ss_user" :"1RRb9wlZ7F3KDS_kCYT1d-8J8hadNvvVoElOKYuosXLI",
+                
+                
+                "exec_kalender" :"AKfycbz1C_d342y6TzjOEV-7eZkfdo0wMYHmXsioDjrmqAkjVTF4KmiArY72MfvB_riIDdsi",
+                "ss_kalender"   :"12Ns5cGUggCys04rpfelrC4BG9QIVAKByjdZfxzPmDng",
+                "trial_ss_kalender"   :"1fQ1AE5toz5Y1DigZecHpvmlmTBTc7eyJR-xmEpOi7TA",
+
+                "exec_kepsek"   :"AKfycbysBOYTu-n3H0yNPGoD-SWAeyZzEEBaKHYRG7xrrpFaDxNbNWK3DlKf-vY47NWW9NAd2g",
+                "ss_kepsek"     :"18vLm5qLHKNXLbzbh6zggTgWz5I8wlD2Rp3YUA4PiL4Y",
+                "trial_ss_kepsek"     :"16OR6CMkvEfI-kPWFlG-IwQfUzDzVqyS3JGkczEzspWQ",
+                
+                "ss_materi"     :"1w4SSUjERJ8gODXdpEZknMP8Q5lasFU9LRKg2vbr4cfk",
+                "trial_ss_materi"     :"1KRA6enYuWLbArZ3ir8VJxiAm-ZoQIqssP1SPc0l9_z4",
+
+                "absen_1"       :"",
+                "absen_2"       :"",
+                "absen_3"       :"",
+                "absen_4"       :"",
+                "absen_5"       :"",
+                "absen_6"       :"",
+                
+                "ss_absen_1"    :"182rPFaeciat1s4pmkIqiZ12t00hdI0_9-W5SrZQUBEQ",
+                "ss_absen_2"    :"1fVnID69-aqdKStNQQ0y4M4L9cjgrZse2JJhonhcR8HE",
+                "ss_absen_3"    :"1y16XDWRPCzTXhq1UlBI8WKSawkbYz-2jqNfxaWwWlOo",
+                "ss_absen_4"    :"1Ah5n35zMN4NI4jsg2db1-7pNhhzZ2BJXG9BOEGstxNU",
+                "ss_absen_5"    :"1PfUbdOK0xnVv9LO-s5AJPEvWsc-hFaYYjxcg6DMpVjg",
+                "ss_absen_6"    :"1ED6KgvPjPSs7VrpUk7bnolThJvudf6tX8KoNHHFTNIo",
+
+                "trial_ss_absen_1"    :"1CHWQQlyFYK7ex-OGiL3ZZUyY-lFeQJNgjunToIe57X8",
+                "trial_ss_absen_2"    :"1VmdOiZEKYaYqi5unv2gwmW0wAsndqIAdpgXjzPxrVZg",
+                "trial_ss_absen_3"    :"1xef3X_-V3hCdsSAT2kU_JBVPQkeApOc2CLBuSMcRrtw",
+                "trial_ss_absen_4"    :"1zKmJGG9dTJM4iA_sLwfvMjxG1FtOShs6VWRlYmzovig",
+                "trial_ss_absen_5"    :"15x1j1yxV4Qb79ReIZvOHlKJjRlY-5IZ61Ourptvdmh8",
+                "trial_ss_absen_6"    :"1GQyEg9CYE833WUF_u9DqiUzJmkEMCrwsxmtOLqNHTTk",
+                
+                "prefix_nilai"  :"nilai_raport_",
+                
+                "ss_nilai_1"    :"1WS9O8pkE5KXtW2yOwuCgrr7cbLB4P8NR1HAnjnV2vwQ",
+                "ss_nilai_2"    :"1HbzV8lWrA6-7g4BnLOBrRvDz5MlQbzc6jyT-PSlEGG8",
+                "ss_nilai_3"    :"1DJTOmdLnjg92wcdFS92tUjLyzA6_5Mks-UQV8A8bNAI",
+                "ss_nilai_4"    :"1XxwY3Rt4FCqhFzGz27Snp1vzpSjA8U8FRl2kUnEG3zY",
+                "ss_nilai_5"    :"13nszXR9rc-Tpr-pVFdkwIrwb3u--RC7feGY2TsxE1KU",
+                "ss_nilai_6"    :"15OGeaseLHm_3LwuM2iRVpDaODAAR2QTSkg8L7IZ_IsI",
+                
+                "trial_ss_nilai_1"    :"1pe6E_j-0KtIF9HOFr0sfTHbkEHvn4FhJ5L6qF-VxyJA",
+                "trial_ss_nilai_2"    :"1mf21z0Q7zGN2426RsdDe5PtczJCsIApBqCUsPcmTTSk",
+                "trial_ss_nilai_3"    :"1HK18yRp_jx_mA8y3eumL23X_iIdKntiotv-Hk3ZbFIQ",
+                "trial_ss_nilai_4"    :"1b6pKHK8s_fgRfLb5Lik8865xAiR0p_IMaaJLVLhBCak",
+                "trial_ss_nilai_5"    :"1SP6TGqLx1i4fewS5jD8JCg9oUvxvucU7NTz6Ne0fWy4",
+                "trial_ss_nilai_6"    :"1jrwOii5wa3D3UHV4ICc57JdkiDg76f2_rTKK1NpuGv0",
+                
+                "exec_crud"     :"AKfycbxIpHLJ4TZs22XxAEdGIseZzrqdcF2DYLT4F1BHtg8CoVI6jorp6h34JL325aUbQzOt"
+            },
+    "t_2324_s_2":{ 
+                "email":"databaseadeandriansyah@gmail.com",
+                "exec_user"     :"AKfycbz0tQfvKxtM02GVb_bj6uFR645cjBkNftFzmvwox6WrnT4ruTYKRLebKZhAWKlvoJBC",
+                "ss_user"       :"18hMCBFPQiC4JkOAPM_R-DdwzQDFWRnlKiV1BUNtwhc8",
+                
+                "exec_kalender" :"AKfycbz1C_d342y6TzjOEV-7eZkfdo0wMYHmXsioDjrmqAkjVTF4KmiArY72MfvB_riIDdsi",
+                "ss_kalender"   :"1VZkJL9JCwp0gVvnooGafazGG40rC6fFo65swK-DGDG4",
+
+                "exec_kepsek"   :"AKfycbysBOYTu-n3H0yNPGoD-SWAeyZzEEBaKHYRG7xrrpFaDxNbNWK3DlKf-vY47NWW9NAd2g",
+                "ss_kepsek"     :"1jZecUUtmOtBDg-VJn4UI5Y4krFO7QxsEamfNDB6-lBY",
+                
+                "ss_materi"     :"19ade0hKIOKbEoujMWAoMxjmoQlJ6MrdN4PvKIL-T5Ys",
+
+                "absen_1"       :"AKfycby5VzkI9pKfdzadwFL6m9hAZRpnB412VcHpXRs8EeY-8ovjaBJ1p8nlzMzdWnP0BdIk",
+                "absen_2"       :"AKfycbzppxFHw0fZ2zoUNrkCaR2FDrIehmhHyKAOC8c6XJMKsxvgrZtpIFlMd77nqANN-Mbb",
+                "absen_3"       :"AKfycbzxI1FC0Xmd3w_uN2dcA3je0MTDrw6JiwBDxZYND5sK2JD5Hh_ZrL1KQhU0NM4wVop5UQ",
+                "absen_4"       :"AKfycby2dDDJjfN8BgpRaI4K_rPENf2LqA1RFFWEjngIY09-mEArE5vyIGP2zWHQHgo8tO4X",
+                "absen_5"       :"AKfycbw6H08AN4zorAUP6rWv1zWqFCMn4rCpMbTWFWbmG_2V6X9bBHXbCXCpXy8AuCkCnu5XjA",
+                "absen_6"       :"AKfycbxJoWisg3HePuaOaca1NfHphsvzTykWDsXMYGo1RRRc03he-nsL2Ck6n9Nxs2PF3AZZ",
+                "ss_absen_1"    :"1tKPQ6CondzzqNMwuRNpISjo3is2yjFcJP2gRbtz1xEY",
+                "ss_absen_2"    :"1rtNALMRBrRFWbgppIHulYPCQAsgr458GRlqYIW6n1Xc",
+                "ss_absen_3"    :"1E49WicUb9lm2kwhdLjDrmwVbJsOPAfafUlq8EeJgrzg",
+                "ss_absen_4"    :"1B5WczgD6q1IWXLjbgn--NHGrqk84_KHQ8VNkS3xLjNs",
+                "ss_absen_5"    :"11bztTonvtbJFa_Ec8bI9-lByIxf-Z4eH4UY4PWYO0jQ",
+                "ss_absen_6"    :"1qVu6FYj1ISKrlIXI57lHETmMs8dzJaIDNg53RqkNsSg",
+
+                "prefix_nilai"  :"nilai_raport_",
+                "ss_nilai_1"    :"1URpbkxeEBQ1Ozdn0RDck5sncAPrfLdfyErAuShKJmPo",
+                "ss_nilai_2"    :"1uVE6bS4fU6Ef3rYmdO998oHpOEf9jID4a01eUcuTCg8",
+                "ss_nilai_3"    :"1hVLE6zM3uvJ2ARpwOFh4H7220L8wcx4cvFaw6JjYXzc",
+                "ss_nilai_4"    :"1VYaXTwULZ9OjlRmHp2IpVQbEKrlp_gF9gu47sjd-jUQ",
+                "ss_nilai_5"    :"1OV8nyuaNx6XG5XpKssA9w-FpBo_rU1Mw4vmAcfuVFWE",
+                "ss_nilai_6"    :"1suKMyxVDNv-2lOPiArq1wyIjBotGi4iB-k0zCBJncSY",
+                
+                "exec_crud"     :"AKfycbxIpHLJ4TZs22XxAEdGIseZzrqdcF2DYLT4F1BHtg8CoVI6jorp6h34JL325aUbQzOt"
+            },
+    "t_2324_s_1":{ "email":"databaseadeandriansyah@gmail.com",
+                    "exec_user"     :"AKfycbz0tQfvKxtM02GVb_bj6uFR645cjBkNftFzmvwox6WrnT4ruTYKRLebKZhAWKlvoJBC",
+                    "ss_user"       :"18hMCBFPQiC4JkOAPM_R-DdwzQDFWRnlKiV1BUNtwhc8",
+                    
+                    "exec_kalender" :"AKfycbzIiD1lYm4mRl6W_ZGaPlukbGlIx2Z4EPd2Q6d6wIwihYBAFyi4vsdmQRSiHAcsS4UJ",
+                    "ss_kalender"   :"1ekV21gBhi9zQbXs4ZB2jJZ6V8n3nYRztRQq8ZRo8JJM",
+
+                    "exec_kepsek"   :"AKfycbysBOYTu-n3H0yNPGoD-SWAeyZzEEBaKHYRG7xrrpFaDxNbNWK3DlKf-vY47NWW9NAd2g",
+                    "ss_kepsek"     :"1jZecUUtmOtBDg-VJn4UI5Y4krFO7QxsEamfNDB6-lBY",
+                    
+                    "ss_materi"     :"13l1GOnBkYssMDK3VLtUv03g0kvTw2XH79udz0P-97ck",
+
+                    "absen_1"       :"AKfycby5VzkI9pKfdzadwFL6m9hAZRpnB412VcHpXRs8EeY-8ovjaBJ1p8nlzMzdWnP0BdIk",
+                    "absen_2"       :"AKfycbzppxFHw0fZ2zoUNrkCaR2FDrIehmhHyKAOC8c6XJMKsxvgrZtpIFlMd77nqANN-Mbb",
+                    "absen_3"       :"AKfycbzxI1FC0Xmd3w_uN2dcA3je0MTDrw6JiwBDxZYND5sK2JD5Hh_ZrL1KQhU0NM4wVop5UQ",
+                    "absen_4"       :"AKfycby2dDDJjfN8BgpRaI4K_rPENf2LqA1RFFWEjngIY09-mEArE5vyIGP2zWHQHgo8tO4X",
+                    "absen_5"       :"AKfycbw6H08AN4zorAUP6rWv1zWqFCMn4rCpMbTWFWbmG_2V6X9bBHXbCXCpXy8AuCkCnu5XjA",
+                    "absen_6"       :"AKfycbxJoWisg3HePuaOaca1NfHphsvzTykWDsXMYGo1RRRc03he-nsL2Ck6n9Nxs2PF3AZZ",
+
+                    "ss_absen_1"    :"1tKPQ6CondzzqNMwuRNpISjo3is2yjFcJP2gRbtz1xEY",
+                    "ss_absen_2"    :"1rtNALMRBrRFWbgppIHulYPCQAsgr458GRlqYIW6n1Xc",
+                    "ss_absen_3"    :"1E49WicUb9lm2kwhdLjDrmwVbJsOPAfafUlq8EeJgrzg",
+                    "ss_absen_4"    :"1B5WczgD6q1IWXLjbgn--NHGrqk84_KHQ8VNkS3xLjNs",
+                    "ss_absen_5"    :"11bztTonvtbJFa_Ec8bI9-lByIxf-Z4eH4UY4PWYO0jQ",
+                    "ss_absen_6"    :"1qVu6FYj1ISKrlIXI57lHETmMs8dzJaIDNg53RqkNsSg",
+                    "prefix_nilai"  :"nilai_raport_",
+                    "ss_nilai_1"    :"1f1TD-UfrvIW5gj8e_LATHf1mijgbMRIePG-p6uqn798",
+                    "ss_nilai_2"    :"181jJoTZ6tr6NqzBaMw4_JG6s6dxlzKPtnF5ABE72ZqI",
+                    "ss_nilai_3"    :"1jy_8GOUe6pXCpWNl2iKTb7IiEbnJz7_rAgAk3RP3-m0",
+                    "ss_nilai_4"    :"1nR-fmvn2M_EnGEqvp1zdw5WAzf_OGfWjqRJePKGcOEc",
+                    "ss_nilai_5"    :"1fZejxZi6FW1X4V76Q2Zrq9EnjO6Oz42XWowJdhPHre0",
+                    "ss_nilai_6"    :"18zq7DCQKxeXtbFWkCn9lehuUW1tJ3EFxeSuu2Gzxn14",
+                    
+                    "exec_crud"     :"AKfycbxIpHLJ4TZs22XxAEdGIseZzrqdcF2DYLT4F1BHtg8CoVI6jorp6h34JL325aUbQzOt"
+                },
+    "t_2223_s_2":{  "email":"databaseadeandriansyah@gmail.com",
+    
+                    "exec_user"     :"15C4B92aA7V0aTm6L95dH3ATFvbG12bQc2Iobc9LKOlZdBeqHa7Ryp_0M",
+                    "ss_user"       :"1Q0CuCEmMuZSIJGvEYNlTJgJYWDJUmTKT-ipjHPMEdTM",
+                    
+                    "exec_kalender" :"AKfycbxwtc_dmw61dwqx2iqPJceIeGqHpkPwXej7XhhrCyEL0W2HiX0ecU6xJiBWPYvrF0kb",
+                    "ss_kalender"   :"1zqtTng7OU4iyKI0XvDnHjCKIlw6NEpzHQwhMhIIJdw0",
+
+                    "exec_kepsek"   :"AKfycbyv8pfQ5r85Qo9vBxdn-XY0BR7Jf0GuivvjBplj0SCdZVsfdlefEigLSsofJIxCxNQC",
+                    "ss_kepsek"     :"1gbjSSkujsSQBMYxw_jzgYc0njvoGKL_sKGADB5T9eWw",
+
+                    "absen_1"       :"AKfycbxyfZaHWxJBU5NxgptArrZleJjVNNKkZR0NoOi-zeW7zJSkzDCQ-tK2TsCV7M7pyKZQ",
+                    "absen_2"       :"AKfycbw9L2vKKFu_sby-adzyIF4wesVZmWe7MPnVNjw2--BnKgEG86fSVHDF6oIdQ6N40xs",
+                    "absen_3"       :"AKfycbw8vzObFG0HizLSmlD3h5jG8T_RAcobb-HVMIBsVSdV4NIWnzuW_tUust35e3vofpUw",
+                    "absen_4"       :"AKfycby49g5u5rDwn9bvzYJeXAcpfpbl-f8tghM5TdrqCWH_GNzg2kI2glz89sRZikdiYnPu3g",
+                    "absen_5"       :"AKfycbzRWq-sC-q6C4UYU7VLpLU_g682R0wIYMyQXZ2r12LTLOTSYzbAGpqZub7lXJ9oTMERMQ",
+                    "absen_6"       :"AKfycbynlAcsEMlCqjdg_yxHOtZYhWs6n8lVeQt3bScC-ieFCicwbGK0sfsX2KMKruZbDd6DbA",
+                    
+                    "ss_absen_1"    :"1HN0RDzeNLjAxW6uC04iB-shYxeabp5sYf0kYlv79O7k",
+                    "ss_absen_2"    :"14EPhZ_oxhPfPw_8vyD4GUGkdV5AJmvPh9MxemLSF2sU",
+                    "ss_absen_3"    :"1u6og2mZbrsYJaF9ujET_hpMcDQ3n0X2pbmFR8aWeKy8",
+                    "ss_absen_4"    :"1YzSNzsUGj6yvaDrgiNpikVO2fY4B9y89138VsLaEavI",
+                    "ss_absen_5"    :"1OxOI5yxnX6IoiC0mCxxhhTt_qNxQcCsnPIX0ccwKmOs",
+                    "ss_absen_6"    :"1jSpDGnbot6FeobSSdsUKa0kKM_wV7AMixWJUxmlXx7E",
+
+                    "ss_materi"     :"11s_Pr5sx1S6w3DRzSPrx8AyUneEprBzUpiLUndV9-Bc",
+
+                    "prefix_nilai"  :"Induksemetara_",
+                    "ss_nilai_1"    :"1F4tH2IIW8vuls4LSZlychtlFbzBn5ciWuQGdS-mnCSM",
+                    "ss_nilai_2"    :"1kiXMb-Vb7y7XmV1eAHlPuv3KUHs6nNlOEU3wLKc7jSI",
+                    "ss_nilai_3"    :"1EaEoHQenocQ0jYLV0e58oQ1TKP0WSHvVYsTLZiRDN3Q",
+                    "ss_nilai_4"    :"1w54qc7YU7tI5UHa_8nWpvpLOjZSzQ8k2-Vyha1fVkW8",
+                    "ss_nilai_5"    :"1GV6OHuCcrEpiNmZK6fv_ZGAi0CvU8ObgO3WXb4veCt0",
+                    "ss_nilai_6"    :"12n6a3N1cWKUDqTZ5pkUb1qu1a0vNJ2umVzZW0HfAG2Y",
+                    
+                    "exec_crud":"AKfycbxIpHLJ4TZs22XxAEdGIseZzrqdcF2DYLT4F1BHtg8CoVI6jorp6h34JL325aUbQzOt"
+                },
+    "t_2223_s_1":{  "email":"databasesdnratujaya1@gmail.com",
+                    "exec_user":"",
+                    "ss_user":"1fl7nvpnNBzmO-FQqAE3oFxhmdp-l0iveZt8YgxCWYq0",
+                    
+                    "exec_kalender":"",
+                    "ss_kalender":"",
+
+                    "exec_kepsek":"",
+                    "ss_kepsek":"",
+
+                    "absen_1":"",
+                    "absen_2":"",
+                    "absen_3":"",
+                    "absen_4":"",
+                    "absen_5":"",
+                    "absen_6":"",
+                    
+                    "ss_absen_1":"",
+                    "ss_absen_2":"",
+                    "ss_absen_3":"",
+                    "ss_absen_4":"",
+                    "ss_absen_5":"",
+                    "ss_absen_6":"",
+
+                    "ss_materi":"1ha35qZGKxkIjuR3SyBz9ViPFSr-PViKNKZgx1CdqTDc",
+
+                    "prefix_nilai"  :"Induksemetara_",
+                    "ss_nilai_1":"1d2Xj4qi-5v9xqR-byfLYigSrssOrJ1wTt1ZS_K4arPo",
+                    "ss_nilai_2":"1g-RFH0jEovmLXasPSl7T3XLODCJh5GqYTMyDlYCrO6Q",
+                    "ss_nilai_3":"1VIV-v6vw0r-VsckRTfe9YZgtxps5BHrKgNo_YMUO_AI",
+                    "ss_nilai_4":"1vQVoRisRvnckXeczszU_fkw_qjKiBLGgjERgQ3TOfsU",
+                    "ss_nilai_5":"1aRo205UAqq9rWPIfntOFVitX7xF3pb6Wbh74KkzrE4Y",
+                    "ss_nilai_6":"1_3Y9eBF4g0aNplcxBYo4nbqD5og7LTSR4ungUDvWkas",
+                    
+                    "exec_crud":"AKfycbwzDPSJQ-qbjn08PYHnJOvhtnwuQwLpheZ-4LIz0OtRY4ZLLnbd69Qb-bqtqc0q21sNLw"
+                },
+    "t_2122_s_2":{  "email":"databasesdnratujaya1@gmail.com",
+                    "exec_user":"",
+                    "ss_user":"1XaZPz3uw6l-NO4wY-kZYydT9-3b-Wz7UHOl4e-YWHkE",
+                    
+                    "exec_kalender":"",
+                    "ss_kalender":"",
+
+                    "exec_kepsek":"",
+                    "ss_kepsek":"",
+
+                    "absen_1":"",
+                    "absen_2":"",
+                    "absen_3":"",
+                    "absen_4":"",
+                    "absen_5":"",
+                    "absen_6":"",
+                    
+                    "ss_absen_1":"",
+                    "ss_absen_2":"",
+                    "ss_absen_3":"",
+                    "ss_absen_4":"",
+                    "ss_absen_5":"",
+                    "ss_absen_6":"",
+
+                    "ss_materi":"1n3nYiApaERmS2tRDBCOcXfWVVOXJdDNGXheTL-rc0Nc",
+                    "prefix_nilai"  :"Induksemetara_",
+                    "ss_nilai_1":"1Uiqa4T5qalZLdS1poWZY3XDprgUycRYybmx1IN9Zetg",
+                    "ss_nilai_2":"1IkmjI6pujBDtcQuTqLcH90nZOZLgQPTLfLRa6NxPBt4",
+                    "ss_nilai_3":"1Bs2LdtV7vQ_MMH29X22okQTNZlXUoUFR-8YxVWE9eUU",
+                    "ss_nilai_4":"1VvO10nBat6Hl7LFBTZ0sCDp4JhDx7ORkj3L6EenM97A",
+                    "ss_nilai_5":"151fWOwxGySDenFRzM6TVMUBTRmaE15MH1fZDo8B78P0",
+                    "ss_nilai_6":"14_49BkEP-u4yqH4_Z6fyW194wEBGLKfDcGUdnUt8rI0",
+                    
+                    "exec_crud":"AKfycbwzDPSJQ-qbjn08PYHnJOvhtnwuQwLpheZ-4LIz0OtRY4ZLLnbd69Qb-bqtqc0q21sNLw"
+                },
+    "t_2122_s_1":{  "email":"lamasosdnratujaya1@gmail.com",
+                    "exec_user":"",
+                    "ss_user":"1n_TYHewm15xNx41NjNIihPQkVhFI-b7oqaLoxbkPJNw",
+                    
+                    "exec_kalender":"",
+                    "ss_kalender":"",
+
+                    "exec_kepsek":"",
+                    "ss_kepsek":"",
+
+                    "absen_1":"",
+                    "absen_2":"",
+                    "absen_3":"",
+                    "absen_4":"",
+                    "absen_5":"",
+                    "absen_6":"",
+                    
+                    "ss_absen_1":"",
+                    "ss_absen_2":"",
+                    "ss_absen_3":"",
+                    "ss_absen_4":"",
+                    "ss_absen_5":"",
+                    "ss_absen_6":"",
+
+                    "ss_materi":"1-takdeCs1ecDH_LiXyhIowF_IVLPNCjgnf0LUrQRhzI",
+                    "prefix_nilai"  :"Induksemetara_",
+                    "ss_nilai_1":"1jkgQwzJ_9k_RFpqmJaKGvsDfh0sHSU6MgEKlpv5Ihug",
+                    "ss_nilai_2":"1TWZ0PCTSsSPjvJpx9oTsDQsKR3we7ou9IKCHhoiUeQI",
+                    "ss_nilai_3":"1lGDnCx31DPGjeGdXU8L5NoUn1GtC38baCwmOxUcpYfU",
+                    "ss_nilai_4":"1JOrrrvrGmxtzAcnL7OXLSiHfZbiO-7q24NCwtWNHxdg",
+                    "ss_nilai_5":"1FUpqNRHcCXHBJb5oE5OBmInuWpQAje3SKxDjtnvY_rY",
+                    "ss_nilai_6":"1VO_gkMNCRQX02r_f8c-jXFrcTeYRCF43m5oGyD0iGRc",
+                    
+                    "exec_crud":"AKfycby206FL8pU_7tHDe1cYjLdrfRLl69BGfNCPAFfpF4UDbQ8xSJw1bzUQ_EAFK_qxmFVa_w"
+                },
+    "t_2021_s_2":{  "email":"elamasosyahandrianeda@gmail.com",
+                    "exec_user":"",
+                    "ss_user":"1jo66AeNFK3RggPN4uxDEPunqY36IBD8GWLsX2cO6obM",
+                    
+                    "exec_kalender":"",
+                    "ss_kalender":"13sMTbgJdvMNYV2DInN5I6jcC6d2KzMnV6VrvmQ2Ha0Y",
+
+                    "exec_kepsek":"",
+                    "ss_kepsek":"",
+
+                    "absen_1":"",
+                    "absen_2":"",
+                    "absen_3":"",
+                    "absen_4":"",
+                    "absen_5":"",
+                    "absen_6":"",
+                    "ss_absen_1":"13sMTbgJdvMNYV2DInN5I6jcC6d2KzMnV6VrvmQ2Ha0Y",
+                    "ss_absen_2":"13sMTbgJdvMNYV2DInN5I6jcC6d2KzMnV6VrvmQ2Ha0Y",
+                    "ss_absen_3":"13sMTbgJdvMNYV2DInN5I6jcC6d2KzMnV6VrvmQ2Ha0Y",
+                    "ss_absen_4":"13sMTbgJdvMNYV2DInN5I6jcC6d2KzMnV6VrvmQ2Ha0Y",
+                    "ss_absen_5":"13sMTbgJdvMNYV2DInN5I6jcC6d2KzMnV6VrvmQ2Ha0Y",
+                    "ss_absen_6":"13sMTbgJdvMNYV2DInN5I6jcC6d2KzMnV6VrvmQ2Ha0Y",
+
+                    "ss_materi":"1f4Rg_uax5Tk6X9Xawo972uDYnll0aHoYGM3NVLrW0rU",
+                    "ss_nilai_1":"1ps7BnXK_xtrHC38kxaiqqFCqzXo900wZGr4dgDO7HI4",
+                    "ss_nilai_2":"1xLFOOa2SWttXp6cFdapPHU5AS1SfYehGnGGV4_U6Hes",
+                    "ss_nilai_3":"1AfxJENUqA9rJZ_fEhoEy0ygfmM_jYxA6yH9BHukSN4Y",
+                    "ss_nilai_4":"17yVuLv8WfavHHxXPkqNXSzx-m6CqMl1IQYwVc2ZxmOQ",
+                    "ss_nilai_5":"12LsIqAg9GH56rwqChAhmLVCCnv-IK5W18oj5_U-_uA4",
+                    "ss_nilai_6":"1Vup8-wPJkWgmradWH7mZBLjDt_XrXnNi8ZlW6C6NjWY",
+                    "exec_crud":"AKfycbzpr_lTfWeOl5D3ujWvoVqlmkoDKjUrkbzAQGF6OJ2S6Hs9RcLZJZp84zZPEolxnzn36w"
+                },
+    "t_xxxx_s_y":{
+                    "email":"",
+                    "exec_user":"",
+                    "ss_user":"",
+                    
+                    "exec_kalender":"",
+                    "ss_kalender":"",
+
+                    "exec_kepsek":"",
+                    "ss_kepsek":"",
+
+                    "absen_1":"",
+                    "absen_2":"",
+                    "absen_3":"",
+                    "absen_4":"",
+                    "absen_5":"",
+                    "absen_6":"",
+                    
+                    "ss_absen_1":"",
+                    "ss_absen_2":"",
+                    "ss_absen_3":"",
+                    "ss_absen_4":"",
+                    "ss_absen_5":"",
+                    "ss_absen_6":"",
+
+                    "ss_materi":"",
+                    "ss_nilai_1":"",
+                    "ss_nilai_2":"",
+                    "ss_nilai_3":"",
+                    "ss_nilai_4":"",
+                    "ss_nilai_5":"",
+                    "ss_nilai_6":"",
+                    
+                    "exec_crud":""
+                }
+                
+
+}
