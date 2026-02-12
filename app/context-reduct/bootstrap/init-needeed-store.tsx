@@ -3,9 +3,14 @@ import type KesiswaanServiceImplements from "~/infrastructures/services/kesiswaa
 import { setAllSiswa } from "../global-state/siswa-slice";
 import type { SiswaType } from "~/types/siswa";
 import type { Store } from "@reduxjs/toolkit";
-import { ShowLoadingPromise, ShowToasterError, ShowToasterLoadingInfo, ShowToasterSuccess } from "~/lib/toaster";
 import { toast } from "sonner";
-import type { ApiResponse } from "~/configs/appscript-config";
+import { setloadedApi } from "../global-state/loaded-slice";
+import type KaldikServiceImplements from "~/infrastructures/services/kaldik-service-implements";
+import type { KaldikType } from "~/types/kaldik";
+import { setKaldik, setLoadedKaldik } from "../global-state/kaldik-slice";
+import type AbsensiServiceImplements from "~/infrastructures/services/absensi-service-implements";
+import { setAbsensiRombel } from "../global-state/absensi-slice";
+import type { AbsensiSiswaSheetType } from "~/types/absensi-siswa";
 
 export default class InitNeededSliceStore{
     constructor(private store: Store<RootState>){}
@@ -15,51 +20,124 @@ export default class InitNeededSliceStore{
     }
 
     async needSiswa(Service:KesiswaanServiceImplements){
-        if(this.state.dataSiswa.loaded) return;
-        toast.promise(
-        Service.loadAllSiswa(),
-        {
-            loading: 'Memuat data siswa...',
-            success: (data) => {
-                const raw = data?.data as SiswaType[];
-                this.store.dispatch(setAllSiswa({
-                    loaded:true,
-                    allSiswa: raw,
-                    source: data?.source,
-                    loading:false
-                }));
-                return 'Data siswa berhasil dimuat dari ' + data?.source;
-            },
-            error: 'Gagal memuat data siswa',
-            
-        }
-    );
-        // if(!this.state.dataSiswa.loaded){
-        //     const data = await Service.loadAllSiswa();
-        //     if(!data?.success){
-        //         this.store.dispatch(setAllSiswa({
-        //             loaded:false,
-        //             loading: false,
-        //             allSiswa: [],
-        //                 // source: data.source
-        //             }));    
-        //         ShowToasterError('Gagal Memanggil Data Siswa')
-        //     }
-        //     if(data?.success && data?.data){
-        //         const raw  = data.data as SiswaType[];
-                
-        //         this.store.dispatch(setAllSiswa({
-        //             loaded: true,
-        //             allSiswa: raw,
-        //             source: data.source,
-        //             loading: false
-        //         }));
-        //         ShowToasterSuccess('Berhasil Memuat Database yang diambil dari '+ data.source)
-        //     }
-        // }
         
-        // ShowToasterSuccess('Berhasil Memuat Database yang diambil dari '+this.state.dataSiswa.source)
-        // return this;
+        if(this.state.dataSiswa.loaded) return;
+        
+        this.store.dispatch(setloadedApi({
+            loaded:true
+        }));
 
+        toast.promise(
+            Service.loadAllSiswa(),
+            {
+                loading: 'Memuat data siswa...',
+                success: (data) => {
+                    const raw = data?.data as SiswaType[];
+                    
+                    if(data?.success){
+                        this.store.dispatch(setAllSiswa({
+                            loaded:true,
+                            allSiswa: raw,
+                            source: data?.source,
+                            loading:false
+                        }));
+                        this.store.dispatch(setloadedApi({
+                            loaded:false
+                        }));
+                    }
+                    return 'Data siswa berhasil dimuat dari ' + data?.source;
+                },
+                error: 'Gagal memuat data siswa',
+                finally:()=>{
+                    this.store.dispatch(setloadedApi({
+                            loaded:false
+                        }));
+                }
+
+                
+                
+            }
+        );
+    }
+    async needKaldik(Service:KaldikServiceImplements){
+        if(this.state.kaldik.loaded) return;
+        this.store.dispatch(setloadedApi({
+            loaded:true
+        }));
+
+        toast.promise(
+            Service.loadAllKaldik(),
+            {
+                loading: 'Memuat data kaldik...',
+                success: (data) => {
+                    const raw = data?.data as KaldikType[];
+                    
+                    if(data?.success){
+                        this.store.dispatch(setKaldik({
+                            loaded:true,
+                            data:raw
+                        }));
+                        this.store.dispatch(setloadedApi({
+                            loaded:false
+                        }));
+                    }
+                    return 'Data Kalender berhasil dimuat dari ' + data?.source;
+                },
+                error: 'Gagal memuat data kalendar',
+                finally:()=>{
+                    this.store.dispatch(setloadedApi({
+                            loaded:false
+                        }));
+                }
+
+                
+                
+            }
+        );
+    }
+    async needAbsensiAndKaldik(rombel:string, Service:AbsensiServiceImplements){
+        
+        if(this.state.kaldik.loaded && this.state.absensiSiswa.dataAbsensi.find(s=>s.nama_rombel === rombel)) return;
+        
+        this.store.dispatch(setloadedApi({
+                loaded:true
+            }));
+            
+        toast.promise(
+            Service.loadAbsensiAndKaldik(rombel),
+            {
+                loading: 'Memuat data Absensi dan Kaldik...',
+                success: (data) => {
+                    
+                    data.forEach(({success,data,detailResponse})=>{
+                        if(success && detailResponse?.namaTab.includes('responses')){
+                                this.store.dispatch(setAbsensiRombel(
+                                    {
+                                        nama_rombel:rombel,
+                                        data:data as AbsensiSiswaSheetType[]
+                                    }
+                                ))
+                            
+                        }
+                        if(success && detailResponse?.namaTab.includes('kalender')){
+                            this.store.dispatch(setKaldik({
+                                loaded:true,
+                                data:data as KaldikType[]
+                            }));
+                        }
+                    });
+                    return 'Pemanggilan data telah selesai' ;//+ data?.source;
+                },
+                error: 'Gagal memuat data Absen',
+                finally:()=>{
+                    this.store.dispatch(setloadedApi({
+                            loaded:false
+                        }));
+                }
+
+                
+                
+            }
+        );
     }
 }

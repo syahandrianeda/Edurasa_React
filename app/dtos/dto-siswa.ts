@@ -1,7 +1,19 @@
 import type { SiswaType } from "~/types/siswa";
-import { resolveAgama, resolveDate, resolveEnum, resolveGender, resolveNumber, resolveString } from "./_resolver";
+import { resolveAgama, resolveDate, resolveGender, resolveNumber, resolveString } from "./_resolver";
 import { Agama } from "~/types/enums/agama";
 import { Gender } from "~/types/enums/gender";
+import { formatDateSheet, type DateToString } from "~/lib/date-helper";
+import { getEnumKey } from "~/lib/get-enum-key";
+
+export type SiswaAppScriptDTO =
+  Omit<
+    DateToString<SiswaType>,
+    'pd_jk' | 'pd_agama'
+  > & {
+    pd_jk: keyof typeof Gender
+    pd_agama: keyof typeof Agama
+  }
+
 
 export class DTOSiswa {
     static fromApi(dto: Record<string, any>): SiswaType {
@@ -18,7 +30,7 @@ export class DTOSiswa {
                 pd_jk: resolveGender(dto.pd_jk),
                 pd_tl: resolveString(dto.pd_tl),
                 pd_tanggallahir: resolveDate(dto.pd_tanggallahir),
-                pd_agama: resolveAgama(dto.pd_agama),
+                pd_agama: resolveAgama(dto.pd_agama), 
                 pd_namaayah: resolveString(dto.pd_namaayah),
                 pd_namaibu: resolveString(dto.pd_namaibu),
                 pd_alamat: resolveString(dto.pd_alamat),
@@ -109,7 +121,7 @@ export class DTOSiswa {
                 tanggalijazahtk: resolveDate(dto.tanggalijazahtk),
                 alasan_keluar: resolveString(dto.alasan_keluar),
                 tahuninduk: resolveString(dto.tahuninduk),
-                tahunindukDate: resolveString(dto.tahunindukDate),
+                tahunindukdate: resolveDate(dto.tahunindukdate),
                 awal_kelas: resolveString(dto.awal_kelas),
                 dok_kartunisn: resolveString(dto.dok_kartunisn),
                 dok_raport: resolveString(dto.dok_raport),
@@ -125,6 +137,37 @@ export class DTOSiswa {
     }
 
     static fromApiArray(dto: Record<string, any>):SiswaType[]{
+        
         return dto.map(this.fromApi);
+        
+    }
+
+    static toAppScript(
+        siswa: SiswaType
+        ): SiswaAppScriptDTO {
+
+        const result: any = {}
+
+        for (const key in siswa) {
+            const value = siswa[key as keyof SiswaType]
+
+            if (value instanceof Date) {
+            result[key] = formatDateSheet(value)
+            } else {
+            result[key] = value
+            }
+        }
+
+        return {
+            ...result,
+            // pd_jk: siswa.pd_jk as keyof typeof Gender,
+            // pd_agama: siswa.pd_agama as keyof typeof Agama,
+            pd_agama: getEnumKey(Agama, siswa.pd_agama),
+            pd_jk: siswa.pd_jk === Gender.UNKNOWN ? '' : siswa.pd_jk,
+
+        }
+    }
+    static toAppScriptArray(dto: Record<string, any>):SiswaType[]{
+        return dto.map(this.toAppScript);
     }
 }

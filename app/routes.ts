@@ -30,15 +30,48 @@ export default [
                     index('routes/kesiswaan.tsx'),
                     route("rombelku","routes/data-siswa.tsx"),
                     route("jenjangku","routes/data-siswa-jenjang.tsx"),
+                    route("mutasi-masuk","routes/mutasi-masuk.tsx"),
+                    route("mutasi-keluar","routes/mutasi-keluar.tsx"),
+                    route("laporan-mutasi","routes/laporan-mutasi.tsx"),
+                    route("statistik-umur","routes/statistik-umur.tsx"),
+                    route("statistik-agama","routes/statistik-agama.tsx"),
+                    route("cari-siswa","routes/cari-siswa.tsx"),
+                    route("format","routes/format-siswa.tsx"),
+                    route("input-siswa","routes/input-siswa.tsx"),
+                    route("import-file-pd-siswa","routes/import-file-pd-siswa.tsx"),
+                    route("update-data-siswa","routes/update-data-siswa.tsx"),
+                    route("sinkron-dapodik","routes/sinkron-dapodik.tsx"),
                 ]),
             ]),
         ]),
-        layout("layouts/sub-layouts/sub-absensi-siswa.tsx",[
-            route("absensi-siswa","routes/absensi-siswa.tsx"),
+        layout('layouts/provider-layout/crud-kaldik-provider.tsx',[
+            layout("layouts/sub-layouts/sub-kaldik.tsx",[
+                ...prefix('kaldik',[
+                    index("routes/kaldik.tsx"),
+                    route("keterangan-kaldik", "routes/kaldik/keterangan-kaldik.tsx"),
+                    route("kaldik-semester-1", "routes/kaldik/kaldik-semester-1.tsx"),
+                    route("kaldik-semester-2", "routes/kaldik/kaldik-semester-2.tsx"),
+                    route("kaldik-setahun", "routes/kaldik/kaldik-setahun.tsx"),
+                    route("hari-efektif-semester-1", "routes/kaldik/hari-efektif-semester-1.tsx"),
+                    route("hari-efektif-semester-2", "routes/kaldik/hari-efektif-semester-2.tsx"),
+                    route("hari-belajar-semester-1", "routes/kaldik/hari-belajar-semester-1.tsx"),
+                    route("hari-belajar-semester-2", "routes/kaldik/hari-belajar-semester-2.tsx"),
+                    route("jam-belajar-semester-1", "routes/kaldik/jam-belajar-semester-1.tsx"),
+                    route("jam-belajar-semester-2", "routes/kaldik/jam-belajar-semester-2.tsx"),
+                ])
+            ]),
         ]),
-        layout("layouts/sub-layouts/sub-kaldik.tsx",[
-            route("kaldik","routes/kaldik.tsx"),
-        ]),
+        layout('layouts/provider-layout/crud-absensi-provider.tsx',[
+            layout("layouts/sub-layouts/sub-absensi-siswa.tsx",[
+                ...prefix('absensi-siswa',[
+                    index("routes/absensi-siswa.tsx"),
+                    route("absensi-hari-ini","routes/absensi/absensi-siswa.tsx"),
+                    route("keterangan-kaldik","routes/absensi/keterangan-kaldik.tsx"),
+                    route("absensi-bulanan","routes/absensi/absensi-bulanan.tsx"),
+
+                ])
+            ]),
+        ])
 
     ]),
    

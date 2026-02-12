@@ -1,18 +1,18 @@
 
-import { BookDown, BookUp, BookUp2, ChartBar, ChartBarIncreasing, CloudDownload, FileInput, Import, Users, UsersRound } from "lucide-react"
+import { BookDown, BookUp, BookUp2, ChartBar, ChartBarIncreasing, CloudDownload, CloudSync, FileInput, Import, Paperclip, RefreshCw, Search, Users, UsersRound } from "lucide-react"
 import type { typeSidebarFiturKonten } from "~/types"
 
 const SubfiturKesiswaan: typeSidebarFiturKonten[] = [
     {
         groupTitle: 'Import Database Siswa',
         breadCrumbs: [
-            {
-                title: 'Koneksikan ke Dapodik',
-                href: '/kesiswaan/connect-dapodik',
-                icon: CloudDownload,
-                description:'Hubungkan dengan Aplikasi Dapodik',
-                permission: 'view connect dapodik'
-            },
+            // {
+            //     title: 'Koneksikan ke Dapodik',
+            //     href: '/kesiswaan/connect-dapodik',
+            //     icon: CloudDownload,
+            //     description:'Hubungkan dengan Aplikasi Dapodik',
+            //     permission: 'view connect dapodik'
+            // },
             {
                 title: 'Import File PD Siswa',
                 href: '/kesiswaan/import-file-pd-siswa',
@@ -31,6 +31,25 @@ const SubfiturKesiswaan: typeSidebarFiturKonten[] = [
         
     }, 
     {
+        groupTitle: 'Update Data Siswa',
+        breadCrumbs: [
+            {
+                title: 'Update Data Siswa',
+                href: '/kesiswaan/update-data-siswa',
+                icon: RefreshCw,
+                description:'Update Data Siswa untuk memanggil ulang API data siswa',
+                permission: 'view update-data-siswa'
+            },
+            {
+                title: 'Sinkronisasi Dapodik',
+                href: '/kesiswaan/sinkron-dapodik',
+                icon: CloudSync,
+                description:'Sinkronsisasi data siswa dari dapodik',
+                permission: 'view sinkron-dapodik'
+            },
+        ]
+    },
+    {
         groupTitle: 'Data Siswa',
         breadCrumbs: [
             {
@@ -40,12 +59,27 @@ const SubfiturKesiswaan: typeSidebarFiturKonten[] = [
                 description:'Daftar siswa di rombel Anda',
                 permission: 'view rombelku'
             },
+
             {
                 title: 'Daftar Siswa Jenjang ',
                 href: '/kesiswaan/jenjangku',
                 icon: UsersRound,
                 description: 'Daftar siswa di semua kelas paralel sekolah',
                 permission: 'view jenjangku'
+            },
+            {
+                title: 'Format Daftar Siswa',
+                href: '/kesiswaan/format',
+                icon: Paperclip,
+                description: 'Format Data siswa desain kustom Anda',
+                permission: 'view format daftar siswa'
+            },
+            {
+                title: 'Cari Siswa',
+                href: '/kesiswaan/cari-siswa',
+                icon: Search,
+                description: 'Cari Siswa berdasarkan nama',
+                permission: 'view cari siswa'
             }
         ]
     }, 
@@ -92,13 +126,13 @@ const SubfiturKesiswaan: typeSidebarFiturKonten[] = [
                 description: 'Menampilkan data siswa berdasarkan agamanya',
                 permission: 'view statistik agama'
             },
-            {
-                title: 'Kustom Statistik',
-                href: '/kesiswaan/statistik-kustom',
-                icon: ChartBar,
-                description: 'Menampilkan data siswa berdasarkan agamanya',
-                permission: 'view statistik kustom'
-            }
+            // {
+            //     title: 'Kustom Statistik',
+            //     href: '/kesiswaan/statistik-kustom',
+            //     icon: ChartBar,
+            //     description: 'Menampilkan data siswa berdasarkan agamanya',
+            //     permission: 'view statistik kustom'
+            // }
         ]
     },
 ]

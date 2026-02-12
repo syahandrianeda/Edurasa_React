@@ -15,7 +15,7 @@ interface MacroMap {
 export type ApiError = {
   code: string            // e.g. AUTH_INVALID, VALIDATION_ERROR
   message: string         // human readable
-  details?: Record<string, string[]>|undefined // validation error
+  details?: Record<string, any[]>|undefined // validation error
 }
 export type typeSourceFetch = 'API'|'indexDB'|'localStorage';
 export type ApiResponseTunggal<T> = {
@@ -31,6 +31,7 @@ export type ApiResponse<T> = {
     data?: T|T[]
     error?: ApiError 
     source?:typeSourceFetch
+    detailResponse?:Record<string, any>
 }
 
 export type ParamFile = {
@@ -103,6 +104,7 @@ export class AppScriptConfig {
 
     /** === method post dengan axios */
     async postBody(param:Record<string, any>){
+        
         try{
             const pos = await axios.post(this.appCrudUrl,param, {
                         headers: {
@@ -111,8 +113,10 @@ export class AppScriptConfig {
                     }
             );
             //reponse axios data yang dibutuhkan, biarkan class turuunannya yang membungkus type data response-nya
+            
             return pos.data;
         }catch(error){
+            
             return this.responActionError(error);
         }finally{
 
@@ -134,13 +138,14 @@ export class AppScriptConfig {
         return {
             success: respon.info.findTab,
             data: respon.data,
-            // error:(!respon.info.findTab)? {
-            //             code:'EROR',
-            //             message: 'Data Gagal di load di reponse Read',
-            //             details: respon.info
-            //         }:undefined,
-            message:respon.info,
-            source:'API'
+            error:(!respon.info.findTab)? {
+                        code:'EROR',
+                        message: 'Data Gagal di load di reponse Read',
+                        details: respon.info
+                    }:undefined,
+            message:respon.info.findTab?'Berhasil dipanggil':'Data Gagal di load (lihat detail error)',//respon.info,
+            source:'API',
+            detailResponse:respon.info
         }
     }
     responActionError<T>(error: unknown): ApiResponse<T> {
@@ -157,14 +162,15 @@ export class AppScriptConfig {
         source: 'API'
         }
     }
-
+    
     return {
         success: false,
         // data: null,
         message: 'Terjadi kesalahan tidak terduga',
         error: {
             code: 'UNEXPECTED_ERROR',
-            message: 'Terjadi kesalahan sistem'
+            message: 'Terjadi kesalahan sistem | '+error,
+            details: {error:[error]}
         },
         source: 'API'
     }
@@ -191,11 +197,6 @@ export class AppScriptConfig {
             return {
             success: true,
             data: respon,
-            // error:(!respon.info.findTab)? {
-            //             code:'EROR',
-            //             message: 'Data Gagal di load di reponse Read',
-            //             details: respon.info
-            //         }:undefined,
             message:'Upload berhasil',
             source:'API'
         }
@@ -203,5 +204,7 @@ export class AppScriptConfig {
             return this.responActionError(error);
         }
     }
+
+   
 
 }

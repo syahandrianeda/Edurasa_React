@@ -8,7 +8,7 @@ const SubfiturAbsensiSiswa: typeSidebarFiturKonten[] = [
         breadCrumbs: [
             {
                 title: 'Kehadiran Hari ini',
-                href: '/absensi-hari-ini',
+                href: '/absensi-siswa/absensi-hari-ini',
                 icon: UserCheck,
                 description:'Daftar Hadir Hari ini',
                 permission: 'view absensi siswa'
@@ -16,14 +16,14 @@ const SubfiturAbsensiSiswa: typeSidebarFiturKonten[] = [
             
             {
                 title: 'Kehadiran Bulanan',
-                href: '/absensi-bulanan',
+                href: '/absensi-siswa/absensi-bulanan',
                 icon: UserCheck,
                 description:'Daftar hadir per bulan siswa Anda',
                 permission: 'view absensi siswa'
             },
             {
                 title: 'Keterangan Kaldik',
-                href: '/keterangan-kaldik',
+                href: '/absensi-siswa/keterangan-kaldik',
                 icon: CalendarCog,
                 description:'Isikan keterangan Kaldik Sekolah Anda',
                 permission: 'view keterangan kaldik'
@@ -35,7 +35,7 @@ const SubfiturAbsensiSiswa: typeSidebarFiturKonten[] = [
         breadCrumbs: [
             {
                 title: 'Rekap Bulanan',
-                href: '/absensi-bulanan-siswa',
+                href: '/absensi-siswa/absensi-bulanan-siswa',
                 icon: CalendarDays,
                 description:'Rekap Kehadiran Siswa per Bulan',
                 permission: 'view absensi siswa'
@@ -43,7 +43,7 @@ const SubfiturAbsensiSiswa: typeSidebarFiturKonten[] = [
             
             {
                 title: 'Kehadiran Semester',
-                href: '/absensi-semester-siswa',
+                href: '/absensi-siswa/absensi-semester-siswa',
                 icon: BookUser,
                 description:'Rekap Kehadiran Siswa per Semester',
                 permission: 'view absensi siswa'
@@ -55,7 +55,7 @@ const SubfiturAbsensiSiswa: typeSidebarFiturKonten[] = [
         breadCrumbs: [
             {
                 title: 'Per Bulan',
-                href: '/rekap-sia-bulanan',
+                href: '/absensi-siswa/rekap-sia-bulanan',
                 icon: Sheet,
                 description:'Menampilkan Rekap SIA tiap bulan',
                 permission: 'view absensi siswa'
@@ -63,7 +63,7 @@ const SubfiturAbsensiSiswa: typeSidebarFiturKonten[] = [
             
             {
                 title: 'Per Semester',
-                href: '/rekap-sia-semester',
+                href: '/absensi-siswa/rekap-sia-semester',
                 icon: Table2,
                 description:'Menampilkan Rekap SIA per Semester',
                 permission: 'view absensi siswa'
@@ -75,7 +75,7 @@ const SubfiturAbsensiSiswa: typeSidebarFiturKonten[] = [
         breadCrumbs: [
             {
                 title: 'Statistik Bulanan',
-                href: '/statistik-absensi-bulanan',
+                href: '/absensi-siswa/statistik-absensi-bulanan',
                 icon: ChartColumn,
                 description:'Menampilkan Grafik SIA tiap bulan',
                 permission: 'view absensi siswa'
@@ -83,7 +83,7 @@ const SubfiturAbsensiSiswa: typeSidebarFiturKonten[] = [
             
             {
                 title: 'Statistik Semester',
-                href: '/statistik-absensi-semester',
+                href: '/absensi-siswa/statistik-absensi-semester',
                 icon: ChartArea,
                 description:'Menampilkan Grafik SIA per Semester',
                 permission: 'view absensi siswa'

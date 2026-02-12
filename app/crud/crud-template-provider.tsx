@@ -1,21 +1,22 @@
-import { createContext, useContext, useMemo, type ReactNode } from "react"
+import { createContext, useContext, useMemo, useState, type ReactNode } from "react"
 import type { ApiResponse } from "~/configs/appscript-config"
-import type { SiswaType } from "~/types/siswa"
+import type { ParamUpdateRecord } from "~/configs/appscript-sheet"
+
 
 
 export type ID =  number
-
-export interface IndexParams {
-    page?: number
-    perPage?: number
-    filters?: Record<string, any>
-    sort?: {
-        field: string
-        direction: 'asc' | 'desc'
-    }
+interface CrudState {
+    isSubmitting: boolean
 }
+interface CrudContextValue<T> {
+    state: CrudState
+    actions: CrudActions<T>
+}
+
 export interface CrudActions<T> {
-    uploadFile(param:File,options?:Record<string,any>): Promise<any>
+    uploadFile(param:File,options?:Record<string,any>): Promise<any>,
+    update(param:Record<string,any>): Promise<ApiResponse<T>>,
+    create(param:Record<string,any>): Promise<ApiResponse<T>>,
 }
 
 export interface CrudProviderProps<T> {
@@ -26,10 +27,13 @@ export interface CrudProviderProps<T> {
 export function createCrudProvider<
     T,
     S extends { 
-        uploadFile?: (param:File,options?:Record<string,any>) => Promise<void>
+        uploadFile?: (param:File,options?:Record<string,any>) => Promise<void>,
+        update?:(param:ParamUpdateRecord<T>)=> Promise<ApiResponse<T>>,
+        create?:(param:ParamUpdateRecord<T>)=> Promise<ApiResponse<T>>
     }
 >() {
-    const CrudContext = createContext<CrudActions<T> | null>(null)
+    
+    const CrudContext = createContext<CrudContextValue<T> | null>(null)
 
     function CrudProvider({
         service,
@@ -38,15 +42,49 @@ export function createCrudProvider<
         service: S
         children: ReactNode
     }) {
-        const actions: CrudActions<T> = useMemo(() => ({
+            const [isSubmitting, setIsSubmitting] = useState(false)
             
-            uploadFile: service.uploadFile
-                ? (param:File,options?:Record<string,any>) => service.uploadFile!(param, options)
-                : async () => {},
-        }), [service])
+            const actions: CrudActions<T> = useMemo(() => ({
+                uploadFile: async (param:File, options?:Record<string, any>) => {
+                    if (!service.uploadFile) return
+                        setIsSubmitting(true)
+                    try {
+                        return await service.uploadFile(param, options)
+                    } finally {
+                        setIsSubmitting(false)
+                    }
+                },
+
+                update: async (param: ParamUpdateRecord<T>) => {
+                    if (!service.update) {
+                        throw new Error("update not implemented")
+                    }
+                    setIsSubmitting(true)
+                    try {
+                        return await service.update(param)
+                    } finally {
+                        setIsSubmitting(false)
+                    }
+                },
+                
+                create: async (param: ParamUpdateRecord<T>) => {
+                    if (!service.create) {
+                        throw new Error("update not implemented")
+                    }
+                    setIsSubmitting(true)
+                    try {
+                        return await service.create(param)
+                    } finally {
+                        setIsSubmitting(false)
+                    }
+                }
+            }), [service])
 
         return (
-            <CrudContext.Provider value={actions}>
+            <CrudContext.Provider value={{
+                state: { isSubmitting },
+                actions,
+                }}>
                 {children}
             </CrudContext.Provider>
         )

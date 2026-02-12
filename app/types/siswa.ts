@@ -2,7 +2,7 @@ import type { Agama } from "./enums/agama";
 import type { Gender } from "./enums/gender"
 
 export interface SiswaType{
-    time_stamp:Date,
+    time_stamp?:Date,
     id:number,
     jenjang:number,
     nama_rombel:string,
@@ -105,7 +105,7 @@ export interface SiswaType{
     tanggalijazahtk:Date,
     alasan_keluar:string,
     tahuninduk:string,
-    tahunindukDate:string,
+    tahunindukdate:Date,
     awal_kelas:string,
     dok_kartunisn:string,
     dok_raport:string,
@@ -119,3 +119,16 @@ export interface SiswaType{
 
 
 }
+
+// types/status.ts
+export type StatusAktif =
+    'aktif'
+    | 'lulus'
+    | 'pindah'
+    | 'meninggal dunia'
+    | 'non-aktif' ;
+
+export interface WithStatusAktif {
+    aktif?: StatusAktif
+}
+

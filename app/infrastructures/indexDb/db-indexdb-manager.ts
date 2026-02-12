@@ -1,4 +1,4 @@
-const STORES = ["datasiswa", "dataptk", "datarombel"]
+const STORES = ["datasiswa", "kaldik","kurikulum"]
 // infra/indexeddb/IndexedDBManager.ts
 
 

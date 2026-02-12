@@ -5,6 +5,7 @@ import { useAppSelector } from '~/context-reduct/hook';
 import type{ kopKontentType } from './config-kop';
 import { SampleDefaultKontenKop } from './default-kop';
 import { cn } from '~/lib/utils';
+import { DAERAH_INDUK, IDENTITAS_SEKOLAH } from '~/domain/identitas_sekolah/identitas-sekolah';
 
 export type ToolbarKopTtdType={
     configTtd: readonly ttdKontenType[];
@@ -40,7 +41,7 @@ export function ToolbarKopTtdProvider({
     const user = useAppSelector((state)=> state.auth.user);
     const userRole = user?.roles;
     
-    /** === setting Ttd === */
+    /** === setting Ttd === */ 
     const [ttdType, setTtdType] = React.useState<ttdKontenType|null>(null);
 
     React.useEffect(()=>{
@@ -171,7 +172,7 @@ export function KomponenTtd({type, dataColumns}:ttdKontenType){
     const middle = columns.find(s=>s.side === 'middle');
     const right = columns.find(s=>s.side === 'right');
     return (
-        <table className='table table-borderless w-full'> 
+        <table className='table table-borderless w-full mt-14'> 
             <tbody>
                 <tr>
                     {dataColumns?.length === 1?(
@@ -242,17 +243,18 @@ export function KontenTopTtd({side, typePerson}:Partial<dataColum>){
     const jabatan_saya = saya?.roles;
     const kodemapel = saya?.kode_mapel_ampu;
     let pertama = null;
+
     let kedua = jabatan_saya;
     if(side === 'right'){
-        pertama = `Kota Depok, ${new Date().toLocaleDateString('id-ID',{
+        pertama = `${DAERAH_INDUK}, ${new Date().toLocaleDateString('id-ID',{
                             dateStyle:'long'
                         })}`;
         if(typePerson==='Kepala Sekolah'){
-            kedua = 'Kepala UPTD SDN Ratujaya 1'
+            kedua = 'Kepala ' + IDENTITAS_SEKOLAH;
         }
         if(typePerson === 'saya'){
             if(jabatan_saya === 'Kepala Sekolah'){
-                kedua = 'Kepala UPTD SDN Ratujaya 1'
+                kedua = 'Kepala ' + IDENTITAS_SEKOLAH;
             }else if(jabatan_saya === 'Guru Kelas'){
                 kedua = jabatan_saya +' ' + fokusRombel;
             }else if(jabatan_saya === 'Guru Mapel'){
@@ -273,12 +275,12 @@ export function KontenTopTtd({side, typePerson}:Partial<dataColum>){
         
         if(typePerson==='Kepala Sekolah'){
             pertama = 'Mengetahui,'
-            kedua = 'Kepala UPTD SDN Ratujaya 1'
+            kedua = 'Kepala ' + IDENTITAS_SEKOLAH;
         }
         if(typePerson === 'saya'){
             if(jabatan_saya === 'Kepala Sekolah'){
                 pertama = 'Mengetahui,'
-                kedua = 'Kepala UPTD SDN Ratujaya 1'
+                kedua = 'Kepala ' + IDENTITAS_SEKOLAH;
             }else if(jabatan_saya === 'Guru Kelas'){
                 pertama = null;
                 kedua = jabatan_saya +' ' + fokusRombel;
@@ -304,12 +306,12 @@ export function KontenTopTtd({side, typePerson}:Partial<dataColum>){
         
         if(typePerson==='Kepala Sekolah'){
             pertama = 'Kepala'
-            kedua = 'UPTD SDN Ratujaya 1'
+            kedua = '' + IDENTITAS_SEKOLAH;
         }
         if(typePerson === 'saya'){
             if(jabatan_saya === 'Kepala Sekolah'){
                 pertama = 'Kepala'
-                kedua = 'UPTD SDN Ratujaya 1'
+                kedua = '' + IDENTITAS_SEKOLAH;
             }else if(jabatan_saya === 'Guru Kelas'){
                 pertama = <br/>;
                 kedua = jabatan_saya +' ' + fokusRombel;
@@ -374,7 +376,7 @@ export function KontenBottomTtd({side, typePerson}:Partial<dataColum>){
 export function KomponenKop({type, dataColumn}: kopKontentType){
     if(type === 'none') return null;
     return (
-        <table className='w-full'>
+        <table className='w-full mb-14'>
             <tbody>
                 <tr>
                     {

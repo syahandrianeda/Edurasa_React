@@ -71,3 +71,24 @@ export function resolveGender(value: any): GenderType {
       return Gender.UNKNOWN;
   }
 }
+
+export function extractKelasKode(input: string): string | null {
+  const match = input.match(/kelas\s+(\d+)\s+([A-D])/i)
+
+  if (!match) return null
+
+  const [, jenjang, rombel] = match
+  return `${jenjang}${rombel}`
+}
+
+export function toBoolean(boolean:any):boolean{
+  let boleanNumber = Number(boolean);
+  if(!isNaN(boleanNumber)){
+    return Boolean(boleanNumber);
+  }else{
+    if(typeof boolean === 'string' && boolean === 'TRUE'){
+      return true;
+    }
+  }
+  return false
+}

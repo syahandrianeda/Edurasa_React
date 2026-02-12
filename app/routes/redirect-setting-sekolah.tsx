@@ -2,9 +2,6 @@
 import { Navigate } from "react-router";
 import type { Route } from "./+types/redirect-setting-sekolah";
 
-
-
-
 export function meta({matches}: Route.MetaArgs) {
     const rootMeta = matches.find(m => m?.id === 'root')?.meta;
     const titleDescriptor = rootMeta?.find((d): d is { title: string } => {

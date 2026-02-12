@@ -13,13 +13,13 @@ const SubfiturKaldik: typeSidebarFiturKonten[] = [
                 description:'Isikan keterangan Kaldik Sekolah Anda',
                 permission: 'view kaldik'
             },
-            {
-                title: 'Kaldik default',
-                href: '/kaldik/keterangan-kaldik-default',
-                icon: CalendarCog,
-                description:'Isikan keterangan Kaldik Sekolah Anda',
-                permission: 'view kaldik default'
-            },
+            // {
+            //     title: 'Kaldik default',
+            //     href: '/kaldik/keterangan-kaldik-default',
+            //     icon: CalendarCog,
+            //     description:'Isikan keterangan Kaldik Sekolah Anda',
+            //     permission: 'view kaldik default'
+            // },
         ]
     }, 
     {

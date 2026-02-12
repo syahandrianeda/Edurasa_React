@@ -23,7 +23,18 @@ export function hydratePreloadedState(): Partial<RootState> {
       allSiswa: [],
       loaded:false,
       loading:true
+    },
+    loadedApi:{
+      loaded:false
+    },
+    kaldik:{
+      loaded:false,
+      data:[]
+    },
+    absensiSiswa:{
+      dataAbsensi:[]
     }
+
 
   };
 }

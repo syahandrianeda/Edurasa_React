@@ -57,3 +57,27 @@ export function ShowLoadingPromise<T>(
         }
     )
 }
+
+export function presentValidationErrors(
+  errors: Record<string, string>,
+  options?: {
+    max?: number
+    joinWith?: string
+  }
+): string {
+  const messages = Object.values(errors)
+
+  if (messages.length === 0) return ""
+
+  const max = options?.max ?? 3
+  const joinWith = options?.joinWith ?? "\n"
+
+  if (messages.length <= max) {
+    return messages.join(joinWith)
+  }
+
+  return (
+    messages.slice(0, max).join(joinWith) +
+    `\nDan ${messages.length - max} kesalahan lainnya`
+  )
+}

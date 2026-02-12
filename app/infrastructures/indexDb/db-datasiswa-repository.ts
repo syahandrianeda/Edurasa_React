@@ -21,8 +21,25 @@ export class IndDbSiswaRepository {
     const db = await IndexedDBManager.open()
     const tx = db.transaction("datasiswa", "readwrite")
     const store = tx.objectStore("datasiswa")
-
+    
     data.forEach(item => store.put(item))
+
+    return new Promise((resolve, reject) => {
+      tx.oncomplete = () => resolve()
+      tx.onerror = () => reject(tx.error)
+    })
+  }
+  async saveBulkAgain(data: SiswaType[]): Promise<void> {
+    const db = await IndexedDBManager.open()
+    const tx = db.transaction("datasiswa", "readwrite")
+    const store = tx.objectStore("datasiswa")
+    
+    store.clear()
+
+    // 🔥 isi ulang
+    for (const item of data) {
+      store.put(item)
+    }
 
     return new Promise((resolve, reject) => {
       tx.oncomplete = () => resolve()

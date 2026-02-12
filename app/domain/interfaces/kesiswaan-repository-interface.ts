@@ -3,5 +3,8 @@ import type { SiswaType } from "~/types/siswa";
 
 export default interface KesiswaanRepositoryInterface{
     loadAllSiswa():Promise<ApiResponse<SiswaType>|null>,
+    loadAllSiswaAPI():Promise<ApiResponse<SiswaType>|null>,
     uploadFileRepo(param:ParamFile):Promise<Record<string, any>>
+    update(param:Record<string,any>):Promise<ApiResponse<SiswaType>>
+    create(param:Record<string,any>):Promise<ApiResponse<SiswaType>>
 }

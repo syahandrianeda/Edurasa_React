@@ -1,5 +1,4 @@
 import { useAppDispatch, useAppSelector } from "~/context-reduct/hook";
-import { Button } from "../ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../ui/dropdown-menu";
 import { setFokusRombel } from "~/context-reduct/global-state/fokus-rombel-slice";
 import { DataRombelUI, filterRombelByKelasAmpu, uniqueRombelByJenjang } from "~/domain/rombel/data-rombel";
@@ -10,7 +9,7 @@ import { getNumberFromString } from "~/lib/get-number";
 //     nama_rombel: string;    
 // }
 export interface controlDropdownKelas{
-    showControlKelas: boolean,
+    showControlKelas?: boolean,
     title?: string,
     description?: string,
     typeKelas?: 'rombel'|'jenjang'
@@ -18,13 +17,13 @@ export interface controlDropdownKelas{
 
 
 export default function RombelDropdown(
-    {   showControlKelas,
+    {   showControlKelas=false,
         title="Rombel",
         description="Kelas yang Diampu",
         typeKelas
     }: controlDropdownKelas) {
     
-    if(!showControlKelas) return null;
+    
 
     const user = useAppSelector(state=> state.auth.user);
     const fokusRombel = useAppSelector(state => state.fokusRombel.value);
@@ -33,7 +32,8 @@ export default function RombelDropdown(
     const dataKelas =  typeKelas === 'rombel'? filterRombelByKelasAmpu(DataRombelUI, user?.kelas_ampu??[]): uniqueRombelByJenjang(filterRombelByKelasAmpu(DataRombelUI, user?.kelas_ampu??[]));
     const fokusRombelByTypeKelas = typeKelas ==='rombel'?fokusRombel: fokusRombel && getNumberFromString(fokusRombel);
     
-
+    if(!showControlKelas) return null;
+    
     return (
         <DropdownMenu>
             <DropdownMenuTrigger className="group relative cursor-pointer h-8 w-8 right-1 mx-auto hover:w-28! transition-all duration-[0.75s] outline-hidden border-none rounded-full flex flex-row items-center justify-center shadow-sm shadow-sky-600 dark:shadow-sky-300 data-[state=open]:w-28!"> 

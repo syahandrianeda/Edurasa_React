@@ -26,11 +26,6 @@ export default function About({
   params,
   matches,
 }: Route.ComponentProps){
-    // console.log('loaderData',loaderData,
-    //   '\nactionData:\n',actionData, 
-    //   '\nparams:\n',params, 
-    //   '\nmatch\n', matches
-    // );
     
     return <AboutPage />;
 }

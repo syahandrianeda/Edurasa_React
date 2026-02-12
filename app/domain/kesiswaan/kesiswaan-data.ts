@@ -1,9 +1,11 @@
-import { getNumberFromString } from "~/lib/get-number";
+
+import { getLastDate, getParseDateYYYYMMMDD, hitungUmurTahun, RENTANG_UMUR, type RentangUmur } from "~/lib/date-helper";
 import type { Agama } from "~/types/enums/agama";
 import type { Gender } from "~/types/enums/gender";
 import type { SiswaType } from "~/types/siswa";
 
 export default class KesiswaanData{
+    private _collectAgama?: string[];
     constructor(private allSiswa: SiswaType[]){}
     
     get dataCurrent(){
@@ -16,7 +18,14 @@ export default class KesiswaanData{
         return this.findDuplicateBy(this.allSiswa, 'nis');
     }
     get collectAgama(){
-        return this.uniqueBy(this.dataCurrent,'pd_agama');
+        // return this.uniqueBy(this.dataCurrent,'pd_agama');
+        if (!this._collectAgama) {
+            this._collectAgama = this.uniqueBy(
+                this.dataCurrent,
+                'pd_agama'
+            );
+        }
+        return this._collectAgama.filter(s=>s!=="");
 
     }
     countValidNisGender(gender:Gender){
@@ -182,7 +191,7 @@ export default class KesiswaanData{
     collectYearsByKey<K extends keyof SiswaType>(key:K):number[]{
         const years = this.dataCurrent
             .map(s => {
-            const date = new Date(s[key]);
+            const date = s[key] && new Date(s[key]);
             if (Number.isNaN(date.getTime())) return null;
             return date.getFullYear();
             })
@@ -193,7 +202,7 @@ export default class KesiswaanData{
     collectAllYearsByKey<K extends keyof SiswaType>(key:K):number[]{
         const years = this.allSiswa
             .map(s => {
-            const date = new Date(s[key]);
+            const date = s[key] && new Date(s[key]);
             if (Number.isNaN(date.getTime())) return null;
             return date.getFullYear();
             })
@@ -207,28 +216,187 @@ export default class KesiswaanData{
         const d = value instanceof Date ? value : new Date(value as any);
         return Number.isNaN(d.getTime()) ? null : d;
     }
+    
+    parseDateYYYYMMDD(value: unknown): number  {
+        // if (!value) return null;
+        // const d = value instanceof Date ? value : new Date(value as any);
+        // const y = d.getFullYear().toString();
+        // const m = String(d.getMonth()+1).padStart(2,'0');
+        // const day = String(d.getDate()).padStart(2,'0');
+        // const teks = y+m+day;
 
-    filterAllDataByDateRange<K extends keyof SiswaType>(
+        // return Number.isNaN(teks) ? null : Number(teks);
+        return getParseDateYYYYMMMDD(value);
+    }
+    
+    filterAllDataByDateRange(
         start: Date,
-        end: Date,
-        checkIn:K , //masuk_tgl
-        checkOut:K, // keluar_tgl
+        // end: Date,
     ): SiswaType[] {
-        const startTime = start.getTime();
-        const endTime = end.getTime();
+        const end: Date = getLastDate(start);
+        // const startTime = start.getTime();
+        const startTime = this.parseDateYYYYMMDD(start) ;
+        // const endTime = end.getTime();
+        const endTime = this.parseDateYYYYMMDD(end) ;
 
         return this.allSiswa.filter(s => {
-            // const masuk = this.parseDate(s.masuk_tgl);
-            const masuk = this.parseDate(s[checkIn]);
+            const masuk = this.parseDateYYYYMMDD(s.masuk_tgl);
+            // const masuk = this.parseDate(s[checkIn]);
             if (!masuk) return false;
 
-            const keluar = this.parseDate(s[checkOut]);
+            
+            const keluar = this.parseDateYYYYMMDD(s.keluar_tgl) ===0?Infinity:this.parseDateYYYYMMDD(s.keluar_tgl);;
 
-            const masukTime = masuk.getTime();
-            const keluarTime = keluar?.getTime() ?? Infinity;
+            // const masukTime = masuk.getTime();
+            // const keluarTime = keluar?.getTime() ?? Infinity;
 
-            return masukTime <= endTime && keluarTime >= startTime;
+            // return masuk <= endTime && keluar >= startTime;
+            return masuk >= startTime && keluar >=endTime
         });
+    }
+    filterAllDataUntilThisDate(refStartDate:Date): SiswaType[]{
+        // const refTime = refStartDate.getTime();\
+        const lastDate = getLastDate(refStartDate)
+        const refTime = this.parseDateYYYYMMDD(lastDate)??0;
+        return this.allSiswa.filter(s => {
+            // const checkIn = this.parseDate(s.masuk_tgl);
+            const checkIn = this.parseDateYYYYMMDD(s.masuk_tgl);
+            if (!checkIn) return false; // skip entries with invalid/unknown masuk_tgl
+
+            const checkOut = this.parseDateYYYYMMDD(s.keluar_tgl) ?? Infinity;
+            // const checkOut = this.parseDate(s.keluar_tgl);
+            // const checkInTime = checkIn.getTime();
+            // const checkOutTime = checkOut ? checkOut.getTime() : Infinity;
+
+            // return checkInTime <= refTime && checkOutTime > refTime;
+            return checkIn <= refTime && checkOut > refTime;
+        });
+    }
+    filterAllDataWhenCheckInThisMonth(refDate:Date): SiswaType[] {
+        // const refTimeIn = refDate.getTime();
+        // const refTimeOutDate = getLastDate(refDate);
+        // const refTimeOut = refTimeOutDate.getTime();
+        const refTimeIn = this.parseDateYYYYMMDD(refDate) ?? 0;
+        const refTimeLastDate = getLastDate(refDate);
+        const refTimeOut = this.parseDateYYYYMMDD(refTimeLastDate) ?? Infinity;
+
+        return this.allSiswa.filter(s => {
+            // const checkIn = this.parseDate(s.masuk_tgl);
+            const checkIn = this.parseDateYYYYMMDD(s.masuk_tgl);
+            if (!checkIn) return false; // skip entries with invalid/unknown masuk_tgl
+
+            // const checkInTime = checkIn.getTime();
+            
+
+            // return checkInTime >= refTimeIn && checkInTime <= refTimeOut;
+            return checkIn >= refTimeIn && checkIn <= refTimeOut;
+        });
+        
+    }
+    filterAllDataWhenCheckOutThisMonth(refDate:Date): SiswaType[] {
+        const refTimeIn = this.parseDateYYYYMMDD(refDate) ;//?? Infinity;
+        const refTimeLastDate = getLastDate(refDate);
+        const refTimeOut = this.parseDateYYYYMMDD(refTimeLastDate) ;//?? Infinity;
+
+        return this.allSiswa.filter(s => {
+            const checkOut = this.parseDateYYYYMMDD(s.keluar_tgl) ?? 0 ;
+            
+            
+            return checkOut >= refTimeIn && checkOut <= refTimeOut;
+        });
+        
+    }
+    countByGenderUntilThisDate(refStartDate:Date, gender:Gender){
+        return this.filterAllDataUntilThisDate(refStartDate).filter(s=>s.pd_jk === gender).length
+    }
+    countByGendersUntilThisDate(refStartDate:Date, gender:Gender[]){
+        return this.filterAllDataUntilThisDate(refStartDate).filter(s=>gender.includes(s.pd_jk)).length
+    }
+    countByGenderCheckInThisMonth(refDate:Date,gender:Gender){
+        return this.filterAllDataWhenCheckInThisMonth(refDate).filter(s=>s.pd_jk === gender).length;
+    }
+    countByGendersCheckInThisMonth(refDate:Date,gender:Gender[]){
+        return this.filterAllDataWhenCheckInThisMonth(refDate).filter(s=>gender.includes(s.pd_jk)).length;
+    }
+    
+    countByGenderCheckOutThisMonth(refDate:Date,gender:Gender){
+        return this.filterAllDataWhenCheckOutThisMonth(refDate).filter(s=>s.pd_jk === gender).length;
+    }
+    countByGendersCheckOutThisMonth(refDate:Date,gender:Gender[]){
+        return this.filterAllDataWhenCheckOutThisMonth(refDate).filter(s=>gender.includes(s.pd_jk)).length;
+    }
+    countByGenderBetweenThisMonth(refDate:Date,gender:Gender){
+        return this.filterAllDataByDateRange(refDate).filter(s=>s.pd_jk === gender).length;
+    }
+    countByGendersBetweenThisMonth(refDate:Date,gender:Gender[]){
+        return this.filterAllDataByDateRange(refDate).filter(s=>gender.includes(s.pd_jk)).length;
+    }
+    
+     // helper static
+    private static hitungUmur(tanggalLahir: Date, referensi = new Date()): number {
+        // let umur = referensi.getFullYear() - tanggalLahir.getFullYear();
+        // const m = referensi.getMonth() - tanggalLahir.getMonth();
+
+        // if (m < 0 || (m === 0 && referensi.getDate() < tanggalLahir.getDate())) {
+        // umur--;
+        // }
+
+        // return umur;
+        return hitungUmurTahun(tanggalLahir, referensi);
+    }
+    filterByRentangUmur(rentang: RentangUmur, referensi: Date = new Date()): SiswaType[] {
+        const { min, max } = RENTANG_UMUR[rentang];
+
+        return this.allSiswa.filter(siswa => {
+            if (!siswa.pd_tanggallahir) return false;
+
+            const umur = KesiswaanData.hitungUmur(
+            new Date(siswa.pd_tanggallahir),
+            referensi 
+            );
+
+            return umur >= min && umur <= max;
+        });
+        }
+    countUmurGender(rentang:RentangUmur,gender:Gender,rombel:string){
+        return this.filterByRentangUmur(rentang).filter(s=> s.nama_rombel === rombel && s.pd_jk === gender).length;
+    }
+    countUmurGenders(rentang:RentangUmur,gender:Gender[],rombel:string){
+        return this.filterByRentangUmur(rentang).filter(s=> s.nama_rombel === rombel && gender.includes(s.pd_jk)).length;
+    }
+    countByRombel(rombel:string){
+        return this.allSiswa.filter(s=>s.nama_rombel=== rombel ).length
+    }
+    countByJenjang(rombel:string){
+        return this.allSiswa.filter(s=>s.jenjang === parseInt(rombel) ).length
+    }
+    countUmurRentangGender(rentang:RentangUmur,gender:Gender){
+        return this.filterByRentangUmur(rentang).filter(s=>s.pd_jk === gender).length
+    }
+    countUmurRentangGenders(rentang:RentangUmur,gender:Gender[]){
+        return this.filterByRentangUmur(rentang).filter(s=>gender.includes(s.pd_jk)).length
+    }
+    filterByAgama(agama:Agama){
+        return this.allSiswa.filter(s=>s.pd_agama === agama);
+    }
+    filterByAgamaGender(agama:Agama,gender:Gender){
+        return this.filterByAgama(agama).filter(s=>s.pd_jk === gender)
+    }
+    filterByAgamaGenders(agama:Agama,gender:Gender[]){
+        return this.filterByAgama(agama).filter(s=>gender.includes(s.pd_jk))
+    }
+    filterByAgamaGenderRombel(agama:Agama, gender:Gender, rombel:string){
+        return this.filterByAgamaGender(agama, gender).filter(s=>s.nama_rombel === rombel);
+    }
+    filterByAgamaGendersRombel(agama:Agama, gender:Gender[], rombel:string){
+        return this.filterByAgamaGenders(agama, gender).filter(s=>s.nama_rombel === rombel);
+    }
+    countAgamaGenderRombel(agama:Agama, gender:Gender, rombel:string){
+        return this.filterByAgamaGenderRombel(agama, gender, rombel).length;
+    }
+
+    countAgamaGendersRombel(agama:Agama, gender:Gender[], rombel:string){
+        return this.filterByAgamaGendersRombel(agama, gender, rombel).length;
     }
 
 }

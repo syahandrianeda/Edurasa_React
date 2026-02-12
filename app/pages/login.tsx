@@ -1,4 +1,3 @@
-import * as React from "react";
 import bgOffline from "../images/bg_offline.webp"
 import logoSekolah from "../images/ratujaya1.png"
 import edurasa from "../images/lamaso.webp"
@@ -26,37 +25,7 @@ export default function LoginPage(
         navigation.state === "submitting" ||
         navigation.state === "loading";
 
-    // const navigate = useNavigate();
-    // const [error, setError] = React.useState<string | null>(null);
     
-    // async function onSubmit(event: React.FormEvent) {
-    //     event.preventDefault();
-    //     // Handle form submission if needed
-    // const formData = new FormData(event.target as HTMLFormElement);
-
-    // const username = formData.get("username") as string;
-    // const password = formData.get("password") as string;
-    //     console.log('Form submitted with:', { username, password });
-        
-    //     const authRepo = new AuthRepository();
-    //     const usecase = new AuthService(authRepo);
-    //     console.log('sebelum useCase dieksekusi', usecase);
-    //     const d = await usecase.login(username, password);
-    //     console.log("Debug:", d);
-    //     if(d.success){
-    //         // Redirect or perform actions on successful login
-    //         navigate('/menu');
-    //         console.log("Login successful:", d);
-    //     }else{
-    //         console.log("Login failed:", d);
-    //         setError( "Login failed");
-    //     }
-
-    // }
-
-
-   
-    // const error = dataAction?.error;
     return(
         <>
             

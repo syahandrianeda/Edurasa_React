@@ -1,7 +1,5 @@
 import { createContext, useCallback, useContext, useMemo, useState, type PropsWithChildren } from "react"
-import { Button } from "../ui/button"
 import { Eye, Trash } from "lucide-react"
-import { Tooltip } from "../ui/tooltip"
 import ButtonTooltip from "../ui_edura/button-tooltip"
 
 
@@ -12,9 +10,6 @@ interface FilePreviewContext{
     setCurrentId: (id: string|null) => void
     open: (fileId: string) => void
     close: () => void
-    // zoom: number
-    // zoomIn: () => void
-    // zoomOut: () => void
     rotate: number,
     rotateLeft:()=>void;
     rotateRight:()=>void;
@@ -92,10 +87,10 @@ export function FileInputUpload({label, src, children}:PropsWithChildren<{label:
     const textUrl = isValidFileId(src)?src:''
     return (
         <div className="relative w-full mt-2">
-            <div className="absolute rounded-t-xl text-sm text-gray-900 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 left-1 ps-2 z-10 origin-left bg-sky-300 dark:bg-gray-700 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-100 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-placeholder-shown:left-2 peer-placeholder-shown:w-[calc(100%-12px)] peer-focus:w-auto peer-focus:top-1 peer-focus:left-1 peer-focus:ps-1 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">{label}</div>
+            <div className="absolute rounded-t-xl text-sm text-gray-900 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 left-1 ps-2 z-10 origin-left bg-white dark:bg-gray-700 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-100 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-placeholder-shown:left-2 peer-placeholder-shown:w-[calc(100%-12px)] peer-focus:w-auto peer-focus:top-1 peer-focus:left-1 peer-focus:ps-1 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">{label}</div>
             <div >
                 <input
-                    className="block px-2.5 pb-2 pt-2 w-full text-sm text-gray-500 rounded-lg border border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600  bg-sky-300 dark:bg-gray-700 peer"
+                    className="block px-2.5 pb-2 pt-2 w-full text-sm text-gray-500 rounded-lg border border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600  bg-white dark:bg-gray-700 peer"
                     readOnly
                     value={textUrl}
                     disabled
@@ -145,7 +140,7 @@ export function FileIframeViewer() {
     const { previewUrl, rotate, rotateLeft, rotateRight, close } = useFilePreview();
 
     if (!previewUrl) return null
-    console.log(isRotatedVertical(rotate));
+    
     return (
         <div className="relative">
         
@@ -163,7 +158,7 @@ export function FileIframeViewer() {
             </div>
             <iframe
             src={previewUrl}
-            className={`${isRotatedVertical(rotate)?'w-50 h-50':'w-full h-full'}`}
+            className="w-95 h-95"//{`${isRotatedVertical(rotate)?'w-100 h-100':'w-full h-full'}`}
             style={{
                 transform: `rotate(${rotate}deg)`,
                 // width: isRotatedVertical(rotate) ? "100%" : "50%",
@@ -173,3 +168,25 @@ export function FileIframeViewer() {
         </div>
     )
 }
+
+export function SectionPreview(){
+    const { previewUrl } = useFilePreview();
+    if(!previewUrl) {
+        return (
+        <div className="flex flex-col rounded-tr-xl border-0 h-full inner-shadow-sky-100 bg-linear-to-bl from-sky-600 to-sky-400">
+            <div className="m-1 inner-shadow-sky-600 shadow-md shadow-sky-300 bg-sky-600/50 rounded-2xl flex flex-col justify-center h-full items-center">
+                Preview Not Found
+            </div>
+        </div>
+        )
+    }
+    return (
+        <div className="flex flex-col rounded-tr-xl border-0 inner-shadow-sky-100 bg-linear-to-bl from-sky-600 to-sky-400">
+            <div className="m-1 inner-shadow-sky-600 shadow-md shadow-sky-300 bg-sky-600/50 rounded-2xl flex flex-col justify-center h-full items-center">
+                <FileIframeViewer/>
+            </div>
+        </div>
+    )
+    
+}
+

@@ -3,7 +3,7 @@ import AppMenuPage from "~/pages/app-menu";
 import type { Route } from "./+types/app-menu";
 
 import { useNavigation } from "react-router";
-import { TopProgressBarFetch } from "~/components/ui_edura/top-progress-bar";
+
 
 
 export function meta({matches}: Route.MetaArgs) {

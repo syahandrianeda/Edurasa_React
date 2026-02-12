@@ -22,8 +22,6 @@ export default class DTOUser{
             roles: dto.gurukelas_gmp,
             permission: dto.permission,
             friends: DTOUser.parseFriends(dto.friends),
-
-
         }
     }
     

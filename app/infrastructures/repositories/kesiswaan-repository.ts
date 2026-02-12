@@ -1,0 +1,113 @@
+import AppScriptSheet from "~/configs/appscript-sheet";
+import type { SiswaType } from "~/types/siswa";
+import type KesiswaanRepositoryInterface from "../../domain/interfaces/kesiswaan-repository-interface";
+import type { ApiResponse, ParamFile } from "~/configs/appscript-config";
+import { IndDbSiswaRepository } from "~/infrastructures/indexDb/db-datasiswa-repository";
+import { saveIsianSiswa } from "~/infrastructures/session-storage/isian-siswa";
+
+
+export default class KesiswaanRepository extends AppScriptSheet implements KesiswaanRepositoryInterface{
+    private indexDB;
+    
+    private STORE:string;
+
+    constructor(table:string){
+        super();
+        if (!table) {
+                throw new Error("KesiswaanRepository: table name is required");
+            }
+            this.STORE = table;
+            this.indexDB = new IndDbSiswaRepository();
+    }
+    async loadAllSiswa(): Promise<ApiResponse<SiswaType> | null> {
+        
+        try{
+            const dataIndexDB = await this.indexDB.getAll()
+            
+            if (dataIndexDB.length > 0) {
+                return {
+                    success: true,
+                    data: dataIndexDB,
+                    message:'Data diambil dari indexDB',
+                    source:'indexDB'
+                }
+            }
+            const parameter = {
+                action: 'read',
+            }
+            this.paramSheetAkunTabSiswa = parameter;
+
+            const callData = await this.postBody(this.paramSheetAkunTabSiswa);
+            await this.indexDB.saveBulk(callData.data)
+            
+            //simpan di session ini:
+            const formatIsianSiswa = callData.info.objKosong;
+            saveIsianSiswa(formatIsianSiswa);
+            
+            return this.responActionRead(callData);
+        }catch(error){
+            return this.responActionError(error);
+        }
+    }
+    async loadAllSiswaAPI(): Promise<ApiResponse<SiswaType> | null> {
+        
+        try{
+            
+            const parameter = {
+                action: 'read',
+            }
+            this.paramSheetAkunTabSiswa = parameter;
+
+            const callData = await this.postBody(this.paramSheetAkunTabSiswa);
+            await this.indexDB.saveBulkAgain(callData.data)
+            
+            //simpan di session ini:
+            const formatIsianSiswa = callData.info.objKosong;
+            saveIsianSiswa(formatIsianSiswa);
+            
+            return this.responActionRead(callData);
+        }catch(error){
+            return this.responActionError(error);
+        }
+
+        
+    }
+    async uploadFileRepo(param: ParamFile): Promise<any> {
+        
+        return await this.uploadFile(param)
+    }
+    async update(param:Record<string, any>):Promise<ApiResponse<SiswaType>>{
+        try{
+            const parameter = {
+                ...param,
+                action: 'update'
+            }
+            this.paramSheetAkunTabSiswa = parameter;
+            
+            const respon =  await this.postBody(this.paramSheetAkunTabSiswa );
+            await this.indexDB.saveBulkAgain(respon.data)
+
+            return this.responActionRead(respon);
+
+        }catch(error){
+            return this.responActionError(error);
+        }
+    }
+    async create(param:Record<string, any>):Promise<ApiResponse<SiswaType>>{
+        try{
+            const parameter = {
+                ...param,
+                action: 'create'
+            }
+            this.paramSheetAkunTabSiswa = parameter;
+            
+            const respon =  await this.postBody(this.paramSheetAkunTabSiswa );
+            await this.indexDB.saveBulkAgain(respon.data)
+
+            return this.responActionRead(respon);
+
+        }catch(error){
+            return this.responActionError(error);
+        }
+    }
+}

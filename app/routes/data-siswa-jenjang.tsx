@@ -1,5 +1,4 @@
 
-import KesiswaanServiceImplements from "~/infrastructures/services/kesiswaan-service-implements";
 import DataSiswaPerJenjangPage from "~/pages/siswa-per-jenjang";
 import type { Route } from "./+types/data-siswa-jenjang";
 import { ConfigToolbarDataSiswaJenjang } from "~/controllers/data-siswa-controller/config-toolbar";

@@ -1,6 +1,6 @@
-export const getNumberFromString = (value: string): number | null => {
+export const getNumberFromString = (value: string): number  => {
     const match = value.match(/\d+/);
-    return match ? Number(match[0]) : null;
+    return match ? Number(match[0]) : 1;
 };
 
 /**

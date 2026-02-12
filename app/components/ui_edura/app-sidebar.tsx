@@ -7,8 +7,6 @@ import AppFiturFloat from "./app-fitur-float";
 import FooterMenuEdura from "../footer-menu/footer-menu";
 import type { controlDropdownKelas } from "../dropdowns/rombel-dropdown";
 
-
-
 interface AppContentProps extends React.ComponentProps<'main'> {
     variant?: 'header' | 'sidebar';
     navItems?: NavItem[]
@@ -47,7 +45,7 @@ export default function AppSidebar({
     return (
         <>
             <AppHeaderDesktop navItems={navItems} className={desktopHeader}/>
-            <SidebarInset className={`${(desktopHeader==='fixed')?'pt-14':'max-w-6xl mx-auto  bg-white/70 dark:bg-zinc-600/50'}`} {...props}>
+            <SidebarInset className={`${(desktopHeader==='fixed')?'pt-14':'max-w-6xl  mx-auto bg-white/70 dark:bg-zinc-600/50'}`} {...props}>
                 <AppFloatingTopBar>
                     <AppFiturFloat title={title}  controlKelas={controlKelas} showExport={showExport}/>
                 </AppFloatingTopBar>

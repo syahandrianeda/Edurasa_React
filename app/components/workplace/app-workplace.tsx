@@ -8,15 +8,15 @@ interface AppWorkplaceProps {
 }   
 export default function AppWorkplace({children, MainFitur}:AppWorkplaceProps){
     return(
-        <div className="flex w-full">
+        <div className="flex relative">
             <Sidebar side="top" variant="floating" collapsible="icon" className="inset-y-14 mt-2 ms-2 sticky top-12 h-[calc(100vh-3.5rem)] me-1 rounded-md shadow-md">
                 <ContentSidebar MainFitur={MainFitur} FooterFitur={[]}/>
                 <SidebarRail></SidebarRail>
             </Sidebar>
-            
                 {children}
+        </div>
+            
             
 
-        </div>
     )
 }   

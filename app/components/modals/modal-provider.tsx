@@ -2,16 +2,22 @@ import { createContext, useContext, useState, type ReactNode } from "react"
 import type { SiswaType } from "~/types/siswa"
 
 export type ModalType =
-    | 'CREATE'
+    | 'INFO'
+    | 'TAMBAH'//-->'CREATE'
     | 'EDIT'
-    | 'DELETE'
+    | 'EDIT-CUSTOM'
+    | 'HAPUS'//'DELETE'
+    | 'EDIT SISWA'
+    | 'EDIT PROFIL'
+    | 'TAMBAH ABSEN'
+    | 'EDIT ABSEN'
+    | 'HAPUS ABSEN'
     | null
 export interface ConfigModelType{
     closeOnOutsideClick: boolean,
-    // with: 'md:max'
 }
 
-const DEFAULT_CONFIG_MODAL: ConfigModelType = {
+export const DEFAULT_CONFIG_MODAL: ConfigModelType = {
     closeOnOutsideClick: true,
 }
 export interface ModalState<TPayload = unknown> {
@@ -66,21 +72,25 @@ export default function ModalProvider({ children }: { children: ReactNode }) {
     })
 
     const open = (type: ModalState["type"], payload?: unknown, configModal?:ConfigModelType) => {
-        setState({
-        isOpen: true,
-        type,
-        payload,
-        configModal:{...DEFAULT_CONFIG_MODAL, ...configModal},
-        })
+        setState(
+            {
+                isOpen: true,
+                type,
+                payload,
+                configModal:{...DEFAULT_CONFIG_MODAL, ...configModal},
+            }
+        )
     }
 
     const close = () => {
-        setState({
-        isOpen: false,
-        type: null,
-        payload: undefined,
-        configModal:DEFAULT_CONFIG_MODAL
-        })
+        setState(
+            {
+                isOpen: false,
+                type: null,
+                payload: undefined,
+                configModal:DEFAULT_CONFIG_MODAL
+            }
+        )
     }
 
     return (

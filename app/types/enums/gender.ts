@@ -16,3 +16,11 @@ export const GenderMeta: Record<Gender, { label: string }> = {
     [Gender.PEREMPUAN]: { label: "Perempuan" },
     [Gender.UNKNOWN]: { label: "Belum Memilih" },
 }
+
+export function getGenderLabel(
+  gender?: Gender | null
+): string {
+  if (!gender) return "";
+
+  return GenderMeta[gender]?.label ?? "-";
+}

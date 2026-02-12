@@ -4,7 +4,6 @@ import AppContainer from "~/components/ui_edura/app-container"
 import App from "~/root"
 import type { Route } from "./+types/home-layout";
 import { getSessionApp } from "~/infrastructures/session-storage/app-session";
-import type { UserPtk } from "~/types";
 
 const navItems = [
     { title: "Beranda", href: "/", isActive: true },

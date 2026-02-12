@@ -2,7 +2,7 @@ import { useMobileNavigation } from "~/hooks/use-mobile-navigation";
 import type { User } from "~/types";
 import UserInfo from "./user-info";
 import { Grid, Home, LogOut, Settings, SunMoon } from "lucide-react";
-import { Link,  Navigate,  redirect,  useLocation, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { isSameUrl } from "~/lib/utils";
 import AppearanceToggleTab from "./appearance-tabs";
 import { 
@@ -19,7 +19,6 @@ import { Button } from "../ui/button";
 import { useAppDispatch } from "~/context-reduct/hook";
 import { logout, setCredentials } from "~/context-reduct/global-state/auth-slice";
 import { setFokusRombel } from "~/context-reduct/global-state/fokus-rombel-slice";
-import EduraIndexDB from "~/infrastructures/indexDb/indexdb-class";
 import { resetSiswa } from "~/context-reduct/global-state/siswa-slice";
 
 interface UserMenuContentProps {
@@ -49,11 +48,11 @@ export function UserMenuContent({ user }: UserMenuContentProps) {
         dispatch(
             resetSiswa()
         )
-        const indB = new EduraIndexDB('datasiswa')
-        await indB.destroy();
-
+        // const indB = new EduraIndexDB('datasiswa')
+        // await indB.destroy();
+        indexedDB.deleteDatabase("edurasa-db");
         navigate("/", {
-        replace: true,
+            replace: true,
         });
     };
 

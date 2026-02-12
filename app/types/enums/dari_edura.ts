@@ -73,3 +73,44 @@ export const PEKERJAAN_EDURA = [
     {value:"Meninggal Dunia",label:"Meninggal Dunia"},
     {value:"Lainnya",label:"Lainnya"}
 ];
+export const PENGHASILAN = [
+    {
+        value:"", label:"Silakan Pilih"
+    },
+    {
+        value:"Kurang dari Rp. 1.000.000,-", label:"Kurang dari Rp. 1.000.000,-"
+    },
+    {
+        value:"Rp. 1.000.000 - Rp. 2.000.000", label:"Rp. 1.000.000 - Rp. 2.000.000"
+    },
+    {
+        value:"Lebih dari Rp. 2.000.000", label:"Lebih dari Rp. 2.000.000"
+    },
+    {
+        value:"Kurang dari Rp. 500.000", label:"Kurang dari Rp. 500.000"
+    },
+    {
+        value:"Rp. 500.000 - Rp. 999.999", label:"Rp. 500.000 - Rp. 999.999"
+    },
+    {
+        value:"Rp. 1.000.000 - Rp. 1.999.999" ,label:"Rp. 1.000.000 - Rp. 1.999.999"
+    },
+    {
+        value:"Rp. 2.000.000 - Rp. 4.999.999" ,label:"Rp. 2.000.000 - Rp. 4.999.999"
+    },
+    {
+        value:"Rp. 5.000.000 - Rp. 20.000.000", label:"Rp. 5.000.000 - Rp. 20.000.000"
+    },
+    {
+        value:"Lebih dari Rp.20.000.000", label:"Lebih dari Rp.20.000.000"
+    },
+    {
+        value:"Tidak Berpenghasilan", label:"Tidak Berpenghasilan"
+    },
+    {
+        value:"Lainnya", label:"Lainnya"
+    },
+]
+/**
+ * 
+ */

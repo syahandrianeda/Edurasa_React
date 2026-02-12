@@ -33,7 +33,9 @@ export default function AppFiturFloat({
                 <div className="flex gap-1 justify-between">
                     {/* {showControlKelas && <MenuSelectRombelKelas title="Kelas"/>}
                     {showPrintable && <ControlDropdownExport/>} */} 
-                    {controlKelas && <RombelDropdown {...controlKelas}/>}
+                    {/* {controlKelas && <RombelDropdown {...controlKelas}/>} */}
+                    {/* <RombelDropdown {...controlKelas}/> */}
+                    <RombelDropdown {...controlKelas} />
                     {showExport && <ExportDropdown/>}
                 </div>
             </div>

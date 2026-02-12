@@ -1,9 +1,8 @@
 
-import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "../ui/dialog"
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "../ui/dialog"
 import { useState, type PropsWithChildren, type ReactNode } from "react"
 import { cn } from "~/lib/utils"
 import { type ModalActions, type ModalState } from "./modal-provider"
-import type { SiswaType } from "~/types/siswa"
 
 export interface ModalEduraType{
     state:ModalState,
@@ -60,7 +59,7 @@ export function ModalHeaderEdura({title="Title Modal", description=""}:{title?:s
 }
 export function ModalFooterEdura({children}:{children:ReactNode}){
     return (
-        <DialogFooter className="fixed bottom-0 w-full bg-linear-to-tr from-sky-600 to-sky-100/5 dark:from-sky-800 dark:to-sky-400 py-2 px-12 md:px-3 gap-0 min-h-16 flex sm:justify-center items-center inner-shadow-sky-800">
+        <DialogFooter className="fixed bottom-0 w-full bg-linear-to-tr from-sky-600 to-sky-100/5 dark:from-sky-800 dark:to-sky-400 py-2 px-12 md:px-3 gap-2 min-h-16 flex sm:justify-center items-center inner-shadow-sky-800">
                     {children}
             </DialogFooter>
     )

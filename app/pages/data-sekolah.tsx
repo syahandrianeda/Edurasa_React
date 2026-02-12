@@ -1,7 +1,6 @@
 
 import { useState } from "react";
 import ToolbarSettingSekolah from "~/components/toolbars/setting-sekolah";
-// import MainToolbar from "~/components/toolbars/main-toolbar";
 import { TopProgressBarFetch } from "~/components/ui_edura/top-progress-bar";
 import { AppScriptConfig } from "~/configs/appscript-config";
 

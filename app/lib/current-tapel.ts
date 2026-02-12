@@ -1,5 +1,6 @@
 
 type variantCurrentTapel = 'short'|'long'|'full'|'onlyTapel';
+type variantCurrentTapelProperties = 'firstYear'|'lastYear'|'getSemester'|'getSemesterWithGanjilGenap';
 
 export function currentTapel({variant='long'}:{variant?:variantCurrentTapel}):string {
     let date = new Date();
@@ -15,4 +16,26 @@ export function currentTapel({variant='long'}:{variant?:variantCurrentTapel}):st
         return firstYear +'/' + lastYear;
     }
     return firstYear +'/' + lastYear +' ('+ semester+')';
+}
+
+export function currentTapelProperties({variant='firstYear'}:{variant?:variantCurrentTapelProperties}):number|string {
+    let date = new Date();
+    let currentYear = date.getFullYear();
+    let firstYear = date.getMonth()>5?currentYear:currentYear - 1;
+    let lastYear = date.getMonth()>5? currentYear + 1: currentYear;
+    let semester = date.getMonth()>5?1:2;
+    if(variant ==='firstYear'){
+        return firstYear 
+    }
+    if(variant ==='lastYear'){
+        return lastYear as number;//+' Semester '+ semester;
+    }
+    
+    if(variant === 'getSemester'){
+        return semester as number;
+    }
+    if(variant === 'getSemesterWithGanjilGenap'){
+        return semester===1?"1 (Ganjil)":"2 (Genap)";
+    }
+    return firstYear 
 }

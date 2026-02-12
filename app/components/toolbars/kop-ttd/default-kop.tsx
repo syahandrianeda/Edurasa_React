@@ -2,6 +2,7 @@ import type { kopKontentType } from "./config-kop";
 import logokota from '../../../images/kotadepok.webp'
 import logoSekolah from '../../../images/ratujaya1.png';
 import { currentTapel } from "~/lib/current-tapel";
+import { ALAMAT_DIGITAL, ALAMAT_JALAN, ALAMAT_KECAMATAN, IDENTITAS_SEKOLAH, INSTANSI_OPD, INSTANSI_PEMERINTAH } from "~/domain/identitas_sekolah/identitas-sekolah";
 
 export const SampleDefaultKontenKop: kopKontentType[] =[
     { type:'none',
@@ -63,11 +64,11 @@ export const SampleDefaultKontenKop: kopKontentType[] =[
     },
 ]
 export function TextKontenKop({
-    pertama     = 'Pemerintah Kota Depok',
-    kedua       = 'Dinas Pendidikan',
-    ketiga      = 'UPTD SDN Ratujaya 1',
-    alamat_1    = 'Alamat: Jl. SMP Ratujaya No. 41, RT 05/RW 03, Kel. Ratujaya',
-    alamat_2    = 'NPSN: 20228914 | Email: uptdsdnratujaya1@gmail.com, web: www.sdnratujaya1.net'
+    pertama     = INSTANSI_PEMERINTAH,//'Pemerintah Kota Depok',
+    kedua       = INSTANSI_OPD,//'Dinas Pendidikan',
+    ketiga      = IDENTITAS_SEKOLAH,//'UPTD SDN Ratujaya 1',
+    alamat_1    = 'Alamat: '+ ALAMAT_JALAN,//'Alamat: Jl. SMP Ratujaya No. 41, RT 05/RW 03, Kel. Ratujaya',
+    alamat_2    = ALAMAT_DIGITAL,//'NPSN: 20228914 | Email: uptdsdnratujaya1@gmail.com, web: www.sdnratujaya1.net'
 }:{
     pertama?: string,
     kedua?: string,
@@ -89,8 +90,8 @@ export function TextKontenKop({
 
 export function TextKontenKopSoal({
     pertama     = 'Naskah Soal',
-    kedua       = 'UPTD SDN Ratujaya 1',
-    ketiga      = 'Kecamatan Cipayung',
+    kedua       = IDENTITAS_SEKOLAH,//'UPTD SDN Ratujaya 1',
+    ketiga      = ALAMAT_KECAMATAN,//'Kecamatan Cipayung',
     alamat_1    = currentTapel({variant:'full'}),
     alamat_2   ,// = 'NPSN: 20228914 | Email: uptdsdnratujaya1@gmail.com, web: www.sdnratujaya1.net'
 }:{

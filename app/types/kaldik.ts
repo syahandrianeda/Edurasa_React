@@ -1,0 +1,36 @@
+export interface KaldikType {
+    time_stamp:Date,
+    keterangan:string,
+    start_tgl:Date,
+    end_tgl:Date,
+    oleh:string,
+    aksi:string,
+    idbaris:number,
+    warna:string,
+    libur_he_heb:boolean,
+    he:boolean,
+    heb:boolean,
+    libur:boolean,
+    backgroundColor:string,
+    color:string,
+    hapus:string,
+
+}
+
+export interface KaldikSheetType {
+    time_stamp:Date,
+    keterangan:string,
+    start_tgl:Date,
+    end_tgl:Date,
+    oleh:string,
+    aksi:string,
+    idbaris?:number,
+    warna:string,
+    libur_he_heb?: number,
+    he: number,
+    heb: number,
+    libur: number,
+    backgroundColor:string,
+    color:string,
+    hapus:string,
+}

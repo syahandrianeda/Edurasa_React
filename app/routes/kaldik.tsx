@@ -1,5 +1,5 @@
-import KaldikPage from "~/pages/kaldik";
 import type { Route } from "./+types/kaldik";
+import { Navigate } from "react-router";
 
 
 
@@ -23,8 +23,10 @@ export function meta({matches}: Route.MetaArgs) {
     ];
 }
 
-export default function Kaldik() {
+export default function KaldikRedirectToKeteranganKaldik() {
+
     return(
-        <KaldikPage />
+
+        <Navigate to="/kaldik/keterangan-kaldik" replace />
     )
 }

@@ -12,27 +12,9 @@ import GenerateTabs, { type TabsConfigProps } from "../tabs/generate-tabs";
 export function GenerateNodeToolbar({defaultValue, tabList, contentList}:TabsConfigProps){
     const [isOpen, setIsOpen] = React.useState(false);
     return(
-        <Toolbar open={isOpen} setOpen={setIsOpen}>
-            {/* <Tabs defaultValue={defaultValue} className="gap-0" >
-                <TabsList>
-                    {
-                        tabList.map((m, index)=>(
-                            <TabsTrigger key={index} value={m.value}>{m.label}</TabsTrigger>
-                        ))
-                    }
-                    
-                </TabsList>
-                <ToolbarContent>
-                    {
-                        contentList.map((m,index)=>(
-                            <TabsContent key={index} value={m.value} className="min-h-34">{m.element}</TabsContent>
-                        ))
-                    }
-                </ToolbarContent>
-            </Tabs> */}
+        <Toolbar open={isOpen} setOpen={setIsOpen} className="mx-1">
             <GenerateTabs defaultValue={defaultValue} tabList={tabList} contentList={contentList}/>
-
-            </Toolbar>
+        </Toolbar>
     )
 }
 

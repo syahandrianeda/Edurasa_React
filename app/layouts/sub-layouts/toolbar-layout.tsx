@@ -1,25 +1,31 @@
 import * as React from 'react';
-import { GenerateNodeToolbar, type ToolbarConfigProps } from "~/components/toolbars/config-default-toolbar"
+import type { TabsConfigProps } from '~/components/tabs/generate-tabs';
+import { GenerateNodeToolbar } from "~/components/toolbars/config-default-toolbar"
 import { ConfigToolbarDataSiswa } from "~/controllers/data-siswa-controller/config-toolbar"
 
 export default function ToolbarLayout(
     {
         children, 
-        configToolbar = ConfigToolbarDataSiswa
+        configToolbar
     }:{
         children:React.ReactNode, 
-        configToolbar?:ToolbarConfigProps
+        configToolbar?:TabsConfigProps
     }){
-    
-    const {tabList, contentList } = configToolbar;
-
+        
     return (
-        <div className="relative border-s border-s-gray-400 ps-1 w-full mt-2">
-            <GenerateNodeToolbar 
-                defaultValue="tab1"
-                tabList={tabList}
-                contentList={contentList}
-            />
+        <div
+            data-slot="toolbar-layout"
+            className="border-s border-black flex flex-1 flex-col ps-0 pe-4"
+        >
+            {
+            configToolbar && (
+                    <GenerateNodeToolbar 
+                        defaultValue="tab1"
+                        tabList={configToolbar?.tabList}
+                        contentList={configToolbar?.contentList}
+                    />
+                )
+            }
             {children}
         </div>
     )

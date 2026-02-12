@@ -43,32 +43,6 @@ export function getSessionApp<T = unknown>(): T | null {
 }
 
 export function clearSessionApp(): void {
+  
   window.localStorage.removeItem(KEY);
 }
-
-// ==== DEPRECATED
-// const KEY = "app";
-
-// export function saveSessionApp(user: unknown) {
-//   const json = JSON.stringify(user);
-//   const encoded = window.btoa(unescape(encodeURIComponent(json)));
-//   localStorage.setItem(KEY, encoded);
-// }
-
-// export function getSessionApp<T = any>(): T | null {
-//   const encoded = localStorage.getItem(KEY);
-//   if (!encoded) return null;
-
-//   try {
-//     const json = decodeURIComponent(escape(window.atob(encoded)));
-//     return JSON.parse(json) as T;
-//   } catch (err) {
-//     console.error("Invalid session data", err);
-//     return null;
-//   }
-// }
-
-// export function clearSessionApp() {
-//   localStorage.removeItem(KEY);
-// }
-

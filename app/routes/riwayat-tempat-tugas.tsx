@@ -1,9 +1,5 @@
-
 import RiwayatTempatTugasPage from "~/pages/riwayat-tempat-tugas";
 import type { Route } from "./+types/riwayat-tempat-tugas";
-
-
-
 
 export function meta({matches}: Route.MetaArgs) {
     const rootMeta = matches.find(m => m?.id === 'root')?.meta;

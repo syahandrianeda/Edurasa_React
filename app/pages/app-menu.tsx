@@ -1,4 +1,3 @@
-import { useSidebar } from "~/components/ui/sidebar";
 import IconMenu from "~/components/ui_edura/icon-menu";
 import { DataMenu } from "~/configs/menu";
 import { useAppSelector } from "~/context-reduct/hook";

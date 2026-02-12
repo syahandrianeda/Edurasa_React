@@ -1,5 +1,5 @@
 import { useInitials } from "~/hooks/use-initials";
-import type { User, UserPtk } from "~/types";
+import type { User } from "~/types";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 export default function UserInfo<T extends User>({

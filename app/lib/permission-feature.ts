@@ -11,8 +11,6 @@ export default function PermissionFeature(permission:AccesUser[],level:string, m
             return {
                 ...l,
                 breadCrumbs: filteredBreadCrumb
-
             }
         });
-    
 }

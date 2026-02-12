@@ -1,5 +1,6 @@
 import { cn } from "~/lib/utils";
 import logo from "../../images/lamaso.webp";
+import { NAMA_VERSI_APLIKASI } from "~/domain/identitas_aplikasi/identitas-aplikasi";
 
 export default function EduraLogo({className, ...props}: React.ComponentProps<'div'>){
     return(
@@ -7,7 +8,7 @@ export default function EduraLogo({className, ...props}: React.ComponentProps<'d
             className)
         }>
             <img src={logo} alt="edurasa publik" className='mx-auto'/>
-            <span className='absolute bg-white truncate top-1/2 left-0 -rotate-15 font-extrabold text-red-600 -translate-y-2 translate-x-2 text-[10px] leading-none transition-all duration-1000 starting:opacity-0 starting:translate-x-10 starting:rotate-180'>New Edition</span>
+            <span className='absolute bg-white truncate top-1/2 left-0 -rotate-15 font-extrabold text-red-600 -translate-y-2 translate-x-2 text-[10px] leading-none transition-all duration-1000 starting:opacity-0 starting:translate-x-10 starting:rotate-180'>{NAMA_VERSI_APLIKASI}</span>
         </div>
     )
 }

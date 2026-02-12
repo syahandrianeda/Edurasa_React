@@ -4,7 +4,7 @@ import { ApiErrors } from './api-errors'
 
 const axiosInstance = axios.create({
 //   baseURL: import.meta.env.VITE_API_URL,
-    timeout: 15000,
+    timeout: 360000,
 })
 
 /* ============================
@@ -27,7 +27,7 @@ axiosInstance.interceptors.response.use(
         return Promise.reject(
             new ApiErrors(
             0,
-            'Server tidak merespons'
+            error,
             )
         )
     }

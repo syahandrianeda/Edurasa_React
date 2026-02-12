@@ -1,8 +1,8 @@
 import * as React from "react";
 import { cn } from "~/lib/utils";
 
-export function ToolbarContent({children}:{children:React.ReactNode}){
-    return (<div className="w-full group-data-[state=open]:h-full group-data-[state=closed]:h-34  transition-transform duration-1000 ease-in bg-linear-to-tr from-sky-300 to-sky-200 dark:border-2  dark:border-sky-700 dark:from-sky-800 dark:to-sky-700 inner-shadow-sky-100 shadow-lg dark:rounded-md overflow-y-scroll scrol-h-custom">
+export function ToolbarContent({children, className}:{children:React.ReactNode, className?:string}){
+    return (<div className={cn("w-full group-data-[state=open]:h-full group-data-[state=closed]:h-34  transition-transform duration-1000 ease-in bg-linear-to-tr from-sky-300 to-sky-200 dark:border-2  dark:border-sky-700 dark:from-sky-800 dark:to-sky-700 inner-shadow-sky-100 shadow-lg dark:rounded-md overflow-y-scroll scrol-h-custom", className)}>
         {children}
     </div>)
 }
@@ -29,7 +29,7 @@ export default function Toolbar({children, className,open, setOpen}: {children: 
         <div
             data-slot="toolbar"
             data-state={open ? "open" : "closed"}
-            className={cn("group sticky -top-30 w-full mt-2 shadow-md ps-0 pt-0 mb-6 data-[state=open]:translate-y-0 data-[state=closed]:translate-y-1",
+            className={cn("group sticky -top-30 z-15 w-full mt-2 shadow-md ps-0 pt-0 mb-6 data-[state=open]:translate-y-0 data-[state=closed]:translate-y-1",
                 className
             )}
             >

@@ -34,7 +34,7 @@ function readFileAsBase64(file: File): Promise<string> {
         reader.readAsDataURL(file);
     });
 }
-const IMAGE_MIME = ["image/jpeg", "image/png", "image/webp"];
+const IMAGE_MIME = ["image/jpeg","image/jpg", "image/png", "image/webp"];
 
 export function isImageFile(file: File): boolean {
     return IMAGE_MIME.includes(file.type);

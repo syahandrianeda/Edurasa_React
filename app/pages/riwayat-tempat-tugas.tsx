@@ -1,7 +1,6 @@
 
 import { useState } from "react";
 import ToolbarSettingSekolah from "~/components/toolbars/setting-sekolah";
-// import MainToolbar from "~/components/toolbars/main-toolbar";
 import { TopProgressBarFetch } from "~/components/ui_edura/top-progress-bar";
 import { AppScriptConfig } from "~/configs/appscript-config";
 
@@ -10,18 +9,15 @@ export default function RiwayatTempatTugasPage() {
     const [active, setActive] = useState<boolean>(false)
     async function onTestClick() {
         const AppScript =  new AppScriptConfig();
-         let p = {
-            'idss':AppScript.currentMacro['ss_user'],
-            'action':'dataguruall',
-        }
+        let p = {
+                'idss':AppScript.currentMacro['ss_user'],
+                'action':'dataguruall',
+            }
         const parameter = AppScript.appExexUser+'?' + new URLSearchParams(p).toString();
-        console.log('Parameter URL:', parameter);
-        const response = await fetch(parameter);
-        console.log('Response from AppScript:', response);
-        const data = await response.json();
-        console.log('Data from AppScript:', data);
         
-        console.log('AppScript instance:', AppScript);
+        const response = await fetch(parameter);
+        const data = await response.json();
+        
     };
     async function onTestClick2() {
         const AppScript =  new AppScriptConfig();

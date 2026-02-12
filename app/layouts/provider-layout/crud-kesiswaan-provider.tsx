@@ -12,10 +12,10 @@ export default function CrudSiswaLayout() {
     
     const service = new KesiswaanServiceImplements();
     useEffect(()=>{
+        if(!user) return 
         
         const initRedux = new InitNeededSliceStore(store);
         initRedux.needSiswa(service);
-        
     },[user])
     
     return (

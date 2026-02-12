@@ -1,10 +1,17 @@
 
-import { useMemo } from "react";
+
+import { useEffect, useMemo } from "react";
+import { Fields, SelectField } from "~/components/fields/fields";
 import type { TabsConfigProps } from "~/components/tabs/generate-tabs";
 import { TabConfigKopTtd } from "~/components/toolbars/config-default-toolbar";
+import { useFilterContext } from "~/components/toolbars/state-toolbar/state-toolbar";
 import { useAppSelector } from "~/context-reduct/hook";
 import { selectAllSiswaDTO } from "~/context-reduct/selectores/data-siswa-aktif";
-import { StatistikPerJenjang, StatistikPerRombel } from "~/domain/kesiswaan/kesiswaan-statistik";
+import { KoleksiTahunMasuk, StatistikPerJenjang, StatistikPerRombel } from "~/domain/kesiswaan/kesiswaan-statistik";
+import { DataRombelUI } from "~/domain/rombel/data-rombel";
+import { currentTapelProperties } from "~/lib/current-tapel";
+import { formatBackendISO, formatStringBulanTahun, getBulanTapel } from "~/lib/date-helper";
+import type { Agama } from "~/types/enums/agama";
 import { Gender } from "~/types/enums/gender";
 
 export function InfoToolbarDataSiswa(){
@@ -27,17 +34,17 @@ export function InfoToolbarDataSiswa(){
                     <tr>
                         <td className="border-b-[0.5pt] border-sky-900 border-dashed w-32">Nama Rombel</td>
                         <td className="border-b-[0.5pt] border-sky-900 border-dashed w-1">:</td>
-                        <td colSpan={4} className="border-b-[0.5pt] border-sky-900 border-dashed px-3">data</td>
+                        <td colSpan={4} className="border-b-[0.5pt] border-sky-900 border-dashed px-3">{rombel}</td>
                     </tr>
                     <tr>
-                        <td rowSpan={2} className="border-b-[0.5pt] border-sky-900 border-dashed text-center bg-sky-300">Data</td>
-                        <td colSpan={3} className="border-b-[0.5pt] border-s-[0.5pt] text-center border-sky-900 border-dashed bg-sky-300">Gender</td>
-                        <td rowSpan={2} className="border-b-[0.5pt] border-s-[0.5pt] text-center border-sky-900 border-dashed bg-sky-300 w-12">Total</td>
-                        <td rowSpan={2} className="border-b-[0.5pt] border-s-[0.5pt] text-center border-sky-900 border-dashed bg-sky-300">Keterangan</td>
+                        <td rowSpan={2} className="border-b-[0.5pt] border-sky-900 border-dashed text-center bg-sky-300 dark:bg-sky-600">Data</td>
+                        <td colSpan={3} className="border-b-[0.5pt] border-s-[0.5pt] text-center border-sky-900 border-dashed bg-sky-300 dark:bg-sky-600">Gender</td>
+                        <td rowSpan={2} className="border-b-[0.5pt] border-s-[0.5pt] text-center border-sky-900 border-dashed bg-sky-300 dark:bg-sky-600 w-12">Total</td>
+                        <td rowSpan={2} className="border-b-[0.5pt] border-s-[0.5pt] text-center border-sky-900 border-dashed bg-sky-300 dark:bg-sky-600">Keterangan</td>
                     </tr>
                     <tr>
-                        <td colSpan={2} className="border-[0.5pt] border-sky-900 border-dashed text-center bg-sky-300">Laki-laki</td>
-                        <td className="border-[0.5pt] border-sky-900 border-dashed text-center bg-sky-300">Perempuan</td>
+                        <td colSpan={2} className="border-[0.5pt] border-sky-900 border-dashed text-center bg-sky-300 dark:bg-sky-600">Laki-laki</td>
+                        <td className="border-[0.5pt] border-sky-900 border-dashed text-center bg-sky-300 dark:bg-sky-600">Perempuan</td>
                     </tr>
                     <tr>
                         <td className="border-b-[0.5pt] border-dashed border-sky-900 text-center">Gender</td>
@@ -47,21 +54,21 @@ export function InfoToolbarDataSiswa(){
                         <td className="border-b-[0.5pt] border-dashed border-sky-900 text-center">{data?.countGender(Gender.UNKNOWN)?"Periksa Data Gender":"✔️"}</td>
                     </tr>
                     <tr>
-                        <td colSpan={6} className="text-center border-b-[0.5pt] border-s-0 border-e-0 bg-sky-300 border-sky-900 border-dashed">Agama Siswa</td>
+                        <td colSpan={6} className="text-center border-b-[0.5pt] border-s-0 border-e-0 bg-sky-300 border-sky-900 border-dashed dark:bg-sky-600">Agama Siswa</td>
                     </tr>
                     {
                         data?.collectAgama.map((agama,index)=>(
                             <tr key={index}>
                                 <td className="border-b-[0.5pt] border-dashed border-sky-900 text-center">{agama}</td>
-                                <td colSpan={2} className="border-[0.5pt] border-dashed border-sky-900 text-center">{data?.countAgamaGender(Gender.LAKI_LAKI, agama)}</td>
-                                <td className="border-[0.5pt] border-dashed border-sky-900 text-center">{data?.countAgamaGender(Gender.PEREMPUAN, agama)}</td>
-                                <td className="border-[0.5pt] border-dashed border-sky-900 text-center">{data?.countAgamaGenders([Gender.LAKI_LAKI,Gender.PEREMPUAN], agama)}</td>
-                                <td className="border-b-[0.5pt] border-dashed border-sky-900 text-center">{data?.countAgamaGender(Gender.UNKNOWN, agama)}</td>
+                                <td colSpan={2} className="border-[0.5pt] border-dashed border-sky-900 text-center">{data?.countAgamaGender(Gender.LAKI_LAKI, agama as Agama)}</td>
+                                <td className="border-[0.5pt] border-dashed border-sky-900 text-center">{data?.countAgamaGender(Gender.PEREMPUAN, agama as Agama)}</td>
+                                <td className="border-[0.5pt] border-dashed border-sky-900 text-center">{data?.countAgamaGenders([Gender.LAKI_LAKI,Gender.PEREMPUAN], agama as Agama)}</td>
+                                <td className="border-b-[0.5pt] border-dashed border-sky-900 text-center">{data?.countAgamaGender(Gender.UNKNOWN, agama as Agama)}</td>
                             </tr>
                         ))
                     }
                     <tr>
-                        <td colSpan={6} className="text-center border-b-[0.5pt] border-s-0 border-e-0 bg-sky-300 border-sky-900 border-dashed">Nomor Induk Siswa</td>
+                        <td colSpan={6} className="text-center border-b-[0.5pt] border-s-0 border-e-0 bg-sky-300 border-sky-900 border-dashed dark:bg-sky-600">Nomor Induk Siswa</td>
                     </tr>
                     <tr>
                         <td className="border-b-[0.5pt] border-dashed border-sky-900 text-center">NIS Valid</td>
@@ -94,7 +101,7 @@ export function InfoToolbarDataSiswa(){
                     </tr>
                     
                     <tr>
-                        <td colSpan={6} className="text-center border-b-[0.5pt] border-s-0 border-e-0 bg-sky-300 border-sky-900 border-dashed">N I S N</td>
+                        <td colSpan={6} className="text-center border-b-[0.5pt] border-s-0 border-e-0 bg-sky-300 border-sky-900 border-dashed dark:bg-sky-600">N I S N</td>
                     </tr>
                     <tr>
                         <td className="border-b-[0.5pt] border-dashed border-sky-900 text-center">NIS Valid</td>
@@ -125,7 +132,7 @@ export function InfoToolbarDataSiswa(){
                         <td className="border-b-[0.5pt] border-dashed border-sky-900 text-center">{data?.countNisnKosongGenders([Gender.LAKI_LAKI,Gender.PEREMPUAN,Gender.UNKNOWN])}</td>
                     </tr>
                     <tr>
-                        <td colSpan={6} className="text-center border-b-[0.5pt] border-s-0 border-e-0 bg-sky-300 border-sky-900 border-dashed">Kepemilikan Dokumen di Aplikasi</td>
+                        <td colSpan={6} className="text-center border-b-[0.5pt] border-s-0 border-e-0 bg-sky-300 border-sky-900 border-dashed dark:bg-sky-600">Kepemilikan Dokumen di Aplikasi</td>
                     </tr>
                     <tr>
                         <td className="border-b-[0.5pt] border-dashed border-sky-900 text-center">Akte Kelahiran</td>
@@ -158,26 +165,31 @@ export function InfoToolbarDataSiswaJenjang(){
         allSiswa,rombel
     ]) 
     
-    
+    const anggotaRombel = DataRombelUI.filter(s=> s.active && s.jenjang === parseInt(rombel as string)).map(m=> m.rombelName).join(', ')
     return (
         <div className="bg-linear-to-br text-xs from-sky-300 to-sky-200  dark:from-sky-800 dark:to-sky-700 px-2 py-2">
             <p>Menampilkan data siswa di Rombel Anda yang Anda ampu. </p>
             <table className="border-collapse w-ful md:w-4/5 md:mx-auto">
                 <tbody>
                     <tr>
-                        <td className="border-b-[0.5pt] border-sky-900 border-dashed w-32">Nama Rombel</td>
+                        <td className="border-b-[0.5pt] border-sky-900 border-dashed w-32">Nama Jenjang</td>
                         <td className="border-b-[0.5pt] border-sky-900 border-dashed w-1">:</td>
-                        <td colSpan={4} className="border-b-[0.5pt] border-sky-900 border-dashed px-3">data</td>
+                        <td colSpan={4} className="border-b-[0.5pt] border-sky-900 border-dashed px-3">{parseInt(rombel as string)}</td>
                     </tr>
                     <tr>
-                        <td rowSpan={2} className="border-b-[0.5pt] border-sky-900 border-dashed text-center bg-sky-300">Data</td>
-                        <td colSpan={3} className="border-b-[0.5pt] border-s-[0.5pt] text-center border-sky-900 border-dashed bg-sky-300">Gender</td>
-                        <td rowSpan={2} className="border-b-[0.5pt] border-s-[0.5pt] text-center border-sky-900 border-dashed bg-sky-300 w-12">Total</td>
-                        <td rowSpan={2} className="border-b-[0.5pt] border-s-[0.5pt] text-center border-sky-900 border-dashed bg-sky-300">Keterangan</td>
+                        <td className="border-b-[0.5pt] border-sky-900 border-dashed w-32">Anggota Rombel</td>
+                        <td className="border-b-[0.5pt] border-sky-900 border-dashed w-1">:</td>
+                        <td colSpan={4} className="border-b-[0.5pt] border-sky-900 border-dashed px-3">{anggotaRombel}</td>
                     </tr>
                     <tr>
-                        <td colSpan={2} className="border-[0.5pt] border-sky-900 border-dashed text-center bg-sky-300">Laki-laki</td>
-                        <td className="border-[0.5pt] border-sky-900 border-dashed text-center bg-sky-300">Perempuan</td>
+                        <td rowSpan={2} className="border-b-[0.5pt] border-sky-900 border-dashed text-center bg-sky-300 dark:bg-sky-600">Data</td>
+                        <td colSpan={3} className="border-b-[0.5pt] border-s-[0.5pt] text-center border-sky-900 border-dashed bg-sky-300 dark:bg-sky-600">Gender</td>
+                        <td rowSpan={2} className="border-b-[0.5pt] border-s-[0.5pt] text-center border-sky-900 border-dashed bg-sky-300 dark:bg-sky-600 w-12">Total</td>
+                        <td rowSpan={2} className="border-b-[0.5pt] border-s-[0.5pt] text-center border-sky-900 border-dashed bg-sky-300 dark:bg-sky-600">Keterangan</td>
+                    </tr>
+                    <tr>
+                        <td colSpan={2} className="border-[0.5pt] border-sky-900 border-dashed text-center bg-sky-300 dark:bg-sky-600">Laki-laki</td>
+                        <td className="border-[0.5pt] border-sky-900 border-dashed text-center bg-sky-300 dark:bg-sky-600">Perempuan</td>
                     </tr>
                     <tr>
                         <td className="border-b-[0.5pt] border-dashed border-sky-900 text-center">Gender</td>
@@ -187,21 +199,21 @@ export function InfoToolbarDataSiswaJenjang(){
                         <td className="border-b-[0.5pt] border-dashed border-sky-900 text-center">{data?.countGender(Gender.UNKNOWN)?"Periksa Data Gender":"✔️"}</td>
                     </tr>
                     <tr>
-                        <td colSpan={6} className="text-center border-b-[0.5pt] border-s-0 border-e-0 bg-sky-300 border-sky-900 border-dashed">Agama Siswa</td>
+                        <td colSpan={6} className="text-center border-b-[0.5pt] border-s-0 border-e-0 bg-sky-300 border-sky-900 border-dashed dark:bg-sky-600">Agama Siswa</td>
                     </tr>
                     {
                         data?.collectAgama.map((agama,index)=>(
                             <tr key={index}>
                                 <td className="border-b-[0.5pt] border-dashed border-sky-900 text-center">{agama}</td>
-                                <td colSpan={2} className="border-[0.5pt] border-dashed border-sky-900 text-center">{data?.countAgamaGender(Gender.LAKI_LAKI, agama)}</td>
-                                <td className="border-[0.5pt] border-dashed border-sky-900 text-center">{data?.countAgamaGender(Gender.PEREMPUAN, agama)}</td>
-                                <td className="border-[0.5pt] border-dashed border-sky-900 text-center">{data?.countAgamaGenders([Gender.LAKI_LAKI,Gender.PEREMPUAN], agama)}</td>
-                                <td className="border-b-[0.5pt] border-dashed border-sky-900 text-center">{data?.countAgamaGender(Gender.UNKNOWN, agama)}</td>
+                                <td colSpan={2} className="border-[0.5pt] border-dashed border-sky-900 text-center">{data?.countAgamaGender(Gender.LAKI_LAKI, agama as Agama)}</td>
+                                <td className="border-[0.5pt] border-dashed border-sky-900 text-center">{data?.countAgamaGender(Gender.PEREMPUAN, agama as Agama)}</td>
+                                <td className="border-[0.5pt] border-dashed border-sky-900 text-center">{data?.countAgamaGenders([Gender.LAKI_LAKI,Gender.PEREMPUAN], agama as Agama)}</td>
+                                <td className="border-b-[0.5pt] border-dashed border-sky-900 text-center">{data?.countAgamaGender(Gender.UNKNOWN, agama as Agama)}</td>
                             </tr>
                         ))
                     }
                     <tr>
-                        <td colSpan={6} className="text-center border-b-[0.5pt] border-s-0 border-e-0 bg-sky-300 border-sky-900 border-dashed">Nomor Induk Siswa</td>
+                        <td colSpan={6} className="text-center border-b-[0.5pt] border-s-0 border-e-0 bg-sky-300 border-sky-900 border-dashed dark:bg-sky-600">Nomor Induk Siswa</td>
                     </tr>
                     <tr>
                         <td className="border-b-[0.5pt] border-dashed border-sky-900 text-center">NIS Valid</td>
@@ -234,7 +246,7 @@ export function InfoToolbarDataSiswaJenjang(){
                     </tr>
                     
                     <tr>
-                        <td colSpan={6} className="text-center border-b-[0.5pt] border-s-0 border-e-0 bg-sky-300 border-sky-900 border-dashed">N I S N</td>
+                        <td colSpan={6} className="text-center border-b-[0.5pt] border-s-0 border-e-0 bg-sky-300 border-sky-900 border-dashed dark:bg-sky-600">N I S N</td>
                     </tr>
                     <tr>
                         <td className="border-b-[0.5pt] border-dashed border-sky-900 text-center">NIS Valid</td>
@@ -265,7 +277,7 @@ export function InfoToolbarDataSiswaJenjang(){
                         <td className="border-b-[0.5pt] border-dashed border-sky-900 text-center">{data?.countNisnKosongGenders([Gender.LAKI_LAKI,Gender.PEREMPUAN,Gender.UNKNOWN])}</td>
                     </tr>
                     <tr>
-                        <td colSpan={6} className="text-center border-b-[0.5pt] border-s-0 border-e-0 bg-sky-300 border-sky-900 border-dashed">Kepemilikan Dokumen di Aplikasi</td>
+                        <td colSpan={6} className="text-center border-b-[0.5pt] border-s-0 border-e-0 bg-sky-300 border-sky-900 border-dashed dark:bg-sky-600">Kepemilikan Dokumen di Aplikasi</td>
                     </tr>
                     <tr>
                         <td className="border-b-[0.5pt] border-dashed border-sky-900 text-center">Akte Kelahiran</td>
@@ -287,6 +299,7 @@ export function InfoToolbarDataSiswaJenjang(){
         </div>
     )
 }
+
 export const ConfigToolbarDataSiswa:TabsConfigProps =  {
     
     tabList:[
@@ -320,4 +333,165 @@ export const ConfigToolbarDataSiswaJenjang:TabsConfigProps =  {
         },
         ...TabConfigKopTtd.contentList
     ]
+}
+export const ConfigToolbarMutasi:TabsConfigProps =  {
+    defaultValue:'tab1',
+    tabList:[
+        {
+            value: 'tab1',
+            label: 'Info'
+        },
+        ...TabConfigKopTtd.tabList
+    ],
+    contentList:[
+        {
+            value: 'tab1',
+            element: <InfoToolbarMutasiTahunMasuk/>
+        },
+        ...TabConfigKopTtd.contentList
+    ]
+}
+export const ConfigToolbarLaporan:TabsConfigProps =  {
+    defaultValue: 'tab1',
+    tabList:[
+        {
+            value: 'tab1',
+            label: 'Info'
+        },
+        ...TabConfigKopTtd.tabList
+    ],
+    contentList:[
+        {
+            value: 'tab1',
+            element: <InfoToolbarMutasiLaporan/>
+        },
+        ...TabConfigKopTtd.contentList
+    ]
+}
+
+export function InfoToolbarMutasiTahunMasuk() {
+  const allSiswa = useAppSelector(selectAllSiswaDTO)
+  const rombel = useAppSelector(state => state.fokusRombel.value)
+  const { setValue, value } = useFilterContext()
+
+  const data = useMemo(() => {
+    if (!rombel) return []
+    return KoleksiTahunMasuk(allSiswa, rombel)
+  }, [allSiswa, rombel])
+
+  useEffect(() => {
+    if (data.length === 0) return
+
+    if (value.tahun == null || !data.includes(value.tahun)) {
+      setValue({ tahun: data[0] })
+    }
+  }, [data, value.tahun, setValue])
+
+  if (data.length === 0) {
+    return (
+      <div className="bg-linear-to-br text-xs px-2 py-2">
+        <p>Pilih Data Per Tahun</p>
+        <p className="italic text-muted">Data tahun tidak tersedia</p>
+      </div>
+    )
+  }
+
+  return (
+    <div className="bg-linear-to-br text-xs from-sky-300 to-sky-200 dark:from-sky-800 dark:to-sky-700 px-2 py-2">
+      <p>Pilih Data Per Tahun</p>
+
+      <Fields className="mt-3 w-50 mx-auto">
+        <SelectField
+          labelSelect="Tahun Pelajaran"
+          value={value.tahun ?? data[0]}
+          onChange={(e) => setValue({ tahun: Number(e.target.value) })}
+        >
+          {data.map((m, i) => (
+            <option key={i} value={m}>
+              {m}/{m + 1}
+            </option>
+          ))}
+        </SelectField>
+      </Fields>
+    </div>
+  )
+}
+export function InfoToolbarMutasiLaporan() {
+    const { setValue, value } = useFilterContext()
+
+    const firstYear = useMemo(() => {
+        return currentTapelProperties({ variant: 'firstYear' })
+    }, [])
+
+    useEffect(() => {
+        if (value.tahun == null) {
+        setValue({ tahun: firstYear as number })
+        }
+    }, [firstYear, value.tahun, setValue])
+
+    const bulanOptions = useMemo(() => {
+        if (!value.tahun) return []
+        return getBulanTapel(firstYear as number)
+    }, [value.tahun])
+
+    const isSameMonthYear = (a: Date, b: Date) =>
+        a.getFullYear() === b.getFullYear() &&
+        a.getMonth() === b.getMonth()
+
+    useEffect(() => {
+        if (!bulanOptions.length) return
+        if (!value.bulan) {
+        setValue({ bulan: bulanOptions[0] })
+        return
+        }
+
+        const isValid = bulanOptions.some(d =>
+        isSameMonthYear(d, value.bulan!)
+        )
+
+        if (!isValid) {
+        setValue({ bulan: bulanOptions[0] })
+        }
+    }, [bulanOptions, value.bulan, setValue])
+
+    const handleChangeBulan = (
+        e: React.ChangeEvent<HTMLSelectElement>
+    ) => {
+        const iso = e.target.value
+        if (!iso) return
+
+        setValue({ bulan: new Date(iso) })
+    }
+
+    if (bulanOptions.length === 0) {
+        return (
+        <div className="bg-linear-to-br text-xs px-2 py-2">
+            <p className="text-center">Pilih Data Per Bulan</p>
+            <p className="italic text-muted">Data tahun tidak tersedia</p>
+        </div>
+        )
+    }
+
+    return (
+        <div className="bg-linear-to-br text-xs from-sky-300 to-sky-200 dark:from-sky-800 dark:to-sky-700 px-2 py-2">
+        <p className="text-center">Pilih Data Per Bulan</p>
+
+        <Fields className="mt-3 w-50 mx-auto">
+            <SelectField
+            labelSelect="Bulan"
+            value={value.bulan ? formatBackendISO(value.bulan) : ''}
+            onChange={handleChangeBulan}
+            >
+            {bulanOptions.map((date, i) => (
+                <option
+                key={i}
+                value={formatBackendISO(date)}
+                >
+                {formatStringBulanTahun(date)}
+                </option>
+            ))}
+            </SelectField>
+        </Fields>
+        </div>
+    )
 }

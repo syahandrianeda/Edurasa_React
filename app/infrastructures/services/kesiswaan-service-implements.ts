@@ -1,9 +1,10 @@
 import type { ApiResponse, ParamFile } from "~/configs/appscript-config";
+import type { ParamUpdateRecord } from "~/configs/appscript-sheet";
 import { dataURLToFile, encodeFileToBase64, isImageFile } from "~/domain/image/file-uploader";
 import { resizeImageForUpload } from "~/domain/image/image-resizer";
 import type KesiswaanRepositoryInterface from "~/domain/interfaces/kesiswaan-repository-interface";
 import type KesiswaanServiceInterface from "~/domain/interfaces/kesiswaan-service-interface";
-import KesiswaanRepository from "~/domain/kesiswaan/kesiswaan-repository";
+import KesiswaanRepository from "~/infrastructures/repositories/kesiswaan-repository";
 import type { SiswaType } from "~/types/siswa";
 
 export default class KesiswaanServiceImplements implements KesiswaanServiceInterface{
@@ -14,12 +15,19 @@ export default class KesiswaanServiceImplements implements KesiswaanServiceInter
     async loadAllSiswa(): Promise<ApiResponse<SiswaType> | null> {
         
         const data = await this.repo.loadAllSiswa();
-        console.log('respon loadAllSiswa dari service', data);
+            
         return data;
     }
+    async loadAllSiswaAPI(): Promise<ApiResponse<SiswaType> | null> {
+        
+        const data = await this.repo.loadAllSiswaAPI();
+            
+        return data;
+    }
+    
     async uploadFile(file:File, options:Record<string, any>): Promise<any>{
         let finalFile = file;
-        console.log('options di uploadFile', options)
+        
         if (isImageFile(file)) {
             const dataUrl = await resizeImageForUpload(file, {
                 maxWidth: Infinity,
@@ -38,7 +46,15 @@ export default class KesiswaanServiceImplements implements KesiswaanServiceInter
             mimeType:encoded.mimeType,
             base64: encoded.base64
         }
-        console.log("dataParam di Service",options,dataParam);
+        
         return await this.repo.uploadFileRepo(dataParam)
+    }
+
+    async update(param:Record<string, any>): Promise<ApiResponse<SiswaType>> {
+
+        return await this.repo.update(param);
+    }
+    async create(param:Record<string, any>): Promise<ApiResponse<SiswaType>> {
+        return await this.repo.create(param);
     }
 }

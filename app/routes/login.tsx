@@ -56,15 +56,6 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
     return d; 
 }
 
-// export function clientLoader(){
-//     const page = getSessionApp();
-//     console.log('pageeee', page);
-//     if(page){
-//         throw redirect('/menu');
-//     }
-//     return null;
-// }
-
 
 export default function LoginRoute({actionData}: Route.ComponentProps) {
     

@@ -15,19 +15,20 @@ import { TopProgressBarFetch } from "~/components/ui_edura/top-progress-bar";
 import  ModalProvider  from "~/components/modals/modal-provider";
 import ModalDataSiswa from "~/controllers/data-siswa-controller/modal-data-siswa";
 import type { TabsConfigProps } from "~/components/tabs/generate-tabs";
-// import { TopProgressBarFetch } from "~/components/ui_edura/top-progress-bar";
+import { ToolbarFilterProvider } from "~/components/toolbars/state-toolbar/state-toolbar";
 
 
 export default function SubDataSiswaLayout({matches, loaderData}:Route.ComponentProps) {
     // const store = useAppStore()    
     const user = useAppSelector(state=> state.auth.user);
-    const active = useAppSelector(state=>state.dataSiswa.loading)
+    const active = useAppSelector(state=>state.loadedApi.loaded);
     const user_permission = user?.permission;
     const result = PermissionFeature(user_permission ?? [], 'view data-siswa', SubfiturKesiswaan);
-    const loaderDataKiriman = matches.at(-1)?.loaderData as { titleTambahan?: string, toolbarTabs?: TabsConfigProps, controlKelas:controlDropdownKelas } | undefined
+    const loaderDataKiriman = matches.at(-1)?.loaderData as { titleTambahan?: string, toolbarTabs?: TabsConfigProps, controlKelas:controlDropdownKelas, showExport?:boolean } | undefined
     const toolbarTabs = loaderDataKiriman?.toolbarTabs ?? undefined; 
     const controlKelas = loaderDataKiriman?.controlKelas ?? undefined; 
     const titleTambahan = loaderDataKiriman?.titleTambahan ?? '';
+    const showExport = loaderDataKiriman?.showExport ?? true;
     const role = user?.roles;
     const filteringConfig = useMemo(() => {
             if (!role) return [];
@@ -36,19 +37,21 @@ export default function SubDataSiswaLayout({matches, loaderData}:Route.Component
             );
         }, []);
     return (
-        <AppSidebar desktopHeader="relative" title={"Kesiswaan - "+ titleTambahan} controlKelas={controlKelas}>
+        <AppSidebar showExport={showExport} desktopHeader="relative" title={"Kesiswaan - "+ titleTambahan} controlKelas={controlKelas}>
             <TopProgressBarFetch active={active} /> 
             <AppWorkplace MainFitur={result}>
-                <ToolbarKopTtdProvider configTtd={filteringConfig}>
-                    <ToolbarLayout configToolbar={toolbarTabs}>
-                        <PrintAreaWithKopTtd>
-                            <ModalProvider>
-                                <Outlet/>
-                                <ModalDataSiswa/>
-                            </ModalProvider>
-                        </PrintAreaWithKopTtd>
-                    </ToolbarLayout>
-                </ToolbarKopTtdProvider>
+                <ToolbarFilterProvider>
+                    <ToolbarKopTtdProvider configTtd={filteringConfig}>
+                        <ToolbarLayout configToolbar={toolbarTabs}>
+                            <PrintAreaWithKopTtd>
+                                <ModalProvider>
+                                    <Outlet/>
+                                    <ModalDataSiswa/>
+                                </ModalProvider>
+                            </PrintAreaWithKopTtd>
+                        </ToolbarLayout>
+                    </ToolbarKopTtdProvider>
+                </ToolbarFilterProvider>
             </AppWorkplace>
         </AppSidebar>
 )

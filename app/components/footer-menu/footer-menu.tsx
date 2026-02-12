@@ -4,7 +4,6 @@ import { useInitials } from '~/hooks/use-initials';
 import { cn, isSameUrl } from '~/lib/utils';
 import { useSidebar } from '../ui/sidebar';
 import { Link, useLocation, useNavigate } from 'react-router';
-
 import IconMenu from '../ui_edura/icon-menu';
 import { DataMenu } from '~/configs/menu';
 import MobileLogo from '../logos/mobile-logo';
@@ -17,7 +16,6 @@ import { useMobileNavigation } from '~/hooks/use-mobile-navigation';
 import { clearSessionApp } from '~/infrastructures/session-storage/app-session';
 import { setCredentials } from '~/context-reduct/global-state/auth-slice';
 import { setFokusRombel } from '~/context-reduct/global-state/fokus-rombel-slice';
-import EduraIndexDB from '~/infrastructures/indexDb/indexdb-class';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { resetSiswa } from '~/context-reduct/global-state/siswa-slice';
 

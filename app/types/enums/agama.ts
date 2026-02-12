@@ -17,3 +17,12 @@ export const AgamaMeta: Record<Agama, { label: string }> = {
     Buddha: { label: "Buddha" },
     Konghucu: { label: "Konghucu" },
 }
+
+
+export function getAgamaLabel(
+  agama?: Agama | null
+): string {
+  if (!agama) return "";
+
+  return AgamaMeta[agama].label ?? "-";
+}

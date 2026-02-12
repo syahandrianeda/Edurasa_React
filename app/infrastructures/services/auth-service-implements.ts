@@ -1,4 +1,4 @@
-import AuthRepository from "~/domain/auth/auth-repository"
+import AuthRepository from "~/infrastructures/repositories/auth-repository"
 import type { AuthRepositoryInterface } from "~/domain/interfaces/auth-repository-interface";
 import type AuthServiceInterface from "~/domain/interfaces/auth-service-interface";
 import DTOUser from "~/dtos/dto-user";
