@@ -41,12 +41,21 @@ export default class OrmKaldik{
     }
 
     filtering(callback: (item: KaldikType) => boolean) {
-        this.dataAsal = this.dataAsal.filter(callback);
-        return this;
+        // ini mutasi
+        // this.dataAsal = this.dataAsal.filter(callback); 
+        // return this;
+        return new OrmKaldik(
+            this.data.filter(callback)
+        );
     }
     sortYoungest(){
-        this.dataAsal.sort((a,b)=> a.start_tgl.getTime() - b.start_tgl.getTime());
-        return this;
+        //ini mutasi
+        // this.dataAsal.sort((a,b)=> a.start_tgl.getTime() - b.start_tgl.getTime());
+        // return this;
+        //ini immutable
+        return new OrmKaldik(
+            [...this.data].sort((a,b)=> a.start_tgl.getTime() - b.start_tgl.getTime())
+        );
     }
     sortOldest(){
         this.dataAsal.sort((a,b)=> b.start_tgl.getTime() - a.start_tgl.getTime());
@@ -144,7 +153,7 @@ export default class OrmKaldik{
             const isLiburFinded = findDateInDate.some(s=>s.libur);
             const styleBg = findDateInDate.map(s=>s.backgroundColor).join(',');
             const styleFontColor =findDateInDate[findDateInDate.length-1].color
-            let bg = {background:`linear-gradient(-45deg,${styleBg})`,color:`${styleFontColor}`};
+            let bg = findDateInDate.length===1? {background:styleBg,color:styleFontColor}: {background:`linear-gradient(-45deg,${styleBg})`,color:`${styleFontColor}`};
             // let bg = {background:`radial-gradient(${styleBg})`,color:`${styleFontColor}`};
             if(isLiburFinded){
                 result = {
@@ -208,26 +217,42 @@ export default class OrmKaldik{
         const curr = getParseDateYYYYMMMDD(date);
         return now < curr;
     }
-    
+    getPropertyTglToday(date:Date, sabtuLibur:boolean =  true):propertyTgl{
+        const d = new Date(date);
+            const weekInMonth = this.getWeekOfMonth(d)
+            const isEventYet = this.getEventYetOfDate(d);
+            const property = this.getLiburHeHebData(d, sabtuLibur);
+            const keterangan = this.getKeteranganInCurrentDate(d);
+
+            return {
+                ...property,
+                tgl:d.getDate(),
+                date:d,
+                weekInMonth: weekInMonth,
+                eventYet:isEventYet,
+                keteranganKaldik:keterangan
+            };
+    }
     arrayDateInMonth(date:Date, sabtuLibur:boolean =  true):propertyTgl[]{
         const countDays = this.countDateInMonth(date);
         const data:propertyTgl[]=[];
 
         [...Array(countDays)].forEach((_,i)=>{
             const d = new Date(date.getFullYear(), date.getMonth(),(i+1));
-            const weekInMonth = this.getWeekOfMonth(d)
-            const isEventYet = this.getEventYetOfDate(d);
-            const property = this.getLiburHeHebData(d, sabtuLibur);
-            const keterangan = this.getKeteranganInCurrentDate(d);
+            // const weekInMonth = this.getWeekOfMonth(d)
+            // const isEventYet = this.getEventYetOfDate(d);
+            // const property = this.getLiburHeHebData(d, sabtuLibur);
+            // const keterangan = this.getKeteranganInCurrentDate(d);
 
-            const item:propertyTgl={
-                ...property,
-                tgl:i+1,
-                date:d,
-                weekInMonth: weekInMonth,
-                eventYet:isEventYet,
-                keteranganKaldik:keterangan
-            };
+            // const item:propertyTgl={
+            //     ...property,
+            //     tgl:i+1,
+            //     date:d,
+            //     weekInMonth: weekInMonth,
+            //     eventYet:isEventYet,
+            //     keteranganKaldik:keterangan
+            // };
+            const item = this.getPropertyTglToday(d, sabtuLibur )
             data.push(item);
         });
 

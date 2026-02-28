@@ -1,39 +1,17 @@
 import { useImmer } from "use-immer";
 import { useFormEdura } from "~/components/form-custom/form-edura";
-import { useSiswaCrud } from "~/controllers/data-siswa-controller/kesiswaan-controller";
-import OrmAbsensi from "~/domain/absensi/orm-absensi"
-import { defineDescriptionValueActionAbsen, KoleksiIdFileByApp, type AbsensiSiswaSheetType, type AbsensiSiswaType, type KehadiranType, type KoleksiIdImgKehadiran, type typeActionValueAppScriptAbsen } from "~/types/absensi-siswa";
+import { KoleksiIdFileByApp, 
+        type AbsensiSiswaType, 
+        type KoleksiIdImgKehadiran
+    } from "~/types/absensi-siswa";
 import { ButtonRemoveFileAbsen, UploadFileAbsen } from "../crud-provider/input-file-lampiran-absen";
-import { useCallback, useEffect, useMemo, useState, type MouseEvent } from "react";
+import { useEffect, useMemo, type MouseEvent } from "react";
 import { normalizeFileName } from "~/lib/normalized-filename";
 import { ShowToasterError, ShowToasterSuccess } from "~/lib/toaster";
 import { useCrudAbsensi } from "../crud-provider/absensi-crud-provider";
-import { useAppDispatch, useAppSelector } from "~/context-reduct/hook";
+import { useAppDispatch } from "~/context-reduct/hook";
 import { setloadedApi } from "~/context-reduct/global-state/loaded-slice";
-import { TdEdura, ThEdura, TRowEdura } from "~/components/tabels/tabel-components";
 
-// interface LampiranTemp{
-//     idFile?:string,
-//     kehadiran:KehadiranType
-// }
-// const dataTemporaryLampiran: LampiranTemp[]=[
-//     {
-//         idFile:undefined,
-//         kehadiran:'Hadir'
-//     },
-//     {
-//         idFile:undefined,
-//         kehadiran:'Sakit'
-//     },
-//     {
-//         idFile:undefined,
-//         kehadiran:'Ijin'
-//     },
-//     {
-//         idFile:undefined,
-//         kehadiran:'Alpa'
-//     },
-// ]
 export default function ColumnControlPresensi(){
     const {currentData, setCurrentData} = useFormEdura<AbsensiSiswaType>();
     

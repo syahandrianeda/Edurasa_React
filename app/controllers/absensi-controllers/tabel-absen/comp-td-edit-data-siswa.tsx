@@ -29,7 +29,7 @@ export default function TdModalEditDataSiswa({
             <TdEduraFreeze 
                 stateFreeze={kunciKolom} 
                 className={className}
-                //actions.open('TAMBAH', objekNew,{closeOnOutsideClick:false})
+                data-content-type="string"
                 onClick={()=>actions.open('EDIT SISWA',findSiswa,{closeOnOutsideClick:false})}
             >
                 {pd_nama}

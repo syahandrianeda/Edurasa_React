@@ -1,4 +1,5 @@
 import { Info, PencilIcon } from "lucide-react";
+import { useMemo } from "react";
 import { ActionButtonTable, type TriggerTable } from "~/components/dropdowns/dropdown-action-table";
 import { useModal } from "~/components/modals/modal-provider";
 import { TableEdura, TdEdura, ThEdura, TRowEdura } from "~/components/tabels/tabel-components";
@@ -12,9 +13,24 @@ import type { SiswaType } from "~/types/siswa";
 
 
 export function IdentitasLaporanMutasi({data, context, rombel}:{data: KesiswaanData, context:FilterContextValue, rombel:string}){
-    const bulan = context?.bulan as Date;
-    const dataSiswaMasuk = bulan?.getMonth() === 6? data?.filterAllDataByDateRange(bulan):data?.filterAllDataWhenCheckInThisMonth(bulan);
-    const dataSiswaKeluar = data?.filterAllDataWhenCheckOutThisMonth(bulan);
+    const bulan = context?.bulan|| new Date();
+    const dataSiswaMasuk = useMemo(()=>{
+        return data.laporanMutasiMasuk(bulan);
+        // return bulan?.getMonth() === 6? data?.filterAllDataByDateRange(bulan):data?.filterAllDataWhenCheckInThisMonth(bulan);
+    },[bulan,data])
+    const dataSiswaKeluar = useMemo(()=>{
+        return data?.filterAllDataWhenCheckOutThisMonth(bulan);
+    }, [data,bulan]);
+
+    const keadaanAwal = useMemo(()=>{
+        return data.laporanKeadaanAwal(bulan);
+    },[data, bulan])
+    
+    
+    const keadaanAkhir = useMemo(()=>{
+        return data.laporanKeadaanAkhir(bulan);
+    },[data, bulan])
+    
     const {actions} = useModal<SiswaType>()
 
     const ActionTrigger: TriggerTable<SiswaType>[] = [
@@ -79,7 +95,7 @@ export function IdentitasLaporanMutasi({data, context, rombel}:{data: KesiswaanD
                                         dataSiswaMasuk.map((item, index)=>(
                                             <TRowEdura 
                                                 key={index}
-                                                className={item.aktif !== 'aktif'?"text-red-500 print:text-inherit":""}
+                                                className={item.aktif !== 'aktif'?"text-red-500 print:text-inherit":item.riwayat_fisik === 'siswa baru'?'odd:bg-sky-200 even:bg-sky-200':''}
                                                 >
                                                 <TdEdura className="print:hidden">
                                                     <ActionButtonTable<SiswaType>
@@ -95,7 +111,7 @@ export function IdentitasLaporanMutasi({data, context, rombel}:{data: KesiswaanD
                                                 <TdEdura>{item.pd_jk}</TdEdura>
                                                 <TdEdura>{item.dapo_sekolahasal}</TdEdura>
                                                 <TdEdura>{item.awal_kelas}</TdEdura>
-                                                <TdEdura></TdEdura>
+                                                <TdEdura>{item.riwayat_fisik}</TdEdura>
                                             </TRowEdura>
                                         ))
                                     )
@@ -152,7 +168,7 @@ export function IdentitasLaporanMutasi({data, context, rombel}:{data: KesiswaanD
                                                 <TdEdura className="text-center">{item.keluar_tgl?.toLocaleDateString('id-ID', {dateStyle:'medium'})}</TdEdura>
                                                 <TdEdura className="text-center">{item.nis}</TdEdura>
                                                 <TdEdura className="text-center">{item.nisn}</TdEdura>
-                                                <TdEdura className="text-center">{item.pd_nama}</TdEdura>
+                                                <TdEdura className="text-start">{item.pd_nama}</TdEdura>
                                                 <TdEdura className="text-center">{item.pd_jk}</TdEdura>
                                                 <TdEdura className="text-center">{item.kelas_keluar}</TdEdura>
                                                 <TdEdura className="text-center">{item.alasan_keluar}</TdEdura>
@@ -205,17 +221,18 @@ export function IdentitasLaporanMutasi({data, context, rombel}:{data: KesiswaanD
                             <TRowEdura className="h-15 text-sm font-bold">
                                 <TdEdura className="text-center align-middle">
                                     {
-                                        data?.countByGenderBetweenThisMonth(bulan, Gender.LAKI_LAKI)
+                                        // data?.countByGenderBetweenThisMonth(bulan, Gender.LAKI_LAKI)
+                                        keadaanAwal.laki
                                     }
                                 </TdEdura>
                                 <TdEdura className="text-center align-middle">
                                     {
-                                        data?.countByGenderBetweenThisMonth(bulan, Gender.PEREMPUAN)
+                                        keadaanAwal.perempuan//data?.countByGenderBetweenThisMonth(bulan, Gender.PEREMPUAN)
                                     }
                                 </TdEdura>
                                 <TdEdura className="text-center align-middle">
                                     {
-                                        data?.countByGendersBetweenThisMonth(bulan,[ Gender.PEREMPUAN,Gender.LAKI_LAKI, Gender.UNKNOWN])
+                                        keadaanAwal.total//;data?.countByGendersBetweenThisMonth(bulan,[ Gender.PEREMPUAN,Gender.LAKI_LAKI, Gender.UNKNOWN])
                                     }
                                 </TdEdura>
                                 <TdEdura className="text-center align-middle">
@@ -250,17 +267,17 @@ export function IdentitasLaporanMutasi({data, context, rombel}:{data: KesiswaanD
                                 </TdEdura>
                                 <TdEdura className="text-center align-middle">
                                     {
-                                        data?.countByGenderUntilThisDate(bulan, Gender.LAKI_LAKI)
+                                        keadaanAkhir.laki//data?.countByGenderUntilThisDate(bulan, Gender.LAKI_LAKI)
                                     }
                                 </TdEdura>
                                 <TdEdura className="text-center align-middle">
                                     {
-                                        data?.countByGenderUntilThisDate(bulan, Gender.PEREMPUAN)
+                                        keadaanAkhir.perempuan//data?.countByGenderUntilThisDate(bulan, Gender.PEREMPUAN)
                                     }
                                 </TdEdura>
                                 <TdEdura className="text-center align-middle">
                                     {
-                                        data?.countByGendersUntilThisDate(bulan,[ Gender.PEREMPUAN,Gender.LAKI_LAKI, Gender.UNKNOWN])
+                                        keadaanAkhir.total//data?.countByGendersUntilThisDate(bulan,[ Gender.PEREMPUAN,Gender.LAKI_LAKI, Gender.UNKNOWN])
                                     }
                                 </TdEdura>
                             </TRowEdura>

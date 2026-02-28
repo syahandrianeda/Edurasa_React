@@ -68,7 +68,11 @@ export default [
                     route("absensi-hari-ini","routes/absensi/absensi-siswa.tsx"),
                     route("keterangan-kaldik","routes/absensi/keterangan-kaldik.tsx"),
                     route("absensi-bulanan","routes/absensi/absensi-bulanan.tsx"),
-
+                    route("rekap-absensi-siswa","routes/absensi/rekap-absensi-siswa.tsx"),
+                    route("rekap-semester-siswa","routes/absensi/rekap-absensi-semester.tsx"),
+                    route("rekap-sia-semester","routes/absensi/rekap-sia-semester.tsx"),
+                    route("statistik-absensi-bulanan","routes/absensi/statistik-absensi-bulanan.tsx"),
+                    route("statistik-absensi-semester","routes/absensi/statistik-absensi-semester.tsx"),
                 ])
             ]),
         ])

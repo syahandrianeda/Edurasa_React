@@ -1,10 +1,7 @@
-import AbsensiSiswaPage from "~/pages/absensi-siswa";
-
 import type { controlDropdownKelas } from "~/components/dropdowns/rombel-dropdown";
 import type { Route } from "./+types/absensi-siswa";
-import { useAppSelector } from "~/context-reduct/hook";
-import { AbsensiRombelAktifDTO } from "~/context-reduct/selectores/absensi-selector";
-import { instanceOfKaldik } from "~/context-reduct/selectores/kaldik-selector";
+import { ConfigToolbarAbsenHariIni } from "~/controllers/absensi-controllers/toolbar/config-toolbar-absen-hari-ini";
+import AbsensiSiswaHariIniPage from "~/pages/absensi/hari-ini";
 
 export function meta({matches}: Route.MetaArgs) {
     const rootMeta = matches.find(m => m?.id === 'root')?.meta;
@@ -37,15 +34,13 @@ export function clientLoader({}:Route.ComponentProps){
     return {
         titleTambahan:'Hari ini',
         controlKelas: settingRombel,
-       
+        toolbarTabs: ConfigToolbarAbsenHariIni
     };
 }
 
 export default function AbsensiSiswaHariIni() {
-    const testData = useAppSelector(AbsensiRombelAktifDTO);
-    const kaldik = useAppSelector(instanceOfKaldik);
-    console.log(kaldik.arrayDateInMonth(new Date()));
+    
     return(
-        <AbsensiSiswaPage/>
+        <AbsensiSiswaHariIniPage/>
     )
 }

@@ -36,7 +36,7 @@ export default function AppFiturFloat({
                     {/* {controlKelas && <RombelDropdown {...controlKelas}/>} */}
                     {/* <RombelDropdown {...controlKelas}/> */}
                     <RombelDropdown {...controlKelas} />
-                    {showExport && <ExportDropdown/>}
+                    {showExport && <ExportDropdown title={title}/>}
                 </div>
             </div>
     );

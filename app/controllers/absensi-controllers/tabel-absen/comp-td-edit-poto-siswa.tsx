@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from "react";
+import {  useMemo } from "react";
 import { useModal } from "~/components/modals/modal-provider";
 import { TdEduraFreeze } from "~/components/tabels/tabel-components";
 import { useAppSelector } from "~/context-reduct/hook";
@@ -26,6 +26,7 @@ export default function TdModalEditPotoProfilSiswa({
         <TdEduraFreeze 
             stateFreeze={kunciKolom} 
             className={className}
+            data-content-type="string"
             onClick={()=>actions.open('EDIT PROFIL',findSiswa,{closeOnOutsideClick:false})}
         >
             {pd_nama}

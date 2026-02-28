@@ -1,12 +1,10 @@
 import type { ApiResponse, ParamFile } from "~/configs/appscript-config";
-import type { ParamUpsert } from "~/configs/appscript-sheet";
 import type { AbsensiServiceInterface } from "~/domain/interfaces/absensi-service-interface";
-import type { AbsensiSiswaSheetType, AbsensiSiswaType } from "~/types/absensi-siswa";
+import type { AbsensiSiswaSheetType } from "~/types/absensi-siswa";
 import AbsensiRepositoryImplements from "../repositories/absensi-repository";
 import { getNumberFromString } from "~/lib/get-number";
 import { dataURLToFile, encodeFileToBase64, isImageFile } from "~/domain/image/file-uploader";
 import { resizeImageForUpload } from "~/domain/image/image-resizer";
-import { currentTapel, currentTapelProperties } from "~/lib/current-tapel";
 
 export default class AbsensiServiceImplements implements AbsensiServiceInterface{
     constructor(public repo = new AbsensiRepositoryImplements()){}

@@ -7,6 +7,7 @@ import TableWithScrolling, { HeadingTableEduraWithSort } from "~/components/tabe
 import { useAppSelector } from "~/context-reduct/hook";
 import { selectAllSiswaDTO } from "~/context-reduct/selectores/data-siswa-aktif";
 import { StatistikPerRombel } from "~/domain/kesiswaan/kesiswaan-statistik";
+import { getParseDateYYYYMMMDD } from "~/lib/date-helper";
 import { getGenderLabel } from "~/types/enums/gender";
 import type { SiswaType } from "~/types/siswa";
 
@@ -194,20 +195,25 @@ function Body({
 
   const data = useMemo(() => {
     if (!tahun) return siswaktifRombel;
-    // return StatistikPerRombel(siswaktifRombel).filterAllDataByDateRange(new Date())
+    const tglMasukStart = new Date(tahun, 6, 1);
+    const tglMasukEnd = new Date(tahun+1, 5, 30);
+    console.log('tahun masuk', tahun, tglMasukStart, tglMasukEnd);
+    const start = getParseDateYYYYMMMDD(tglMasukStart);
+    const end = getParseDateYYYYMMMDD(tglMasukEnd);
     return siswaktifRombel.filter((siswa) => {
-    //   if (!siswa.masuk_tgl) return false;
+        const d = new Date(siswa.masuk_tgl);
+        const yDd = getParseDateYYYYMMMDD(d);
+        return start<=yDd && end >=yDd;
+        // const d = new Date(siswa.masuk_tgl);
+        // const y = d.getFullYear();
+        // const m = d.getMonth() + 1;
+        // const day = d.getDate();
 
-      const d = new Date(siswa.masuk_tgl);
-      const y = d.getFullYear();
-      const m = d.getMonth() + 1;
-      const day = d.getDate();
-
-      return (
-        (y > tahun || (y === tahun && (m > 7 || (m === 7 && day >= 1)))) &&
-        (y < tahun + 1 || (y === tahun + 1 && (m < 6 || (m === 6 && day <= 30))))
-      );
-    });
+        // return (
+        //         (y > tahun || (y === tahun && (m > 7 || (m === 7 && day >= 1)))) &&
+        //         (y < tahun + 1 || (y === tahun + 1 && (m < 6 || (m === 6 && day <= 30))))
+        //     );
+        });
   }, [siswaktifRombel, tahun]);
 
   return (

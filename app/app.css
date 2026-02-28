@@ -68,8 +68,10 @@
     --color-sidebar-border: var(--sidebar-border);
     --color-sidebar-ring: var(--sidebar-ring);
     --background-image-edurasa: url('images/katulistiwa.webp');
+    --background-image-ruangan: url('images/lantai_rumah2.webp');
+    /* --background-ruangan: var(--color-orange-200); */
     --background-image-edurasa-dark: url('images/corner-palka.webp');
-    --animate-progress : progress 5.2s linear infinite;
+    --animate-progress : progress 6s linear infinite;
     
      
     @keyframes progress {

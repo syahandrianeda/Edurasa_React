@@ -3,24 +3,29 @@ import { Switch } from "~/components/ui/switch";
 import { useFilterContext } from "./state-toolbar";
 import { useEffect } from "react";
 import { cn } from "~/lib/utils";
+import { useAppDispatch, useAppSelector } from "~/context-reduct/hook";
+import { setSabtuLibur } from "~/context-reduct/global-state/sabtu-libur";
 
 export function SwitchSabtuLibur({className}:{className?:string}){
-    const { value, setValue } = useFilterContext();
-    useEffect(()=>{
-        setValue({
-            sabtuLibur:true
-        })
-    },[])
+    const sabtuLibur  = useAppSelector(state=> state.uiPreference.sabtuLibur);
+    const dispatch = useAppDispatch();
+    // const { value, setValue } = useFilterContext();
+    // useEffect(()=>{
+    //     setValue({
+    //         sabtuLibur:true
+    //     })
+    // },[])
     const onSwitch = (v:boolean)=>{
-        setValue({
-            sabtuLibur:v
-        })
+        // setValue({
+        //     sabtuLibur:v
+        // })
+        dispatch(setSabtuLibur(v))
     }
     
     return (
         <Field orientation="horizontal" className={cn("w-1/2",className)}>
-            <Switch id="switch-size-sm" size="default" defaultChecked={true} checked={!!value?.sabtuLibur} onCheckedChange={onSwitch} />
-            <FieldLabel htmlFor="switch-size-sm">Sabtu {value?.sabtuLibur?"":"Tidak"} Libur</FieldLabel>
+            <Switch id="switch-size-sm" size="default" defaultChecked={true} checked={sabtuLibur} onCheckedChange={onSwitch} />
+            <FieldLabel htmlFor="switch-size-sm">Sabtu {sabtuLibur?"":"Tidak"} Libur</FieldLabel>
         </Field>
     )
 }

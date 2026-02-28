@@ -1,5 +1,4 @@
 import type { ApiResponse, ParamFile } from "~/configs/appscript-config";
-import type { ParamUpdateRecord } from "~/configs/appscript-sheet";
 import { dataURLToFile, encodeFileToBase64, isImageFile } from "~/domain/image/file-uploader";
 import { resizeImageForUpload } from "~/domain/image/image-resizer";
 import type KesiswaanRepositoryInterface from "~/domain/interfaces/kesiswaan-repository-interface";

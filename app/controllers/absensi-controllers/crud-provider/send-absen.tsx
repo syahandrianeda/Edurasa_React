@@ -7,8 +7,6 @@ import { useCrudAbsensi } from "./absensi-crud-provider";
 import { Loader } from "lucide-react";
 import { setloadedApi } from "~/context-reduct/global-state/loaded-slice";
 import { ShowToasterSuccess } from "~/lib/toaster";
-import { DTOKaldikSheetToSheet } from "~/dtos/dto-kaldik-to-sheet";
-import DTOAbsensiToApp from "~/dtos/dto-absensi-to-app";
 import { setAbsensiRombel } from "~/context-reduct/global-state/absensi-slice";
 
 export default function SendAbsen({stateType}:{stateType:ModalType}){
@@ -26,14 +24,10 @@ export default function SendAbsen({stateType}:{stateType:ModalType}){
         
         const kondisiObject:Record<string, any> =Object.assign({},currentData, {action:'guruNgabsensiSiswaEdurasa'});
 
-        
-        // console.log(kondisiObject, currentData);
         const argService = {
             data:JSON.stringify([kondisiObject]),
             rombel:kondisiObject.kelas
         }
-        // const dataDto = DTOAbsensiToApp.fromApp(currentData);
-        
         
         dispatch(setloadedApi({
                     loaded:true
@@ -41,10 +35,10 @@ export default function SendAbsen({stateType}:{stateType:ModalType}){
         const respon  = await absenCrud.update(argService);
         
         dispatch(setloadedApi({
-                    loaded:false
-                }))
+            loaded:false
+        }));
+        
         if(respon.success){
-            
             dispatch(setAbsensiRombel(
                 {
                     nama_rombel:kondisiObject.kelas,
@@ -57,7 +51,6 @@ export default function SendAbsen({stateType}:{stateType:ModalType}){
     }
 
     return (
-        
         <button onClick={onSubmit}  disabled={state.isSubmitting} type="button" className="border border-sky-500 rounded-xl p-1 bg-radial from-amber-200 text-rose-600 to-sky-600 shadow-xs shadow-amber-300 font-extrabold w-fit mx-auto flex justify-center gap-2">
             {state.isSubmitting && <Loader size={12} className="animate-spin self-center"/>}Simpan
         </button>

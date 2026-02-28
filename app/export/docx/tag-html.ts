@@ -1,0 +1,11 @@
+export type SupportedTag =
+    | "H1"
+    | "H2"
+    | "P"
+    | "SPAN"
+    | "TABLE"
+    | "THEAD"
+    | "TBODY"
+    | "TR"
+    | "TD"
+    | "TH"

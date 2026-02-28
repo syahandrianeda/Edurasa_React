@@ -172,7 +172,7 @@ export function KomponenTtd({type, dataColumns}:ttdKontenType){
     const middle = columns.find(s=>s.side === 'middle');
     const right = columns.find(s=>s.side === 'right');
     return (
-        <table className='table table-borderless w-full mt-14'> 
+        <table className='table table-borderless w-full mt-14' data-word="ttd"> 
             <tbody>
                 <tr>
                     {dataColumns?.length === 1?(
@@ -282,13 +282,13 @@ export function KontenTopTtd({side, typePerson}:Partial<dataColum>){
                 pertama = 'Mengetahui,'
                 kedua = 'Kepala ' + IDENTITAS_SEKOLAH;
             }else if(jabatan_saya === 'Guru Kelas'){
-                pertama = null;
+                pertama = <br/>;
                 kedua = jabatan_saya +' ' + fokusRombel;
             }else if(jabatan_saya === 'Guru Mapel'){
                 pertama = 'Guru Bidang Studi ';
                 kedua = kodemapel;
             }else{
-                pertama = null
+                pertama = <br/>
                 kedua = jabatan_saya;
             }
             
@@ -298,7 +298,7 @@ export function KontenTopTtd({side, typePerson}:Partial<dataColum>){
             kedua = '(Forkom/Korlas)'
         }
         if(typePerson === 'walas'){
-            pertama = null;
+            pertama = <br/>;
             kedua = 'Guru Kelas ' + fokusRombel;
         }
     };
@@ -376,7 +376,7 @@ export function KontenBottomTtd({side, typePerson}:Partial<dataColum>){
 export function KomponenKop({type, dataColumn}: kopKontentType){
     if(type === 'none') return null;
     return (
-        <table className='w-full mb-14'>
+        <table className='w-full mb-14' data-word="kop">
             <tbody>
                 <tr>
                     {

@@ -3,8 +3,7 @@ import { toast } from "sonner";
 import { setAbsensiRombel } from "~/context-reduct/global-state/absensi-slice";
 import { setloadedApi } from "~/context-reduct/global-state/loaded-slice";
 import { useAppDispatch, useAppSelector } from "~/context-reduct/hook";
-import AbsensiServiceImplements from "~/infrastructures/services/absensi-service-implements"
-import { getNumberFromString } from "~/lib/get-number";
+import AbsensiServiceImplements from "~/infrastructures/services/absensi-service-implements";
 import type { AbsensiSiswaSheetType } from "~/types/absensi-siswa";
 
 export default function ButtonReloadAbsen(){
@@ -22,19 +21,15 @@ export default function ButtonReloadAbsen(){
             {
                 loading: 'Mereload data Absensi...',
                 success: (data) => {
-                    
-                    console.log('data succes', data)
-                        if(data.success){
-                                dispatch(setAbsensiRombel(
-                                    {
-                                        nama_rombel:rombel as string,
-                                        data:data.data as AbsensiSiswaSheetType[]
-                                    }
-                                ))
-                            
-                        }
+                    if(data.success){
+                            dispatch(setAbsensiRombel(
+                                {
+                                    nama_rombel:rombel as string,
+                                    data:data.data as AbsensiSiswaSheetType[]
+                                }
+                            ))
                         
-                    
+                    }
                     return 'Pemanggilan data telah selesai' ;//+ data?.source;
                 },
                 error: 'Gagal memuat data Absen',
@@ -43,9 +38,6 @@ export default function ButtonReloadAbsen(){
                             loaded:false
                         }));
                 }
-
-                
-                
             }
         );
     }

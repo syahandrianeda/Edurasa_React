@@ -3,42 +3,103 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem,
 import { FileStack } from "lucide-react";
 import { useReactToPrint } from "react-to-print";
 import { useExportTarget } from "~/layouts/exports/export-target-provider";
+import { useAdvancedWordExport } from '~/export/use-export-edurasa';
+import { useWordExport } from '~/export/docx/application/use-export-docx';
+import { useAppDispatch } from '~/context-reduct/hook';
+import { setloadedApi } from '~/context-reduct/global-state/loaded-slice';
+import UseDocxEdura from '~/export/word-edura/applications/use-docx-edura';
 
 
-export default function ExportDropdown() {
-const { getTarget } = useExportTarget();
-  const printRef = React.useRef<HTMLElement | null>(null);
-
-  /* ===============================
-   * PRINT HANDLER — PORTRAIT
-   * =============================== */
-  const handlePrintPortrait = useReactToPrint({
+export default function ExportDropdown({title}:{title:string}) {
+    const printRef = React.useRef<HTMLElement | null>(null);
+    // const dispatch = useAppDispatch();
+    const { getTarget } = useExportTarget();
+    const [printMode, setPrintMode]=React.useState(false);
+    // const { exportWord, isExporting } = useWordExport({
+    //         fileName: title+".docx",
+    //         beforeExport: async () => {
+    //             setPrintMode(true)
+    //         },
+    //         afterExport: () => {
+    //             setPrintMode(false)
+    //         },
+    //         type:'portrait'
+    // });
+    const {executeWord, setOrientation} = UseDocxEdura({
+            fileName: title+".docx"
+    });
+    const { exportWord:landscapeWord, isExporting:isLanscapingProccess } = useWordExport({
+            fileName: title+".docx",
+            beforeExport: async () => {
+                setPrintMode(true)
+            },
+            afterExport: () => {
+                setPrintMode(false)
+            },
+            type:'landscape'
+    });
+    /* ===============================
+    * PRINT HANDLER — PORTRAIT
+    * =============================== */
+    const handlePrintPortrait = useReactToPrint({
     contentRef: printRef,
     documentTitle: 'Dokumen Portrait',
     pageStyle: '@page { size: portrait; margin: 16px; }',
-  });
+    });
 
-  /* ===============================
-   * PRINT HANDLER — LANDSCAPE
-   * =============================== */
-  const handlePrintLandscape = useReactToPrint({
+    /* ===============================
+    * PRINT HANDLER — LANDSCAPE
+    * =============================== */
+    const handlePrintLandscape = useReactToPrint({
     contentRef: printRef,
     documentTitle: 'Dokumen Landscape',
     pageStyle: '@page { size: landscape; margin: 16px; }',
-  });
+    });
 
-  function onHandlePrint(type: 'portrait' | 'landscape') {
-    const target = getTarget('print-area');
-    if (!target) return;
+    function onHandlePrint(type: 'portrait' | 'landscape') {
+        const target = getTarget('print-area');
+        if (!target) return;
 
-    printRef.current = target;
+        printRef.current = target;
 
-    if (type === 'portrait') {
-      handlePrintPortrait?.();
-    } else {
-      handlePrintLandscape?.();
+        if (type === 'portrait') {
+            handlePrintPortrait?.();
+        } else {
+            handlePrintLandscape?.();
+        }
     }
-  }
+    
+    function onHandleWord(type: 'portrait' | 'landscape') {
+        const target = getTarget('print-area');
+        if (!target) return;
+
+        printRef.current = target;
+
+       
+        if(printRef){
+            if(type === 'portrait'){
+                // exportWord(printRef.current);
+            }else{
+                // landscapeWord(printRef.current);
+            }
+            setOrientation(type);
+            executeWord(printRef.current,type);
+            // dispatch(setloadedApi({
+            //     loaded:isExporting
+            // }))
+        }
+    }
+    
+    function exportToExcel() {
+        const target = getTarget('print-area');
+        if (!target) return;
+        printRef.current = target;
+        import("~/export/excel/export-excel").then((exportToExcel) => {
+            if(!printRef) return;
+                exportToExcel.default(printRef,title);
+            
+        });
+    }
     return (
         <DropdownMenu>
             <DropdownMenuTrigger className="group relative cursor-pointer h-8 w-8 right-1 mx-auto hover:w-32.5! transition-all duration-[0.75s] outline-hidden border-none rounded-full flex flex-row items-center justify-center shadow-sm shadow-sky-600 dark:shadow-sky-300 data-[state=open]:w-32.5!"> 
@@ -71,13 +132,13 @@ const { getTarget } = useExportTarget();
                         <DropdownMenuSub>
                             <DropdownMenuSubTrigger>Ms Word</DropdownMenuSubTrigger>
                             <DropdownMenuSubContent className="me-3 bg-linear-to-br from-sky-200 to-[#F7EEDD] dark:bg-linear-to-b dark:from-sky-800 shadow-sm dark:to-sky-700 hover:bg-zinc-600 hover:text-blue-600  dark:hover:text-blue-200 transition-colors duration-300 p-2 shadow-[#41C9E2]">
-                                <DropdownMenuItem>Portrait</DropdownMenuItem>
-                                <DropdownMenuItem>Landscape</DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => onHandleWord('portrait')}>Portrait</DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => onHandleWord('landscape')}>Landscape</DropdownMenuItem>
                             </DropdownMenuSubContent>
                         </DropdownMenuSub>
-                        <DropdownMenuItem>
-                        Ms.Excel
-                    </DropdownMenuItem>
+                        <DropdownMenuItem onClick={exportToExcel}>
+                            Ms.Excel
+                        </DropdownMenuItem>
                 </DropdownMenuGroup>
 
             </DropdownMenuContent>

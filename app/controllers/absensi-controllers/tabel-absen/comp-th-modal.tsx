@@ -1,13 +1,15 @@
-import { DropdownMenu, DropdownMenuContent } from "@radix-ui/react-dropdown-menu"
+
 import { PencilIcon, Plus, Trash } from "lucide-react"
 import type { CSSProperties, ReactNode } from "react"
 import type { TriggerTable } from "~/components/dropdowns/dropdown-action-table"
 import { useModal } from "~/components/modals/modal-provider"
 import { ThEdura } from "~/components/tabels/tabel-components"
-import { DropdownMenuItem, DropdownMenuTrigger } from "~/components/ui/dropdown-menu"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "~/components/ui/dropdown-menu"
+
 import TooltipComp from "~/components/ui_edura/tooltip-comp"
 import type OrmKaldik from "~/domain/kaldik/orm-kaldik"
 import type { keteranganLabelKaldik } from "~/domain/kaldik/type-output-kaldik"
+import { useMobileNavigation } from "~/hooks/use-mobile-navigation"
 import { ShortDayName } from "~/lib/date-helper"
 import type { KaldikType } from "~/types/kaldik"
 
@@ -28,7 +30,7 @@ export default function ThSettingKalendar({
     style?: CSSProperties,
     ormKaldik:OrmKaldik
 }){
-
+    
     let teksKonten: string[]= [];
     const objekKosong = ormKaldik.dataTemplate();
     const {actions} = useModal();
@@ -63,43 +65,46 @@ export default function ThSettingKalendar({
 
     if(eventYet){
         return (
-            <TooltipComp content={keteranganKaldik.length>0?{children:<TooltipContentKeteranganKalendar kontenTooltip={teksKonten}/>}:''}>
-                <ThEdura style={style} className="relative ring-0 outline-0 select-none">
-                    {
-                        (!isLibur && !eventYet)&& (
-                            <span className="rounded-full bg-green-500 h-2 w-2 absolute top-0.5 right-0.5 print:hidden" title="Hari Efektif"></span>
-                        )
-                    }
-                    <div className="flex flex-col capitalize mt-1">
-                        <span className="text-[10px]">
-                            {date.getDate()}
-                        </span>
-                        <span className="text-[8px]">
-                            {ShortDayName[date.getDay()]}
-                        </span>
+            <ThEdura style={style} className="relative ring-0 outline-0 select-none print:static">
+                <TooltipComp content={keteranganKaldik.length>0?{children:<TooltipContentKeteranganKalendar kontenTooltip={teksKonten}/>}:''}>
+                    <div>
+                        {
+                            (!isLibur && !eventYet)&& (
+                                <span className="rounded-full bg-green-500 h-2 w-2 absolute top-0.5 right-0.5 print:hidden" title="Hari Efektif"></span>
+                            )
+                        }
+                        <div className="flex flex-col capitalize mt-1">
+                            <span className="text-[10px]">
+                                {date.getDate()}
+                            </span>
+                            <span className="text-[8px]">
+                                {ShortDayName[date.getDay()]} 
+                            </span>
+                        </div>
+
                     </div>
-                </ThEdura>
-            </TooltipComp>
+                </TooltipComp>
+            </ThEdura>
         )
     }
 
-    if(teksKonten.length === 0){
-        return (
-                <ThEdura style={style} className="relative ring-0 outline-0 select-none">
-                    <DropdownThKalendar 
-                        isLibur={isLibur}
-                        eventYet={eventYet}
-                        data={objekKosong}
-                        trigger={draftAction}
-                        date={date}
-                        />
-                </ThEdura>
-            )
-    }
+    // if(teksKonten.length === 0){
+    //     return (
+    //             <ThEdura style={style} className="relative ring-0 outline-0 select-none print:static">
+    //                 <DropdownThKalendar 
+    //                     isLibur={isLibur}
+    //                     eventYet={eventYet}
+    //                     data={objekKosong}
+    //                     trigger={draftAction}
+    //                     date={date}
+    //                     />
+    //             </ThEdura>
+    //         )
+    // }
 
     return (
-        <TooltipComp content={{children:<TooltipContentKeteranganKalendar kontenTooltip={teksKonten}/>}}>
-            <ThEdura style={style} className="relative select-none ring-0 outline-0">
+        <ThEdura style={style} className="relative select-none ring-0 outline-0">
+            <TooltipComp content={{children:<TooltipContentKeteranganKalendar kontenTooltip={teksKonten}/>}}>
                     <DropdownThKalendar 
                         isLibur={isLibur}
                         eventYet={eventYet}
@@ -107,8 +112,9 @@ export default function ThSettingKalendar({
                         trigger={draftAction}
                         date={date}
                         />
-                </ThEdura>
-        </TooltipComp>
+            </TooltipComp>
+            
+        </ThEdura>
     );
 }
 
@@ -139,13 +145,49 @@ function DropdownThKalendar({
     trigger:TriggerTable<KaldikType>[],
 }){
     return (
-        <DropdownMenu>
-            <DropdownMenuTrigger className="select-none  ring-0 outline-0">
-                {
-                    (!isLibur && !eventYet) && (
-                        <span className="rounded-full bg-green-500 h-2 w-2 absolute top-0.5 right-0.5 print:hidden" title="Hari Efektif"></span>
-                    )
-                }
+        <>
+        <div className="print:hidden">
+                <DropdownMenu>
+                    <DropdownMenuTrigger className="select-none print:static ring-0 outline-0">
+                        {
+                            (!isLibur && !eventYet) && (
+                                <span className="rounded-full bg-green-500 h-2 w-2 absolute top-0.5 right-0.5 print:hidden" title="Hari Efektif"></span>
+                            )
+                        }
+                        <div className="flex flex-col capitalize mt-1">
+                            <span className="text-[10px]">
+                                {date.getDate()}
+                            </span>
+                            <span className="text-[8px]">
+                                {ShortDayName[date.getDay()]}
+                            </span>
+                        </div>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent  align="start" className="bg-transparent shadow-none border-0 outline-1 z-10">
+                        {
+                            trigger.map(({label, icon:Icon, callback}, index)=>(
+                                <DropdownMenuItem 
+                                    key={index} 
+                                    className="group w-60 md:w-10 overflow-hidden rounded-none first-of-type:rounded-t-lg md:first-of-type:rounded-t-full last-of-type:rounded-b-lg md:last-of-type:rounded-b-full border-l    bg-linear-to-l from-sky-500 to-sky-100 border-sky-950 transition-width duration-300 md:hover:w-30 hover:border-gray-200 hover:shadow-lg hover:rounded-e-full first-of-type:hover:rounded-t-full last-of-type:hover:rounded-b-full has-focus:w-60 focus:bg-gray-500 hover:bg-gray-100 has-focus:shadow-lg"
+                                    >
+                                        <button
+                                            onClick={(e)=>callback(data)}
+                                            className="peer flex w-full cursor-pointer items-center gap-2.5 p-1 text-left text-sky-900 transition-width active:scale-95"
+                                            >
+                                                <Icon  className="aspect-square size-4 text-sky-900" />
+                                                <div className="text-xs text-nowrap">{label}</div>
+                                        </button>
+                                </DropdownMenuItem>
+                            ))
+                        }
+                    </DropdownMenuContent>
+                </DropdownMenu>
+        </div>
+        <div className="hidden print:block relative">
+                {(!isLibur && !eventYet) && (
+                    <span className="rounded-full bg-green-500 h-2 w-2 absolute top-0.5 right-0.5 print:hidden"></span>
+                )}
+
                 <div className="flex flex-col capitalize mt-1">
                     <span className="text-[10px]">
                         {date.getDate()}
@@ -154,25 +196,7 @@ function DropdownThKalendar({
                         {ShortDayName[date.getDay()]}
                     </span>
                 </div>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent  align="start" className="bg-transparent shadow-none border-0 outline-1 z-10">
-                {
-                    trigger.map(({label, icon:Icon, callback}, index)=>(
-                        <DropdownMenuItem 
-                            key={index} 
-                            className="group w-60 md:w-10 overflow-hidden rounded-none first-of-type:rounded-t-lg md:first-of-type:rounded-t-full last-of-type:rounded-b-lg md:last-of-type:rounded-b-full border-l    bg-linear-to-l from-sky-500 to-sky-100 border-sky-950 transition-width duration-300 md:hover:w-30 hover:border-gray-200 hover:shadow-lg hover:rounded-e-full first-of-type:hover:rounded-t-full last-of-type:hover:rounded-b-full has-focus:w-60 focus:bg-gray-500 hover:bg-gray-100 has-focus:shadow-lg"
-                            >
-                                <button
-                                    onClick={(e)=>callback(data)}
-                                    className="peer flex w-full cursor-pointer items-center gap-2.5 p-1 text-left text-sky-900 transition-width active:scale-95"
-                                    >
-                                        <Icon  className="aspect-square size-4 text-sky-900" />
-                                        <div className="text-xs text-nowrap">{label}</div>
-                                </button>
-                        </DropdownMenuItem>
-                    ))
-                }
-            </DropdownMenuContent>
-        </DropdownMenu>
+            </div>
+        </>
     )
 }

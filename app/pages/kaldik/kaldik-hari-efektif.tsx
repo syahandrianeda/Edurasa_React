@@ -9,13 +9,9 @@ import { currentTapel } from "~/lib/current-tapel";
 export default function KaldikHariEfektif({semester}:{semester:number}){
     const ormKaldik = useAppSelector(instanceOfKaldik);
     const {value}= useFilterContext();
-    const isSabtuLibur = value?.sabtuLibur;
-    const isBottomKeterangan = value?.isBottomKalendar;
-    const includingHariEfektif = value?.includingHariEfektif;
-    
+    const isSabtuLibur = useAppSelector(state=>state.uiPreference.sabtuLibur);//value?.sabtuLibur;
     const modePartSemester = value?.kaldikSatuTahun;
 
-    
     const {includeKeterangan:dataKaldikSemester, dataKeterangan,dataPropertiHari, totalPropertiHari, totalPropertiHariBelajar} = useMemo(() => {
         return ormKaldik.getKaldikSemester(semester,isSabtuLibur)
     }, [ormKaldik, isSabtuLibur]);
@@ -47,7 +43,6 @@ export default function KaldikHariEfektif({semester}:{semester:number}){
                     </>
                 )
             }                       
-            
         </div>
     )
 };

@@ -9,6 +9,7 @@ export type RadioLabelProps = {
 export default function RadioboxLabel({
     children,
     className,
+
     checked,
     onChange,
     ...props

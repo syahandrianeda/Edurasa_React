@@ -9,9 +9,7 @@ import { currentTapel } from "~/lib/current-tapel";
 export default function KaldikJamEfektifBelajar({semester}:{semester:number}){
     const ormKaldik = useAppSelector(instanceOfKaldik);
     const {value}= useFilterContext();
-    const isSabtuLibur = value?.sabtuLibur;
-    const isBottomKeterangan = value?.isBottomKalendar;
-    const includingHariEfektif = value?.includingHariEfektif;
+    const isSabtuLibur = useAppSelector(state=>state.uiPreference.sabtuLibur);// value?.sabtuLibur;
     
     const modePartSemester = value?.kaldikSatuTahun;
 

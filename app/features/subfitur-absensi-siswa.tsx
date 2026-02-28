@@ -35,7 +35,7 @@ const SubfiturAbsensiSiswa: typeSidebarFiturKonten[] = [
         breadCrumbs: [
             {
                 title: 'Rekap Bulanan',
-                href: '/absensi-siswa/absensi-bulanan-siswa',
+                href: '/absensi-siswa/rekap-absensi-siswa',
                 icon: CalendarDays,
                 description:'Rekap Kehadiran Siswa per Bulan',
                 permission: 'view absensi siswa'
@@ -43,7 +43,7 @@ const SubfiturAbsensiSiswa: typeSidebarFiturKonten[] = [
             
             {
                 title: 'Kehadiran Semester',
-                href: '/absensi-siswa/absensi-semester-siswa',
+                href: '/absensi-siswa/rekap-semester-siswa',
                 icon: BookUser,
                 description:'Rekap Kehadiran Siswa per Semester',
                 permission: 'view absensi siswa'
@@ -53,16 +53,16 @@ const SubfiturAbsensiSiswa: typeSidebarFiturKonten[] = [
     {
         groupTitle: 'Sakit Ijin Alpa',
         breadCrumbs: [
-            {
-                title: 'Per Bulan',
-                href: '/absensi-siswa/rekap-sia-bulanan',
-                icon: Sheet,
-                description:'Menampilkan Rekap SIA tiap bulan',
-                permission: 'view absensi siswa'
-            },
+            // {
+            //     title: 'Per Bulan',
+            //     href: '/absensi-siswa/rekap-sia-bulanan',
+            //     icon: Sheet,
+            //     description:'Menampilkan Rekap SIA tiap bulan',
+            //     permission: 'view absensi siswa'
+            // },
             
             {
-                title: 'Per Semester',
+                title: 'Rekap SIA',
                 href: '/absensi-siswa/rekap-sia-semester',
                 icon: Table2,
                 description:'Menampilkan Rekap SIA per Semester',

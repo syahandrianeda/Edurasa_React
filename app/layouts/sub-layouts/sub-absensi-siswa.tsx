@@ -42,7 +42,7 @@ export default function SubAbsensiSiswaLayout({matches}:Route.ComponentProps) {
         }, []);
     
     return (
-        <AppSidebar showExport={showExport} desktopHeader="relative" title={"Kesiswaan - "+ titleTambahan} controlKelas={controlKelas}>
+        <AppSidebar showExport={showExport} desktopHeader="relative" title={"Absensi - "+ titleTambahan} controlKelas={controlKelas}>
             <TopProgressBarFetch active={active} /> 
             <AppWorkplace MainFitur={result}>
                 <ToolbarFilterProvider>
@@ -52,8 +52,6 @@ export default function SubAbsensiSiswaLayout({matches}:Route.ComponentProps) {
                                 <ModalProvider>
                                     <Outlet/>
                                     <ModalFiturAbsen/>
-                                    {/* <ModalSettingKaldik/> */}
-                                    {/* <ModalDataSiswa/> */}
                                 </ModalProvider>
                             </PrintAreaWithKopTtd>
                         </ToolbarLayout>

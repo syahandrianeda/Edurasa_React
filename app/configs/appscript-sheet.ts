@@ -121,7 +121,7 @@ export default class AppScriptSheet extends AppScriptConfig{
      */
     CreateParamSheetAbsensiJenjang(jenjang:number, additonalParam:Record<string, any>){
         const namaSheet = this.sheetAbsensi(jenjang);
-        const tab =this.isDev?'trial_responses':'responses';
+        const tab ='responses';
         this.sheetAbsensiTabResponse={
             idss: namaSheet,
             tab: tab,

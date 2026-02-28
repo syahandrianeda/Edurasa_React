@@ -18,7 +18,7 @@ export default class AbsensiRepositoryImplements extends AppScriptSheet implemen
         return action.map(this.responActionRead);
     }
     async refreshAbsensi(): Promise<ApiResponse<Record<string, any>>> {
-        console.log('cek param di rombel ', this.paramSheetAbsensiJenjang)
+        
         const action = await this.postBody(this.paramSheetAbsensiJenjang);
         return this.responActionRead(action);
     }

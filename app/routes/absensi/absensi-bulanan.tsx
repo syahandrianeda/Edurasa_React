@@ -1,11 +1,6 @@
 import type { controlDropdownKelas } from "~/components/dropdowns/rombel-dropdown";
 import type { Route } from "./+types/absensi-bulanan";
-import { useAppSelector } from "~/context-reduct/hook";
-import { OrmAbsensiSelector } from "~/context-reduct/selectores/absensi-selector";
-import { useMemo } from "react";
-import { useFilterContext } from "~/components/toolbars/state-toolbar/state-toolbar";
 import AbsensiSiswaBulananPage from "~/pages/absensi/absensi-siswa-bulanan";
-import { ConfigToolbarLaporan } from "~/controllers/data-siswa-controller/config-toolbar";
 import { ConfigToolbarAbsenBulanan } from "~/controllers/absensi-controllers/toolbar/confit-toolbar-absen";
 
 export function meta({matches}: Route.MetaArgs) {
@@ -37,10 +32,9 @@ export function clientLoader({}:Route.ComponentProps){
         
 
     return {
-        titleTambahan:'Hari ini',
+        titleTambahan:'Per Bulan',
         controlKelas: settingRombel,
         toolbarTabs: ConfigToolbarAbsenBulanan,
-       
     };
 }
 

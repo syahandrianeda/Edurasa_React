@@ -25,6 +25,8 @@ export type FilterContextValue<T = any> = {
   kaldikSatuTahun?:boolean
   //fitur absen
   modeTampilanAbsen?: modeTampilanAbsenType
+  modeTampilanAbsenStatistik?: modeTampilanAbsenType
+  modeTampilanChart?: modeTampilanAbsenType
   // fitur lain
   extra?: Record<string, unknown>
   filterSumberData?: FilterSumberData[]

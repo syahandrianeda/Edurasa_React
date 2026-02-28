@@ -6,6 +6,7 @@ import loadedApiReducer from './global-state/loaded-slice'
 import siswaDapodikReducer from './global-state/sheet-dapodik-slice'
 import kaldikReducer from './global-state/kaldik-slice';
 import absensiSiswaReducer from './global-state/absensi-slice'
+import sabtuLiburReducer from './global-state/sabtu-libur'
 
 const rootReducer = combineReducers({
     auth: authReducer,
@@ -14,7 +15,8 @@ const rootReducer = combineReducers({
     loadedApi: loadedApiReducer,
     siswaDapodik: siswaDapodikReducer,
     kaldik:kaldikReducer,
-    absensiSiswa:absensiSiswaReducer
+    absensiSiswa:absensiSiswaReducer,
+    uiPreference: sabtuLiburReducer
 })
 
 export default rootReducer

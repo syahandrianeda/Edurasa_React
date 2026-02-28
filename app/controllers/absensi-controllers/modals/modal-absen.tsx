@@ -1,11 +1,6 @@
-import { FormEdura, useFormEdura } from "~/components/form-custom/form-edura";
+import { FormEdura} from "~/components/form-custom/form-edura";
 import type { ModalState, ModalType } from "~/components/modals/modal-provider";
-import type OrmAbsensi from "~/domain/absensi/orm-absensi";
 import type { AbsensiSiswaType } from "~/types/absensi-siswa";
-import { useAppSelector } from "~/context-reduct/hook";
-import { selectAllSiswaDTO } from "~/context-reduct/selectores/data-siswa-aktif";
-import ButtonSetAsProfile from "../crud-provider/send-update-poto-profile";
-import { ImageProfileOrAbsen } from "./image-profile-or-absen";
 import PreviewGambar from "./column-preview-absen";
 import ColumnControlPresensi from "./column-control-presensi";
 import ColumnPreviewStatusData from "./column-preview-status-data";

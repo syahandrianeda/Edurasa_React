@@ -1,4 +1,4 @@
-import { Check, MarsStroke, Smile, User, UserCircle } from "lucide-react";
+import { Check, Smile,UserCircle } from "lucide-react";
 import { useEffect, useMemo } from "react";
 import { Fields, SelectField } from "~/components/fields/fields";
 import RadioboxLabel from "~/components/fields/radiobox-label";
@@ -106,13 +106,13 @@ export function InfoToolbarAbsensiBulanan() {
     },[]);
     useEffect(()=>{
         
-        if(!value?.bulan){
+        // if(!value?.bulan){
             const now = new Date(new Date().getFullYear(), new Date().getMonth(),1);
             setValue({
                 bulan:now
             })
             
-        }
+        // }
     },[])
     const handleCheckRadio = (v:string)=>{
         const find = TampilanAbsen.find(s=>s.name === v);

@@ -7,6 +7,7 @@ import TableWithScrolling, { HeadingTableEduraWithSort } from "~/components/tabe
 import { useFilterContext } from "~/components/toolbars/state-toolbar/state-toolbar";
 import { useAppSelector } from "~/context-reduct/hook";
 import { selectAllSiswaDTO } from "~/context-reduct/selectores/data-siswa-aktif";
+import { getParseDateYYYYMMMDD } from "~/lib/date-helper";
 import { AgamaMeta, getAgamaLabel } from "~/types/enums/agama";
 import { GenderMeta, getGenderLabel } from "~/types/enums/gender";
 import type { SiswaType } from "~/types/siswa";
@@ -202,21 +203,29 @@ function BodyKeluar({
 
   const data = useMemo(() => {
     if (!tahun) return siswaktifRombel;
-
+const tglMasukStart = new Date(tahun, 6, 1);
+    const tglMasukEnd = new Date(tahun+1, 5, 30);
+    const start = getParseDateYYYYMMMDD(tglMasukStart);
+    const end = getParseDateYYYYMMMDD(tglMasukEnd);
+    console.log('data Siswa', siswaktifRombel, end, start);
     return siswaktifRombel.filter((siswa) => {
-    //   if (!siswa.keluar_tgl) return false;
+        const d = getParseDateYYYYMMMDD(new Date(siswa.keluar_tgl));
+        if(siswa.keluar_tgl === null){
+            console.log('siswa ini keluar tgl null', siswa);
+        }
+        return start<=d && end >=d;
+    
+    //   const d = new Date(siswa.keluar_tgl);
+    //   const y = d.getFullYear();
+    //   const m = d.getMonth() + 1;
+    //   const day = d.getDate();
 
-      const d = new Date(siswa.keluar_tgl);
-      const y = d.getFullYear();
-      const m = d.getMonth() + 1;
-      const day = d.getDate();
-
-      return (
+    //   return (
             
-            (y > tahun || (y === tahun && (m > 7 || (m === 7 && day >= 1)))) &&
-            (y < tahun + 1 || (y === tahun + 1 && (m < 6 || (m === 6 && day <= 30))))
+    //         (y > tahun || (y === tahun && (m > 7 || (m === 7 && day >= 1)))) &&
+    //         (y < tahun + 1 || (y === tahun + 1 && (m < 6 || (m === 6 && day <= 30))))
         
-      );
+    //   );
     });
   }, [siswaktifRombel, tahun]);
 

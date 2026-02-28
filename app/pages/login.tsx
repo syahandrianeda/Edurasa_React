@@ -6,11 +6,6 @@ import { Form, useNavigation } from "react-router";
 import { TopProgressBarFetch } from "~/components/ui_edura/top-progress-bar";
 import type { ApiError } from "~/configs/appscript-config";
 
-// import AuthRepository from "~/domain/auth/auth-repository";
-// import AuthService from "~/domain/auth/auth-service";
-// import { redirect, useNavigate } from "react-router";
-
-
 export default function LoginPage(
     {
         dataAction

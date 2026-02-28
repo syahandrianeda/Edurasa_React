@@ -21,7 +21,7 @@ export default function TableWithScrolling({children, className}:{children:React
                 </div>
                 <div
                     ref={bottomScrollRef}
-                    className="overflow-x-auto scrol-h-custom"
+                    className="overflow-x-auto scrol-h-custom print:overflow-visible"
                 >
                     <div ref={tableContainerRef}>
                         <TableEdura className={cn("text-xs w-full leading-normal",className)}>

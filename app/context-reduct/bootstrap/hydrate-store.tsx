@@ -33,6 +33,9 @@ export function hydratePreloadedState(): Partial<RootState> {
     },
     absensiSiswa:{
       dataAbsensi:[]
+    },
+    uiPreference:{
+      sabtuLibur:true
     }
 
 

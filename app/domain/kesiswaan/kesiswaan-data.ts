@@ -18,7 +18,6 @@ export default class KesiswaanData{
         return this.findDuplicateBy(this.allSiswa, 'nis');
     }
     get collectAgama(){
-        // return this.uniqueBy(this.dataCurrent,'pd_agama');
         if (!this._collectAgama) {
             this._collectAgama = this.uniqueBy(
                 this.dataCurrent,
@@ -144,7 +143,6 @@ export default class KesiswaanData{
             if (!this.isValidKey(value)) return;
 
             map.set(value, (map.get(value) ?? 0) + 1);
-            // map.set(item[key], (map.get(item[key]) ?? 0) + 1);
         });
 
         return [...map.entries()]
@@ -188,6 +186,7 @@ export default class KesiswaanData{
 
         return [...map.keys()];
         }
+
     collectYearsByKey<K extends keyof SiswaType>(key:K):number[]{
         const years = this.dataCurrent
             .map(s => {
@@ -199,6 +198,7 @@ export default class KesiswaanData{
 
         return [...new Set(years)].sort((a, b) => a - b);
     }
+
     collectAllYearsByKey<K extends keyof SiswaType>(key:K):number[]{
         const years = this.allSiswa
             .map(s => {
@@ -218,14 +218,7 @@ export default class KesiswaanData{
     }
     
     parseDateYYYYMMDD(value: unknown): number  {
-        // if (!value) return null;
-        // const d = value instanceof Date ? value : new Date(value as any);
-        // const y = d.getFullYear().toString();
-        // const m = String(d.getMonth()+1).padStart(2,'0');
-        // const day = String(d.getDate()).padStart(2,'0');
-        // const teks = y+m+day;
-
-        // return Number.isNaN(teks) ? null : Number(teks);
+        
         return getParseDateYYYYMMMDD(value);
     }
     
@@ -241,54 +234,104 @@ export default class KesiswaanData{
 
         return this.allSiswa.filter(s => {
             const masuk = this.parseDateYYYYMMDD(s.masuk_tgl);
-            // const masuk = this.parseDate(s[checkIn]);
-            if (!masuk) return false;
 
-            
+            if (!masuk) return false;
             const keluar = this.parseDateYYYYMMDD(s.keluar_tgl) ===0?Infinity:this.parseDateYYYYMMDD(s.keluar_tgl);;
 
-            // const masukTime = masuk.getTime();
-            // const keluarTime = keluar?.getTime() ?? Infinity;
-
-            // return masuk <= endTime && keluar >= startTime;
             return masuk >= startTime && keluar >=endTime
         });
     }
+    laporanMutasiMasuk(bulan:Date):SiswaType[]{
+        /**
+         * menentukan data siswa di rombel apapun yang masuk di bulan ini, berarti:
+         * tentukan tglAwalBulan dan tglAkhirBulan
+         */
+        const tglAwalBulan = bulan;
+        const tglAkhirBulan = getLastDate(bulan);
+        const start = this.parseDateYYYYMMDD(tglAwalBulan);
+        const end = this.parseDateYYYYMMDD(tglAkhirBulan);
+        /**
+         * untuk laporanMutasiMasuk, jika bulan julli semester 1, maka seluruh data di kelas tersebut DITAMBAH siswa yang benar-benar masuk di bulan itu:
+         */
+        const siswaCheckInThisMonth = this.allSiswa.filter(s=>{
+            const checkIn = new Date(s.masuk_tgl); /// ini dipatiksan tidak berisi null/undefined
+            const checkOut = new Date(s.keluar_tgl);// ini berisi null// undefined;
+            const parseCheckIn = this.parseDateYYYYMMDD(checkIn);
+            const parseChekOut =  s.keluar_tgl===null?Infinity:this.parseDateYYYYMMDD(checkOut);
+            return parseCheckIn >=start && parseCheckIn <= end
+        });
+        const siswaAktif = this.allSiswa.filter(s=> {
+            const checkIn = new Date(s.masuk_tgl); /// ini dipatiksan tidak berisi null/undefined
+            const checkOut = new Date(s.keluar_tgl);// ini berisi null// undefined;
+            const masuk = this.parseDateYYYYMMDD(s.masuk_tgl);
+            const keluar = s.keluar_tgl===null?Infinity:this.parseDateYYYYMMDD(checkOut);
+            
+            return (keluar >= start && masuk <= end);
+        }
+            ).sort((a,b)=>a.masuk_tgl.getTime()-b.masuk_tgl.getTime());
+        
+        /** jika bulan juli, maka data ditambahkan dengan siswa yang aktif dibulan juli */
+            if(bulan.getMonth() === 6){
+                return siswaAktif.map(m=>siswaCheckInThisMonth.map(ss=>ss.id).includes(m.id)?({...m,riwayat_fisik:'siswa baru'}):({...m, riwayat_fisik:'naik kelas'}))
+            }
+
+        return siswaCheckInThisMonth
+    }
+
+    laporanKeadaanAwal(bulan:Date){
+        const lastTglPreviousMonth = new Date(bulan.getFullYear(),bulan.getMonth(),0);
+        const end = this.parseDateYYYYMMDD(lastTglPreviousMonth);
+        const siswa = this.allSiswa.filter(s=>{
+            const checkIn = new Date(s.masuk_tgl); /// ini dipatiksan tidak berisi null/undefined
+            const checkOut = new Date(s.keluar_tgl);// ini berisi null// undefined;
+            const masuk = this.parseDateYYYYMMDD(s.masuk_tgl);
+            const keluar = s.keluar_tgl===null?Infinity:this.parseDateYYYYMMDD(checkOut);
+            return (keluar >= end && masuk <=end);
+        })
+        
+        return {
+                laki: siswa.filter(s=>s.pd_jk === 'L').length,
+                perempuan: siswa.filter(s=>s.pd_jk === 'P').length,
+                total : siswa.length
+            }
+    }
+    laporanKeadaanAkhir(bulan:Date){
+        const lastTglPreviousMonth = getLastDate(bulan);//new Date(bulan.getFullYear(),bulan.getMonth(),0);
+        const end = this.parseDateYYYYMMDD(lastTglPreviousMonth);
+        const siswa = this.allSiswa.filter(s=>{
+            const checkIn = new Date(s.masuk_tgl); /// ini dipatiksan tidak berisi null/undefined
+            const checkOut = new Date(s.keluar_tgl);// ini berisi null// undefined;
+            const masuk = this.parseDateYYYYMMDD(s.masuk_tgl);
+            const keluar = s.keluar_tgl===null?Infinity:this.parseDateYYYYMMDD(checkOut);
+            return (keluar >= end && masuk <=end);
+        })
+        
+        return {
+                laki: siswa.filter(s=>s.pd_jk === 'L').length,
+                perempuan: siswa.filter(s=>s.pd_jk === 'P').length,
+                total : siswa.length
+            }
+    }
     filterAllDataUntilThisDate(refStartDate:Date): SiswaType[]{
-        // const refTime = refStartDate.getTime();\
         const lastDate = getLastDate(refStartDate)
         const refTime = this.parseDateYYYYMMDD(lastDate)??0;
         return this.allSiswa.filter(s => {
-            // const checkIn = this.parseDate(s.masuk_tgl);
             const checkIn = this.parseDateYYYYMMDD(s.masuk_tgl);
             if (!checkIn) return false; // skip entries with invalid/unknown masuk_tgl
+            const checkOut = s.keluar_tgl?this.parseDateYYYYMMDD(s.keluar_tgl): Infinity;
 
-            const checkOut = this.parseDateYYYYMMDD(s.keluar_tgl) ?? Infinity;
-            // const checkOut = this.parseDate(s.keluar_tgl);
-            // const checkInTime = checkIn.getTime();
-            // const checkOutTime = checkOut ? checkOut.getTime() : Infinity;
-
-            // return checkInTime <= refTime && checkOutTime > refTime;
             return checkIn <= refTime && checkOut > refTime;
         });
     }
     filterAllDataWhenCheckInThisMonth(refDate:Date): SiswaType[] {
-        // const refTimeIn = refDate.getTime();
-        // const refTimeOutDate = getLastDate(refDate);
-        // const refTimeOut = refTimeOutDate.getTime();
         const refTimeIn = this.parseDateYYYYMMDD(refDate) ?? 0;
         const refTimeLastDate = getLastDate(refDate);
         const refTimeOut = this.parseDateYYYYMMDD(refTimeLastDate) ?? Infinity;
 
         return this.allSiswa.filter(s => {
-            // const checkIn = this.parseDate(s.masuk_tgl);
             const checkIn = this.parseDateYYYYMMDD(s.masuk_tgl);
             if (!checkIn) return false; // skip entries with invalid/unknown masuk_tgl
 
-            // const checkInTime = checkIn.getTime();
-            
-
-            // return checkInTime >= refTimeIn && checkInTime <= refTimeOut;
             return checkIn >= refTimeIn && checkIn <= refTimeOut;
         });
         
@@ -299,10 +342,9 @@ export default class KesiswaanData{
         const refTimeOut = this.parseDateYYYYMMDD(refTimeLastDate) ;//?? Infinity;
 
         return this.allSiswa.filter(s => {
-            const checkOut = this.parseDateYYYYMMDD(s.keluar_tgl) ?? 0 ;
-            
-            
-            return checkOut >= refTimeIn && checkOut <= refTimeOut;
+                const checkOut = this.parseDateYYYYMMDD(s.keluar_tgl) ?? 0 ;
+    
+                return checkOut >= refTimeIn && checkOut <= refTimeOut;
         });
         
     }
@@ -334,14 +376,6 @@ export default class KesiswaanData{
     
      // helper static
     private static hitungUmur(tanggalLahir: Date, referensi = new Date()): number {
-        // let umur = referensi.getFullYear() - tanggalLahir.getFullYear();
-        // const m = referensi.getMonth() - tanggalLahir.getMonth();
-
-        // if (m < 0 || (m === 0 && referensi.getDate() < tanggalLahir.getDate())) {
-        // umur--;
-        // }
-
-        // return umur;
         return hitungUmurTahun(tanggalLahir, referensi);
     }
     filterByRentangUmur(rentang: RentangUmur, referensi: Date = new Date()): SiswaType[] {
@@ -349,11 +383,10 @@ export default class KesiswaanData{
 
         return this.allSiswa.filter(siswa => {
             if (!siswa.pd_tanggallahir) return false;
-
             const umur = KesiswaanData.hitungUmur(
-            new Date(siswa.pd_tanggallahir),
-            referensi 
-            );
+                    new Date(siswa.pd_tanggallahir),
+                    referensi 
+                    );
 
             return umur >= min && umur <= max;
         });
@@ -398,6 +431,4 @@ export default class KesiswaanData{
     countAgamaGendersRombel(agama:Agama, gender:Gender[], rombel:string){
         return this.filterByAgamaGendersRombel(agama, gender, rombel).length;
     }
-
 }
-

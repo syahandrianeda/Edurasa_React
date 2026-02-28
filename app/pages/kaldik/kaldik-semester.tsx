@@ -9,7 +9,7 @@ import { currentTapel } from "~/lib/current-tapel";
 export default function KaldikSemesterPage({semester}:{semester:number}){
     const ormKaldik = useAppSelector(instanceOfKaldik);
     const {value}= useFilterContext();
-    const isSabtuLibur = value?.sabtuLibur;
+    const isSabtuLibur= useAppSelector(state=>state.uiPreference.sabtuLibur);// value?.sabtuLibur;
     const isBottomKeterangan = value?.isBottomKalendar;
     const includingHariEfektif = value?.includingHariEfektif;
 
@@ -19,7 +19,7 @@ export default function KaldikSemesterPage({semester}:{semester:number}){
     }, [ormKaldik, isSabtuLibur]);
     
     return (
-        <div className="p-1">
+        <div className="p-1" data-word="img">
             <h3 className="text-3xl text-center font-extrabold uppercase mb-0">Kalender Pendidikan</h3>
             <h3 className="text-2xl text-center font-extrabold uppercase mb-0">{IDENTITAS_SEKOLAH}</h3>
             <h3 className="text-xl text-center font-extrabold mb-5">{currentTapel({variant:'full'})} Semester {semester}</h3>

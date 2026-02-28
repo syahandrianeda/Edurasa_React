@@ -75,13 +75,13 @@ function SwitchTitle(state:ModalState):string{
         case 'EDIT PROFIL':
             return 'Setting Poto Profil : '  +((state.payload as { pd_nama?: string })?.pd_nama ?? '');
         case 'EDIT SISWA':
-            return 'Edit Data: '  +((state.payload as { pd_nama?: string })?.pd_nama ?? '') +' tanggal ';
+            return 'Edit Data: '  +((state.payload as { pd_nama?: string })?.pd_nama ?? '') 
         case 'TAMBAH ABSEN':
-            return 'Tambah Absen '  +((state.payload as { name?: string })?.name ?? '') +' tanggal ' + ((state.payload as { Time_Stamp?: Date })?.Time_Stamp?.toLocaleString('id-ID', {dateStyle:'full'}) ?? '');
+            return 'Tambah Absen '  +((state.payload as { name?: string })?.name ?? '') +' hari ' + ((state.payload as { Time_Stamp?: Date })?.Time_Stamp?.toLocaleString('id-ID', {dateStyle:'full'}) ?? '');
         case 'HAPUS ABSEN':
-            return 'Hapus Absen '  +((state.payload as { name?: string })?.name ?? '') +' tanggal ' + ((state.payload as { Time_Stamp?: Date })?.Time_Stamp?.toLocaleString('id-ID', {dateStyle:'full'}) ?? '');
+            return 'Hapus Absen '  +((state.payload as { name?: string })?.name ?? '') +' hari ' + ((state.payload as { Time_Stamp?: Date })?.Time_Stamp?.toLocaleString('id-ID', {dateStyle:'full'}) ?? '');
         case 'EDIT ABSEN':
-            return 'Edit Absen ' +((state.payload as { name?: string })?.name ?? '') +' tanggal ' + ((state.payload as { Time_Stamp?: Date })?.Time_Stamp?.toLocaleString('id-ID', {dateStyle:'full'}) ?? '');
+            return 'Edit Absen ' +((state.payload as { name?: string })?.name ?? '') +' hari ' + ((state.payload as { Time_Stamp?: Date })?.Time_Stamp?.toLocaleString('id-ID', {dateStyle:'full'}) ?? '');
         default:
             return  'Modal tidak ada'
     }

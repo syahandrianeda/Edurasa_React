@@ -74,7 +74,7 @@ export default function KeteranganKaldikPage(){
                     {
                         dataKaldikUrut.map((data,i)=>(
                             <TRowEdura key={i}>
-                                <TdEdura>{i+1}</TdEdura>
+                                <TdEdura data-content-type="number" className="text-center">{i+1}</TdEdura>
                                 <TdEdura className="print:hidden">
                                     <div className='w-fit border px-2 rounded-sm' style={{backgroundColor: data?.backgroundColor?data?.backgroundColor:'', color:data?.color?data?.color:''}}>tgl</div>
                                 </TdEdura>
@@ -87,10 +87,11 @@ export default function KeteranganKaldikPage(){
                                 <TdEdura>{data.keterangan}</TdEdura>
                                 <TdEdura className="text-end">{formatTanggalIndonesia(data.start_tgl)}</TdEdura>
                                 <TdEdura className="text-end">{formatTanggalIndonesia(data.end_tgl)}</TdEdura>
-                                <TdEdura className="text-end">{durasiHari(data.start_tgl,data.end_tgl)} hari</TdEdura>
-                                <TdEdura className="text-center">{data.libur?<Check size={14} className="mx-auto"/>:'-'}</TdEdura>
-                                <TdEdura className="text-center">{data.he?<Check className="mx-auto" size={14}/>:'-'}</TdEdura>
-                                <TdEdura className="text-center">{data.heb?<Check className="mx-auto" size={14}/>:'-'}</TdEdura>
+                                <TdEdura className="text-end">{durasiHari(data.start_tgl,data.end_tgl) + ' hari'}</TdEdura>
+                                {/* <TdEdura className="text-center">{data.libur?<Check size={14} className="mx-auto"/>:'-'}</TdEdura> */}
+                                <TdEdura className="text-center">{data.libur?'✔️':'-'}</TdEdura>
+                                <TdEdura className="text-center">{data.he?'✔️':'-'}</TdEdura>
+                                <TdEdura className="text-center">{data.heb?'✔️':'-'}</TdEdura>
                             </TRowEdura>
                         ))
                     }

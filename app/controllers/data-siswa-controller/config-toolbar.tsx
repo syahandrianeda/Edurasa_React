@@ -434,6 +434,12 @@ export function InfoToolbarMutasiLaporan() {
         return getBulanTapel(firstYear as number)
     }, [value.tahun])
 
+    useEffect(()=>{
+        setValue({
+            bulan:new Date(new Date().getFullYear(), new Date().getMonth(), 1)
+        })
+    },[]);
+    
     const isSameMonthYear = (a: Date, b: Date) =>
         a.getFullYear() === b.getFullYear() &&
         a.getMonth() === b.getMonth()
@@ -441,7 +447,7 @@ export function InfoToolbarMutasiLaporan() {
     useEffect(() => {
         if (!bulanOptions.length) return
         if (!value.bulan) {
-        setValue({ bulan: bulanOptions[0] })
+            setValue({ bulan: bulanOptions[0] })
         return
         }
 
