@@ -75,10 +75,21 @@ export default [
                     route("statistik-absensi-semester","routes/absensi/statistik-absensi-semester.tsx"),
                 ])
             ]),
-        ])
+        ]),
+        layout('layouts/provider-layout/crud-kurikulum-provider.tsx',[
+            layout("layouts/sub-layouts/sub-kurikulum.tsx",[
+                ...prefix('kurikulum',[
+                    index("routes/kurikulum/index-redirect.tsx"),
+                    route("cp","routes/kurikulum/cp-page.tsx"),
+                    // route("tp","routes/kurikulum/tp.tsx"),
+                    // route("atp","routes/kurikulum/atp.tsx"),
+                    // route("mapel","routes/kurikulum/mapel.tsx"),
+                    // route("jadwal-pelajaran","routes/kurikulum/jadwal-pelajaran.tsx"),
+                    // route("alokasi-waktu","routes/kurikulum/alokasi-waktu.tsx"),
+                ])
+            ])
 
-    ]),
-   
-    
+        ]),
+    ])
 
 ] satisfies RouteConfig;

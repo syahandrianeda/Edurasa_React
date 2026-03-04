@@ -7,6 +7,8 @@ import siswaDapodikReducer from './global-state/sheet-dapodik-slice'
 import kaldikReducer from './global-state/kaldik-slice';
 import absensiSiswaReducer from './global-state/absensi-slice'
 import sabtuLiburReducer from './global-state/sabtu-libur'
+import kurmerReducer from './global-state/kurikulum/kurmer-slice'
+import fokusMapelReducer from './global-state/kurikulum/fokus-mapel-slice'
 
 const rootReducer = combineReducers({
     auth: authReducer,
@@ -16,7 +18,9 @@ const rootReducer = combineReducers({
     siswaDapodik: siswaDapodikReducer,
     kaldik:kaldikReducer,
     absensiSiswa:absensiSiswaReducer,
-    uiPreference: sabtuLiburReducer
+    uiPreference: sabtuLiburReducer,
+    kurmer:kurmerReducer,
+    fokusMapel: fokusMapelReducer,
 })
 
 export default rootReducer

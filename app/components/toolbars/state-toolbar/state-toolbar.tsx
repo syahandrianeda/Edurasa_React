@@ -7,6 +7,7 @@ import type { OptionDesignTableToolbar } from "./interface-design-table"
 import { useImmer } from "use-immer"
 import { OptionsDesignTableDefaultProps } from "./data-opsi-header-custom"
 import type { modeTampilanAbsenType } from "~/controllers/absensi-controllers/toolbar/mode-tampilan-absen-type"
+import type { InterfaceMapel } from "~/types/mapel"
 
 // domain/filter/FilterContext.ts
 
@@ -31,7 +32,8 @@ export type FilterContextValue<T = any> = {
   extra?: Record<string, unknown>
   filterSumberData?: FilterSumberData[]
   dataFilterToolbar?: T[]
-
+  // fitur Pilih Mapel Aktif:
+  fokusMapel?:InterfaceMapel
   // TABLE DESIGN
   draftOptionHeaderTable?: OptionDesignTableToolbar<T>[]
   desainFormatheader?: ThType<T>[]

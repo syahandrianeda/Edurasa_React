@@ -21,7 +21,7 @@ export function meta({matches}: Route.MetaArgs) {
     ];
 }
 export async function clientLoader({}:Route.ComponentProps){
-   
+
     const settingRombel: controlDropdownKelas ={
         showControlKelas:true,
         title: 'Rombel',

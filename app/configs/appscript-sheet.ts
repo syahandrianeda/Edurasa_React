@@ -26,6 +26,12 @@ export default class AppScriptSheet extends AppScriptConfig{
     protected sheetAkunTabDapodik       : ParamRequestAppScript  = {idss:'',tab:''};;
     protected sheetKaldikTabKaldik      : ParamRequestAppScript  = {idss:'',tab:''};
     protected sheetAbsensiTabResponse   : ParamRequestAppScript  = {idss:'',tab:''};
+    /** kurikulum */
+    protected sheetMateriTabElemenCp    : ParamRequestAppScript = {idss:'',tab:''};
+    protected sheetMateriTabFaseA       : ParamRequestAppScript = {idss:'',tab:''};
+    protected sheetMateriTabFaseB       : ParamRequestAppScript = {idss:'',tab:''};
+    protected sheetMateriTabFaseC       : ParamRequestAppScript = {idss:'',tab:''};
+    protected sheetMateriTabFaseTpAtp   : ParamRequestAppScript = {idss:'',tab:''};
 
     constructor(){
         super();
@@ -47,6 +53,9 @@ export default class AppScriptSheet extends AppScriptConfig{
     /** id sheet Kaldik: */
     get sheetKaldik():string{
         return this.currentMacro['ss_kalender']
+    }
+    get sheetMateri():string{
+        return this.currentMacro['ss_materi']
     }
     /** id sheet Absensi: */
     sheetAbsensi(jenjang:number):string{
@@ -134,5 +143,81 @@ export default class AppScriptSheet extends AppScriptConfig{
         return this.sheetAbsensiTabResponse;
     }
 
+    /**
+     * Kurikulum
+     */
+    set paramKurikulumCp(additionalParam:Record<string, any>){
+        const tab = this.isDev?'trial_elemencp':'elemencp';
+        this.sheetMateriTabElemenCp = {
+            idss: this.sheetMateri,
+            tab,
+            ...additionalParam
+        }
+    }
+    get paramKurikulumCp(){
+        return this.sheetMateriTabElemenCp;
+    }
+    //tp faseA
+    set paramKurikulumTpFaseA(additionalParam:Record<string, any>){
+        const tab = this.isDev?'trial_faseA':'faseA';
+        this.sheetMateriTabFaseA = {
+            idss: this.sheetMateri,
+            tab,
+            ...additionalParam
+        }
+    }
+    get paramKurikulumTpFaseA(){
+        return this.sheetMateriTabFaseA;
+    }
+    //tp faseB
+    set paramKurikulumTpFaseB(additionalParam:Record<string, any>){
+        const tab = this.isDev?'trial_faseB':'faseB';
+        this.sheetMateriTabFaseB = {
+            idss: this.sheetMateri,
+            tab,
+            ...additionalParam
+        }
+    }
+    get paramKurikulumTpFaseB(){
+        return this.sheetMateriTabFaseB;
+    }
+    //tp faseC
+    set paramKurikulumTpFaseC(additionalParam:Record<string, any>){
+        const tab = this.isDev?'trial_faseC':'faseC';
+        this.sheetMateriTabFaseC = {
+            idss: this.sheetMateri,
+            tab,
+            ...additionalParam
+        }
+    }
+    get paramKurikulumTpFaseC(){
+        return this.sheetMateriTabFaseC;
+    }
+    //atp
+    set paramKurikulumAtp(additionalParam:Record<string, any>){
+        const tab = this.isDev?'trial_faseTPATP':'faseTPATP';
+        this.sheetMateriTabFaseTpAtp = {
+            idss: this.sheetMateri,
+            tab,
+            ...additionalParam
+        }
+    }
+    get paramKurikulumAtp(){
+        return this.sheetMateriTabFaseTpAtp;
+    }
+    getParamKurikulumNeeded():ParamRequestAppScript[]{
+        this.paramKurikulumCp = {};
+        this.paramKurikulumTpFaseA={};
+        this.paramKurikulumTpFaseB = {};
+        this.paramKurikulumTpFaseC = {};
+        this.paramKurikulumAtp = {}
 
+        return [
+            this.sheetMateriTabElemenCp,
+            this.sheetMateriTabFaseA,
+            this.sheetMateriTabFaseB,
+            this.sheetMateriTabFaseC,
+            this.sheetMateriTabFaseTpAtp
+        ]
+    }
 }

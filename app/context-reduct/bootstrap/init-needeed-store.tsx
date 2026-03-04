@@ -11,6 +11,11 @@ import { setKaldik, setLoadedKaldik } from "../global-state/kaldik-slice";
 import type AbsensiServiceImplements from "~/infrastructures/services/absensi-service-implements";
 import { setAbsensiRombel } from "../global-state/absensi-slice";
 import type { AbsensiSiswaSheetType } from "~/types/absensi-siswa";
+import type ElemenCpServiceImplements from "~/infrastructures/services/elemencp-service-implements";
+import { setKurmerAtp, setKurmerCp, setKurmerTpFaseA, setKurmerTpFaseB, setKurmerTpFaseC } from "../global-state/kurikulum/kurmer-slice";
+import type { ElemenCpType } from "~/types/kurikulum/elemen-cp";
+import type { FaseKurikulumType } from "~/types/kurikulum/fase-kurikulum";
+import type { AtpKurikulumType } from "~/types/kurikulum/atp-kurikulum";
 
 export default class InitNeededSliceStore{
     constructor(private store: Store<RootState>){}
@@ -140,4 +145,56 @@ export default class InitNeededSliceStore{
             }
         );
     }
+    async needKurikulum(Service:ElemenCpServiceImplements){
+        if(
+            this.state.kurmer.loadedAtp && 
+            this.state.kurmer.loadedAtp &&
+            this.state.kurmer.loadedTpFaseA &&
+            this.state.kurmer.loadedTpFaseB &&
+            this.state.kurmer.loadedTpFaseC 
+        ) return;
+
+        this.store.dispatch(setloadedApi({
+                loaded:true
+            }));
+            
+        toast.promise(
+            Service.loadAllKurmer(),
+            {
+                loading: 'Memuat Kurikulum',
+                success: (datas) => {
+                    datas.forEach(({success,data,detailResponse})=>{
+                        
+                        if(success && detailResponse?.namaTab.toString().includes('elemencp')){
+                            this.store.dispatch(setKurmerCp(data as   ElemenCpType[]));
+                        }
+                        if(success && detailResponse?.namaTab.toString().includes('faseA')){
+                            this.store.dispatch(setKurmerTpFaseA(data as   FaseKurikulumType[]));
+                        }
+                        if(success && detailResponse?.namaTab.toString().includes('faseB')){
+                            this.store.dispatch(setKurmerTpFaseB(data as   FaseKurikulumType[]));
+                        }
+                        if(success && detailResponse?.namaTab.toString().includes('faseC')){
+                            this.store.dispatch(setKurmerTpFaseC(data as   FaseKurikulumType[]));
+                        }
+                        if(success && detailResponse?.namaTab.toString().includes('faseTPATP')){
+                            this.store.dispatch(setKurmerAtp(data as  AtpKurikulumType[]));
+                        }
+                    });
+                    return 'Pemanggilan data telah selesai' ;//+ data?.source;
+                },
+                error: 'Gagal memuat data Kurikulum',
+                finally:()=>{
+                    this.store.dispatch(setloadedApi({
+                            loaded:false
+                        }));
+                }
+
+                
+                
+            }
+        );
+        return []
+    }
+
 }
