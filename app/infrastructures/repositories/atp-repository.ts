@@ -11,6 +11,22 @@ export default class AtpRepository extends AppScriptSheet implements AtpReposito
         return await this.postBody(param);
     }
     async update(param: Record<string, any>): Promise<ApiResponse<AtpKurikulumType>> {
-        return await this.postBody(param);
+        
+        const paramUpdate = {
+            data: JSON.stringify([param]),
+            key_match:'idbaris',
+            key_index:'idbaris',
+            schema:JSON.stringify({
+                idbaris:'number',
+                foreignkey_elemencp:'number',
+                //idbaris	foreignkey_elemencp	
+                foreignkey_tp:'number',
+                // kelase:'string'
+            }),
+            action:'upsert'
+        }
+        this.paramKurikulumAtp = paramUpdate
+        const respon = await this.postBody(this.paramKurikulumAtp );
+        return this.responActionRead(respon);
     }
 }

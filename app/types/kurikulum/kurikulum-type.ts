@@ -1,3 +1,4 @@
+import type { Agama } from "../enums/agama";
 import type { AtpKurikulumType } from "./atp-kurikulum";
 import type { ElemenCpType } from "./elemen-cp";
 import type { FaseKurikulumType } from "./fase-kurikulum";
@@ -20,7 +21,7 @@ export interface OrmKurikulumMerdekaType{
     id_elemen_cp:number,
     kodemapel:string,
     elemen:string,
-    tp_fase_properties?:OrmFaseKurikulumType[],
+    tp_fase_properties:OrmFaseKurikulumType[],
     cp_utama:string,
     index:number,
     taksonomibloom?:string,
@@ -34,7 +35,7 @@ export interface OrmFaseKurikulumType{
     source_data_tp?:FaseKurikulumType
     tp:string,
     kelas?:number[],
-    atp?:OrmAtp[],
+    atp:OrmAtp[],
     countItem:number
 }
 export interface OrmAtp{
@@ -42,5 +43,25 @@ export interface OrmAtp{
     atp:string,
     source_atp?:AtpKurikulumType,
     kelas:number[],
-    countItem:number
+    countItem:number,
+    status?:string
+}
+export interface ormKurikulumInterface{
+    mapel_nama:string,
+    mapel_kode:string,
+    mapel_kode_umum:string,
+    mapel_khusus_penganut?:Agama|null,
+    mapel_id:number, // digunakan untuk pengurutan di rapor
+    fase: faseOrm[]
+
+}
+export interface currentFase extends ormKurikulumInterface{
+    currentFase:faseOrm
+}
+export interface faseOrm{
+    faseName:faseMerdekaType,
+    elemen_cp:OrmKurikulumMerdekaType[],
+    countItems:number,
+    memberJenjang:number[]
+
 }

@@ -5,7 +5,7 @@ import type { UserPtk } from "~/types";
 import type { RootState } from "../store";
 import { KoleksiIdFileByApp } from "~/types/absensi-siswa";
 import { KoleksiMapel } from "~/domain/mapel/koleksi-mapel";
-import type { InterfaceMapel } from "~/types/mapel";
+import type { InterfaceMapel } from "~/types/mapel/mapel";
 
 export function hydratePreloadedState(): Partial<RootState> {
   if (typeof window === "undefined") {
@@ -17,6 +17,7 @@ export function hydratePreloadedState(): Partial<RootState> {
   const defaultFokusmapel = KoleksiMapel.find(s=>s.kode === 'PKN') as InterfaceMapel;
   const mapelByUser = KoleksiMapel.find(s=>s.kode === user?.kode_mapel_ampu) as InterfaceMapel
   const mapelFokus = user?.jabatan === 'Guru Mapel'?mapelByUser:defaultFokusmapel;
+
   return {
     auth: {
       user: user ?? null,
@@ -57,6 +58,14 @@ export function hydratePreloadedState(): Partial<RootState> {
     fokusMapel:{
       data: mapelFokus,
       disabled:user?.jabatan === 'Guru Mapel'
+    },
+    mapel:{
+      dataMapel:[],
+      loadedMapel:false
+    },
+    mapelRombel:{
+      dataMapelRombel:[],
+      loadedDataMapelRombel:false
     }
 
   };

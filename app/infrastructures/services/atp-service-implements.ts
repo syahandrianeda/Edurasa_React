@@ -9,6 +9,7 @@ export default class AtpServiceImplements implements AtpServiceInterface{
         return await this.repo.create(param);
     }
     async update(param: Record<string, any>): Promise<ApiResponse<AtpKurikulumType>> {
+        
         return await this.repo.update(param);
     }
 }

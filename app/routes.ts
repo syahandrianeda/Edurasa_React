@@ -81,9 +81,9 @@ export default [
                 ...prefix('kurikulum',[
                     index("routes/kurikulum/index-redirect.tsx"),
                     route("cp","routes/kurikulum/cp-page.tsx"),
-                    // route("tp","routes/kurikulum/tp.tsx"),
-                    // route("atp","routes/kurikulum/atp.tsx"),
-                    // route("mapel","routes/kurikulum/mapel.tsx"),
+                    route("tp","routes/kurikulum/tp-page.tsx"),
+                    route("atp","routes/kurikulum/atp-page.tsx"),
+                    route("mapel","routes/kurikulum/mapel-route.tsx"),
                     // route("jadwal-pelajaran","routes/kurikulum/jadwal-pelajaran.tsx"),
                     // route("alokasi-waktu","routes/kurikulum/alokasi-waktu.tsx"),
                 ])

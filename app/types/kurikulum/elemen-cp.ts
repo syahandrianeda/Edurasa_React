@@ -7,5 +7,6 @@ export interface ElemenCpType {
     kode_elemen:number,
     cp_kunci:string,
     taksonomibloom:string,
+    status?:string
 
 }

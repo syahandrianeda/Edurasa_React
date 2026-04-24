@@ -20,6 +20,12 @@ export default class ElemenCpRepository extends AppScriptSheet implements Elemen
         return await this.postBody(param);
     }
     async update(param: Record<string, any>): Promise<ApiResponse<ElemenCpType>> {
-        return await this.postBody(param);
+        try{
+            const respon = await this.postBody(param);
+            return this.responActionRead(respon);
+        }catch(error){
+            return this.responActionError(error);
+        }
+        
     }
 }

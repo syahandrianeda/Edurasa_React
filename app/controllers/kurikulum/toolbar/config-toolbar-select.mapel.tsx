@@ -5,7 +5,7 @@ import { Field } from "~/components/ui/field";
 import { setFokusMapel } from "~/context-reduct/global-state/kurikulum/fokus-mapel-slice";
 import { useAppDispatch, useAppSelector } from "~/context-reduct/hook";
 import { KoleksiMapel } from "~/domain/mapel/koleksi-mapel";
-import type { InterfaceMapel } from "~/types/mapel";
+import type { InterfaceMapel } from "~/types/mapel/mapel";
 
 export const ConfigToolbarSelectMapel:TabsConfigProps =  {
         defaultValue:"tab1",

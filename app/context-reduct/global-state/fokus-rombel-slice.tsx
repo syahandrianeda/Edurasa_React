@@ -1,11 +1,11 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit"
 
 type fokusRombelType = {
-    value : string|null,
+    value? : string,
 }
 
 const initialState: fokusRombelType = {
-    value: null
+    value: undefined
 }
 
 

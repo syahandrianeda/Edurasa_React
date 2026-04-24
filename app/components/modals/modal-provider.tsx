@@ -12,6 +12,18 @@ export type ModalType =
     | 'TAMBAH ABSEN'
     | 'EDIT ABSEN'
     | 'HAPUS ABSEN'
+    | 'TAMBAH TP'
+    | 'EDIT TP'
+    | 'HAPUS TP'
+    | 'TAMBAH ATP'
+    | 'EDIT ATP'
+    | 'HAPUS ATP'
+    | 'TAMBAH MAPEL ROMBEL'
+    | 'EDIT MAPEL ROMBEL'
+    | 'HAPUS MAPEL ROMBEL'
+    | 'TAMBAH JADWAL MAPEL'
+    | 'EDIT JADWAL MAPEL'
+    | 'HAPUS JADWAL MAPEL'
     | null
 export interface ConfigModelType{
     closeOnOutsideClick: boolean,

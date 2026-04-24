@@ -71,12 +71,12 @@ export default function RekapAbsensiSiswaSemesterPage(){
                                             />
                                     )
                                 }
-                                <TdEdura className="text-center">{total_hadir}</TdEdura>
-                                <TdEdura className="text-center">{total_sakit}</TdEdura>
-                                <TdEdura className="text-center">{total_ijin}</TdEdura>
-                                <TdEdura className="text-center">{total_alpa}</TdEdura>
-                                <TdEdura className="text-center">{count_hari_efektif}</TdEdura>
-                                <TdEdura className="text-center">{countHEByMonth}</TdEdura>
+                                <TdEdura data-content-type="number" className="text-center">{total_hadir}</TdEdura>
+                                <TdEdura data-content-type="number" className="text-center">{total_sakit}</TdEdura>
+                                <TdEdura data-content-type="number" className="text-center">{total_ijin}</TdEdura>
+                                <TdEdura data-content-type="number" className="text-center">{total_alpa}</TdEdura>
+                                <TdEdura data-content-type="number" className="text-center">{count_hari_efektif}</TdEdura>
+                                <TdEdura data-content-type="number" className="text-center">{countHEByMonth}</TdEdura>
                                 <TdEdura className="text-end">{persentase_kehadiran}</TdEdura>
                             </TRowEdura>
                         ))

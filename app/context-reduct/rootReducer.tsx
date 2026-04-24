@@ -9,6 +9,8 @@ import absensiSiswaReducer from './global-state/absensi-slice'
 import sabtuLiburReducer from './global-state/sabtu-libur'
 import kurmerReducer from './global-state/kurikulum/kurmer-slice'
 import fokusMapelReducer from './global-state/kurikulum/fokus-mapel-slice'
+import mapelReducer from './global-state/mapel/mapel-slice';
+import mapelRombelReducer from './global-state/mapel/mapel-rombel-slice'
 
 const rootReducer = combineReducers({
     auth: authReducer,
@@ -21,6 +23,8 @@ const rootReducer = combineReducers({
     uiPreference: sabtuLiburReducer,
     kurmer:kurmerReducer,
     fokusMapel: fokusMapelReducer,
+    mapel:mapelReducer,
+    mapelRombel:mapelRombelReducer,
 })
 
 export default rootReducer

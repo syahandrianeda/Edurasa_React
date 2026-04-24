@@ -1,5 +1,5 @@
 import { Agama } from "~/types/enums/agama";
-import type { InterfaceMapel } from "~/types/mapel";
+import type { InterfaceMapel } from "~/types/mapel/mapel";
 
 // lihat refrensi di sheet materi
 export const KoleksiMapel: InterfaceMapel[]=[

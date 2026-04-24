@@ -87,21 +87,7 @@ export default function ThSettingKalendar({
             </ThEdura>
         )
     }
-
-    // if(teksKonten.length === 0){
-    //     return (
-    //             <ThEdura style={style} className="relative ring-0 outline-0 select-none print:static">
-    //                 <DropdownThKalendar 
-    //                     isLibur={isLibur}
-    //                     eventYet={eventYet}
-    //                     data={objekKosong}
-    //                     trigger={draftAction}
-    //                     date={date}
-    //                     />
-    //             </ThEdura>
-    //         )
-    // }
-
+    
     return (
         <ThEdura style={style} className="relative select-none ring-0 outline-0">
             <TooltipComp content={{children:<TooltipContentKeteranganKalendar kontenTooltip={teksKonten}/>}}>

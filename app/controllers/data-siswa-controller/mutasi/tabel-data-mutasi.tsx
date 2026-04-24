@@ -197,30 +197,20 @@ function Body({
     if (!tahun) return siswaktifRombel;
     const tglMasukStart = new Date(tahun, 6, 1);
     const tglMasukEnd = new Date(tahun+1, 5, 30);
-    console.log('tahun masuk', tahun, tglMasukStart, tglMasukEnd);
     const start = getParseDateYYYYMMMDD(tglMasukStart);
     const end = getParseDateYYYYMMMDD(tglMasukEnd);
     return siswaktifRombel.filter((siswa) => {
         const d = new Date(siswa.masuk_tgl);
         const yDd = getParseDateYYYYMMMDD(d);
         return start<=yDd && end >=yDd;
-        // const d = new Date(siswa.masuk_tgl);
-        // const y = d.getFullYear();
-        // const m = d.getMonth() + 1;
-        // const day = d.getDate();
-
-        // return (
-        //         (y > tahun || (y === tahun && (m > 7 || (m === 7 && day >= 1)))) &&
-        //         (y < tahun + 1 || (y === tahun + 1 && (m < 6 || (m === 6 && day <= 30))))
-        //     );
-        });
+    });
   }, [siswaktifRombel, tahun]);
 
   return (
     <HeadingTableEduraWithSort<SiswaType>
-      dataHead={HeadingTable}
-      data={data}
-      dataKey={tableKeys}
+        dataHead={HeadingTable}
+        data={data}
+        dataKey={tableKeys}
     />
   );
 }

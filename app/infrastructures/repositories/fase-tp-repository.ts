@@ -8,9 +8,20 @@ export default class FaseTpRepository extends AppScriptSheet implements FaseTpRe
         super();
     }
     async create(param: Record<string, any>): Promise<ApiResponse<FaseKurikulumType>> {
-        return this.postBody(param);
+        try{
+            const respon = await this.postBody(param);
+            return this.responActionRead(respon);
+        }catch(error){
+            return this.responActionError(error);
+        }
     }
     async update(param: Record<string, any>): Promise<ApiResponse<FaseKurikulumType>> {
-        return this.postBody(param);
+        try{
+            const respon = await this.postBody(param);
+            return this.responActionRead(respon);
+        }catch(error){
+            return this.responActionError(error);
+        }
+        
     }
 }

@@ -7,6 +7,7 @@ export default class DTOFaseTp{
             idbaris:resolveNumber(data.idbaris),
             foreignkey_elemencp: resolveNumber(data.foreignkey_elemencp),
             tp:resolveString(data.tp),
+            status:resolveString(data.status)
             // atp:resolveString(data.atp)
             // tpcustom:resolveString(data.tpcustom)
             // atpcustom:resolveString(data.atpcustom)
@@ -22,6 +23,7 @@ export default class DTOFaseTp{
             idbaris:resolveNumber(data.idbaris),
             foreignkey_elemencp: resolveNumber(data.foreignkey_elemencp),
             tp:resolveString(data.tp),
+            status:resolveString(data.status)
             // atp:resolveString(data.atp)
             // tpcustom:resolveString(data.tpcustom)
             // atpcustom:resolveString(data.atpcustom)

@@ -6,8 +6,10 @@ export interface FaseKurikulumType {
     foreignkey_elemencp:number,
     tp:string,
     atp?:string,
+    faseName?:string,
     tpcustom?:string,
     atpcustom?:string,
     jenjang?:string,
+    status?:string
 
 }

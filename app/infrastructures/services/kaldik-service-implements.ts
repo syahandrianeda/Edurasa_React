@@ -23,9 +23,7 @@ export default class KaldikServiceImplements implements KaldikServiceInterface{
         return await this.repo.create(param);
     }
     async update(param:Partial<ParamUpsert<KaldikSheetType>>): Promise<ApiResponse<KaldikType>>{
-        const paramUpsertCombine = {
-            ...param,
-        }
+
         return await this.repo.update(param);
     }
 }

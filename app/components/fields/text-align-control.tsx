@@ -47,18 +47,15 @@ export function RadioTextAlign({
                                 "has-checked:bg-green-400 has-checked:text-sky-900",
                                 "[&>svg]:size-3",
                             )}>
-                        <label
-                            
-                            
-                        >
-                        <input
-                            type="radio"
-                            name={`text-align-${sectionKey}`}
-                            className="hidden peer"
-                            checked={value === v}
-                            onChange={() => onChange(v)}
-                        />
-                        <Icon />
+                        <label>
+                            <input
+                                type="radio"
+                                name={`text-align-${sectionKey}`}
+                                className="hidden peer"
+                                checked={value === v}
+                                onChange={() => onChange(v)}
+                            />
+                            <Icon />
                         </label>
                     </ButtonTooltip>
                 ))

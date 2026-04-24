@@ -32,6 +32,10 @@ export default class AppScriptSheet extends AppScriptConfig{
     protected sheetMateriTabFaseB       : ParamRequestAppScript = {idss:'',tab:''};
     protected sheetMateriTabFaseC       : ParamRequestAppScript = {idss:'',tab:''};
     protected sheetMateriTabFaseTpAtp   : ParamRequestAppScript = {idss:'',tab:''};
+    /** mapel, jp-mapel, dan jadwal-mapel */
+    protected sheetMateriTabMapel       : ParamRequestAppScript = {idss:'',tab:''};
+    protected sheetMateriTabJpMapel     : ParamRequestAppScript = {idss:'',tab:''};
+    protected sheetMateriTabJadwalMapel : ParamRequestAppScript = {idss:'',tab:''};
 
     constructor(){
         super();
@@ -205,19 +209,64 @@ export default class AppScriptSheet extends AppScriptConfig{
     get paramKurikulumAtp(){
         return this.sheetMateriTabFaseTpAtp;
     }
+
+
     getParamKurikulumNeeded():ParamRequestAppScript[]{
         this.paramKurikulumCp = {};
         this.paramKurikulumTpFaseA={};
         this.paramKurikulumTpFaseB = {};
         this.paramKurikulumTpFaseC = {};
-        this.paramKurikulumAtp = {}
+        this.paramKurikulumAtp = {};
+        /** tambahan untuk mapel */
+        this.paramKurikulumMapel={};
+        this.paramKurikulumJpMapel ={} ;// a.ka mapel rombel
 
         return [
             this.sheetMateriTabElemenCp,
             this.sheetMateriTabFaseA,
             this.sheetMateriTabFaseB,
             this.sheetMateriTabFaseC,
-            this.sheetMateriTabFaseTpAtp
+            this.sheetMateriTabFaseTpAtp,
+            this.sheetMateriTabMapel,
+            this.sheetMateriTabJpMapel
         ]
+    }
+
+    
+    /** Mapel, jp-mapel, jadwal-mapel */
+    set paramKurikulumMapel(additionalParam:Record<string, any>){
+        const tab = 'mapel';
+        this.sheetMateriTabMapel = {
+            idss: this.sheetMateri,
+            tab,
+            ...additionalParam
+        }
+    }
+    get paramKurikulumMapel(){
+        return this.sheetMateriTabMapel;
+    }
+
+    set paramKurikulumJpMapel(additionalParam:Record<string, any>){
+        const tab = 'jp_mapel';
+        this.sheetMateriTabJpMapel = {
+            idss: this.sheetMateri,
+            tab,
+            ...additionalParam
+        }
+    }
+    get paramKurikulumJpMapel(){
+        return this.sheetMateriTabJpMapel;
+    }
+
+    set paramKurikulumJadwalMapel(additionalParam:Record<string, any>){
+        const tab = 'jadwal_mapel';
+        this.sheetMateriTabJadwalMapel = {
+            idss: this.sheetMateri,
+            tab,
+            ...additionalParam
+        }
+    }
+    get paramKurikulumJadwalMapel(){
+        return this.sheetMateriTabJadwalMapel;
     }
 }

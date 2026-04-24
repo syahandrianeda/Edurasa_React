@@ -16,6 +16,12 @@ import { setKurmerAtp, setKurmerCp, setKurmerTpFaseA, setKurmerTpFaseB, setKurme
 import type { ElemenCpType } from "~/types/kurikulum/elemen-cp";
 import type { FaseKurikulumType } from "~/types/kurikulum/fase-kurikulum";
 import type { AtpKurikulumType } from "~/types/kurikulum/atp-kurikulum";
+import { setDataMapel } from "../global-state/mapel/mapel-slice";
+import type { InterfaceMapelSheet } from "~/types/mapel/mapel";
+import { setDataMapelRombel } from "../global-state/mapel/mapel-rombel-slice";
+import type { jp_mapelSheet } from "~/types/mapel/jp_mapel";
+import type MapelRombelRepositoryInterface from "~/domain/interfaces/mapelrombel-repository-interface";
+import type MapelRombelServiceInterface from "~/domain/interfaces/mapelrombel-service-interface";
 
 export default class InitNeededSliceStore{
     constructor(private store: Store<RootState>){}
@@ -145,8 +151,11 @@ export default class InitNeededSliceStore{
             }
         );
     }
-    async needKurikulum(Service:ElemenCpServiceImplements){
+    // async needKurikulum(Service:ElemenCpServiceImplements){
+    async needKurikulum(Service:MapelRombelServiceInterface){
         if(
+            this.state.mapel.loadedMapel && 
+            this.state.mapelRombel.loadedDataMapelRombel &&
             this.state.kurmer.loadedAtp && 
             this.state.kurmer.loadedAtp &&
             this.state.kurmer.loadedTpFaseA &&
@@ -179,6 +188,12 @@ export default class InitNeededSliceStore{
                         }
                         if(success && detailResponse?.namaTab.toString().includes('faseTPATP')){
                             this.store.dispatch(setKurmerAtp(data as  AtpKurikulumType[]));
+                        }
+                        if(success && detailResponse?.namaTab ==='mapel'){
+                            this.store.dispatch(setDataMapel(data as InterfaceMapelSheet[]))
+                        }
+                        if(success && detailResponse?.namaTab==='jp_mapel'){
+                            this.store.dispatch(setDataMapelRombel(data as jp_mapelSheet[]));
                         }
                     });
                     return 'Pemanggilan data telah selesai' ;//+ data?.source;

@@ -59,16 +59,3 @@ export function FormEdura<T>({children, data}:{children:ReactNode, data:T}){
         </EduraContext>
     )
 }
-
- /* sync jika data awal berubah (edit / reset form)  dan ini hanya berlaku untuk MODAL*/
-    // useEffect(() => {
-    //     setCurrentData(() => data);
-    // }, [data, setCurrentData]);
-
-    // const value = useMemo(
-    //     () => ({
-    //         currentData,
-    //         setCurrentData,
-    //     }),
-    //     [currentData, setCurrentData]
-    // );

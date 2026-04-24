@@ -46,3 +46,19 @@ export function InputText ({ label, labelClassName, className, type='text', chil
     )
 }
 
+export function InputTextArea({ label, labelClassName, className, children, ...props}:ComponentProps<'textarea'>&{
+    label: string,
+    labelClassName?: string
+}){
+    return (
+        <>
+            <textarea rows={props.rows??6}
+                className={cn("block px-2.5 pb-2 pt-2 w-full text-sm text-gray-900 rounded-lg border border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600  bg-white dark:bg-gray-700 peer",className)}
+                {...props}/>
+
+            <label htmlFor={props.id} className={cn("absolute rounded-t-xl text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 left-1 ps-2 z-10 origin-left bg-white dark:bg-gray-700 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-100 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-placeholder-shown:left-2 peer-placeholder-shown:w-[calc(100%-12px)] peer-focus:w-auto peer-focus:top-1 peer-focus:left-1 peer-focus:ps-1 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1",labelClassName)}>
+                {label} 
+            </label>
+        </>
+    )
+}

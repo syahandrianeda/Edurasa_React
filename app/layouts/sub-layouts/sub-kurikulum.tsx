@@ -15,6 +15,7 @@ import ToolbarLayout from "./toolbar-layout";
 import PrintAreaWithKopTtd from "~/components/toolbars/kop-ttd/print-area-kopttd";
 import ModalProvider from "~/components/modals/modal-provider";
 import { Outlet } from "react-router";
+import ModalFiturKurikulum from "~/controllers/kurikulum/modals/modal-kurikulum";
 
 export default function SubKurikulumLayout({matches}:Route.ComponentProps) {
     
@@ -36,7 +37,7 @@ export default function SubKurikulumLayout({matches}:Route.ComponentProps) {
         }, []);
     
     return (
-        <AppSidebar showExport={showExport} desktopHeader="relative" title={"Absensi - "+ titleTambahan} controlKelas={controlKelas}>
+        <AppSidebar showExport={showExport} desktopHeader="relative" title={"Kurikulum - "+ titleTambahan} controlKelas={controlKelas}>
             <TopProgressBarFetch active={active} /> 
             <AppWorkplace MainFitur={result}>
                 <ToolbarFilterProvider>
@@ -45,7 +46,7 @@ export default function SubKurikulumLayout({matches}:Route.ComponentProps) {
                             <PrintAreaWithKopTtd>
                                 <ModalProvider>
                                     <Outlet/>
-                                    {/* <ModalFiturAbsen/> */}
+                                    <ModalFiturKurikulum/>
                                 </ModalProvider>
                             </PrintAreaWithKopTtd>
                         </ToolbarLayout>

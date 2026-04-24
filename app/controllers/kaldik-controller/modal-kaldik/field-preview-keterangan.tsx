@@ -29,7 +29,11 @@ export default function FieldKeteranganKaldik({date}:{date:Date}){
                     memberTanggal:member,
                     warnaLatar:bg,
                     warnaHuruf:color,
-                    className:'bg-amber-200'
+                    className:'bg-amber-200',
+                    
+                    idbaris:currentData.idbaris,
+                    start_tgl:currentData.start_tgl,
+                    end_tgl:currentData.end_tgl
                 };
             sumberKeterangan.splice(indexKeterangan,1,data);
             return sumberKeterangan;//.sort((a,b)=> a.start_tgl.getTime() - b.start_tgl.getTime());
