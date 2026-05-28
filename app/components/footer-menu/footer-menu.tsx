@@ -42,7 +42,7 @@ export default function FooterMenuEdura(){
         )
         dispatch(
             setFokusRombel(
-                {value:null}
+                {value:undefined}
             )
         )
         dispatch(

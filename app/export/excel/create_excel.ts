@@ -123,11 +123,11 @@ export async function MyCreateExcel(parse:ParsedElementEdura[],title:string){
                     pattern: 'solid',
                     fgColor: { argb: `FF${bg || 'FFFFFFFF'}` },
                 },
-                numFmt: cellData.typeData === 'number' ? '0' : '@',
+                numFmt: cellData?.typeData === 'number' ? '0' : '@',
                 
             }
             
-            if(joinText){
+            if(joinText !== undefined && joinText !== null){
                 cell.value = cellData.typeData === 'number' ? parseFloat(joinText) : joinText;
                 
             }

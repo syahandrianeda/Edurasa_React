@@ -66,7 +66,14 @@ export function hydratePreloadedState(): Partial<RootState> {
     mapelRombel:{
       dataMapelRombel:[],
       loadedDataMapelRombel:false
+    },
+    jadwalPelajaran:{
+      dataJadwalPelajaran:[],
+      loadedDataJadwalPelajaran:false
+    },
+    settingJadwalMapel:{
+      settingJadwal:[],
+      loadedSettingJadwal:false
     }
-
   };
 }

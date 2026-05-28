@@ -22,6 +22,10 @@ import { setDataMapelRombel } from "../global-state/mapel/mapel-rombel-slice";
 import type { jp_mapelSheet } from "~/types/mapel/jp_mapel";
 import type MapelRombelRepositoryInterface from "~/domain/interfaces/mapelrombel-repository-interface";
 import type MapelRombelServiceInterface from "~/domain/interfaces/mapelrombel-service-interface";
+import type { settingJadwalSheet } from "~/types/setting_jadwal/setting_jadwal";
+import { setSettingJadwalMapel } from "../global-state/mapel/setting-jadwal-mapel-slice";
+import type { jadwalMapelAccordTable } from "~/types/setting_jadwal/jadwal_mapel";
+import { setDataJadwalPelajaran } from "../global-state/mapel/jadwal-pelajaran";
 
 export default class InitNeededSliceStore{
     constructor(private store: Store<RootState>){}
@@ -173,7 +177,6 @@ export default class InitNeededSliceStore{
                 loading: 'Memuat Kurikulum',
                 success: (datas) => {
                     datas.forEach(({success,data,detailResponse})=>{
-                        
                         if(success && detailResponse?.namaTab.toString().includes('elemencp')){
                             this.store.dispatch(setKurmerCp(data as   ElemenCpType[]));
                         }
@@ -195,6 +198,12 @@ export default class InitNeededSliceStore{
                         if(success && detailResponse?.namaTab==='jp_mapel'){
                             this.store.dispatch(setDataMapelRombel(data as jp_mapelSheet[]));
                         }
+                        if(success && detailResponse?.namaTab==='jadwal_mapel'){
+                            this.store.dispatch(setDataJadwalPelajaran(data as jadwalMapelAccordTable[]));
+                        }
+                        if(success && detailResponse?.namaTab==='setting_jadwal'){
+                            this.store.dispatch(setSettingJadwalMapel(data as settingJadwalSheet[]));
+                        }
                     });
                     return 'Pemanggilan data telah selesai' ;//+ data?.source;
                 },
@@ -204,9 +213,6 @@ export default class InitNeededSliceStore{
                             loaded:false
                         }));
                 }
-
-                
-                
             }
         );
         return []

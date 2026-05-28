@@ -4,11 +4,8 @@ import { ActionButtonTable, type TriggerTable } from "~/components/dropdowns/dro
 import { useModal } from "~/components/modals/modal-provider";
 import { TdEdura, ThEdura, TRowEdura } from "~/components/tabels/tabel-components";
 import TableWithScrolling from "~/components/tabels/table-with-scrolling";
-import { useFilterContext } from "~/components/toolbars/state-toolbar/state-toolbar";
 import { useAppSelector } from "~/context-reduct/hook";
-import { DataSiswaAktifRombel } from "~/context-reduct/selectores/data-siswa-aktif";
-import { CurrentMapelInActiveRombel, OrmMapelSelector } from "~/context-reduct/selectores/mapel-rombel-selector";
-import { DtoMapelSelector } from "~/context-reduct/selectores/mapel-selector";
+import { OrmMapelSelector } from "~/context-reduct/selectores/mapel-rombel-selector";
 import { moveItem } from "~/lib/move_item";
 import type { jp_mapelApp, jp_mapelSheet } from "~/types/mapel/jp_mapel";
 import ButtonSendMapel from "../crud/send-mapelrombel";
@@ -67,7 +64,7 @@ export default function TableMapelOrm(){
         if (index === mapelData.length - 1) return; // sudah paling bawah
         setMapelData(prev => moveItem(prev, index, index + 1));
     };
-    console.log('mapel',mapel.collectifMapelRombel());
+    console.log('mapel',instanceMapel.data);
     return (
         <>
         <div className="flex justify-between gap-3 print:hidden">

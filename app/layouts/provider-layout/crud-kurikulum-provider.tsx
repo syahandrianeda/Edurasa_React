@@ -12,6 +12,8 @@ import ElemenCpServiceImplements from "~/infrastructures/services/elemencp-servi
 import FaseTpServiceImplements from "~/infrastructures/services/fase-tp-service-implements";
 import KesiswaanServiceImplements from "~/infrastructures/services/kesiswaan-service-implements";
 import MapelRombelServiceImplements from "~/infrastructures/services/mapelrombel-service-implements";
+import { SettingJadwalCrudProvider } from "~/controllers/jadwal_pelajaran/crud/crud-setting-jadwal-provider";
+import SettingJadwalService from "~/infrastructures/services/setting-jadwal-service";
 
 export default function CrudKurikulumLayout() {
     const store = useAppStore();
@@ -21,6 +23,7 @@ export default function CrudKurikulumLayout() {
     const serviceTpFase = new FaseTpServiceImplements();
     const serviceAtp = new AtpServiceImplements();
     const serviceSiswa = new KesiswaanServiceImplements();
+    const serviceSettingJadwal = new SettingJadwalService();
     useEffect(()=>{
         if(!user) return 
         
@@ -34,7 +37,10 @@ export default function CrudKurikulumLayout() {
             <CrudElemenCpProvider service={serviceElemen}>
                 <CrudTpFaseProvider service={serviceTpFase}>
                     <CrudAtpProvider service={serviceAtp}>
-                        <Outlet />
+                        <SettingJadwalCrudProvider service={serviceSettingJadwal}>
+                            <Outlet />
+                        </SettingJadwalCrudProvider>
+                        
                     </CrudAtpProvider>
                 </CrudTpFaseProvider>
             </CrudElemenCpProvider>

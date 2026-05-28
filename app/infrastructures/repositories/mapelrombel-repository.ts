@@ -4,11 +4,12 @@ import type MapelRombelRepositoryInterface from "~/domain/interfaces/mapelrombel
 import type { jp_mapelSheet } from "~/types/mapel/jp_mapel";
 
 export default class MapelRombelRepositoryImplements extends AppScriptSheet implements MapelRombelRepositoryInterface{
-     constructor(){
+        constructor(){
             super();
         }
         async loadAllNeed(): Promise<ApiResponse<Record<string, any>>[]> {
             const paramSheet = this.getParamKurikulumNeeded();
+            console.log('param sheet', paramSheet);
             const param = {
                 action:'readMultipleTab',
                 source:JSON.stringify(paramSheet)

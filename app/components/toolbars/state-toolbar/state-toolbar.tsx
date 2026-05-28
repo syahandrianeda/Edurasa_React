@@ -9,6 +9,8 @@ import { OptionsDesignTableDefaultProps } from "./data-opsi-header-custom"
 import type { modeTampilanAbsenType } from "~/controllers/absensi-controllers/toolbar/mode-tampilan-absen-type"
 import type { InterfaceMapel } from "~/types/mapel/mapel"
 import type { jp_mapelApp } from "~/types/mapel/jp_mapel"
+import type DtoSettingJadwalMapel from "~/dtos/dto-setting-jadwal-mapel"
+import type { settingJadwalApp } from "~/types/setting_jadwal/setting_jadwal"
 
 // domain/filter/FilterContext.ts
 
@@ -37,6 +39,8 @@ export type FilterContextValue<T = any> = {
   fokusMapel?:InterfaceMapel
   //urutan mapel
   urutanMapel?:jp_mapelApp[]
+  // fitur Setting Jadwal Mapel;
+  settingJadwalMapelToolbar?:settingJadwalApp
   // TABLE DESIGN
   draftOptionHeaderTable?: OptionDesignTableToolbar<T>[]
   desainFormatheader?: ThType<T>[]

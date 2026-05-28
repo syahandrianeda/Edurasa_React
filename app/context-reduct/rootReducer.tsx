@@ -11,6 +11,8 @@ import kurmerReducer from './global-state/kurikulum/kurmer-slice'
 import fokusMapelReducer from './global-state/kurikulum/fokus-mapel-slice'
 import mapelReducer from './global-state/mapel/mapel-slice';
 import mapelRombelReducer from './global-state/mapel/mapel-rombel-slice'
+import jadwalPelajaranReducer from './global-state/mapel/jadwal-pelajaran';
+import settingJadwalMapelReducer from './global-state/mapel/setting-jadwal-mapel-slice';
 
 const rootReducer = combineReducers({
     auth: authReducer,
@@ -25,6 +27,8 @@ const rootReducer = combineReducers({
     fokusMapel: fokusMapelReducer,
     mapel:mapelReducer,
     mapelRombel:mapelRombelReducer,
+    settingJadwalMapel: settingJadwalMapelReducer,
+    jadwalPelajaran: jadwalPelajaranReducer
 })
 
 export default rootReducer

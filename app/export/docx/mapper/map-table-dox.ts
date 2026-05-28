@@ -61,12 +61,18 @@ export async function mapTableToDocx(
 
         if (content.type === "image") {
           const buffer = await loadImageAsArrayBuffer(content.src);
+          const extension = content.src.split('.').pop()?.split('?')[0]?.toLowerCase();
+          const imageType = (extension === "jpg" || extension === "jpeg") ? "jpg"
+            : extension === "gif" ? "gif"
+            : extension === "bmp" ? "bmp"
+            : "png"; // Default fallback ke png
 
           paragraphs.push(
             new Paragraph({
               children: [
                 new ImageRun({
                   data: buffer,
+                  type: imageType,
                   transformation: {
                     width: content.width,
                     height: content.height,
@@ -108,7 +114,7 @@ export async function mapTableToDocx(
 
 function mapAlignment(
   align: string
-): AlignmentType {
+): (typeof AlignmentType)[keyof typeof AlignmentType] {
   switch (align) {
     case "center":
       return AlignmentType.CENTER;

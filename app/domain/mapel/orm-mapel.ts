@@ -58,6 +58,7 @@ export default class OrmMapel{
         const mapelAgama = this.mapel.filter(s=>s.kelompok === 'Agama' && s.penganut && koleksiAgamaInCurrentRombel.includes(s.penganut));
         const mapelUmum = this.mapel.filter(s=>s.kelompok === 'Umum' && s.kurikulum === 'kurmer')
         const koleksiMapel:jp_mapelApp[]=[];
+        console.log('koleksi mapel agama', mapelAgama)
         let index:number = 0;
         // const jenjang = this.jenjang;
         // const rombel = this.rombel;
@@ -69,7 +70,7 @@ export default class OrmMapel{
                 nama_mapel:data.nama,
                 nama_mapel_ijazah:'Pendidikan Agama dan Budi Pekerti',
                 jp_perminggu: this.getJPInJenjang(data.kode_umum)??0,
-                following_students:instanseSiswa.countAgamaGenders([Gender.LAKI_LAKI, Gender.PEREMPUAN, Gender.UNKNOWN],resolveAgama(data.penganut)??'Islam'),
+                following_students:instanseSiswa.countAgamaGenders([Gender.LAKI_LAKI, Gender.PEREMPUAN, Gender.UNKNOWN],data.penganut??'Islam'),//resolveAgama(data.penganut)??'Islam'),
                 status:'',
                 nama_rombel: this.rombel,
                 index_in_rombel:index,
@@ -383,7 +384,7 @@ export default class OrmMapel{
                     nama_mapel:data.nama,
                     nama_mapel_ijazah:'Pendidikan Agama dan Budi Pekerti',
                     jp_perminggu: this.getJPInJenjang(data.kode_umum)??0,
-                    following_students:this.SiswaInstance.countAgamaGenders([Gender.LAKI_LAKI, Gender.PEREMPUAN, Gender.UNKNOWN],resolveAgama(data.penganut)??'Islam'),
+                    following_students:this.SiswaInstance.countAgamaGenders([Gender.LAKI_LAKI, Gender.PEREMPUAN, Gender.UNKNOWN],resolveAgama(data.penganut)||'Islam'),
                     status:'',
                     nama_rombel: this.rombel,   
                     index_in_rombel:index,
@@ -473,5 +474,11 @@ export default class OrmMapel{
             countJp:countTotalJp
             
         }
+    }
+    mapelRombelUniqe():jp_mapelApp[]{
+        return this.collectifMapelRombel().data.filter((value, index, self) => index === self.findIndex((m) => (
+                m.nama_mapel_ijazah === value.nama_mapel_ijazah
+            ))
+        );
     }
 }

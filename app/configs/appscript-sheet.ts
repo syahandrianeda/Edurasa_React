@@ -32,10 +32,12 @@ export default class AppScriptSheet extends AppScriptConfig{
     protected sheetMateriTabFaseB       : ParamRequestAppScript = {idss:'',tab:''};
     protected sheetMateriTabFaseC       : ParamRequestAppScript = {idss:'',tab:''};
     protected sheetMateriTabFaseTpAtp   : ParamRequestAppScript = {idss:'',tab:''};
-    /** mapel, jp-mapel, dan jadwal-mapel */
+    /** mapel, jp-mapel, dan jadwal-mapel, serta setting */
     protected sheetMateriTabMapel       : ParamRequestAppScript = {idss:'',tab:''};
     protected sheetMateriTabJpMapel     : ParamRequestAppScript = {idss:'',tab:''};
     protected sheetMateriTabJadwalMapel : ParamRequestAppScript = {idss:'',tab:''};
+    protected sheetMateriTabSettingJadwalMapel : ParamRequestAppScript = {idss:'',tab:''};
+    
 
     constructor(){
         super();
@@ -220,7 +222,8 @@ export default class AppScriptSheet extends AppScriptConfig{
         /** tambahan untuk mapel */
         this.paramKurikulumMapel={};
         this.paramKurikulumJpMapel ={} ;// a.ka mapel rombel
-
+        this.paramKurikulumSettingJadwalMapel = {};
+        this.paramKurikulumJadwalMapel = {};
         return [
             this.sheetMateriTabElemenCp,
             this.sheetMateriTabFaseA,
@@ -228,7 +231,9 @@ export default class AppScriptSheet extends AppScriptConfig{
             this.sheetMateriTabFaseC,
             this.sheetMateriTabFaseTpAtp,
             this.sheetMateriTabMapel,
-            this.sheetMateriTabJpMapel
+            this.sheetMateriTabJpMapel,
+            this.sheetMateriTabJadwalMapel,
+            this.sheetMateriTabSettingJadwalMapel
         ]
     }
 
@@ -268,5 +273,16 @@ export default class AppScriptSheet extends AppScriptConfig{
     }
     get paramKurikulumJadwalMapel(){
         return this.sheetMateriTabJadwalMapel;
+    }
+    set paramKurikulumSettingJadwalMapel(additionalParam:Record<string, any>){
+        const tab = 'setting_jadwal';
+        this.sheetMateriTabSettingJadwalMapel= {
+            idss: this.sheetMateri,
+            tab,
+            ...additionalParam
+        }
+    }
+    get paramKurikulumSettingJadwalMapel(){
+        return this.sheetMateriTabSettingJadwalMapel;
     }
 }

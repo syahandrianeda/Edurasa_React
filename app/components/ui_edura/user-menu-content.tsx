@@ -42,7 +42,7 @@ export function UserMenuContent({ user }: UserMenuContentProps) {
         )
         dispatch(
             setFokusRombel(
-                {value:null}
+                {value:undefined}
             )
         )
         dispatch(
@@ -96,7 +96,6 @@ export function UserMenuContent({ user }: UserMenuContentProps) {
                             Beranda
                         </Link>
                     ):(
-
                         <Link className="block w-full" to='/menu' role="button" onClick={cleanup}>
                             <Grid className="mr-2" />
                             Menu

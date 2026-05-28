@@ -84,7 +84,7 @@ export default [
                     route("tp","routes/kurikulum/tp-page.tsx"),
                     route("atp","routes/kurikulum/atp-page.tsx"),
                     route("mapel","routes/kurikulum/mapel-route.tsx"),
-                    // route("jadwal-pelajaran","routes/kurikulum/jadwal-pelajaran.tsx"),
+                    route("jadwal-pelajaran","routes/kurikulum/jadwal-pelajaran.tsx"),
                     // route("alokasi-waktu","routes/kurikulum/alokasi-waktu.tsx"),
                 ])
             ])

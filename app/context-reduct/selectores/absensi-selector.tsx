@@ -27,7 +27,7 @@ export const OrmAbsensiSelector = createSelector(
         AbsensiSiswaSelectorDTO,
         instanceOfKaldik,
         selectSiswaWithValidation,
-        (state:RootState)=>state.fokusRombel.value
+        (state:RootState)=>state.fokusRombel.value??'1A'
     ],
     (dataAbsen, kaldikData, selectSiswaWithValidation, fokusRombel)=> {
         return new OrmAbsensi(

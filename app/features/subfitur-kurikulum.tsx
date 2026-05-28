@@ -47,10 +47,10 @@ export const SubfiturKurikulum: typeSidebarFiturKonten[] = [
                 permission: 'view jadwal mapel'
             },
             {
-                title: 'Aloksi waktu Mata Pelajaran',
-                href: '/kurikulum/alokasi-waktu',
+                title: 'Semua Jadwal Pelajaran',
+                href: '/kurikulum/all-jadwal-pelajaran',
                 icon: CalendarCheck,
-                description:'Atur alokasi waktu mata pelajaran di Rombel ini, ini berguna untuk penyebaran materi pembelajaran dan penilaian',
+                description:'Menampilkan semua jadwal pelajaran yang sudah di atur di setiap rombel, ini berguna untuk melihat keseluruhan jadwal pelajaran yang sudah di atur',
                 permission: 'view alokasi mapel'
             },
         ]   
