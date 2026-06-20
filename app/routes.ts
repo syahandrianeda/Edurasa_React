@@ -85,11 +85,40 @@ export default [
                     route("atp","routes/kurikulum/atp-page.tsx"),
                     route("mapel","routes/kurikulum/mapel-route.tsx"),
                     route("jadwal-pelajaran","routes/kurikulum/jadwal-pelajaran.tsx"),
+                    route("all-jadwal-pelajaran","routes/kurikulum/jadwal-pelajaran-all.tsx"),
+                    route("program-tahunan","routes/kurikulum/program-tahunan.tsx"),
+                    route("program-semester","routes/kurikulum/program-semester.tsx"),
                     // route("alokasi-waktu","routes/kurikulum/alokasi-waktu.tsx"),
                 ])
-            ])
+            ]),
+            layout("layouts/sub-layouts/sub-bank-soal.tsx",[
+                ...prefix('bank-soal',[
+                    index("routes/bank-soal/index-redirect.tsx"),
+                    route("create-item-soal","routes/bank-soal/create-item-soal.tsx"),
+                    route("koleksi-bank-soal","routes/bank-soal/koleksi-bank-soal.tsx"),
+                    route("create-paket-soal","routes/bank-soal/create-paket-soal.tsx"),
+                    route("koleksi-paket-soal","routes/bank-soal/koleksi-paket-soal.tsx"),
+                    route("taksonomi-bloom","routes/bank-soal/taksonomi-bloom.tsx"),
 
+                ],
+                )
+            ])
         ]),
-    ])
+        
+        layout("layouts/provider-layout/crud-profile-provider.tsx",[
+            layout("layouts/sub-layouts/sub-profile.tsx",[
+                ...prefix('profile',[
+                    index("routes/profile/index-redirect.tsx"),
+                    route("about","routes/profile/about.tsx"), 
+                    // route("contact","routes/profile/contact.tsx"),
+                    // route("my-document","routes/profile/my-document.tsx"),
+                    // route("tugas-mengajar","routes/profile/tugas-mengajar.tsx"),
+                    // route("riwayat-tugas-mengajar","routes/profile/riwayat-tugas-mengajar.tsx")
+                ])
+            ])
+        ])
+        
+    ]),
+
 
 ] satisfies RouteConfig;

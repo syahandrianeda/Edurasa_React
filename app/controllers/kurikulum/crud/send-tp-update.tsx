@@ -16,6 +16,10 @@ export default function SendTpUpdate({mode, data}:{mode:'update'|'delete', data:
     const {state, actions}=useCrudTpFaseProvider();
     const onSubmit =  async (e: React.MouseEvent<HTMLButtonElement>)=>{
         e.preventDefault();
+        if(data.tp ==="" ) {
+            alert('TP tidak boleh kosong');
+            return;
+        }
         const modeStatus = mode ==='delete'?'hapus':'';
         const dataFase:FaseKurikulumType ={
             idbaris:data.idbaris_tp,

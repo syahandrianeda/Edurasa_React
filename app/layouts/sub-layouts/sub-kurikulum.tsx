@@ -14,9 +14,17 @@ import { ToolbarKopTtdProvider } from "~/components/toolbars/kop-ttd/kop-ttd";
 import ToolbarLayout from "./toolbar-layout";
 import PrintAreaWithKopTtd from "~/components/toolbars/kop-ttd/print-area-kopttd";
 import ModalProvider from "~/components/modals/modal-provider";
-import { Outlet } from "react-router";
+import { Outlet, redirect } from "react-router";
 import ModalFiturKurikulum from "~/controllers/kurikulum/modals/modal-kurikulum";
-
+import { getSessionApp } from "~/infrastructures/session-storage/app-session";
+export function clientLoader(){
+    const page = getSessionApp();
+    
+    if(!page){
+        throw redirect('/login');
+    }
+    return page;
+}
 export default function SubKurikulumLayout({matches}:Route.ComponentProps) {
     
     const user = useAppSelector(state=> state.auth.user);

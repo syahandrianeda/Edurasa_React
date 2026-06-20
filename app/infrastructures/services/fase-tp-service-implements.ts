@@ -8,7 +8,8 @@ export default class FaseTpServiceImplements implements FaseTpServiceInterface{
     constructor(public repo = new FaseTpRepository()){}
     async create(param: Record<string, any>): Promise<ApiResponse<FaseKurikulumType>> {
         let paramRepo = {}
-        const paramDto = DTOFaseTp.toSheet(param)
+        const paramDto = DTOFaseTp.toSheet(param);
+        console.log('service tp dto', paramDto)
         const paramUpdate = {
             data: JSON.stringify([paramDto]),
             key_match:'idbaris',
@@ -34,6 +35,7 @@ export default class FaseTpServiceImplements implements FaseTpServiceInterface{
     async update(param: Record<string, any>): Promise<ApiResponse<FaseKurikulumType>> {
         let paramRepo = {}
         const paramDto = DTOFaseTp.toSheet(param)
+       
         const paramUpdate = {
             data: JSON.stringify([paramDto]),
             key_match:'idbaris',
@@ -50,10 +52,11 @@ export default class FaseTpServiceImplements implements FaseTpServiceInterface{
         }else if(param.faseName === 'B'){
             this.repo.paramKurikulumTpFaseB = paramUpdate;
             paramRepo = this.repo.paramKurikulumTpFaseB;
-        }else if(param.faeName === 'C'){
+        }else if(param.faseName === 'C'){
             this.repo.paramKurikulumTpFaseC = paramUpdate;
             paramRepo = this.repo.paramKurikulumTpFaseC;
         }
+         console.log('service tp dto', paramDto, 'paramRepo', paramRepo)
         return await this.repo.update(paramRepo);
     }
 }

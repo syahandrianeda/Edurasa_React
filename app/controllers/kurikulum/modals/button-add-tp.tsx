@@ -9,7 +9,7 @@ export default function ButtonAddTp(){
     const data = useAppSelector(PropertyKurikulumMapelAktifSelector);
     const objekKosong:OrmFaseKurikulumType = {
         idbaris_tp:0,
-        fase_name:data.currentFase.faseName, // fase A, fase B, fase C
+        fase_name:data.currentFase?.faseName, // fase A, fase B, fase C
         // source_tab?:string,
         // source_data_tp?:FaseKurikulumType
         tp:'',

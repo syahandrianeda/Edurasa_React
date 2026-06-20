@@ -3,7 +3,7 @@ import type { InterfaceMapelSheet } from "~/types/mapel/mapel"
 
 export type MapelTypeSlice = {
     dataMapel:InterfaceMapelSheet[],
-    loadedMapel:Boolean
+    loadedMapel:boolean
 }
 const initialState:MapelTypeSlice = {
     dataMapel:[],

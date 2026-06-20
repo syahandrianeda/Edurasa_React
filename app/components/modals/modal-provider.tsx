@@ -24,6 +24,7 @@ export type ModalType =
     | 'TAMBAH JADWAL MAPEL'
     | 'EDIT JADWAL MAPEL'
     | 'HAPUS JADWAL MAPEL'
+    | 'EDIT PROTA'
     | null
 export interface ConfigModelType{
     closeOnOutsideClick: boolean,

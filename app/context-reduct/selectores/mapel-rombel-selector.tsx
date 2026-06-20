@@ -4,12 +4,18 @@ import DTOMapelRombel from "~/dtos/dto-mapel-rombel";
 import { DataSiswaAktifRombel } from "./data-siswa-aktif";
 import OrmMapel from "~/domain/mapel/orm-mapel";
 import { DtoMapelSelector } from "./mapel-selector";
+import OrmMapelRefactored from "~/domain/mapel/orm-mapel-refactored";
 
 
 export const MapelRombelPureSelector = (state:RootState)=>state.mapelRombel.dataMapelRombel;
 export const DTOMapelRombelSelector = createSelector(
     [MapelRombelPureSelector],
     (dto)=>DTOMapelRombel.arrayFromSheet(dto)
+)
+export const DtoMapellAllRombelSelector =createSelector(
+    [DTOMapelRombelSelector],
+    (dto)=>DTOMapelRombel.arrayFromSheet_to_jp_mapelApp(dto)
+    
 )
 export const CurrentMapelInActiveRombel = createSelector(
     [
@@ -24,7 +30,8 @@ export const CurrentMapelInActiveRombel = createSelector(
         // const test = orm.defaultMapelInActiveRombel();
         // console.log('test orm', test);
         // return orm.defaultMapelInActiveRombel();
-        return new OrmMapel(mapel, mapelRombel,siswaCurrentRombel,rombel).defaultMapelInActiveRombel()
+        // return new OrmMapel(mapel, mapelRombel,siswaCurrentRombel,rombel).defaultMapelInActiveRombel()
+        return new OrmMapelRefactored(mapel, mapelRombel,siswaCurrentRombel,rombel).defaultMapelInActiveRombel()
     }
 ) 
 export const OrmMapelSelector = createSelector(
@@ -40,6 +47,7 @@ export const OrmMapelSelector = createSelector(
         // const test = orm.defaultMapelInActiveRombel();
         // console.log('test orm', test);
         // return orm.defaultMapelInActiveRombel();
-        return new OrmMapel(mapel, mapelRombel,siswaCurrentRombel,rombel);//.defaultMapelInActiveRombel()
+        // return new OrmMapel(mapel, mapelRombel,siswaCurrentRombel,rombel);//.defaultMapelInActiveRombel()
+        return new OrmMapelRefactored(mapel, mapelRombel,siswaCurrentRombel,rombel);//.defaultMapelInActiveRombel()
     }
 ) 

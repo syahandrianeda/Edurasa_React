@@ -18,4 +18,5 @@ export default class DTOMapel{
     static arrayFromSheet(dto:InterfaceMapelSheet[]):InterfaceMapel[]{
         return dto.map(this.fromSheet);
     }
+   
 }

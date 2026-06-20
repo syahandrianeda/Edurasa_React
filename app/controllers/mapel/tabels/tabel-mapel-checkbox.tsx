@@ -6,7 +6,7 @@ import { DtoMapelSelector } from "~/context-reduct/selectores/mapel-selector";
 export default function TableMapelCheckbox(){
     
     const dataMapel = useAppSelector(DtoMapelSelector);
-    console.log('data mapel', dataMapel);
+    
 
     return (
         <>

@@ -3,7 +3,7 @@ import type { jadwalMapelAccordTable, jadwalMapelSheet } from "~/types/setting_j
 
 export type JadwalPelajaranSliceType = {
     dataJadwalPelajaran:jadwalMapelAccordTable[],
-    loadedDataJadwalPelajaran:Boolean
+    loadedDataJadwalPelajaran:boolean
 }
 export const InitialState:JadwalPelajaranSliceType = {
     dataJadwalPelajaran:[],

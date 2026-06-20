@@ -6,6 +6,8 @@ import DTOAtp from "~/dtos/dto-atp";
 import type { currentFase, resourcesKurikulum } from "~/types/kurikulum/kurikulum-type";
 import OrmKurikulum from "~/domain/kurikulum/orm-kurikulum";
 import { getNumberFromString } from "~/lib/get-number";
+import { DtoMapelAllSelector } from "./mapel-selector";
+import { getSessionRombel } from "~/infrastructures/session-storage/rombel-session";
 
 export const KurmerPureSelector = (state:RootState)=>state.kurmer;
 
@@ -43,10 +45,11 @@ export const KurmerDtoSelector = createSelector(
 )
 export const DataKurikulumSelector = createSelector(
     [
-        KurmerDtoSelector
+        KurmerDtoSelector,
+        DtoMapelAllSelector,
     ],
-    (orm)=>{
-        return new OrmKurikulum(orm).createData().data
+    (orm,mapel)=>{
+        return new OrmKurikulum(orm, mapel).createData().data
     }
     
 )
@@ -57,7 +60,8 @@ export const PropertyKurikulumMapelAktifSelector = createSelector(
         (state:RootState)=>state.fokusRombel.value
     ],
     (data,kode,kelas)=>{
-        const jenjang = getNumberFromString(kelas??'1A')
+        const kelasLocal = getSessionRombel()
+        const jenjang = getNumberFromString(kelas??kelasLocal)
         return {
             ...data.find(s=>s.mapel_kode === kode),
             currentFase:data.find(s=>s.mapel_kode === kode)?.fase.find(s=>s.memberJenjang.includes(jenjang))

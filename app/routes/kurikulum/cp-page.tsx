@@ -3,6 +3,8 @@ import type { Route } from "./+types/cp-page";
 import ElemenCpPage from "~/pages/kurikulum/elemen-cp-page";
 import { ConfigToolbarSelectMapel } from "~/controllers/kurikulum/toolbar/config-toolbar-select.mapel";
 
+import { getSessionApp } from "~/infrastructures/session-storage/app-session";
+import { redirect } from "react-router";
 export function meta({matches}: Route.MetaArgs) {
     const rootMeta = matches.find(m => m?.id === 'root')?.meta;
     const titleDescriptor = rootMeta?.find((d): d is { title: string } => {
@@ -23,6 +25,11 @@ export function meta({matches}: Route.MetaArgs) {
 
 export function clientLoader({}:Route.ComponentProps){
     
+    // const page = getSessionApp();
+    
+    // if(!page){
+    //     throw redirect('/login');
+    // };
     const settingRombel: controlDropdownKelas ={
             showControlKelas:true,
             title: 'Rombel',
@@ -38,8 +45,8 @@ export function clientLoader({}:Route.ComponentProps){
     };
 }
 
-export default function CpPageRoute() {
-    
+export default function CpPageRoute({loaderData}:Route.ComponentProps) {
+    console.log(loaderData)
     return(
         <ElemenCpPage/>
     )

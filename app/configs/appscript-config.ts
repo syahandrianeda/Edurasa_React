@@ -2,6 +2,8 @@ import macro from "../macro.json";
 // import axios from 'axios';
 import axios from '../infrastructures/http/axios'
 import { ApiErrors } from "~/infrastructures/http/api-errors";
+import DTOUser from "~/dtos/dto-user";
+import { clearSessionApp, saveSessionApp } from "~/infrastructures/session-storage/app-session";
 
 interface MacroChild {
     [key: string]: string;
@@ -113,7 +115,12 @@ export class AppScriptConfig {
                     }
             );
             //reponse axios data yang dibutuhkan, biarkan class turuunannya yang membungkus type data response-nya
-            
+            if(pos.data.hasOwnProperty('auth')){
+                
+                this.checkAkun(pos.data.auth)
+            }else{
+                console.log('post body TIDAK memanggil Auth pada action', param.action);
+            }
             return pos.data;
         }catch(error){
             
@@ -130,7 +137,23 @@ export class AppScriptConfig {
         
         // return pos.data;
     }
-
+    checkAkun(auth:Record<string, any>){
+        if(auth){
+            const {authenticated, data} = auth;
+            if(authenticated){
+                const updateUser =  DTOUser.fromResponAkun(data);
+                saveSessionApp(updateUser)
+            }
+            /** else tidak pernah terpanggil 
+                else{
+                    clearSessionApp();
+                }
+             * 
+            */
+        }else{
+            clearSessionApp();
+        }
+    }
     
     /** === Convert Respon */
     responActionRead<T>(respon:Record<string, any>):ApiResponse<T>{
@@ -205,6 +228,6 @@ export class AppScriptConfig {
         }
     }
 
-   
+
 
 }

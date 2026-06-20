@@ -2,6 +2,8 @@ import type { controlDropdownKelas } from "~/components/dropdowns/rombel-dropdow
 import type { Route } from "./+types/atp-page";
 import { ConfigToolbarSelectMapel } from "~/controllers/kurikulum/toolbar/config-toolbar-select.mapel";
 import AtpPage from "~/pages/kurikulum/atp-page";
+import { getSessionApp } from "~/infrastructures/session-storage/app-session";
+import { redirect } from "react-router";
 
 export function meta({matches}: Route.MetaArgs) {
     const rootMeta = matches.find(m => m?.id === 'root')?.meta;
@@ -22,7 +24,11 @@ export function meta({matches}: Route.MetaArgs) {
 }
 
 export function clientLoader({}:Route.ComponentProps){
+    // const page = getSessionApp();
     
+    // if(!page){
+    //     throw redirect('/login');
+    // }
     const settingRombel: controlDropdownKelas ={
             showControlKelas:true,
             title: 'Rombel',

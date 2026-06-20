@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Outlet } from "react-router";
+import { Outlet, redirect } from "react-router";
 import InitNeededSliceStore from "~/context-reduct/bootstrap/init-needeed-store";
 import { useAppSelector, useAppStore } from "~/context-reduct/hook";
 import { CrudAtpProvider } from "~/controllers/kurikulum/crud/crud-atp-provider";
@@ -14,7 +14,20 @@ import KesiswaanServiceImplements from "~/infrastructures/services/kesiswaan-ser
 import MapelRombelServiceImplements from "~/infrastructures/services/mapelrombel-service-implements";
 import { SettingJadwalCrudProvider } from "~/controllers/jadwal_pelajaran/crud/crud-setting-jadwal-provider";
 import SettingJadwalService from "~/infrastructures/services/setting-jadwal-service";
+import { SebaranJadwalCrudProvider } from "~/controllers/jadwal_pelajaran/crud/crud-sebaran-jadwal-provider";
+import JadwalMapelServiceImplements from "~/infrastructures/services/sebaran-jadwal-mapel";
+import { CrudProtaProvider } from "~/controllers/prota/crud/crud-prota-provider";
+import ProtaServiceImplements from "~/infrastructures/services/prota-service-implements";
+import { getSessionApp } from "~/infrastructures/session-storage/app-session";
 
+export function clientLoader(){
+    const page = getSessionApp();
+    
+    if(!page){
+        throw redirect('/login');
+    }
+    return page;
+}
 export default function CrudKurikulumLayout() {
     const store = useAppStore();
     const user = useAppSelector(state => state.auth.user);
@@ -24,12 +37,16 @@ export default function CrudKurikulumLayout() {
     const serviceAtp = new AtpServiceImplements();
     const serviceSiswa = new KesiswaanServiceImplements();
     const serviceSettingJadwal = new SettingJadwalService();
+    const serviceSebaranJadwal = new JadwalMapelServiceImplements();
+    const serviceProta = new ProtaServiceImplements();
+
     useEffect(()=>{
         if(!user) return 
         
         const initRedux = new InitNeededSliceStore(store);
         initRedux.needSiswa(serviceSiswa);
-        initRedux.needKurikulum(service);
+        initRedux.needKurikulum(service); 
+        
     },[user])
     
     return (
@@ -38,9 +55,12 @@ export default function CrudKurikulumLayout() {
                 <CrudTpFaseProvider service={serviceTpFase}>
                     <CrudAtpProvider service={serviceAtp}>
                         <SettingJadwalCrudProvider service={serviceSettingJadwal}>
-                            <Outlet />
+                            <SebaranJadwalCrudProvider service={serviceSebaranJadwal}>
+                                <CrudProtaProvider service={serviceProta}>
+                                    <Outlet />
+                                </CrudProtaProvider>
+                            </SebaranJadwalCrudProvider>
                         </SettingJadwalCrudProvider>
-                        
                     </CrudAtpProvider>
                 </CrudTpFaseProvider>
             </CrudElemenCpProvider>

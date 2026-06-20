@@ -21,10 +21,9 @@ export function meta({matches}: Route.MetaArgs) {
         },
     ];
 }
+
 export async function clientLoader({}:Route.ComponentProps){
-    // const services = new KesiswaanServiceImplements();
     
-    // const data = await services.loadAllSiswa();
     const settingRombel: controlDropdownKelas ={
             showControlKelas:true,
             title: 'Kelas',

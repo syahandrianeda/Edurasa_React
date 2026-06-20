@@ -74,6 +74,8 @@ function EditContenCP(){
                     <Field className="relative mt-4">
                         <InputTextArea className="scrol-h-custom" label="Capaian Pembelajaran" value={currentData.cp_utama} onChange={(e)=>handleInputChange(e.target.value)}/>
                     </Field>
+                    <p className="text-xs">Hindari awalan 'Peserta didik mampu' atau sejenisnya agar dapat digunakan sebagai indikator deskripsi rapor</p>
+                    
                 </div>
                 <div className="border select-none rounded-2xl bg-sky-500/50 border-sky-500 inset-shadow-sky-600 shadow-lg p-1 md:overflow-y-auto scrol-h-custom">
                     <div className="bg-white dark:bg-sky-50 p-1 m-1 rounded">

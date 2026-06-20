@@ -9,7 +9,7 @@ export default function DataSekolahPage() {
     const [active, setActive] = useState<boolean>(false)
     async function onTestClick() {
         const AppScript =  new AppScriptConfig();
-         let p = {
+        let p = {
             'idss':AppScript.currentMacro['ss_user'],
             'action':'dataguruall',
         }

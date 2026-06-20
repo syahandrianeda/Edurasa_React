@@ -33,7 +33,7 @@ export default function ButtonAddMapel ({data, children}:{data:jp_mapelApp, chil
             const jpJenjang = dataJP?.jenjangJp.find(s=>s.jenjang === resolveNumber(rombel))?.jp || 2 ;//jenjangJp.find(t=>t.jenjang === parseInt(rombel as string));
             const dataHasIndexed = {...dataHasConverted, index_in_rombel:dataMapel.data.length, jp_perminggu:jpJenjang, nama_rombel:rombel}
             if (dataHasIndexed) dataDto.push(dataHasIndexed);
-            console.log('ini hasil akhirnya', dataDto);
+            
             const respon = await actions.update(dataDto);
                     
                     if(respon.success){

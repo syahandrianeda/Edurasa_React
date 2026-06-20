@@ -1,0 +1,36 @@
+import type OrmPromes from "~/domain/kurikulum/orm-promes"
+import { currentTapel } from "~/lib/current-tapel"
+
+export default function TableTitleProsem({prota}:{prota:OrmPromes }){
+    return (
+        <table className="w-full" data-word="ignore-parse">
+            <tbody>
+                <tr>
+                    <td className="border-none outline-none text-nowrap pe-2">Mata Pelajaran</td>
+                    <td className="border-none outline-none w-1 pe-2">:</td>
+                    <td className="border-none outline-none ps-1 text-nowrap w-full">{prota.namaMapel ?? ''}</td>
+                </tr>
+                <tr>
+                    <td className="border-none outline-none text-nowrap">Fase/Kelas</td>
+                    <td className="border-none outline-none">:</td>
+                    <td className="border-none outline-none ps-1 text-nowrap"><p>{prota.faseAbjad} / {prota.namaJenjang} / {prota.namaRombel}</p></td>
+                </tr>
+                <tr>
+                    <td className="border-none outline-none text-nowrap pe-2">Tahun Pelajaran</td>
+                    <td className="border-none outline-none w-1">:</td>
+                    <td className="border-none outline-none ps-1 text-nowrap">{currentTapel({variant:'onlyTapel'})}</td>
+                </tr>
+                <tr>
+                    <td className="border-none outline-none text-nowrap pe-2">Semester</td>
+                    <td className="border-none outline-none w-1">:</td>
+                    <td className="border-none outline-none ps-1 text-nowrap">{prota.promesResult?.semester}</td>
+                </tr> 
+                <tr>
+                    <td className="border-none outline-none text-nowrap pe-2">Pengajar/Pengampu Mapel</td>
+                    <td className="border-none outline-none w-1">:</td>
+                    <td className="border-none outline-none ps-1 text-nowrap">{prota.pengampuMapel}</td>
+                </tr>
+            </tbody>
+        </table>
+    )
+}

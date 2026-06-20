@@ -9,8 +9,8 @@ export default function ButtonAddAtp(){
     const {actions} = useModal<OrmAtp>();
     const data = useAppSelector(PropertyKurikulumMapelAktifSelector);
     const kelas = useAppSelector(state=>state.fokusRombel.value);
-    const m = data.currentFase.elemen_cp[0]?.tp_fase_properties[0];
-    if(!m) return 'Not Found'
+    const m = data.currentFase?.elemen_cp[0]?.tp_fase_properties[0];
+    if(!m) return null;
     const objekKosong:OrmAtp = {
         idbaris_atp:0,
                         atp:'',

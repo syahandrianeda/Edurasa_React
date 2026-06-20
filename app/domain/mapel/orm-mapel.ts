@@ -6,6 +6,7 @@ import { Gender } from "~/types/enums/gender";
 import { resolveAgama } from "~/dtos/_resolver";
 import { koleksiJpInJenjang } from "./jp-in-jenjang";
 import { getNumberFromString } from "~/lib/get-number";
+import type { Agama } from "~/types/enums/agama";
 
 export interface CurrentMapelsInRombel{
     hasRegistered:boolean,
@@ -58,7 +59,7 @@ export default class OrmMapel{
         const mapelAgama = this.mapel.filter(s=>s.kelompok === 'Agama' && s.penganut && koleksiAgamaInCurrentRombel.includes(s.penganut));
         const mapelUmum = this.mapel.filter(s=>s.kelompok === 'Umum' && s.kurikulum === 'kurmer')
         const koleksiMapel:jp_mapelApp[]=[];
-        console.log('koleksi mapel agama', mapelAgama)
+        
         let index:number = 0;
         // const jenjang = this.jenjang;
         // const rombel = this.rombel;
@@ -70,7 +71,7 @@ export default class OrmMapel{
                 nama_mapel:data.nama,
                 nama_mapel_ijazah:'Pendidikan Agama dan Budi Pekerti',
                 jp_perminggu: this.getJPInJenjang(data.kode_umum)??0,
-                following_students:instanseSiswa.countAgamaGenders([Gender.LAKI_LAKI, Gender.PEREMPUAN, Gender.UNKNOWN],data.penganut??'Islam'),//resolveAgama(data.penganut)??'Islam'),
+                following_students:instanseSiswa.countAgamaGenders([Gender.LAKI_LAKI, Gender.PEREMPUAN, Gender.UNKNOWN],data.penganut as Agama),//data.penganut as Agama),
                 status:'',
                 nama_rombel: this.rombel,
                 index_in_rombel:index,
@@ -218,7 +219,7 @@ export default class OrmMapel{
                     nama_mapel:data.nama,
                     nama_mapel_ijazah:'Pendidikan Agama dan Budi Pekerti',
                     jp_perminggu: this.getJPInJenjang(data.kode_umum)??0,
-                    following_students:instanseSiswa.countAgamaGenders([Gender.LAKI_LAKI, Gender.PEREMPUAN, Gender.UNKNOWN],resolveAgama(data.penganut)??'Islam'),
+                    following_students:instanseSiswa.countAgamaGenders([Gender.LAKI_LAKI, Gender.PEREMPUAN, Gender.UNKNOWN],data.penganut  as Agama),
                     status:'',
                     nama_rombel: this.rombel,
                     index_in_rombel:index+this.mapelRombel.filter(s=>s.nama_rombel===this.rombel).length,
@@ -242,7 +243,7 @@ export default class OrmMapel{
         
         return this.mapelRombel.filter(s=>s.nama_rombel === this.rombel&& s.status === '').map(m=>{
             const source = this.mapel.find(s=>s.id === m.idmapel);
-            const following_students=instanseSiswa.countAgamaGenders([Gender.LAKI_LAKI, Gender.PEREMPUAN, Gender.UNKNOWN],resolveAgama(m.required_penganut)??'Islam');
+            const following_students=instanseSiswa.countAgamaGenders([Gender.LAKI_LAKI, Gender.PEREMPUAN, Gender.UNKNOWN],resolveAgama(m.required_penganut) as Agama);
             return {
                 ...m,
                 following_students,
@@ -274,7 +275,7 @@ export default class OrmMapel{
                     nama_mapel:data.nama,
                     nama_mapel_ijazah:'Pendidikan Agama dan Budi Pekerti',
                     jp_perminggu: this.getJPInJenjang(data.kode_umum)??0,
-                    following_students:this.SiswaInstance.countAgamaGenders([Gender.LAKI_LAKI, Gender.PEREMPUAN, Gender.UNKNOWN],resolveAgama(data.penganut)??'Islam'),
+                    following_students:this.SiswaInstance.countAgamaGenders([Gender.LAKI_LAKI, Gender.PEREMPUAN, Gender.UNKNOWN],data.penganut as Agama),
                     status:'',
                     nama_rombel: this.rombel,   
                     index_in_rombel:index,
@@ -292,7 +293,7 @@ export default class OrmMapel{
                     nama_mapel:data.nama,
                     nama_mapel_ijazah:data.nama,
                     jp_perminggu: this.getJPInJenjang(data.kode_umum)??0,
-                    following_students:this.SiswaInstance.countAgamaGenders([Gender.LAKI_LAKI, Gender.PEREMPUAN, Gender.UNKNOWN],resolveAgama(data.penganut)??'Islam'),
+                    following_students:this.siswaAktifRombel.length,//this.SiswaInstance.countAgamaGenders([Gender.LAKI_LAKI, Gender.PEREMPUAN, Gender.UNKNOWN], data.penganut as Agama),
                     status:'',
                     nama_rombel: this.rombel,   
                     index_in_rombel:index + mapelAgama.length,
@@ -313,7 +314,7 @@ export default class OrmMapel{
                         nama_mapel:pjok.nama,
                         nama_mapel_ijazah:pjok.nama,
                         jp_perminggu: this.getJPInJenjang(pjok.kode_umum)??0,
-                        following_students:this.SiswaInstance.countByRombel(this.rombel??''),
+                        following_students:this.siswaAktifRombel.length,//this.SiswaInstance.countByRombel(this.rombel??''),
                         status:'',
                         nama_rombel: this.rombel,
                         index_in_rombel:1 + mapelAgama.length + mapelUmumNasional.length,
@@ -333,7 +334,7 @@ export default class OrmMapel{
                         nama_mapel:rupa.nama,
                         nama_mapel_ijazah:rupa.nama,
                         jp_perminggu: this.getJPInJenjang(rupa.kode_umum)??0,
-                        following_students:this.SiswaInstance.countByRombel(this.rombel??''),
+                        following_students:this.siswaAktifRombel.length,//this.SiswaInstance.countByRombel(this.rombel??''),
                         status:'',
                         nama_rombel: this.rombel,
                         index_in_rombel:2 + mapelAgama.length + mapelUmumNasional.length,
@@ -384,7 +385,7 @@ export default class OrmMapel{
                     nama_mapel:data.nama,
                     nama_mapel_ijazah:'Pendidikan Agama dan Budi Pekerti',
                     jp_perminggu: this.getJPInJenjang(data.kode_umum)??0,
-                    following_students:this.SiswaInstance.countAgamaGenders([Gender.LAKI_LAKI, Gender.PEREMPUAN, Gender.UNKNOWN],resolveAgama(data.penganut)||'Islam'),
+                    following_students:this.SiswaInstance.countAgamaGenders([Gender.LAKI_LAKI, Gender.PEREMPUAN, Gender.UNKNOWN],data.penganut ||'Islam'),
                     status:'',
                     nama_rombel: this.rombel,   
                     index_in_rombel:index,
@@ -416,7 +417,7 @@ export default class OrmMapel{
                             nama_mapel:source?.nama??'',
                             nama_mapel_ijazah:data.nama_mapel_ijazah,
                             jp_perminggu: data.jp_perminggu,
-                            following_students:this.SiswaInstance.countAgamaGenders([Gender.LAKI_LAKI, Gender.PEREMPUAN, Gender.UNKNOWN],resolveAgama(source?.penganut)??'Islam'),
+                            following_students:this.siswaAktifRombel.length,//this.SiswaInstance.countAgamaGenders([Gender.LAKI_LAKI, Gender.PEREMPUAN, Gender.UNKNOWN],resolveAgama(source?.penganut)as Agama),
                             status:data.status,
                             nama_rombel: this.rombel,   
                             index_in_rombel:index,
@@ -435,7 +436,7 @@ export default class OrmMapel{
                             nama_mapel:source?.nama??'',
                             nama_mapel_ijazah:namaMapelIjazahSBDP,
                             jp_perminggu: data.jp_perminggu,
-                            following_students:this.SiswaInstance.countAgamaGenders([Gender.LAKI_LAKI, Gender.PEREMPUAN, Gender.UNKNOWN],resolveAgama(source?.penganut)??'Islam'),
+                            following_students:this.siswaAktifRombel.length,//this.SiswaInstance.countAgamaGenders([Gender.LAKI_LAKI, Gender.PEREMPUAN, Gender.UNKNOWN],resolveAgama(source?.penganut)as Agama),
                             status:data.status,
                             nama_rombel: this.rombel,   
                             index_in_rombel:index,
@@ -452,7 +453,7 @@ export default class OrmMapel{
                             nama_mapel:source?.nama??'',
                             nama_mapel_ijazah:data.nama_mapel_ijazah,
                             jp_perminggu: data.jp_perminggu,
-                            following_students:this.SiswaInstance.countAgamaGenders([Gender.LAKI_LAKI, Gender.PEREMPUAN, Gender.UNKNOWN],resolveAgama(source?.penganut)??'Islam'),
+                            following_students:this.siswaAktifRombel.length,//this.SiswaInstance.countAgamaGenders([Gender.LAKI_LAKI, Gender.PEREMPUAN, Gender.UNKNOWN],resolveAgama(source?.penganut)as Agama),
                             status:data.status,
                             nama_rombel: this.rombel,   
                             index_in_rombel:index,

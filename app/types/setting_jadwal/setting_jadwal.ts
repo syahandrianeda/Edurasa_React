@@ -5,7 +5,10 @@ export interface settingJadwalSheet {
     has_rest_time:number,
     include_sabtu:number,
     count_jp_hari:number,
-    interval_menit:number
+    interval_menit:number,
+    menit_istirahat:number
+    index_jam_istirahat:number,
+    show_type:string
 }
 export interface settingJadwalApp {
     idbaris:number,
@@ -14,6 +17,9 @@ export interface settingJadwalApp {
     has_rest_time:Boolean,
     include_sabtu:Boolean,
     count_jp_hari:number,
-    interval_menit:number
+    interval_menit:number,
+    menit_istirahat:number
+    index_jam_istirahat:number,
+    show_type:string
 
 }

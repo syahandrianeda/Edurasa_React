@@ -12,7 +12,7 @@ export default class SettingJadwalRepository extends AppScriptSheet implements S
             
             this.paramKurikulumSettingJadwalMapel = param;
             const respon = await this.postBody(param);
-            console.log('respon on repo', respon)
+            
             return this.responActionRead(respon);
         }catch(error){
             return this.responActionError(error);
@@ -22,7 +22,7 @@ export default class SettingJadwalRepository extends AppScriptSheet implements S
         try{
             this.paramKurikulumSettingJadwalMapel = param;
             const respon = await this.postBody(this.paramKurikulumSettingJadwalMapel);
-            console.log('respon on repo', respon)
+            
             return this.responActionRead(respon);
         }catch(error){
             return this.responActionError(error);

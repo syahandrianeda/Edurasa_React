@@ -11,7 +11,6 @@ import { setKaldik, setLoadedKaldik } from "../global-state/kaldik-slice";
 import type AbsensiServiceImplements from "~/infrastructures/services/absensi-service-implements";
 import { setAbsensiRombel } from "../global-state/absensi-slice";
 import type { AbsensiSiswaSheetType } from "~/types/absensi-siswa";
-import type ElemenCpServiceImplements from "~/infrastructures/services/elemencp-service-implements";
 import { setKurmerAtp, setKurmerCp, setKurmerTpFaseA, setKurmerTpFaseB, setKurmerTpFaseC } from "../global-state/kurikulum/kurmer-slice";
 import type { ElemenCpType } from "~/types/kurikulum/elemen-cp";
 import type { FaseKurikulumType } from "~/types/kurikulum/fase-kurikulum";
@@ -20,12 +19,15 @@ import { setDataMapel } from "../global-state/mapel/mapel-slice";
 import type { InterfaceMapelSheet } from "~/types/mapel/mapel";
 import { setDataMapelRombel } from "../global-state/mapel/mapel-rombel-slice";
 import type { jp_mapelSheet } from "~/types/mapel/jp_mapel";
-import type MapelRombelRepositoryInterface from "~/domain/interfaces/mapelrombel-repository-interface";
 import type MapelRombelServiceInterface from "~/domain/interfaces/mapelrombel-service-interface";
 import type { settingJadwalSheet } from "~/types/setting_jadwal/setting_jadwal";
 import { setSettingJadwalMapel } from "../global-state/mapel/setting-jadwal-mapel-slice";
 import type { jadwalMapelAccordTable } from "~/types/setting_jadwal/jadwal_mapel";
 import { setDataJadwalPelajaran } from "../global-state/mapel/jadwal-pelajaran";
+import { setDataJadwalPembiasaan } from "../global-state/pembiasaan-kegiatan-sekolah/jadwal-pembiasaan";
+import type { pembiasaanSheet } from "~/types/pembiasaan/pembiasaan";
+import { setDataProta } from "../global-state/prota/prota-slice";
+import type {protaSheet } from "~/types/kurikulum/prota-orm";
 
 export default class InitNeededSliceStore{
     constructor(private store: Store<RootState>){}
@@ -161,10 +163,13 @@ export default class InitNeededSliceStore{
             this.state.mapel.loadedMapel && 
             this.state.mapelRombel.loadedDataMapelRombel &&
             this.state.kurmer.loadedAtp && 
-            this.state.kurmer.loadedAtp &&
+            // this.state.kurmer.loadedAtp &&
             this.state.kurmer.loadedTpFaseA &&
             this.state.kurmer.loadedTpFaseB &&
-            this.state.kurmer.loadedTpFaseC 
+            this.state.kurmer.loadedTpFaseC && 
+            this.state.jadwalPembiasaan.loadedDataJadwalPembiasaan &&
+            this.state.settingJadwalMapel.loadedSettingJadwal &&
+            this.state.jadwalPelajaran.loadedDataJadwalPelajaran
         ) return;
 
         this.store.dispatch(setloadedApi({
@@ -176,6 +181,7 @@ export default class InitNeededSliceStore{
             {
                 loading: 'Memuat Kurikulum',
                 success: (datas) => {
+                    console.log('data kurikulum yang dipanggil', datas);
                     datas.forEach(({success,data,detailResponse})=>{
                         if(success && detailResponse?.namaTab.toString().includes('elemencp')){
                             this.store.dispatch(setKurmerCp(data as   ElemenCpType[]));
@@ -192,6 +198,12 @@ export default class InitNeededSliceStore{
                         if(success && detailResponse?.namaTab.toString().includes('faseTPATP')){
                             this.store.dispatch(setKurmerAtp(data as  AtpKurikulumType[]));
                         }
+                        if(success && detailResponse?.namaTab.toString().includes('kalender')){
+                            this.store.dispatch(setKaldik({
+                                loaded:true,
+                                data:data as KaldikType[]
+                            }));
+                        }
                         if(success && detailResponse?.namaTab ==='mapel'){
                             this.store.dispatch(setDataMapel(data as InterfaceMapelSheet[]))
                         }
@@ -203,6 +215,12 @@ export default class InitNeededSliceStore{
                         }
                         if(success && detailResponse?.namaTab==='setting_jadwal'){
                             this.store.dispatch(setSettingJadwalMapel(data as settingJadwalSheet[]));
+                        }
+                        if(success && detailResponse?.namaTab === 'kegiatan_nonkbm'){
+                            this.store.dispatch(setDataJadwalPembiasaan(data as pembiasaanSheet[]));
+                        }
+                        if(success && detailResponse?.namaTab === 'prota'){
+                            this.store.dispatch(setDataProta(data as protaSheet[]));
                         }
                     });
                     return 'Pemanggilan data telah selesai' ;//+ data?.source;

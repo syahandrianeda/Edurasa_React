@@ -20,6 +20,7 @@ import type { settingJadwalApp } from "~/types/setting_jadwal/setting_jadwal"
 
 export type FilterContextValue<T = any> = {
   tahun?: number
+  semester?: number
   bulan?: Date
   mode?: "semester" | "tapel"
   // fitur kaldik
@@ -32,7 +33,7 @@ export type FilterContextValue<T = any> = {
   modeTampilanAbsenStatistik?: modeTampilanAbsenType
   modeTampilanChart?: modeTampilanAbsenType
   // fitur lain
-  extra?: Record<string, unknown>
+  extra?: T
   filterSumberData?: FilterSumberData[]
   dataFilterToolbar?: T[]
   // fitur Pilih Mapel Aktif:
@@ -41,6 +42,8 @@ export type FilterContextValue<T = any> = {
   urutanMapel?:jp_mapelApp[]
   // fitur Setting Jadwal Mapel;
   settingJadwalMapelToolbar?:settingJadwalApp
+  presentationJadwalPelajaran?:Record<string, unknown>[]
+
   // TABLE DESIGN
   draftOptionHeaderTable?: OptionDesignTableToolbar<T>[]
   desainFormatheader?: ThType<T>[]
@@ -69,6 +72,11 @@ export type FilterContextType<T = any> = {
 
   /** API LAMA — WAJIB DIPERTAHANKAN */
   setValue: (v: Partial<FilterContextValue<T>>) => void
+
+  /** Update nested `extra` atomically */
+  updateExtra: (
+    updater: (draft: NonNullable<FilterContextValue<T>['extra']>) => void
+  ) => void
 
   /** API BARU — DOMAIN-BASED */
   updateHeaderOptions: (
@@ -113,6 +121,15 @@ export function ToolbarFilterProvider<T>({
       Object.assign(draft, v)
     })
   }
+
+  const updateExtra = (
+    updater: (draft: NonNullable<FilterContextValue<T>['extra']>) => void
+  ) =>
+    updateDraftArray(
+      'extra' as any,
+      () => ({} as NonNullable<FilterContextValue<T>['extra']>),
+      updater as any
+    )
 
   /* -----------------------
    * HELPER INTERNAL
@@ -167,7 +184,8 @@ export function ToolbarFilterProvider<T>({
         setValue,
         updateHeaderOptions,
         updateHeaderDesign,
-        updateKeyDataColum
+        updateKeyDataColum,
+        updateExtra
       }}
     >
       {children}

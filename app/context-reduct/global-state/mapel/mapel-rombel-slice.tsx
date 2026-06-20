@@ -3,7 +3,7 @@ import type { jp_mapelSheet } from "~/types/mapel/jp_mapel"
 
 export type MapelRombelSliceType = {
     dataMapelRombel:jp_mapelSheet[],
-    loadedDataMapelRombel:Boolean
+    loadedDataMapelRombel:boolean
 }
 const initialState:MapelRombelSliceType = {
     dataMapelRombel:[],

@@ -1,7 +1,9 @@
 import type { ApiResponse } from "~/configs/appscript-config";
 import AppScriptSheet from "~/configs/appscript-sheet";
 import type MapelRombelRepositoryInterface from "~/domain/interfaces/mapelrombel-repository-interface";
+import DTOUser from "~/dtos/dto-user";
 import type { jp_mapelSheet } from "~/types/mapel/jp_mapel";
+import { clearSessionApp, saveSessionApp } from "../session-storage/app-session";
 
 export default class MapelRombelRepositoryImplements extends AppScriptSheet implements MapelRombelRepositoryInterface{
         constructor(){
@@ -9,14 +11,30 @@ export default class MapelRombelRepositoryImplements extends AppScriptSheet impl
         }
         async loadAllNeed(): Promise<ApiResponse<Record<string, any>>[]> {
             const paramSheet = this.getParamKurikulumNeeded();
-            console.log('param sheet', paramSheet);
+            
+            const auth = this.dataAuth();
             const param = {
                 action:'readMultipleTab',
-                source:JSON.stringify(paramSheet)
+                source:JSON.stringify(paramSheet),
+                auth
             }
+            
             const response =  await this.postBody(param);
-            return response.map(this.responActionRead);
+            console.log('response', response);
+            
+
+            return response.collections.map(this.responActionRead);
         }
+        /**
+         * 
+         * @param param if (user.success) {
+                     const currentData = DTOUser.fromResponAkun(user.data);
+                     saveSessionApp(currentData);
+                 } else {
+                     clearSessionApp();
+                 }  
+         * @returns 
+         */
         // async loadAllNeed(): Promise<ApiResponse<Record<string, any>>[]> {
         //     const paramSheet = this.getParamKurikulumNeeded();
         //     const param = {
@@ -32,7 +50,7 @@ export default class MapelRombelRepositoryImplements extends AppScriptSheet impl
         async update(param: Record<string, any>): Promise<ApiResponse<jp_mapelSheet>> {
             try{
                 const respon = await this.postBody(param);
-                console.log('respon on repo', respon)
+                
                 return this.responActionRead(respon);
             }catch(error){
                 return this.responActionError(error);

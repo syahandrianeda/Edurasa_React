@@ -310,7 +310,7 @@ function AddMapelRombel(){
     const mapel = useAppSelector(CurrentMapelInActiveRombel);
     const dataMapel = useAppSelector(DtoMapelSelector);
     const mapelTambahan  = dataMapel.filter(s=>!mapel.data.some(m=>m.idmapel === s.id) && s.kurikulum === 'kurmer');
-    console.log('datamapel', dataMapel, 'mapelInCurrentRombel', mapel.data, 'mapelTambahan', mapelTambahan);
+    
     return(
         <fieldset disabled={stateCrud.isSubmitting}>
             <div className="bg-linear-to-tl from-sky-400 to-sky-300 p-2  h-[calc(100vh-12.5rem)]  md:overflow-y-auto scrol-h-custom">
@@ -348,7 +348,6 @@ function AddMapelRombel(){
             </div>
                 
             <ModalFooterEdura>
-                {/* <button className="border p-2 border-black" type="button" onClick={()=>console.log(currentData)}>Tambahkan</button> */}
                 <ButtonAddMapel data={currentData}>Tambahkan</ButtonAddMapel>
             </ModalFooterEdura>
         </fieldset>

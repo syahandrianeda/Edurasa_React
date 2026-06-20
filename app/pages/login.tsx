@@ -5,6 +5,8 @@ import kotaDepok from "../images/kotadepok.webp"
 import { Form, useNavigation } from "react-router";
 import { TopProgressBarFetch } from "~/components/ui_edura/top-progress-bar";
 import type { ApiError } from "~/configs/appscript-config";
+import { Eye, EyeClosed } from "lucide-react";
+import { useState } from "react";
 
 export default function LoginPage(
     {
@@ -15,6 +17,7 @@ export default function LoginPage(
     const rawError = dataAction?.error;
     const error = typeof rawError === "string" ? rawError : rawError?.message ?? "";
     const navigation = useNavigation();
+    const [show, setShow] = useState(false);
 
     const isLoading =
         navigation.state === "submitting" ||
@@ -54,7 +57,14 @@ export default function LoginPage(
                                 </div>
                                 <div className="grid gap-2">
                                     <label htmlFor="password">Password</label>
-                                    <input type="password" name="password" id="password" required className="w-full rounded-md border border-input bg-background px-3 py-2 placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"/>
+                                    <div className="relative">
+                                        <input type={`${show?'text':'password'}`} name="password" id="password" required className="w-full rounded-md border border-input bg-background px-3 py-2 placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"/>
+                                        <button type="button" className="top-0 translate-y-1/2 right-1 absolute" onClick={()=>setShow(!show)}>{
+                                            show ? <Eye/> : <EyeClosed/>
+                                        
+                                            }</button>
+
+                                    </div>
                                 </div>
                                 <button type="submit" className="rounded-md bg-blue-600 px-4 py-2 text-white"> Login</button>
                             </div>

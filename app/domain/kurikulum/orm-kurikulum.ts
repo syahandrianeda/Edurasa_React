@@ -1,17 +1,17 @@
-import type {  faseMerdekaType, faseOrm, OrmAtp, OrmFaseKurikulumType, ormKurikulumInterface, OrmKurikulumMerdekaType, resourcesKurikulum } from "~/types/kurikulum/kurikulum-type";
-import { KoleksiMapel } from "../mapel/koleksi-mapel";
-import type { Agama } from "~/types/enums/agama";
+import type {  faseOrm, OrmAtp, OrmFaseKurikulumType, ormKurikulumInterface, OrmKurikulumMerdekaType, resourcesKurikulum } from "~/types/kurikulum/kurikulum-type";
+import type { InterfaceMapel } from "~/types/mapel/mapel";
 
 export default class OrmKurikulum{
     private dataKurikulum: ormKurikulumInterface[] = [];
-    constructor(private dataSelector:resourcesKurikulum){}
+    constructor(private dataSelector:resourcesKurikulum, private mapelKoleksi:InterfaceMapel[]){}
     createData(){
         const { cp, fase, atp } = this.dataSelector;
         
         /** kosongkan/bersihkan dataKurikulum */
         this.dataKurikulum = [];
         
-        KoleksiMapel.forEach(({id,nama,kode, kode_umum,penganut})=>{
+        //KoleksiMapel
+        this.mapelKoleksi.forEach(({id,nama,kode, kode_umum,penganut})=>{
             const dataPerFase:faseOrm[]=[];
             
             fase.forEach((dataFase)=>{
@@ -44,9 +44,9 @@ export default class OrmKurikulum{
                             }
                         )
                         const dataElemenCpFase:OrmFaseKurikulumType={
-                            idbaris_tp:dataTp.idbaris,
-                            fase_name:dataCp.fase,
-                            tp:dataTp.tp,
+                            idbaris_tp:dataTp?.idbaris,
+                            fase_name:dataCp?.fase,
+                            tp:dataTp?.tp,
                             atp:collectAtp,
                             source_data_tp:dataTp,
                             countItem:countAtp,
@@ -91,5 +91,8 @@ export default class OrmKurikulum{
         return this.dataKurikulum
     }
 
+    atpOrm(){
+
+    }
     
 }

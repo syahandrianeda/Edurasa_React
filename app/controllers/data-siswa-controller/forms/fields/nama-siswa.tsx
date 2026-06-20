@@ -10,7 +10,7 @@ export default function NamaSiswa({className}:{className?:string}){
         <Fields className={cn("mt-3 w-10/12",className)}>
             <InputText
                 id="pd_nama"
-                value={currentData?.pd_nama.toUpperCase()??""}
+                value={currentData?.pd_nama?.toUpperCase()??""}
                 onChange={(e)=>{
                     const v = e.currentTarget.value;
                     setCurrentData(draft=> {

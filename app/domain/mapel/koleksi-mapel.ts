@@ -105,4 +105,13 @@ export const KoleksiMapel: InterfaceMapel[]=[
         grup:'B',
         kelompok:'Pilihan'
     },
+    {
+        id:24,
+        nama:'Koding dan Kecerdasan Artificial',
+        kode:'KODING',
+        kode_umum:'KODING',
+        muatan:'NASIONAL',
+        grup:'B',
+        kelompok:'Pilihan'
+    },
 ]

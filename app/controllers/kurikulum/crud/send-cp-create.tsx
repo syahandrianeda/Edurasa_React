@@ -15,7 +15,10 @@ export default function SendCpCreate({data}:{data:ElemenCpType}){
     const {state, actions}=useCrudElemenCpProvider();
     const onSubmit =  async (e: React.MouseEvent<HTMLButtonElement>)=>{
         e.preventDefault();
-        
+        if(data.cp_utama ==="" || data.elemen ==="") {
+            alert('Elemen dan/atau CP tidak boleh kosong');
+            return;
+        }
         const paramUpdate = {
             data: JSON.stringify([data]),
             key_match:'idbaris',

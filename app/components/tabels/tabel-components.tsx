@@ -1,4 +1,5 @@
 import type { ComponentProps } from "react";
+import { useIsMobile } from "~/hooks/use-mobile";
 import { cn } from "~/lib/utils";
 
 export function TableEdura({className, ...props}:ComponentProps<'table'>){
@@ -20,19 +21,41 @@ export function ThEdura({className, style, ...props}: ComponentProps<'th'>){
     )
 }
 export function THEduraFreeze({stateFreeze=false, className, style, ...props}:ComponentProps<'th'> & {stateFreeze?:boolean}){
-    const classFreeze= stateFreeze?`sticky left-0 z-5 print:static
-                        shadow-[inset_-0.5px_0px_rgb(221,221,221)]
-                        border border-black ${className}`:`relative print:static ${className}`;
-    return(
-        <ThEdura 
-            style={style}
-            className={cn(classFreeze)}
-            {...props}
-        />
-    )
+    const isMobile = useIsMobile();
+    if(isMobile){
+        return (
+            <ThEdura 
+                style={style}
+                className={cn(className)}
+                {...props}
+            />
+        )
+    }else{
+        const classFreeze= stateFreeze?`sticky left-0 z-5 print:static
+                            shadow-[inset_-0.5px_0px_rgb(221,221,221)]
+                            border border-black ${className}`:`relative print:static ${className}`;
+
+                            return(
+                                <ThEdura 
+                                    style={style}
+                                    className={cn(classFreeze)}
+                                    {...props}
+                                />
+                            )
+    }
 }
-export function TdEduraFreeze({stateFreeze=false, className, style, ...props}:ComponentProps<'th'> & {stateFreeze?:boolean}){
-    const classFreeze= stateFreeze?`sticky left-0 z-5 uppercase align-middle print:static
+export function TdEduraFreeze({stateFreeze=false, className, style, ...props}:ComponentProps<'td'> & {stateFreeze?:boolean}){
+     const isMobile = useIsMobile();
+    if(isMobile){
+        return (
+            <TdEdura 
+                style={style}
+                className={cn(className)}
+                {...props}
+            />
+        )
+    }else{
+        const classFreeze= stateFreeze?`sticky left-0 z-5 align-middle print:static
                         shadow-[inset_-0.5px_0px_rgb(221,221,221)]
                         border border-black ${className}`:`align-middle ${className}`;
     return(
@@ -42,6 +65,7 @@ export function TdEduraFreeze({stateFreeze=false, className, style, ...props}:Co
             {...props}
         />
     )
+    }
 }
 export function TRowEdura({className, ...props}:ComponentProps<'tr'>){
     return (

@@ -1,4 +1,4 @@
-import { Bookmark, CalendarCheck, ClipboardClock, GitForkIcon, LandPlotIcon, LocateFixed, Target, TargetIcon } from "lucide-react";
+import { Bookmark, Calendar, CalendarCheck, ClipboardClock, GitForkIcon, LandPlotIcon, LocateFixed, Target, TargetIcon } from "lucide-react";
 import type { typeSidebarFiturKonten } from "~/types";
 
 
@@ -55,5 +55,25 @@ export const SubfiturKurikulum: typeSidebarFiturKonten[] = [
             },
         ]   
     },
+    {
+        groupTitle:'Program Pembelajaran',
+        breadCrumbs: [
+            {
+                title: "Program Tahunan (Prota)",
+                href: '/kurikulum/program-tahunan',
+                icon: Calendar,
+                description:'Program Tahunan disusun berdasarkan ATP yang telah Anda Isi',
+                permission:'view kurikulum'
+            },
+            {
+                title:'Program Semester',
+                href: '/kurikulum/program-semester',
+                icon: GitForkIcon,
+                description:'Program Semester disusun berdasarkan Program Tahunan. Anda cukup menyebarkannya ke kaldik',
+                permission:'view kurikulum'
+            }
+        ]
+    },
+    
     
 ]

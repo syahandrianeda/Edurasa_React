@@ -1,4 +1,4 @@
-import type { jp_mapelSheet } from "~/types/mapel/jp_mapel";
+import type { jp_mapelApp, jp_mapelSheet } from "~/types/mapel/jp_mapel";
 import { resolveNumber, resolveString } from "./_resolver";
 
 export default class DTOMapelRombel{
@@ -28,4 +28,14 @@ export default class DTOMapelRombel{
     static arrayFromSheet(data:Record<string, any>[]):jp_mapelSheet[]{
         return data.map(this.fromSheet);
     }
+    static fromSheetTo_jp_mapelApp(data:jp_mapelSheet):jp_mapelApp{
+        return {
+            ...DTOMapelRombel.fromSheet(data),
+            source:undefined as any
+        }
+    }
+    static arrayFromSheet_to_jp_mapelApp(data:jp_mapelSheet[]):jp_mapelApp[]{
+        return data.map(this.fromSheetTo_jp_mapelApp);
+    }
+
 }

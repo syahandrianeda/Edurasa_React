@@ -148,7 +148,7 @@ function EditContenAtp(){
                             >
                             {
                                 dataasal.currentFase.elemen_cp.map(({elemen,cp_utama, id_elemen_cp},index)=>
-                                    <option value={id_elemen_cp} key={index}>{elemen}</option>
+                                    <option value={id_elemen_cp} key={index}>{cp_utama}</option>
                                 )
                             }
                         </SelectField>
@@ -167,8 +167,9 @@ function EditContenAtp(){
                         </SelectField>
                     </Field>
                     <Field className="relative mt-4">
-                        <InputTextArea className="scrol-h-custom" label="Alur Tujuan Pembelajaran" value={currentData.atp} onChange={(e)=>handleInputChange(e.target.value)}/>
+                        <InputTextArea className="scrol-h-custom min-h-10" label="Alur Tujuan Pembelajaran" value={currentData.atp} onChange={(e)=>handleInputChange(e.target.value)}/>
                     </Field>
+                        <p className="text-xs">Hindari awalan 'Peserta didik mampu' atau sejenisnya agar dapat digunakan sebagai indikator deskripsi rapor</p>
                 </div>
                 <div className="border rounded-2xl  flex flex-col justify-start bg-sky-500/50 border-sky-500 inset-shadow-sky-600 shadow-lg p-1 md:overflow-y-auto scrol-h-custom">
                     <div className="bg-white dark:bg-sky-50 p-1 m-1 rounded">
@@ -310,8 +311,8 @@ function CreateContenAtp(){
                             onChange={(e)=>handleChangeElemen(Number(e.currentTarget.value))}
                             >
                             {
-                                dataasal.currentFase.elemen_cp.map(({elemen,cp_utama, id_elemen_cp},index)=>
-                                    <option value={id_elemen_cp} key={index}>{elemen}</option>
+                                dataasal.currentFase.elemen_cp.filter(s=>s.tp_fase_properties.length>0).map(({elemen,cp_utama, id_elemen_cp},index)=>
+                                    <option value={id_elemen_cp} key={index}>{cp_utama}</option>
                                 )
                             }
                         </SelectField>
@@ -332,6 +333,8 @@ function CreateContenAtp(){
                     <Field className="relative mt-4">
                         <InputTextArea className="scrol-h-custom" label="Alur Tujuan Pembelajaran" value={currentData.atp} onChange={(e)=>handleInputChange(e.target.value)}/>
                     </Field>
+                    <p className="text-xs">Hindari awalan 'Peserta didik mampu' atau sejenisnya agar dapat digunakan sebagai indikator deskripsi rapor</p>
+                    
                 </div>
                 <div className="border rounded-2xl  flex flex-col justify-start bg-sky-500/50 border-sky-500 inset-shadow-sky-600 shadow-lg p-1 md:overflow-y-auto scrol-h-custom">
                     <div className="bg-white dark:bg-sky-50 p-1 m-1 rounded">
@@ -347,6 +350,8 @@ function CreateContenAtp(){
                         </div>
                         <p className="font-bold dark:text-black">Elemen</p>
                         <p className="italic border p-2 text-xs text-black">{dataCp?.elemen}</p>
+                        <p className="font-bold dark:text-black">CP</p>
+                        <p className="italic border p-2 text-xs text-black">{dataCp?.cp_utama}</p>
                         <p className="font-bold dark:text-black">TP</p>
                         <p className="italic border p-2 text-xs text-black">{dataTp?.tp}</p> 
                         <p className="font-bold dark:text-black">ATP</p>

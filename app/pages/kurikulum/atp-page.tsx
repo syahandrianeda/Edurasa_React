@@ -14,7 +14,7 @@ export default function AtpPage(){
             <h3 className="text-xl text-center font-extrabold uppercase mb-0">{`${fokusMapel?.nama}`}</h3>
             <h3 className="text-xl text-center font-extrabold uppercase mb-0">Fase {data.currentFase?.faseName} (Kelas {data.currentFase?.memberJenjang.join(' dan ')})</h3>
             <h5 className="text-base text-center font-extrabold uppercase mb-5">{currentTapel({variant:'full'})}</h5>
-            <ButtonAddAtp/>
+            {/* <ButtonAddAtp/> */}
             <TableAtp/>
         </div>
     )

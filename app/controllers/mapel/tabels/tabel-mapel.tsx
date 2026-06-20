@@ -19,7 +19,7 @@ export default function TableMapel(){
     const mapel = useAppSelector(CurrentMapelInActiveRombel);
     const {actions} = useModal<jp_mapelSheet>();
     
-    console.log('mapel',mapel);
+    
     const ActionTrigger: TriggerTable<jp_mapelSheet>[] = [
         {
             label: 'Edit',
@@ -133,7 +133,6 @@ export default function TableMapel(){
                     </TRowEdura>
                 </tfoot>
             </TableWithScrolling>  
-            {/* <button className="border bg-sky-300 rounded-3xl p-2 mx-auto mt-3" onClick={()=>console.log(mapelData)}>Simpan</button> */}
             <ButtonSendMapel data={mapelData}/>
         </>
     )

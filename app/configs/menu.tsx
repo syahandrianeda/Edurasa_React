@@ -4,24 +4,24 @@ import type { typeKoleksiMenu } from "~/types";
 
 
 export const DataMenu: typeKoleksiMenu[] = [
-    {
-        title: "Approval", 
-        routeName: "approval",
-        urlIcon: MenuIcons["sosial"],
-        permission: 'view approval',
-    },
+    // {
+    //     title: "Approval", 
+    //     routeName: "approval",
+    //     urlIcon: MenuIcons["sosial"],
+    //     permission: 'view approval',
+    // },
     {
         title: "Admin Panel", 
         routeName: "admin-panel",
         urlIcon: MenuIcons["admin-panel"],
         permission: 'view admin-panel',
     },
-    {
-        title: "Identitas Sekolah", 
-        routeName: "setting-sekolah",
-        urlIcon: MenuIcons["sekolah-indonesia"],
-        permission: 'view setting sekolah',
-    },
+    // {
+    //     title: "Identitas Sekolah", 
+    //     routeName: "setting-sekolah",
+    //     urlIcon: MenuIcons["sekolah-indonesia"],
+    //     permission: 'view setting sekolah',
+    // },
     {
         title: "Data Siswa", 
         routeName: "kesiswaan",
@@ -29,6 +29,12 @@ export const DataMenu: typeKoleksiMenu[] = [
         permission: 'view data-siswa',
     },
     
+    {
+        title: "Absensi Siswa", 
+        routeName: "absensi-siswa",
+        urlIcon: MenuIcons["absensi-siswa"],
+        permission: 'view absensi-siswa',
+    },
     {
         title: "Kalender Pendidikan", 
         routeName: "kaldik",
@@ -42,23 +48,17 @@ export const DataMenu: typeKoleksiMenu[] = [
         urlIcon: MenuIcons["lg_hand_book"],
         permission: 'view kurikulum',
     },
-    {
-        title: "Program Pembelajaran", 
-        routeName: "program-pembelajaran",
-        urlIcon: MenuIcons["program-pembelajaran"],
-        permission: 'view program-pembelajaran',
-    },
+    // {
+    //     title: "Program Pembelajaran", 
+    //     routeName: "program-pembelajaran",
+    //     urlIcon: MenuIcons["program-pembelajaran"],
+    //     permission: 'view program-pembelajaran',
+    // },
     {
         title: "Modul Ajar", 
         routeName: "modul-ajar",
         urlIcon: MenuIcons["rpp"],
         permission: 'view modul-ajar',
-    },
-    {
-        title: "Absensi Siswa", 
-        routeName: "absensi-siswa",
-        urlIcon: MenuIcons["absensi-siswa"],
-        permission: 'view absensi-siswa',
     },
     
     {

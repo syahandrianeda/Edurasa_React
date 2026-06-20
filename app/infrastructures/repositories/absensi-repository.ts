@@ -9,17 +9,20 @@ export default class AbsensiRepositoryImplements extends AppScriptSheet implemen
     }
     async loadAbsensiAndKaldik(): Promise<ApiResponse<Record<string, any>>[]> {
         const pushing = [this.paramSheetAbsensiJenjang,this.paramSheetKaldikTabKaldik];
+        const auth = this.dataAuth();
         const paramCallKaldikAndAbsensi = {
                 action: 'readMultipleTab',
                 source: JSON.stringify(pushing),
+                auth
             };
         const action =  await this.postBody(paramCallKaldikAndAbsensi);
-        
-        return action.map(this.responActionRead);
+        console.log('action absen', action);
+        return action.collections.map(this.responActionRead);
     }
     async refreshAbsensi(): Promise<ApiResponse<Record<string, any>>> {
         
         const action = await this.postBody(this.paramSheetAbsensiJenjang);
+        console.log('action absen', action);
         return this.responActionRead(action);
     }
     async uploadFileRepo(param: ParamFile): Promise<any> {

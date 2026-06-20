@@ -1,5 +1,7 @@
 
+import { getSessionApp } from "~/infrastructures/session-storage/app-session";
 import { AppScriptConfig } from "./appscript-config";
+import type { UserPtk } from "~/types";
 
 
 export interface ParamRequestAppScript{
@@ -37,6 +39,9 @@ export default class AppScriptSheet extends AppScriptConfig{
     protected sheetMateriTabJpMapel     : ParamRequestAppScript = {idss:'',tab:''};
     protected sheetMateriTabJadwalMapel : ParamRequestAppScript = {idss:'',tab:''};
     protected sheetMateriTabSettingJadwalMapel : ParamRequestAppScript = {idss:'',tab:''};
+    /** pembiasaan dan kegiatan sekolah yang dijadwalkan */
+    protected sheetMateriTabKegiatanNonKbm : ParamRequestAppScript = {idss:'',tab:''};
+    protected sheetMateriTabProta : ParamRequestAppScript = {idss:'',tab:''};
     
 
     constructor(){
@@ -45,6 +50,13 @@ export default class AppScriptSheet extends AppScriptConfig{
         this.sheetAkunTabSiswa       = {idss:this.sheetAkun, tab:'siswa'}
         this.sheetAkunTabDapodik     = {idss:this.sheetAkun, tab:'dapodik'}
         this.sheetKaldikTabKaldik    = {idss:this.sheetKaldik, tab:'kalender'}
+        this.sheetMateriTabMapel       = {idss:this.sheetMateri, tab:'mapel'}
+        this.sheetMateriTabJpMapel     = {idss:this.sheetMateri, tab:'jp_mapel'}
+        this.sheetMateriTabJadwalMapel = {idss:this.sheetMateri, tab:'jadwal_mapel'}
+        this.sheetMateriTabSettingJadwalMapel = {idss:this.sheetMateri, tab:'setting_jadwal'}
+        this.sheetMateriTabKegiatanNonKbm = {idss:this.sheetMateri, tab:'kegiatan_nonkbm'}
+        this.sheetMateriTabProta = {idss:this.sheetMateri, tab:'prota'}
+
         // this.sheetAkunTabUser   = {idss:'',tab:''};
         // this.sheetAkunTabSiswa  = {idss:'',tab:''};
     }
@@ -119,6 +131,7 @@ export default class AppScriptSheet extends AppScriptConfig{
      */
     set paramSheetKaldikTabKaldik(additionalParam:Record<string, any>){
         const tab=this.isDev?"trial_kalender":"kalender";
+        //this.sheetKaldikTabKaldik 
         this.sheetKaldikTabKaldik = {
             idss: this.sheetKaldik,
             tab: tab,
@@ -214,26 +227,42 @@ export default class AppScriptSheet extends AppScriptConfig{
 
 
     getParamKurikulumNeeded():ParamRequestAppScript[]{
+        this.paramKurikulumMapel={};
+        this.paramKurikulumJpMapel ={} ;// a.ka mapel rombel
         this.paramKurikulumCp = {};
         this.paramKurikulumTpFaseA={};
         this.paramKurikulumTpFaseB = {};
         this.paramKurikulumTpFaseC = {};
         this.paramKurikulumAtp = {};
         /** tambahan untuk mapel */
-        this.paramKurikulumMapel={};
-        this.paramKurikulumJpMapel ={} ;// a.ka mapel rombel
         this.paramKurikulumSettingJadwalMapel = {};
         this.paramKurikulumJadwalMapel = {};
+        /** param kegiatan jadwal */
+        this.paramKurikulumKegiatanNonKbm = {};
+        /** kaldik */
+        this.paramSheetKaldikTabKaldik = {};
+        /** prota */
+        
+
         return [
             this.sheetMateriTabElemenCp,
             this.sheetMateriTabFaseA,
             this.sheetMateriTabFaseB,
             this.sheetMateriTabFaseC,
             this.sheetMateriTabFaseTpAtp,
+            /** terkait mapel di rombel, jp, dan jadwal */
+            this.sheetMateriTabKegiatanNonKbm,
+            
+            /** terkait mapel di rombel, jp, dan jadwal */
             this.sheetMateriTabMapel,
             this.sheetMateriTabJpMapel,
+            this.sheetMateriTabSettingJadwalMapel,
             this.sheetMateriTabJadwalMapel,
-            this.sheetMateriTabSettingJadwalMapel
+            /** terkait kaldik dan prota */
+            this.sheetKaldikTabKaldik,
+            this.sheetMateriTabProta
+        
+
         ]
     }
 
@@ -285,4 +314,43 @@ export default class AppScriptSheet extends AppScriptConfig{
     get paramKurikulumSettingJadwalMapel(){
         return this.sheetMateriTabSettingJadwalMapel;
     }
+    set paramKurikulumKegiatanNonKbm(additionalParam:Record<string, any>){
+        const tab = 'kegiatan_nonkbm';
+        this.sheetMateriTabKegiatanNonKbm= {
+            idss: this.sheetMateri,
+            tab,
+            ...additionalParam
+        }
+    }
+    get paramKurikulumKegiatanNonKbm(){
+        return this.sheetMateriTabKegiatanNonKbm;
+    }
+    
+    set paramSheetMateriTabProta(additionalParam:Record<string, any>){
+        const tab = 'prota';
+        this.sheetMateriTabProta= {
+            idss: this.sheetMateri,
+            tab,
+            ...additionalParam
+        }
+    }
+    get paramSheetMateriTabProta(){
+        return this.sheetMateriTabProta;
+    }
+
+    dataAuth(){
+        this.paramSheetAkunTabUser = {};
+        const sheetTabAkun = this.paramSheetAkunTabUser;
+        const currentUser = getSessionApp() as unknown as UserPtk ;
+        if(currentUser){
+            const auth = JSON.stringify({
+                token: currentUser.id,
+                sheet_id:sheetTabAkun.idss,
+                tab: sheetTabAkun.tab
+            });
+            return auth;
+        }
+        return null
+    }
+
 }

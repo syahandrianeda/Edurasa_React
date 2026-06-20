@@ -29,6 +29,10 @@ function CpUpdate({data, dataAsal}:{data:OrmKurikulumMerdekaType, dataAsal:curre
     const {state, actions}=useCrudElemenCpProvider();
     const onSubmit =  async (e: React.MouseEvent<HTMLButtonElement>)=>{
         e.preventDefault();
+        if(data.cp_utama ==="" || data.elemen ==="") {
+            alert('Elemen dan/atau CP tidak boleh kosong');
+            return;
+        }
         const dataMerge = {...data, ...dataAsal}
         const dataDto = DTOCp.fromOrmToSheet(dataMerge);
         
@@ -71,7 +75,7 @@ function CpDelete({data, dataAsal}:{data:OrmKurikulumMerdekaType, dataAsal:curre
         e.preventDefault();
         const dataMerge = {...data, ...dataAsal, status:'hapus'}
         const dataDto = DTOCp.fromOrmToSheet(dataMerge);
-        console.log('onSubmit',dataMerge, dataDto);
+        
         const paramUpdate = {
             data: JSON.stringify([dataDto]),
             key_match:'idbaris',

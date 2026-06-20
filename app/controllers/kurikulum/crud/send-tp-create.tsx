@@ -16,6 +16,10 @@ export default function SendTpCreate({data}:{ data:OrmFaseKurikulumType}){
     const {state, actions}=useCrudTpFaseProvider();
     const onSubmit =  async (e: React.MouseEvent<HTMLButtonElement>)=>{
         e.preventDefault();
+        if(data.tp ==="" ) {
+            alert('TP tidak boleh kosong');
+            return;
+        }
         const dataFase:FaseKurikulumType ={
             idbaris:0,
             foreignkey_elemencp:data.source_data_tp?.foreignkey_elemencp??0,
@@ -23,8 +27,8 @@ export default function SendTpCreate({data}:{ data:OrmFaseKurikulumType}){
             faseName:data.fase_name
         }
         
+        console.log('data TP yang dikirim', dataFase)
         
-        console.log('dataFase yang dikirim',dataFase)
         const respon  = await actions.update(dataFase);
                 
                 dispatch(setloadedApi({

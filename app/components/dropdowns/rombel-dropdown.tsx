@@ -3,6 +3,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem,
 import { setFokusRombel } from "~/context-reduct/global-state/fokus-rombel-slice";
 import { DataRombelUI, filterRombelByKelasAmpu, uniqueRombelByJenjang } from "~/domain/rombel/data-rombel";
 import { getNumberFromString } from "~/lib/get-number";
+import { saveSessionRombel } from "~/infrastructures/session-storage/rombel-session";
 
 // type IdentiasRombel = {
 //     id_rombel: string;
@@ -56,11 +57,22 @@ export default function RombelDropdown(
                         <DropdownMenuItem key={index} className="py-1 px-0">
                             {
                                 typeKelas==='rombel'?(
-                                        <button onClick={()=>dispatch(setFokusRombel({value:rombel.rombelName}))} className="w-full bg-sky-300/50">
+                                        <button onClick={()=>{
+                                                    dispatch(setFokusRombel({value:rombel.rombelName}));
+                                                    // localStorage.setItem('rombel',rombel.rombelName)
+                                                    saveSessionRombel(rombel.rombelName);
+                                                }} 
+                                                className="w-full bg-sky-300/50"
+                                            >
                                                 {rombel.rombelName}
                                         </button>
                                 ):(
-                                    <button onClick={()=>dispatch(setFokusRombel({value:rombel.rombelName}))} className="w-full bg-sky-300/50">
+                                    <button onClick={()=>{
+                                                    dispatch(setFokusRombel({value:rombel.rombelName}));
+                                                    // localStorage.setItem('rombel',rombel.rombelName)
+                                                    saveSessionRombel(rombel.rombelName);
+                                                }} 
+                                                className="w-full bg-sky-300/50">
                                             {rombel.jenjang}
                                     </button>
                                 )

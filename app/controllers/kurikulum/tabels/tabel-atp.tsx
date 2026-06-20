@@ -1,20 +1,25 @@
-import { PencilIcon, Trash } from "lucide-react";
+import { PencilIcon, PlusIcon, Trash } from "lucide-react";
+import { useMemo } from "react";
 import { ActionButtonTable, type TriggerTable } from "~/components/dropdowns/dropdown-action-table";
 import { useModal } from "~/components/modals/modal-provider";
 import { TdEdura, ThEdura, TRowEdura } from "~/components/tabels/tabel-components";
 import TableWithScrolling from "~/components/tabels/table-with-scrolling";
 import { useAppSelector } from "~/context-reduct/hook";
 import { PropertyKurikulumMapelAktifSelector } from "~/context-reduct/selectores/kurmer-selector";
+import { groupByOriginalOrder } from "~/lib/group-by";
 import type { OrmAtp, OrmFaseKurikulumType, OrmKurikulumMerdekaType } from "~/types/kurikulum/kurikulum-type";
 
 export default function TableAtp(){
     const data = useAppSelector(PropertyKurikulumMapelAktifSelector);
     const {actions} = useModal<OrmAtp>();
-    const {actions:tpAction} = useModal<OrmFaseKurikulumType>();
+    const dataGroup = useMemo(()=>{
+        return data && groupByOriginalOrder(data.currentFase?.elemen_cp, (m)=>m.elemen)
+    },[data]);
+    
     const ActionTriggerAddAtp:TriggerTable<OrmFaseKurikulumType>[] = [
         {
             label: 'Tambah ATP',
-            icon: PencilIcon,
+            icon: PlusIcon,
             callback: (m) =>{ 
                 const ormAtpBlangko:OrmAtp = {
                         idbaris_atp:0,
@@ -36,6 +41,20 @@ export default function TableAtp(){
         },
     ]
     const ActionTrigger: TriggerTable<OrmAtp>[] = [
+        {
+            label: 'Tambah ATP',
+            icon: PlusIcon,
+            callback: (m) =>{ 
+                
+                actions.open('TAMBAH ATP', {...m,
+                    idbaris_atp:0,
+                    atp:'',
+                    kelas:[],
+                    countItem:1,
+                    status:''
+                },{closeOnOutsideClick:false})
+            }
+        },
         {
             label: 'Edit',
             icon: PencilIcon,
@@ -63,8 +82,87 @@ export default function TableAtp(){
                 </TRowEdura>
             </thead>
             <tbody>
-                    {
-                        data.currentFase.elemen_cp.map((elemen) => {
+                {
+                    dataGroup && Object.keys(dataGroup).map((key,gi)=>{
+                        const dataElemen = dataGroup[key];
+                        const countATPInElemen = dataElemen.reduce((acc, item) => acc + Math.max(1, item.countItem || 0), 0);
+                        return dataElemen.map((dataCP, indexCp)=>{
+                            const dataTp = dataCP.tp_fase_properties.length
+                                ?dataCP.tp_fase_properties
+                                :[null];
+                            return dataTp.map((dataTp, indexTp)=>{
+                                const dataAtp = dataTp?.atp.length
+                                    ?dataTp.atp
+                                    :[null];
+                                return dataAtp.map((dataAtp, indexAtp)=>{
+                                    const key = `${dataCP.id_elemen_cp}-${indexTp}-${indexAtp}`
+                                    return (
+                                        <TRowEdura key={key} className="odd:bg-white event:bg-white">
+                                            
+                                            {
+                                                indexCp === 0 && indexTp === 0 && indexAtp === 0 && (
+                                                    <TdEdura 
+                                                        rowSpan={countATPInElemen}
+                                                        className="text-wrap align-middle max-w-32"
+                                                        >
+                                                    {dataCP.elemen}
+                                                    </TdEdura>
+                                                )
+                                                
+                                            }
+                                            
+                                            {
+                                                indexAtp === 0 && (
+                                                    <TdEdura 
+                                                        rowSpan={dataTp?.countItem || 1}    
+                                                        className="text-wrap align-middle max-w-lg"
+                                                        >
+                                                            {
+                                                                dataTp?.tp ?? <span className="text-rose-400">Silakan tambahkan TP di fitur Tujuan Pembelajaran</span>
+                                                            }
+                                                        </TdEdura>
+                                                )
+                                            }
+                                            
+                                            <TdEdura className="text-wrap max-w-xl" >
+                                                {dataAtp?.atp ?? ""}
+                                            </TdEdura>
+
+                                            <TdEdura className="text-center">
+                                                {
+                                                    dataAtp?.kelas.join(', ') ??""
+                                                }
+                                            </TdEdura>
+                                            <TdEdura>
+                                                {
+                                                    dataAtp ?( <ActionButtonTable<OrmAtp>
+                                                        data={dataAtp}
+                                                        trigger={ActionTrigger}
+                                                    />):(
+                                                        dataTp && <ActionButtonTable<OrmFaseKurikulumType>
+                                                        data={dataTp}
+                                                        trigger={ActionTriggerAddAtp}
+                                                        />
+                                                    )
+                                                }
+                                            </TdEdura>
+                                        </TRowEdura>
+                                    )
+                                })
+                                
+                            
+                            })
+                        })
+                    })
+                }
+            </tbody>
+        </TableWithScrolling>
+    )
+}
+
+/**
+{
+                        data.currentFase?.elemen_cp.map((elemen) => {
                             const tpList = elemen.tp_fase_properties.length
                                 ? elemen.tp_fase_properties
                                 : [null]
@@ -82,7 +180,7 @@ export default function TableAtp(){
                                             
                                             {
                                                 tpIndex === 0 && atpIndex === 0 && (
-                                                    <TdEdura className="text-wrap align-middle" rowSpan={elemen.countItem || 1}>
+                                                    <TdEdura className="text-wrap align-middle max-w-32" rowSpan={elemen.countItem || 1}>
                                                     {elemen.elemen}
                                                     </TdEdura>
                                                 )
@@ -90,13 +188,13 @@ export default function TableAtp(){
                                             
                                             {
                                                 atpIndex === 0 && (
-                                                    <TdEdura className="text-wrap align-middle"  rowSpan={tp?.countItem || 1}>
+                                                    <TdEdura className="text-wrap align-middle max-w-lg"  rowSpan={tp?.countItem || 1}>
                                                     {tp?.tp ?? <span className="text-rose-400 text-[10px] font-extrabold print:hidden">Silakan tambahkan TP di fitur Tujuan Pembelajaran</span>}
                                                     </TdEdura>
                                                 )
                                             }
                                             
-                                            <TdEdura className="text-wrap" >
+                                            <TdEdura className="text-wrap max-w-xl" >
                                                 {atp?.atp ?? ""}
                                             </TdEdura>
                                             <TdEdura className="text-center">
@@ -122,7 +220,4 @@ export default function TableAtp(){
                             })
                         })
                     }
-            </tbody>
-        </TableWithScrolling>
-    )
-}
+ */

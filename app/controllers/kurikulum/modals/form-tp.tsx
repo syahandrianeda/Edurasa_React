@@ -46,11 +46,11 @@ function EditContenFaseTp(){
     const handleChangeElemen = (v:number)=>{
         const findCP = dataasal.currentFase.elemen_cp.find(s=>s.id_elemen_cp === v);
         setDataIdElemen(findCP?.id_elemen_cp??0)
-        
+        console.log('id elemen cp', findCP?.id_elemen_cp, findCP)
         setCurrentData(draft=>{
             draft.source_data_tp = {
                 idbaris:draft.idbaris_tp,
-                foreignkey_elemencp: dataIdElemen,//,Number(findCP?.id_elemen_cp)??0,
+                foreignkey_elemencp:findCP?.id_elemen_cp??0,// dataIdElemen,//,Number(findCP?.id_elemen_cp)??0,
                 status:'',
                 tp:draft.tp
 
@@ -66,7 +66,7 @@ function EditContenFaseTp(){
             setDataIdElemen(findCP.id_elemen_cp)
             // setCurrentData(draft=>draft.fase_name=dataasal.currentFase.faseName)
         }
-    },[]);
+    },[dataasal]);
     
     const handleInputChange = (vt:string)=>{
         setCurrentData(draft=>{
@@ -79,7 +79,7 @@ function EditContenFaseTp(){
             }
         })
     };
-
+    console.log('data form', currentData)
     return (
         <fieldset disabled={stateCrud.isSubmitting}>
             <div className="grid grid-cols-1 gap-2 space-x-2 md:grid-cols-2 bg-linear-to-tl from-sky-400 to-sky-300 p-2  h-[calc(100vh-12.5rem)]  md:overflow-y-auto scrol-h-custom">
@@ -92,7 +92,7 @@ function EditContenFaseTp(){
                             >
                             {
                                 dataasal.currentFase.elemen_cp.map(({elemen,cp_utama, id_elemen_cp},index)=>
-                                    <option value={id_elemen_cp} key={index}>{elemen}</option>
+                                    <option value={id_elemen_cp} key={index}>{cp_utama}</option>
                                 )
                             }
                         </SelectField>
@@ -183,7 +183,7 @@ function CreateContenFaseTp(){
                             >
                             {
                                 dataasal.currentFase.elemen_cp.map(({elemen,cp_utama, id_elemen_cp},index)=>
-                                    <option value={id_elemen_cp} key={index}>{elemen}</option>
+                                    <option value={id_elemen_cp} key={index}>{cp_utama}</option>
                                 )
                             }
                         </SelectField>
@@ -192,6 +192,7 @@ function CreateContenFaseTp(){
                     
                     <Field className="relative mt-4">
                         <InputTextArea className="scrol-h-custom" label="Tujuan Pembelajaran" value={currentData.tp} onChange={(e)=>handleInputChange(e.target.value)}/>
+                        <p>Hindari awalan 'Peserta didik mampu' atau sejenisnya agar dapat digunakan sebagai indikator deskripsi rapor</p>
                     </Field>
                 </div>
                 <div className="border rounded-2xl  flex flex-col justify-center bg-sky-500/50 border-sky-500 inset-shadow-sky-600 shadow-lg p-1 md:overflow-y-auto scrol-h-custom">

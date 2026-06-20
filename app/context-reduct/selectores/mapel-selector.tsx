@@ -7,3 +7,7 @@ export const DtoMapelSelector = createSelector(
     [MapelPureSelector],
     (dto)=>DTOMapel.arrayFromSheet(dto)
 )
+export const DtoMapelAllSelector = createSelector(
+    [MapelPureSelector],
+    (dto)=>DTOMapel.arrayFromSheet(dto)
+)

@@ -45,15 +45,13 @@ export default function TableMapelOrm(){
     ]
     const [mapelData, setMapelData] = useState<jp_mapelApp[]>([]);
     const instanceMapel = useMemo(()=>{
-        return mapel.collectifMapelRombel();
+        return mapel.collectifMapelRaport();
     },[mapel]);
     useEffect(()=>{
-        if(instanceMapel){
-            const instance = mapel.collectifMapelRombel();
-            
-            setMapelData(instance.data??[])
+        if(instanceMapel.data){
+            setMapelData(instanceMapel.data)
         }
-    }, [mapel])
+    }, [instanceMapel])
 
     const handleMoveUp = (index: number) => {
         if (index === 0) return; // sudah paling atas
@@ -64,7 +62,7 @@ export default function TableMapelOrm(){
         if (index === mapelData.length - 1) return; // sudah paling bawah
         setMapelData(prev => moveItem(prev, index, index + 1));
     };
-    console.log('mapel',instanceMapel.data);
+    
     return (
         <>
         <div className="flex justify-between gap-3 print:hidden">
@@ -150,12 +148,11 @@ export default function TableMapelOrm(){
                 <tfoot>
                     <TRowEdura>
                         <TdEdura colSpan={3} className="text-center">Total JP dalam Seminggu</TdEdura>
-                        <TdEdura className="text-center">{mapel.collectifMapelRombel().countJp}</TdEdura>
+                        <TdEdura className="text-center">{instanceMapel.countJp}</TdEdura>
                         <TdEdura colSpan={4}/>
                     </TRowEdura>
                 </tfoot>
             </TableWithScrolling>  
-            {/* <button className="border bg-sky-300 rounded-3xl p-2 mx-auto mt-3" onClick={()=>console.log(mapelData)}>Simpan</button> */}
             <ButtonSendMapel data={mapelData}/>
         </>
     )

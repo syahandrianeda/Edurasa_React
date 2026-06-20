@@ -51,6 +51,7 @@ const kurmer = createSlice({
         },
         setKurmerAtp(state, action:PayloadAction<AtpKurikulumType[]>){
             state.dataAtp = action.payload
+            state.loadedAtp=action.payload.length>0
         }
     }
 });

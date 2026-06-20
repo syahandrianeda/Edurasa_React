@@ -17,6 +17,9 @@ export default async function ParsingPrintAreaExcel(element:HTMLElement):Promise
                     resultParsed.push(tabelNode);
                     return;
                 }
+                if(node.dataset.word ==='ignore-parse'){
+                    return;
+                }
                 const tableNode = await parseCommonTableExcel(node as HTMLTableElement);
                     resultParsed.push(tableNode);
                 return; // jangan lanjut ke children

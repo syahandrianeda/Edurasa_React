@@ -3,7 +3,7 @@ import type { settingJadwalSheet } from "~/types/setting_jadwal/setting_jadwal"
 
 export type settingJadwalMapelSliceType = {
     settingJadwal:settingJadwalSheet[],
-    loadedSettingJadwal:Boolean
+    loadedSettingJadwal:boolean
 }   
 
 export const InitialState:settingJadwalMapelSliceType = {

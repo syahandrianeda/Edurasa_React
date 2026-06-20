@@ -19,7 +19,10 @@ export default function SendAtpUpdate({mode, data}:{mode:'update'|'delete', data
     const {state, actions}=useCrudAtpProvider();
     const onSubmit =  async (e: React.MouseEvent<HTMLButtonElement>)=>{
         e.preventDefault();
-        
+        if(data.atp ==="") {
+            alert('ATP tidak boleh kosong');
+            return;
+        }
         const dataAtp:AtpKurikulumSheetType = DTOAtp.fromOrmAtpToSheet(data);
         
         const respon  = await actions.update(dataAtp);

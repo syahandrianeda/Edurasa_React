@@ -6,6 +6,7 @@ import FormContentCp from "./form-cp";
 import FormContentFaseTp from "./form-tp";
 import FormContentAtp from "./form-atp";
 import FormMapelRombel from "../../mapel/modal/form-mapel-rombel";
+import FormModifikasiProta from "~/controllers/prota/modal/form-prota";
 
 
 export default function ModalFiturKurikulum(){
@@ -49,6 +50,8 @@ function switchJudulModalKurikulum(stateType:ModalType){
             return 'Tambah Mata pelajaran di kelas Anda';
         case 'HAPUS MAPEL ROMBEL':
             return 'Hapus Mata pelajaran di kelas Anda';
+        case 'EDIT PROTA':
+            return 'Edit Prota';
         default:
             return 'MODAL'
     }
@@ -73,6 +76,11 @@ function SwitchContentForm({state}:{state:ModalState}){
     if(['EDIT MAPEL ROMBEL','TAMBAH MAPEL ROMBEL', 'HAPUS MAPEL ROMBEL'].includes(stateType)){
         return (
             <FormMapelRombel state={state}/>
+        )
+    }
+    if(stateType === 'EDIT PROTA'){
+        return (
+            <FormModifikasiProta state={state}/>
         )
     }
     return <div className="bg-sky-50">Menyusul</div>

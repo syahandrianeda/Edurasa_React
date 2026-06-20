@@ -9,9 +9,11 @@ export default class ElemenCpRepository extends AppScriptSheet implements Elemen
     }
     async loadAllNeed(): Promise<ApiResponse<Record<string, any>>[]> {
         const paramSheet = this.getParamKurikulumNeeded();
+        const auth = this.dataAuth();
         const param = {
             action:'readMultipleTab',
-            source:JSON.stringify(paramSheet)
+            source:JSON.stringify(paramSheet),
+            auth
         }
         const response =  await this.postBody(param);
         return response.map(this.responActionRead);

@@ -11,10 +11,10 @@ export default function ButtonAddCp(){
     const objekKosong = {
         idbaris:0,
         kodemapel:data.mapel_kode,
-        fase:data.currentFase.faseName,
+        fase:data.currentFase?.faseName,
         elemen:'',
         cp_utama:'',
-        kode_elemen:data?.currentFase.elemen_cp.length + 1,
+        kode_elemen: data?.currentFase?.elemen_cp?.length + 1,
         cp_kunci:'',
         taksonomibloom:'',
     };

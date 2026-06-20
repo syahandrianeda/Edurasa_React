@@ -1,47 +1,72 @@
-import { useState } from "react";
-import { TableEdura, TdEdura, ThEdura, TRowEdura } from "~/components/tabels/tabel-components";
+import { memo, useMemo } from "react";
+import { TdEdura, ThEdura, TRowEdura } from "~/components/tabels/tabel-components";
 import TableWithScrolling from "~/components/tabels/table-with-scrolling";
-import { generateDataJadwal } from "~/domain/jadwal_mapel/data-jadwal";
-import type { jp_mapelApp } from "~/types/mapel/jp_mapel";
-import type { jadwalMapelAccordTableApp, jadwalMapelApp } from "~/types/setting_jadwal/jadwal_mapel";
+import { useFilterContext } from "~/components/toolbars/state-toolbar/state-toolbar";
+import { NAMA_HARI_LABEL } from "~/types/hari";
+
+import type { jadwalMapelAccordTableApp } from "~/types/setting_jadwal/jadwal_mapel";
 import type { settingJadwalApp } from "~/types/setting_jadwal/setting_jadwal";
 
-export default function TabelJadwalPelajaran({setting, mapel, jadwalServer}:{setting:settingJadwalApp, mapel: jp_mapelApp[], jadwalServer:jadwalMapelAccordTableApp[]}) {
-    const dataJadwal = generateDataJadwal(setting, mapel, jadwalServer);
-    console.log('data jadwal', dataJadwal, 'setting', setting, 'mapel', mapel, 'jadwalServer', jadwalServer);
+/**
+ * TabelJadwalPelajaran dioptimasi dengan React.memo untuk mencegah re-render dari parent
+ * yang tidak berhubungan dengan data jadwal.
+ */
+const TabelJadwalPelajaran = memo(function TabelJadwalPelajaran() {
+    const { value } = useFilterContext();
+    const extra = value?.extra;
+
+    // Menggunakan useMemo untuk mengekstrak dan memfilter data hanya jika 'extra' di context berubah.
+    const { dataDisplay, hariAktif, hariLabel, dataSetting } = useMemo(() => {
+        const rawData = (extra?.dataJadwal as Record<string, any>[]) || [];
+        return {
+            dataDisplay: rawData.filter(s => s.status !== 'hapus'),
+            hariAktif: extra?.hariAktif as Array<keyof Pick<jadwalMapelAccordTableApp, 'sn' | 'sl' | 'rb' | 'km' | 'jm' | 'sb'>>,
+            hariLabel: (extra?.namaHari as typeof NAMA_HARI_LABEL) || NAMA_HARI_LABEL,
+            dataSetting: (extra?.dataSetting as settingJadwalApp) || {}
+        };
+    }, [extra]);
     
-    return ( 
+    return (
         <TableWithScrolling>
             <thead>
                 <TRowEdura>
-                    <ThEdura rowSpan={2} className="w-2 text-wrap text-center">Jam Ke</ThEdura>
-                    <ThEdura rowSpan={2} className="w-3">Waktu</ThEdura>
-                    <ThEdura colSpan={setting?.include_sabtu ? 6 : 5}>Hari {setting?.has_rest_time?'(Dengan Istirahat)':''}</ThEdura>
+                    <ThEdura rowSpan={2} className="dark:text-black w-2">Jam Ke</ThEdura>
+                    <ThEdura rowSpan={2} className="dark:text-black w-1">Waktu</ThEdura>
+                    <ThEdura className="dark:text-black w-2" colSpan={dataSetting?.include_sabtu?6:5}>Hari</ThEdura>
                 </TRowEdura>
                 <TRowEdura>
-                    <ThEdura>Senin</ThEdura>
-                    <ThEdura>Selasa</ThEdura>
-                    <ThEdura>Rabu</ThEdura> 
-                    <ThEdura>Kamis</ThEdura>
-                    <ThEdura>Jumat</ThEdura>
-                    {setting?.include_sabtu && <ThEdura>Sabtu</ThEdura>}
+                    {
+                        hariAktif?.map((hari, index) => (
+                            <ThEdura key={hari + '_' + index}>{hariLabel[hari]}</ThEdura>
+                        ))
+                    }
                 </TRowEdura>
             </thead>
             <tbody>
-                {dataJadwal.map((item, index)=>(
-                    <TRowEdura key={index}>
-                        <TdEdura className="text-center">{item.jam_ke}</TdEdura>
-                        <TdEdura>{item.waktu}</TdEdura>
-                        <TdEdura className="text-wrap text-center">{item.sn}</TdEdura>
-                        <TdEdura className="text-wrap text-center">{item.sl}</TdEdura>            
-                        <TdEdura className="text-wrap text-center">{item.rb}</TdEdura>
-                        <TdEdura className="text-wrap text-center">{item.km}</TdEdura>
-                        <TdEdura className="text-wrap text-center">{item.jm}</TdEdura>
-                        {setting?.include_sabtu && <TdEdura>{item.sb}</TdEdura>}
-                    </TRowEdura>
-                ))} 
-                
+                {
+                    dataDisplay.map((row, index) => (    
+                        <TRowEdura key={row.idbaris + '_' + index}>
+                            <TdEdura className="    align-middle text-center">{row.jam_ke}</TdEdura>
+                            <TdEdura className="align-middle text-center">{row.waktu}</TdEdura>
+                            {
+                                row.type_row === 'istirahat' ? (
+                                    <TdEdura colSpan={hariAktif.length} className="text-center font-semibold italic bg-yellow-100 dark:bg-yellow-700">
+                                        Istirahat - {row.waktu}
+                                    </TdEdura>
+                                ) :
+                                hariAktif.map(hari => (
+                                    <TdEdura key={hari} className="text-center align-baseline">
+                                        {row[hari]}
+                                        </TdEdura>
+                                ))
+                            }
+                        </TRowEdura>
+                    ))
+                            
+                }
             </tbody>
         </TableWithScrolling>
     )
-}
+});
+
+export default TabelJadwalPelajaran;

@@ -28,12 +28,14 @@ export type jadwalMapelAccordTable={
     jam_ke:number,
     waktu:string,
     namarombel:string,
-    sn:number,
-    sl:number,
-    rb:number,
-    km:number,
-    jm:number,
-    sb:number,
+    sn?:number,
+    sl?:number,
+    rb?:number,
+    km?:number,
+    jm?:number,
+    sb?:number,
+    status:string,
+    type_row:string,
 }
 export type jadwalMapelAccordTableApp={
     
@@ -47,4 +49,6 @@ export type jadwalMapelAccordTableApp={
     km?:jp_mapelApp,
     jm?:jp_mapelApp,
     sb?:jp_mapelApp,
+    status:string,
+    type_row:string,
 }

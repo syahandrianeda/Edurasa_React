@@ -74,6 +74,10 @@ export function hydratePreloadedState(): Partial<RootState> {
     settingJadwalMapel:{
       settingJadwal:[],
       loadedSettingJadwal:false
+    },
+    jadwalPembiasaan:{
+      dataJadwalPembiasaan:[],
+      loadedDataJadwalPembiasaan:false
     }
   };
 }
