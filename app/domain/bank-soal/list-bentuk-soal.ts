@@ -1,5 +1,6 @@
 import type { ListBentukSoalType } from "~/types/bank-soal/bentuk-soal-type";
 
+
 export const ListBentukSoal:ListBentukSoalType[]=[
     {
         name:'pg',

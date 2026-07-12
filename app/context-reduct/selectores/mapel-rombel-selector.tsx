@@ -7,7 +7,7 @@ import { DtoMapelSelector } from "./mapel-selector";
 import OrmMapelRefactored from "~/domain/mapel/orm-mapel-refactored";
 
 
-export const MapelRombelPureSelector = (state:RootState)=>state.mapelRombel.dataMapelRombel;
+export const MapelRombelPureSelector = (state:RootState)=>state.jpMapel.data;//MapelRombel;
 export const DTOMapelRombelSelector = createSelector(
     [MapelRombelPureSelector],
     (dto)=>DTOMapelRombel.arrayFromSheet(dto)

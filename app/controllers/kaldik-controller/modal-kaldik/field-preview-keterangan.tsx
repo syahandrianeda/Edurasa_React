@@ -7,6 +7,10 @@ import { getLabelTanggalBetweenDate } from "~/lib/date-helper";
 import type { keteranganLabelKaldik } from "~/domain/kaldik/type-output-kaldik";
 
 export default function FieldKeteranganKaldik({date}:{date:Date}){
+    // console.log('date di FieldKeteranganKaldik', date);
+    //  console.log("=== RENDER FieldKeteranganKaldik ===");
+    // console.log("date =", date);
+    // console.trace();
         const dataKaldik = useAppSelector(instanceOfKaldik);
         const {currentData} = useFormEdura<KaldikType>();
         const [firstKeterangan, setFirstKeterangan] = useState(currentData.keterangan);
@@ -38,7 +42,7 @@ export default function FieldKeteranganKaldik({date}:{date:Date}){
             sumberKeterangan.splice(indexKeterangan,1,data);
             return sumberKeterangan;//.sort((a,b)=> a.start_tgl.getTime() - b.start_tgl.getTime());
         }
-        ,[currentData]);
+        ,[currentData, instanceKaldik, date, firstKeterangan]);
         
     return (
         <div className="rounded w-full">

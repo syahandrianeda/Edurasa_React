@@ -13,7 +13,7 @@ export default class KaldikRepositoryImplements extends AppScriptSheet implement
             action: 'read'
         }
         const callData = await this.postBody(this.paramSheetKaldikTabKaldik);
-                    
+        
         return this.responActionRead(callData);
     }
     

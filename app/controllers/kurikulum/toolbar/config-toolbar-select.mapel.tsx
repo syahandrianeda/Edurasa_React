@@ -42,7 +42,9 @@ function TabSelectMapelApp(){
         
         dispatch(setFokusMapel({
             data:fokus,
-            disabled
+            disabled,
+            name:'fokusMapel',
+            loaded:true
             // user?.roles !== "Guru Mapel"?true:false
         }))
     }
@@ -51,7 +53,9 @@ function TabSelectMapelApp(){
         
         dispatch(setFokusMapel({
             data:fokus,
-            disabled
+            disabled,
+            name:'fokusMapel',
+            loaded:true
             // user?.roles !== "Guru Mapel"?true:false
         }))
     },[user,KoleksiMapel])

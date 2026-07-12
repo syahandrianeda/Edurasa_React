@@ -9,15 +9,21 @@ import { getNumberFromString } from "~/lib/get-number";
 import { DtoMapelAllSelector } from "./mapel-selector";
 import { getSessionRombel } from "~/infrastructures/session-storage/rombel-session";
 
-export const KurmerPureSelector = (state:RootState)=>state.kurmer;
+// export const KurmerPureSelector = (state:RootState)=>state.kurmer;
 
 export const KurmerDtoSelector = createSelector(
     [
-        (state:RootState)=>state.kurmer.dataCp,
-        (state:RootState)=>state.kurmer.dataTpFaseA,
-        (state:RootState)=>state.kurmer.dataTpFaseB,
-        (state:RootState)=>state.kurmer.dataTpFaseC,
-        (state:RootState)=>state.kurmer.dataAtp,
+        // (state:RootState)=>state.kurmer.dataCp,
+        // (state:RootState)=>state.kurmer.dataTpFaseA,
+        // (state:RootState)=>state.kurmer.dataTpFaseB,
+        // (state:RootState)=>state.kurmer.dataTpFaseC,
+        // (state:RootState)=>state.kurmer.dataAtp,
+        (state:RootState)=>state.CP.data,
+        (state:RootState)=>state.faseA.data,
+        (state:RootState)=>state.faseB.data,
+        (state:RootState)=>state.faseC.data,
+        (state:RootState)=>state.Atp.data
+
     ],
     (cp, faseA, faseB, faseC, atp)=>{
         return {

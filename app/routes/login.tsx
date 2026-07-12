@@ -41,13 +41,17 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
         
         store.dispatch(
             setCredentials({
-                user: userAuth
+                user: userAuth,
+                name:'auth',
+                loaded:true
             })
         );
         
         store.dispatch(
             setFokusRombel({
-                value: userAuth.kelas_ampu[0]
+                value: userAuth.kelas_ampu[0],
+                name:'fokusRombel',
+                loaded:true
             })
         );
         

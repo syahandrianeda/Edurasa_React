@@ -4,8 +4,7 @@ import { getNumberFromString } from "~/lib/get-number";
 import { DTOSiswa } from "~/dtos/dto-siswa";
 import type { SiswaType } from "~/types/siswa";
 
-export const selectAllSiswa = (state: RootState) =>
-  state.dataSiswa.allSiswa;
+export const selectAllSiswa = (state: RootState) => state.dataSiswa.data
 
 export const selectAllSiswaDTO = createSelector(
   [selectAllSiswa],

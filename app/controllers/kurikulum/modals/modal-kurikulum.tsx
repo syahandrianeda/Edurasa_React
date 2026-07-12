@@ -7,11 +7,13 @@ import FormContentFaseTp from "./form-tp";
 import FormContentAtp from "./form-atp";
 import FormMapelRombel from "../../mapel/modal/form-mapel-rombel";
 import FormModifikasiProta from "~/controllers/prota/modal/form-prota";
+import PreviewModalItemSoal from "~/controllers/bank-soal/modal/PreviewModalItemSoal";
+import type { BankSoalAppType } from "~/types/bank-soal/bank-soal-type";
 
 
 export default function ModalFiturKurikulum(){
     
-        const { state, actions } = useModal<ormKurikulumInterface>();
+        const { state, actions } = useModal<ormKurikulumInterface|BankSoalAppType>();
     
         return (
             <ModalEdura 
@@ -52,6 +54,8 @@ function switchJudulModalKurikulum(stateType:ModalType){
             return 'Hapus Mata pelajaran di kelas Anda';
         case 'EDIT PROTA':
             return 'Edit Prota';
+        case 'PREVIEW ITEM SOAL':
+            return 'Preview Item Soal';
         default:
             return 'MODAL'
     }
@@ -82,6 +86,9 @@ function SwitchContentForm({state}:{state:ModalState}){
         return (
             <FormModifikasiProta state={state}/>
         )
+    }
+    if(stateType === 'PREVIEW ITEM SOAL'){
+        return <PreviewModalItemSoal state={state as ModalState<BankSoalAppType>}/>
     }
     return <div className="bg-sky-50">Menyusul</div>
 }

@@ -1,13 +1,18 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit"
 import type { jp_mapelSheet } from "~/types/mapel/jp_mapel"
 
-export type MapelRombelSliceType = {
-    dataMapelRombel:jp_mapelSheet[],
-    loadedDataMapelRombel:boolean
+export interface MapelRombelSliceType extends SliceType<jp_mapelSheet> {
+    // dataMapelRombel:jp_mapelSheet[],
+    data:jp_mapelSheet[],
+    name:'jp_mapel',
+    // loadedDataMapelRombel:boolean
+    loaded:boolean
 }
 const initialState:MapelRombelSliceType = {
-    dataMapelRombel:[],
-    loadedDataMapelRombel:false
+    // dataMapelRombel:[],
+    data:[],
+    name:'jp_mapel',
+    loaded:false
 }
 
 const mapelRombel = createSlice({
@@ -15,10 +20,16 @@ const mapelRombel = createSlice({
     initialState,
     reducers:{
         setDataMapelRombel(state, action:PayloadAction<jp_mapelSheet[]>){
-            state.dataMapelRombel = action.payload
-            state.loadedDataMapelRombel = true
-        }
+            // state.dataMapelRombel = action.payload
+            state.data = action.payload;
+            state.loaded = true
+        },
+        setJpMapel(state, action:PayloadAction<jp_mapelSheet[]>){
+            // state.dataMapelRombel = action.payload
+            state.data = action.payload;
+            state.loaded = true
+        },
     }
 });
-export const {setDataMapelRombel} = mapelRombel.actions;
+export const {setDataMapelRombel, setJpMapel} = mapelRombel.actions;
 export default mapelRombel.reducer;

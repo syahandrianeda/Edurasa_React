@@ -214,6 +214,7 @@ export default class OrmProta{
                 obCp.cp_description = dataCp.cp_utama;
                 obCp.cp_id = dataCp.idbaris;
                 obCp.kodemapel = dataCp.kodemapel;
+                
                 obCp.fase=dataCp.fase;
                 /** 
                  * meskipun data berikut telah ditemukan, ormATP belum tentu valid 

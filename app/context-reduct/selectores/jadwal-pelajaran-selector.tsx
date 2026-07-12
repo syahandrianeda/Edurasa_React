@@ -7,7 +7,7 @@ import { CurrentMapelInActiveRombel, DtoMapellAllRombelSelector, DTOMapelRombelS
 import DtoJadwalPelajaranTable from "~/dtos/dto-jadwal-pelajaran-table";
 import { DtoJadwalPembelajaranTo_jp_mapelApp } from "./jadwal-pembiasaan-kegiatan";
 
-export const jadwalPelajaranPureSelector = (state:RootState) => state.jadwalPelajaran.dataJadwalPelajaran;
+export const jadwalPelajaranPureSelector = (state:RootState) => state.jadwalPelajaran.data;//dataJadwalPelajaran;
 export const jadwalPelajaranAppSelector = createSelector(
     [
         jadwalPelajaranPureSelector,

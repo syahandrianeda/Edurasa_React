@@ -1,11 +1,14 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit"
 
 type loadedApiType={
-    loaded:boolean
+    loaded:boolean,
+    name:'loaded_animation',
+    
 }
 
 const initialState:loadedApiType = {
-    loaded:false
+    loaded:false,
+    name:'loaded_animation',
 }
 
 

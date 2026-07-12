@@ -16,6 +16,7 @@ export type OrmPromesResult = {
     data_atp_semester: ItemAtpAsProtaEditable[];
     koleksi_hari: ProsemDay[];
     kode_mapel: string;
+    mapel_name:string;
     rombel: string;
     semester: number;
     meta: {

@@ -11,7 +11,7 @@ export default class MapelRombelRepositoryImplements extends AppScriptSheet impl
         }
         async loadAllNeed(): Promise<ApiResponse<Record<string, any>>[]> {
             const paramSheet = this.getParamKurikulumNeeded();
-            
+            console.log('parameter loadAllNeedKurikulum', paramSheet);
             const auth = this.dataAuth();
             const param = {
                 action:'readMultipleTab',
@@ -20,7 +20,7 @@ export default class MapelRombelRepositoryImplements extends AppScriptSheet impl
             }
             
             const response =  await this.postBody(param);
-            console.log('response', response);
+            
             
 
             return response.collections.map(this.responActionRead);
@@ -28,11 +28,11 @@ export default class MapelRombelRepositoryImplements extends AppScriptSheet impl
         /**
          * 
          * @param param if (user.success) {
-                     const currentData = DTOUser.fromResponAkun(user.data);
-                     saveSessionApp(currentData);
-                 } else {
-                     clearSessionApp();
-                 }  
+                    const currentData = DTOUser.fromResponAkun(user.data);
+                    saveSessionApp(currentData);
+                } else {
+                    clearSessionApp();
+                }  
          * @returns 
          */
         // async loadAllNeed(): Promise<ApiResponse<Record<string, any>>[]> {

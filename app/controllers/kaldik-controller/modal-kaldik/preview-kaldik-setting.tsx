@@ -6,13 +6,14 @@ import { instanceOfKaldik } from "~/context-reduct/selectores/kaldik-selector";
 import { getMemberTanggal, getParseDateYYYYMMMDD } from "~/lib/date-helper";
 import type { KaldikType } from "~/types/kaldik";
 
-export function PreviewKaldikModal({date}:{date:Date}){
+export function PreviewKaldikModal({date = new Date()}:{date:Date}){
     const { value} = useFilterContext();
     const isSabtuLibur = value?.sabtuLibur;
     const {currentData} = useFormEdura<KaldikType>();
     const [firstKeterangan, setFirstKeterangan] = useState(currentData.keterangan);
     const dataKaldik = useAppSelector(instanceOfKaldik);
     const instanceKaldik = useMemo(() => {
+        console.log(dataKaldik);
         return dataKaldik;
     }, [dataKaldik]);
 

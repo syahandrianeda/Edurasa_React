@@ -22,7 +22,10 @@ function WrapPreviewMultipleKaldik(){
     const dateBefore = new Date(currentData.start_tgl.getFullYear(), currentData.start_tgl.getMonth()-1,1);
     const isTwoMonth = currentData.end_tgl.getMonth() - currentData.start_tgl.getMonth();
     const dateNext = new Date(currentData.start_tgl.getFullYear(), currentData.start_tgl.getMonth()+1,1);
-
+console.log("wrap", {
+    start: currentData.start_tgl,
+    end: currentData.end_tgl,
+});
     return (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-2 h-[calc(100vh-12.5rem)] bg-linear-to-tl from-sky-400 to-sky-300">
             <div className="md:flex hidden border rounded justify-between items-center md:flex-col px-2 py-3">
@@ -40,8 +43,8 @@ function WrapPreviewMultipleKaldik(){
                 }
             </div>
             <div className="flex border rounded h-full justify-between items-center flex-col px-1 py-3">
-                <PreviewKaldikModal date={currentData?.start_tgl|| new Date()}/>
-                <FieldKeteranganKaldik date={currentData?.start_tgl|| new Date()}/>
+                <PreviewKaldikModal date={currentData?.start_tgl ?? new Date()}/>
+                <FieldKeteranganKaldik date={currentData?.start_tgl ?? new Date()}/>
             </div>
             <div className="flex border rounded h-full justify-between items-stretch flex-col px-2 py-3">
                 {

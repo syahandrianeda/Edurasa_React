@@ -17,7 +17,7 @@ export default function AppFiturFloat({
     return (
         <div className="flex justify-between w-full">
                 <div className="flex space-x-2 items-center w-2/3 md:w-full">
-                    <SidebarMenuButton asChild className="h-8 w-8" tooltip={{ children:'Buka/Tutup Sidebar dengan CTRL + B', side:'left' }}>
+                    <SidebarMenuButton asChild className="h-8 w-8" tooltip={{ children:'Buka/Tutup Sidebar dengan CTRL + Q', side:'left' }}>
                         <Button  
                             className="rounded-xl size-9 cursor-pointer bg-radial from-sky-400 to-[#F7EEDD] dark:bg-linear-to-b dark:from-sky-800 shadow-sm dark:to-sky-700 hover:bg-zinc-600 hover:text-blue-600 transition-colors duration-300 p-2 dark:hover:text-blue-100 shadow-[#129cb4]"
                             onClick={(event) => {

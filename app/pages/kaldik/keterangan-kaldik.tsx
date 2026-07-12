@@ -14,6 +14,7 @@ import type { KaldikType } from "~/types/kaldik";
 
 export default function KeteranganKaldikPage(){
     const dataKaldik = useAppSelector(instanceOfKaldik);
+
     const dataKaldikUrut = useMemo(() => {
         return dataKaldik.data;
     }, [dataKaldik]);

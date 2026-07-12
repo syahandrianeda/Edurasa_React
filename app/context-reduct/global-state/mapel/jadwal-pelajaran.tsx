@@ -1,13 +1,19 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { jadwalMapelAccordTable, jadwalMapelSheet } from "~/types/setting_jadwal/jadwal_mapel"
 
-export type JadwalPelajaranSliceType = {
-    dataJadwalPelajaran:jadwalMapelAccordTable[],
-    loadedDataJadwalPelajaran:boolean
+export interface JadwalPelajaranSliceType extends SliceType<jadwalMapelAccordTable>  {
+    // dataJadwalPelajaran:jadwalMapelAccordTable[],
+    // loadedDataJadwalPelajaran:boolean
+    name:'jadwal_mapel',
+    data:jadwalMapelAccordTable[];
+    loaded:boolean;
 }
 export const InitialState:JadwalPelajaranSliceType = {
-    dataJadwalPelajaran:[],
-    loadedDataJadwalPelajaran:false
+    // dataJadwalPelajaran:[],
+    name:'jadwal_mapel',
+    data:[],
+    // loadedDataJadwalPelajaran:false
+    loaded:false
 }
 
 export const JadwalPelajaranSlice = createSlice({
@@ -15,11 +21,19 @@ export const JadwalPelajaranSlice = createSlice({
     initialState:InitialState,
     reducers:{
         setDataJadwalPelajaran(state, action:PayloadAction<jadwalMapelAccordTable[]>){
-            state.dataJadwalPelajaran = action.payload
-            state.loadedDataJadwalPelajaran = true
-        }
+            // state.dataJadwalPelajaran = action.payload
+            state.data = action.payload
+            // state.loadedDataJadwalPelajaran = true
+            state.loaded = true
+        },
+        setJadwalMapel(state, action:PayloadAction<jadwalMapelAccordTable[]>){
+            // state.dataJadwalPelajaran = action.payload
+            state.data = action.payload
+            // state.loadedDataJadwalPelajaran = true
+            state.loaded = true
+        },
     }
 });
 
-export const {setDataJadwalPelajaran} = JadwalPelajaranSlice.actions;
+export const {setDataJadwalPelajaran,setJadwalMapel} = JadwalPelajaranSlice.actions;
 export default JadwalPelajaranSlice.reducer;

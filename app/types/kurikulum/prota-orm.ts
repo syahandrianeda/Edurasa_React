@@ -76,6 +76,7 @@ export type AtpAsOrm={
     cp_id?:number,
     kelas:number[],
     kodemapel?:string;
+    mapelname?:string
     fase?:string
     invalid:boolean,
     message:string[]

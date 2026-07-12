@@ -3,13 +3,20 @@ import type { AbsensiSiswaSheetType, AbsensiSiswaType } from "~/types/absensi-si
 
 export type dataAbsensiTypeSlice = {
     data: AbsensiSiswaSheetType[],
-    nama_rombel:string
+    nama_rombel:string,
+    
 }
 type AbsensiSiswaSlice={
-    dataAbsensi:dataAbsensiTypeSlice[]
+    dataAbsensi:dataAbsensiTypeSlice[],
+    name:'absensi',
+    loaded:boolean
+    
 }
 const initialState:AbsensiSiswaSlice = {
-    dataAbsensi: []
+    dataAbsensi: [],
+    name:'absensi',
+    loaded:false
+    
 }
 
 const Absensi = createSlice({
@@ -23,6 +30,7 @@ const Absensi = createSlice({
             }else{
                 state.dataAbsensi[index] = action.payload;
             }
+            
         }
     }
 

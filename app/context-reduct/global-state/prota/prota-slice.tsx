@@ -2,12 +2,14 @@ import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { protaSheet } from "~/types/kurikulum/prota-orm"
 
 export type ProtaSliceType={
-    dataProta:protaSheet[],
-    loadedDataProta:Boolean
+    data:protaSheet[],
+    name:'prota',
+    loaded:Boolean
 }
 export const InitialState:ProtaSliceType = {
-    dataProta:[],
-    loadedDataProta:false
+    data:[],
+    name:'prota',
+    loaded:false
 }   
 
 export const ProtaSlice = createSlice({
@@ -15,8 +17,8 @@ export const ProtaSlice = createSlice({
     initialState:InitialState,
     reducers:{
         setDataProta(state, action:PayloadAction<protaSheet[]>){
-            state.dataProta = action.payload
-            state.loadedDataProta = true
+            state.data = action.payload
+            state.loaded = true
         }
     }
 });

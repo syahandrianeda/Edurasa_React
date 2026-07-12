@@ -5,6 +5,7 @@ import { Gender } from "~/types/enums/gender";
 
 export class DTOSiswaDapodikSheetToApp {
     static fromSheet(dto: Record<string, any>): SiswaDapodikSheetToApp {
+        
         return {
                 index: resolveNumber(dto.index),
                 pd_nama: resolveString(dto.pd_nama),

@@ -3,7 +3,7 @@ import type { RootState } from "../store";
 
 import { createSelector } from "@reduxjs/toolkit";
 
-export const jadwalPembiasaanPureSelector = (state:RootState) => state.jadwalPembiasaan.dataJadwalPembiasaan;
+export const jadwalPembiasaanPureSelector = (state:RootState) => state.jadwalPembiasaan.data;//taJadwalPembiasaan;
 export const DtoJadwalPembelajaranTo_jp_mapelApp= createSelector(
     [jadwalPembiasaanPureSelector],
     (pembiasaan) => {

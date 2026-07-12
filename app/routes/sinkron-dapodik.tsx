@@ -64,7 +64,7 @@ export default  function SinkronDapodikRoute({actionData}:Route.ComponentProps) 
     useEffect(() => {
         if (!hasData && fetcher.state === "idle" && fetcher.data == null) {
             fetcher.submit(null, { method: "post" });
-            dispatch(setloadedApi({ loaded: true }));
+            dispatch(setloadedApi({ loaded: true,name:'loaded_animation' }));
         }
     }, [hasData, fetcher.state]); // ❗ bukan fetcher
 
@@ -72,13 +72,14 @@ export default  function SinkronDapodikRoute({actionData}:Route.ComponentProps) 
     useEffect(() => {
         
         if (fetcher.data?.success) {
-            
+            const data = fetcher.data?.data as unknown as SiswaDapodikAppToSheet[];
             dispatch(
-                setSiswaDapodik({
-                    siswaDapodik: fetcher.data?.data as unknown as SiswaDapodikAppToSheet[],
-                })
+                setSiswaDapodik(data)
+                // setSiswaDapodik({
+                //     dapodik: fetcher.data?.data as unknown as SiswaDapodikAppToSheet[],
+                // })
             );
-            dispatch(setloadedApi({ loaded: false }));
+            dispatch(setloadedApi({ loaded: false, name:'loaded_animation' }));
         }
     }, [fetcher.data]);
     

@@ -1,9 +1,14 @@
-import macro from "../macro.json";
+import macro from "../macro_react.json";
 // import axios from 'axios';
 import axios from '../infrastructures/http/axios'
 import { ApiErrors } from "~/infrastructures/http/api-errors";
 import DTOUser from "~/dtos/dto-user";
 import { clearSessionApp, saveSessionApp } from "~/infrastructures/session-storage/app-session";
+import { IndDbSiswaRepository } from "~/infrastructures/indexDb/db-datasiswa-repository";
+import { saveSessionRombel } from "~/infrastructures/session-storage/rombel-session";
+import { store } from "~/context-reduct/redux-provider";
+import { setCredentials } from "~/context-reduct/global-state/auth-slice";
+import { setFokusRombel } from "~/context-reduct/global-state/fokus-rombel-slice";
 
 interface MacroChild {
     [key: string]: string;
@@ -44,14 +49,33 @@ export type ParamFile = {
     base64: string
     mimeType: string
 }
+/**
+ * kita tambahkan :
+ * - indexDB
+ * - store redux
+ */
 
 export class AppScriptConfig {
     private readonly macro: MacroMap;
+    // private storeRedux:Store<RootState>;
+    private indexDBSiswa: IndDbSiswaRepository;
 
-    constructor(macroData: MacroMap = macro) {
+    constructor(macroData: MacroMap = macro, tableIndexDB:string = 'Datasiswa') {
         this.macro = macroData;
+        // this.storeRedux =  useStore();
+        this.indexDBSiswa = new IndDbSiswaRepository()
+
+
     }
 
+    get dbBrowser(){
+        return this.indexDBSiswa
+    }
+
+    get stateRedux(){
+        // return this.storeRedux
+        return false
+    }
     /** ===== Derived Keys ===== */
 
     get currentMacroKey(): string {
@@ -114,12 +138,14 @@ export class AppScriptConfig {
                         }
                     }
             );
+            
             //reponse axios data yang dibutuhkan, biarkan class turuunannya yang membungkus type data response-nya
             if(pos.data.hasOwnProperty('auth')){
                 
-                this.checkAkun(pos.data.auth)
+                this.checkAkun(pos.data.auth);
+                
             }else{
-                console.log('post body TIDAK memanggil Auth pada action', param.action);
+                // console.log('post body TIDAK memanggil Auth pada action', param.action);
             }
             return pos.data;
         }catch(error){
@@ -142,7 +168,25 @@ export class AppScriptConfig {
             const {authenticated, data} = auth;
             if(authenticated){
                 const updateUser =  DTOUser.fromResponAkun(data);
-                saveSessionApp(updateUser)
+                saveSessionApp(updateUser);
+                /** test dulu */
+                // saveSessionRombel(updateUser.kelas_ampu[0]);
+                        
+                //         store.dispatch(
+                //             setCredentials({
+                //                 user: updateUser,
+                //                 name:'auth',
+                //                 loaded:true
+                //             })
+                //         );
+                        
+                //         store.dispatch(
+                //             setFokusRombel({
+                //                 value: updateUser.kelas_ampu[0],
+                //                 name:'fokusRombel',
+                //                 loaded:true
+                //             })
+                //         );
             }
             /** else tidak pernah terpanggil 
                 else{
@@ -152,7 +196,23 @@ export class AppScriptConfig {
             */
         }else{
             clearSessionApp();
+            // store.dispatch(
+            //                 setCredentials({
+            //                     user: null,
+            //                     name:'auth',
+            //                     loaded:false
+            //                 })
+            //             );
+                        
+            //             store.dispatch(
+            //                 setFokusRombel({
+            //                     value:undefined,
+            //                     name:'fokusRombel',
+            //                     loaded:false
+            //                 })
+            //             );
         }
+        
     }
     
     /** === Convert Respon */

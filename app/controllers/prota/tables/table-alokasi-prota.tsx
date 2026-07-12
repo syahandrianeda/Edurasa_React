@@ -147,6 +147,7 @@ export default function TableAlokasiWaktuProta({prota}:{prota:DataAtpAsProtaEdit
         
         dispatch(setloadedApi({ loaded: true }));
         const respon = await actions.update(dataToSend);
+        console.log('prota respon',respon)
         if (respon.success) {
             const raw = respon.data as protaSheet[];
             dispatch(setDataProta(raw));

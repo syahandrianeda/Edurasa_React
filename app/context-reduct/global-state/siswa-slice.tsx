@@ -2,18 +2,20 @@ import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { typeSourceFetch } from "~/configs/appscript-config";
 import type { SiswaType } from "~/types/siswa"
 
-type DataSiswa<SiswaType> ={
+export type DataSiswa<SiswaType> ={
     // semua siswa baik yang aktif/maupun yang nonaktif
-    allSiswa: SiswaType[] | []
+    data: SiswaType[] 
     loaded: boolean,
     source?: typeSourceFetch
-    loading?:boolean
+    loading?:boolean,
+    name:'datasiswa',
 }
 
 const initialState: DataSiswa<SiswaType> = {
-    allSiswa : [],
+    data : [],
     loaded:false,
-    loading:true
+    loading:true,
+    name:'datasiswa',
 
 }
 
@@ -22,7 +24,7 @@ const dataSiswa = createSlice({
     initialState,
     reducers:{
         setAllSiswa(state, action: PayloadAction<DataSiswa<SiswaType>>) {
-            state.allSiswa = action.payload.allSiswa,
+            state.data = action.payload.data,
             state.loaded = action.payload.loaded,
             state.source = action.payload.source
             state.loading = action.payload.loading

@@ -2,19 +2,24 @@ import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { SiswaDapodikAppToSheet } from "~/types/siswa-dapodik"
 
 type DapodikSheetSliceType={
-    siswaDapodik:SiswaDapodikAppToSheet[]|[]
+    data:SiswaDapodikAppToSheet[]
+    name:'dapodik',
+    loaded:boolean
 }
 
 const initialState:DapodikSheetSliceType = {
-    siswaDapodik: []
+    data: [],
+    name:'dapodik',
+    loaded:false
 }
 
 const siswaDapodik = createSlice({
     name:'siswaDapodik',
     initialState,
     reducers:{
-            setSiswaDapodik(state, action: PayloadAction<DapodikSheetSliceType>) {
-                state.siswaDapodik = action.payload.siswaDapodik;
+            setSiswaDapodik(state, action: PayloadAction<SiswaDapodikAppToSheet[]>) {
+                state.data = action.payload
+                state.loaded = true;
             }
         }
     }

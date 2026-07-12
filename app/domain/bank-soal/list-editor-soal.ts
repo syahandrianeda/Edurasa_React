@@ -11,10 +11,10 @@ export const ListEditorSoal:EditorSoalType[] =[
         label:'copy paste',
         description:'Bayangkan Anda sudah punya file Kisi-kisi soal, Anda tinggal paste kan di editor lalu tandai semua properti item soal'
     },
-    {
-        name:'upload_template',
-        label:'upload soal AI',
-        description:'Upload file word soal hasil AI, prompting lihat tab toolbar Prompting'
-    },
+    // {
+    //     name:'upload_template',
+    //     label:'upload soal AI',
+    //     description:'Upload file word soal hasil AI, prompting lihat tab toolbar Prompting'
+    // },
     
 ]

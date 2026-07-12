@@ -12,6 +12,7 @@ export default class ProtaRepositoryImplements extends AppScriptSheet implements
         try {
             this.paramSheetMateriTabProta = param
             const respon = await this.postBody(this.paramSheetMateriTabProta);
+            console.log('respon from Repository', respon)
             return this.responActionRead(respon);
         } catch (error) {
             return this.responActionError(error);

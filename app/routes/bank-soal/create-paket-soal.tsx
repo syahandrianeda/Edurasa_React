@@ -1,5 +1,6 @@
 import type { controlDropdownKelas } from "~/components/dropdowns/rombel-dropdown";
 import type { Route } from "./+types/create-paket-soal";
+import ImportSoalPage from "~/controllers/bank-soal/import-soal/page/import-soal";
 
 
 export function meta({matches}: Route.MetaArgs) {
@@ -41,6 +42,10 @@ export function clientLoader({}:Route.ComponentProps){
 export default function CreatePaketSoalRoute() {
     
     return(
-        <p>Hello Page Create Paket Soal</p>
+        <>
+            <p>Hello Page Create Paket Soal</p>
+            <ImportSoalPage/>
+        </>
+
     )
 }

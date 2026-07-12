@@ -16,6 +16,7 @@ export type KurmerSliceType={
     loadedAtp:boolean
 }
 
+
 const initialKurmerState:KurmerSliceType={
     dataCp:[],
     loadedCp:false,

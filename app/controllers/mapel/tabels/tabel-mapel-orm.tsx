@@ -52,7 +52,7 @@ export default function TableMapelOrm(){
             setMapelData(instanceMapel.data)
         }
     }, [instanceMapel])
-
+    
     const handleMoveUp = (index: number) => {
         if (index === 0) return; // sudah paling atas
         setMapelData(prev => moveItem(prev, index, index - 1));

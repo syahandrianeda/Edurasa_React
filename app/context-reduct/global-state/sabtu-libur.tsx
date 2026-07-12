@@ -4,10 +4,14 @@ import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
 interface UIPreferenceState {
   sabtuLibur: boolean;
+  name:'isSabtuLibur',
+  loaded:boolean
 }
 
 const initialState: UIPreferenceState = {
-  sabtuLibur: true
+  sabtuLibur: true,
+  name:'isSabtuLibur',
+  loaded:true
 };
 
 const uiPreferenceSlice = createSlice({

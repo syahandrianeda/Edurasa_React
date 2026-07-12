@@ -8,7 +8,7 @@ import { ExportTargetProvider } from "./exports/export-target-provider";
 
 export function clientLoader({}:Route.ComponentProps){
     const page = getSessionApp();
-    console.log('session:\r',page)
+    // console.log('session:\r',page)
     if(!page){
             throw redirect('/login');
     }
@@ -17,7 +17,7 @@ export function clientLoader({}:Route.ComponentProps){
 
 export default function AppLayout({loaderData}:Route.ComponentProps) {
     
-    console.log('loaderData', !!loaderData, !loaderData, loaderData);
+    
 
     return (
         <ExportTargetProvider>

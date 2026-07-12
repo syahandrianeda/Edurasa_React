@@ -7,22 +7,22 @@ import { saveIsianSiswa } from "~/infrastructures/session-storage/isian-siswa";
 
 
 export default class KesiswaanRepository extends AppScriptSheet implements KesiswaanRepositoryInterface{
-    private indexDB;
+    // private indexDB;
     
-    private STORE:string;
+    // private STORE:string;
 
     constructor(table:string){
         super();
         if (!table) {
                 throw new Error("KesiswaanRepository: table name is required");
             }
-            this.STORE = table;
-            this.indexDB = new IndDbSiswaRepository();
+            // this.STORE = table;
+            // this.indexDB = new IndDbSiswaRepository();
     }
     async loadAllSiswa(): Promise<ApiResponse<SiswaType> | null> {
         
         try{
-            const dataIndexDB = await this.indexDB.getAll()
+            const dataIndexDB = await this.dbBrowser.getAll()
             
             if (dataIndexDB.length > 0) {
                 return {
@@ -38,7 +38,8 @@ export default class KesiswaanRepository extends AppScriptSheet implements Kesis
             this.paramSheetAkunTabSiswa = parameter;
 
             const callData = await this.postBody(this.paramSheetAkunTabSiswa);
-            await this.indexDB.saveBulk(callData.data)
+            // await this.indexDB.saveBulk(callData.data)
+            await this.dbBrowser.saveBulk(callData.data)
             
             //simpan di session ini:
             const formatIsianSiswa = callData.info.objKosong;
@@ -59,7 +60,8 @@ export default class KesiswaanRepository extends AppScriptSheet implements Kesis
             this.paramSheetAkunTabSiswa = parameter;
 
             const callData = await this.postBody(this.paramSheetAkunTabSiswa);
-            await this.indexDB.saveBulkAgain(callData.data)
+            // await this.indexDB.saveBulkAgain(callData.data)
+            await this.dbBrowser.saveBulkAgain(callData.data)
             
             //simpan di session ini:
             const formatIsianSiswa = callData.info.objKosong;
@@ -85,7 +87,7 @@ export default class KesiswaanRepository extends AppScriptSheet implements Kesis
             this.paramSheetAkunTabSiswa = parameter;
             
             const respon =  await this.postBody(this.paramSheetAkunTabSiswa );
-            await this.indexDB.saveBulkAgain(respon.data)
+            await this.dbBrowser.saveBulkAgain(respon.data)
 
             return this.responActionRead(respon);
 
@@ -102,7 +104,7 @@ export default class KesiswaanRepository extends AppScriptSheet implements Kesis
             this.paramSheetAkunTabSiswa = parameter;
             
             const respon =  await this.postBody(this.paramSheetAkunTabSiswa );
-            await this.indexDB.saveBulkAgain(respon.data)
+            await this.dbBrowser.saveBulkAgain(respon.data)
 
             return this.responActionRead(respon);
 

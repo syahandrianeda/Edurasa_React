@@ -1,14 +1,18 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit"
 import type { settingJadwalSheet } from "~/types/setting_jadwal/setting_jadwal"
 
-export type settingJadwalMapelSliceType = {
-    settingJadwal:settingJadwalSheet[],
-    loadedSettingJadwal:boolean
+export interface settingJadwalMapelSliceType extends SliceType<settingJadwalSheet> {
+    
+    name:'setting_jadwal',
+    data:settingJadwalSheet[],
+    loaded:boolean
 }   
 
 export const InitialState:settingJadwalMapelSliceType = {
-    settingJadwal:[],
-    loadedSettingJadwal:false
+    
+    name:'setting_jadwal',
+    data:[],
+    loaded:false
 }
 
 export const settingJadwalMapelSlice = createSlice({
@@ -16,8 +20,9 @@ export const settingJadwalMapelSlice = createSlice({
     initialState:InitialState,
     reducers:{
         setSettingJadwalMapel(state, action:PayloadAction<settingJadwalSheet[]>){
-            state.settingJadwal = action.payload
-            state.loadedSettingJadwal = true
+            
+            state.data = action.payload;
+            state.loaded = true
         }
     }
 });

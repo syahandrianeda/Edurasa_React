@@ -11,6 +11,7 @@ export async function parseRoot(element: HTMLElement): Promise<ParsedNode[]> {
         // --- TABLE ---
         if (tag === "TABLE") {
             const tableNode = await parseTable(node as HTMLTableElement);
+            console.log('cek tableNode export word', tableNode);
             result.push(tableNode );
             return; // jangan lanjut ke children
         }
@@ -41,5 +42,6 @@ export async function parseRoot(element: HTMLElement): Promise<ParsedNode[]> {
     }
 
     await walk(element);
+    console.log('result parseRoot', result);
     return result;
 }

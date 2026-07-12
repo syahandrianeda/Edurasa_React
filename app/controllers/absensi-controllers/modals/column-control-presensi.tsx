@@ -51,7 +51,8 @@ export default function ColumnControlPresensi(){
             
             // setLoad(true);
             dispatch(setloadedApi({
-                loaded:true
+                loaded:true,
+                name:'loaded_animation'
             }));
             const result =  await actions.uploadFile(file,param);
             // setLoad(false);
@@ -71,7 +72,8 @@ export default function ColumnControlPresensi(){
             
             // setLoad(true);
             dispatch(setloadedApi({
-                loaded:false
+                loaded:false,
+                name:'loaded_animation'
             }));
     };
     const isTemporaryHasShown = useMemo(()=>{

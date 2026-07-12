@@ -1,21 +1,42 @@
+import type { ReactNode } from "react";
 
-export type FormatElemen = 'table'|'square'|'list'|'landscape'|'vertical';
+export type FormatElemen = 'table'|'square'|'horizontal'|'vertical';
 
 
 export interface PgTunggal {
+    /** opsiPilihanJawabanBiasa */
     OpsiPilihanJawaban:OpsiPilihanJawaban[],
     formatOpsi:FormatElemen,
-    type: 'radio'
+    opsiPilihanTabel?:OpsiPilihanTabel[],
+    // type: 'radio',
+    valid:number
+}
+export interface OpsiPilihanTabel{
+    row:number,
+    content:RowOpsiJawaban[]
+}
+export interface RowOpsiJawaban{
+    col:number
+    content:string
 }
 export interface PgKompleks {
     OpsiPilihanJawaban:OpsiPilihanJawaban[],
     formatOpsi:FormatElemen,
-    type:'checkbox'
+    tableHeader?:OpsiPilihanJawabanTable
+    // type:'checkbox',
+    valid:number[]
 }
 export interface OpsiPilihanJawaban{
-    label:string
-    value:string|number
+    // label:string|ReactNode
+    // value:string|number
+    content:string
     index:number
+    // tableFormat?:OpsiPilihanJawabanTable[]
+}
+
+export interface OpsiPilihanJawabanTable{
+    type:'heading'|'cell',
+    content:string//ReactNode
 }
 export interface PilihanMenjodohkan{
     opsiKiri:OpsiPilihanJawaban[],

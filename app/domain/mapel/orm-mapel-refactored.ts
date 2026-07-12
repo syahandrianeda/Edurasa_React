@@ -14,7 +14,8 @@ const MAPEL_CODES = {
     PJOK: 'PJOK',
     RUPA: 'RUPA',
     PA_GENERAL: 'PA',
-    SBDP_GROUP: ['RUPA', 'TARI', 'MUSIK', 'TEATER']
+    SBDP_GROUP: ['RUPA', 'TARI', 'MUSIK', 'TEATER'],
+    BING:'BING'
 };
 
 export interface CurrentMapelsInRombel {
@@ -163,6 +164,7 @@ export default class OrmMapelRefactored {
         }
 
         const currentData = this.getMapelWithSource(serverData);
+        
         const agamaRequired = this.mapel.filter(s => 
             s.kelompok === 'Agama' && 
             s.penganut && 
@@ -225,7 +227,7 @@ export default class OrmMapelRefactored {
         const sortedServer = [...serverData].sort((a, b) => a.index_in_rombel - b.index_in_rombel);
         const raportData: jp_mapelApp[] = [];
         const agamaInRombel = this.siswaInstance.collectAgama;
-
+        
         // 1. Sinkronisasi Mapel Agama (Selalu pastikan sesuai komposisi siswa terbaru)
         this.mapel
             .filter(s => s.kelompok === 'Agama' && s.penganut && agamaInRombel.includes(s.penganut))
@@ -247,6 +249,7 @@ export default class OrmMapelRefactored {
             .filter(s => !MAPEL_CODES.AGAMA_ALL.includes(s.kode) && s.status === '')
             .forEach(data => {
                 const source = this.mapel.find(m => m.id === data.idmapel);
+                
                 if (source) {
                     let namaIjazah = data.nama_mapel_ijazah;
                     // Normalisasi nama ijazah untuk kelompok Seni

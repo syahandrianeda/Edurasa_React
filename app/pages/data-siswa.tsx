@@ -1,5 +1,6 @@
 import { useAppSelector } from "~/context-reduct/hook";
 import { DataSiswaAktifWithValidation } from "~/context-reduct/selectores/data-siswa-aktif";
+import { selectSiswaDapodik } from "~/context-reduct/selectores/siswa-dapodik-selector";
 import { TableSiswaRombelWithValidation } from "~/controllers/data-siswa-controller/table-data-siswa-with-validation";
 import { currentTapel } from "~/lib/current-tapel";
 
@@ -8,8 +9,7 @@ export default  function DataSiswaPage() {
     
     const allSiswa = useAppSelector(DataSiswaAktifWithValidation)
     const rombel = useAppSelector(state=>state.fokusRombel.value);
-    const test = useAppSelector(state=>state)
-    console.log(test)
+    
     return (
         <div className="p-1">
             <h3 className="text-2xl font-bold mb-0 text-center uppercase">Daftar Siswa Kelas {rombel}</h3>

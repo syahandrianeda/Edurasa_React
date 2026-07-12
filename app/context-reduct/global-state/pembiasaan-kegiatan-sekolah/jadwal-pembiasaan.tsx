@@ -1,13 +1,15 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { pembiasaanSheet } from "~/types/pembiasaan/pembiasaan"
 
-export type JadwalPembiasaanSliceType = {
-    dataJadwalPembiasaan:pembiasaanSheet[],
-    loadedDataJadwalPembiasaan:boolean
+export type JadwalPembiasaanSliceType ={
+    name:'kegiatan_nonkbm',
+    data:pembiasaanSheet[],
+    loaded:boolean
 }
 export const InitialState:JadwalPembiasaanSliceType = {
-    dataJadwalPembiasaan:[],
-    loadedDataJadwalPembiasaan:false
+    name:'kegiatan_nonkbm',
+    data:[],
+    loaded:false
 }
 
 export const JadwalPembiasaanSlice = createSlice({
@@ -15,8 +17,8 @@ export const JadwalPembiasaanSlice = createSlice({
     initialState:InitialState,
     reducers:{
         setDataJadwalPembiasaan(state, action:PayloadAction<pembiasaanSheet[]>){
-            state.dataJadwalPembiasaan = action.payload
-            state.loadedDataJadwalPembiasaan = true
+            state.data = action.payload;
+            state.loaded = true
         }
     }
 });

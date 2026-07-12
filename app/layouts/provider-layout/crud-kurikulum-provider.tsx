@@ -39,13 +39,13 @@ export default function CrudKurikulumLayout() {
     const serviceSettingJadwal = new SettingJadwalService();
     const serviceSebaranJadwal = new JadwalMapelServiceImplements();
     const serviceProta = new ProtaServiceImplements();
-
+    
     useEffect(()=>{
         if(!user) return 
         
-        const initRedux = new InitNeededSliceStore(store);
-        initRedux.needSiswa(serviceSiswa);
-        initRedux.needKurikulum(service); 
+        // const initRedux = new InitNeededSliceStore(store);
+        // initRedux.needSiswa(serviceSiswa);
+        // initRedux.needKurikulum(service); 
         
     },[user])
     

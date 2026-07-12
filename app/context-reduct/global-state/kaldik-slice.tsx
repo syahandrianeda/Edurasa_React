@@ -2,12 +2,14 @@ import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { KaldikType } from "~/types/kaldik";
 
 type KaldikSliceType={
-    data:KaldikType[]
+    data:KaldikType[],
+    name:'kalender',
     loaded:boolean;
 }
 
 const initialState:KaldikSliceType = {
     data: [],
+    name:'kalender',
     loaded:false
 }
 
@@ -23,11 +25,16 @@ const kaldik = createSlice({
             setLoadedKaldik(state, action: PayloadAction<KaldikSliceType>) {
                 state.loaded = action.payload.loaded;
                 
-            }
+            },
+            setKaldikArray(state, action: PayloadAction<KaldikType[]>) {
+                state.loaded = true;
+                state.data = action.payload
+                
+            },
         }
     }
 );
 
 
-export const { setKaldik, setLoadedKaldik} = kaldik.actions
+export const { setKaldik, setLoadedKaldik, setKaldikArray} = kaldik.actions
 export default kaldik.reducer

@@ -59,6 +59,7 @@ export default async function ParsingPrintArea(element:HTMLElement):Promise<Pars
                     return;
                 }
                 const tableNode = await parseCommonTable(node as HTMLTableElement);
+                console.log('tableNode', tableNode);
                     resultParsed.push(tableNode);
                 return; // jangan lanjut ke children
             }
@@ -109,6 +110,16 @@ export default async function ParsingPrintArea(element:HTMLElement):Promise<Pars
             ) {
                 
                 if(node.dataset.word === 'image-liburan'){
+                    const imageNode = await parseImage(node as HTMLImageElement);
+                    resultParsed.push(imageNode as ImageNodeEdura);
+                }
+            }
+            if (
+                tag === "IMG" &&
+                node.closest("td")
+            ) {
+                
+                if(node.dataset.word === 'image-soal'){
                     const imageNode = await parseImage(node as HTMLImageElement);
                     resultParsed.push(imageNode as ImageNodeEdura);
                 }

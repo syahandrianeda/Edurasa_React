@@ -25,6 +25,7 @@ export type ModalType =
     | 'EDIT JADWAL MAPEL'
     | 'HAPUS JADWAL MAPEL'
     | 'EDIT PROTA'
+    | 'PREVIEW ITEM SOAL'
     | null
 export interface ConfigModelType{
     closeOnOutsideClick: boolean,

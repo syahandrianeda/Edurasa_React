@@ -3,6 +3,7 @@ import AppMenuPage from "~/pages/app-menu";
 import type { Route } from "./+types/app-menu";
 
 import { useNavigation } from "react-router";
+import { useAppSelector } from "~/context-reduct/hook";
 
 
 
@@ -37,7 +38,8 @@ export default function AppMenu({
     const navigation = useNavigation();
     const isLoading = navigation.state === "loading" || navigation.state === "submitting";
     
-    
+    const test = useAppSelector(s=>s)
+    console.log('test redux', test);
 
     return (
         <>

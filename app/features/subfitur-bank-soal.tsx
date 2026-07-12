@@ -1,4 +1,4 @@
-import { BanknoteArrowUp, CirclePile, LucidePaperclip, ToolCase } from "lucide-react";
+import { BanknoteArrowDownIcon, BanknoteArrowUp, BanknoteXIcon, CirclePile, LucidePaperclip, ToolCase } from "lucide-react";
 import type { typeSidebarFiturKonten } from "~/types";
 
 export const SubFiturBankSoal: typeSidebarFiturKonten[] = [
@@ -9,6 +9,13 @@ export const SubFiturBankSoal: typeSidebarFiturKonten[] = [
                 title: 'Buat Item Soal',
                 href: '/bank-soal/create-item-soal',
                 icon: BanknoteArrowUp,
+                description:'Simpan Item Soal sebagai koleksi bank soal Anda',
+                permission: 'view bank soal'
+            },
+            {
+                title: 'Upload Massal Soal',
+                href: '/bank-soal/create-items-soal',
+                icon: BanknoteArrowDownIcon,
                 description:'Simpan Item Soal sebagai koleksi bank soal Anda',
                 permission: 'view bank soal'
             },

@@ -21,6 +21,9 @@ export interface ImageNode {
       style.display === "none" ||
       style.visibility === "hidden"
     ) {
+      style.verticalAlign='middle'
+      style.textAlign='left'
+      style.textWrap='inline'
       return null;
     }
 

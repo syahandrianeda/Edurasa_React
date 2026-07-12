@@ -22,7 +22,7 @@ export default class AbsensiRepositoryImplements extends AppScriptSheet implemen
     async refreshAbsensi(): Promise<ApiResponse<Record<string, any>>> {
         
         const action = await this.postBody(this.paramSheetAbsensiJenjang);
-        console.log('action absen', action);
+        console.log('action absen repfes', action);
         return this.responActionRead(action);
     }
     async uploadFileRepo(param: ParamFile): Promise<any> {

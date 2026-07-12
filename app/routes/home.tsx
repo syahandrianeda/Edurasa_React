@@ -1,3 +1,4 @@
+import { useAppSelector } from "~/context-reduct/hook";
 import type { Route } from "./+types/home";
 import HomePage from "~/pages/home";
 
@@ -24,6 +25,7 @@ export default function Home({
     //   '\nparams:\n',params, 
     //   '\nmatch\n', matches
     // );
+    
     
   return <HomePage />;
 }

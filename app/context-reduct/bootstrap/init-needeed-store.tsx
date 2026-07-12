@@ -28,6 +28,11 @@ import { setDataJadwalPembiasaan } from "../global-state/pembiasaan-kegiatan-sek
 import type { pembiasaanSheet } from "~/types/pembiasaan/pembiasaan";
 import { setDataProta } from "../global-state/prota/prota-slice";
 import type {protaSheet } from "~/types/kurikulum/prota-orm";
+import { setCp } from "../global-state/kurikulum/cp-slice";
+import { setFaseA } from "../global-state/kurikulum/tp-fase-a";
+import { setFaseB } from "../global-state/kurikulum/tp-fase-b";
+import { setAtp } from "../global-state/kurikulum/atp-slice";
+import { setFaseC } from "../global-state/kurikulum/tp-fase-c";
 
 export default class InitNeededSliceStore{
     constructor(private store: Store<RootState>){}
@@ -41,7 +46,7 @@ export default class InitNeededSliceStore{
         if(this.state.dataSiswa.loaded) return;
         
         this.store.dispatch(setloadedApi({
-            loaded:true
+            loaded:true,name:'loaded_animation'
         }));
 
         toast.promise(
@@ -54,12 +59,14 @@ export default class InitNeededSliceStore{
                     if(data?.success){
                         this.store.dispatch(setAllSiswa({
                             loaded:true,
-                            allSiswa: raw,
+                            // allSiswa: raw,
+                            data:raw,
                             source: data?.source,
-                            loading:false
+                            loading:false,
+                            name:'datasiswa'
                         }));
                         this.store.dispatch(setloadedApi({
-                            loaded:false
+                            loaded:false,name:'loaded_animation'
                         }));
                     }
                     return 'Data siswa berhasil dimuat dari ' + data?.source;
@@ -67,7 +74,7 @@ export default class InitNeededSliceStore{
                 error: 'Gagal memuat data siswa',
                 finally:()=>{
                     this.store.dispatch(setloadedApi({
-                            loaded:false
+                            loaded:false,name:'loaded_animation'
                         }));
                 }
 
@@ -79,7 +86,8 @@ export default class InitNeededSliceStore{
     async needKaldik(Service:KaldikServiceImplements){
         if(this.state.kaldik.loaded) return;
         this.store.dispatch(setloadedApi({
-            loaded:true
+            loaded:true,
+            name:'loaded_animation'
         }));
 
         toast.promise(
@@ -92,10 +100,12 @@ export default class InitNeededSliceStore{
                     if(data?.success){
                         this.store.dispatch(setKaldik({
                             loaded:true,
-                            data:raw
+                            data:raw,
+                            name:'kalender',
                         }));
                         this.store.dispatch(setloadedApi({
-                            loaded:false
+                            loaded:false,
+                            name:'loaded_animation'
                         }));
                     }
                     return 'Data Kalender berhasil dimuat dari ' + data?.source;
@@ -103,7 +113,8 @@ export default class InitNeededSliceStore{
                 error: 'Gagal memuat data kalendar',
                 finally:()=>{
                     this.store.dispatch(setloadedApi({
-                            loaded:false
+                            loaded:false,
+                            name:'loaded_animation'
                         }));
                 }
 
@@ -117,7 +128,7 @@ export default class InitNeededSliceStore{
         if(this.state.kaldik.loaded && this.state.absensiSiswa.dataAbsensi.find(s=>s.nama_rombel === rombel)) return;
         
         this.store.dispatch(setloadedApi({
-                loaded:true
+                loaded:true,name:'loaded_animation'
             }));
             
         toast.promise(
@@ -127,7 +138,7 @@ export default class InitNeededSliceStore{
                 success: (data) => {
                     
                     data.forEach(({success,data,detailResponse})=>{
-                        if(success && detailResponse?.namaTab.includes('responses')){
+                        if(success && detailResponse?.namaTab.includes('kelas_'+rombel)){
                                 this.store.dispatch(setAbsensiRombel(
                                     {
                                         nama_rombel:rombel,
@@ -139,7 +150,8 @@ export default class InitNeededSliceStore{
                         if(success && detailResponse?.namaTab.includes('kalender')){
                             this.store.dispatch(setKaldik({
                                 loaded:true,
-                                data:data as KaldikType[]
+                                data:data as KaldikType[],
+                                name:'kalender',
                             }));
                         }
                     });
@@ -148,7 +160,7 @@ export default class InitNeededSliceStore{
                 error: 'Gagal memuat data Absen',
                 finally:()=>{
                     this.store.dispatch(setloadedApi({
-                            loaded:false
+                            loaded:false,name:'loaded_animation'
                         }));
                 }
 
@@ -160,20 +172,29 @@ export default class InitNeededSliceStore{
     // async needKurikulum(Service:ElemenCpServiceImplements){
     async needKurikulum(Service:MapelRombelServiceInterface){
         if(
-            this.state.mapel.loadedMapel && 
-            this.state.mapelRombel.loadedDataMapelRombel &&
-            this.state.kurmer.loadedAtp && 
-            // this.state.kurmer.loadedAtp &&
-            this.state.kurmer.loadedTpFaseA &&
-            this.state.kurmer.loadedTpFaseB &&
-            this.state.kurmer.loadedTpFaseC && 
-            this.state.jadwalPembiasaan.loadedDataJadwalPembiasaan &&
-            this.state.settingJadwalMapel.loadedSettingJadwal &&
-            this.state.jadwalPelajaran.loadedDataJadwalPelajaran
+            this.state.mapel.loaded && 
+            this.state.jadwalPembiasaan.loaded &&
+            this.state.settingJadwalMapel.loaded &&
+            this.state.jadwalPelajaran.loaded &&
+            // this.sheetMateriTabElemenCp,
+            this.state.CP.loaded &&
+            this.state.faseA.loaded &&
+            this.state.faseB.loaded &&
+            this.state.faseC.loaded &&
+            this.state.Atp.loaded &&
+            this.state.jadwalPembiasaan.loaded &&
+            this.state.mapel.loaded &&
+            this.state.jpMapel.loaded &&
+            this.state.settingJadwalMapel.loaded &&
+            this.state.jadwalPelajaran.loaded &&
+            this.state.kaldik.loaded &&
+            
+            this.state.prota.loaded
+            
         ) return;
 
         this.store.dispatch(setloadedApi({
-                loaded:true
+                loaded:true,name:'loaded_animation'
             }));
             
         toast.promise(
@@ -181,27 +202,33 @@ export default class InitNeededSliceStore{
             {
                 loading: 'Memuat Kurikulum',
                 success: (datas) => {
-                    console.log('data kurikulum yang dipanggil', datas);
+                    
                     datas.forEach(({success,data,detailResponse})=>{
-                        if(success && detailResponse?.namaTab.toString().includes('elemencp')){
-                            this.store.dispatch(setKurmerCp(data as   ElemenCpType[]));
+                        if(success && detailResponse?.namaTab.toString().includes('elemen_cp')){
+                            // this.store.dispatch(setKurmerCp(data as   ElemenCpType[]));
+                            this.store.dispatch(setCp(data as ElemenCpType[]));
                         }
                         if(success && detailResponse?.namaTab.toString().includes('faseA')){
-                            this.store.dispatch(setKurmerTpFaseA(data as   FaseKurikulumType[]));
+                            // this.store.dispatch(setKurmerTpFaseA(data as   FaseKurikulumType[]));
+                            this.store.dispatch(setFaseA(data as FaseKurikulumType[]));
                         }
                         if(success && detailResponse?.namaTab.toString().includes('faseB')){
-                            this.store.dispatch(setKurmerTpFaseB(data as   FaseKurikulumType[]));
+                            // this.store.dispatch(setKurmerTpFaseB(data as   FaseKurikulumType[]));
+                            this.store.dispatch(setFaseB(data as FaseKurikulumType[]));
                         }
                         if(success && detailResponse?.namaTab.toString().includes('faseC')){
-                            this.store.dispatch(setKurmerTpFaseC(data as   FaseKurikulumType[]));
+                            // this.store.dispatch(setKurmerTpFaseC(data as   FaseKurikulumType[]));
+                            this.store.dispatch(setFaseC(data as FaseKurikulumType[]));
                         }
-                        if(success && detailResponse?.namaTab.toString().includes('faseTPATP')){
-                            this.store.dispatch(setKurmerAtp(data as  AtpKurikulumType[]));
+                        if(success && detailResponse?.namaTab.toString().includes('Atp')){
+                            // this.store.dispatch(setKurmerAtp(data as  AtpKurikulumType[]));
+                            this.store.dispatch(setAtp(data as AtpKurikulumType[]))
                         }
                         if(success && detailResponse?.namaTab.toString().includes('kalender')){
                             this.store.dispatch(setKaldik({
                                 loaded:true,
-                                data:data as KaldikType[]
+                                data:data as KaldikType[],
+                                name:'kalender',
                             }));
                         }
                         if(success && detailResponse?.namaTab ==='mapel'){
@@ -228,12 +255,21 @@ export default class InitNeededSliceStore{
                 error: 'Gagal memuat data Kurikulum',
                 finally:()=>{
                     this.store.dispatch(setloadedApi({
-                            loaded:false
+                            loaded:false,name:'loaded_animation'
                         }));
                 }
             }
         );
         return []
+    }
+
+    callProviderData(){
+        /** call Provider menyiapkan data apa saja yang harus dipanggil
+         * - InitNeededSliceStore tidak harus menginjeksi devedency lain, cukup punya sendiri aja;
+         * - misal fitur/page CP, maka data CP yang harus tersedia oleh aplikasi,
+         *   jika tidak ada, maka siapkan parameternya untuk dipanggil;
+         * - misalnya: callFiturPage('route.cp')
+         */
     }
 
 }

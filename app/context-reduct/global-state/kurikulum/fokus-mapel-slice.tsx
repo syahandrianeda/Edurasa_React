@@ -4,13 +4,17 @@ import type { InterfaceMapel } from "~/types/mapel/mapel";
 
 export type fokusMapel = {
     data:InterfaceMapel,
-    disabled:boolean
+    disabled:boolean,
+    name:'fokusMapel',
+    loaded:boolean
 }
 const defaultFokusMapel = KoleksiMapel.find(s=>s.kode === 'PKN') as InterfaceMapel;
 
 const initialState:fokusMapel = {
     data:defaultFokusMapel,
-    disabled:false
+    disabled:false,
+    name:'fokusMapel',
+    loaded:false
 }
 
 const fokusMapel = createSlice({

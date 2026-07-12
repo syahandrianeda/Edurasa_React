@@ -3,6 +3,7 @@ import { SelectField } from "~/components/fields/fields";
 import { TdEdura, ThEdura, TRowEdura } from "~/components/tabels/tabel-components";
 import TableWithScrolling from "~/components/tabels/table-with-scrolling";
 import type { TabsConfigProps } from "~/components/tabs/generate-tabs";
+import { TabConfigKopTtd } from "~/components/toolbars/config-default-toolbar";
 import { useFilterContext } from "~/components/toolbars/state-toolbar/state-toolbar";
 import { Field } from "~/components/ui/field";
 import { setFokusMapel } from "~/context-reduct/global-state/kurikulum/fokus-mapel-slice";
@@ -31,6 +32,7 @@ export const ConfigToolbarDesainPraSoal:TabsConfigProps =  {
                 value: 'tab1',
                 label: 'Setting'
             },
+            ...TabConfigKopTtd.tabList
             
         ],
         contentList:[
@@ -38,7 +40,7 @@ export const ConfigToolbarDesainPraSoal:TabsConfigProps =  {
                 value:'tab1',
                 element:<TabPraDesainItemSoal/>
             },
-            
+            ...TabConfigKopTtd.contentList
         ]
 }
 function TabPraDesainItemSoal(){
@@ -60,25 +62,30 @@ function TabPraDesainItemSoal(){
     //const semester = value.semester?? currentTapelProperties({variant:'getSemester'}) as number ;
     
     
+    
     const promes = useMemo(()=>{
         const kaldik = ormKaldik;
         const inprota = user && new OrmPromes(cpFaseAtp,jadwal,kaldik,fokusMapel,rombel ?? getSessionRombel(),user,prota).init();//.buildPromes(2);//.createKoleksiMapelInJadwal().koleksiMapelInJadwal
+        
         const fokusAtp = inprota?.dataAtpValidInRombel||[];
         return fokusAtp.length>0? groupByToArray(fokusAtp,item=>item?.tp_as_cp_description ||''):[];    
         },[user,rombel,fokusMapel,cpFaseAtp,jadwal,prota]);
     
-    
+
     
     const mapelRombel = useMemo(()=>{
         return mapelSelector.data?.map(m=>m.source);
-    },[mapelSelector])
+    },[mapelSelector]);
+    
     const handleChangeMapel = useCallback((e:React.ChangeEvent<HTMLSelectElement>)=>{
         // const fokus = KoleksiMapel.find(s=>s.kode === e.currentTarget.value) as InterfaceMapel;
         const fokus = mapelRombel?.find(s=>s.kode === e.currentTarget.value) as InterfaceMapel;
         
         dispatch(setFokusMapel({
             data:fokus,
-            disabled
+            disabled,
+            name:'fokusMapel',
+            loaded:true
             // user?.roles !== "Guru Mapel"?true:false
         }))
     },[mapelRombel, dispatch, disabled])
@@ -87,7 +94,9 @@ function TabPraDesainItemSoal(){
         
         dispatch(setFokusMapel({
             data:fokus,
-            disabled
+            disabled,
+            name:'fokusMapel',
+            loaded:true
             // user?.roles !== "Guru Mapel"?true:false
         }))
     },[user,KoleksiMapel]);
@@ -115,6 +124,7 @@ function TabPraDesainItemSoal(){
             })
         }
         if(!(value?.extra?.fokusAtp) && promes.length>0){
+            
             updateExtra(draft=>{
                 draft.fokusAtp = promes[0].data[0]
             })
@@ -143,7 +153,7 @@ function TabPraDesainItemSoal(){
                         </SelectField>
                 </Field>
                 <Field className="relative mt-2">
-                    <div className="text-xs absolute bg-white dark:text-gray-100 text-gray-500 dark:bg-sky-900 dark:border-gray-600 dark:placeholder-gray-400 duration-300 transform -translate-y-4 rounded-3xl scale-75 top-2 z-10 origin-left  px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-100 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 start-1">Pilih Bentuk Soal</div>
+                    <div className="text-xs absolute bg-white dark:text-gray-100 text-gray-500 dark:bg-sky-900 dark:border-gray-600 dark:placeholder-gray-400 duration-300 transform -translate-y-4 rounded-3xl scale-75 top-2 z-10 origin-left  px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-100 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 inset-s-1">Pilih Bentuk Soal</div>
                     <ol className="list-none list-inside bg-white p-2 rounded dark:bg-sky-900">
                         {
                             ListBentukSoal.map((m,index)=>(
@@ -168,7 +178,7 @@ function TabPraDesainItemSoal(){
                 </Field>
                 
                 <Field className="relative mt-2">
-                    <div className="text-xs absolute bg-white dark:text-gray-100 text-gray-500 dark:bg-sky-900 dark:border-gray-600 dark:placeholder-gray-400 duration-300 transform -translate-y-4 rounded-3xl scale-75 top-2 z-10 origin-left  px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-100 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 start-1">Pilih Editor</div>
+                    <div className="text-xs absolute bg-white dark:text-gray-100 text-gray-500 dark:bg-sky-900 dark:border-gray-600 dark:placeholder-gray-400 duration-300 transform -translate-y-4 rounded-3xl scale-75 top-2 z-10 origin-left  px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-100 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 inset-s-1">Pilih Editor</div>
                     <ol className="list-none list-inside bg-white p-2 rounded dark:bg-sky-900">
                         {
                             ListEditorSoal.map((m, index)=>

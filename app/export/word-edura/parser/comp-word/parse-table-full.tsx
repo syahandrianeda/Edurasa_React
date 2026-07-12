@@ -105,8 +105,8 @@ async function walkNode(node: Node, contents: cellsTableCommon[]): Promise<void>
     // ✅ IMAGE
     if (node instanceof HTMLImageElement) {
         if (node.classList.contains("print:hidden")) return;
-        
         const src = await parseImage(node as  HTMLImageElement)
+        console.log('isFound image?',src );
         
         if(src){
         contents.push(src);
@@ -134,7 +134,8 @@ async function walkNode(node: Node, contents: cellsTableCommon[]): Promise<void>
             isItalic:style.fontStyle === 'italic'
         });
         }
-        return; // ⛔ penting: jangan lanjut rekursi
+        // return; // ⛔ penting: jangan lanjut rekursi
+        /** jangan hentikan proses rekursi. Karena bisa saja ada komponen/element yang harus dirender oleh word */
     }
     // ✅ ELEMENT NODE → Masuk lebih dalam
     if (node instanceof HTMLElement) {

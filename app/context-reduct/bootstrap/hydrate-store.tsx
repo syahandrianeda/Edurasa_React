@@ -21,63 +21,121 @@ export function hydratePreloadedState(): Partial<RootState> {
   return {
     auth: {
       user: user ?? null,
+      loaded:false,
+      name:'auth'
     },
     fokusRombel: {
       value: fokusRombel ?? null,
+      name:'fokusRombel',
+      loaded:false
     },
     dataSiswa:{
-      allSiswa: [],
+      name:'datasiswa',
+      data: [],
       loaded:false,
       loading:true
     },
     loadedApi:{
-      loaded:false
+      loaded:false,
+      name:'loaded_animation',
     },
     kaldik:{
       loaded:false,
+      name:'kalender',
       data:[]
     },
     absensiSiswa:{
-      dataAbsensi:[]
+      dataAbsensi:[],
+      name:'absensi',
+      loaded:false
     },
     uiPreference:{
-      sabtuLibur:true
+      sabtuLibur:true,
+      name:'isSabtuLibur',
+      loaded:true
     },
-    kurmer:{
-      dataCp:[],
-      loadedCp:false,
-      dataTpFaseA:[],
-      loadedTpFaseA:false,
-      dataTpFaseB:[],
-      loadedTpFaseB:false,
-      dataTpFaseC:[],
-      loadedTpFaseC:false,
-      dataAtp:[],
-      loadedAtp:false
-    },
+    /** kurmer akan deprecated */
+    // kurmer:{
+    //   dataCp:[],
+    //   loadedCp:false,
+    //   dataTpFaseA:[],
+    //   loadedTpFaseA:false,
+    //   dataTpFaseB:[],
+    //   loadedTpFaseB:false,
+    //   dataTpFaseC:[],
+    //   loadedTpFaseC:false,
+    //   dataAtp:[],
+    //   loadedAtp:false
+    // },
     fokusMapel:{
       data: mapelFokus,
-      disabled:user?.jabatan === 'Guru Mapel'
+      disabled:user?.jabatan === 'Guru Mapel',
+      name:'fokusMapel',
+      loaded:false
     },
     mapel:{
-      dataMapel:[],
-      loadedMapel:false
+      data:[],
+      name:'mapel',
+      loaded:false
     },
-    mapelRombel:{
-      dataMapelRombel:[],
-      loadedDataMapelRombel:false
+    jpMapel:{
+      // dataMapelRombel:[],
+      data:[],
+      name:'jp_mapel',
+      loaded:false
     },
     jadwalPelajaran:{
-      dataJadwalPelajaran:[],
-      loadedDataJadwalPelajaran:false
+      // dataJadwalPelajaran:[],
+      loaded:false,
+      data:[],
+      name:'jadwal_mapel',
     },
     settingJadwalMapel:{
-      settingJadwal:[],
-      loadedSettingJadwal:false
+      name:'setting_jadwal',
+      data:[],
+      loaded:false
     },
     jadwalPembiasaan:{
-      dataJadwalPembiasaan:[],
-      loadedDataJadwalPembiasaan:false
+      name:'kegiatan_nonkbm',
+      data:[],
+      loaded:false
+    },
+    faseA:{
+      name:'faseA',
+      data:[],
+      loaded:false
+    },
+    faseB:{
+      name:'faseB',
+      data:[],
+      loaded:false
+    },
+    faseC:{
+      name:'faseC',
+      data:[],
+      loaded:false
+    },
+    Atp:{
+      name:'Atp',
+      data:[],
+      loaded:false
+    },
+    CP:{
+      name:'elemen_cp',
+      data:[],
+      loaded:false
+    },
+    prota:{
+      data:[],
+      name:'prota',
+      loaded:false
+      
+    },
+    bankSoal:{
+      data:[],
+      name:'bank_soal',
+      loaded:false
     }
+
   };
 }

@@ -58,7 +58,7 @@ export default function MainSettingMapel() {
                 hariAktif:hariAktif,
                 namaHari:NAMA_HARI_LABEL
             }
-        })
+        }as unknown as { extra: settingJadwalApp }) 
     },[dataPresentation]);
     
     return (

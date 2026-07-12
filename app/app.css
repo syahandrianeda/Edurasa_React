@@ -4,6 +4,8 @@
 
 @import "./additional-css/scroll.css";
 
+@import 'katex/dist/katex.min.css';
+
 @custom-variant dark (&:is(.dark *));
 
 @theme {
@@ -164,5 +166,215 @@
 
     body {
         @apply bg-background text-foreground;
+    }
+}
+
+@layer components {
+
+    .editor-document h1 {
+        @apply scroll-m-20 text-4xl font-extrabold tracking-tight;
+    }
+
+    .editor-document h2 {
+        @apply scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0;
+    }
+
+    .editor-document h3 {
+        @apply scroll-m-20 text-2xl font-semibold tracking-tight;
+    }
+
+    .editor-document h4 {
+        @apply scroll-m-20 text-xl font-semibold tracking-tight;
+    }
+
+    .editor-document h5 {
+        @apply text-lg font-semibold;
+    }
+
+    .editor-document h6 {
+        @apply text-base font-semibold;
+    }
+    
+    .editor-document ul {
+        @apply list-disc pl-6 my-4;
+    }
+
+    .editor-document ol {
+        @apply list-decimal pl-6 my-4;
+    }
+
+    .editor-document li {
+        @apply my-1;
+    }
+    /* ==========================================================
+     * IMAGE RESIZER (Tiptap)
+     * ========================================================== */
+
+    .editor-document [data-resizer] {
+        background-color: rgb(240 240 240);
+    }
+
+    .editor-document [data-resize-wrapper] {
+        position: relative;
+        display: inline-block;
+    }
+
+    .editor-document [data-resize-handle] {
+        position: absolute;
+        z-index: 10;
+
+        background: rgba(0, 0, 0, .5);
+        border: 1px solid rgba(255,255,255,.8);
+        border-radius: 2px;
+
+        transition: background-color .15s ease;
+    }
+
+    .editor-document [data-resize-handle]:hover {
+        background: rgba(0,0,0,.8);
+    }
+
+    /* ==========================================================
+     * CORNER HANDLES
+     * ========================================================== */
+
+    .editor-document [data-resize-handle="top-left"],
+    .editor-document [data-resize-handle="top-right"],
+    .editor-document [data-resize-handle="bottom-left"],
+    .editor-document [data-resize-handle="bottom-right"] {
+        width: 8px;
+        height: 8px;
+    }
+
+    .editor-document [data-resize-handle="top-left"] {
+        top: -4px;
+        left: -4px;
+        cursor: nwse-resize;
+    }
+
+    .editor-document [data-resize-handle="top-right"] {
+        top: -4px;
+        right: -4px;
+        cursor: nesw-resize;
+    }
+
+    .editor-document [data-resize-handle="bottom-left"] {
+        bottom: -4px;
+        left: -4px;
+        cursor: nesw-resize;
+    }
+
+    .editor-document [data-resize-handle="bottom-right"] {
+        bottom: -4px;
+        right: -4px;
+        cursor: nwse-resize;
+    }
+
+    /* ==========================================================
+     * EDGE HANDLES
+     * ========================================================== */
+
+    .editor-document [data-resize-handle="top"],
+    .editor-document [data-resize-handle="bottom"] {
+        left: 8px;
+        right: 8px;
+        height: 6px;
+    }
+
+    .editor-document [data-resize-handle="top"] {
+        top: -3px;
+        cursor: ns-resize;
+    }
+
+    .editor-document [data-resize-handle="bottom"] {
+        bottom: -3px;
+        cursor: ns-resize;
+    }
+
+    .editor-document [data-resize-handle="left"],
+    .editor-document [data-resize-handle="right"] {
+        top: 8px;
+        bottom: 8px;
+        width: 6px;
+    }
+
+    .editor-document [data-resize-handle="left"] {
+        left: -3px;
+        cursor: ew-resize;
+    }
+
+    .editor-document [data-resize-handle="right"] {
+        right: -3px;
+        cursor: ew-resize;
+    }
+
+    /* ==========================================================
+     * ACTIVE IMAGE
+     * ========================================================== */
+
+    .editor-document [data-resize-state="true"] [data-resize-wrapper] {
+        outline: 1px solid rgba(0,0,0,.25);
+        border-radius: .125rem;
+    }
+    /* ============================
+    Tiptap Table
+    ============================ */
+
+    .editor-document table {
+        border-collapse: collapse;
+        margin: 0;
+        overflow: hidden;
+        table-layout: fixed;
+        /* width: 100%; */
+    }
+
+    .editor-document table td,
+    .editor-document table th {
+        border: 1px solid #000;
+        box-sizing: border-box;
+        min-width: 1em;
+        padding: 6px 8px;
+        position: relative;
+        vertical-align: top;
+    }
+
+    .editor-document table td > *,
+    .editor-document table th > * {
+        margin-bottom: 0;
+    }
+
+    .editor-document table th {
+        background-color: #e5e5e5;
+        font-weight: bold;
+        text-align: left;
+    }
+
+    .editor-document table .selectedCell::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.15);
+        pointer-events: none;
+        z-index: 2;
+    }
+
+    .editor-document table .column-resize-handle {
+        position: absolute;
+        top: 0;
+        right: -2px;
+        bottom: -2px;
+        width: 4px;
+        background-color: #000;
+        pointer-events: none;
+    }
+
+    .editor-document .tableWrapper {
+        margin: 1.5rem 0;
+        overflow-x: auto;
+    }
+
+    .editor-document .resize-cursor {
+        cursor: ew-resize;
+        cursor: col-resize;
     }
 }

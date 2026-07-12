@@ -20,6 +20,7 @@ export default class ProtaServiceImplements{
             }),
             action: 'upsert'
         };
+        
         return await this.repo.update(paramUpdate);
     }
 

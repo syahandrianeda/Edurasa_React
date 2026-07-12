@@ -70,7 +70,7 @@ export default class AbsensiServiceImplements implements AbsensiServiceInterface
             }),
             action:'upsert'
         }
-        this.repo.CreateParamSheetAbsensiJenjang(jenjang,{...paramUpdate,filter:JSON.stringify({kelas:param.rombel})})
+        this.repo.CreateParamSheetAbsensiRombel(param.rombel,{...paramUpdate,filter:JSON.stringify({kelas:param.rombel})})
         
         return await this.repo.update(param);
     }

@@ -12,11 +12,12 @@ import FieldKeteranganKaldik from "./field-preview-keterangan";
 import SendEditKaldik from "../crud-provider-controller/send-edit-kaldik";
 import FormPreviewKaldik from "./form-preview-kaldik";
 import { useEffect } from "react";
+import { useAppSelector } from "~/context-reduct/hook";
 
 export default function FormSettingKaldik({state}:{
     state:ModalState
 }){
-
+    
     return (
         <FormEdura<KaldikType> data={state.payload as unknown as KaldikType}>
             {
@@ -63,7 +64,13 @@ export function FieldSetKaldik(){
 }
 
 function TambahEditKaldik(){
-    const {currentData} = useFormEdura<KaldikType>();
+    const {currentData, setCurrentData} = useFormEdura<KaldikType>();
+    const userInfo = useAppSelector(s=>s.auth.user)
+    useEffect(()=>{
+        setCurrentData(drf=>{
+            drf.oleh = userInfo?.name ?? ''
+        })
+    },[])
     return (
         <div className="grid grid-cols-1 gap-2 space-x-2 md:grid-cols-2 bg-linear-to-tl from-sky-400 to-sky-300 p-2  h-[calc(100vh-12.5rem)]  md:overflow-y-auto scrol-h-custom">
             <div className="border rounded-2xl bg-sky-500/50 border-sky-500 inset-shadow-sky-600 shadow-lg p-1 md:overflow-y-auto scrol-h-custom">
@@ -80,8 +87,8 @@ function TambahEditKaldik(){
                 <SelectHariEfektif/>
             </div>
             <div className="border px-2 pt-2 pb-8 flex flex-col justify-between rounded-2xl bg-sky-500/50 border-sky-500 inset-shadow-sky-600 shadow-lg">
-                <PreviewKaldikModal date={currentData?.start_tgl}/>
-                <FieldKeteranganKaldik date={currentData?.start_tgl}/>
+                <PreviewKaldikModal date={currentData?.start_tgl?? new Date()}/>
+                <FieldKeteranganKaldik date={currentData?.start_tgl?? new Date()}/> 
             </div>
         </div>
     )

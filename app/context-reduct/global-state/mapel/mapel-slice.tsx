@@ -2,24 +2,32 @@ import { createSlice, type PayloadAction } from "@reduxjs/toolkit"
 import type { InterfaceMapelSheet } from "~/types/mapel/mapel"
 
 export type MapelTypeSlice = {
-    dataMapel:InterfaceMapelSheet[],
-    loadedMapel:boolean
+    // dataMapel:InterfaceMapelSheet[],
+    data:InterfaceMapelSheet[],
+    name:'mapel',
+    // loadedMapel:boolean
+    loaded:boolean
 }
 const initialState:MapelTypeSlice = {
-    dataMapel:[],
-    loadedMapel:false
+    data:[],
+    name:'mapel',
+    loaded:false
 }
 const mapel = createSlice({
     name:'mapelSlice',
     initialState,
     reducers:{
             setDataMapel(state, action:PayloadAction<InterfaceMapelSheet[]>){
-                state.dataMapel = action.payload
-                state.loadedMapel = true
-            }
+                state.data = action.payload;
+                state.loaded = true
+            },
+            setMapel(state, action:PayloadAction<InterfaceMapelSheet[]>){
+                state.data = action.payload;
+                state.loaded = true
+            },
         }
     }
 );
 
-export const {setDataMapel} = mapel.actions;
+export const {setDataMapel, setMapel} = mapel.actions;
 export default mapel.reducer

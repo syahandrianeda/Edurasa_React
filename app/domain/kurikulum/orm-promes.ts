@@ -54,6 +54,7 @@ export default class OrmPromes extends OrmProta{
 
             // kode, rombel (use parent fokusMapel)
             const kode_mapel = this.realKodeMapel;//this.codeMapel;
+            const mapel_name = this.fokusMapel.nama;
             const rombel = this.namaRombel ?? '';
 
             // jadwal hari untuk mapel
@@ -144,6 +145,7 @@ export default class OrmPromes extends OrmProta{
                 koleksi_hari,
                 kode_mapel,
                 rombel,
+                mapel_name,
                 semester,
                 meta:{ total_days, total_jp },
                 // total_atp_distributed:total_atp_distributed
@@ -286,6 +288,7 @@ export default class OrmPromes extends OrmProta{
                 data_atp_semester: [],
                 koleksi_hari: [],
                 kode_mapel: this.codeMapel ?? '',
+                mapel_name: this.fokusMapel.nama,
                 rombel: this.namaRombel ?? '',
                 semester,
                 meta: { total_days: 0, total_jp: 0 },
