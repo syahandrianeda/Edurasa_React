@@ -11,6 +11,7 @@ import type { DataSheetNeeeded } from "~/domain/enloaded/data-sheet-needed-type"
 import { useAppSelector } from "~/context-reduct/hook";
 import DispatchingResponseToStore from "~/lib/dispatching-response-to-store";
 import { JadwalPelajaranNeeded } from "~/domain/enloaded/intial-enloaded/by-route-page/kurikulum/jadwal-pelajaran-needed";
+import { store } from "~/context-reduct/redux-provider";
 
 
 export function meta({matches}: Route.MetaArgs) {
@@ -65,7 +66,7 @@ export async function clientAction({ request }: Route.ActionArgs){
 export default function JadwalMapelPageRoute() {
     const fetcher = useFetcher<typeof clientAction>();
     const isSubmitting = useRef(false);
-    const st = useAppSelector(state => state);
+    const st = store.getState();
     const rombel = useAppSelector(state=> state.fokusRombel.value);
     const dataNeeded:DataSheetNeeeded[] = JadwalPelajaranNeeded;
     
@@ -73,7 +74,7 @@ export default function JadwalMapelPageRoute() {
         return createParamEnloaded(st,dataNeeded)
     }, [ dataNeeded, st]);
     
-    console.log('dataNeed', dataNeeded, ' sementara paramCreate', data);
+    
 
     /** Panggil Api sekali yng belum diload */
     useEffect(()=>{
@@ -88,7 +89,7 @@ export default function JadwalMapelPageRoute() {
                 {
                     loading: `Memuat data yang dibutuhkan untuk Jadwal Mata Pelajaran di Kelas ${rombel}`,
                     success: (data) => {
-                        console.log('fetching dipanggil');
+                        
                         return 'Pemanggilan data telah selesai' ;//+ data?.source;
                     },
                     error: 'Gagal memuat data Absen',
@@ -118,7 +119,7 @@ export default function JadwalMapelPageRoute() {
             })
     
         }
-        console.log('state redux', st)
+        
     },
     [fetcher.state]);
         

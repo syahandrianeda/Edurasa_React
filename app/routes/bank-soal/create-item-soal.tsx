@@ -12,9 +12,7 @@ import { toast } from "sonner";
 import type { DataSheetNeeeded } from "~/domain/enloaded/data-sheet-needed-type";
 import DispatchingResponseToStore from "~/lib/dispatching-response-to-store";
 import getFaseByRombel from "~/lib/get-fase-by-rombel";
-import { defineProsemNeeded } from "~/domain/enloaded/intial-enloaded/by-route-page/kurikulum/prosem-needed";
 import { useAppSelector } from "~/context-reduct/hook";
-import { defineCpTpAtpNeeded } from "~/domain/enloaded/intial-enloaded/by-route-page/kurikulum/cp-needed";
 import { IndDbSiswaRepository } from "~/infrastructures/indexDb/db-datasiswa-repository";
 import { namaTab } from "~/lib/nama-tab-environment";
 import { getSessionRombel } from "~/infrastructures/session-storage/rombel-session";
@@ -65,6 +63,8 @@ export async function clientAction({ request }: Route.ActionArgs){
     /** jika paramReq meminta datasiswa, cegah dulu.  */
     const indexRequestDataSiswa = json.findIndex(s=>s.tab.toString().includes('datasiswa'));
     const requestWithoutDatasiswa = json.filter((_,i)=>i !== indexRequestDataSiswa);
+    
+    
     if(indexRequestDataSiswa > -1){
         const db = new IndDbSiswaRepository();
         const dbSiswa = await db.getAll();
@@ -157,7 +157,7 @@ export default function BankSoalRoute() {
         // <CreateItemSoalProvider dataImmer={dataBankSoalApp} actionImmer={setDataBankSoalApp}>
         <CreateItemSoalProvider initialData ={initialCreateItemSoal}>
             <CreateItemSoal/>
-            
+        
         </CreateItemSoalProvider>
     )
 }

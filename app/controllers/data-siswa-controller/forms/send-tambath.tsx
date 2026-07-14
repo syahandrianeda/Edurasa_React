@@ -45,9 +45,10 @@ export default function SendTambah(){
         if(respon.success){
             dispatch(setAllSiswa({
                 loaded:true,
-                allSiswa: respon.data as SiswaType[],
+                data: respon.data as SiswaType[],
                 source: respon?.source,
-                loading:false
+                loading:false,
+                name:'datasiswa'
             }))
 
             ShowToasterSuccess('Berhasil ditambahkan');

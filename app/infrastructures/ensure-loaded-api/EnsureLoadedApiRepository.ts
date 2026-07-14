@@ -14,6 +14,7 @@ export default class EnsureLoadedApiRepository extends AppScriptSheet implements
     
     async callNeeded(param: Record<string, any>): Promise<ApiResponse<Record<string, any>>[]> {
         const response =  await this.postBody(param);
+        
         return response.collections.map(this.responActionRead);
     }
 

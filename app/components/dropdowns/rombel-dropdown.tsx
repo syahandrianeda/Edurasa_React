@@ -58,7 +58,11 @@ export default function RombelDropdown(
                             {
                                 typeKelas==='rombel'?(
                                         <button onClick={()=>{
-                                                    dispatch(setFokusRombel({value:rombel.rombelName}));
+                                                    dispatch(setFokusRombel({
+                                                        value:rombel.rombelName,
+                                                        name:'fokusRombel',
+                                                        loaded:true
+                                                    }));
                                                     // localStorage.setItem('rombel',rombel.rombelName)
                                                     saveSessionRombel(rombel.rombelName);
                                                 }} 
@@ -68,7 +72,11 @@ export default function RombelDropdown(
                                         </button>
                                 ):(
                                     <button onClick={()=>{
-                                                    dispatch(setFokusRombel({value:rombel.rombelName}));
+                                                    dispatch(setFokusRombel({
+                                                        value:rombel.rombelName,
+                                                        name:'fokusRombel',
+                                                        loaded:true
+                                                    }));
                                                     // localStorage.setItem('rombel',rombel.rombelName)
                                                     saveSessionRombel(rombel.rombelName);
                                                 }} 

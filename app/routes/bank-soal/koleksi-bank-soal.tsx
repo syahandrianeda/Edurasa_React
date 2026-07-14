@@ -8,8 +8,8 @@ import { store } from "~/context-reduct/redux-provider";
 import { toast } from "sonner";
 import { setBankSoal } from "~/context-reduct/global-state/bank-soal/bank-soal-slice";
 import type { DataSheetNeeeded } from "~/domain/enloaded/data-sheet-needed-type";
-import { CreateItemSoalNeeded } from "~/domain/enloaded/intial-enloaded/by-route-page/banksoal/create-item-soal-needed";
 import DispatchingResponseToStore from "~/lib/dispatching-response-to-store";
+import { defineCreateItemSoalNeeded } from "~/domain/enloaded/intial-enloaded/by-route-page/banksoal/create-item-soal-needed";
 
 
 
@@ -67,56 +67,7 @@ export async function clientAction({ request }: Route.ActionArgs){
 
 export default function KoleksiBankSoalRoute() {
     
-    const fetcher = useFetcher<typeof clientAction>();
-    const st = store.getState();
-    const dataNeeded:DataSheetNeeeded[] = CreateItemSoalNeeded;
-    const data = useMemo(()=>{
-        return createParamEnloaded(st,dataNeeded)
-    }, [dataNeeded, createParamEnloaded]);
-    
-    console.log('state redux', st)
-    console.log(' data createParam', data);
-
-    /** Panggil Api sekali yng belum diload */
-    useEffect(()=>{
-        if (fetcher.state === "idle" && fetcher.data === null && data.needCall ) {
-            
-            toast.promise(
-                fetcher.submit({parameter:JSON.stringify(data.param)}, { method: "post" }),
-                {
-                    loading: 'Memuat data yang dibutuhkan Bank Soal...',
-                    success: () => {
-                        return 'Pemanggilan data telah selesai' ;//+ data?.source;
-                    },
-                    error: 'Gagal memuat data Absen',
-                    finally:()=>{
-                        /**=========================== 
-                         * jika butuh animasi loader atas, aktifkan ini. 
-                         *  tapi harus menempakan beberapa kode  di beberapa tempat
-                         * -----------------------------
-                                store.dispatch(setloadedApi({
-                                    loaded:false,name:'loaded_animation'
-                                }));
-                         * --------------------------*/
-                    }
-                }
-
-            )
-        }
-    },[data.needCall,fetcher.state]);
-
-    useEffect(()=>{
-        const dataFetch = fetcher.data ;
-        console.log('state redux', st)
-        if(dataFetch){
-            dataFetch.forEach(({success,data,detailResponse})=>{
-                detailResponse && DispatchingResponseToStore(success, data, detailResponse)
-            })
-    
-        }
-    },
-    [fetcher.data]);
-
+   
     return(
         <div className="p-1">
             Hello Koleksi Bank Soal

@@ -22,8 +22,7 @@ export default function ProsemPage(){
     const user = useAppSelector(state=>state.auth.user);
     const {value} = useFilterContext();
     const semester = value.semester?? currentTapelProperties({variant:'getSemester'}) as number ;
-    const test = useAppSelector(s=>s)
-    console.log('cek state reducx', test);
+    
     
     const promes = useMemo(()=>{
         const kaldik = ormKaldik;

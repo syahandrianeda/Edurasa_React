@@ -49,7 +49,8 @@ function CpUpdate({data, dataAsal}:{data:OrmKurikulumMerdekaType, dataAsal:curre
         const respon  = await actions.update(paramUpdate);
                 
                 dispatch(setloadedApi({
-                            loaded:true
+                            loaded:true,
+                            name:'loaded_animation'
                         }))
                 if(respon.success){
                     const raw = respon.data as ElemenCpType[];
@@ -60,7 +61,8 @@ function CpUpdate({data, dataAsal}:{data:OrmKurikulumMerdekaType, dataAsal:curre
                     ShowToasterError('Gagal Menyimpan Edit');
                 }
                 dispatch(setloadedApi({
-                                    loaded:false
+                                    loaded:false,
+                                    name:'loaded_animation'
                                 }))
     }
     return (
@@ -89,7 +91,8 @@ function CpDelete({data, dataAsal}:{data:OrmKurikulumMerdekaType, dataAsal:curre
         const respon  = await actions.update(paramUpdate);
                 
                 dispatch(setloadedApi({
-                            loaded:true
+                            loaded:true,
+                            name:'loaded_animation'
                         }))
                 if(respon.success){
                     const raw = respon.data as ElemenCpType[];
@@ -100,7 +103,8 @@ function CpDelete({data, dataAsal}:{data:OrmKurikulumMerdekaType, dataAsal:curre
                     ShowToasterError('Gagal Menyimpan Edit');
                 }
                 dispatch(setloadedApi({
-                                    loaded:false
+                                    loaded:false,
+                                    name:'loaded_animation'
                                 }))
     }
     return (

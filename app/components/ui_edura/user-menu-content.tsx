@@ -37,12 +37,17 @@ export function UserMenuContent({ user }: UserMenuContentProps) {
         localStorage.clear(); // kalau memang mau bersih total
         dispatch(
             setCredentials(
-                {user:null}
+                {user:null,
+                    name:'auth',loaded:false
+                }
             ),
         )
         dispatch(
             setFokusRombel(
-                {value:undefined}
+                {value:undefined,
+                    name:'fokusRombel',
+                    loaded:false
+                }
             )
         )
         dispatch(

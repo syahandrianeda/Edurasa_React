@@ -5,7 +5,7 @@ import { ApiErrors } from "~/infrastructures/http/api-errors";
 import DTOUser from "~/dtos/dto-user";
 import { clearSessionApp, saveSessionApp } from "~/infrastructures/session-storage/app-session";
 import { IndDbSiswaRepository } from "~/infrastructures/indexDb/db-datasiswa-repository";
-import { saveSessionRombel } from "~/infrastructures/session-storage/rombel-session";
+import { getSessionRombel, saveSessionRombel } from "~/infrastructures/session-storage/rombel-session";
 import { store } from "~/context-reduct/redux-provider";
 import { setCredentials } from "~/context-reduct/global-state/auth-slice";
 import { setFokusRombel } from "~/context-reduct/global-state/fokus-rombel-slice";
@@ -31,6 +31,13 @@ export type ApiResponseTunggal<T> = {
     data?: T
     error?: ApiError 
     source?:typeSourceFetch
+}
+export type ApiResponseGet<T>={
+    success:boolean, 
+    message?: string
+    response?:T,
+    errors?:ApiError,
+    
 }
 export type ApiResponse<T> = {
     success: boolean
@@ -164,29 +171,34 @@ export class AppScriptConfig {
         // return pos.data;
     }
     checkAkun(auth:Record<string, any>){
+        const rombel = getSessionRombel();
         if(auth){
             const {authenticated, data} = auth;
             if(authenticated){
                 const updateUser =  DTOUser.fromResponAkun(data);
                 saveSessionApp(updateUser);
                 /** test dulu */
-                // saveSessionRombel(updateUser.kelas_ampu[0]);
+                //jika rombel ada di rombel:
+                if(!updateUser.kelas_ampu.includes(rombel)) {
+
+                        store.dispatch(
+                            setFokusRombel({
+                                value: updateUser.kelas_ampu[0],
+                                name:'fokusRombel',
+                                loaded:true
+                            })
+                        );
+                        saveSessionRombel(updateUser.kelas_ampu[0]);
+                };
                         
-                //         store.dispatch(
-                //             setCredentials({
-                //                 user: updateUser,
-                //                 name:'auth',
-                //                 loaded:true
-                //             })
-                //         );
+                        store.dispatch(
+                            setCredentials({
+                                user: updateUser,
+                                name:'auth',
+                                loaded:true
+                            })
+                        );
                         
-                //         store.dispatch(
-                //             setFokusRombel({
-                //                 value: updateUser.kelas_ampu[0],
-                //                 name:'fokusRombel',
-                //                 loaded:true
-                //             })
-                //         );
             }
             /** else tidak pernah terpanggil 
                 else{
@@ -196,21 +208,21 @@ export class AppScriptConfig {
             */
         }else{
             clearSessionApp();
-            // store.dispatch(
-            //                 setCredentials({
-            //                     user: null,
-            //                     name:'auth',
-            //                     loaded:false
-            //                 })
-            //             );
+            store.dispatch(
+                            setCredentials({
+                                user: null,
+                                name:'auth',
+                                loaded:false
+                            })
+                        );
                         
-            //             store.dispatch(
-            //                 setFokusRombel({
-            //                     value:undefined,
-            //                     name:'fokusRombel',
-            //                     loaded:false
-            //                 })
-            //             );
+                        store.dispatch(
+                            setFokusRombel({
+                                value:undefined,
+                                name:'fokusRombel',
+                                loaded:false
+                            })
+                        );
         }
         
     }

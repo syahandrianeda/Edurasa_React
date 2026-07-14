@@ -14,7 +14,7 @@ export default function ButtonReloadAbsen(){
         
         const Service = new AbsensiServiceImplements();
         dispatch(setloadedApi({
-                            loaded:true
+                            loaded:true, name:'loaded_animation'
                         }));
         toast.promise(
             Service.refreshAbsensi(rombel??'1A'),
@@ -35,7 +35,7 @@ export default function ButtonReloadAbsen(){
                 error: 'Gagal memuat data Absen',
                 finally:()=>{
                     dispatch(setloadedApi({
-                            loaded:false
+                            loaded:false, name:'loaded_animation'
                         }));
                 }
             }

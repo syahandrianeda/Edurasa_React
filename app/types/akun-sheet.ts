@@ -1,5 +1,9 @@
 import type { AccesUser } from ".";
 
+export interface CredentialSheet{
+    username:string, 
+    password:string
+}
 export interface AkunSheet{
     Time_Stamp:string,
     // username:string,

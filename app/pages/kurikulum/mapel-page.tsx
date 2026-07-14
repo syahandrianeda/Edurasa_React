@@ -1,6 +1,4 @@
 import { useAppSelector } from "~/context-reduct/hook";
-import TableMapel from "~/controllers/mapel/tabels/tabel-mapel";
-import TableMapelCheckbox from "~/controllers/mapel/tabels/tabel-mapel-checkbox";
 import TableMapelOrm from "~/controllers/mapel/tabels/tabel-mapel-orm";
 import { currentTapel } from "~/lib/current-tapel";
 

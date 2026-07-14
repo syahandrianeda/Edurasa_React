@@ -4,9 +4,7 @@ import EnsureLoadedApiRepository from "./EnsureLoadedApiRepository";
 
 
 export default class EnsurLoadedApiService implements EnsureLoadedApiServiceInterface{
-    
     constructor(public repo =  new EnsureLoadedApiRepository()){}
-
     
     async callNeeded(paramSheet: Record<string, any>[]): Promise<ApiResponse<any>[]> {
         const auth = this.repo.dataAuth();
@@ -15,8 +13,9 @@ export default class EnsurLoadedApiService implements EnsureLoadedApiServiceInte
             source:JSON.stringify(paramSheet),
             auth
         }
+        
         const data =  await this.repo.callNeeded(param);
-        console.log('result callNeeded', data);
+        
         return data;
     }
 

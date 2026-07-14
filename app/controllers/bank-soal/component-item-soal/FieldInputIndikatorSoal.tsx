@@ -8,6 +8,7 @@ import { TaksonomiBloomInstance } from "~/context-reduct/selectores/taksonomi-se
 import { TextHighlighter } from "~/domain/text-highlighter/services/TextHighlighter";
 import TableWithScrolling from "~/components/tabels/table-with-scrolling";
 import { TdEdura, ThEdura, TRowEdura } from "~/components/tabels/tabel-components";
+import { Field } from "~/components/ui/field";
 
 export function FieldInputIndikatorSoal() {
     const { data, action } = useCreateItemSoalContext();
@@ -55,11 +56,15 @@ export function FieldInputIndikatorSoal() {
 
     return (
         <WrapperContentForm keyTitle="Indikator Soal">
-            <InputTextArea
-                label=""
-                value={indikator_soal}
-                onChange={(e) => onChangeInput(e.currentTarget.value)}
-            />
+            <Field orientation="horizontal">
+                <InputTextArea
+                    label=""
+                    value={indikator_soal}
+                    className="text-wrap"
+                    cols={15}
+                    onChange={(e) => onChangeInput(e.currentTarget.value)}
+                />
+            </Field>
 
             <div className="border my-1 rounded p-1 text-xs">
                 {analysis.segments.map((segment, index) => {

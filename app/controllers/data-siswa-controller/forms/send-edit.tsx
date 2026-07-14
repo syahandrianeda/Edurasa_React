@@ -29,7 +29,8 @@ export function SendEdit(){
             
             dispatch(setAllSiswa({
                 loaded:true,
-                allSiswa: respon.data as SiswaType[],
+                data: respon.data as SiswaType[],
+                name:'datasiswa',
                 source: respon?.source,
                 loading:false
             }))

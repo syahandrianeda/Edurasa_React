@@ -29,10 +29,14 @@ import type { KaldikType } from "~/types/kaldik";
 import { IndDbSiswaRepository } from "~/infrastructures/indexDb/db-datasiswa-repository";
 import { setTaksonomiBloom } from "~/context-reduct/global-state/taksonomi/taksonomi-slice";
 import type { TaksonomiSheetType } from "~/types/taksonomi/taksonomi-sheet";
+import { getSessionRombel } from "~/infrastructures/session-storage/rombel-session";
+import { setAbsensiRombel } from "~/context-reduct/global-state/absensi-slice";
+import type { AbsensiSiswaSheetType } from "~/types/absensi-siswa";
 
 
-export default function DispatchingResponseToStore(success:boolean, data:Record<string, any>[],detailResponse:Record<string,any>):void{
-    if(success){
+export default function DispatchingResponseToStore(success:boolean, data:Record<string, any>[],detailResponse:Record<string,any>, rombelAktif?:string):void{
+    // console.log('detail respons',detailResponse)
+    // if(success){
         // ga boleh ada trial-nya, karena namanya bakal ngefek ke bawah
         if(detailResponse?.namaTab === namaTab('mapel')){
             store.dispatch(setDataMapel(data as unknown as InterfaceMapelSheet[]));
@@ -116,7 +120,16 @@ export default function DispatchingResponseToStore(success:boolean, data:Record<
         if(detailResponse?.namaTab === namaTab('kalender')){
             store.dispatch(setKaldikArray(data as unknown as KaldikType[]))
         }
-    }
+
+        if(detailResponse?.namaTab === namaTab('kelas_'+rombelAktif)){
+                store.dispatch(setAbsensiRombel(
+                    {
+                        nama_rombel:rombelAktif ?? getSessionRombel(),
+                        data: detailResponse?.findTab?data as AbsensiSiswaSheetType[]:[]
+                    }
+                ))
+            
+        }
     
 
 }

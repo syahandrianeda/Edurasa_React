@@ -4,7 +4,7 @@ import type { TabsConfigProps } from "~/components/tabs/generate-tabs";
 import { TabConfigKopTtd } from "~/components/toolbars/config-default-toolbar";
 import { useFilterContext } from "~/components/toolbars/state-toolbar/state-toolbar";
 import { Field } from "~/components/ui/field";
-import { setFokusMapel } from "~/context-reduct/global-state/kurikulum/fokus-mapel-slice";
+import { setFokusMapel, type fokusMapel } from "~/context-reduct/global-state/kurikulum/fokus-mapel-slice";
 import { useAppDispatch, useAppSelector } from "~/context-reduct/hook";
 import { CurrentMapelInActiveRombel } from "~/context-reduct/selectores/mapel-rombel-selector";
 import { KoleksiMapel } from "~/domain/mapel/koleksi-mapel";
@@ -41,11 +41,14 @@ export function InfoToolbarAbsensiBulanan() {
             const fokus = mapelRombel?.find(s=>s.kode === e.currentTarget.value) as InterfaceMapel;
             
             // console.log('cek user di tab selectMapel', user?.kode_mapel_ampu, fokus.kode)
-            dispatch(setFokusMapel({
-                data:fokus,
-                disabled
-                // user?.roles !== "Guru Mapel"?true:false
-            }))
+            // dispatch(setFokusMapel(fokus))
+            const fokusMapelC:fokusMapel = {
+    data:fokus,
+    disabled,
+    name:'fokusMapel',
+    loaded:true
+}
+            dispatch(setFokusMapel(fokusMapelC))
         }
         useEffect(()=>{
             const fokus = user?.roles === 'Guru Mapel'?KoleksiMapel.find(s=>s.kode === user?.kode_mapel_ampu) as InterfaceMapel:KoleksiMapel.find(s=>s.kode === 'PKN') as InterfaceMapel;
@@ -55,7 +58,7 @@ export function InfoToolbarAbsensiBulanan() {
                 data:fokus,
                 disabled
                 // user?.roles !== "Guru Mapel"?true:false
-            }))
+            } as fokusMapel))
         },[user,KoleksiMapel])
     const { setValue, value } = useFilterContext()
     const handleChangeBulan = (

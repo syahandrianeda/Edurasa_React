@@ -15,6 +15,7 @@ export const DataMenu: typeKoleksiMenu[] = [
         routeName: "admin-panel",
         urlIcon: MenuIcons["admin-panel"],
         permission: 'view admin-panel',
+        
     },
     // {
     //     title: "Identitas Sekolah", 
@@ -27,6 +28,7 @@ export const DataMenu: typeKoleksiMenu[] = [
         routeName: "kesiswaan",
         urlIcon: MenuIcons["data-siswa"],
         permission: 'view data-siswa',
+        hasRoute:true
     },
     
     {
@@ -34,12 +36,14 @@ export const DataMenu: typeKoleksiMenu[] = [
         routeName: "absensi-siswa",
         urlIcon: MenuIcons["absensi-siswa"],
         permission: 'view absensi-siswa',
+        hasRoute:true
     },
     {
         title: "Kalender Pendidikan", 
         routeName: "kaldik",
         urlIcon: MenuIcons["kalender-pendidikan"],
         permission: 'view kaldik',
+        hasRoute:true
     },
     
     {
@@ -47,6 +51,7 @@ export const DataMenu: typeKoleksiMenu[] = [
         routeName: "kurikulum",
         urlIcon: MenuIcons["lg_hand_book"],
         permission: 'view kurikulum',
+        hasRoute:true
     },
     // {
     //     title: "Program Pembelajaran", 
@@ -66,6 +71,7 @@ export const DataMenu: typeKoleksiMenu[] = [
         routeName: "bank-soal",
         urlIcon: MenuIcons["banksoal"],
         permission: 'view bank-soal',
+        hasRoute:true
     },
     {
         title: "KBM Asesmen", 

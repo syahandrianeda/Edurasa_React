@@ -7,6 +7,7 @@ export default class AbsensiRepositoryImplements extends AppScriptSheet implemen
     constructor(){
         super(); 
     }
+    /**@deprecated */
     async loadAbsensiAndKaldik(): Promise<ApiResponse<Record<string, any>>[]> {
         const pushing = [this.paramSheetAbsensiJenjang,this.paramSheetKaldikTabKaldik];
         const auth = this.dataAuth();
@@ -19,6 +20,7 @@ export default class AbsensiRepositoryImplements extends AppScriptSheet implemen
         console.log('action absen', action);
         return action.collections.map(this.responActionRead);
     }
+    /**@deprecated */
     async refreshAbsensi(): Promise<ApiResponse<Record<string, any>>> {
         
         const action = await this.postBody(this.paramSheetAbsensiJenjang);
@@ -37,4 +39,5 @@ export default class AbsensiRepositoryImplements extends AppScriptSheet implemen
         const action = await this.postBody(this.paramSheetAbsensiJenjang);
         return this.responActionRead(action);
     }
+    
 }

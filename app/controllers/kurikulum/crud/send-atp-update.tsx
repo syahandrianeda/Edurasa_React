@@ -2,9 +2,7 @@ import ButtonDeleteAwesome from "~/components/button-awesome/delete-button";
 import ButtonSaveAwesome from "~/components/button-awesome/save-button";
 import { useModal } from "~/components/modals/modal-provider";
 import { useAppDispatch } from "~/context-reduct/hook";
-import type { faseMerdekaType, OrmAtp } from "~/types/kurikulum/kurikulum-type";
-import { useCrudTpFaseProvider } from "./crud-tp-fase-provider";
-import type { FaseKurikulumType } from "~/types/kurikulum/fase-kurikulum";
+import type { OrmAtp } from "~/types/kurikulum/kurikulum-type";
 import DTOAtp from "~/dtos/dto-atp";
 import type { AtpKurikulumSheetType, AtpKurikulumType } from "~/types/kurikulum/atp-kurikulum";
 import { setloadedApi } from "~/context-reduct/global-state/loaded-slice";
@@ -28,7 +26,7 @@ export default function SendAtpUpdate({mode, data}:{mode:'update'|'delete', data
         const respon  = await actions.update(dataAtp);
                 
                 dispatch(setloadedApi({
-                            loaded:state.isSubmitting
+                            loaded:state.isSubmitting, name:'loaded_animation'
                         }))
                 if(respon.success){
                     const raw = respon.data as AtpKurikulumType[];

@@ -3,12 +3,10 @@ import { Field, FieldLabel } from "~/components/ui/field";
 import { Switch } from "~/components/ui/switch";
 import { useAppSelector } from "~/context-reduct/hook";
 import { DtoSettingJadwalMapelSelector } from "~/context-reduct/selectores/setting-jadwal-mapel";
-import { useSettingAndJadwal } from "./use-setting-and-jadwal";
 import { OrmMapelSelector } from "~/context-reduct/selectores/mapel-rombel-selector";
 import { jadwalPelajaranAppSelector } from "~/context-reduct/selectores/jadwal-pelajaran-selector";
 import { useEffect, useMemo } from "react";
-import type { settingJadwalApp } from "~/types/setting_jadwal/setting_jadwal";
-import { useFilterContext } from "~/components/toolbars/state-toolbar/state-toolbar";
+import { useFilterContext,  } from "~/components/toolbars/state-toolbar/state-toolbar";
 import BtnSaveSettingJadwal from "../../crud/btn-save-setting-jadwal";
 import { useSettingAndJadwalRefactor } from "./use-setting-and-jadwal-refactor";
 import type { UserPtk } from "~/types";
@@ -21,7 +19,7 @@ export default function MainSettingJadwal(){
     const rombel = useAppSelector(state=>state.fokusRombel.value??'1A');
     const user = useAppSelector(state=>state.auth.user);
     
-    const {setValue, value} = useFilterContext<settingJadwalApp>();
+    const {setValue, value} = useFilterContext();
     const mapel = useMemo(()=>{
             return mapelSelector.mapelRombelUnique()??[];
         }, [mapelSelector,rombel]);
@@ -57,7 +55,7 @@ export default function MainSettingJadwal(){
                                 dataJadwal:dataPresentation,
                                 hariAktif: hariAktif,
                                 namaHari:NAMA_HARI_LABEL
-                            }
+                            }  
             })
         }
     },[settingJadwal,dataPresentation]);

@@ -28,7 +28,7 @@ export default function UseDocxEdura({fileName}:OptionsEduraWord){
 
         try{
             dispatcher(setloadedApi({
-                loaded:true
+                loaded:true, name:'loaded_animation'
             }));
             /** parsing element html ke data yang diinginkan */
             const parsedHtml = await ParsingPrintArea(element);
@@ -37,7 +37,7 @@ export default function UseDocxEdura({fileName}:OptionsEduraWord){
             await exportDocx(doc, fileName ?? "document.docx")
         }finally{
             dispatcher(setloadedApi({
-                loaded:false
+                loaded:false, name:'loaded_animation'
             }));
         }
 

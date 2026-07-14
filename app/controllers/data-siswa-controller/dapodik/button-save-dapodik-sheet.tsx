@@ -18,19 +18,21 @@ export default function ButtonSaveDapodikSheet({formDapodik}:{formDapodik:Record
             
         }
         dispatch(setloadedApi({
-            loaded:true
+            loaded:true,name:'loaded_animation'
         }))
         const data = await service.saveAllDapodik(paramUpdate);
         
         if(data?.success){
-            dispatch(setSiswaDapodik({
-                siswaDapodik : data?.data as unknown as SiswaDapodikAppToSheet[]  //as SiswaDapodikAppToSheet[]
-            }));
+            dispatch(setSiswaDapodik(data?.data as unknown as SiswaDapodikAppToSheet[]))
+            // dispatch(setSiswaDapodik({
+            //     siswaDapodik : data?.data as unknown as SiswaDapodikAppToSheet[]  //as SiswaDapodikAppToSheet[],
+                
+            // }));
             ShowToasterSuccess('Berhasil disimpan');
         }
         
         dispatch(setloadedApi({
-            loaded:false
+            loaded:false, name:'loaded_animation'
         }))
     }
     return (

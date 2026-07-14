@@ -6,18 +6,20 @@ import { getNumberFromString } from "~/lib/get-number";
 import { dataURLToFile, encodeFileToBase64, isImageFile } from "~/domain/image/file-uploader";
 import { resizeImageForUpload } from "~/domain/image/image-resizer";
 
+
 export default class AbsensiServiceImplements implements AbsensiServiceInterface{
     constructor(public repo = new AbsensiRepositoryImplements()){}
-
+    /**@deprecated */
     async loadAbsensiAndKaldik(rombel:string): Promise<ApiResponse<Record<string, any>>[]> {
         const jenjang = getNumberFromString(rombel);
         
         this.repo.paramSheetKaldikTabKaldik = {};
         
-        this.repo.CreateParamSheetAbsensiJenjang(jenjang,{filter:JSON.stringify({kelas:rombel})})
+        this.repo.CreateParamSheetAbsensiRombel(rombel,{filter:JSON.stringify({kelas:rombel})})
         
         return await this.repo.loadAbsensiAndKaldik()
     }
+    /**@deprecated */
     async refreshAbsensi(rombel: string): Promise<ApiResponse<Record<string, any>>> {
         const jenjang = getNumberFromString(rombel);
         
@@ -25,7 +27,16 @@ export default class AbsensiServiceImplements implements AbsensiServiceInterface
         return await this.repo.refreshAbsensi()
     }
     /** useCrud Provider */
-
+    
+    async loadAbsensiAndKaldikRombel(rombel:string): Promise<ApiResponse<Record<string, any>>[]> {
+        const jenjang = getNumberFromString(rombel);
+        
+        this.repo.paramSheetKaldikTabKaldik = {};
+        
+        const sheetAbsenTabKelas = this.repo.CreateParamSheetAbsensiRombel(rombel,{filter:JSON.stringify({kelas:rombel})})
+        
+        return await this.repo.postBody(this.repo.paramSheetKaldikTabKaldik)
+    }
     
     async uploadFile(file:File, options?:Record<string, any>): Promise<any>{
         let finalFile = file;

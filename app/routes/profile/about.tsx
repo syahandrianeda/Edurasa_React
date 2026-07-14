@@ -1,5 +1,5 @@
-import { useAppStore } from "~/context-reduct/hook";
 import type { Route } from "./+types/index-redirect";
+import ProfileUser from "~/pages/profile/profile-user";
 
 export function meta({matches}: Route.MetaArgs) {
     const rootMeta = matches.find(m => m?.id === 'root')?.meta;
@@ -25,17 +25,14 @@ export function clientLoader({}:Route.ComponentProps){
     return {
         titleTambahan:'Profile',
         // controlKelas: settingRombel,
-        toolbarTabs: undefined,//ConfigToolbarSelectMapel
-        showExport:false
+        // toolbarTabs: ConfigToolbarSelectMapel,
+        showExport:true
     };
 }
-export function clientAction({ request }: Route.ClientActionArgs){
-    const store = useAppStore()
-    console.log('store', store)
-}
+
 export default function ProfileRoute() {
     
     return(
-        <p>Hello Profile</p>
+        <ProfileUser/>
     )
 }

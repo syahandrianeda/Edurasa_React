@@ -1,6 +1,4 @@
 import type { ApiResponse } from "~/configs/appscript-config";
-import type { RootState } from "~/context-reduct/store";
-import type { Store } from "@reduxjs/toolkit";
 
 export default interface EnsureLoadedApiRepositoryInterface{
     // stateRedux: Store<RootState>

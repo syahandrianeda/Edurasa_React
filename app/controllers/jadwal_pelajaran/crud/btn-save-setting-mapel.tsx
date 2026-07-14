@@ -16,7 +16,7 @@ export default function BtnSaveSettingMapel({data}:{data:any}){
         const dto = DtoJadwalPelajaranTable.sebararanMapelToSheet(data);
         console.log('save jadwal app', data, dto);
         dispatch(setloadedApi({
-                    loaded:true
+                    loaded:true, name:'loaded_animation'
                 }));
         const respon = await actions.update(dto);
         if(respon.success){
@@ -27,7 +27,7 @@ export default function BtnSaveSettingMapel({data}:{data:any}){
             ShowToasterError('Gagal diupdate');
         }
         dispatch(setloadedApi({
-            loaded:false
+            loaded:false, name:'loaded_animation'
         }));
     }
     return (

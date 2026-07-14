@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { MatchResult } from "~/domain/taksonomi";
+import type { MatchResult, Taksonomi } from "~/domain/taksonomi";
 
 import { TextHighlighter } from "~/domain/text-highlighter/services/TextHighlighter";
 
@@ -19,7 +19,7 @@ describe("TextHighlighter", () => {
                     kko: "mengidentifikasi",
                     type: "C2",
                     LK: "LK2",
-                },
+                } ,
             },
         ];
 
@@ -107,7 +107,7 @@ describe("TextHighlighter", () => {
                             kko: "identifikasi",
                             type: "C1",
                             LK: "LK1",
-                        },
+                        } as Taksonomi,
                     },
                 ],
             },

@@ -68,6 +68,7 @@ export interface typeKoleksiMenu {
     routeName: string;
     urlIcon: string|LucideIcon;
     permission?: string;
+    hasRoute?:boolean
 }
 
 export interface FeatureType {

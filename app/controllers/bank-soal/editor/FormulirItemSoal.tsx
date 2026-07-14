@@ -51,6 +51,7 @@ export default function FormulirItemSoal({description,bentukSoal}:{description:s
                 <FieldInfoTp/>
                 <FieldInfoCp/>
             </div>
+            <div className="border fixed print:hidden bg-sky-300 bottom-5 md:bottom-0 w-216 flex justify-center">Disinii footer</div>
         </>
     )
 }

@@ -15,7 +15,7 @@ export default function BtnSaveSettingJadwal({data}:{data:settingJadwalApp}){
         const dto = DtoSettingJadwalMapel.toSheet(data);
         console.log('save setting jadwal app', data, '\r\n dto to sheet', dto);
         dispatch(setloadedApi({
-            loaded:true
+            loaded:true, name:'loaded_animation'
         }));
         const respon = await actions.update(dto);
         if(respon.success){
@@ -26,7 +26,7 @@ export default function BtnSaveSettingJadwal({data}:{data:settingJadwalApp}){
             ShowToasterError('Gagal diupdate');
         }
         dispatch(setloadedApi({
-            loaded:false
+            loaded:false, name:'loaded_animation'
         }));
     }   
     return (

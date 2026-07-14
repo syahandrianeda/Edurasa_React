@@ -55,7 +55,7 @@ const TabelJadwalPelajaran = memo(function TabelJadwalPelajaran() {
                                     </TdEdura>
                                 ) :
                                 hariAktif.map(hari => (
-                                    <TdEdura key={hari} className="text-center align-baseline">
+                                    <TdEdura key={hari} className="text-center text-wrap align-middle">
                                         {row[hari]}
                                         </TdEdura>
                                 ))

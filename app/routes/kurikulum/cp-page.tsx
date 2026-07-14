@@ -8,11 +8,12 @@ import { useFetcher } from "react-router";
 import { createParamEnloaded} from "~/infrastructures/ensure-loaded-api/create-param-loaded";
 import { toast } from "sonner";
 import type { DataSheetNeeeded } from "~/domain/enloaded/data-sheet-needed-type";
-import {  defineCpNeeded, defineCpTpAtpNeeded } from "~/domain/enloaded/intial-enloaded/by-route-page/kurikulum/cp-needed";
+import {   defineCpTpAtpNeeded } from "~/domain/enloaded/intial-enloaded/by-route-page/kurikulum/cp-needed";
 import { useAppSelector } from "~/context-reduct/hook";
 import DispatchingResponseToStore from "~/lib/dispatching-response-to-store";
 import getFaseByRombel from "~/lib/get-fase-by-rombel";
 import { getSessionRombel } from "~/infrastructures/session-storage/rombel-session";
+import { store } from "~/context-reduct/redux-provider";
 
 
 export function meta({matches}: Route.MetaArgs) {
@@ -67,7 +68,7 @@ export async function clientAction({ request }: Route.ActionArgs){
 export default function CpPageRoute({loaderData}:Route.ComponentProps) {
     const fetcher = useFetcher<typeof clientAction>();
     const isSubmitting = useRef(false);
-    const st = useAppSelector(state => state);
+    const st = store.getState();
     const rombel = useAppSelector(state=> state.fokusRombel.value);//st.fokusRombel.value;
     const dataNeeded:DataSheetNeeeded[] = defineCpTpAtpNeeded(rombel??getSessionRombel());
     

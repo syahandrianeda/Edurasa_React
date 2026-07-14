@@ -3,12 +3,12 @@ import { useEffect } from "react";
 
 import KesiswaanServiceImplements from "~/infrastructures/services/kesiswaan-service-implements";
 import RedirectUpdateSiswa from "~/pages/redirect-update-siswa";
-import { TopProgressBarFetch } from "~/components/ui_edura/top-progress-bar";
+
 import { useFetcher, useNavigate } from "react-router";
 import { ConfigUpdateDataSiswa } from "~/controllers/data-siswa-controller/update-siswa/config-toolbar-update-siswa";
 import { useAppDispatch } from "~/context-reduct/hook";
 import { setloadedApi } from "~/context-reduct/global-state/loaded-slice";
-import { setAllSiswa } from "~/context-reduct/global-state/siswa-slice";
+import { setAllSiswa, type DataSiswa } from "~/context-reduct/global-state/siswa-slice";
 import type { SiswaType } from "~/types/siswa";
 
 export function meta({matches}: Route.MetaArgs) {
@@ -59,7 +59,7 @@ export default function UpdateDataSiswaRoute({actionData}:Route.ComponentProps) 
             });
             
                 dispatch(setloadedApi({
-                    loaded:true
+                    loaded:true, name:'loaded_animation'
                 }))
         }
     }, [fetcher]);
@@ -70,14 +70,14 @@ export default function UpdateDataSiswaRoute({actionData}:Route.ComponentProps) 
             dispatch(
                 setAllSiswa({
                     loaded:true,
-                    allSiswa: fetcher.data?.data as SiswaType[],
+                    data: fetcher.data?.data as SiswaType[],
                     source: fetcher.data?.source,
                     loading:false
-                })
+                } as  DataSiswa<SiswaType>)
             );
             dispatch(
                 setloadedApi({
-                    loaded:false
+                    loaded:false, name:'loaded_animation'
                 })
             );
 

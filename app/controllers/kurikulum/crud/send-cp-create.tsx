@@ -32,7 +32,7 @@ export default function SendCpCreate({data}:{data:ElemenCpType}){
         const respon  = await actions.update(paramUpdate);
                 
                 dispatch(setloadedApi({
-                            loaded:true
+                            loaded:true, name:'loaded_animation'
                         }))
                 if(respon.success){
                     const raw = respon.data as ElemenCpType[];
@@ -43,7 +43,7 @@ export default function SendCpCreate({data}:{data:ElemenCpType}){
                     ShowToasterError('Gagal Menyimpan Edit');
                 }
                 dispatch(setloadedApi({
-                                    loaded:false
+                                    loaded:false, name:'loaded_animation'
                                 }))
     }
     return (

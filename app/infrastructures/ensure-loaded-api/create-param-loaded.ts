@@ -1,6 +1,7 @@
 import type { RootState } from '../../context-reduct/store'
 import AppScriptSheet, { type ParamRequestAppScript } from '~/configs/appscript-sheet'
 import type { DataSheetNeeeded } from '../../domain/enloaded/data-sheet-needed-type';
+import type { dataAbsensiTypeSlice } from '~/context-reduct/global-state/absensi-slice';
 
 /** 
  * - ditempatkan bersamaan dengan toolbar 
@@ -16,8 +17,9 @@ export interface ResultParamEnloade{
     unStated:DataSheetNeeeded[], 
     param:ParamRequestAppScript[],
     needCall:boolean,
-    stateNotLaoded:Record<string, any>, 
-    notProvidedState :DataSheetNeeeded[]
+    stateNotLaoded:Record<string, any>[], 
+    notProvidedState :DataSheetNeeeded[],
+    dataAbsensiKelasIni?:dataAbsensiTypeSlice
 }
 export  function createParamEnloaded(state:RootState , data:DataSheetNeeeded[]=[]):ResultParamEnloade{
 
@@ -34,9 +36,23 @@ export  function createParamEnloaded(state:RootState , data:DataSheetNeeeded[]=[
 
 
     const notProvidedState = data.filter(s=>KeyOfState.findIndex(k=>k.name === namaTab(s.tab)) === -1);
+    /** untuk sheet absensi, state redux hanya menyediakan `name=absensi`, 
+     * jadi, request data sheet dan tab ini harus tetap dipanggil 
+     *  */
+    const notProvidedAbsensiState = notProvidedState.filter(s=>s.sheet ==='absensi');
+
+    /**data absensi per kelas itu berada di dalam `notProviderAbsensiState` */
+    const dataAbsensiKelasIni =  state.absensiSiswa.dataAbsensi.find(s=>s.nama_rombel == state.fokusRombel.value);
+
     const stateNotLaoded = KeyOfState.filter(s=>!s.loaded);
-    /** carikan data yang belum diloaded oleh state dari `DataSheetNeed` */
-    const unStated = data.filter(s=>KeyOfState.findIndex(k=>k.name === namaTab(s.tab) && !k.loaded)>-1);
+    /** carikan data yang belum diloaded oleh state dari `DataSheetNeed` 
+     * Jika dataAbsensiIndi ditemukan, janagan masuk
+    */
+    const unStated = dataAbsensiKelasIni ? 
+                    data.filter(s=>KeyOfState.findIndex(k=>k.name === namaTab(s.tab) && !k.loaded)>-1)
+                    .filter(ss=>notProvidedAbsensiState.map(m=>m.sheet).includes(ss.sheet))
+                    :
+                    [...notProvidedAbsensiState, ...data.filter(s=>KeyOfState.findIndex(k=>k.name === namaTab(s.tab) && !k.loaded)>-1)];
     /** buat parameter untuk AppScript */
     const param:ParamRequestAppScript[]=[];
    
@@ -54,5 +70,5 @@ export  function createParamEnloaded(state:RootState , data:DataSheetNeeeded[]=[
     const needCall = param.length>0;
     // console.log({KeyOfState, idss:AppSheet.sheetKurikulum}, shouldBeCall, testFindIndex)
 
-    return {unStated, needCall,param,stateNotLaoded, notProvidedState }
+    return {unStated, needCall,param,stateNotLaoded, notProvidedState, dataAbsensiKelasIni }
 }

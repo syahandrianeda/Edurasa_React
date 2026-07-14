@@ -13,6 +13,7 @@ import DispatchingResponseToStore from "~/lib/dispatching-response-to-store";
 import getFaseByRombel from "~/lib/get-fase-by-rombel";
 import { defineProsemNeeded } from "~/domain/enloaded/intial-enloaded/by-route-page/kurikulum/prosem-needed";
 import { getSessionRombel } from "~/infrastructures/session-storage/rombel-session";
+import { store } from "~/context-reduct/redux-provider";
 
 export function meta({matches}: Route.MetaArgs) {
     const rootMeta = matches.find(m => m?.id === 'root')?.meta;
@@ -63,7 +64,7 @@ export async function clientAction({ request }: Route.ActionArgs){
 export default function ProgramSemesterRoutePage({loaderData}: Route.ComponentProps) {
     const fetcher = useFetcher<typeof clientAction>();
     const isSubmitting = useRef(false);
-    const st = useAppSelector(state => state);
+    const st = store.getState();
     const rombel = useAppSelector(state=> state.fokusRombel.value);//st.fokusRombel.value;
     const dataNeeded:DataSheetNeeeded[] = defineProsemNeeded(rombel??getSessionRombel());
     
@@ -71,7 +72,7 @@ export default function ProgramSemesterRoutePage({loaderData}: Route.ComponentPr
         return createParamEnloaded(st,dataNeeded)
     }, [ dataNeeded, st]);
     
-    console.log('dataNeed', dataNeeded, ' sementara paramCreate', data);
+    
 
     /** Panggil Api sekali yng belum diload */
     useEffect(()=>{
@@ -86,7 +87,7 @@ export default function ProgramSemesterRoutePage({loaderData}: Route.ComponentPr
                 {
                     loading: `Memuat data yang dibutuhkan Program Semester di Kelas ${rombel} / fase ${getFaseByRombel(rombel??getSessionRombel())}`,
                     success: (data) => {
-                        console.log('fetching dipanggil');
+                        
                         return 'Pemanggilan data telah selesai' ;//+ data?.source;
                     },
                     error: 'Gagal memuat data Absen',
@@ -116,7 +117,7 @@ export default function ProgramSemesterRoutePage({loaderData}: Route.ComponentPr
             })
     
         }
-        console.log('state redux', st)
+        
     },
     [fetcher.state]);
     

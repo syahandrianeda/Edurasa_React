@@ -30,12 +30,13 @@ export default function SendAbsen({stateType}:{stateType:ModalType}){
         }
         
         dispatch(setloadedApi({
-                    loaded:true
+                    loaded:true,
+                    name:'loaded_animation'
                 }))
         const respon  = await absenCrud.update(argService);
         
         dispatch(setloadedApi({
-            loaded:false
+            loaded:false, name:'loaded_animation'
         }));
         
         if(respon.success){

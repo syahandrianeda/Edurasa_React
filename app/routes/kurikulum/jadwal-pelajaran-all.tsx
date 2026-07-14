@@ -8,9 +8,9 @@ import { useFetcher } from "react-router";
 import { createParamEnloaded} from "~/infrastructures/ensure-loaded-api/create-param-loaded";
 import { toast } from "sonner";
 import type { DataSheetNeeeded } from "~/domain/enloaded/data-sheet-needed-type";
-import { useAppSelector } from "~/context-reduct/hook";
 import DispatchingResponseToStore from "~/lib/dispatching-response-to-store";
 import { JadwalPelajaranNeeded } from "~/domain/enloaded/intial-enloaded/by-route-page/kurikulum/jadwal-pelajaran-needed";
+import { store } from "~/context-reduct/redux-provider";
 
 export function meta({matches}: Route.MetaArgs) {
     const rootMeta = matches.find(m => m?.id === 'root')?.meta;
@@ -62,15 +62,14 @@ export async function clientAction({ request }: Route.ActionArgs){
 export default function JadwalMapelPageRoute() {
     const fetcher = useFetcher<typeof clientAction>();
     const isSubmitting = useRef(false);
-    const st = useAppSelector(state => state);
+    const st =store.getState();
     const dataNeeded:DataSheetNeeeded[] = JadwalPelajaranNeeded;
     
     const data = useMemo(()=>{
         return createParamEnloaded(st,dataNeeded)
     }, [ dataNeeded, st]);
     
-    console.log('dataNeed', dataNeeded);
-    console.log(' sementara paramCreate', data);
+    
 
     /** Panggil Api sekali yng belum diload */
     useEffect(()=>{
@@ -85,7 +84,7 @@ export default function JadwalMapelPageRoute() {
                 {
                     loading: `Memuat data yang dibutuhkan untuk Semua Jadwal Mata Pelajaran di Semua Kelas`,
                     success: (data) => {
-                        console.log('fetching dipanggil');
+                        
                         return 'Pemanggilan data telah selesai' ;//+ data?.source;
                     },
                     error: 'Gagal memuat data Absen',
@@ -115,7 +114,7 @@ export default function JadwalMapelPageRoute() {
             })
     
         }
-        console.log('state redux', st)
+        
     },
     [fetcher.state]);
         

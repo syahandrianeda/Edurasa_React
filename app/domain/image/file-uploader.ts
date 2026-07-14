@@ -7,6 +7,9 @@ export interface EncodedFile {
     extension: string
 }
 
+export function isImageFileType(file: File): boolean {
+    return !!file.type && file.type.startsWith("image/");
+}
 export async function encodeFileToBase64(
     file: File
 ): Promise<EncodedFile> {
@@ -34,7 +37,7 @@ function readFileAsBase64(file: File): Promise<string> {
         reader.readAsDataURL(file);
     });
 }
-const IMAGE_MIME = ["image/jpeg","image/jpg", "image/png", "image/webp"];
+export const IMAGE_MIME = ["image/jpeg","image/jpg", "image/png", "image/webp"];
 
 export function isImageFile(file: File): boolean {
     return IMAGE_MIME.includes(file.type);

@@ -9,7 +9,7 @@ export default function IconMenu({menus}:{menus:typeKoleksiMenu[]}){
                     <div key={index} className="relative flex justify-center items-center overflow-hidden group ">
                         <Link to={`/${item.routeName}`} role="button">
                             <img src={item.urlIcon as string} className="rounded-full bg-radial-[at_50%_75%] from-sky-200 via-blue-400 to-sky-500 to-90% bg-cover  size-20 overflow-visible group-hover:scale-105 grayscale-75 group-hover:grayscale-0 transition-all duration-100 ease-linear"/>
-                            <div className="rounded-full bg-green-500 h-3 w-3 text-center text-small absolute top-0 right-0"></div>
+                            <div className={`rounded-full ${item.hasRoute?'bg-green-500':'bg-gray-500'} h-3 w-3 text-center text-small absolute top-0 right-0`}></div>
                             {item.title.split(' ')[1] && (
                                 <div className="absolute bg-linear-65 from-[#E45A92] to-purple-500 text-small text-white p-0 mb-2 leading-3 rotate-x-15 -rotate-y-30 text-center bottom-0 left-0 md:left-0 text-[12px] translate-y-1 rounded-4xl w-full  md:group-hover:-left-30 transition-all duration-500 ease-linear">{item.title.split(' ')[1]}</div>
                             )}

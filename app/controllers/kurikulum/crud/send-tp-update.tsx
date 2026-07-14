@@ -34,7 +34,7 @@ export default function SendTpUpdate({mode, data}:{mode:'update'|'delete', data:
         const respon  = await actions.update(dataFase);
                 
                 dispatch(setloadedApi({
-                            loaded:true
+                            loaded:true, name:'loaded_animation'
                         }))
                 if(respon.success){
                     const raw = respon.data as FaseKurikulumType[];
@@ -53,7 +53,8 @@ export default function SendTpUpdate({mode, data}:{mode:'update'|'delete', data:
                     ShowToasterError('Gagal Menyimpan Edit');
                 }
                 dispatch(setloadedApi({
-                                    loaded:false
+                                    loaded:false,
+                                    name:'loaded_animation'
                                 }))
     }
     if(mode==='delete'){

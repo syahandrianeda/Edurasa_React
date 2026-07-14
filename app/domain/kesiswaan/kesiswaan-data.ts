@@ -268,7 +268,7 @@ export default class KesiswaanData{
             
             return (keluar >= start && masuk <= end);
         }
-            ).sort((a,b)=>a.masuk_tgl.getTime()-b.masuk_tgl.getTime());
+            ).sort((a,b)=>a.masuk_tgl?.getTime()-b.masuk_tgl?.getTime());
         
         /** jika bulan juli, maka data ditambahkan dengan siswa yang aktif dibulan juli */
             if(bulan.getMonth() === 6){

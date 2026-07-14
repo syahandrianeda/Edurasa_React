@@ -37,13 +37,14 @@ export default function SendEditKaldik(){
         const respon  = await actionCrud.update(paramUpdate);
         
         dispatch(setloadedApi({
-                    loaded:true
+                    loaded:true, name:'loaded_animation'
                 }))
         if(respon.success){
             const raw = respon.data as KaldikType[];
             dispatch(setKaldik({
                 loaded:true,
-                data:raw
+                data:raw,
+                name:'kalender'
             }));
             ShowToasterSuccess('Berhasil diupdate');
             actionModal.close();
@@ -51,7 +52,7 @@ export default function SendEditKaldik(){
             ShowToasterError('Gagal Menyimpan Edit');
         }
         dispatch(setloadedApi({
-                            loaded:false
+                            loaded:false, name:'loaded_animation'
                         }))
 
     } 

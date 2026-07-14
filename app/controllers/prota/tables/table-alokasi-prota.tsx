@@ -145,7 +145,7 @@ export default function TableAlokasiWaktuProta({prota}:{prota:DataAtpAsProtaEdit
                 })),
         ];
         
-        dispatch(setloadedApi({ loaded: true }));
+        dispatch(setloadedApi({ loaded: true, name:'loaded_animation' }));
         const respon = await actions.update(dataToSend);
         console.log('prota respon',respon)
         if (respon.success) {
@@ -155,7 +155,7 @@ export default function TableAlokasiWaktuProta({prota}:{prota:DataAtpAsProtaEdit
         } else {
             ShowToasterError('Gagal diupdate');
         }
-        dispatch(setloadedApi({ loaded: false }));
+        dispatch(setloadedApi({ loaded: false, name:'loaded_animation' }));
     }
     
     return (

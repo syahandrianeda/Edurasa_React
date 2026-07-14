@@ -20,6 +20,7 @@ const loadedApiSlice = createSlice({
         setloadedApi(state, action: PayloadAction<loadedApiType>) {
         state.loaded = action.payload.loaded
         // state.token = action.payload.token
+        state.name = 'loaded_animation'
         },
         
     },

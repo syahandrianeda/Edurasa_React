@@ -1,6 +1,5 @@
 import { useAppSelector } from "~/context-reduct/hook";
 import { PropertyKurikulumMapelAktifSelector } from "~/context-reduct/selectores/kurmer-selector";
-import ButtonAddTp from "~/controllers/kurikulum/modals/button-add-tp";
 import TableFaseTp from "~/controllers/kurikulum/tabels/tabel-tp";
 import { currentTapel } from "~/lib/current-tapel";
 

@@ -49,10 +49,13 @@ export default function SubBankSoalLayout({matches}:Route.ComponentProps) {
                                     <ModalFiturKurikulum/>
                                 </ModalProvider>
                             </PrintAreaWithKopTtd>
+                            
                         </ToolbarLayout>
                     </ToolbarKopTtdProvider>
                 </ToolbarFilterProvider>
             </AppWorkplace>
+                
+            
         </AppSidebar>
     )
 }   

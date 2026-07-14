@@ -23,7 +23,8 @@ const fokusMapel = createSlice({
     reducers:{
         setFokusMapel(state, action:PayloadAction<fokusMapel>){
             state.data = action.payload.data
-            state.disabled = action.payload.disabled
+            state.disabled = action.payload.disabled,
+            state.name = 'fokusMapel'
         }
     }
 });

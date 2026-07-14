@@ -1,4 +1,6 @@
-export const getNumberFromString = (value: string): number  => {
+export const getNumberFromString = (value: unknown): number => {
+    if (typeof value !== "string") return 1;
+
     const match = value.match(/\d+/);
     return match ? Number(match[0]) : 1;
 };

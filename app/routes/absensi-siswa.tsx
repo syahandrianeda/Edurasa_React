@@ -1,4 +1,3 @@
-import AbsensiSiswaPage from "~/pages/absensi-siswa";
 import type { Route } from "./+types/absensi-siswa";
 import type { controlDropdownKelas } from "~/components/dropdowns/rombel-dropdown";
 import { Navigate } from "react-router";

@@ -29,7 +29,9 @@ export default function ButtonSetAsProfile({siswa, data}:{siswa?:SiswaType, data
             
             dispatch(setAllSiswa({
                 loaded:true,
-                allSiswa: respon.data as SiswaType[],
+                // data: respon.data as SiswaType[],
+                data:respon.data as SiswaType[],
+                name:'datasiswa',
                 source: respon?.source,
                 loading:false
             }))

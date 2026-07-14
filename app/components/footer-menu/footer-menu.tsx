@@ -37,12 +37,12 @@ export default function FooterMenuEdura(){
         localStorage.clear(); // kalau memang mau bersih total
         dispatch(
             setCredentials(
-                {user:null}
+                {user:null,name:'auth',loaded:false}
             ),
         )
         dispatch(
             setFokusRombel(
-                {value:undefined}
+                {value:undefined,name:'fokusRombel',loaded:false}
             )
         )
         dispatch(
@@ -91,7 +91,7 @@ export default function FooterMenuEdura(){
                     </div>
                     {!user ? (
                         <>
-                            <div className="flex gap-1 text-sm focus-visible:ring-0">
+                            <div className="flex gap-1 text-sm focus-visible:ring-0 flex-col">
                                 <button onClick={()=>handleToggle('profile')}  aria-label="Toggle profile">
                                     <span className="self-center">Gabung</span>
                                     <span className="rounded-full w-8 h-8 align-center p-1 rotate-145 text-sm bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white">
@@ -179,7 +179,10 @@ export default function FooterMenuEdura(){
                                     </div>
                                 </>
                             ):(
-                                <div className='bg-sky-200'>Yuk Login</div>
+                                <>
+                                <div className='text-2xl font-bold'>Yuk Login</div>
+                                <Link to='/login' className='items-center justify-center gap-[0.5em] rounded-full bg-sky-700 px-[2em] py-0 text-white shadow-[inset_0px_-4px_4px_0px_var(--color-sky-600),0px_0px_4px_1px_var(--color-sky-100),0px_4px_0px_0px_var(--color-sky-800)] duration-250 hover:translate-y-[0.25em] active:translate-y-[0.5em] active:shadow-[inset_0px_-4px_4px_0px_var(--color-sky-600),1px_0px_2px_1px_#f9d1d1]'>Ke Login</Link>
+                                </>
                             )
                         }
                     </div>

@@ -1,7 +1,7 @@
-import { useEffect } from "react";
+// import { useEffect } from "react";
 import { Outlet, redirect } from "react-router";
-import InitNeededSliceStore from "~/context-reduct/bootstrap/init-needeed-store";
-import { useAppSelector, useAppStore } from "~/context-reduct/hook";
+// import InitNeededSliceStore from "~/context-reduct/bootstrap/init-needeed-store";
+// import { useAppSelector, useAppStore } from "~/context-reduct/hook";
 import { CrudAtpProvider } from "~/controllers/kurikulum/crud/crud-atp-provider";
 import { CrudElemenCpProvider } from "~/controllers/kurikulum/crud/crud-elemen-cp-provider";
 import { CrudMapelRombel } from "~/controllers/mapel/crud/crud-mapelrombel-provider";
@@ -29,8 +29,8 @@ export function clientLoader(){
     return page;
 }
 export default function CrudKurikulumLayout() {
-    const store = useAppStore();
-    const user = useAppSelector(state => state.auth.user);
+    // const store = useAppStore();
+    // const user = useAppSelector(state => state.auth.user);
     const service = new MapelRombelServiceImplements();
     const serviceElemen = new ElemenCpServiceImplements();
     const serviceTpFase = new FaseTpServiceImplements();
@@ -40,14 +40,14 @@ export default function CrudKurikulumLayout() {
     const serviceSebaranJadwal = new JadwalMapelServiceImplements();
     const serviceProta = new ProtaServiceImplements();
     
-    useEffect(()=>{
-        if(!user) return 
+    // useEffect(()=>{
+    //     if(!user) return 
         
-        // const initRedux = new InitNeededSliceStore(store);
-        // initRedux.needSiswa(serviceSiswa);
-        // initRedux.needKurikulum(service); 
+    //     // const initRedux = new InitNeededSliceStore(store);
+    //     // initRedux.needSiswa(serviceSiswa);
+    //     // initRedux.needKurikulum(service); 
         
-    },[user])
+    // },[user])
     
     return (
         <CrudMapelRombel service={service}>

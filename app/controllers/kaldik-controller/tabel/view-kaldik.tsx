@@ -27,7 +27,7 @@ export function ViewKaldik({
     
     if(isBottomKeterangan){
         return (
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                 { 
                     dataKaldikSemester.map(({namaBulan, tahun, data, dataKeterangan},index)=>(
                         <div className="h-full flex flex-col justify-between gap-2" key={index}>
@@ -55,7 +55,7 @@ export function ViewKaldik({
         )
     }else{
         return (
-            <div className="grid grid-cols-4">
+            <div className="grid md:grid-cols-4 print:grid-cols-4">
                 { 
                     dataKaldikSemester.map(({namaBulan, tahun, data, dataKeterangan},index)=>(
                         <PreviewKaldikModalNonSetting

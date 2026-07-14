@@ -123,10 +123,15 @@ export default class InitNeededSliceStore{
             }
         );
     }
+
+    /**@deprecated */
     async needAbsensiAndKaldik(rombel:string, Service:AbsensiServiceImplements){
         
-        if(this.state.kaldik.loaded && this.state.absensiSiswa.dataAbsensi.find(s=>s.nama_rombel === rombel)) return;
-        
+        if(
+            this.state.kaldik.loaded && 
+            this.state.absensiSiswa.dataAbsensi.find(s=>s.nama_rombel === rombel)
+        ) return;
+        console.log('state', this.state.kaldik, this.state.absensiSiswa)
         this.store.dispatch(setloadedApi({
                 loaded:true,name:'loaded_animation'
             }));
