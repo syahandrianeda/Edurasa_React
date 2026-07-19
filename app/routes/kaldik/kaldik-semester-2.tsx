@@ -2,6 +2,7 @@ import type { controlDropdownKelas } from "~/components/dropdowns/rombel-dropdow
 import KaldikSemesterPage from "~/pages/kaldik/kaldik-semester";
 import type { Route } from "./+types/kaldik-semester-2";
 import { ConfigToolbarKaldikSemester } from "~/controllers/kaldik-controller/toolbar/config-kaldik-semester";
+import { sheetKaldik_kalender } from "~/domain/enloaded/intial-enloaded/by-sheet/kaldik";
 
 export function meta({matches}: Route.MetaArgs) {
     const rootMeta = matches.find(m => m?.id === 'root')?.meta;
@@ -36,6 +37,9 @@ export async function clientLoader({}:Route.ComponentProps){
         data: [], // data: data, 
         toolbarTabs: ConfigToolbarKaldikSemester,
         controlKelas: settingRombel,
+        pesanLoading:'Mempersiapkan kaldik semester 2',
+        // addPesanRombel:{isAdd:true, type:'rombel', includeFaseName:false},
+        sheetNeeded: [sheetKaldik_kalender]
     };
 }
 

@@ -2,6 +2,7 @@ import type { controlDropdownKelas } from "~/components/dropdowns/rombel-dropdow
 import type { Route } from "./+types/statistik-umur";
 import StatistikUmurPage from "~/pages/statistik-umur";
 import { ConfigToolbarStatistikUmur } from "~/controllers/data-siswa-controller/statistik/statistik-umur";
+import { sheetAkun_dataSiswa } from "~/domain/enloaded/intial-enloaded/by-sheet/akun";
 
 export function meta({matches}: Route.MetaArgs) {
     const rootMeta = matches.find(m => m?.id === 'root')?.meta;
@@ -33,7 +34,10 @@ export async function clientLoader({}:Route.ComponentProps){
         titleTambahan: 'Statistik Umur', 
         data: [], // data: data, 
         toolbarTabs: ConfigToolbarStatistikUmur,
-        controlKelas: settingRombel
+        controlKelas: settingRombel,
+        pesanLoading:'Mempersiapkan Data Statistik Umur',
+        addPesanRombel:{isAdd:true, type:'rombel', includeFaseName:false},
+        sheetNeeded: [sheetAkun_dataSiswa]
     };
 }
 

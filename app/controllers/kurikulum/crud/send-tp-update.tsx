@@ -9,6 +9,8 @@ import { ShowToasterError, ShowToasterSuccess } from "~/lib/toaster";
 import ButtonSaveAwesome from "~/components/button-awesome/save-button";
 import { Loader } from "lucide-react";
 import ButtonDeleteAwesome from "~/components/button-awesome/delete-button";
+import DispatchingResponseToStore from "~/lib/dispatching-response-to-store";
+import { Row } from "node_modules/react-day-picker/dist/esm";
 
 export default function SendTpUpdate({mode, data}:{mode:'update'|'delete', data:OrmFaseKurikulumType}){
     const dispatch = useAppDispatch();
@@ -36,26 +38,20 @@ export default function SendTpUpdate({mode, data}:{mode:'update'|'delete', data:
                 dispatch(setloadedApi({
                             loaded:true, name:'loaded_animation'
                         }))
-                if(respon.success){
-                    const raw = respon.data as FaseKurikulumType[];
-                    if(data.fase_name === 'A'){
-                        dispatch(setKurmerTpFaseA(raw));
-                    }
-                    if(data.fase_name === 'B'){
-                        dispatch(setKurmerTpFaseB(raw));
-                    }
-                    if(data.fase_name === 'C'){
-                        dispatch(setKurmerTpFaseC(raw));
-                    }
-                    ShowToasterSuccess('Berhasil diupdate');
-                    actionModal.close();
-                }else{
-                    ShowToasterError('Gagal Menyimpan Edit');
-                }
-                dispatch(setloadedApi({
-                                    loaded:false,
-                                    name:'loaded_animation'
-                                }))
+        const {success, data:dataAtpRespon, detailResponse} = respon
+        if(success){
+            if(detailResponse){
+                DispatchingResponseToStore(success, dataAtpRespon as unknown as FaseKurikulumType[], detailResponse,)
+            }
+                ShowToasterSuccess('Berhasil diupdate');
+                actionModal.close();
+        }else{
+            ShowToasterError('Gagal Menyimpan Edit');
+        }
+        dispatch(setloadedApi({
+                            loaded:false,
+                            name:'loaded_animation'
+                        }))
     }
     if(mode==='delete'){
         return (

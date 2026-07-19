@@ -154,6 +154,7 @@ export class AppScriptConfig {
             }else{
                 // console.log('post body TIDAK memanggil Auth pada action', param.action);
             }
+            
             return pos.data;
         }catch(error){
             

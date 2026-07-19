@@ -15,8 +15,7 @@ export function clientLoader({}:Route.ComponentProps){
     return page;
 }
 
-export default function AppLayout({loaderData}:Route.ComponentProps) {
-    
+export default function AppLayout({loaderData, matches}:Route.ComponentProps) {
     
 
     return (

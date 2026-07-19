@@ -9,6 +9,7 @@ import { useCrudTpFaseProvider } from "./crud-tp-fase-provider";
 import { ShowToasterError, ShowToasterSuccess } from "~/lib/toaster";
 import ButtonSaveAwesome from "~/components/button-awesome/save-button";
 import { Loader } from "lucide-react";
+import DispatchingResponseToStore from "~/lib/dispatching-response-to-store";
 
 export default function SendTpCreate({data}:{ data:OrmFaseKurikulumType}){
     const dispatch = useAppDispatch();
@@ -34,22 +35,17 @@ export default function SendTpCreate({data}:{ data:OrmFaseKurikulumType}){
                 dispatch(setloadedApi({
                             loaded:true,name:'loaded_animation'
                         }))
-                if(respon.success){
-                    const raw = respon.data as FaseKurikulumType[];
-                    if(data.fase_name === 'A'){
-                        dispatch(setKurmerTpFaseA(raw));
-                    }
-                    if(data.fase_name === 'B'){
-                        dispatch(setKurmerTpFaseB(raw));
-                    }
-                    if(data.fase_name === 'C'){
-                        dispatch(setKurmerTpFaseC(raw));
-                    }
-                    ShowToasterSuccess('Berhasil diupdate');
-                    actionModal.close();
-                }else{
-                    ShowToasterError('Gagal Menyimpan Edit');
-                }
+        const {success, data:dataAtpRespon, detailResponse} = respon
+        if(success){
+            if(detailResponse){
+                DispatchingResponseToStore(success, dataAtpRespon as unknown as FaseKurikulumType[], detailResponse,)
+            }
+                ShowToasterSuccess('Berhasil diupdate');
+                actionModal.close();
+        }else{
+            ShowToasterError('Gagal Menyimpan Edit');
+        }
+        
                 dispatch(setloadedApi({
                                     loaded:false, name:'loaded_animation'
                                 }))

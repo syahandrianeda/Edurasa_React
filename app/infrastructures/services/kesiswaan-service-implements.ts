@@ -50,10 +50,80 @@ export default class KesiswaanServiceImplements implements KesiswaanServiceInter
     }
 
     async update(param:Record<string, any>): Promise<ApiResponse<SiswaType>> {
+        const parameter = {
+            data:JSON.stringify([param]),
+            key_match:'id',
+            key_index:'id',
+            action:'upsert',
+            schema:JSON.stringify({
+                    id:'number',
+                    masuk_tgl:'date',
+                    keluar_tgl:'date',
+                    nis:'string',
+                    nisn:'string',
+                    pd_tanggallahir:'date',
+                    dapo_tahunlahirayah:'date',
+                    dapo_tahunlahiribu:'date',
+                    dapo_beratbadan:'number',
+                    dapo_tinggibadan:'number',
+                    dapo_lingkarkepala:'number',
+                    dapo_jumlahsaudarakandung:'number',
+                    dapo_jarakrumahkesekolah:'number',
+                    pdb_tgl:'date',
+                    keluar_tgl2:'date',
+                    tanggalijazahtk:'date',
+                }),
 
-        return await this.repo.update(param);
+        }
+        
+        return await this.repo.update(parameter);
     }
     async create(param:Record<string, any>): Promise<ApiResponse<SiswaType>> {
-        return await this.repo.create(param);
+        /**
+         *   const paramUpdate = {
+            data: JSON.stringify(param),
+            key_match:'idbaris',
+            key_index:'idbaris',
+            schema:JSON.stringify({
+                idbaris:'number',
+                sn:'number',
+                sl:'number',
+                rb:'number',
+                km:'number',
+                jm:'number',
+                sb:'number'
+                // kelase:'string'
+            }),
+            action:'upsert'
+        }
+         */
+        const parameter = {
+            data:JSON.stringify(param),
+            key_match:'id',
+            key_index:'id',
+            action:'upsert',
+            
+            schema:JSON.stringify({
+                    id:'number',
+                    masuk_tgl:'date',
+                    keluar_tgl:'date',
+                    nis:'string',
+                    nisn:'string',
+                    pd_tanggallahir:'date',
+                    dapo_tahunlahirayah:'date',
+                    dapo_tahunlahiribu:'date',
+                    dapo_beratbadan:'number',
+                    dapo_tinggibadan:'number',
+                    dapo_lingkarkepala:'number',
+                    dapo_jumlahsaudarakandung:'number',
+                    dapo_jarakrumahkesekolah:'number',
+                    pdb_tgl:'date',
+                    keluar_tgl2:'date',
+                    tanggalijazahtk:'date',
+                }),
+
+        }
+        return await this.repo.create(parameter)
+        // return await this.repo.create(param);
     }
 }

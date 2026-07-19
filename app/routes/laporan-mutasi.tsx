@@ -2,6 +2,7 @@ import type { controlDropdownKelas } from "~/components/dropdowns/rombel-dropdow
 import type { Route } from "./+types/laporan-mutasi";
 import MutasiLaporanMutasiPage from "~/pages/mutasi-laporan-mutasi";
 import { ConfigToolbarLaporan, ConfigToolbarMutasi } from "~/controllers/data-siswa-controller/config-toolbar";
+import { sheetAkun_dataSiswa } from "~/domain/enloaded/intial-enloaded/by-sheet/akun";
 
 export function meta({matches}: Route.MetaArgs) {
     const rootMeta = matches.find(m => m?.id === 'root')?.meta;
@@ -33,7 +34,10 @@ export async function clientLoader({}:Route.ComponentProps){
         titleTambahan: 'Laporan Mutasi', 
         data: [], // data: data, 
         toolbarTabs: ConfigToolbarLaporan,
-        controlKelas: settingRombel
+        controlKelas: settingRombel,
+        pesanLoading:'Mempersiapkan Data Laporan Mutasi',
+        addPesanRombel:{isAdd:true, type:'rombel', includeFaseName:false},
+        sheetNeeded: [sheetAkun_dataSiswa]
     };
 }
 

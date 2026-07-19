@@ -13,8 +13,8 @@ export default function TableAtp(){
     const data = useAppSelector(PropertyKurikulumMapelAktifSelector);
     const {actions} = useModal<OrmAtp>();
     const dataGroup = useMemo(()=>{
-        return data && groupByOriginalOrder(data.currentFase?.elemen_cp, (m)=>m.elemen)
-    },[data]);
+        return data.currentFase && groupByOriginalOrder(data.currentFase?.elemen_cp, (m)=>m.elemen)
+    },[data.currentFase]);
     
     const ActionTriggerAddAtp:TriggerTable<OrmFaseKurikulumType>[] = [
         {

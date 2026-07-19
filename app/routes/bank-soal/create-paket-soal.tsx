@@ -1,6 +1,7 @@
 import type { controlDropdownKelas } from "~/components/dropdowns/rombel-dropdown";
 import type { Route } from "./+types/create-paket-soal";
 import ImportSoalPage from "~/controllers/bank-soal/import-soal/page/import-soal";
+import { defineCreateItemSoalNeeded } from "~/domain/enloaded/intial-enloaded/by-route-page/banksoal/create-item-soal-needed";
 
 
 export function meta({matches}: Route.MetaArgs) {
@@ -35,7 +36,10 @@ export function clientLoader({}:Route.ComponentProps){
         titleTambahan:'Buat Paket Soal',
         controlKelas: settingRombel,
         toolbarTabs: undefined,//ConfigToolbarSelectMapel,
-        showExport:false
+        showExport:false,
+                        // pesanLoading:'Mempersiapkan ATP',
+                        addPesanRombel:{isAdd:true, type:'rombel', includeFaseName:true},
+                        sheetNeeded: defineCreateItemSoalNeeded
     };
 }
 

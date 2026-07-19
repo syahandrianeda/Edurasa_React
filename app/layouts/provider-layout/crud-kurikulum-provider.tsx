@@ -31,11 +31,11 @@ export function clientLoader(){
 export default function CrudKurikulumLayout() {
     // const store = useAppStore();
     // const user = useAppSelector(state => state.auth.user);
+    const serviceSiswa = new KesiswaanServiceImplements();
     const service = new MapelRombelServiceImplements();
     const serviceElemen = new ElemenCpServiceImplements();
     const serviceTpFase = new FaseTpServiceImplements();
     const serviceAtp = new AtpServiceImplements();
-    const serviceSiswa = new KesiswaanServiceImplements();
     const serviceSettingJadwal = new SettingJadwalService();
     const serviceSebaranJadwal = new JadwalMapelServiceImplements();
     const serviceProta = new ProtaServiceImplements();

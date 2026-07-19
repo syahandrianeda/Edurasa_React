@@ -2,6 +2,7 @@ import type { controlDropdownKelas } from "~/components/dropdowns/rombel-dropdow
 import { ConfigToolbarKeteranganKaldik } from "~/controllers/kaldik-controller/toolbar/config-toolbar-kaldik";
 import type { Route } from "../+types/kaldik";
 import KeteranganKaldikPage from "~/pages/kaldik/keterangan-kaldik";
+import { sheetKaldik_kalender } from "~/domain/enloaded/intial-enloaded/by-sheet/kaldik";
 
 
 export function meta({matches}: Route.MetaArgs) {
@@ -36,7 +37,10 @@ export async function clientLoader({}:Route.ComponentProps){
         titleTambahan: 'Setting Kalender', 
         data: [], // data: data, 
         toolbarTabs: ConfigToolbarKeteranganKaldik,
-        controlKelas: settingRombel
+        controlKelas: settingRombel, 
+        pesanLoading:'Mempersiapkan data Setting',
+        // addPesanRombel:{isAdd:true, type:'rombel', includeFaseName:false},
+        sheetNeeded: [sheetKaldik_kalender]
     };
 }
 

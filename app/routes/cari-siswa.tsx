@@ -2,6 +2,7 @@ import type { controlDropdownKelas } from "~/components/dropdowns/rombel-dropdow
 import type { Route } from "./+types/cari-siswa";
 import CariSiswaPage from "~/pages/cari-siswa";
 import { ConfigToolCariSiswa } from "~/controllers/data-siswa-controller/cari-siswa/config-toolbar-cari-siswa";
+import { sheetAkun_dataSiswa } from "~/domain/enloaded/intial-enloaded/by-sheet/akun";
 
 export function meta({matches}: Route.MetaArgs) {
     const rootMeta = matches.find(m => m?.id === 'root')?.meta;
@@ -33,7 +34,10 @@ export async function clientLoader({}:Route.ComponentProps){
         titleTambahan: 'Cari Siswa', 
         data: [], // data: data, 
         toolbarTabs: ConfigToolCariSiswa,
-        controlKelas: settingRombel
+        controlKelas: settingRombel,
+        pesanLoading:'Mempersiapkan Data Pencarian',
+        // addPesanRombel:{isAdd:true, type:'rombel', includeFaseName:false},
+        sheetNeeded: [sheetAkun_dataSiswa]
     };
 }
 

@@ -31,7 +31,7 @@ export default function SwitchChartSemester(
                             
                             {
                                 dataSemester.map((dataItem,index)=>(
-                                    <div className="w-fit text-start">
+                                    <div className="w-fit text-start" key={index}>
                                         <StatisticPieSIAChart title={`Bulan ${dataItem.dateRefrence?.toLocaleString('id-ID',{month:'long', year:'numeric'})}`} dataRefrence={dataItem} />
                                     </div>
 

@@ -1,6 +1,8 @@
-import type { Route } from "./+types/absensi-siswa";
+
 import type { controlDropdownKelas } from "~/components/dropdowns/rombel-dropdown";
 import { Navigate } from "react-router";
+import type { Route } from "./+types/absensi-siswa";
+import { defineAbsenRombelNeeded } from "~/domain/enloaded/intial-enloaded/by-route-page/absensi/absensi-needed";
 
 export function meta({matches}: Route.MetaArgs) {
     const rootMeta = matches.find(m => m?.id === 'root')?.meta;
@@ -31,7 +33,10 @@ export function clientLoader({}:Route.ComponentProps){
 
     return {
         titleTambahan:'Hari ini',
-        controlKelas: settingRombel
+        controlKelas: settingRombel,
+        pesanLoading:'Memanggil Data Absen Hari ini',
+        addPesanRombel:{isAdd:true, type:'rombel', includeFaseName:false},
+        sheetNeeded:defineAbsenRombelNeeded
     };
 }
 

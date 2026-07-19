@@ -40,6 +40,7 @@ export function groupByOriginalOrder<T, K extends string | number>(
     array: T[],
     keyGetter: (item: T) => K
 ): Record<K, T[]> {
+    // if (!array) return {}
     const grouped = groupBy(array, keyGetter);
     const orderedKeys: K[] = [];
     const seen = new Set<K>();

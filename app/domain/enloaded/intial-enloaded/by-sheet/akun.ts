@@ -4,3 +4,4 @@ import type { DataSheetNeeeded } from "../../data-sheet-needed-type";
 const sheet= 'user';
 
 export const sheetAkun_dataSiswa:DataSheetNeeeded = {sheet, tab: namaTab('datasiswa')};
+export const sheetAkun_dapodik:DataSheetNeeeded = {sheet, tab: namaTab('dapodik')};

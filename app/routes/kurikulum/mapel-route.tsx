@@ -51,77 +51,15 @@ export function clientLoader({}:Route.ComponentProps){
     return {
         titleTambahan:'Mata Pelajaran',
         controlKelas: settingRombel,
-        toolbarTabs: ConfigToolbarMapel
+        toolbarTabs: ConfigToolbarMapel,
+        pesanLoading:'Mempersiapkan Mata Pelajaran',
+        addPesanRombel:{isAdd:true, type:'rombel', includeFaseName:false},
+        sheetNeeded: mapelNeeded
     };
 }
 
-export async function clientAction({ request }: Route.ActionArgs){
-    const instCall  = new EnsurLoadedApiService();
-    const paramReq = ((await request.formData()).get('parameter'));
-    const json = JSON.parse(paramReq as string);
-    const data = await instCall.callNeeded(json);
-    return data
-}
-
-
 export default function MapelPageRoute() {
-    const fetcher = useFetcher<typeof clientAction>();
-    const isSubmitting = useRef(false);
-    const st = store.getState();
-    const rombel = useAppSelector(state=> state.fokusRombel.value);
-    const dataNeeded:DataSheetNeeeded[] = mapelNeeded;
     
-    const data = useMemo(()=>{
-        return createParamEnloaded(st,dataNeeded)
-    }, [ dataNeeded, st]);
-    
-    
-    /** Panggil Api sekali yng belum diload */
-    useEffect(()=>{
-        if (fetcher.state !== "idle") return;
-        if (!data.needCall) return;
-        if (isSubmitting.current) return;
-
-        isSubmitting.current = true;
-
-            toast.promise(
-                fetcher.submit({parameter:JSON.stringify(data.param)}, { method: "post" }),
-                {
-                    loading: `Memuat data yang dibutuhkan untuk Setting Mata Pelajaran di Kelas ${rombel}`,
-                    success: (data) => {
-                        
-                        return 'Pemanggilan data telah selesai' ;//+ data?.source;
-                    },
-                    error: 'Gagal memuat data Absen',
-                    finally:()=>{
-                        /**=========================== 
-                         * jika butuh animasi loader atas, aktifkan ini. 
-                         *  tapi harus menempakan beberapa kode  di beberapa tempat
-                         * -----------------------------
-                                store.dispatch(setloadedApi({
-                                    loaded:false,name:'loaded_animation'
-                                }));
-                        * --------------------------*/
-                    }
-                }
-
-            )
-    },[data.needCall, data.param, fetcher.state]);
-
-    useEffect(()=>{
-        const dataFetch = fetcher.data ;
-        isSubmitting.current = false;
-        if(dataFetch){
-            dataFetch.forEach(({success,data,detailResponse})=>{
-                if(detailResponse){
-                    DispatchingResponseToStore(success,data,detailResponse)
-                }
-            })
-    
-        }
-        
-    },
-    [fetcher.state]);
     
     return(
         <MapelPage/>

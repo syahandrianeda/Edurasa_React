@@ -11,6 +11,7 @@ import { setKurmerCp } from "~/context-reduct/global-state/kurikulum/kurmer-slic
 import { ShowToasterError, ShowToasterSuccess } from "~/lib/toaster";
 import { Loader } from "lucide-react";
 import { PropertyKurikulumMapelAktifSelector } from "~/context-reduct/selectores/kurmer-selector";
+import DispatchingResponseToStore from "~/lib/dispatching-response-to-store";
 
 export default function SendCpUpdate({mode, data}:{mode:'update'|'delete', data:OrmKurikulumMerdekaType}){
     const dataasal = useAppSelector(PropertyKurikulumMapelAktifSelector);
@@ -52,18 +53,21 @@ function CpUpdate({data, dataAsal}:{data:OrmKurikulumMerdekaType, dataAsal:curre
                             loaded:true,
                             name:'loaded_animation'
                         }))
-                if(respon.success){
-                    const raw = respon.data as ElemenCpType[];
-                    dispatch(setKurmerCp(raw));
-                    ShowToasterSuccess('Berhasil diupdate');
-                    actionModal.close();
-                }else{
-                    ShowToasterError('Gagal Menyimpan Edit');
-                }
-                dispatch(setloadedApi({
-                                    loaded:false,
-                                    name:'loaded_animation'
-                                }))
+        const {success, data:dataAtpRespon, detailResponse} = respon
+        if(success){
+            if(detailResponse){
+                DispatchingResponseToStore(success, dataAtpRespon as unknown as ElemenCpType[], detailResponse,)
+            }
+                ShowToasterSuccess('Berhasil diupdate');
+                actionModal.close();
+        }else{
+            ShowToasterError('Gagal Menyimpan Edit');
+        }
+                
+        dispatch(setloadedApi({
+                            loaded:false,
+                            name:'loaded_animation'
+                        }))
     }
     return (
         <ButtonSaveAwesome onClick={onSubmit} className="px-2 py-1" labelButton="Simpan">{state.isSubmitting && <Loader size={12} className="animate-spin self-center"/>}</ButtonSaveAwesome>

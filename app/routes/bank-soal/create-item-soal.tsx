@@ -51,106 +51,15 @@ export function clientLoader({}:Route.ComponentProps){
         controlKelas: settingRombel,
         toolbarTabs: ConfigToolbarDesainPraSoal,//ConfigToolbarSelectMapel
         showExport:true,
+                // pesanLoading:'Mempersiapkan ATP',
+                addPesanRombel:{isAdd:true, type:'rombel', includeFaseName:true},
+                sheetNeeded: defineCreateItemSoalNeeded
     };
 }
 
 
-export async function clientAction({ request }: Route.ActionArgs){
-    const instCall  = new EnsurLoadedApiService();
-    const paramReq = ((await request.formData()).get('parameter'));
-    const json = JSON.parse(paramReq as string) as Record<string, any>[];
-    
-    /** jika paramReq meminta datasiswa, cegah dulu.  */
-    const indexRequestDataSiswa = json.findIndex(s=>s.tab.toString().includes('datasiswa'));
-    const requestWithoutDatasiswa = json.filter((_,i)=>i !== indexRequestDataSiswa);
-    
-    
-    if(indexRequestDataSiswa > -1){
-        const db = new IndDbSiswaRepository();
-        const dbSiswa = await db.getAll();
-        const dbTanpaSiswa = await instCall.callNeeded(requestWithoutDatasiswa);
-
-        if(dbSiswa.length>0){
-            /** panggil request tanpa tab `datasiswa` */;
-            const output = {
-                data: dbSiswa,
-                success: true,
-                detailResponse: {
-                    namaTab:namaTab('datasiswa')
-                },
-                source:'indexDB'
-            }
-            return [...dbTanpaSiswa, output]
-        }
-    }
-    // const data = await instCall.callNeeded(json);
-    const data = await instCall.callNeeded(json);
-
-    return data
-}
-
 export default function BankSoalRoute() {
-    const fetcher = useFetcher<typeof clientAction>();
-    const isSubmitting = useRef(false);
-    const st = store.getState();
-    const rombel = useAppSelector(state=> state.fokusRombel.value);//st.fokusRombel.value;
-    // const rombel = st.fokusRombel.value;
-    const dataNeeded:DataSheetNeeeded[] = defineCreateItemSoalNeeded(rombel??getSessionRombel());
     
-    const data = useMemo(()=>{
-        return createParamEnloaded(st,dataNeeded)
-    }, [ dataNeeded, st]);
-    
-    
-
-    /** Panggil Api sekali yng belum diload */
-    useEffect(()=>{
-        if (fetcher.state !== "idle") return;
-        if (!data.needCall) return;
-        if (isSubmitting.current) return;
-
-        isSubmitting.current = true;
-
-            toast.promise(
-                fetcher.submit({parameter:JSON.stringify(data.param)}, { method: "post" }),
-                {
-                    loading: `Memuat data yang dibutuhkan Bank Soal di Kelas ${rombel} / fase ${getFaseByRombel(rombel??getSessionRombel())}`,
-                    success: (data) => {
-                        
-                        return 'Pemanggilan data telah selesai' ;//+ data?.source;
-                    },
-                    error: 'Gagal memuat data Absen',
-                    finally:()=>{
-                        /**=========================== 
-                         * jika butuh animasi loader atas, aktifkan ini. 
-                         *  tapi harus menempakan beberapa kode  di beberapa tempat
-                         * -----------------------------
-                                store.dispatch(setloadedApi({
-                                    loaded:false,name:'loaded_animation'
-                                }));
-                        * --------------------------*/
-                    }
-                }
-
-            )
-    },[data.needCall, data.param, fetcher.state]);
-
-    useEffect(()=>{
-        const dataFetch = fetcher.data ;
-        
-        isSubmitting.current = false;
-        if(dataFetch){
-            dataFetch.forEach(({success,data,detailResponse})=>{
-                if(detailResponse){
-                    DispatchingResponseToStore(success,data,detailResponse)
-                }
-            })
-    
-        }
-        
-    },
-    [fetcher.state]);
-        
         
 
     return(

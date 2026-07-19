@@ -3,6 +3,7 @@ import { ConfigToolbarMutasi } from "~/controllers/data-siswa-controller/config-
 import type { controlDropdownKelas } from "~/components/dropdowns/rombel-dropdown";
 import type { Route } from "../+types/root";
 import MutasiKeluarPage from "~/pages/mutasi-keluar";
+import { sheetAkun_dataSiswa } from "~/domain/enloaded/intial-enloaded/by-sheet/akun";
 
 export function meta({matches}: Route.MetaArgs) {
     const rootMeta = matches.find(m => m?.id === 'root')?.meta;
@@ -34,7 +35,10 @@ export async function clientLoader({}:Route.ComponentProps){
         titleTambahan: 'Mutasi Keluar', 
         data: [], // data: data, 
         toolbarTabs: ConfigToolbarMutasi,
-        controlKelas: settingRombel
+        controlKelas: settingRombel,
+        pesanLoading:'Mempersiapkan Data Mutasi Keluar',
+        addPesanRombel:{isAdd:true, type:'rombel', includeFaseName:false},
+        sheetNeeded: [sheetAkun_dataSiswa]
     };
 }
 

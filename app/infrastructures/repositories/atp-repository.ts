@@ -21,7 +21,7 @@ export default class AtpRepository extends AppScriptSheet implements AtpReposito
                 foreignkey_elemencp:'number',
                 //idbaris	foreignkey_elemencp	
                 foreignkey_tp:'number',
-                // kelase:'string'
+                kelas:'string'
             }),
             action:'upsert'
         }

@@ -42,7 +42,6 @@ export default function MainSettingMapel() {
     } = useSettingAndJadwalRefactor(
         allDataSettingJadwal,
         sebaranTabelJadwal,
-        
         mapel,
         pembiasaan,
         rombel,

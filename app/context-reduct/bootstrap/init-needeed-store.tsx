@@ -11,7 +11,7 @@ import { setKaldik, setLoadedKaldik } from "../global-state/kaldik-slice";
 import type AbsensiServiceImplements from "~/infrastructures/services/absensi-service-implements";
 import { setAbsensiRombel } from "../global-state/absensi-slice";
 import type { AbsensiSiswaSheetType } from "~/types/absensi-siswa";
-import { setKurmerAtp, setKurmerCp, setKurmerTpFaseA, setKurmerTpFaseB, setKurmerTpFaseC } from "../global-state/kurikulum/kurmer-slice";
+// import { setKurmerAtp, setKurmerCp, setKurmerTpFaseA, setKurmerTpFaseB, setKurmerTpFaseC } from "../global-state/kurikulum/kurmer-slice";
 import type { ElemenCpType } from "~/types/kurikulum/elemen-cp";
 import type { FaseKurikulumType } from "~/types/kurikulum/fase-kurikulum";
 import type { AtpKurikulumType } from "~/types/kurikulum/atp-kurikulum";

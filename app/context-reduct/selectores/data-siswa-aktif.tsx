@@ -127,10 +127,10 @@ export interface validationType {
     };
   }
 
-const isValidNis = (nis?: string) =>
+export const isValidNis = (nis?: string) =>
   typeof nis === "string" && /^\d{9}$/.test(nis);//nis.trim().length >= 4;
 
-const isValidNisn = (nisn?: string) =>
+export const isValidNisn = (nisn?: string) =>
   typeof nisn === "string" && /^\d{10}$/.test(nisn);
 
 export const selectSiswaWithValidation = createSelector(

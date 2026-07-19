@@ -2,6 +2,7 @@ import type { controlDropdownKelas } from "~/components/dropdowns/rombel-dropdow
 import type { Route } from "./+types/format-siswa";
 import FormatDaftarSiswaPage from "~/pages/format-daftar-siswa";
 import { ConfigFormatDaftarSiswa } from "~/controllers/data-siswa-controller/format-daftar-siswa/config-format-daftar-siswa";
+import { sheetAkun_dataSiswa } from "~/domain/enloaded/intial-enloaded/by-sheet/akun";
 
 export function meta({matches}: Route.MetaArgs) {
     const rootMeta = matches.find(m => m?.id === 'root')?.meta;
@@ -33,7 +34,10 @@ export async function clientLoader({}:Route.ComponentProps){
         titleTambahan: 'Format Daftar Siswa', 
         data: [], // data: data, 
         toolbarTabs: ConfigFormatDaftarSiswa,
-        controlKelas: settingRombel
+        controlKelas: settingRombel,
+        pesanLoading:'Mempersiapkan Data Format Siswa',
+        addPesanRombel:{isAdd:true, type:'rombel', includeFaseName:false},
+        sheetNeeded: [sheetAkun_dataSiswa]
     };
 }
 

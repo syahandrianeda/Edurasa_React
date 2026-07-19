@@ -10,6 +10,9 @@ import { useCrudAtpProvider } from "./crud-atp-provider";
 import { ShowToasterError, ShowToasterSuccess } from "~/lib/toaster";
 import { setKurmerAtp } from "~/context-reduct/global-state/kurikulum/kurmer-slice";
 import { Loader } from "lucide-react";
+import { setFaseA } from "~/context-reduct/global-state/kurikulum/tp-fase-a";
+import type { FaseKurikulumType } from "~/types/kurikulum/fase-kurikulum";
+import DispatchingResponseToStore from "~/lib/dispatching-response-to-store";
 
 export default function SendAtpUpdate({mode, data}:{mode:'update'|'delete', data:OrmAtp}){
     const dispatch = useAppDispatch();
@@ -28,18 +31,16 @@ export default function SendAtpUpdate({mode, data}:{mode:'update'|'delete', data
                 dispatch(setloadedApi({
                             loaded:state.isSubmitting, name:'loaded_animation'
                         }))
-                if(respon.success){
-                    const raw = respon.data as AtpKurikulumType[];
-                    
-                    dispatch(setKurmerAtp(raw))
-                    ShowToasterSuccess('Berhasil diupdate');
-                    actionModal.close();
-                }else{
-                    ShowToasterError('Gagal Menyimpan Edit');
-                }
-                // dispatch(setloadedApi({
-                //                     loaded:false
-                //                 }))
+        const {success, data:dataAtpRespon, detailResponse} = respon
+        if(success){
+            if(detailResponse){
+                DispatchingResponseToStore(success, dataAtpRespon as unknown as AtpKurikulumType[], detailResponse,)
+            }
+                ShowToasterSuccess('Berhasil diupdate');
+                actionModal.close();
+        }else{
+            ShowToasterError('Gagal Menyimpan Edit');
+        }
     }
 
     if(mode==='delete'){

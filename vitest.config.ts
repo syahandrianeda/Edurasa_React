@@ -12,7 +12,7 @@ export default mergeConfig(
         environment: "node",
 
         include: [
-            "app/**/*.test.ts",
+            "tests/**/*.test.ts",
         ],
 
     },

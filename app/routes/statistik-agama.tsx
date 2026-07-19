@@ -2,6 +2,7 @@ import type { controlDropdownKelas } from "~/components/dropdowns/rombel-dropdow
 import type { Route } from "./+types/statistik-agama";
 import { ConfigToolbarStatistikAgama } from "~/controllers/data-siswa-controller/statistik/statistik-agama";
 import StatistikAgamaPage from "~/pages/statistik-agama";
+import { sheetAkun_dataSiswa } from "~/domain/enloaded/intial-enloaded/by-sheet/akun";
 
 export function meta({matches}: Route.MetaArgs) {
     const rootMeta = matches.find(m => m?.id === 'root')?.meta;
@@ -33,7 +34,10 @@ export async function clientLoader({}:Route.ComponentProps){
         titleTambahan: 'Statistik Agama', 
         data: [], // data: data, 
         toolbarTabs: ConfigToolbarStatistikAgama,
-        controlKelas: settingRombel
+        controlKelas: settingRombel,
+        pesanLoading:'Mempersiapkan Data Statistik Agama',
+        addPesanRombel:{isAdd:true, type:'rombel', includeFaseName:false},
+        sheetNeeded: [sheetAkun_dataSiswa]
     };
 }
 

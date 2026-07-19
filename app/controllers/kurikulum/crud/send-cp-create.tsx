@@ -8,6 +8,7 @@ import { setloadedApi } from "~/context-reduct/global-state/loaded-slice";
 import { setKurmerCp } from "~/context-reduct/global-state/kurikulum/kurmer-slice";
 import { ShowToasterError, ShowToasterSuccess } from "~/lib/toaster";
 import { Loader } from "lucide-react";
+import DispatchingResponseToStore from "~/lib/dispatching-response-to-store";
 
 export default function SendCpCreate({data}:{data:ElemenCpType}){
     const dispatch = useAppDispatch();
@@ -33,15 +34,26 @@ export default function SendCpCreate({data}:{data:ElemenCpType}){
                 
                 dispatch(setloadedApi({
                             loaded:true, name:'loaded_animation'
-                        }))
-                if(respon.success){
-                    const raw = respon.data as ElemenCpType[];
-                    dispatch(setKurmerCp(raw));
-                    ShowToasterSuccess('Berhasil diupdate');
-                    actionModal.close();
-                }else{
-                    ShowToasterError('Gagal Menyimpan Edit');
-                }
+                        }));
+    
+    const {success, data:dataAtpRespon, detailResponse} = respon
+    if(success){
+        if(detailResponse){
+            DispatchingResponseToStore(success, dataAtpRespon as unknown as ElemenCpType[], detailResponse,)
+        }
+            ShowToasterSuccess('Berhasil diupdate');
+            actionModal.close();
+    }else{
+        ShowToasterError('Gagal Menyimpan Edit');
+    }
+                // if(respon.success){
+                //     const raw = respon.data as ElemenCpType[];
+                //     dispatch(setKurmerCp(raw));
+                //     ShowToasterSuccess('Berhasil diupdate');
+                //     actionModal.close();
+                // }else{
+                //     ShowToasterError('Gagal Menyimpan Edit');
+                // }
                 dispatch(setloadedApi({
                                     loaded:false, name:'loaded_animation'
                                 }))

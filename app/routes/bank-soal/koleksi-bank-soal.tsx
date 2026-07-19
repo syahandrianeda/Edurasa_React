@@ -52,18 +52,21 @@ export function clientLoader({}:Route.ComponentProps){
         controlKelas: settingRombel,
         toolbarTabs: undefined,//ConfigToolbarSelectMapel
         showExport:false,
+                // pesanLoading:'Mempersiapkan ATP',
+                addPesanRombel:{isAdd:true, type:'rombel', includeFaseName:true},
+                sheetNeeded: defineCreateItemSoalNeeded
         
     };
 }
 
 
-export async function clientAction({ request }: Route.ActionArgs){
-    const instCall  = new EnsurLoadedApiService();
-    const paramReq = ((await request.formData()).get('parameter'));
-    const json = JSON.parse(paramReq as string);
-    const data = await instCall.callNeeded(json);
-    return data
-}
+// export async function clientAction({ request }: Route.ActionArgs){
+//     const instCall  = new EnsurLoadedApiService();
+//     const paramReq = ((await request.formData()).get('parameter'));
+//     const json = JSON.parse(paramReq as string);
+//     const data = await instCall.callNeeded(json);
+//     return data
+// }
 
 export default function KoleksiBankSoalRoute() {
     

@@ -1,6 +1,7 @@
 import { Navigate, useNavigation,} from "react-router";
 import type { Route } from "./+types/kesiswaan";
 import { TopProgressBarFetch } from "~/components/ui_edura/top-progress-bar";
+import { sheetAkun_dataSiswa } from "~/domain/enloaded/intial-enloaded/by-sheet/akun";
 
 export function meta({matches}: Route.MetaArgs) {
     const rootMeta = matches.find(m => m?.id === 'root')?.meta;
@@ -15,7 +16,7 @@ export function meta({matches}: Route.MetaArgs) {
         },
         { 
             name: "description", 
-            content: "Welcome to React Router!" 
+            content: "Edurasa versi baru" 
         },
     ];
 }
@@ -23,7 +24,12 @@ export function meta({matches}: Route.MetaArgs) {
 export async function clientLoader({}:Route.ComponentProps){
     
 
-    return {titleTambahan:'Data Rombel', data:[]};
+    return {
+        titleTambahan:'Data Rombel', 
+        pesanLoading:'Mempersiapkan data Siswa',
+        // addPesanRombel:{isAdd:true, type:'rombel', includeFaseName:false},
+        sheetNeeded: [sheetAkun_dataSiswa]
+    };
 }
 export default function RedirectKesiswaan({loaderData}:Route.ComponentProps) {
 

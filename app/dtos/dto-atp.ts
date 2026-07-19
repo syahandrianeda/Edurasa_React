@@ -27,7 +27,7 @@ export default class DTOAtp{
             foreignkey_elemencp:resolveNumber(data.foreignkey_elemencp),
             foreignkey_tp:resolveNumber(data.foreignkey_tp),
             atp:resolveString(data.atp),
-            kelas:data.kelas===""?[]: data.kelas?.toString()?.split(',').map((m:string)=>resolveNumber(m)),
+            kelas:Array.isArray( data.kelas)? data.kelas.join(','):data.kelas,//;//data.kelas===""?[]: data.kelas?.toString()?.split(',').map((m:string)=>resolveNumber(m)),
             status:data.status
         }
     }
@@ -40,7 +40,7 @@ export default class DTOAtp{
             foreignkey_elemencp: resolveNumber(data.source_atp?.foreignkey_elemencp),
             foreignkey_tp: resolveNumber(data.source_atp?.foreignkey_tp),
             atp: resolveString(data.atp),
-            kelas:resolveString(data.kelas.join(',')),
+            kelas:data.kelas.join(', '),//Array.isArray(data.kelas)? data.kelas.join(','):'',//;//resolveString(data.kelas.join(',')),
             // profilpancasila:string,
             // penjelasan_profil?:string,
             status:resolveString(data.status)

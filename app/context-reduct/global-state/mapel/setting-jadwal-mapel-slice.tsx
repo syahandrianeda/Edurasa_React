@@ -22,6 +22,7 @@ export const settingJadwalMapelSlice = createSlice({
         setSettingJadwalMapel(state, action:PayloadAction<settingJadwalSheet[]>){
             
             state.data = action.payload;
+            state.name='setting_jadwal';
             state.loaded = true
         }
     }

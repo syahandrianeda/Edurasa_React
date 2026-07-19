@@ -97,6 +97,7 @@ export const DataMenu: typeKoleksiMenu[] = [
         routeName: "buku-induk",
         urlIcon: MenuIcons["lg_tumpukan_buku"],
         permission: 'view buku-induk',
+        hasRoute:true
     },
     {
         title: "Kokuler", 

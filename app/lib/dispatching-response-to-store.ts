@@ -32,10 +32,12 @@ import type { TaksonomiSheetType } from "~/types/taksonomi/taksonomi-sheet";
 import { getSessionRombel } from "~/infrastructures/session-storage/rombel-session";
 import { setAbsensiRombel } from "~/context-reduct/global-state/absensi-slice";
 import type { AbsensiSiswaSheetType } from "~/types/absensi-siswa";
+import { setSiswaDapodik } from "~/context-reduct/global-state/sheet-dapodik-slice";
+import type { SiswaDapodikAppToSheet, SiswaTypeDapodik } from "~/types/siswa-dapodik";
+import { saveIsianSiswa } from "~/infrastructures/session-storage/isian-siswa";
 
 
-export default function DispatchingResponseToStore(success:boolean, data:Record<string, any>[],detailResponse:Record<string,any>, rombelAktif?:string):void{
-    // console.log('detail respons',detailResponse)
+export default async function DispatchingResponseToStore(success:boolean, data:Record<string, any>[],detailResponse:Record<string,any>, rombelAktif?:string){
     // if(success){
         // ga boleh ada trial-nya, karena namanya bakal ngefek ke bawah
         if(detailResponse?.namaTab === namaTab('mapel')){
@@ -48,20 +50,33 @@ export default function DispatchingResponseToStore(success:boolean, data:Record<
         }
         // datasiswa ada trial-nya
         if(detailResponse?.namaTab === namaTab('datasiswa')){
-            // store.dispatch(setAllSiswa(data as unknown as DataSiswa<SiswaType>))
+            console.log('dispatching data Siswa', detailResponse)
+            /**
+             * 
+             */
             store.dispatch(setAllSiswa({
                 data : data as unknown as SiswaType[] ,
                 loaded : true,
-                source :detailResponse.source,//'API',
+                source :'API',
                 loading:true
     
             } as DataSiswa<SiswaType>));
-            /** jika `detailRespons.source = 'API'` lakukan save indexDb */
-            if(detailResponse.source === 'API'){
-                const db = new IndDbSiswaRepository();
-                db.saveBulkAgain(data as unknown as SiswaType[])
-            }
             
+            
+            // if(detailResponse.source === 'API'){
+
+            // }
+            const db = new IndDbSiswaRepository();
+            await db.saveBulkAgain(data as unknown as SiswaType[]);
+            
+            //simpan di session ini:
+            
+            const formatIsianSiswa = detailResponse?.objKosong
+            saveIsianSiswa(formatIsianSiswa);
+        }
+
+        if(detailResponse?.namaTab === namaTab('dapodik')){
+            store.dispatch(setSiswaDapodik(data as unknown as SiswaDapodikAppToSheet[]))
         }
     
         //taksonomi belum dibuatkan store-nya
@@ -122,10 +137,11 @@ export default function DispatchingResponseToStore(success:boolean, data:Record<
         }
 
         if(detailResponse?.namaTab === namaTab('kelas_'+rombelAktif)){
+            
                 store.dispatch(setAbsensiRombel(
                     {
                         nama_rombel:rombelAktif ?? getSessionRombel(),
-                        data: detailResponse?.findTab?data as AbsensiSiswaSheetType[]:[]
+                        data: detailResponse?.findTab? data as AbsensiSiswaSheetType[]:[]
                     }
                 ))
             

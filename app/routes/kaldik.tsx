@@ -1,8 +1,8 @@
+import { ConfigToolbarKeteranganKaldik } from "~/controllers/kaldik-controller/toolbar/config-toolbar-kaldik";
 import type { Route } from "./+types/kaldik";
 import { Navigate } from "react-router";
-
-
-
+import { sheetKaldik_kalender } from "~/domain/enloaded/intial-enloaded/by-sheet/kaldik";
+import type { controlDropdownKelas } from "~/components/dropdowns/rombel-dropdown";
 
 
 export function meta({matches}: Route.MetaArgs) {
@@ -21,6 +21,26 @@ export function meta({matches}: Route.MetaArgs) {
             content: "Welcome to React Router!" 
         },
     ];
+}
+
+export async function clientLoader({}:Route.ComponentProps){
+
+    const settingRombel: controlDropdownKelas ={
+        showControlKelas:false,
+        title: 'Rombel',
+        description:'Rombel yang Anda Ampu',
+        typeKelas:'rombel'
+    }
+    
+    return {
+        titleTambahan: 'Mempersiapkan data', 
+        data: [], // data: data, 
+        toolbarTabs: ConfigToolbarKeteranganKaldik,
+        controlKelas: settingRombel, 
+        pesanLoading:'Mempersiapkan data',
+        // addPesanRombel:{isAdd:true, type:'rombel', includeFaseName:false},
+        sheetNeeded: [sheetKaldik_kalender]
+    };
 }
 
 export default function KaldikRedirectToKeteranganKaldik() {

@@ -2,6 +2,7 @@ import type { controlDropdownKelas } from "~/components/dropdowns/rombel-dropdow
 import { ConfigToolbarKaldikHariEfektif } from "~/controllers/kaldik-controller/toolbar/config-hari-efektif";
 import type { Route } from "./+types/jam-belajar-semester-2";
 import KaldikJamEfektifBelajar from "~/pages/kaldik/kaldik-jam-efektif-belajar";
+import { sheetKaldik_kalender } from "~/domain/enloaded/intial-enloaded/by-sheet/kaldik";
 
 export function meta({matches}: Route.MetaArgs) {
     const rootMeta = matches.find(m => m?.id === 'root')?.meta;
@@ -32,10 +33,13 @@ export async function clientLoader({}:Route.ComponentProps){
     }
     
     return {
-        titleTambahan: 'Hari Efektif Belajar Semester 1', 
+        titleTambahan: 'Jam Efektif Belajar Semester 2', 
         data: [], // data: data, 
         toolbarTabs: ConfigToolbarKaldikHariEfektif,
         controlKelas: settingRombel,
+        pesanLoading:'Mempersiapkan Jam Efektif Belajar semester 2',
+        // addPesanRombel:{isAdd:true, type:'rombel', includeFaseName:false},
+        sheetNeeded: [sheetKaldik_kalender]
     };
 }
 

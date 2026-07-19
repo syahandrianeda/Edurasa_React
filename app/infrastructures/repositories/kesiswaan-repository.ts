@@ -80,13 +80,11 @@ export default class KesiswaanRepository extends AppScriptSheet implements Kesis
     }
     async update(param:Record<string, any>):Promise<ApiResponse<SiswaType>>{
         try{
-            const parameter = {
-                ...param,
-                action: 'update'
-            }
-            this.paramSheetAkunTabSiswa = parameter;
+            
+            this.paramSheetAkunTabSiswa = param;
             
             const respon =  await this.postBody(this.paramSheetAkunTabSiswa );
+            
             await this.dbBrowser.saveBulkAgain(respon.data)
 
             return this.responActionRead(respon);
@@ -104,6 +102,7 @@ export default class KesiswaanRepository extends AppScriptSheet implements Kesis
             this.paramSheetAkunTabSiswa = parameter;
             
             const respon =  await this.postBody(this.paramSheetAkunTabSiswa );
+            
             await this.dbBrowser.saveBulkAgain(respon.data)
 
             return this.responActionRead(respon);

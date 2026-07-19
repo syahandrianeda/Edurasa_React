@@ -1,6 +1,7 @@
 import { ConfigImportFilePD } from "~/controllers/data-siswa-controller/import-file-pd/config-import-file-pd";
 import type { Route } from "./+types/import-file-pd-siswa";
 import ImportFilePdPage from "~/pages/import-file-pd";
+import { sheetAkun_dataSiswa } from "~/domain/enloaded/intial-enloaded/by-sheet/akun";
 
 
 export function meta({matches}: Route.MetaArgs) {
@@ -27,7 +28,10 @@ export async function clientLoader({}:Route.ComponentProps){
         data: [], // data: data, 
         toolbarTabs: ConfigImportFilePD,
         controlKelas: undefined,
-        showExport:true
+        showExport:true,
+        pesanLoading:'Mempersiapkan Data Import ',
+        // addPesanRombel:{isAdd:true, type:'rombel', includeFaseName:false},
+        sheetNeeded: [sheetAkun_dataSiswa]
     };
 }
 export default function ImportFIlePdRoute(){

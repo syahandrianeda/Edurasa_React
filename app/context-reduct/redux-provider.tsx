@@ -11,5 +11,6 @@ type Props = {
 export const store = createStore(hydratePreloadedState());
 
 export function ReduxProvider({ children }: Props) {
+    
     return <Provider store={store}>{children}</Provider>
 }

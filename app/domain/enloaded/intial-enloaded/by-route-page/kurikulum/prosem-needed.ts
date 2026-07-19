@@ -43,6 +43,7 @@ export const defineProsemNeeded = (rombel:string):DataSheetNeeeded[] =>{
         ...CpNeeded, 
         fase,
         sheetKurikulum_prota,
+        
         sheetKurikulum_jadwalMapel, 
         sheetKaldik_kalender,
         sheetKurikulum_kegiatanNonKbm,

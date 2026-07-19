@@ -1,6 +1,7 @@
 import { ConfigToolbarInputSiswa } from "~/controllers/data-siswa-controller/input-siswa/config-toolbar-input-siswa";
 import type { Route } from "./+types/input-siswa";
 import CreateNewSiswaPage from "~/pages/create-new-siswa";
+import { sheetAkun_dataSiswa } from "~/domain/enloaded/intial-enloaded/by-sheet/akun";
 
 export function meta({matches}: Route.MetaArgs) {
     const rootMeta = matches.find(m => m?.id === 'root')?.meta;
@@ -26,7 +27,10 @@ export async function clientLoader({}:Route.ComponentProps){
         data: [], // data: data, 
         toolbarTabs: ConfigToolbarInputSiswa,
         controlKelas: undefined,
-        showExport:false
+        showExport:false,
+        pesanLoading:'Mempersiapkan Data Input Manual',
+        // addPesanRombel:{isAdd:true, type:'rombel', includeFaseName:false},
+        sheetNeeded: [sheetAkun_dataSiswa]
     };
 }
 export default function InputSiswaRoute(){

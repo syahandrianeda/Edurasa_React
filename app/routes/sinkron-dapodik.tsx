@@ -10,6 +10,7 @@ import { setSiswaDapodik } from "~/context-reduct/global-state/sheet-dapodik-sli
 import type { SiswaDapodikAppToSheet } from "~/types/siswa-dapodik";
 import SinkronDapodikPage from "~/pages/sinkron-dapodik";
 import { selectSiswaDapodikDTO } from "~/context-reduct/selectores/siswa-dapodik-selector";
+import { sheetAkun_dapodik, sheetAkun_dataSiswa } from "~/domain/enloaded/intial-enloaded/by-sheet/akun";
 
 export function meta({matches}: Route.MetaArgs) {
     const rootMeta = matches.find(m => m?.id === 'root')?.meta;
@@ -45,43 +46,53 @@ export async function clientLoader({}:Route.ComponentProps){
             toolbarTabs: ConfigToolbarSinkronDapodik,
             controlKelas: settingRombel,
             showExport:true,
+            pesanLoading:'Mempersiapkan Data Dapodik',
+                    // addPesanRombel:{isAdd:true, type:'rombel', includeFaseName:false},
+                    sheetNeeded: [sheetAkun_dataSiswa, sheetAkun_dapodik]
             
         };
 }
-export async function clientAction({ request }: Route.ActionArgs){
-    const instCall  = new DapodikServiceImplements();
-    const data = await instCall.loadAllDapodik();
-    return data;
-}
-export default  function SinkronDapodikRoute({actionData}:Route.ComponentProps) {
-    const fetcher = useFetcher<typeof clientAction>();
-    const dispatch = useAppDispatch();
+// export async function clientAction({ request }: Route.ActionArgs){
+//     const instCall  = new DapodikServiceImplements();
+//     const data = await instCall.loadAllDapodik();
+//     return data;
+// }
+// export default  function SinkronDapodikRoute({actionData}:Route.ComponentProps) {
+//     const fetcher = useFetcher<typeof clientAction>();
+//     const dispatch = useAppDispatch();
 
-    const siswaDapodikExist = useAppSelector(selectSiswaDapodikDTO);
-    const hasData = siswaDapodikExist.length > 0;
+//     const siswaDapodikExist = useAppSelector(selectSiswaDapodikDTO);
+//     const hasData = siswaDapodikExist.length > 0;
 
-    // 1️⃣ trigger API SEKALI
-    useEffect(() => {
-        if (!hasData && fetcher.state === "idle" && fetcher.data == null) {
-            fetcher.submit(null, { method: "post" });
-            dispatch(setloadedApi({ loaded: true,name:'loaded_animation' }));
-        }
-    }, [hasData, fetcher.state]); // ❗ bukan fetcher
+//     // 1️⃣ trigger API SEKALI
+//     useEffect(() => {
+//         if (!hasData && fetcher.state === "idle" && fetcher.data == null) {
+//             fetcher.submit(null, { method: "post" });
+//             dispatch(setloadedApi({ loaded: true,name:'loaded_animation' }));
+//         }
+//     }, [hasData, fetcher.state]); // ❗ bukan fetcher
 
-    // 2️⃣ response API
-    useEffect(() => {
+//     // 2️⃣ response API
+//     useEffect(() => {
         
-        if (fetcher.data?.success) {
-            const data = fetcher.data?.data as unknown as SiswaDapodikAppToSheet[];
-            dispatch(
-                setSiswaDapodik(data)
-                // setSiswaDapodik({
-                //     dapodik: fetcher.data?.data as unknown as SiswaDapodikAppToSheet[],
-                // })
-            );
-            dispatch(setloadedApi({ loaded: false, name:'loaded_animation' }));
-        }
-    }, [fetcher.data]);
+//         if (fetcher.data?.success) {
+//             const data = fetcher.data?.data as unknown as SiswaDapodikAppToSheet[];
+//             dispatch(
+//                 setSiswaDapodik(data)
+//                 // setSiswaDapodik({
+//                 //     dapodik: fetcher.data?.data as unknown as SiswaDapodikAppToSheet[],
+//                 // })
+//             );
+//             dispatch(setloadedApi({ loaded: false, name:'loaded_animation' }));
+//         }
+//     }, [fetcher.data]);
+    
+//     return (
+//             <SinkronDapodikPage />
+//         )
+// }
+
+export default  function SinkronDapodikRoute({actionData}:Route.ComponentProps) {
     
     return (
             <SinkronDapodikPage />

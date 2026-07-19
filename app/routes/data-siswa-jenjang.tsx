@@ -3,6 +3,7 @@ import DataSiswaPerJenjangPage from "~/pages/siswa-per-jenjang";
 import type { Route } from "./+types/data-siswa-jenjang";
 import { ConfigToolbarDataSiswaJenjang } from "~/controllers/data-siswa-controller/config-toolbar";
 import type { controlDropdownKelas } from "~/components/dropdowns/rombel-dropdown";
+import { sheetAkun_dataSiswa } from "~/domain/enloaded/intial-enloaded/by-sheet/akun";
 
 export function meta({matches}: Route.MetaArgs) {
     const rootMeta = matches.find(m => m?.id === 'root')?.meta;
@@ -35,7 +36,10 @@ export async function clientLoader({}:Route.ComponentProps){
         titleTambahan: 'Per Jenjang', 
         data: [],//data, 
         toolbarTabs: ConfigToolbarDataSiswaJenjang,
-        controlKelas: settingRombel
+        controlKelas: settingRombel,
+        pesanLoading:'Mempersiapkan Data Perjenjang',
+        addPesanRombel:{isAdd:true, type:'jenjang', includeFaseName:false},
+        sheetNeeded: [sheetAkun_dataSiswa]
     };
 }
 

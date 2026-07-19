@@ -16,15 +16,37 @@ export default [
     
     
     layout("layouts/app-layout.tsx",[
-        layout("layouts/sub-layouts/sub-setting-sekolah.tsx",[
+
+        layout('layouts/sub-layouts/sub-setting-sekolah.tsx',[
             ...prefix('setting-sekolah',[
                 index('routes/redirect-setting-sekolah.tsx'),
                 route('tempat-tugas',"routes/data-sekolah.tsx"),
                 route('riwayat-tempat-tugas',"routes/riwayat-tempat-tugas.tsx"),
                 ]),
             ]),
-            
-        layout('layouts/provider-layout/crud-kesiswaan-provider.tsx',[
+        layout("layouts/provider-layout/app-provider-service.tsx",[
+            layout("layouts/sub-layouts/sub-profile.tsx",[
+                ...prefix('profile',[
+                    index("routes/profile/index-redirect-profile.tsx"),
+                    route("about","routes/profile/about.tsx"), 
+                    // route("contact","routes/profile/contact.tsx"),
+                    // route("my-document","routes/profile/my-document.tsx"),
+                    // route("tugas-mengajar","routes/profile/tugas-mengajar.tsx"),
+                    // route("riwayat-tugas-mengajar","routes/profile/riwayat-tugas-mengajar.tsx")
+                ])
+            ]),
+            layout("layouts/sub-layouts/sub-buku-induk.tsx",[
+                ...prefix("buku-induk",[
+                    index("routes/buku-induk/redirect-ringkasan.tsx"),
+                    route("ringkasan","routes/buku-induk/ringkasan.tsx"),
+                    route("rekap","routes/buku-induk/rekap-induk.tsx"),
+                    // route("arsip-siswa","routes/buku-induk/arsip-siswa.tsx"),
+                    // route("klepper-induk","routes/buku-induk/arsip-siswa.tsx"),
+                    // route("klepper-angkatan","routes/buku-induk/arsip-siswa.tsx"),
+                    // route("data-ijazah","routes/buku-induk/arsip-siswa.tsx"),
+
+                ])
+            ]),
             layout("layouts/sub-layouts/sub-data-siswa.tsx",[
                 ...prefix('kesiswaan',[
                     index('routes/kesiswaan.tsx'),
@@ -43,8 +65,19 @@ export default [
                     route("sinkron-dapodik","routes/sinkron-dapodik.tsx"),
                 ]),
             ]),
-        ]),
-        layout('layouts/provider-layout/crud-kaldik-provider.tsx',[
+            layout("layouts/sub-layouts/sub-absensi-siswa.tsx",[
+                ...prefix('absensi-siswa',[
+                    index("routes/absensi-siswa.tsx"),
+                    route("absensi-hari-ini","routes/absensi/absensi-siswa.tsx"),
+                    route("keterangan-kaldik","routes/absensi/keterangan-kaldik.tsx"),
+                    route("absensi-bulanan","routes/absensi/absensi-bulanan.tsx"),
+                    route("rekap-absensi-siswa","routes/absensi/rekap-absensi-siswa.tsx"),
+                    route("rekap-semester-siswa","routes/absensi/rekap-absensi-semester.tsx"),
+                    route("rekap-sia-semester","routes/absensi/rekap-sia-semester.tsx"),
+                    route("statistik-absensi-bulanan","routes/absensi/statistik-absensi-bulanan.tsx"),
+                    route("statistik-absensi-semester","routes/absensi/statistik-absensi-semester.tsx"),
+                ])
+            ]),
             layout("layouts/sub-layouts/sub-kaldik.tsx",[
                 ...prefix('kaldik',[
                     index("routes/kaldik.tsx"),
@@ -60,26 +93,9 @@ export default [
                     route("jam-belajar-semester-2", "routes/kaldik/jam-belajar-semester-2.tsx"),
                 ])
             ]),
-        ]),
-        layout('layouts/provider-layout/crud-absensi-provider.tsx',[
-            layout("layouts/sub-layouts/sub-absensi-siswa.tsx",[
-                ...prefix('absensi-siswa',[
-                    index("routes/absensi-siswa.tsx"),
-                    route("absensi-hari-ini","routes/absensi/absensi-siswa.tsx"),
-                    route("keterangan-kaldik","routes/absensi/keterangan-kaldik.tsx"),
-                    route("absensi-bulanan","routes/absensi/absensi-bulanan.tsx"),
-                    route("rekap-absensi-siswa","routes/absensi/rekap-absensi-siswa.tsx"),
-                    route("rekap-semester-siswa","routes/absensi/rekap-absensi-semester.tsx"),
-                    route("rekap-sia-semester","routes/absensi/rekap-sia-semester.tsx"),
-                    route("statistik-absensi-bulanan","routes/absensi/statistik-absensi-bulanan.tsx"),
-                    route("statistik-absensi-semester","routes/absensi/statistik-absensi-semester.tsx"),
-                ])
-            ]),
-        ]),
-        layout('layouts/provider-layout/crud-kurikulum-provider.tsx',[
             layout("layouts/sub-layouts/sub-kurikulum.tsx",[
                 ...prefix('kurikulum',[
-                    index("routes/kurikulum/index-redirect.tsx"),
+                    index("routes/kurikulum/index-redirect-kurikulum.tsx"),
                     route("cp","routes/kurikulum/cp-page.tsx"),
                     route("tp","routes/kurikulum/tp-page.tsx"),
                     route("atp","routes/kurikulum/atp-page.tsx"),
@@ -93,7 +109,7 @@ export default [
             ]),
             layout("layouts/sub-layouts/sub-bank-soal.tsx",[
                 ...prefix('bank-soal',[
-                    index("routes/bank-soal/index-redirect.tsx"),
+                    index("routes/bank-soal/index-redirect-bank-soal.tsx"),
                     route("create-item-soal","routes/bank-soal/create-item-soal.tsx"),
                     route("koleksi-bank-soal","routes/bank-soal/koleksi-bank-soal.tsx"),
                     route("create-paket-soal","routes/bank-soal/create-paket-soal.tsx"),
@@ -104,20 +120,6 @@ export default [
                 )
             ])
         ]),
-        
-        layout("layouts/provider-layout/crud-profile-provider.tsx",[
-            layout("layouts/sub-layouts/sub-profile.tsx",[
-                ...prefix('profile',[
-                    index("routes/profile/index-redirect.tsx"),
-                    route("about","routes/profile/about.tsx"), 
-                    // route("contact","routes/profile/contact.tsx"),
-                    // route("my-document","routes/profile/my-document.tsx"),
-                    // route("tugas-mengajar","routes/profile/tugas-mengajar.tsx"),
-                    // route("riwayat-tugas-mengajar","routes/profile/riwayat-tugas-mengajar.tsx")
-                ])
-            ])
-        ])
-        
     ]),
 
 

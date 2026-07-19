@@ -2,8 +2,8 @@
 type variantCurrentTapel = 'short'|'long'|'full'|'onlyTapel';
 type variantCurrentTapelProperties = 'firstYear'|'lastYear'|'getSemester'|'getSemesterWithGanjilGenap';
 
-export function currentTapel({variant='long'}:{variant?:variantCurrentTapel}):string {
-    let date = new Date();
+export function currentTapel({variant='long', date = new Date()}:{variant?:variantCurrentTapel, date?:Date}):string {
+    // let date = new Date();
     let currentYear = date.getFullYear();
     let firstYear = date.getMonth()>5?currentYear:currentYear - 1;
     let lastYear = date.getMonth()>5? currentYear + 1: currentYear;
@@ -14,6 +14,8 @@ export function currentTapel({variant='long'}:{variant?:variantCurrentTapel}):st
         return 'Tahun Pelajaran '+ firstYear +'/' + lastYear ;//+' Semester '+ semester;
     }else if(variant === 'onlyTapel'){
         return firstYear +'/' + lastYear;
+    }else if(variant === 'short'){
+        return firstYear.toString().substring(2,4)+lastYear.toString().substring(2,4)
     }
     return firstYear +'/' + lastYear +' ('+ semester+')';
 }

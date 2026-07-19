@@ -40,7 +40,7 @@ export default function SendTambah(){
             autoId:'id',
         }
         
-        const respon = await siswaActions.create(param);
+        const respon = await siswaActions.create(DTO);
         
         if(respon.success){
             dispatch(setAllSiswa({
