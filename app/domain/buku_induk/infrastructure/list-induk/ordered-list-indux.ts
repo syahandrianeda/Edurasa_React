@@ -24,8 +24,8 @@ export class OrderedListInduk{
         const max = Math.max(...ListIndex);
         const result:SiswaWithValidation[] = [];
         const dataKosong = getIsianSiswa();
-         const DataDefault:SiswaType = {...dataKosong,
-                aktif:'aktif',
+        const DataDefault:SiswaType = {...dataKosong,
+                aktif:'non-aktif',
                 id:-1,
                 masuk_tgl:new Date(),
                 time_stamp:new Date(),

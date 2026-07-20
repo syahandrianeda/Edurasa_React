@@ -27,6 +27,9 @@ export class GroupingIndukBuilder{
             this.duplicateNisn.validate(grouped);
             this.SummaryValidationing.validate(grouped);
             this.orderedListInduk.validate(grouped);
+            /**
+             * this.predictableRiwayatRapor.build(grouped)
+             */
     
         // return grouped;
         return this;

@@ -16,12 +16,7 @@ export function SendEdit(){
     const onSubmit = async (e?: React.MouseEvent<HTMLButtonElement>) => {
         e?.preventDefault()
 
-        // ambil state dari context / store
         const DTO = DTOSiswa.toAppScript(currentData);
-        // const param = {
-        //     formData: JSON.stringify(DTO),
-        //     byRow: currentData?.id
-        // }
         
         
         const respon = await siswaActions.update(DTO);
@@ -40,8 +35,6 @@ export function SendEdit(){
         }else{
             ShowToasterError('Gagal Menyimpan Edit');
         }
-
-        
     }
 
     return (

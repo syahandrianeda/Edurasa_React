@@ -15,7 +15,7 @@ import ModalProvider from "~/components/modals/modal-provider";
 import { Outlet } from "react-router";
 import type { Route } from "./+types/sub-buku-induk";
 import { SubFiturBukuInduk } from "~/features/subfitur-buku-induk";
-import ModalDataSiswa from "~/controllers/data-siswa-controller/modal-data-siswa";
+import ModalDataIndukSiswa from "~/controllers/buku-induk-controller/modal/modal-induk";
 
 
 
@@ -48,7 +48,7 @@ export default function SubBukuIndukLayout({matches}:Route.ComponentProps) {
                             <PrintAreaWithKopTtd>
                                 <ModalProvider>
                                     <Outlet/>
-                                    <ModalDataSiswa/>
+                                    <ModalDataIndukSiswa/>
                                 </ModalProvider>
                             </PrintAreaWithKopTtd>
                             

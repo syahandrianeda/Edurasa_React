@@ -6,6 +6,8 @@ import TableWithScrolling from "~/components/tabels/table-with-scrolling";
 import { TdEdura, ThEdura, TRowEdura } from "~/components/tabels/tabel-components";
 import { GroupNisInduk } from "~/context-reduct/selectores/induk-nis-selector";
 import { selectAllSiswaDTO } from "~/context-reduct/selectores/data-siswa-aktif";
+import { ValidationPreRequesiteRiwayatRaport } from "~/domain/buku_induk/infrastructure/riwayat-raport/validation-riwayat-raport";
+import type { SiswaType } from "~/types/siswa";
 
 
 export function meta({matches}: Route.MetaArgs) {
@@ -44,6 +46,11 @@ export function clientLoader({}:Route.ComponentProps){
 export default function RingkasanBukuIndukRoute({loaderData}:Route.ComponentProps){
     const group = useAppSelector(GroupNisInduk)
     
+    const dataSiswaSelector = useAppSelector(selectAllSiswaDTO)
+    const dataSiswa = dataSiswaSelector.find(s=>s.id === 529)
+    const test = new ValidationPreRequesiteRiwayatRaport(dataSiswa as SiswaType)
+    test.evaluate();
+    console.log('test', dataSiswa, test.dataValidation)
     return (
         <div className="p-1">
             <h3 className="font-bold uppercase text-center text-3xl">Ringkasan Buku Induk</h3>

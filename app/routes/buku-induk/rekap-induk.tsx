@@ -1,5 +1,5 @@
 import { useAppSelector } from "~/context-reduct/hook";
-import { selectAllSiswaDTO, type validationType } from "~/context-reduct/selectores/data-siswa-aktif";
+import { selectAllSiswa, selectAllSiswaDTO, type validationType } from "~/context-reduct/selectores/data-siswa-aktif";
 import { sheetAkun_dataSiswa } from "~/domain/enloaded/intial-enloaded/by-sheet/akun";
 import { GroupNisInduk } from "~/context-reduct/selectores/induk-nis-selector";
 import TableWithScrolling from "~/components/tabels/table-with-scrolling";
@@ -14,6 +14,7 @@ import { useModal } from "~/components/modals/modal-provider";
 import type { SiswaType } from "~/types/siswa";
 import { ActionButtonTable, type TriggerTable } from "~/components/dropdowns/dropdown-action-table";
 import { Info, PencilIcon } from "lucide-react";
+import { ValidationPreRequesiteRiwayatRaport } from "~/domain/buku_induk/infrastructure/riwayat-raport/validation-riwayat-raport";
 
 export function meta({matches}: Route.MetaArgs) {
     const rootMeta = matches.find(m => m?.id === 'root')?.meta;
@@ -35,7 +36,7 @@ export function meta({matches}: Route.MetaArgs) {
 
 
 export function clientLoader({}:Route.ComponentProps){
-     
+    
 
     return {
         titleTambahan:'Rekap Induk',

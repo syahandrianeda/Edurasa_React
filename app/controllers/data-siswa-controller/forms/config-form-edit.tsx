@@ -198,7 +198,8 @@ function GroupKeaktifan(){
                     {
                         currentData?.aktif === 'non-aktif' && (
                             <>
-                                <KalendarKeluarTanggal/> 
+                                <KalendarKeluarTanggal/>
+                                <MutasiDiKelas/> 
                                 <MutasiAlasan/>
                             </>
                         )
@@ -212,7 +213,7 @@ function GroupKeaktifan(){
                         <div className="flex flex-col border rounded-bl-xl bg-linear-to-tr from-sky-600 to-sky-400">
                             <div className="m-1 inner-shadow-sky-600 shadow-md shadow-sky-300 bg-sky-600/50 rounded-2xl flex flex-col justify-center h-full items-center">
                                 <KalendarKeluarTanggal/> 
-                                
+                                <MutasiDiKelas/>
                             </div>
                         </div>
                         

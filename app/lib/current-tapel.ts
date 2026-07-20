@@ -4,6 +4,7 @@ type variantCurrentTapelProperties = 'firstYear'|'lastYear'|'getSemester'|'getSe
 
 export function currentTapel({variant='long', date = new Date()}:{variant?:variantCurrentTapel, date?:Date}):string {
     // let date = new Date();
+    if(!(date)) return '';
     let currentYear = date.getFullYear();
     let firstYear = date.getMonth()>5?currentYear:currentYear - 1;
     let lastYear = date.getMonth()>5? currentYear + 1: currentYear;

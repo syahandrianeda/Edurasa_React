@@ -1,5 +1,6 @@
-import type { Route } from "./+types/index-redirect";
+
 import ProfileUser from "~/pages/profile/profile-user";
+import type { Route } from "../+types/about";
 
 export function meta({matches}: Route.MetaArgs) {
     const rootMeta = matches.find(m => m?.id === 'root')?.meta;

@@ -33,7 +33,7 @@ export function parseBackendISO(value?: string|Date): Date | undefined {
         const d = Number(m[3])
         // Buat Date pada UTC 00:00 agar konsisten lintas timezone
         // return new Date(Date.UTC(y, mo, d))
-        new Date(y,mo,d);
+        return new Date(y,mo,d);
     }
     return new Date(value);
     // return new Date(Date.UTC(
@@ -73,7 +73,8 @@ export function formatDateSheet(
   const month = String(d.getMonth() + 1).padStart(2, '0')
   const year = d.getFullYear()
 
-  return `${day}/${month}/${year}`
+  // return `${day}/${month}/${year}`
+  return `${year}-${month}-${day}`
 }
 
 export function formatStringBulanTahun(d:Date): string{

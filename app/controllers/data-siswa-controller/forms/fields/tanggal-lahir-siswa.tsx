@@ -5,6 +5,7 @@ import type { SiswaType } from "~/types/siswa";
 
 export default function KalendarTanggalLahir({className}:{className?:string}){
     const {currentData, setCurrentData} = useFormEdura<SiswaType>();
+    
     const handleDate = (value:string|Date)=>{
         setCurrentData(draft=>{
             draft.pd_tanggallahir = value as Date

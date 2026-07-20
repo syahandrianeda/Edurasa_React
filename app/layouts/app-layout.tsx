@@ -1,5 +1,3 @@
-
-
 import { Navigate, Outlet, redirect, useLocation } from "react-router";
 import { SidebarProvider } from "~/components/ui/sidebar"
 import { getSessionApp } from "~/infrastructures/session-storage/app-session";

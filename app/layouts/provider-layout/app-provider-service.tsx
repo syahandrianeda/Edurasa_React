@@ -10,7 +10,6 @@ import { getSessionRombel } from "~/infrastructures/session-storage/rombel-sessi
 import EnsurLoadedApiService from "~/infrastructures/ensure-loaded-api/EnsureLoadedApiService";
 import DispatchingResponseToStore from "~/lib/dispatching-response-to-store";
 import { toast } from "sonner";
-import { Loader } from "lucide-react";
 import { IndDbSiswaRepository } from "~/infrastructures/indexDb/db-datasiswa-repository";
 import type { TabsConfigProps } from "~/components/tabs/generate-tabs";
 import type { controlDropdownKelas } from "~/components/dropdowns/rombel-dropdown";
@@ -105,8 +104,8 @@ export default function AppProviderLayoutService({matches}:Route.ComponentProps)
         if(dataEnloaded?.needCall){
             preventSecondLoad.current = true;
             
-            const param = (db && db.length > 0) ? dataEnloaded.param.filter(s => s.tab !== namaTab('datasiswa')): dataEnloaded.param;
-            // const param = (!loaderDataKiriman?.mustLoadSheetNeedSiswaIfExist) ? dataEnloaded.param.filter(s => s.tab !== namaTab('datasiswa')): dataEnloaded.param;
+            // const param = (db && db.length > 0) ? dataEnloaded.param.filter(s => s.tab !== namaTab('datasiswa')): dataEnloaded.param;
+            const param = (!loaderDataKiriman?.mustLoadSheetNeedSiswaIfExist) ? dataEnloaded.param.filter(s => s.tab !== namaTab('datasiswa')): dataEnloaded.param;
             
             if(db.length > 0 && st.dataSiswa.data.length === 0){
                 store.dispatch(setAllSiswa({
