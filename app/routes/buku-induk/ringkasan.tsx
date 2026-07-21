@@ -45,12 +45,12 @@ export function clientLoader({}:Route.ComponentProps){
 
 export default function RingkasanBukuIndukRoute({loaderData}:Route.ComponentProps){
     const group = useAppSelector(GroupNisInduk)
-    
-    const dataSiswaSelector = useAppSelector(selectAllSiswaDTO)
-    const dataSiswa = dataSiswaSelector.find(s=>s.id === 529)
-    const test = new ValidationPreRequesiteRiwayatRaport(dataSiswa as SiswaType)
-    test.evaluate();
-    console.log('test', dataSiswa, test.dataValidation)
+    console.log(group.group)
+    // const dataSiswaSelector = useAppSelector(selectAllSiswaDTO)
+    // const dataSiswa = dataSiswaSelector.find(s=>s.id === 529)
+    // const test = new ValidationPreRequesiteRiwayatRaport(dataSiswa as SiswaType)
+    // test.evaluate();
+    // console.log('test', dataSiswa, test.dataValidation)
     return (
         <div className="p-1">
             <h3 className="font-bold uppercase text-center text-3xl">Ringkasan Buku Induk</h3>

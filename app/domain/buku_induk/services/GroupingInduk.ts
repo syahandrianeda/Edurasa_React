@@ -5,6 +5,9 @@ import { DefineNis } from "../infrastructure/nis/DefineNis";
 import type { SiswaWithValidation } from "~/context-reduct/selectores/data-siswa-aktif";
 import { NisNisnValidatorBuilder } from "../infrastructure/builders/NisNisnValidatorBuilder";
 import { DefineRiwayatRaport } from "../infrastructure/riwayat-raport/define-riwayat-raport";
+import type { SiswaValidationWithPredictableRiwayatRaport } from "../value-objects/extends-siswa-with-validation-type";
+import { CollectingRiwayatRaport } from "../infrastructure/riwayat-raport/collecting-riwayat-raport";
+import { ValidationPreRequesiteRiwayatRaport } from "../infrastructure/riwayat-raport/validation-riwayat-raport";
 
 export class GroupingInduk{
     
@@ -46,12 +49,17 @@ export class GroupingInduk{
                             .setNis(nisValidate.validate().validation)
                             .setNisn(nisnValidate)
                             .build();
+            const requestRiwayatRaportInstance = new ValidationPreRequesiteRiwayatRaport(data);
+            const predictionRiwayatRaport = new CollectingRiwayatRaport(requestRiwayatRaportInstance)
+                                        .evaluate()
+                                        .build()
             // const riwayatRapor = new DefineRiwayatRaport(data);
             
 
-            const item: SiswaWithValidation = {
+            const item: SiswaValidationWithPredictableRiwayatRaport={//SiswaWithValidation = {
                 data,
                 validation,
+                predictionRiwayatRaport
                 //riwayatRapor
             };
 

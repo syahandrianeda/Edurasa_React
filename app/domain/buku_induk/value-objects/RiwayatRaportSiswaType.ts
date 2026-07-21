@@ -2,11 +2,7 @@ import type { PrefixNis } from "./PrefixNis";
 
 export interface RiwayatRaportSiswa{
     tapel:PrefixNis,
-
     rombelInTapel:string,
-
-    // data:DataRaportInduk
-    // detected: ProblemRiwayat
 
 }
 
@@ -18,7 +14,9 @@ export interface ProblemRiwayat{
 
 /** Deteksi Riwayat Siswa */
 export interface PredicatableRiwayatRaport{
-    riwayat:RiwayatRaportSiswa[],
-    validation:ProblemRiwayat
+    prediksiKelas:RiwayatRaportSiswa[],
+    // validation:ProblemRiwayat
+    isValid:boolean,
+    shouldBeFixed?:string[]
 }
 
