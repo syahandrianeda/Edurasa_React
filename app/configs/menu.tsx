@@ -146,5 +146,6 @@ export const DataMenu: typeKoleksiMenu[] = [
         routeName: "tabungan",
         urlIcon: MenuIcons["tabungan"],
         permission: 'view tabungan',   
+        hasRoute:true
     },
 ];

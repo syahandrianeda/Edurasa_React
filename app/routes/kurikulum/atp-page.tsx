@@ -42,7 +42,8 @@ export function clientLoader({}:Route.ComponentProps){
         toolbarTabs: ConfigToolbarSelectMapel,
         pesanLoading:'Mempersiapkan ATP',
         addPesanRombel:{isAdd:true, type:'rombel', includeFaseName:true},
-        sheetNeeded: defineCpTpAtpNeeded
+        sheetNeeded: defineCpTpAtpNeeded,
+        mustLoadSheetNeedSiswaIfExist:true
     };
 }
 

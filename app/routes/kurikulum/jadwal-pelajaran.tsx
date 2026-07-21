@@ -43,7 +43,9 @@ export function clientLoader({}:Route.ComponentProps){
         toolbarTabs: ConfigToolbarJadwalMapel,
         pesanLoading:'Mempersiapkan Jadwal Pelajaran',
         addPesanRombel:{isAdd:true, type:'rombel', includeFaseName:false},
-        sheetNeeded: JadwalPelajaranNeeded
+        sheetNeeded: JadwalPelajaranNeeded,
+        
+        mustLoadSheetNeedSiswaIfExist:true
     };
 }
 

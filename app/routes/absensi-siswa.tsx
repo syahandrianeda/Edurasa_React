@@ -36,7 +36,8 @@ export function clientLoader({}:Route.ComponentProps){
         controlKelas: settingRombel,
         pesanLoading:'Memanggil Data Absen Hari ini',
         addPesanRombel:{isAdd:true, type:'rombel', includeFaseName:false},
-        sheetNeeded:defineAbsenRombelNeeded
+        sheetNeeded:defineAbsenRombelNeeded,
+        mustLoadSheetNeedSiswaIfExist:true
     };
 }
 

@@ -118,6 +118,17 @@ export default [
 
                 ],
                 )
+            ]),
+            //app\layouts\sub-layouts\sub-tabungan-siswa.tsx
+            layout("layouts/sub-layouts/sub-tabungan-siswa.tsx",[
+                ...prefix('tabungan',[
+                    index('routes/tabungan/redirect-tabungan.tsx'),
+                    route('tabungan-siswa', 'routes/tabungan/tabungan-siswa-route.tsx'),
+                    route('rekap-tabungan-siswa', 'routes/tabungan/rekap-tabungan-siswa-route.tsx'),
+                    // route('kategori-kuangan', 'routes/tabungan/kategori-kuangan-route.tsx'),
+                    // route('debit-kredit', 'routes/tabungan/debit-kredit-route.tsx'),
+                    // route('rekap-debit-kredit', 'routes/tabungan/rekap-debit-kredit-route.tsx'),
+                ])
             ])
         ]),
     ]),

@@ -38,7 +38,9 @@ export async function clientLoader({}:Route.ComponentProps){
         toolbarTabs: ConfigToolbarSelectMapel,
         pesanLoading:'Mempersiapkan Capaian Pembelajaran',
         addPesanRombel:{isAdd:true, type:'rombel', includeFaseName:true},
-        sheetNeeded: defineCpTpAtpNeeded
+        sheetNeeded: defineCpTpAtpNeeded,
+        
+        mustLoadSheetNeedSiswaIfExist:true
     };
 }
 export default function RedirectToCpPage({loaderData}:Route.ComponentProps) {

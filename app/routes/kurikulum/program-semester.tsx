@@ -42,7 +42,8 @@ export async function clientLoader({}:Route.ComponentProps){
         toolbarTabs:ConfigToolbarSemester,
         pesanLoading:'Mempersiapkan Program Semester',
         addPesanRombel:{isAdd:true, type:'rombel', includeFaseName:true},
-        sheetNeeded: defineProsemNeeded
+        sheetNeeded: defineProsemNeeded,
+        mustLoadSheetNeedSiswaIfExist:true
     };
 }
 

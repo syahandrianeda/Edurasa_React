@@ -40,7 +40,9 @@ export async function clientLoader({}:Route.ComponentProps){
         controlKelas: settingRombel,
         pesanLoading:'Memanggil Setting Kalender',
         addPesanRombel:{isAdd:true, type:'rombel', includeFaseName:false},
-        sheetNeeded:defineAbsenRombelNeeded
+        sheetNeeded:defineAbsenRombelNeeded,
+        
+        mustLoadSheetNeedSiswaIfExist:true
     };
 }
 

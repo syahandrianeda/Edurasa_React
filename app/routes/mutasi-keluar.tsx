@@ -38,7 +38,8 @@ export async function clientLoader({}:Route.ComponentProps){
         controlKelas: settingRombel,
         pesanLoading:'Mempersiapkan Data Mutasi Keluar',
         addPesanRombel:{isAdd:true, type:'rombel', includeFaseName:false},
-        sheetNeeded: [sheetAkun_dataSiswa]
+        sheetNeeded: [sheetAkun_dataSiswa],
+        mustLoadSheetNeedSiswaIfExist:true
     };
 }
 

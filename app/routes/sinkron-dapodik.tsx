@@ -48,7 +48,9 @@ export async function clientLoader({}:Route.ComponentProps){
             showExport:true,
             pesanLoading:'Mempersiapkan Data Dapodik',
                     // addPesanRombel:{isAdd:true, type:'rombel', includeFaseName:false},
-                    sheetNeeded: [sheetAkun_dataSiswa, sheetAkun_dapodik]
+                    sheetNeeded: [sheetAkun_dataSiswa, sheetAkun_dapodik],
+                    // addPesanRombel:{isAdd:true, type:'rombel', includeFaseName:false},
+        mustLoadSheetNeedSiswaIfExist:true
             
         };
 }

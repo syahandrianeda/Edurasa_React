@@ -1,10 +1,7 @@
 import type { controlDropdownKelas } from "~/components/dropdowns/rombel-dropdown";
-import type { Route } from "./+types/mapel-route";
-import MapelPage from "~/pages/kurikulum/mapel-page";
-import { ConfigToolbarMapel } from "~/controllers/kurikulum/toolbar/config-toolbar-mapel";
-import {  mapelNeeded } from "~/domain/enloaded/intial-enloaded/by-route-page/kurikulum/mapel-needed";
 
-
+import { sheetAkun_dataSiswa } from "~/domain/enloaded/intial-enloaded/by-sheet/akun";
+import type { Route } from "./+types/rekap-tabungan-siswa-route";
 
 
 export function meta({matches}: Route.MetaArgs) {
@@ -16,7 +13,7 @@ export function meta({matches}: Route.MetaArgs) {
     
     return [
         {
-            title: mainTitle + ' | Kurikulum'
+            title: mainTitle + ' | Buku Induk'
         },
         { 
             name: "description", 
@@ -25,35 +22,32 @@ export function meta({matches}: Route.MetaArgs) {
     ];
 }
 
+
 export function clientLoader({}:Route.ComponentProps){
-    // const page = getSessionApp();
     
-    // if(!page){
-    //     throw redirect('/login');
-    // }
-    const settingRombel: controlDropdownKelas ={
+   const settingRombel: controlDropdownKelas ={
             showControlKelas:true,
             title: 'Rombel',
             description:'Rombel yang Anda Ampu',
             typeKelas:'rombel'
         }
-        
-
     return {
-        titleTambahan:'Mata Pelajaran',
+        titleTambahan:'Buku Tabungan',
         controlKelas: settingRombel,
-        toolbarTabs: ConfigToolbarMapel,
-        pesanLoading:'Mempersiapkan Mata Pelajaran',
+        // toolbarTabs: ConfigToolbarSelectMape
+        pesanLoading:'Memanggil Data Tabungan',
         addPesanRombel:{isAdd:true, type:'rombel', includeFaseName:false},
-        sheetNeeded: mapelNeeded,
+        sheetNeeded: [sheetAkun_dataSiswa],
         mustLoadSheetNeedSiswaIfExist:true
     };
 }
 
-export default function MapelPageRoute() {
+export default function TabunganSiswaRoute({loaderData}:Route.ComponentProps){
     
-    
-    return(
-        <MapelPage/>
+    return (
+        <div className="p-1">
+            <h3 className="font-bold uppercase text-center text-3xl">Hallo Tabungan Siswa</h3>
+            
+        </div>
     )
 }

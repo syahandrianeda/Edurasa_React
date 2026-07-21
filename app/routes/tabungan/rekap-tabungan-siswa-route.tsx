@@ -1,8 +1,8 @@
 import type { controlDropdownKelas } from "~/components/dropdowns/rombel-dropdown";
-import type { Route } from "./+types/jadwal-pelajaran-all";
-import { ConfigToolbarJadwalMapelAll } from "~/controllers/jadwal_pelajaran/toolbar/config-toolbar-jadwal-mapelall";
-import JadwalMapelAll from "~/pages/kurikulum/jadwal-mapel-all";
-import { JadwalPelajaranNeeded } from "~/domain/enloaded/intial-enloaded/by-route-page/kurikulum/jadwal-pelajaran-needed";
+
+import { sheetAkun_dataSiswa } from "~/domain/enloaded/intial-enloaded/by-sheet/akun";
+import type { Route } from "./+types/rekap-tabungan-siswa-route";
+
 
 export function meta({matches}: Route.MetaArgs) {
     const rootMeta = matches.find(m => m?.id === 'root')?.meta;
@@ -13,7 +13,7 @@ export function meta({matches}: Route.MetaArgs) {
     
     return [
         {
-            title: mainTitle + ' | Kurikulum'
+            title: mainTitle + ' | Buku Induk'
         },
         { 
             name: "description", 
@@ -22,29 +22,32 @@ export function meta({matches}: Route.MetaArgs) {
     ];
 }
 
+
 export function clientLoader({}:Route.ComponentProps){
     const settingRombel: controlDropdownKelas ={
-            showControlKelas:false,
+            showControlKelas:true,
             title: 'Rombel',
             description:'Rombel yang Anda Ampu',
             typeKelas:'rombel'
         }
-        
-
+   
     return {
-        titleTambahan:'Semua Jadwal Pelajaran',
+        titleTambahan:'Rekap Buku Tabungan',
         controlKelas: settingRombel,
-        toolbarTabs: ConfigToolbarJadwalMapelAll,
-        pesanLoading:'Mempersiapkan Semua Jadwal Pelajaran',
-        // addPesanRombel:{isAdd:true, type:'rombel', includeFaseName:true},
-        sheetNeeded: JadwalPelajaranNeeded,
+        // toolbarTabs: ConfigToolbarSelectMape
+        pesanLoading:'Memanggil Data Tabungan',
+        addPesanRombel:{isAdd:true, type:'rombel', includeFaseName:false},
+        sheetNeeded: [sheetAkun_dataSiswa],
         mustLoadSheetNeedSiswaIfExist:true
     };
 }
 
-export default function JadwalMapelPageRoute() {
-   
-    return(
-        <JadwalMapelAll/>
+export default function RekapTabunganSiswaRoute({loaderData}:Route.ComponentProps){
+    
+    return (
+        <div className="p-1">
+            <h3 className="font-bold uppercase text-center text-3xl">Hallo Rekap Tabungan Siswa</h3>
+            
+        </div>
     )
 }

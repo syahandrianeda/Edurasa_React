@@ -38,7 +38,8 @@ export async function clientLoader({}:Route.ComponentProps){
         toolbarTabs:ConfigToolbarSelectMapel,
         pesanLoading:'Mempersiapkan Program Tahunan',
         addPesanRombel:{isAdd:true, type:'rombel', includeFaseName:true},
-        sheetNeeded: defineProtaNeeded
+        sheetNeeded: defineProtaNeeded,
+        mustLoadSheetNeedSiswaIfExist:true
     };
 }
 

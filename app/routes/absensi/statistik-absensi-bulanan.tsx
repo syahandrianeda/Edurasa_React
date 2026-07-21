@@ -39,7 +39,8 @@ export function clientLoader({}:Route.ComponentProps){
         toolbarTabs: ConfigToolbarStatistikBulanan,
         pesanLoading:'Memanggil Statistik Bulanan',
         addPesanRombel:{isAdd:true, type:'rombel', includeFaseName:false},
-        sheetNeeded:defineAbsenRombelNeeded
+        sheetNeeded:defineAbsenRombelNeeded,
+        mustLoadSheetNeedSiswaIfExist:true
     };
 }
 

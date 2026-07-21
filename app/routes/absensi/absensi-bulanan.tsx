@@ -39,6 +39,7 @@ export function clientLoader({}:Route.ComponentProps){
         pesanLoading:'Memanggil Absen per Bulan',
         addPesanRombel:{isAdd:true, type:'rombel', includeFaseName:false},
         sheetNeeded:defineAbsenRombelNeeded,
+        mustLoadSheetNeedSiswaIfExist:true
         
     };
 }

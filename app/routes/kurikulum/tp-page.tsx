@@ -38,7 +38,8 @@ export function clientLoader({}:Route.ComponentProps){
         toolbarTabs: ConfigToolbarSelectMapel,
         pesanLoading:'Mempersiapkan Tujuan Pembelajaran (Fase TP)',
         addPesanRombel:{isAdd:true, type:'rombel', includeFaseName:true},
-        sheetNeeded: defineCpTpAtpNeeded
+        sheetNeeded: defineCpTpAtpNeeded,
+        mustLoadSheetNeedSiswaIfExist:true
     };
 }
 

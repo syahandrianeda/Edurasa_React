@@ -39,7 +39,8 @@ export function clientLoader({}:Route.ComponentProps){
         toolbarTabs: ConfigToolbarRekapSemesterSiswa,
                 pesanLoading:'Memanggil Absen per Bulan',
                 addPesanRombel:{isAdd:true, type:'rombel', includeFaseName:false},
-                sheetNeeded:defineAbsenRombelNeeded
+                sheetNeeded:defineAbsenRombelNeeded,
+        mustLoadSheetNeedSiswaIfExist:true
     };
 }
 

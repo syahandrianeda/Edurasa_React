@@ -27,8 +27,12 @@ export async function clientLoader({}:Route.ComponentProps){
     return {
         titleTambahan:'Data Rombel', 
         pesanLoading:'Mempersiapkan data Siswa',
-        // addPesanRombel:{isAdd:true, type:'rombel', includeFaseName:false},
-        sheetNeeded: [sheetAkun_dataSiswa]
+        sheetNeeded: [sheetAkun_dataSiswa],
+        
+        addPesanRombel:{isAdd:true, type:'rombel', includeFaseName:false},
+        mustLoadSheetNeedSiswaIfExist:true
+        
+
     };
 }
 export default function RedirectKesiswaan({loaderData}:Route.ComponentProps) {
