@@ -17,6 +17,7 @@ import { Outlet } from "react-router";
 import ModalDataIndukSiswa from "~/controllers/buku-induk-controller/modal/modal-induk";
 import { SubFiturTabungan } from "~/features/subfitur-tabungan";
 import type { Route } from "../../layouts/sub-layouts/+types/sub-tabungan-siswa";
+import ModalKeuangan from "~/controllers/tabungan/modal/modal-tabungan";
 
 
 
@@ -40,7 +41,7 @@ export default function SubBukuIndukLayout({matches}:Route.ComponentProps) {
         }, []);
     
     return (
-        <AppSidebar showExport={showExport} desktopHeader="relative" title={"Buku Induk - "+ titleTambahan} controlKelas={controlKelas}>
+        <AppSidebar showExport={showExport} desktopHeader="relative" title={"Keuangan - "+ titleTambahan} controlKelas={controlKelas}>
             <TopProgressBarFetch active={active} /> 
             <AppWorkplace MainFitur={result}>
                 <ToolbarFilterProvider>
@@ -49,16 +50,13 @@ export default function SubBukuIndukLayout({matches}:Route.ComponentProps) {
                             <PrintAreaWithKopTtd>
                                 <ModalProvider>
                                     <Outlet/>
-                                    <ModalDataIndukSiswa/>
+                                    <ModalKeuangan/>
                                 </ModalProvider>
                             </PrintAreaWithKopTtd>
-                            
                         </ToolbarLayout>
                     </ToolbarKopTtdProvider>
                 </ToolbarFilterProvider>
             </AppWorkplace>
-                
-            
         </AppSidebar>
     )
 }   

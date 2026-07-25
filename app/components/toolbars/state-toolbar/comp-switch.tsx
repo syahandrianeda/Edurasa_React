@@ -77,3 +77,25 @@ export function SwitchModeTahunan(){
         </Field>
     )
 }
+export function SwitchModePenabungAktif(){
+    const { value, updateExtra } = useFilterContext();
+
+    const onSwitch = (v:boolean)=>{
+        updateExtra(draft=>{
+            draft.onlyPenabung = v
+        })
+    }
+
+    useEffect(()=>{
+        updateExtra(draft=>{
+            draft.onlyPenabung = true
+        })
+    },[])
+    
+    return (
+        <Field orientation="horizontal" className="w-1/2 items-center pt-5">
+            <Switch id="switch-penabung-aktif" size="default" checked={value?.extra?.onlyPenabung ?? false} onCheckedChange={onSwitch} />
+            <FieldLabel htmlFor="switch-penabung-aktif">{value?.extra?.onlyPenabung?'Penabung Aktif':'Semua Siswa Rombel'}</FieldLabel>
+        </Field>
+    )
+}

@@ -1,4 +1,4 @@
-import { Banknote, BanknoteArrowDown, BanknoteX, BookmarkCheck, BookMarked, LucideBanknoteArrowUp, PiggyBank, TagsIcon } from "lucide-react";
+import { Banknote, BanknoteArrowDown, BanknoteX, BookmarkCheck, BookMarked, LucideBanknoteArrowUp, PiggyBank, PiggyBankIcon, TagsIcon, Wallet2, WalletCards } from "lucide-react";
 import type { typeSidebarFiturKonten } from "~/types";
 
 export const SubFiturTabungan: typeSidebarFiturKonten[] =[
@@ -8,14 +8,14 @@ export const SubFiturTabungan: typeSidebarFiturKonten[] =[
             {
                 title: 'Tabungan',
                 href: '/tabungan/tabungan-siswa',
-                icon: PiggyBank,
+                icon: Wallet2,
                 description:'Tabungan Siswa',
                 permission: 'view tabungan kelas'
             },
             {
                 title: 'Rekap Tabungan',
                 href: '/tabungan/rekap-tabungan-siswa',
-                icon: BookmarkCheck,
+                icon: PiggyBankIcon,
                 description:'Rekap Tabungan Siswa',
                 permission: 'view tabungan kelas'
             },

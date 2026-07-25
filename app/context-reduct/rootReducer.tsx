@@ -27,6 +27,12 @@ import AtpReducer from './global-state/kurikulum/atp-slice'
 import BankSoalReducer from './global-state/bank-soal/bank-soal-slice';
 import taksonomiBloomReducer from './global-state/taksonomi/taksonomi-slice';
 
+import kategoriKeuanganReducer from './global-state/tabungan/kategori-keuangan-slice'
+import fokusKategoriKeuanganReducer from './global-state/tabungan/ui-akses-keuangan-slice'
+
+import tabunganReducer from './global-state/tabungan/tabungan-slice'
+import keuanganReducer from './global-state/tabungan/keuangan-slice'
+
 const rootReducer = combineReducers({
     auth: authReducer,
     fokusRombel: fokusRombelReducer,
@@ -52,7 +58,11 @@ const rootReducer = combineReducers({
     faseC: faseCReducer,
     Atp: AtpReducer,
     bankSoal:BankSoalReducer,
-    taksonomiBloom:taksonomiBloomReducer
+    taksonomiBloom:taksonomiBloomReducer,
+    kategoriKeuangan:kategoriKeuanganReducer,
+    fokusKategoriKeuangan:fokusKategoriKeuanganReducer,
+    tabungan: tabunganReducer,
+    keuangan: keuanganReducer
 })
 
 export default rootReducer

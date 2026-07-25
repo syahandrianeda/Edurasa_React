@@ -24,7 +24,7 @@ import { setDataJadwalPembiasaan } from "~/context-reduct/global-state/pembiasaa
 import type { pembiasaanSheet } from "~/types/pembiasaan/pembiasaan";
 import { setDataProta } from "~/context-reduct/global-state/prota/prota-slice";
 import type { protaSheet } from "~/types/kurikulum/prota-orm";
-import { setKaldik, setKaldikArray } from "~/context-reduct/global-state/kaldik-slice";
+import {  setKaldikArray } from "~/context-reduct/global-state/kaldik-slice";
 import type { KaldikType } from "~/types/kaldik";
 import { IndDbSiswaRepository } from "~/infrastructures/indexDb/db-datasiswa-repository";
 import { setTaksonomiBloom } from "~/context-reduct/global-state/taksonomi/taksonomi-slice";
@@ -33,8 +33,18 @@ import { getSessionRombel } from "~/infrastructures/session-storage/rombel-sessi
 import { setAbsensiRombel } from "~/context-reduct/global-state/absensi-slice";
 import type { AbsensiSiswaSheetType } from "~/types/absensi-siswa";
 import { setSiswaDapodik } from "~/context-reduct/global-state/sheet-dapodik-slice";
-import type { SiswaDapodikAppToSheet, SiswaTypeDapodik } from "~/types/siswa-dapodik";
+import type { SiswaDapodikAppToSheet } from "~/types/siswa-dapodik";
 import { saveIsianSiswa } from "~/infrastructures/session-storage/isian-siswa";
+import { getSessionApp } from "~/infrastructures/session-storage/app-session";
+import type { UserPtk } from "~/types";
+import { setTabunganRombel } from "~/context-reduct/global-state/tabungan/tabungan-slice";
+import type { TabunganSheetType } from "~/types/tabungan/tabungan-sheet-type";
+import {  setKeuanganUser } from "~/context-reduct/global-state/tabungan/keuangan-slice";
+import type { KeuanganSheetType } from "~/types/tabungan/keuangan-sheet-type";
+import { setKategoriAkses_keuangan } from "~/context-reduct/global-state/tabungan/kategori-keuangan-slice";
+import type { KategoriKeuanganAppType, KategoriKeuanganSheetType } from "~/types/tabungan/kategori-keuangan-type";
+import { setFokusAksesRombelKeuangan } from "~/context-reduct/global-state/tabungan/ui-akses-keuangan-slice";
+import DtoKategoriKeuangan from "~/dtos/dto-kategori-keuangan";
 
 
 export default async function DispatchingResponseToStore(success:boolean, data:Record<string, any>[],detailResponse:Record<string,any>, rombelAktif?:string){
@@ -50,7 +60,7 @@ export default async function DispatchingResponseToStore(success:boolean, data:R
         }
         // datasiswa ada trial-nya
         if(detailResponse?.namaTab === namaTab('datasiswa')){
-            console.log('dispatching data Siswa', detailResponse)
+            // console.log('dispatching data Siswa', detailResponse)
             /**
              * 
              */
@@ -116,7 +126,8 @@ export default async function DispatchingResponseToStore(success:boolean, data:R
         }
         
         // ada trial-nya:
-        if(detailResponse?.namaTab === namaTab('jadwal_mapel')){ store.dispatch(setDataJadwalPelajaran(data as unknown as jadwalMapelAccordTable[]))
+        if(detailResponse?.namaTab === namaTab('jadwal_mapel')){ 
+            store.dispatch(setDataJadwalPelajaran(data as unknown as jadwalMapelAccordTable[]))
             // store.dispatch(setJadwalMapel(data as unknown as jadwalMapelAccordTable[]))
         }
         // ada trial-nya:
@@ -146,6 +157,74 @@ export default async function DispatchingResponseToStore(success:boolean, data:R
                 ))
             
         }
-    
+        
+        /** tabungan */
+        if(detailResponse?.namaTab === `${namaTab('tabungan_')}${rombelAktif}`){
+            
+            // console.log('tabungan_', detailResponse, data, store.getState().tabungan, rombelAktif)
+            /**
+             * store.dispatch(setAbsensiRombel(
+                    {
+                        nama_rombel:rombelAktif ?? getSessionRombel(),
+                        data: detailResponse?.findTab? data as AbsensiSiswaSheetType[]:[]
+                    }
+                ))
+             */
+            store.dispatch(setTabunganRombel(
+                {
+                    nama_rombel:rombelAktif ?? getSessionRombel(),
+                    data: detailResponse?.findTab? data as TabunganSheetType[]:[]
+                }
+            ))
+            
+        }
+        /** keuangan */
+        if(detailResponse?.namaTab === `${namaTab('keuangan_')}${getSessionApp<UserPtk>()?.id}`){
+            
+                store.dispatch(setKeuanganUser(
+                    {
+                        user_id:getSessionApp<UserPtk>()?.id ?? undefined,
+                        data: detailResponse?.findTab? data as KeuanganSheetType[] :[]
+                    }
+                ))
+            
+        }
+        if(detailResponse?.namaTab === namaTab('kategori_akses')){
+                // console.log('response kategori akses', data, detailResponse)
+                store.dispatch(setKategoriAkses_keuangan({
+                    data: data as KategoriKeuanganSheetType[],
+                    loaded:true,
+                    name:'kategori_akses'
+
+                }));
+                /** simpan store kelas awal jika ada,  */
+                if(data.length>0 && !getSessionApp<UserPtk>()){
+                    const found = (data as KategoriKeuanganSheetType[]).find(s=>s.user_id === getSessionApp<UserPtk>()?.id);
+                    if(found){
+                        const dto = DtoKategoriKeuangan.fromSheet(found);
+                        store.dispatch(setFokusAksesRombelKeuangan({
+                            value:{
+                                kategori:dto.kategori ,
+                                rombel:dto.akses_kelas[0]
+                            },
+                            name:'fokusRombelKategoriKeuangan',
+                            loaded:true
+                        }))
+
+                    }else{
+                        if(getSessionApp<UserPtk>()?.jabatan === 'Guru Kelas'){
+                            store.dispatch(setFokusAksesRombelKeuangan({
+                                value:{
+                                    kategori:'tabungan' ,
+                                    rombel:getSessionRombel()
+                                },
+                                name:'fokusRombelKategoriKeuangan',
+                                loaded:true
+                        }))
+                        }
+                    }
+                }
+            
+        }
 
 }

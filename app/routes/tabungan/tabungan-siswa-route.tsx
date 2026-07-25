@@ -1,7 +1,10 @@
 import type { controlDropdownKelas } from "~/components/dropdowns/rombel-dropdown";
-
-import { sheetAkun_dataSiswa } from "~/domain/enloaded/intial-enloaded/by-sheet/akun";
 import type { Route } from "./+types/rekap-tabungan-siswa-route";
+import InputHarianTabungan from "~/pages/tabungan/input-harian";
+import { useAppSelector } from "~/context-reduct/hook";
+import { defineTabunganRombelNeeded } from "~/domain/enloaded/intial-enloaded/by-route-page/tabungan/input-tabungan-needed";
+import { FokusRombelKeuangan } from "~/context-reduct/selectores/rombel-tabungan-selector";
+import { ConfigToolbarTanggalInput } from "~/controllers/tabungan/toolbar/configToolbarTanngalInput";
 
 
 export function meta({matches}: Route.MetaArgs) {
@@ -13,7 +16,7 @@ export function meta({matches}: Route.MetaArgs) {
     
     return [
         {
-            title: mainTitle + ' | Buku Induk'
+            title: mainTitle + ' | Keuangan'
         },
         { 
             name: "description", 
@@ -25,29 +28,32 @@ export function meta({matches}: Route.MetaArgs) {
 
 export function clientLoader({}:Route.ComponentProps){
     
-   const settingRombel: controlDropdownKelas ={
+    const settingRombel: controlDropdownKelas ={
             showControlKelas:true,
-            title: 'Rombel',
-            description:'Rombel yang Anda Ampu',
-            typeKelas:'rombel'
+            title: 'Akses kelas',
+            description:'Akses Rombel',
+            typeKelas:'rombel',
+            sourceKelas:'keuangan'
         }
     return {
         titleTambahan:'Buku Tabungan',
         controlKelas: settingRombel,
-        // toolbarTabs: ConfigToolbarSelectMape
+        toolbarTabs: ConfigToolbarTanggalInput,
         pesanLoading:'Memanggil Data Tabungan',
-        addPesanRombel:{isAdd:true, type:'rombel', includeFaseName:false},
-        sheetNeeded: [sheetAkun_dataSiswa],
+        sourceKelas:'tabungan',
+        // addPesanRombel:{isAdd:true, type:'rombel', includeFaseName:false},
+        sheetNeeded: defineTabunganRombelNeeded,//[sheetAkun_dataSiswa],
         mustLoadSheetNeedSiswaIfExist:true
     };
 }
 
 export default function TabunganSiswaRoute({loaderData}:Route.ComponentProps){
-    
+    const fokus = useAppSelector(FokusRombelKeuangan);
+    const rombel = fokus?.rombel;
     return (
         <div className="p-1">
-            <h3 className="font-bold uppercase text-center text-3xl">Hallo Tabungan Siswa</h3>
-            
+            <h3 className="font-bold uppercase text-center text-3xl mb-0">Input {fokus?.kategori} Kelas {rombel}</h3>
+            <InputHarianTabungan/>
         </div>
     )
 }

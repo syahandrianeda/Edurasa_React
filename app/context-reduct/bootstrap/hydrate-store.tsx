@@ -50,7 +50,7 @@ export function hydratePreloadedState(): Partial<RootState> {
       loaded:false
     },
     uiPreference:{
-      sabtuLibur:true,
+      sabtuLibur:false,
       name:'isSabtuLibur',
       loaded:true
     },
@@ -135,6 +135,35 @@ export function hydratePreloadedState(): Partial<RootState> {
       data:[],
       name:'bank_soal',
       loaded:false
+    },
+    //anggap keuangan kelas itu tabungan
+    kategoriKeuangan:{
+      data:[
+        {
+          idbaris:0,
+          user_id: null,
+          kategori:'tabungan',
+          nama_user:'',
+          akses_kelas:''
+        }
+      ],
+      name:'kategori_akses',
+      loaded:false
+    },
+    fokusKategoriKeuangan:{
+      value:undefined,
+      name:'fokusRombelKategoriKeuangan',
+      loaded:false
+    },
+    keuangan: {
+        data:[],
+        name:'keuangan',
+        loaded:false
+    },
+    tabungan: {
+        data:[],
+        name:'tabungan',
+        loaded:false
     }
 
   };

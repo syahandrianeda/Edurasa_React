@@ -124,7 +124,17 @@ export function getParseDateYYYYMMMDD(value: unknown): number {
 
     return Number.isNaN(teks) ? 0 : Number(teks);
 }
-
+export function isSameDay(day1:Date, day2:Date):boolean{
+  const h1= day1.getDate();
+  const b1 =day1.getMonth();
+  const y1 = day1.getFullYear();
+  
+  const h2= day2.getDate();
+  const b2 =day2.getMonth();
+  const y2 = day2.getFullYear();
+  return (h1===h2 && b1 === b2 && y1 === y2)
+  
+}
 export function getParseDateDMMYYYY(value: unknown): string {
   if (!value) return '';
       const d = value instanceof Date ? value : new Date(value as any);

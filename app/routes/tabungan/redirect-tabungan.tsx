@@ -1,7 +1,7 @@
 import { Navigate } from "react-router";
-
-import { sheetAkun_dataSiswa } from "~/domain/enloaded/intial-enloaded/by-sheet/akun";
 import type { Route } from "./+types/redirect-tabungan";
+import { defineTabunganRombelNeededRedirect } from "~/domain/enloaded/intial-enloaded/by-route-page/tabungan/input-tabungan-needed";
+import type { controlDropdownKelas } from "~/components/dropdowns/rombel-dropdown";
 
 
 export function meta({matches}: Route.MetaArgs) {
@@ -23,12 +23,19 @@ export function meta({matches}: Route.MetaArgs) {
 }
 
 export function clientLoader({}:Route.ComponentProps){
-    
+    const settingRombel: controlDropdownKelas ={
+                showControlKelas:true,
+                title: 'Akses kelas',
+                description:'Akses Rombel',
+                typeKelas:'rombel',
+                sourceKelas:'tabungan',
+            }
     return {
         titleTambahan:'Buku Tabungan Loading', 
-        pesanLoading:'Mempersiapkan Buku Tabungan',
-        sheetNeeded: [sheetAkun_dataSiswa],
-        
+        controlKelas: settingRombel,
+        pesanLoading:'Mempersiapkan Hak Akses Keuangan',
+        sheetNeeded: defineTabunganRombelNeededRedirect,//[sheetAkun_dataSiswa],
+        sourceKelas:'tabungan',
         mustLoadSheetNeedSiswaIfExist:true
     
     };

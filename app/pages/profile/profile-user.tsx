@@ -17,7 +17,7 @@ import { saveSessionApp } from "~/infrastructures/session-storage/app-session";
 import { setCredentials } from "~/context-reduct/global-state/auth-slice";
 import { setFokusRombel } from "~/context-reduct/global-state/fokus-rombel-slice";
 import { isImageFileType } from "~/domain/image/file-uploader";
-import { getSessionRombel, saveSessionRombel } from "~/infrastructures/session-storage/rombel-session";
+import { saveSessionRombel } from "~/infrastructures/session-storage/rombel-session";
 import { getNumberFromString } from "~/lib/get-number";
 
 
@@ -93,7 +93,7 @@ export default function ProfileUser(){
     }
     
     return (
-        <div className="p-1">
+        <div className="p-1" data-word="img">
             <h3 className="text-2xl font-extrabold text-center">PROFIL GURU</h3>
             <div className="grid grid-cols-1 md:grid-cols-4 border m-2 rounded-2xl border-dotted shadow-2xl">
                 <AvatarComponent disable={disabled} user_name={dataAkun?.name ?? 'Avatar'} k="avatar" value={dataAkun?.avatar ?? ''} setValue={onChangeInputText}/>

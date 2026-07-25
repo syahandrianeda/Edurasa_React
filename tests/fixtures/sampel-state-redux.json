@@ -1,0 +1,1328 @@
+{
+    "auth": {
+        "user": {
+            "id": 27,
+            "name": "Admin",
+            "email": "uptdsdnratujaya1@gmail.com",
+            "sekolah": "UPTD SDN Ratujaya 1",
+            "kepsek_name": "Nenah, S.Pd",
+            "kepsek_nip": "19810730 201001 2 008",
+            "avatar": "https://lh3.googleusercontent.com/d/1zA3EM2G1WDzvbfC_vBTk2hpush47ocFE",
+            "jabatan": "admin",
+            "nip": "",
+            "kelas_ampu": [
+                "5A",
+                "5B",
+                "1A",
+                "1B",
+                "2B",
+                "2A",
+                "3A",
+                "3B",
+                "4B",
+                "4A",
+                "6A",
+                "6B"
+            ],
+            "kode_mapel_ampu": "admin",
+            "roles": "admin",
+            "permission": [
+                {
+                    "idbaris": 2,
+                    "role": "admin",
+                    "permission": "view approval",
+                    "level": "menu",
+                    "keterangan": ""
+                },
+                {
+                    "idbaris": 3,
+                    "role": "admin",
+                    "permission": "view admin-panel",
+                    "level": "menu",
+                    "keterangan": ""
+                },
+                {
+                    "idbaris": 4,
+                    "role": "admin",
+                    "permission": "view setting sekolah",
+                    "level": "menu",
+                    "keterangan": ""
+                },
+                {
+                    "idbaris": 5,
+                    "role": "admin",
+                    "permission": "view data-siswa",
+                    "level": "menu",
+                    "keterangan": ""
+                },
+                {
+                    "idbaris": 6,
+                    "role": "admin",
+                    "permission": "view kaldik",
+                    "level": "menu",
+                    "keterangan": ""
+                },
+                {
+                    "idbaris": 7,
+                    "role": "admin",
+                    "permission": "view kurikulum",
+                    "level": "menu",
+                    "keterangan": ""
+                },
+                {
+                    "idbaris": 8,
+                    "role": "admin",
+                    "permission": "view bank-soal",
+                    "level": "menu",
+                    "keterangan": ""
+                },
+                {
+                    "idbaris": 9,
+                    "role": "admin",
+                    "permission": "view program-pembelajaran",
+                    "level": "menu",
+                    "keterangan": ""
+                },
+                {
+                    "idbaris": 10,
+                    "role": "admin",
+                    "permission": "view modul-ajar",
+                    "level": "menu",
+                    "keterangan": ""
+                },
+                {
+                    "idbaris": 11,
+                    "role": "admin",
+                    "permission": "view absensi-siswa",
+                    "level": "menu",
+                    "keterangan": ""
+                },
+                {
+                    "idbaris": 12,
+                    "role": "admin",
+                    "permission": "view remedial pengayaan",
+                    "level": "menu",
+                    "keterangan": ""
+                },
+                {
+                    "idbaris": 13,
+                    "role": "admin",
+                    "permission": "view kbm",
+                    "level": "menu",
+                    "keterangan": ""
+                },
+                {
+                    "idbaris": 14,
+                    "role": "admin",
+                    "permission": "view raport",
+                    "level": "menu",
+                    "keterangan": ""
+                },
+                {
+                    "idbaris": 15,
+                    "role": "admin",
+                    "permission": "view buku-induk",
+                    "level": "menu",
+                    "keterangan": ""
+                },
+                {
+                    "idbaris": 16,
+                    "role": "admin",
+                    "permission": "view kokuler",
+                    "level": "menu",
+                    "keterangan": ""
+                },
+                {
+                    "idbaris": 17,
+                    "role": "admin",
+                    "permission": "view program-literasi",
+                    "level": "menu",
+                    "keterangan": ""
+                },
+                {
+                    "idbaris": 18,
+                    "role": "admin",
+                    "permission": "view program-supervisi",
+                    "level": "menu",
+                    "keterangan": ""
+                },
+                {
+                    "idbaris": 19,
+                    "role": "admin",
+                    "permission": "view kehadiran-guru",
+                    "level": "menu",
+                    "keterangan": ""
+                },
+                {
+                    "idbaris": 20,
+                    "role": "admin",
+                    "permission": "view arsip-surat",
+                    "level": "menu",
+                    "keterangan": ""
+                },
+                {
+                    "idbaris": 21,
+                    "role": "admin",
+                    "permission": "view arsip-aplikasi",
+                    "level": "menu",
+                    "keterangan": ""
+                },
+                {
+                    "idbaris": 22,
+                    "role": "admin",
+                    "permission": "view arsip-dokumen",
+                    "level": "menu",
+                    "keterangan": ""
+                },
+                {
+                    "idbaris": 23,
+                    "role": "admin",
+                    "permission": "view tabungan",
+                    "level": "menu",
+                    "keterangan": ""
+                },
+                {
+                    "idbaris": 24,
+                    "role": "admin",
+                    "permission": "Import Database Siswa",
+                    "level": "view data-siswa",
+                    "keterangan": "group"
+                },
+                {
+                    "idbaris": 25,
+                    "role": "admin",
+                    "permission": "view connect dapodik",
+                    "level": "view data-siswa",
+                    "keterangan": ""
+                },
+                {
+                    "idbaris": 26,
+                    "role": "admin",
+                    "permission": "view import file pdsiswa",
+                    "level": "view data-siswa",
+                    "keterangan": ""
+                },
+                {
+                    "idbaris": 27,
+                    "role": "admin",
+                    "permission": "view input siswa",
+                    "level": "view data-siswa",
+                    "keterangan": ""
+                },
+                {
+                    "idbaris": 28,
+                    "role": "admin",
+                    "permission": "Data Siswa",
+                    "level": "view data-siswa",
+                    "keterangan": "group"
+                },
+                {
+                    "idbaris": 29,
+                    "role": "admin",
+                    "permission": "view rombelku",
+                    "level": "view data-siswa",
+                    "keterangan": ""
+                },
+                {
+                    "idbaris": 30,
+                    "role": "admin",
+                    "permission": "view jenjangku",
+                    "level": "view data-siswa",
+                    "keterangan": ""
+                },
+                {
+                    "idbaris": 31,
+                    "role": "admin",
+                    "permission": "Data Mutasi",
+                    "level": "view data-siswa",
+                    "keterangan": "group"
+                },
+                {
+                    "idbaris": 32,
+                    "role": "admin",
+                    "permission": "view mutasi masuk",
+                    "level": "view data-siswa",
+                    "keterangan": ""
+                },
+                {
+                    "idbaris": 33,
+                    "role": "admin",
+                    "permission": "view mutasi keluar",
+                    "level": "view data-siswa",
+                    "keterangan": ""
+                },
+                {
+                    "idbaris": 34,
+                    "role": "admin",
+                    "permission": "view laporan mutasi",
+                    "level": "view data-siswa",
+                    "keterangan": ""
+                },
+                {
+                    "idbaris": 35,
+                    "role": "admin",
+                    "permission": "Statistik Siswa",
+                    "level": "view data-siswa",
+                    "keterangan": "group"
+                },
+                {
+                    "idbaris": 36,
+                    "role": "admin",
+                    "permission": "view statistik umur",
+                    "level": "view data-siswa",
+                    "keterangan": ""
+                },
+                {
+                    "idbaris": 37,
+                    "role": "admin",
+                    "permission": "view statistik agama",
+                    "level": "view data-siswa",
+                    "keterangan": ""
+                },
+                {
+                    "idbaris": 38,
+                    "role": "admin",
+                    "permission": "view statistik kustom",
+                    "level": "view data-siswa",
+                    "keterangan": ""
+                },
+                {
+                    "idbaris": 39,
+                    "role": "admin",
+                    "permission": "Identitas Sekolah",
+                    "level": "view setting sekolah",
+                    "keterangan": "group"
+                },
+                {
+                    "idbaris": 40,
+                    "role": "admin",
+                    "permission": "view tempat tugas",
+                    "level": "view setting sekolah",
+                    "keterangan": ""
+                },
+                {
+                    "idbaris": 41,
+                    "role": "admin",
+                    "permission": "view riwayat tempat tugas",
+                    "level": "view setting sekolah",
+                    "keterangan": ""
+                },
+                {
+                    "idbaris": 42,
+                    "role": "admin",
+                    "permission": "Tugas dan Jabatan",
+                    "level": "view setting sekolah",
+                    "keterangan": "group"
+                },
+                {
+                    "idbaris": 43,
+                    "role": "admin",
+                    "permission": "view tugas jabatan",
+                    "level": "view setting sekolah",
+                    "keterangan": ""
+                },
+                {
+                    "idbaris": 44,
+                    "role": "admin",
+                    "permission": "view riwayat tugas jabatan",
+                    "level": "view setting sekolah",
+                    "keterangan": ""
+                },
+                {
+                    "idbaris": 45,
+                    "role": "admin",
+                    "permission": "Kelas dan Rombel",
+                    "level": "view setting sekolah",
+                    "keterangan": "group"
+                },
+                {
+                    "idbaris": 46,
+                    "role": "admin",
+                    "permission": "view rombel aktif",
+                    "level": "view setting sekolah",
+                    "keterangan": ""
+                },
+                {
+                    "idbaris": 47,
+                    "role": "admin",
+                    "permission": "view riwayat mengajar",
+                    "level": "view setting sekolah",
+                    "keterangan": ""
+                },
+                {
+                    "idbaris": 48,
+                    "role": "admin",
+                    "permission": "Daftar Hadir",
+                    "level": "view absensi siswa",
+                    "keterangan": "group"
+                },
+                {
+                    "idbaris": 49,
+                    "role": "admin",
+                    "permission": "view absensi siswa",
+                    "level": "view absensi siswa",
+                    "keterangan": ""
+                },
+                {
+                    "idbaris": 50,
+                    "role": "admin",
+                    "permission": "view keterangan kaldik",
+                    "level": "view absensi siswa",
+                    "keterangan": ""
+                },
+                {
+                    "idbaris": 51,
+                    "role": "admin",
+                    "permission": "Rekapitulasi Absensi Siswa",
+                    "level": "view absensi siswa",
+                    "keterangan": "group"
+                },
+                {
+                    "idbaris": 52,
+                    "role": "admin",
+                    "permission": "Sakit Ijin Alpa",
+                    "level": "view absensi siswa",
+                    "keterangan": "group"
+                },
+                {
+                    "idbaris": 53,
+                    "role": "admin",
+                    "permission": "Grafik Absensi (SIA)",
+                    "level": "view absensi siswa",
+                    "keterangan": "group"
+                },
+                {
+                    "idbaris": 54,
+                    "role": "admin",
+                    "permission": "Setting Keterangan",
+                    "level": "view kaldik",
+                    "keterangan": "group"
+                },
+                {
+                    "idbaris": 55,
+                    "role": "admin",
+                    "permission": "view kaldik",
+                    "level": "view kaldik",
+                    "keterangan": ""
+                },
+                {
+                    "idbaris": 56,
+                    "role": "admin",
+                    "permission": "view kaldik default",
+                    "level": "view kaldik",
+                    "keterangan": ""
+                },
+                {
+                    "idbaris": 57,
+                    "role": "admin",
+                    "permission": "Format Kaldik Sekolah",
+                    "level": "view kaldik",
+                    "keterangan": "group"
+                },
+                {
+                    "idbaris": 58,
+                    "role": "admin",
+                    "permission": "Hari Efektif",
+                    "level": "view kaldik",
+                    "keterangan": "group"
+                },
+                {
+                    "idbaris": 59,
+                    "role": "admin",
+                    "permission": "Hari Efektif Belajar",
+                    "level": "view kaldik",
+                    "keterangan": "group"
+                },
+                {
+                    "idbaris": 60,
+                    "role": "admin",
+                    "permission": "Jam Efektif Belajar",
+                    "level": "view kaldik",
+                    "keterangan": "group"
+                },
+                {
+                    "idbaris": 285,
+                    "role": "admin",
+                    "permission": "view format daftar siswa",
+                    "level": "view data-siswa",
+                    "keterangan": ""
+                },
+                {
+                    "idbaris": 290,
+                    "role": "admin",
+                    "permission": "view cari siswa",
+                    "level": "view data-siswa",
+                    "keterangan": ""
+                },
+                {
+                    "idbaris": 295,
+                    "role": "admin",
+                    "permission": "Update Data Siswa",
+                    "level": "view data-siswa",
+                    "keterangan": "group"
+                },
+                {
+                    "idbaris": 300,
+                    "role": "admin",
+                    "permission": "view sinkron-dapodik",
+                    "level": "view data-siswa",
+                    "keterangan": ""
+                },
+                {
+                    "idbaris": 305,
+                    "role": "admin",
+                    "permission": "view update-data-siswa",
+                    "level": "view data-siswa",
+                    "keterangan": ""
+                },
+                {
+                    "idbaris": 310,
+                    "role": "admin",
+                    "permission": "Properti Kurikulum",
+                    "level": "view kurikulum",
+                    "keterangan": "group"
+                },
+                {
+                    "idbaris": 311,
+                    "role": "admin",
+                    "permission": "view kurikulum",
+                    "level": "view kurikulum",
+                    "keterangan": ""
+                },
+                {
+                    "idbaris": 312,
+                    "role": "admin",
+                    "permission": "Mata Pelajaran",
+                    "level": "view kurikulum",
+                    "keterangan": "group"
+                },
+                {
+                    "idbaris": 325,
+                    "role": "admin",
+                    "permission": "view mapel",
+                    "level": "view kurikulum",
+                    "keterangan": ""
+                },
+                {
+                    "idbaris": 326,
+                    "role": "admin",
+                    "permission": "view jadwal mapel",
+                    "level": "view kurikulum",
+                    "keterangan": ""
+                },
+                {
+                    "idbaris": 327,
+                    "role": "admin",
+                    "permission": "view alokasi mapel",
+                    "level": "view kurikulum",
+                    "keterangan": ""
+                },
+                {
+                    "idbaris": 342,
+                    "role": "admin",
+                    "permission": "Program Pembelajaran",
+                    "level": "view kurikulum",
+                    "keterangan": "group"
+                },
+                {
+                    "idbaris": 343,
+                    "role": "admin",
+                    "permission": "Bank Soal",
+                    "level": "view bank soal",
+                    "keterangan": "group"
+                },
+                {
+                    "idbaris": 344,
+                    "role": "admin",
+                    "permission": "view bank soal",
+                    "level": "view bank soal",
+                    "keterangan": ""
+                },
+                {
+                    "idbaris": 345,
+                    "role": "admin",
+                    "permission": "Paket Soal",
+                    "level": "view bank soal",
+                    "keterangan": "group"
+                },
+                {
+                    "idbaris": 346,
+                    "role": "admin",
+                    "permission": "Taksonomi Bloom",
+                    "level": "view bank soal",
+                    "keterangan": "group"
+                },
+                {
+                    "idbaris": 347,
+                    "role": "admin",
+                    "permission": "Data Pribadi",
+                    "level": "view profile",
+                    "keterangan": "group"
+                },
+                {
+                    "idbaris": 348,
+                    "role": "admin",
+                    "permission": "Tugas Mengajar",
+                    "level": "view profile",
+                    "keterangan": "group"
+                },
+                {
+                    "idbaris": 349,
+                    "role": "admin",
+                    "permission": "view profile",
+                    "level": "view profile",
+                    "keterangan": ""
+                },
+                {
+                    "idbaris": 379,
+                    "role": "admin",
+                    "permission": "Buku Induk",
+                    "level": "view buku induk",
+                    "keterangan": "group"
+                },
+                {
+                    "idbaris": 380,
+                    "role": "admin",
+                    "permission": "view buku induk",
+                    "level": "view buku induk",
+                    "keterangan": ""
+                },
+                {
+                    "idbaris": 381,
+                    "role": "admin",
+                    "permission": "Klapper",
+                    "level": "view buku induk",
+                    "keterangan": "group"
+                },
+                {
+                    "idbaris": 382,
+                    "role": "admin",
+                    "permission": "Ijazah",
+                    "level": "view buku induk",
+                    "keterangan": "group"
+                },
+                {
+                    "idbaris": 399,
+                    "role": "admin",
+                    "permission": "Tabungan",
+                    "level": "view tabungan",
+                    "keterangan": "group"
+                },
+                {
+                    "idbaris": 400,
+                    "role": "admin",
+                    "permission": "view tabungan kelas",
+                    "level": "view tabungan",
+                    "keterangan": ""
+                },
+                {
+                    "idbaris": 401,
+                    "role": "admin",
+                    "permission": "view tabungan kategori",
+                    "level": "view tabungan",
+                    "keterangan": ""
+                },
+                {
+                    "idbaris": 402,
+                    "role": "admin",
+                    "permission": "view tabungan input kelas",
+                    "level": "view tabungan",
+                    "keterangan": ""
+                },
+                {
+                    "idbaris": 403,
+                    "role": "admin",
+                    "permission": "view tabungan input kategori",
+                    "level": "view tabungan",
+                    "keterangan": ""
+                },
+                {
+                    "idbaris": 404,
+                    "role": "admin",
+                    "permission": "view tabungan kategori",
+                    "level": "view tabungan",
+                    "keterangan": ""
+                },
+                {
+                    "idbaris": 405,
+                    "role": "admin",
+                    "permission": "Keuangan Lainnya",
+                    "level": "view tabungan",
+                    "keterangan": "group"
+                }
+            ],
+            "friends": [
+                {
+                    "id": 2,
+                    "name": "Nena, S.Pd",
+                    "email": "uptdsdnratujaya1@gmail.com",
+                    "sekolah": "UPTD SDN Ratujaya 1",
+                    "kepsek_name": "Nena, S.Pd",
+                    "kepsek_nip": "197307202000032005",
+                    "avatar": "https://lh3.googleusercontent.com/d/1VHT3gyUixSyzLyHILQYtRkSGqgsbbJdN",
+                    "jabatan": "Kepala Sekolah",
+                    "nip": "197307202000032005",
+                    "kelas_ampu": [
+                        "1A",
+                        "1B",
+                        "2A",
+                        "2B",
+                        "3A",
+                        "3B",
+                        "4A",
+                        "4B",
+                        "5A",
+                        "5B",
+                        "6A",
+                        "6B"
+                    ],
+                    "kode_mapel_ampu": "Kepala Sekolah",
+                    "roles": "Kepala Sekolah"
+                },
+                {
+                    "id": 4,
+                    "name": "Ahmad Dasuki, S.Pd.I",
+                    "email": "uptdsdnratujaya1@gmail.com",
+                    "sekolah": "UPTD SDN Ratujaya 1",
+                    "kepsek_name": "Yoce Magdalena, S.Pd.SD",
+                    "kepsek_nip": "197307202000032005",
+                    "avatar": "https://lh3.googleusercontent.com/d/1aOh9I3NnitMdu7hDAyajg4gxPftWXem9",
+                    "jabatan": "Guru Kelas",
+                    "nip": "19760814 200604 1 012",
+                    "kelas_ampu": [
+                        "5A"
+                    ],
+                    "kode_mapel_ampu": "5A",
+                    "roles": "Guru Kelas"
+                },
+                {
+                    "id": 6,
+                    "name": "Badriah, S.Pd.I",
+                    "email": "uptdsdnratujaya1@gmail.com",
+                    "sekolah": "UPTD SDN Ratujaya 1",
+                    "kepsek_name": "Nenah, S.Pd",
+                    "kepsek_nip": "19810730 201001 2 008",
+                    "avatar": "https://lh3.googleusercontent.com/d/1yfwaZb3uCBfTPdeRQVLZ6kJ0ZJypU9dj",
+                    "jabatan": "Guru Mapel",
+                    "nip": "19761004 200710 2 002",
+                    "kelas_ampu": [
+                        "3A",
+                        " 1A",
+                        " 1B",
+                        " 3B",
+                        " 6A",
+                        " 6B"
+                    ],
+                    "kode_mapel_ampu": "PAI",
+                    "roles": "Guru Mapel"
+                },
+                {
+                    "id": 8,
+                    "name": "Widya Hendarsari,S.PdSD",
+                    "email": "uptdsdnratujaya1@gmail.com",
+                    "sekolah": "UPTD SDN Ratujaya 1",
+                    "kepsek_name": "Yoce Magdalena, S.Pd.SD",
+                    "kepsek_nip": "197307202000032005",
+                    "avatar": "https://lh3.googleusercontent.com/d/1n9bDOVlLzzLgNbVlk1BjjK_l7kMTPplq",
+                    "jabatan": "Guru Kelas",
+                    "nip": "19810709 201001 2 010",
+                    "kelas_ampu": [
+                        "1A"
+                    ],
+                    "kode_mapel_ampu": "1A",
+                    "roles": "Guru Kelas"
+                },
+                {
+                    "id": 10,
+                    "name": "Sartika Marini, S.Pd",
+                    "email": "sartikamarini@gmail.com",
+                    "sekolah": "UPTD SDN Ratujaya 1",
+                    "kepsek_name": "Yoce Magdalena, S.Pd.SD",
+                    "kepsek_nip": "197307202000032005",
+                    "avatar": "https://lh3.googleusercontent.com/d/1G56mOub1EmRqHi7AqY8gE-ZdTskWZrkG",
+                    "jabatan": "Guru Kelas",
+                    "nip": "19820530 200902 2 003",
+                    "kelas_ampu": [
+                        "6B"
+                    ],
+                    "kode_mapel_ampu": "6B",
+                    "roles": "Guru Kelas"
+                },
+                {
+                    "id": 11,
+                    "name": "Ruliyanti, S.Pd.SD",
+                    "email": "uptdsdnratujaya1@gmail.com",
+                    "sekolah": "UPTD SDN Ratujaya 1",
+                    "kepsek_name": "Yoce Magdalena, S.Pd.SD",
+                    "kepsek_nip": "197307202000032005",
+                    "avatar": "https://lh3.googleusercontent.com/d/1ZKS3Uegc9mVHpJiowSJf3X16RM1mq-i1",
+                    "jabatan": "Guru Kelas",
+                    "nip": "19760314 201001 2 004",
+                    "kelas_ampu": [
+                        "5B"
+                    ],
+                    "kode_mapel_ampu": "5B",
+                    "roles": "Guru Kelas"
+                },
+                {
+                    "id": 12,
+                    "name": "Ade Andriansyah, S.Pd.SD",
+                    "email": "databasesdnratujaya1@gmail.com",
+                    "sekolah": "UPTD SDN Ratujaya 1",
+                    "kepsek_name": "Yoce Magdalena, S.Pd.SD",
+                    "kepsek_nip": "197307202000032005",
+                    "avatar": "https://lh3.googleusercontent.com/d/1EsGGOM9bvR1bcxKCta86AFwcKKuQPKQe",
+                    "jabatan": "Guru Kelas",
+                    "nip": "19870710 201403 1 002",
+                    "kelas_ampu": [
+                        "6A"
+                    ],
+                    "kode_mapel_ampu": "6A",
+                    "roles": "Guru Kelas"
+                },
+                {
+                    "id": 14,
+                    "name": "Vera Andriani,S.Pd.SD",
+                    "email": "uptdsdnratujaya1@gmail.com",
+                    "sekolah": "UPTD SDN Ratujaya 1",
+                    "kepsek_name": "Yoce Magdalena, S.Pd.SD",
+                    "kepsek_nip": "197307202000032005",
+                    "avatar": "https://lh3.googleusercontent.com/d/1LSOYTPBUDEM2N0Gb3yJYA1uodQDMZhLk",
+                    "jabatan": "Guru Kelas",
+                    "nip": "198204292021212001",
+                    "kelas_ampu": [
+                        "4B"
+                    ],
+                    "kode_mapel_ampu": "4B",
+                    "roles": "Guru Kelas"
+                },
+                {
+                    "id": 15,
+                    "name": "Jettri Meigawati, S.Pd.SD",
+                    "email": "uptdsdnratujaya1@gmail.com",
+                    "sekolah": "UPTD SDN Ratujaya 1",
+                    "kepsek_name": "Yoce Magdalena, S.Pd.SD",
+                    "kepsek_nip": "197307202000032005",
+                    "avatar": "https://lh3.googleusercontent.com/d/1vBNGsCot55R94gH2CBGBGh0aV_9LEO4X",
+                    "jabatan": "Guru Kelas",
+                    "nip": "19910512 202221 2 004",
+                    "kelas_ampu": [
+                        "4A"
+                    ],
+                    "kode_mapel_ampu": "4A",
+                    "roles": "Guru Kelas"
+                },
+                {
+                    "id": 16,
+                    "name": "Miftah Mawaddah, S.Pd",
+                    "email": "uptdsdnratujaya1@gmail.com",
+                    "sekolah": "UPTD SDN Ratujaya 1",
+                    "kepsek_name": "Yoce Magdalena, S.Pd.SD",
+                    "kepsek_nip": "197307202000032005",
+                    "avatar": "https://lh3.googleusercontent.com/d/1Muoq40wmMoyszWUWwSH8tTYBLmsdErMf",
+                    "jabatan": "Guru Kelas",
+                    "nip": "",
+                    "kelas_ampu": [
+                        "1B"
+                    ],
+                    "kode_mapel_ampu": "1B",
+                    "roles": "Guru Kelas"
+                },
+                {
+                    "id": 17,
+                    "name": "Anisa Setiawati,S.Pd.",
+                    "email": "anisasw54@gmail.com",
+                    "sekolah": "UPTD SDN Ratujaya 1",
+                    "kepsek_name": "Yoce Magdalena, S.Pd.SD",
+                    "kepsek_nip": "197307202000032005",
+                    "avatar": "https://lh3.googleusercontent.com/d/1_TAnL7d_IIZXtkiQrwOGpxDgDS8LrVUb",
+                    "jabatan": "Guru Kelas",
+                    "nip": "199502202023212020",
+                    "kelas_ampu": [
+                        "2A"
+                    ],
+                    "kode_mapel_ampu": "2A",
+                    "roles": "Guru Kelas"
+                },
+                {
+                    "id": 20,
+                    "name": "Dyah Puji Lestari, S.Pd",
+                    "email": "uptdsdnratujaya1@gmail.com",
+                    "sekolah": "UPTD SDN Ratujaya 1",
+                    "kepsek_name": "Yoce Magdalena, S.Pd.SD",
+                    "kepsek_nip": "197307202000032005",
+                    "avatar": "https://lh3.googleusercontent.com/d/15gz7k42prJhAgBIjIwhaGKkRVx7qLBG5",
+                    "jabatan": "Guru Kelas",
+                    "nip": "",
+                    "kelas_ampu": [
+                        "3B"
+                    ],
+                    "kode_mapel_ampu": "2B",
+                    "roles": "Guru Kelas"
+                },
+                {
+                    "id": 21,
+                    "name": "Dian Suhendri",
+                    "email": "uptdsdnratujaya1@gmail.com",
+                    "sekolah": "UPTD SDN Ratujaya 1",
+                    "kepsek_name": "Yoce Magdalena, S.Pd.SD",
+                    "kepsek_nip": "197307202000032005",
+                    "avatar": "https://lh3.googleusercontent.com/d/1ATzQlzyqcwE4zQFd-xcnEtiVkU0d-Rfj",
+                    "jabatan": "Operator Sekolah",
+                    "nip": "",
+                    "kelas_ampu": [
+                        "1A",
+                        "1B",
+                        "2A",
+                        "2B",
+                        "3A",
+                        "3B",
+                        "4A",
+                        "4B",
+                        "5A",
+                        "5B",
+                        "6A",
+                        "6B",
+                        "6C"
+                    ],
+                    "kode_mapel_ampu": "Operator Sekolah",
+                    "roles": "Operator Sekolah"
+                },
+                {
+                    "id": 22,
+                    "name": "Priyatno",
+                    "email": "uptdsdnratujaya1@gmail.com",
+                    "sekolah": "UPTD SDN Ratujaya 1",
+                    "kepsek_name": "Yoce Magdalena, S.Pd.SD",
+                    "kepsek_nip": "197307202000032005",
+                    "avatar": "https://lh3.googleusercontent.com/d/1LSOYTPBUDEM2N0Gb3yJYA1uodQDMZhLk",
+                    "jabatan": "Penjaga Sekolah",
+                    "nip": "",
+                    "kelas_ampu": [
+                        ""
+                    ],
+                    "kode_mapel_ampu": "Penjaga Sekolah",
+                    "roles": "Penjaga Sekolah"
+                },
+                {
+                    "id": 24,
+                    "name": "Ahmad Satria, S.Pd.I",
+                    "email": "uptdsdnratujaya1@gmail.com",
+                    "sekolah": "UPTD SDN Ratujaya 1",
+                    "kepsek_name": "Yoce Magdalena, S.Pd.SD",
+                    "kepsek_nip": "197307202000032005",
+                    "avatar": "https://lh3.googleusercontent.com/d/1ARkx2BM67iHCbUwGpFwwR8rWnjGy1wN6",
+                    "jabatan": "Guru Mapel",
+                    "nip": "",
+                    "kelas_ampu": [
+                        "2A",
+                        "2B",
+                        "3A",
+                        "3B",
+                        "5A",
+                        "5B"
+                    ],
+                    "kode_mapel_ampu": "PAI",
+                    "roles": "Guru Mapel"
+                },
+                {
+                    "id": 26,
+                    "name": "Abdul Rahman, S.Kom",
+                    "email": "uptdsdnratujaya1@gmail.com",
+                    "sekolah": "UPTD SDN Ratujaya 1",
+                    "kepsek_name": "Yoce Magdalena, S.Pd.SD",
+                    "kepsek_nip": "197307202000032005",
+                    "avatar": "https://lh3.googleusercontent.com/d/1LSOYTPBUDEM2N0Gb3yJYA1uodQDMZhLk",
+                    "jabatan": "Guru Mapel",
+                    "nip": "",
+                    "kelas_ampu": [
+                        "3A",
+                        "3B",
+                        "4A",
+                        "4B",
+                        "5A"
+                    ],
+                    "kode_mapel_ampu": "PJOK",
+                    "roles": "Guru Mapel"
+                },
+                {
+                    "id": 28,
+                    "name": "Test Ganti lagi",
+                    "email": "uptdsdnratujaya1@gmail.com",
+                    "sekolah": "UPTD SDN Ratujaya 1",
+                    "kepsek_name": "Yoce Magdalena, S.Pd.SD",
+                    "kepsek_nip": "197307202000032005",
+                    "avatar": "https://lh3.googleusercontent.com/d/1zA3EM2G1WDzvbfC_vBTk2hpush47ocFE",
+                    "jabatan": "Guru Mapel",
+                    "nip": "",
+                    "kelas_ampu": [
+                        "1A",
+                        "1B",
+                        "2A",
+                        "2B",
+                        "3A",
+                        "3B",
+                        "4A",
+                        "4B",
+                        "5A",
+                        "5B",
+                        "6A",
+                        "6B"
+                    ],
+                    "kode_mapel_ampu": "BING",
+                    "roles": "Guru Mapel"
+                },
+                {
+                    "id": 29,
+                    "name": "Hydrilla Mei Myristika",
+                    "email": "uptdsdnratujaya1@gmail.com",
+                    "sekolah": "UPTD SDN Ratujaya 1",
+                    "kepsek_name": "Yoce Magdalena, S.Pd.SD",
+                    "kepsek_nip": "197307202000032005",
+                    "avatar": "https://lh3.googleusercontent.com/d/1zA3EM2G1WDzvbfC_vBTk2hpush47ocFE",
+                    "jabatan": "Guru Kelas",
+                    "nip": "",
+                    "kelas_ampu": [
+                        "3A"
+                    ],
+                    "kode_mapel_ampu": "3A",
+                    "roles": "Guru Kelas"
+                },
+                {
+                    "id": 30,
+                    "name": "Anisa Damayanti, S.Pd",
+                    "email": "uptdsdnratujaya1@gmail.com",
+                    "sekolah": "UPTD SDN Ratujaya 1",
+                    "kepsek_name": "Yoce Magdalena, S.Pd.SD",
+                    "kepsek_nip": "197307202000032005",
+                    "avatar": "https://lh3.googleusercontent.com/d/1zA3EM2G1WDzvbfC_vBTk2hpush47ocFE",
+                    "jabatan": "Guru Mapel",
+                    "nip": "",
+                    "kelas_ampu": [
+                        "1A",
+                        "1B",
+                        "2A",
+                        "2B",
+                        "5B",
+                        "6A",
+                        "6B"
+                    ],
+                    "kode_mapel_ampu": "PJOK",
+                    "roles": "Guru Mapel"
+                },
+                {
+                    "id": 31,
+                    "name": "Irma Khoirunnisa, S.Pd",
+                    "email": "uptdsdnratujaya1@gmail.com",
+                    "sekolah": "UPTD SDN Ratujaya 1",
+                    "kepsek_name": "Yoce Magdalena, S.Pd.SD",
+                    "kepsek_nip": "197307202000032005",
+                    "avatar": "https://lh3.googleusercontent.com/d/1zA3EM2G1WDzvbfC_vBTk2hpush47ocFE",
+                    "jabatan": "Guru Kelas",
+                    "nip": "",
+                    "kelas_ampu": [
+                        "3B"
+                    ],
+                    "kode_mapel_ampu": "3B",
+                    "roles": "Guru Kelas"
+                }
+            ]
+        },
+        "loaded": true,
+        "name": "auth"
+    },
+    "fokusRombel": {
+        "value": "3A",
+        "name": "fokusRombel",
+        "loaded": true
+    },
+    "dataSiswa": {
+        "name": "datasiswa",
+        "data": [],
+        "loaded": true,
+        "loading": true,
+        "source": "API"
+    },
+    "loadedApi": {
+        "loaded": false,
+        "name": "loaded_animation"
+    },
+    "dapodik": {
+        "data": [],
+        "name": "dapodik",
+        "loaded": false
+    },
+    "kaldik": {
+        "loaded": true,
+        "name": "kalender",
+        "data": [
+            {
+                "time_stamp": "2026-07-11T17:46:27.007Z",
+                "keterangan": "Libur semester 2 Tahun Pelajaran 2025/2026",
+                "start_tgl": "2026-06-30T17:00:00.000Z",
+                "end_tgl": "2026-07-11T17:00:00.000Z",
+                "aksi": "",
+                "idbaris": 2,
+                "warna": "",
+                "libur_he_heb": "0",
+                "he": 0,
+                "heb": 0,
+                "libur": 1,
+                "backgroundColor": "#ff0000",
+                "color": "#00ff04",
+                "hapus": "",
+                "oleh": "Admin"
+            },
+            {
+                "time_stamp": "2026-07-16T08:51:57.528Z",
+                "keterangan": "Hari Pertama Masuk dan MPLS",
+                "start_tgl": "2026-07-12T17:00:00.000Z",
+                "end_tgl": "2026-07-15T17:00:00.000Z",
+                "aksi": "",
+                "idbaris": 3,
+                "warna": "",
+                "libur_he_heb": "0",
+                "he": 1,
+                "heb": 0,
+                "libur": 0,
+                "backgroundColor": "#00ff62",
+                "color": "#fa0000",
+                "hapus": "",
+                "oleh": "Admin"
+            },
+            {
+                "time_stamp": "2026-07-16T08:48:47.609Z",
+                "keterangan": "Libur HUT Kemerdekaan RI",
+                "start_tgl": "2026-08-16T17:00:00.000Z",
+                "end_tgl": "2026-08-16T17:00:00.000Z",
+                "aksi": "",
+                "idbaris": 4,
+                "warna": "",
+                "libur_he_heb": "0",
+                "he": 0,
+                "heb": 0,
+                "libur": 1,
+                "backgroundColor": "#ff0000",
+                "color": "#ffdd00",
+                "hapus": "",
+                "oleh": "Admin"
+            },
+            {
+                "time_stamp": "2026-07-16T08:49:55.352Z",
+                "keterangan": "Lomba-lomba HUT Kemerdekaan",
+                "start_tgl": "2026-08-17T17:00:00.000Z",
+                "end_tgl": "2026-08-17T17:00:00.000Z",
+                "aksi": "",
+                "idbaris": 5,
+                "warna": "",
+                "libur_he_heb": "0",
+                "he": 1,
+                "heb": 0,
+                "libur": 0,
+                "backgroundColor": "#00fffb",
+                "color": "#0011ff",
+                "hapus": "",
+                "oleh": "Admin"
+            },
+            {
+                "time_stamp": "2026-07-16T08:54:26.264Z",
+                "keterangan": "Santnan Anak Yatim",
+                "start_tgl": "2026-07-16T17:00:00.000Z",
+                "end_tgl": "2026-07-16T17:00:00.000Z",
+                "aksi": "",
+                "idbaris": 6,
+                "warna": "",
+                "libur_he_heb": "0",
+                "he": 1,
+                "heb": 0,
+                "libur": 0,
+                "backgroundColor": "#00fffb",
+                "color": "#9900ff",
+                "hapus": "",
+                "oleh": "Admin"
+            },
+            {
+                "time_stamp": "2026-07-20T05:23:51.391Z",
+                "keterangan": "Tahun Baru 2027",
+                "start_tgl": "2026-12-31T17:00:00.000Z",
+                "end_tgl": "2026-12-31T17:00:00.000Z",
+                "aksi": "",
+                "idbaris": 7,
+                "warna": "",
+                "libur_he_heb": "0",
+                "he": 0,
+                "heb": 0,
+                "libur": 1,
+                "backgroundColor": "#ff0000",
+                "color": "#00fffb",
+                "hapus": "",
+                "oleh": "Admin"
+            }
+        ]
+    },
+    "absensiSiswa": {
+        "dataAbsensi": [
+            {
+                "nama_rombel": "4A",
+                "data": []
+            },
+            {
+                "nama_rombel": "3A",
+                "data": [
+                    {
+                        "Time_Stamp": "2026-07-09T23:30:00.000Z",
+                        "id": "10072026",
+                        "name": "ABDUL AZIZ JAELANI",
+                        "kelas": "3A",
+                        "kehadiran": "Sakit",
+                        "fileContent": "10sfjLCvGjOL0kG2sabg5OBQc8s3_JmNs",
+                        "resume": "",
+                        "action": "guruNgabsensiSiswaEdurasa",
+                        "idbaris": 2,
+                        "tokensiswa": 823
+                    },
+                    {
+                        "Time_Stamp": "2026-07-13T23:30:00.000Z",
+                        "id": "14072026",
+                        "name": "ABDUL AZIZ JAELANI",
+                        "kelas": "3A",
+                        "kehadiran": "Ijin",
+                        "fileContent": "1VOdeOa_vilNTwfGWn48VK56-v5IWzibb",
+                        "resume": "",
+                        "action": "guruNgabsensiSiswaEdurasa",
+                        "idbaris": 3,
+                        "tokensiswa": 823
+                    },
+                    {
+                        "Time_Stamp": "2026-07-15T23:30:00.000Z",
+                        "id": "16072026",
+                        "name": "DELISA DWI KUSUMA",
+                        "kelas": "3A",
+                        "kehadiran": "Alpa",
+                        "fileContent": "1tDBZCBhUDs9eu3o9yc7FNImjPiHXKQR7",
+                        "resume": "",
+                        "action": "guruNgabsensiSiswaEdurasa",
+                        "idbaris": 4,
+                        "tokensiswa": 840
+                    },
+                    {
+                        "Time_Stamp": "2026-07-16T05:18:21.115Z",
+                        "id": "16072026",
+                        "name": "AZIZA HIMATU ZULFA",
+                        "kelas": "3A",
+                        "kehadiran": "Ijin",
+                        "fileContent": "1VOdeOa_vilNTwfGWn48VK56-v5IWzibb",
+                        "resume": "",
+                        "action": "guruNgabsensiSiswaEdurasa",
+                        "idbaris": 5,
+                        "tokensiswa": 835
+                    }
+                ]
+            }
+        ],
+        "name": "absensi",
+        "loaded": false
+    },
+    "uiPreference": {
+        "sabtuLibur": true,
+        "name": "isSabtuLibur",
+        "loaded": true
+    },
+    "fokusMapel": {
+        "data": {
+            "id": 8,
+            "nama": "Pendidikan Pancasila",
+            "kode": "PKN",
+            "kode_umum": "PKN",
+            "muatan": "Nasional",
+            "grup": "A",
+            "kelompok": "Umum"
+        },
+        "disabled": false,
+        "name": "fokusMapel",
+        "loaded": false
+    },
+    "mapel": {
+        "data": [],
+        "name": "mapel",
+        "loaded": false
+    },
+    "jpMapel": {
+        "data": [],
+        "name": "jp_mapel",
+        "loaded": false
+    },
+    "settingJadwalMapel": {
+        "name": "setting_jadwal",
+        "data": [],
+        "loaded": false
+    },
+    "jadwalPelajaran": {
+        "loaded": false,
+        "data": [],
+        "name": "jadwal_mapel"
+    },
+    "jadwalPembiasaan": {
+        "name": "kegiatan_nonkbm",
+        "data": [],
+        "loaded": false
+    },
+    "prota": {
+        "data": [],
+        "name": "prota",
+        "loaded": false
+    },
+    "CP": {
+        "name": "elemen_cp",
+        "data": [],
+        "loaded": false
+    },
+    "faseA": {
+        "name": "faseA",
+        "data": [],
+        "loaded": false
+    },
+    "faseB": {
+        "name": "faseB",
+        "data": [],
+        "loaded": false
+    },
+    "faseC": {
+        "name": "faseC",
+        "data": [],
+        "loaded": false
+    },
+    "Atp": {
+        "name": "Atp",
+        "data": [],
+        "loaded": false
+    },
+    "bankSoal": {
+        "data": [],
+        "name": "bank_soal",
+        "loaded": false
+    },
+    "taksonomiBloom": {
+        "name": "taksonomi_bloom",
+        "data": [],
+        "loaded": false
+    },
+    "kategoriKeuangan": {
+        "data": [
+            {
+                "idbaris": 0,
+                "user_id": 27,
+                "kategori": "tabungan",
+                "akses_kelas": [
+                    "4A"
+                ]
+            }
+        ],
+        "name": "kategori_akses",
+        "loaded": true
+    },
+    "fokusKategoriKeuangan": {
+        "name": "fokusRombelKategoriKeuangan",
+        "loaded": false
+    }
+}

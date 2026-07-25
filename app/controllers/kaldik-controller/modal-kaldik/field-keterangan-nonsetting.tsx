@@ -4,6 +4,7 @@ import { instanceOfKaldik } from "~/context-reduct/selectores/kaldik-selector";
 import { useFormEdura } from "~/components/form-custom/form-edura";
 import type{ KaldikType } from "~/types/kaldik";
 import type { keteranganLabelKaldik } from "~/domain/kaldik/type-output-kaldik";
+import { cn } from "~/lib/utils";
 
 export default function FieldKeteranganKaldikNonSetting({date}:{date:Date}){
         const dataKaldik = useAppSelector(instanceOfKaldik);
@@ -41,11 +42,11 @@ export default function FieldKeteranganKaldikNonSetting({date}:{date:Date}){
     )
 }
 
-export function KeteranganKaldikNonSetting({label, dataKeterangan}:{label?:string, dataKeterangan:keteranganLabelKaldik[]}){
+export function KeteranganKaldikNonSetting({label, dataKeterangan, className}:{label?:string, dataKeterangan:keteranganLabelKaldik[], className?:string}){
         
         
     return (
-        <div className="rounded w-full]">
+        <div className={cn("rounded w-full]", className)}>
             {
                 dataKeterangan.length>0 && (<p className="text-[10px] border-b bg-sky-100 border-sky-500 ps-1 pe-4 w-fit rounded-tr-2xl">{label||'Keterangan'}</p>)
             }

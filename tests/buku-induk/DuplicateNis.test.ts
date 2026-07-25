@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import GroupPrefixInduk from "~/domain/buku-induk/infrastructures/group-prefix-induk";
 import DuplicateNis from "~/domain/buku-induk/ValidateNis/DuplicateNis";
+import type { SiswaType } from "~/types/siswa";
 
 // import GroupPrefixNis from "~/domain/grouping/GroupPrefixNis";
 // import DuplicateNis from "~/domain/validation/DuplicateNis";
@@ -31,7 +32,7 @@ describe("DuplicateNis", () => {
         pd_nama:"Budi",
         pd_jk:"L",
       },
-    ]);
+    ] as SiswaType[]);
 
     const result = duplicate.validate(grouped);
 
@@ -61,7 +62,7 @@ describe("DuplicateNis", () => {
         pd_nama:"Budi",
         pd_jk:"L",
       },
-    ]);
+    ] as SiswaType[]);
 
     const result = duplicate.validate(grouped);
 
@@ -100,7 +101,7 @@ describe("DuplicateNis", () => {
         pd_nama:"Budi",
         pd_jk:"L",
       },
-    ]);
+    ] as SiswaType[]);
 
     const result = duplicate.validate(grouped);
 

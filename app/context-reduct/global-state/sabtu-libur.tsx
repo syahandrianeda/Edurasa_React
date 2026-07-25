@@ -9,7 +9,7 @@ interface UIPreferenceState {
 }
 
 const initialState: UIPreferenceState = {
-  sabtuLibur: true,
+  sabtuLibur: false,
   name:'isSabtuLibur',
   loaded:true
 };

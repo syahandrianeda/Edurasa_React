@@ -137,6 +137,9 @@ export default class AppScriptSheet extends AppScriptConfig{
     get sheetKurikulum():string{
         return this.currentMacro['ss_kurikulum']
     }
+    get sheetTabungan():string{
+        return this.currentMacro['ss_tabungan']
+    }
     /** id sheet Absensi: */
     sheetAbsensi(jenjang:number): string{
         //ss_absen_6

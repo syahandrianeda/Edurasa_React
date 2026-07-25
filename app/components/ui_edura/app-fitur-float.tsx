@@ -31,10 +31,6 @@ export default function AppFiturFloat({
                     <span className="font-medium truncate">{title || 'Menu'}</span>
                 </div>
                 <div className="flex gap-1 justify-between">
-                    {/* {showControlKelas && <MenuSelectRombelKelas title="Kelas"/>}
-                    {showPrintable && <ControlDropdownExport/>} */} 
-                    {/* {controlKelas && <RombelDropdown {...controlKelas}/>} */}
-                    {/* <RombelDropdown {...controlKelas}/> */}
                     <RombelDropdown {...controlKelas} />
                     {showExport && <ExportDropdown title={title}/>}
                 </div>
