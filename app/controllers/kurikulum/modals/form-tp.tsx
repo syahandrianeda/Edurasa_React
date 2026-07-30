@@ -11,6 +11,7 @@ import SendTpCreate from "../crud/send-tp-create";
 import SendTpUpdate from "../crud/send-tp-update";
 import { useCrudTpFaseProvider } from "../crud/crud-tp-fase-provider";
 import { TriangleAlert } from "lucide-react";
+import TpPageRoute from "~/routes/kurikulum/atp-page";
 
 
 export default function FormContentFaseTp<OrmFaseKurikulumType>({state}:{state:ModalState}){
@@ -100,7 +101,7 @@ function EditContenFaseTp(){
                     <div className="border p-2 text-xs italic rounded bg-sky-50">{dataCp?.cp_utama}</div>
                     
                     <Field className="relative mt-4">
-                        <InputTextArea className="scrol-h-custom" label="Tujuan Pembelajaran" value={currentData.tp} onChange={(e)=>handleInputChange(e.target.value)}/>
+                        <InputTextArea className="scrol-h-custom" label={`Tujuan Pembelajaran`} value={currentData.tp} onChange={(e)=>handleInputChange(e.target.value)}/>
                     </Field>
                 </div>
                 <div className="border rounded-2xl  flex flex-col justify-start bg-sky-500/50 border-sky-500 inset-shadow-sky-600 shadow-lg p-1 md:overflow-y-auto scrol-h-custom">
@@ -113,9 +114,9 @@ function EditContenFaseTp(){
                         </div>
                         <p className="font-bold dark:text-black">Elemen (Elemen Yang Sedang Anda Pilih)</p>
                         <p className="italic border p-2 text-xs text-black">{dataCp?.elemen}</p>
-                        <p className="font-bold dark:text-black">CP (Yang sedang Anda Pilih)</p>
+                        <p className="font-bold dark:text-black">CP (Yang sedang Anda Pilih | ({currentData?.source_data_tp?.foreignkey_elemencp}) )</p>
                         <p className="italic border p-2 text-xs text-black">{dataCp?.cp_utama}</p>
-                        <p className="font-bold dark:text-black">TP (Yang sedang Anda Edit)</p>
+                        <p className="font-bold dark:text-black">TP (Yang sedang Anda Edit |  ({currentData?.idbaris_tp}))</p>
                         <p className="italic border p-2 text-xs text-black">{currentData.tp}</p>
                     </div>
                 </div>

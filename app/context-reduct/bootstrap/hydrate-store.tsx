@@ -164,6 +164,11 @@ export function hydratePreloadedState(): Partial<RootState> {
         data:[],
         name:'tabungan',
         loaded:false
+    },
+    suratKeluar:{
+      data: [],
+      name:'surat_keluar',
+      loaded:false
     }
 
   };

@@ -7,8 +7,7 @@ import type { ModalState } from "~/components/modals/modal-provider";
 import { useFormEdura } from "~/components/form-custom/form-edura";
 import type{ TabunganAppType } from "~/types/tabungan/tabungan-app-type";
 import { useCrudTabunganProvider } from "../../crud/crud-tabungan-provider";
-import { useEffect, useMemo, useState } from "react";
-import ButtonUpdateTabungan from "../../crud/button-update-tabungan";
+import { useEffect,  useState } from "react";
 import WrapperSnapshot from "../previews/wrapper-snapshot-single";
 
 export default function ModalFieldTabungan({stateModal}:{stateModal:ModalState}){
@@ -49,28 +48,20 @@ export default function ModalFieldTabungan({stateModal}:{stateModal:ModalState})
      * User mengubah Debit/Kredit
      */
     const handleChangeKategori = (kategori: keyof TabunganAppType) => {
-    setInputanKategori(kategori);
+        setInputanKategori(kategori);
 
-    setTabunganItem((draft) => {
-        console.log("SEBELUM", {
-            masuk: draft.masuk,
-            keluar: draft.keluar,
+        setTabunganItem((draft) => {
+            
+            if (kategori === "masuk") {
+                draft.masuk = draft.keluar;
+                draft.keluar = undefined;
+            } else {
+                draft.keluar = draft.masuk;
+                draft.masuk = undefined;
+            }
+
         });
-
-        if (kategori === "masuk") {
-            draft.masuk = draft.keluar;
-            draft.keluar = undefined;
-        } else {
-            draft.keluar = draft.masuk;
-            draft.masuk = undefined;
-        }
-
-        console.log("SESUDAH", {
-            masuk: draft.masuk,
-            keluar: draft.keluar,
-        });
-    });
-};
+    };
 
     /**
      * User mengubah nominal

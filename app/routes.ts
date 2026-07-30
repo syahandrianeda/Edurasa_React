@@ -129,6 +129,21 @@ export default [
                     // route('debit-kredit', 'routes/tabungan/debit-kredit-route.tsx'),
                     // route('rekap-debit-kredit', 'routes/tabungan/rekap-debit-kredit-route.tsx'),
                 ])
+            ]),
+            layout("layouts/sub-layouts/sub-administrasi-surat.tsx",[
+                ...prefix("arsip-surat",[
+                    index('routes/administrasi-surat/redirect-surat.tsx'),
+                    route('surat-keluar', "routes/administrasi-surat/surat-keluar.tsx"),
+                    route('create-surat-keluar', "routes/administrasi-surat/surat-keluar-harian.tsx"),
+                    route('sppd', "routes/administrasi-surat/sppd.tsx"),
+                    route('surat-masuk', "routes/administrasi-surat/surat-masuk.tsx"),
+                    route('create-surat-masuk', "routes/administrasi-surat/surat-masuk-harian.tsx"),
+                    route('sk-siswa-aktif', "routes/administrasi-surat/sk-siswa-aktif.tsx"),
+                    // route('sk-nisn', "routes/administrasi-surat/sk-nisn.tsx"),
+                    // route('sk-kb', "routes/administrasi-surat/sk-kb.tsx"),
+                    // route('sk-siswa-diterima', "routes/administrasi-surat/sk-siswa-diterima.tsx"),
+                    // route('sk-siswa-mutasi', "routes/administrasi-surat/sk-siswa-mutasi"),
+                ])
             ])
         ]),
     ]),

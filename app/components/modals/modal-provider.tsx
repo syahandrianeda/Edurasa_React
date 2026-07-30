@@ -1,37 +1,12 @@
 import { createContext, useContext, useState, type ReactNode } from "react"
 import type { SiswaType } from "~/types/siswa"
+import type { ModalType } from "./modal-type"
 
-export type ModalType =
-    | 'INFO'
-    | 'TAMBAH'//-->'CREATE'
-    | 'EDIT'
-    | 'EDIT-CUSTOM'
-    | 'HAPUS'//'DELETE'
-    | 'EDIT SISWA'
-    | 'EDIT PROFIL'
-    | 'TAMBAH ABSEN'
-    | 'EDIT ABSEN'
-    | 'HAPUS ABSEN'
-    | 'TAMBAH TP'
-    | 'EDIT TP'
-    | 'HAPUS TP'
-    | 'TAMBAH ATP'
-    | 'EDIT ATP'
-    | 'HAPUS ATP'
-    | 'TAMBAH MAPEL ROMBEL'
-    | 'EDIT MAPEL ROMBEL'
-    | 'HAPUS MAPEL ROMBEL'
-    | 'TAMBAH JADWAL MAPEL'
-    | 'EDIT JADWAL MAPEL'
-    | 'HAPUS JADWAL MAPEL'
-    | 'EDIT PROTA'
-    | 'PREVIEW ITEM SOAL'
-    | 'EDIT KEUANGAN'
-    | 'HAPUS KEUANGAN'
-    | 'INFO KEUANGAN'
-    | null
+
+
 export interface ConfigModelType{
     closeOnOutsideClick: boolean,
+    backToModalType?:ModalState['type']
 }
 
 export const DEFAULT_CONFIG_MODAL: ConfigModelType = {
@@ -56,7 +31,8 @@ export interface ModalActions<TPayload = unknown> {
 
 export interface ModalContextType {
     state: ModalState
-    actions: ModalActions
+    actions: ModalActions,
+    nextState?:ModalState['type']
 }
 
 export const ModalContext = createContext<ModalContextType | null>(null)
@@ -76,6 +52,7 @@ export function useModal<TPayload>() {
         payload: context.state.payload as TPayload | undefined,
         },
     actions: context.actions,
+    nextState: context.state.configModal?.backToModalType
     }
 }
 

@@ -1,5 +1,5 @@
 import { useFormEdura } from "~/components/form-custom/form-edura";
-import { useModal, type ModalType } from "~/components/modals/modal-provider";
+import { useModal} from "~/components/modals/modal-provider";
 import { useAppDispatch } from "~/context-reduct/hook";
 import type OrmAbsensi from "~/domain/absensi/orm-absensi";
 import type { AbsensiSiswaSheetType } from "~/types/absensi-siswa";
@@ -8,6 +8,7 @@ import { Loader } from "lucide-react";
 import { setloadedApi } from "~/context-reduct/global-state/loaded-slice";
 import { ShowToasterSuccess } from "~/lib/toaster";
 import { setAbsensiRombel } from "~/context-reduct/global-state/absensi-slice";
+import type { ModalType } from "~/components/modals/modal-type";
 
 export default function SendAbsen({stateType}:{stateType:ModalType}){
     const dispatch = useAppDispatch();

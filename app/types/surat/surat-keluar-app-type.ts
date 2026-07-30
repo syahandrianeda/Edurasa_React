@@ -1,0 +1,16 @@
+export interface SuratKeluarAppType{
+            idbaris: number,
+            nosurat: string,
+            id_nosurat: string,
+            tglsurat: Date,
+            perihal: string,
+            indekssurat: string,
+            ditujukkankepada: string,
+            idfile: string,
+            status: string,
+            oleh: string,
+            user: number,
+            target_siswa: number[],
+            target_ptk: number[],
+            refrensi_suratmasuk: number,
+}

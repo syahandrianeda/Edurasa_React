@@ -28,14 +28,14 @@ export const SubFiturTabungan: typeSidebarFiturKonten[] =[
                 title: 'Kategori',
                 href: '/tabungan/kategori-kuangan',
                 icon: TagsIcon,
-                description:'Buat Kategori Tabungan',
+                description:'Buat Kategori keuangan lain',
                 permission: 'view tabungan kategori'
             },
             {
                 title: 'Debit Kredit',
                 href: '/tabungan/debit-kredit',
                 icon: Banknote,
-                description:'Buat Kategori Tabungan',
+                description:'Input keuangan berdasarkan kategori',
                 permission: 'view tabungan kategori'
             },
             {

@@ -58,8 +58,8 @@ describe('BuildParamEnloaded', ()=>{
         const instance = new BuildParamLoaded(state, sheetNeeded).evaluate();
         const param = instance.param
         const sheetNeededMustCall = instance.sheetToBeParam
-        expect(param).toHaveLength(4)
-        expect(sheetNeeded).toHaveLength(4)
+        expect(param).toHaveLength(2)
+        expect(sheetNeeded).toHaveLength(5)
     })
 
 

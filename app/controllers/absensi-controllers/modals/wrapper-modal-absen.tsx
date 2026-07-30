@@ -1,9 +1,10 @@
 import { ModalEdura } from "~/components/modals/modal-components";
-import { useModal, type ModalState, type ModalType } from "~/components/modals/modal-provider";
+import { useModal, type ModalState,  } from "~/components/modals/modal-provider";
 import FormDataSiswa, { FormDataSiswaKhususAbsen } from "~/controllers/data-siswa-controller/form-data-siswa";
 import FormSettingKaldik from "~/controllers/kaldik-controller/modal-kaldik/form-setting-kaldik";
 import type OrmAbsensi from "~/domain/absensi/orm-absensi";
 import FormModalAbsen from "./modal-absen";
+import type { ModalType } from "~/components/modals/modal-type";
 
 /**
  * 
@@ -77,11 +78,11 @@ function SwitchTitle(state:ModalState):string{
         case 'EDIT SISWA':
             return 'Edit Data: '  +((state.payload as { pd_nama?: string })?.pd_nama ?? '') 
         case 'TAMBAH ABSEN':
-            return 'Tambah Absen '  +((state.payload as { name?: string })?.name ?? '') +' hari ' + ((state.payload as { Time_Stamp?: Date })?.Time_Stamp?.toLocaleString('id-ID', {dateStyle:'full'}) ?? '');
+            return '✍️ ' + ((state.payload as { name?: string })?.name ?? '') +' hari ' + ((state.payload as { Time_Stamp?: Date })?.Time_Stamp?.toLocaleString('id-ID', {dateStyle:'full'}) ?? '');
         case 'HAPUS ABSEN':
-            return 'Hapus Absen '  +((state.payload as { name?: string })?.name ?? '') +' hari ' + ((state.payload as { Time_Stamp?: Date })?.Time_Stamp?.toLocaleString('id-ID', {dateStyle:'full'}) ?? '');
+            return '🗑️ '  +((state.payload as { name?: string })?.name ?? '') +' hari ' + ((state.payload as { Time_Stamp?: Date })?.Time_Stamp?.toLocaleString('id-ID', {dateStyle:'full'}) ?? '');
         case 'EDIT ABSEN':
-            return 'Edit Absen ' +((state.payload as { name?: string })?.name ?? '') +' hari ' + ((state.payload as { Time_Stamp?: Date })?.Time_Stamp?.toLocaleString('id-ID', {dateStyle:'full'}) ?? '');
+            return '✒️ '+((state.payload as { name?: string })?.name ?? '') +' hari ' + ((state.payload as { Time_Stamp?: Date })?.Time_Stamp?.toLocaleString('id-ID', {dateStyle:'full'}) ?? '');
         default:
             return  'Modal tidak ada'
     }

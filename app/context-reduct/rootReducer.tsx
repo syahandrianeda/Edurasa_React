@@ -33,6 +33,8 @@ import fokusKategoriKeuanganReducer from './global-state/tabungan/ui-akses-keuan
 import tabunganReducer from './global-state/tabungan/tabungan-slice'
 import keuanganReducer from './global-state/tabungan/keuangan-slice'
 
+import suratKeluarReducer from './global-state/surat/surat-keluar-slice'
+
 const rootReducer = combineReducers({
     auth: authReducer,
     fokusRombel: fokusRombelReducer,
@@ -62,7 +64,8 @@ const rootReducer = combineReducers({
     kategoriKeuangan:kategoriKeuanganReducer,
     fokusKategoriKeuangan:fokusKategoriKeuanganReducer,
     tabungan: tabunganReducer,
-    keuangan: keuanganReducer
+    keuangan: keuanganReducer,
+    suratKeluar: suratKeluarReducer,
 })
 
 export default rootReducer

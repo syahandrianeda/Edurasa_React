@@ -1,6 +1,7 @@
 import { createContext, useCallback, useContext, useMemo, useState, type PropsWithChildren } from "react"
 import { Eye, Trash } from "lucide-react"
 import ButtonTooltip from "../ui_edura/button-tooltip"
+import { cn } from "~/lib/utils"
 
 
 interface FilePreviewContext{
@@ -158,7 +159,8 @@ export function FileIframeViewer() {
             </div>
             <iframe
             src={previewUrl}
-            className="w-95 h-95"//{`${isRotatedVertical(rotate)?'w-100 h-100':'w-full h-full'}`}
+            // className="w-95 h-95"//{`${isRotatedVertical(rotate)?'w-100 h-100':'w-full h-full'}`}
+            className="h-80"//{`${isRotatedVertical(rotate)?'w-100 h-100':'w-full h-full'}`}
             style={{
                 transform: `rotate(${rotate}deg)`,
                 // width: isRotatedVertical(rotate) ? "100%" : "50%",
@@ -169,7 +171,7 @@ export function FileIframeViewer() {
     )
 }
 
-export function SectionPreview(){
+export function SectionPreview({className=''}:{className?:string}){
     const { previewUrl } = useFilePreview();
     if(!previewUrl) {
         return (
@@ -182,7 +184,7 @@ export function SectionPreview(){
     }
     return (
         <div className="flex flex-col rounded-tr-xl border-0 inner-shadow-sky-100 bg-linear-to-bl from-sky-600 to-sky-400">
-            <div className="m-1 inner-shadow-sky-600 shadow-md shadow-sky-300 bg-sky-600/50 rounded-2xl flex flex-col justify-center h-full items-center">
+            <div className={cn("m-1 inner-shadow-sky-600 shadow-md shadow-sky-300 bg-sky-600/50 rounded-2xl flex flex-col justify-center h-full items-center", className)}>
                 <FileIframeViewer/>
             </div>
         </div>

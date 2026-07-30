@@ -185,7 +185,7 @@ function EditContenAtp(){
                         </div>
                         <p className="font-bold dark:text-black">Elemen</p>
                         <p className="italic border p-2 text-xs text-black">{dataCp?.elemen}</p>
-                        <p className="font-bold dark:text-black">TP</p>
+                        <p className="font-bold dark:text-black">TP ({dataTp?.idbaris_tp})</p>
                         <p className="italic border p-2 text-xs text-black">{dataTp?.tp}</p> 
                         <p className="font-bold dark:text-black">ATP</p>
                         <p className="italic border p-2 text-xs text-black">{currentData.atp}</p>

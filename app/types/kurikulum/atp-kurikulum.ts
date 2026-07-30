@@ -18,5 +18,6 @@ export interface AtpKurikulumSheetType {
     profilpancasila?:string,
     penjelasan_profil?:string,
     status?:string
+    fase:string
 
 }

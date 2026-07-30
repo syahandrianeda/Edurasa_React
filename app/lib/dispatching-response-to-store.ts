@@ -45,6 +45,8 @@ import { setKategoriAkses_keuangan } from "~/context-reduct/global-state/tabunga
 import type { KategoriKeuanganAppType, KategoriKeuanganSheetType } from "~/types/tabungan/kategori-keuangan-type";
 import { setFokusAksesRombelKeuangan } from "~/context-reduct/global-state/tabungan/ui-akses-keuangan-slice";
 import DtoKategoriKeuangan from "~/dtos/dto-kategori-keuangan";
+import type { SuratKeluarSheetType } from "~/types/surat/surat-keluar-sheet-type";
+import { setSuratKeluar } from "~/context-reduct/global-state/surat/surat-keluar-slice";
 
 
 export default async function DispatchingResponseToStore(success:boolean, data:Record<string, any>[],detailResponse:Record<string,any>, rombelAktif?:string){
@@ -189,6 +191,7 @@ export default async function DispatchingResponseToStore(success:boolean, data:R
                 ))
             
         }
+
         if(detailResponse?.namaTab === namaTab('kategori_akses')){
                 // console.log('response kategori akses', data, detailResponse)
                 store.dispatch(setKategoriAkses_keuangan({
@@ -225,6 +228,11 @@ export default async function DispatchingResponseToStore(success:boolean, data:R
                     }
                 }
             
+        }
+        
+        if(detailResponse?.namaTab === namaTab('surat_keluar')){
+            console.log({data,detailResponse})
+            store.dispatch(setSuratKeluar(data as unknown as SuratKeluarSheetType[]))
         }
 
 }

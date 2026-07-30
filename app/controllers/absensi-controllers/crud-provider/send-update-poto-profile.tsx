@@ -23,7 +23,7 @@ export default function ButtonSetAsProfile({siswa, data}:{siswa?:SiswaType, data
             byRow: updateProfile.id
         }
                 
-        const respon = await actions.update(param);
+        const respon = await actions.update(DTO);
         if(respon.success){
             
             

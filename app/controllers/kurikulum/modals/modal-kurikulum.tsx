@@ -1,5 +1,5 @@
 import { ModalEdura} from "~/components/modals/modal-components";
-import { useModal, type ModalState, type ModalType } from "~/components/modals/modal-provider";
+import { useModal, type ModalState } from "~/components/modals/modal-provider";
 import OrmKurikulum from "~/domain/kurikulum/orm-kurikulum";
 import type { ormKurikulumInterface } from "~/types/kurikulum/kurikulum-type";
 import FormContentCp from "./form-cp";
@@ -9,6 +9,7 @@ import FormMapelRombel from "../../mapel/modal/form-mapel-rombel";
 import FormModifikasiProta from "~/controllers/prota/modal/form-prota";
 import PreviewModalItemSoal from "~/controllers/bank-soal/modal/PreviewModalItemSoal";
 import type { BankSoalAppType } from "~/types/bank-soal/bank-soal-type";
+import type { ModalType } from "~/components/modals/modal-type";
 
 
 export default function ModalFiturKurikulum(){

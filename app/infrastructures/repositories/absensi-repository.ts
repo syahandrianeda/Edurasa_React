@@ -20,7 +20,7 @@ export default class AbsensiRepositoryImplements extends AppScriptSheet implemen
         console.log('action absen', action);
         return action.collections.map(this.responActionRead);
     }
-    /**@deprecated */
+    
     async refreshAbsensi(): Promise<ApiResponse<Record<string, any>>> {
         
         const action = await this.postBody(this.paramSheetAbsensiJenjang);

@@ -40,6 +40,8 @@ import BuildParamLoaded from "~/infrastructures/ensure-loaded-api/build-param-lo
 import { CrudTabunganProvider } from "~/controllers/tabungan/crud/crud-tabungan-provider";
 import TabunganServiceImplements from "~/infrastructures/services/tabungan-service-implements";
 import { FokusRombelKeuangan } from "~/context-reduct/selectores/rombel-tabungan-selector";
+import SuratKeluarService from "~/infrastructures/repositories/surat-keluar-service";
+import { SuratKeluarCrudProvider } from "~/controllers/surat/crud/surat-keluar-crud-provider";
 /**
  * `AppProviderLayoutService`, menyediakan:
  *  * ensurLoadedStateService
@@ -81,6 +83,7 @@ export default function AppProviderLayoutService({matches}:Route.ComponentProps)
     const serviceSebaranJadwal      = new JadwalMapelServiceImplements();
     const serviceProta              = new ProtaServiceImplements();
     const serviceTabungan           = new TabunganServiceImplements();
+    const serviceSuratKeluar        = new SuratKeluarService()
 
     
     
@@ -183,7 +186,9 @@ export default function AppProviderLayoutService({matches}:Route.ComponentProps)
                                         <SebaranJadwalCrudProvider service={serviceSebaranJadwal}>
                                             <CrudProtaProvider service={serviceProta}>
                                                 <CrudTabunganProvider service={serviceTabungan}>
-                                                    <Outlet/>
+                                                    <SuratKeluarCrudProvider service={serviceSuratKeluar}>
+                                                        <Outlet/>
+                                                    </SuratKeluarCrudProvider>
                                                 </CrudTabunganProvider>
                                             </CrudProtaProvider>
                                         </SebaranJadwalCrudProvider>

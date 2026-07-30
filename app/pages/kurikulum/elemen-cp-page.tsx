@@ -1,5 +1,5 @@
 import { useAppSelector } from "~/context-reduct/hook"
-import { PropertyKurikulumMapelAktifSelector } from "~/context-reduct/selectores/kurmer-selector";
+import { DataKurikulumSelector, KurmerDtoSelector, PropertyKurikulumMapelAktifSelector } from "~/context-reduct/selectores/kurmer-selector";
 import ButtonAddCp from "~/controllers/kurikulum/modals/button-add-cp";
 import TableCp from "~/controllers/kurikulum/tabels/tabel-cp";
 import { currentTapel } from "~/lib/current-tapel";
@@ -7,7 +7,9 @@ import { currentTapel } from "~/lib/current-tapel";
 export default function ElemenCpPage(){
     const fokusMapel = useAppSelector(state=>state.fokusMapel.data);
     const data = useAppSelector(PropertyKurikulumMapelAktifSelector);
-    
+    const data2 = useAppSelector(DataKurikulumSelector);
+    const data4 = useAppSelector(KurmerDtoSelector);
+    console.log({data, data2, data4});
         return (
         <div className="p-1">
             <h3 className="text-2xl text-center font-extrabold uppercase mb-0">Capaian Pembelajaran (CP)</h3>

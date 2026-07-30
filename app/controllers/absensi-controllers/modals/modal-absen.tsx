@@ -1,11 +1,12 @@
 import { FormEdura} from "~/components/form-custom/form-edura";
-import type { ModalState, ModalType } from "~/components/modals/modal-provider";
+import type { ModalState } from "~/components/modals/modal-provider";
 import type { AbsensiSiswaType } from "~/types/absensi-siswa";
 import PreviewGambar from "./column-preview-absen";
 import ColumnControlPresensi from "./column-control-presensi";
 import ColumnPreviewStatusData from "./column-preview-status-data";
 import { ModalFooterEdura } from "~/components/modals/modal-components";
 import SendAbsen from "../crud-provider/send-absen";
+import type { ModalType } from "~/components/modals/modal-type";
 
 export default function FormModalAbsen({state}:{state:ModalState}){
     

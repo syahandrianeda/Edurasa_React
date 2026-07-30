@@ -81,6 +81,8 @@ export default class AppScriptSheet extends AppScriptConfig{
     /** * @deprecated */
     protected sheetMateriTabProta : ParamRequestAppScript = {idss:'',tab:''};
     protected KurikulumTabProta : ParamRequestAppScript = {idss:'',tab:''};
+
+    protected sheetSuratTabSuratKeluar:ParamRequestAppScript = {idss:'', tab:''}
     
 
     constructor(){
@@ -139,6 +141,9 @@ export default class AppScriptSheet extends AppScriptConfig{
     }
     get sheetTabungan():string{
         return this.currentMacro['ss_tabungan']
+    }
+    get sheetSurat():string{
+        return this.currentMacro['ss_surat']
     }
     /** id sheet Absensi: */
     sheetAbsensi(jenjang:number): string{
@@ -497,7 +502,7 @@ export default class AppScriptSheet extends AppScriptConfig{
     }
     
     set paramSheetMateriTabProta(additionalParam:Record<string, any>){
-        const tab = this.isDev?'prota':'prota';
+        const tab = this.isDev?'trial_prota':'prota';
         this.KurikulumTabProta = {
             idss: this.sheetKurikulum,
             tab,
@@ -516,6 +521,19 @@ export default class AppScriptSheet extends AppScriptConfig{
             return this.sheetMateriTabProta;
          * */
         return this.KurikulumTabProta;
+    }
+
+    set paramSheetSuratTabSuratKeluar(additionalParam:Record<string, any>){
+        const tab = this.isDev?'trial_surat_keluar':'surat_keluar';
+        this.sheetSuratTabSuratKeluar =  {
+            idss: this.sheetSurat,
+            tab,
+            ...additionalParam
+        }
+        
+    }
+    get paramSheetSuratTabSuratKeluar(){
+        return this.sheetSuratTabSuratKeluar;
     }
 
     dataAuth(){

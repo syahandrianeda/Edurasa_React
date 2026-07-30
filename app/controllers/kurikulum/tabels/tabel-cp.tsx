@@ -14,6 +14,7 @@ export default function TableCp(){
     const {actions} = useModal<OrmKurikulumMerdekaType>();
     const dataGroupElemen = useMemo(()=>{
         return data?.currentFase && groupByOriginalOrder(data.currentFase?.elemen_cp, (m)=>m.elemen)}, [data.currentFase?.elemen_cp])
+    console.log({dataGroupElemen});
 
     const ActionTrigger: TriggerTable<OrmKurikulumMerdekaType>[] = [
         {
@@ -70,21 +71,3 @@ export default function TableCp(){
     )
 }
 
-/**
-{
-                    data.currentFase?.elemen_cp.map((cp,index)=>
-                        <TRowEdura key={index}>
-                            <TdEdura className="align-middle max-w-32 text-start text-wrap">{cp.elemen}</TdEdura>
-                            <TdEdura className="text-wrap max-w-lg">{cp.cp_utama}</TdEdura>
-                            <TdEdura className="align-middle text-center" data-content-type="number">{cp.index}</TdEdura>
-                            <TdEdura className="print:hidden align-middle text-center">
-                                <ActionButtonTable<OrmKurikulumMerdekaType>
-                                    data={cp}
-                                    trigger={ActionTrigger}
-                                />
-                            </TdEdura>
-                        </TRowEdura>
-                        
-                    )
-                }
- */

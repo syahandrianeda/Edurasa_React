@@ -5,7 +5,7 @@ export function saveSessionRombel(user: any) {
 }
 
 export function getSessionRombel() {
-  const data = window.localStorage.getItem(KEY);
+  const data = window.localStorage?.getItem(KEY);
   return data ? JSON.parse(data) : null;
 }
 

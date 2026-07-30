@@ -19,11 +19,11 @@ export default class AbsensiServiceImplements implements AbsensiServiceInterface
         
         return await this.repo.loadAbsensiAndKaldik()
     }
-    /**@deprecated */
+    
     async refreshAbsensi(rombel: string): Promise<ApiResponse<Record<string, any>>> {
         const jenjang = getNumberFromString(rombel);
         
-        this.repo.CreateParamSheetAbsensiJenjang(jenjang,{action:'read',filter:JSON.stringify({kelas:rombel})})
+        this.repo.CreateParamSheetAbsensiRombel(rombel,{action:'read',filter:JSON.stringify({kelas:rombel})})
         return await this.repo.refreshAbsensi()
     }
     /** useCrud Provider */

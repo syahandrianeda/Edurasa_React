@@ -1,0 +1,16 @@
+export interface SuratKeluarSheetType{
+            idbaris: number,
+            nosurat: string,
+            id_nosurat: string,
+            tglsurat: string,
+            perihal: string,
+            indekssurat: string,
+            ditujukkankepada: string,
+            idfile: string,
+            status: string,
+            oleh: string,
+            user: number,
+            target_siswa: string,
+            target_ptk: string,
+            refrensi_suratmasuk: number,
+}

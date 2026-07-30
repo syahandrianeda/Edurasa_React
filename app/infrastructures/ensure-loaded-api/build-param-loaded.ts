@@ -64,7 +64,7 @@ export default class BuildParamLoaded{
                         const spliting = tab.split('_')
                         const nama_rombel = spliting[spliting.length-1];
                         
-                        const foundData = this.state.tabungan.data.find(s=>s.nama_rombel === nama_rombel);
+                        const foundData = this.state.tabungan?.data.find(s=>s.nama_rombel === nama_rombel);
                         if(!foundData){
                             this.sheetToBeParam.push(sheet)
                         }

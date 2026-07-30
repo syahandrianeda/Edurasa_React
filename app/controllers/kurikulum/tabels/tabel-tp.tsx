@@ -7,8 +7,7 @@ import TableWithScrolling from "~/components/tabels/table-with-scrolling";
 import { useAppSelector } from "~/context-reduct/hook";
 import { PropertyKurikulumMapelAktifSelector } from "~/context-reduct/selectores/kurmer-selector";
 import { groupByOriginalOrder } from "~/lib/group-by";
-import type { ElemenCpType } from "~/types/kurikulum/elemen-cp";
-import type { faseOrm, OrmFaseKurikulumType } from "~/types/kurikulum/kurikulum-type";
+import type {  OrmFaseKurikulumType } from "~/types/kurikulum/kurikulum-type";
 
 export default function TableFaseTp(){
     const data = useAppSelector(PropertyKurikulumMapelAktifSelector);
@@ -94,6 +93,7 @@ export default function TableFaseTp(){
                             return dataElemen.map((cp, indexCp)=>{
                                 const tpList = cp.tp_fase_properties.length
                                     ? cp.tp_fase_properties
+                                        .filter(s=>s.source_data_tp?.status ==='')
                                     : [null]
 
                                 return tpList.map((tp,indexTp)=>
@@ -108,6 +108,7 @@ export default function TableFaseTp(){
                                             (indexTp === 0)  && <TdEdura rowSpan={tpList.length} className="text-wrap max-w-xs">{cp.cp_utama}</TdEdura>
                                         }
                                         <TdEdura className="text-wrap max-w-xl">
+                                            
                                             {tp?.tp ?? <span className="text-rose-400 text-[10px] italic font-bold">Belum ada TP. Silakan tambahkan di fitur Tujuan Pembelajaran</span>}
                                         </TdEdura>
                                         <TdEdura className="print:hidden align-middle text-center">

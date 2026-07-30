@@ -128,6 +128,7 @@ export const DataMenu: typeKoleksiMenu[] = [
         routeName: "arsip-surat",
         urlIcon: MenuIcons["data_lemari"],
         permission: 'view arsip-surat',
+        hasRoute:true
     },
     {
         title: "Arsip Aplikasi", 

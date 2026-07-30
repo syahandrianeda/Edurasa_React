@@ -30,7 +30,7 @@ export function saveSessionApp<T>(data: T): void {
 }
 
 export function getSessionApp<T = unknown>(): T | null {
-  const encoded = window.localStorage.getItem(KEY);
+  const encoded = window.localStorage?.getItem(KEY);
   if (!encoded) return null;
 
   try {
