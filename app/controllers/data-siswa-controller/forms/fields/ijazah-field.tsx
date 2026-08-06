@@ -6,7 +6,7 @@ import type { SiswaType } from "~/types/siswa";
 export function NomorSeriIjazah({className}:{className?:string}){
      const {currentData, setCurrentData} = useFormEdura<SiswaType>();
     return (
-        <Fields className={cn("mt-3 w-10/12 mx-auto",className)}>
+        <Fields className={cn("mt-3 md:w-10/12 mx-auto",className)}>
             <InputText
                 id="noseri-ijazah"
                 value={currentData?.dapo_noseriijazah??""}

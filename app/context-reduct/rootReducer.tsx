@@ -35,6 +35,11 @@ import keuanganReducer from './global-state/tabungan/keuangan-slice'
 
 import suratKeluarReducer from './global-state/surat/surat-keluar-slice'
 
+import riwayatIdAkunReducer from './global-state/tendik/riwayat-id-akun-slice'
+import sppdReducer from './global-state/surat/sppd-slice';
+import pangkatGolonganReducer from './global-state/tendik/pangkat-golongan-slice'
+import suratMasukReducer from './global-state/surat/surat-masuk-slice'   
+
 const rootReducer = combineReducers({
     auth: authReducer,
     fokusRombel: fokusRombelReducer,
@@ -66,6 +71,10 @@ const rootReducer = combineReducers({
     tabungan: tabunganReducer,
     keuangan: keuanganReducer,
     suratKeluar: suratKeluarReducer,
+    riwayatIdAkun: riwayatIdAkunReducer,
+    sppd: sppdReducer,
+    pangkatGolongan: pangkatGolonganReducer,
+    suratMasuk: suratMasukReducer
 })
 
 export default rootReducer

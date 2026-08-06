@@ -8,7 +8,7 @@ export default function SelectModaTransportasi({className}:{className?:string}){
     const {currentData, setCurrentData} = useFormEdura<SiswaType>();
     
     return (
-        <Fields className={cn("mt-2 mb-0 w-10/12",className)}>
+        <Fields className={cn("mt-2 mb-0 md:w-10/12",className)}>
             <SelectField
                 id='dapo_alattransportasi'
                 value={currentData?.dapo_alattransportasi ??""}

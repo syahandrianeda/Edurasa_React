@@ -15,7 +15,7 @@ export default function KalendarTanggalLahir({className}:{className?:string}){
         <CalendarPicker
             id="id_pd_tanggallahir"
             label="Tanggal Lahir"
-            className={cn("w-10/12", className)}
+            className={cn("md:w-10/12", className)}
             currentDate={currentData?.pd_tanggallahir ??""}
             handleChangeDate={handleDate}/>
             

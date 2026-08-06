@@ -377,4 +377,65 @@
         cursor: ew-resize;
         cursor: col-resize;
     }
+    /* FLAG */
+        /* width: 110px;
+    */
+    /* auto;
+    */
+    /* width: auto;
+    */
+    /* margin:0 1px;
+    */
+    .flag {
+        height: 76px;
+        box-sizing: content-box;
+        padding-top: 15px;
+        /* padding: 5px 15px;
+        */
+        position: relative;
+        /* background: rgb(0, 247, 255);
+        */
+        color: white;
+        font-size: 11px;
+        letter-spacing: 0.2em;
+        text-align: center;
+        text-transform: uppercase;
+        font-weight: bold;
+        border: 0;
+    }
+    .flag:after {
+        content: "";
+        position: absolute;
+        bottom: -2px;
+        right: 0;
+        width: 20%;
+        border-bottom: 35px solid #fdf5e6;
+        /* border-right: 30px solid transparent;
+        */
+        border-left: 100px solid transparent;
+    }
+    .flag:before {
+        content: "";
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 20%;
+        border-bottom: 35px solid #fdf5e6;
+        /* border-left: 30px solid transparent;
+        */
+        border-right: 100px solid transparent;
+    }
+    
+    .bgsekolah {
+        /* background: url('/img/sdnratujaya1-transparent.png') repeat-y;
+        */
+        background-color: white;
+        background-image: url(https://syahandrianeda.github.io/syahandrianeda/img/sdnratujaya1-transparent2.png);
+        background-position: center top;
+        background-repeat: no-repeat;
+        background-origin: content-box;
+        background-attachment: scroll;
+        background-size: 400px 400px;
+    }
+    
 }

@@ -27,7 +27,7 @@ export default class SettingJadwalService implements SettingJadwalServiceInterfa
                 action:'upsert'
             }
             const respon = await this.repo.create(param);
-            console.log('respon on repo', respon)
+            
             return respon;
     }
 

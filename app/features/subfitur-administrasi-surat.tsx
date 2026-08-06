@@ -3,6 +3,26 @@ import type { typeSidebarFiturKonten } from "~/types"
 
 export const SubfiturAdminsitrsiSurat: typeSidebarFiturKonten[] = [
     {
+        groupTitle: 'Surat Masuk',
+        breadCrumbs: [
+            {
+                title: 'Surat Masuk',
+                href: '/arsip-surat/surat-masuk',
+                icon: FileInput,
+                description:'Surat Masuk dan Pendataannya',
+                permission: 'view administrasi surat'
+            },
+            {
+                title: 'Input Surat Masuk',
+                href: '/arsip-surat/create-surat-masuk',
+                icon: FileSymlinkIcon,
+                description:'Input Surat Masuk Untuk Hari Ini',
+                permission: 'view administrasi surat'
+            },
+            
+        ]
+    },
+    {
         groupTitle: 'Surat Keluar',
         breadCrumbs: [
             {
@@ -26,26 +46,6 @@ export const SubfiturAdminsitrsiSurat: typeSidebarFiturKonten[] = [
                 description:'Input Surat Keluar Untuk Hari Ini',
                 permission: 'view administrasi surat'
             },
-        ]
-    },
-    {
-        groupTitle: 'Surat Masuk',
-        breadCrumbs: [
-            {
-                title: 'Surat Masuk',
-                href: '/arsip-surat/surat-masuk',
-                icon: FileInput,
-                description:'Surat Masuk dan Pendataannya',
-                permission: 'view administrasi surat'
-            },
-            {
-                title: 'Input Surat Masuk',
-                href: '/arsip-surat/create-surat-masuk',
-                icon: FileSymlinkIcon,
-                description:'Input Surat Masuk Untuk Hari Ini',
-                permission: 'view administrasi surat'
-            },
-            
         ]
     },
     {

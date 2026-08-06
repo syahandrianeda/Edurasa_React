@@ -8,15 +8,15 @@ export default class SuratKeluarRepository extends AppScriptSheet implements Sur
         super()
     }
     
-    async uploadFile(param: Record<string, any>): Promise<ApiResponse<unknown> | { success: boolean; data: any; message: string; source: string; }> {
-        return await this.postBody(param);
+    async uploadFileRepo(param: ParamFile): Promise<ApiResponse<unknown> | { success: boolean; data: any; message: string; source: string; }> {
+        return await this.uploadFile(param);
     }
 
     async update(param: Record<string, any>): Promise<ApiResponse<SuratKeluarSheetType>> {
         /** tentukan idss dan tab-nya dulu */
         this.paramSheetSuratTabSuratKeluar = param;
         const parameter = this.paramSheetSuratTabSuratKeluar
-        console.log('new param', this.paramKurikulumAtp)
+        
         try{
                 const respon = await this.postBody(parameter);
                 
@@ -29,7 +29,7 @@ export default class SuratKeluarRepository extends AppScriptSheet implements Sur
     async create(param: Record<string, any>): Promise<ApiResponse<SuratKeluarSheetType>> {
         this.paramSheetSuratTabSuratKeluar = param;
         const parameter = this.paramSheetSuratTabSuratKeluar
-        console.log('new param', this.paramKurikulumAtp)
+        
         try{
                 const respon = await this.postBody(parameter);
                 

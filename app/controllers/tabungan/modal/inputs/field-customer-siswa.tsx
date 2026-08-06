@@ -37,6 +37,7 @@ export default function FieldCustomerSiswa({value, setValue, values, disabled}:F
             <SelectField 
                 disabled={disabled}
                 id="penabung"
+                tabIndex={0}
                 labelSelect="Nasabah"
                 value = {value.siswa_id ?? ''}
                 onChange={handleSelectSiswa}

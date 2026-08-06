@@ -22,7 +22,7 @@ export default function FormModalAbsen({state}:{state:ModalState}){
 
 function FieldsAbsen({stateType}:{stateType?:ModalType}){
     return (
-        <div className="grid grid-cols-1 gap-2 space-x-1 md:grid-cols-3 bg-linear-to-tl from-sky-600 to-sky-500 p-2  h-[calc(100vh-12.5rem)]  md:overflow-y-auto scrol-h-custom">
+        <div className="grid grid-cols-1 gap-2 space-x-1 md:grid-cols-3 bg-linear-to-tl from-sky-600 to-sky-500 p-2 overflow-y-auto scrol-h-custom">
             <PreviewGambar type={stateType}/>
             <ColumnControlPresensi/>
             <ColumnPreviewStatusData/>

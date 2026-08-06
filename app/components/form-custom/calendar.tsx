@@ -64,7 +64,7 @@ const [open, setOpen] = React.useState(false)
 
     return (
         <div className={cn("flex flex-col gap-0 w-fit relative mt-4", className)}>
-            <label htmlFor={id} className="absolute peer px-1 left-0 top-0 -translate-y-3 text-xs z-100  bg-white dark:bg-gray-700 dark:text-sky-100 w-fit rounded-se-xl text-[10px]">
+            <label htmlFor={id} className="absolute peer px-1 left-0 top-0 -translate-y-3 text-xs z-10  bg-white dark:bg-gray-700 dark:text-sky-100 w-fit rounded-se-xl text-[10px]">
                 {label}
             </label>
             <div className="relative flex gap-2">

@@ -713,7 +713,7 @@ function SidebarMenuSubButton({
 }
 
 function PrintArea({children, className,...props}:React.ComponentProps<'div'>){
-   const exportRef = useExportTarget('print-area') as React.Ref<HTMLDivElement>;;
+  const exportRef = useExportTarget('print-area') as React.Ref<HTMLDivElement>;;
   return <div ref={exportRef}
           className={cn("bg-white text-black p-4 print:pt-16 print:shadow-none",className)}
           {...props}

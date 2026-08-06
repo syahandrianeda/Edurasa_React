@@ -27,7 +27,7 @@ console.log("wrap", {
     end: currentData.end_tgl,
 });
     return (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-2 h-[calc(100vh-12.5rem)] bg-linear-to-tl from-sky-400 to-sky-300">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-2 bg-linear-to-tl from-sky-400 to-sky-300">
             <div className="md:flex hidden border rounded justify-between items-center md:flex-col px-2 py-3">
                 {
                     currentData.start_tgl.getMonth()===6?(

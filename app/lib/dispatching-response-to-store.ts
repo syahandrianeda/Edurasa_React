@@ -47,6 +47,14 @@ import { setFokusAksesRombelKeuangan } from "~/context-reduct/global-state/tabun
 import DtoKategoriKeuangan from "~/dtos/dto-kategori-keuangan";
 import type { SuratKeluarSheetType } from "~/types/surat/surat-keluar-sheet-type";
 import { setSuratKeluar } from "~/context-reduct/global-state/surat/surat-keluar-slice";
+import type { RiwayatAkunSheetType } from "~/types/tendik/riwayat-akun-sheet-type";
+import { setRiwayatIdAkun } from "~/context-reduct/global-state/tendik/riwayat-id-akun-slice";
+import type { SppdSheetType } from "~/types/surat/sppd-sheet-type";
+import { setSppd } from "~/context-reduct/global-state/surat/sppd-slice";
+import { setPangkatGolongan } from "~/context-reduct/global-state/tendik/pangkat-golongan-slice";
+import type { PangkatGolonganSheetType } from "~/types/tendik/pangkat-golongan-sheet-type";
+import { setSuratMasuk } from "~/context-reduct/global-state/surat/surat-masuk-slice";
+import type { SuratMasukSheetType } from "~/types/surat/surat-masuk-sheet-type";
 
 
 export default async function DispatchingResponseToStore(success:boolean, data:Record<string, any>[],detailResponse:Record<string,any>, rombelAktif?:string){
@@ -62,10 +70,7 @@ export default async function DispatchingResponseToStore(success:boolean, data:R
         }
         // datasiswa ada trial-nya
         if(detailResponse?.namaTab === namaTab('datasiswa')){
-            // console.log('dispatching data Siswa', detailResponse)
-            /**
-             * 
-             */
+            
             store.dispatch(setAllSiswa({
                 data : data as unknown as SiswaType[] ,
                 loaded : true,
@@ -163,15 +168,6 @@ export default async function DispatchingResponseToStore(success:boolean, data:R
         /** tabungan */
         if(detailResponse?.namaTab === `${namaTab('tabungan_')}${rombelAktif}`){
             
-            // console.log('tabungan_', detailResponse, data, store.getState().tabungan, rombelAktif)
-            /**
-             * store.dispatch(setAbsensiRombel(
-                    {
-                        nama_rombel:rombelAktif ?? getSessionRombel(),
-                        data: detailResponse?.findTab? data as AbsensiSiswaSheetType[]:[]
-                    }
-                ))
-             */
             store.dispatch(setTabunganRombel(
                 {
                     nama_rombel:rombelAktif ?? getSessionRombel(),
@@ -193,7 +189,6 @@ export default async function DispatchingResponseToStore(success:boolean, data:R
         }
 
         if(detailResponse?.namaTab === namaTab('kategori_akses')){
-                // console.log('response kategori akses', data, detailResponse)
                 store.dispatch(setKategoriAkses_keuangan({
                     data: data as KategoriKeuanganSheetType[],
                     loaded:true,
@@ -231,8 +226,21 @@ export default async function DispatchingResponseToStore(success:boolean, data:R
         }
         
         if(detailResponse?.namaTab === namaTab('surat_keluar')){
-            console.log({data,detailResponse})
             store.dispatch(setSuratKeluar(data as unknown as SuratKeluarSheetType[]))
+        }
+        
+        if(detailResponse?.namaTab === namaTab('sppd')){
+            store.dispatch(setSppd(data as unknown as SppdSheetType[]))
+        }
+
+        if(detailResponse?.namaTab === namaTab('riwayat_id_akun')){
+            store.dispatch(setRiwayatIdAkun(data as unknown as RiwayatAkunSheetType[]))
+        }
+        if(detailResponse?.namaTab === namaTab('pangkat_golongan')){
+            store.dispatch(setPangkatGolongan(data as unknown as PangkatGolonganSheetType[]))
+        }
+        if(detailResponse?.namaTab === namaTab('surat_masuk')){
+            store.dispatch(setSuratMasuk(data as unknown as SuratMasukSheetType[]))
         }
 
 }

@@ -8,7 +8,7 @@ export default function SelectJenisTinggal({className}:{className?:string}){
     const {currentData, setCurrentData} = useFormEdura<SiswaType>();
     
     return (
-        <Fields className={cn("mt-2 mb-0 w-6/12",className)}>
+        <Fields className={cn("mt-2 mb-0 md:w-6/12",className)}>
             <SelectField 
                 id='jenis_tinggal'
                 value={currentData?.dapo_jenistinggal ?? ""}

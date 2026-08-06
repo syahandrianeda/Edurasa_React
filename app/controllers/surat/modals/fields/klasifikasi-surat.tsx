@@ -1,8 +1,7 @@
-import { useEffect, useMemo, useState } from "react";
 import { useFormEdura } from "~/components/form-custom/form-edura";
 import { Label } from "~/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "~/components/ui/select";
-import { KlasifikasiNoSurat, type KlasifikasiSuratKemendegriType } from "~/domain/surat/klasifikasi-surat-permendagri";
+import { KlasifikasiNoSurat} from "~/domain/surat/klasifikasi-surat-permendagri";
 import type{ SuratKeluarAppType } from "~/types/surat/surat-keluar-app-type";
 
 export interface KlasifikasiSuratProps {

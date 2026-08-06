@@ -7,7 +7,7 @@ import type { SiswaType } from "~/types/siswa";
 export default function AwalKelas({className, activeOnly}:{className?:string, activeOnly?:boolean}){
     const {currentData, setCurrentData} = useFormEdura<SiswaType>();
     return (
-        <Fields className={cn("w-6/12 my-3",className)}>
+        <Fields className={cn("md:w-6/12 w-10/12 my-3",className)}>
             <SelectField 
                 id='awal_kelas'
                 value={currentData?.awal_kelas||""}

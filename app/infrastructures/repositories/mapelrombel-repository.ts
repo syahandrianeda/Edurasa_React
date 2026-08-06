@@ -11,7 +11,7 @@ export default class MapelRombelRepositoryImplements extends AppScriptSheet impl
         }
         async loadAllNeed(): Promise<ApiResponse<Record<string, any>>[]> {
             const paramSheet = this.getParamKurikulumNeeded();
-            console.log('parameter loadAllNeedKurikulum', paramSheet);
+            
             const auth = this.dataAuth();
             const param = {
                 action:'readMultipleTab',

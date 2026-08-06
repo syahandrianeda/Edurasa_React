@@ -11,7 +11,7 @@ export default function WaliKelas({className}:{className?:string}){
     const findWalas = friends?.find(s=>s.kode_mapel_ampu === rombel);
     
     return (
-        <Fields className={cn("w-6/12 my-3", className)}>
+        <Fields className={cn("md:w-6/12 my-3", className)}>
             <InputText
                 disabled
                 readOnly

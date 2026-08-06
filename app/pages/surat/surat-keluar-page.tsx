@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import AppPagination from "~/components/pagination/app-pagination";
 import { useAppSelector } from "~/context-reduct/hook";
-import { DataOrmSuratKeluarSelector, DtoSuratKeluarSelector } from "~/context-reduct/selectores/surat-keluar-selector";
+import { DataOrmSuratKeluarSelector } from "~/context-reduct/selectores/surat-keluar-selector";
 import TableSuratKeluar from "~/controllers/surat/tabel/tabel-surat-keluar";
 import { usePagination } from "~/hooks/use-pagination";
 import { getNumberFromString } from "~/lib/get-number";
@@ -13,7 +13,7 @@ export default function SuratKeluarPage(){
     
     const pagination =  usePagination(sortir)
     const nextNoSurat = getNumberFromString(sortir[0]?.id_nosurat) + 1;
-    console.log({sortir});
+    
     return (
         <>
         {

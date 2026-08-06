@@ -15,6 +15,7 @@ interface CrudContextValue<T> {
 
 export interface CrudActions<T> {
     uploadFile(param:File,options?:Record<string,any>): Promise<any>,
+    findById(param:Record<string, any>): Promise<ApiResponse<T>>,
     update(param:Record<string,any>): Promise<ApiResponse<T>>,
     create(param:Record<string,any>): Promise<ApiResponse<T>>,
 }
@@ -28,6 +29,7 @@ export function createCrudProvider<
     T,
     S extends { 
         uploadFile?: (param:File,options?:Record<string,any>) => Promise<void>,
+        findById?:(param:Record<string, any>)=> Promise<ApiResponse<T>>
         update?:(param:ParamUpdateRecord<T>)=> Promise<ApiResponse<T>>,
         create?:(param:ParamUpdateRecord<T>)=> Promise<ApiResponse<T>>
     }
@@ -74,6 +76,18 @@ export function createCrudProvider<
                     setIsSubmitting(true)
                     try {
                         return await service.create(param)
+                    } finally {
+                        setIsSubmitting(false)
+                    }
+                },
+
+                findById: async (param:Record<string, any>) =>{
+                    if (!service.findById) {
+                        throw new Error("update not implemented")
+                    }
+                    setIsSubmitting(true)
+                    try {
+                        return await service.findById(param)
                     } finally {
                         setIsSubmitting(false)
                     }

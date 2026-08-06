@@ -9,7 +9,7 @@ export default class FaseTpServiceImplements implements FaseTpServiceInterface{
     async create(param: Record<string, any>): Promise<ApiResponse<FaseKurikulumType>> {
         let paramRepo = {}
         const paramDto = DTOFaseTp.toSheet(param);
-        console.log('service tp dto', paramDto)
+        
         const paramUpdate = {
             data: JSON.stringify([paramDto]),
             key_match:'idbaris',
@@ -56,7 +56,7 @@ export default class FaseTpServiceImplements implements FaseTpServiceInterface{
             this.repo.paramKurikulumTpFaseC = paramUpdate;
             paramRepo = this.repo.paramKurikulumTpFaseC;
         }
-         console.log('service tp dto', paramDto, 'paramRepo', paramRepo)
+
         return await this.repo.update(paramRepo);
     }
 }

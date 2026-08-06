@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, type ReactNode } from "react"
+import { createContext, useContext, useState, type Dispatch, type ReactNode, type SetStateAction } from "react"
 import type { SiswaType } from "~/types/siswa"
 import type { ModalType } from "./modal-type"
 
@@ -6,7 +6,7 @@ import type { ModalType } from "./modal-type"
 
 export interface ConfigModelType{
     closeOnOutsideClick: boolean,
-    backToModalType?:ModalState['type']
+    backToModalType?:ModalState
 }
 
 export const DEFAULT_CONFIG_MODAL: ConfigModelType = {
@@ -31,6 +31,7 @@ export interface ModalActions<TPayload = unknown> {
 
 export interface ModalContextType {
     state: ModalState
+    setState?: Dispatch<SetStateAction<ModalState>>
     actions: ModalActions,
     nextState?:ModalState['type']
 }
@@ -91,6 +92,7 @@ export default function ModalProvider({ children }: { children: ReactNode }) {
         <ModalContext.Provider
         value={{
             state,
+            setState,
             actions: { open, close },
         }}
         >

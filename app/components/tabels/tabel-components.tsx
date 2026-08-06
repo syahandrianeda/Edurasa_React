@@ -56,7 +56,7 @@ export function TdEduraFreeze({stateFreeze=false, className, style, ...props}:Co
         )
     }else{
         const classFreeze= stateFreeze?`sticky left-0 z-5 align-middle print:static
-                        shadow-[inset_-0.5px_0px_rgb(221,221,221)]
+                        shadow-[inset_-0.5px_0px_rgb(221,221,221)] bg-inherit
                         border border-black ${className}`:`align-middle ${className}`;
     return(
         <TdEdura 
@@ -69,7 +69,8 @@ export function TdEduraFreeze({stateFreeze=false, className, style, ...props}:Co
 }
 export function TRowEdura({className, ...props}:ComponentProps<'tr'>){
     return (
-        <tr className={cn("odd:bg-zinc-100  even:bg-transparent print:odd:bg-transparent", className)
+        // <tr className={cn("odd:bg-zinc-100  even:bg-transparent print:odd:bg-transparent", className)
+        <tr className={cn("odd:bg-zinc-100  even:bg-white print:odd:bg-transparent", className)
         }
         {...props}
         />

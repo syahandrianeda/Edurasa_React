@@ -1,5 +1,8 @@
 import type { controlDropdownKelas } from "~/components/dropdowns/rombel-dropdown";
 import type { Route } from "./+types/surat-masuk-harian";
+import FormulirSuratMasukPage from "~/pages/surat/formulir-surat-masuk-page";
+import { sheetSurat_sppd, sheetSurat_suratKeluar, sheetSurat_suratMasuk } from "~/domain/enloaded/intial-enloaded/by-sheet/surat";
+import { sheetTendik_pangkatGolongan, sheetTendik_riwayatIdAkun } from "~/domain/enloaded/intial-enloaded/by-sheet/tendik";
 
 
 
@@ -42,6 +45,13 @@ export function clientLoader({}:Route.ComponentProps){
         controlKelas: settingRombel,
         toolbarTabs: undefined,//ConfigToolbarSelectMapel
         showExport:false,
+        sheetNeeded: [
+                    sheetSurat_suratKeluar,
+                    sheetSurat_suratMasuk,
+                    sheetSurat_sppd, 
+                    sheetTendik_riwayatIdAkun,
+                    sheetTendik_pangkatGolongan
+                ]
                 // pesanLoading:'Mempersiapkan ATP',
                 // addPesanRombel:{isAdd:true, type:'rombel', includeFaseName:true},
                 // sheetNeeded: defineCreateItemSoalNeeded
@@ -63,8 +73,7 @@ export default function SuratMasukHarianRoute() {
    
     return(
         <div className="p-1">
-            Hello World Buat Surat Masuk
-            
+            <FormulirSuratMasukPage/>
         </div>
     )
 }

@@ -8,7 +8,7 @@ import type { SiswaType } from "~/types/siswa";
 export function NamaAyah({className}:{className?:string}){
     const {currentData, setCurrentData} = useFormEdura<SiswaType>();
     return (
-        <Fields className={cn("mt-3 w-10/12",className)}>
+        <Fields className={cn("mt-3 md:w-10/12",className)}>
             <InputText
                 id="nama_ayah"
                 value={currentData?.pd_namaayah??""}

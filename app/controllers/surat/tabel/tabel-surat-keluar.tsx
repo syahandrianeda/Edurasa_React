@@ -1,36 +1,22 @@
-import { PencilIcon, Printer, Trash } from "lucide-react";
-import { ActionButtonTable, type TriggerTable } from "~/components/dropdowns/dropdown-action-table";
+import { Eye} from "lucide-react";
 import { useModal } from "~/components/modals/modal-provider";
 import { TdEdura, ThEdura, TRowEdura } from "~/components/tabels/tabel-components";
 import TableWithScrolling from "~/components/tabels/table-with-scrolling";
-import type { SuratKeluarAppType } from "~/types/surat/surat-keluar-app-type";
+import SwitchTriggerModalSuratKeluar from "../modals/trigers/trigger-modal-surat-keluar";
+import type { DataOrmSuratKeluarType } from "~/domain/surat-orm/entity/surat-orm-type";
+import { Button } from "~/components/ui/button";
+import CellPersonalTypeTemplate from "./cell-personal-type-template";
+import urlFileDrive from "~/lib/url-fil-drive";
 
 
-export default function TableSuratKeluar({data, startIndex=0}:{data:SuratKeluarAppType[], startIndex:number}){
-    const {actions} = useModal<SuratKeluarAppType>();
-    const ActionTrigger: TriggerTable<SuratKeluarAppType>[] = [
-            {
-                label: 'Edit',
-                icon: PencilIcon,
-                callback: (m) => actions.open('EDIT', m,{closeOnOutsideClick:false})
-            },
-            {
-                label: 'Cetak',
-                icon: Printer,
-                callback: (m) => actions.open('PRINT PREVIEW', m,{closeOnOutsideClick:false})
-            },
-            {
-                label: 'Hapus',
-                icon: Trash,
-                callback: (m) => actions.open('HAPUS', m,{closeOnOutsideClick:false})
-            },
-        ];
-        
+export default function TableSuratKeluar({data, startIndex=0}:{data:DataOrmSuratKeluarType[], startIndex:number}){
+    const {state, actions} = useModal<DataOrmSuratKeluarType>();
+    
     return (
         <TableWithScrolling className="text-[10px]">
             <thead>
                 <TRowEdura>
-                    <ThEdura className="pring:hidden">Aksi</ThEdura>
+                    <ThEdura className="print:hidden">Aksi</ThEdura>
                     <ThEdura className="w-5 text-wrap">No. urut</ThEdura>
                     <ThEdura>No Surat</ThEdura>
                     <ThEdura>Tanggal Surat</ThEdura>
@@ -38,7 +24,6 @@ export default function TableSuratKeluar({data, startIndex=0}:{data:SuratKeluarA
                     <ThEdura>Index Surat</ThEdura>
                     <ThEdura>Perihal</ThEdura>
                     <ThEdura>File</ThEdura>
-                    {/* <ThEdura>Pendata</ThEdura> */}
                 </TRowEdura>
             </thead>
             <tbody>
@@ -46,10 +31,10 @@ export default function TableSuratKeluar({data, startIndex=0}:{data:SuratKeluarA
                     data.length ? (
                         data.map((m, i)=>
                             <TRowEdura key={m.idbaris}>
-                                <TdEdura>
-                                    <ActionButtonTable<SuratKeluarAppType>
+                                <TdEdura className="print:hidden">
+                                    <SwitchTriggerModalSuratKeluar
                                         data={m}
-                                        trigger={ActionTrigger}
+                                        actions={actions}
                                     />
                                 </TdEdura>
                                 <TdEdura>{(startIndex + i + 1)}</TdEdura>
@@ -57,9 +42,15 @@ export default function TableSuratKeluar({data, startIndex=0}:{data:SuratKeluarA
                                 <TdEdura>{m.tglsurat?.toLocaleDateString('id-ID', {dateStyle:'long'})}</TdEdura>
                                 <TdEdura className="text-wrap">{m.ditujukkankepada}</TdEdura>
                                 <TdEdura className="text-wrap">{m.indekssurat}</TdEdura>
-                                <TdEdura className="text-wrap">{m.perihal}</TdEdura>
-                                <TdEdura className="text-[8px]">{m.idfile}</TdEdura>
-                                {/* <TdEdura>{m.user}</TdEdura> */}
+                                <TdEdura className="text-wrap">{m.perihal}
+                                    {
+                                        m.hasTemplate && m.dataTemplate?.personalSppdType?.length && <CellPersonalTypeTemplate data={m.dataTemplate.personalSppdType} />
+                                    }
+                                </TdEdura>
+                                <TdEdura className="text-[8px] align-middle">
+                                    {m.idfile && <Button className="size-4 cursor-pointer text-sky-600 font-bold" variant="ghost" role="button" onClick={()=>window.open(urlFileDrive(m.idfile),'', 'width=720,height=600')}><Eye/></Button>}
+                                </TdEdura>
+                                
                             </TRowEdura>
                         )
                     ) : (

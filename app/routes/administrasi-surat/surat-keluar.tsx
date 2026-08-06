@@ -1,8 +1,9 @@
 import type { controlDropdownKelas } from "~/components/dropdowns/rombel-dropdown";
 import type { Route } from "./+types/surat-keluar";
 import SuratKeluarPage from "~/pages/surat/surat-keluar-page";
-import { sheetSurat_suratKeluar } from "~/domain/enloaded/intial-enloaded/by-sheet/surat";
+import { sheetSurat_sppd, sheetSurat_suratKeluar, sheetSurat_suratMasuk } from "~/domain/enloaded/intial-enloaded/by-sheet/surat";
 import { useAppSelector } from "~/context-reduct/hook";
+import { sheetTendik_pangkatGolongan, sheetTendik_riwayatIdAkun } from "~/domain/enloaded/intial-enloaded/by-sheet/tendik";
 
 
 
@@ -37,7 +38,13 @@ export function clientLoader({}:Route.ComponentProps){
         controlKelas: settingRombel,
         toolbarTabs: undefined,//ConfigToolbarSelectMapel
         showExport:true,
-        sheetNeeded: [sheetSurat_suratKeluar]
+        sheetNeeded: [
+            sheetSurat_suratKeluar,
+            sheetSurat_suratMasuk,
+            sheetSurat_sppd, 
+            sheetTendik_riwayatIdAkun,
+            sheetTendik_pangkatGolongan
+        ]
         
         
     };

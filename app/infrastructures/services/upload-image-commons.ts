@@ -26,10 +26,9 @@ export default async function UploadImageServiceCommon(file:File, opt?:OptionSke
     try {
         const svc = new UploadGambarSoalService();
         const url = await svc.uploadFile(file, onProgress,opt);
-        console.log(url);
+        
         return url;
     } catch (err) {
-        console.error("upload error", err);
         return "";
     }
 }

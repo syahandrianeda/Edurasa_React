@@ -11,7 +11,7 @@ export default function ModalSettingKaldik(){
         <ModalEdura 
             state={state} 
             actions={actions} 
-            className="sm:min-w-5xl  md:min-w-2xl lg:min-w-5xl gap-0 overflow-x-auto"
+            className="gap-0 overflow-x-auto"
             title={()=>state.type === 'INFO' ?'Preview Kalendar Pendidikan': state.type + ' Kalendar Pendidikan'}
         >
             <FormSettingKaldik state={state}/>

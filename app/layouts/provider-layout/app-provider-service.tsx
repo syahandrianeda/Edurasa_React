@@ -40,8 +40,12 @@ import BuildParamLoaded from "~/infrastructures/ensure-loaded-api/build-param-lo
 import { CrudTabunganProvider } from "~/controllers/tabungan/crud/crud-tabungan-provider";
 import TabunganServiceImplements from "~/infrastructures/services/tabungan-service-implements";
 import { FokusRombelKeuangan } from "~/context-reduct/selectores/rombel-tabungan-selector";
-import SuratKeluarService from "~/infrastructures/repositories/surat-keluar-service";
+import SuratKeluarService from "~/infrastructures/services/surat-keluar-service";
 import { SuratKeluarCrudProvider } from "~/controllers/surat/crud/surat-keluar-crud-provider";
+import { CrudSppdProvider } from "~/controllers/surat/crud/sppd-crud-provider";
+import SppdService from "~/infrastructures/services/sppd-service";
+import SuratMasukService from "~/infrastructures/services/surat-masuk-service";
+import { SuratMasukCrudProvider } from "~/controllers/surat/crud/surat-masuk-crud-provider";
 /**
  * `AppProviderLayoutService`, menyediakan:
  *  * ensurLoadedStateService
@@ -83,7 +87,9 @@ export default function AppProviderLayoutService({matches}:Route.ComponentProps)
     const serviceSebaranJadwal      = new JadwalMapelServiceImplements();
     const serviceProta              = new ProtaServiceImplements();
     const serviceTabungan           = new TabunganServiceImplements();
-    const serviceSuratKeluar        = new SuratKeluarService()
+    const serviceSuratKeluar        = new SuratKeluarService();
+    const serviceSuratMasuk         = new SuratMasukService();
+    const serviceSppd               = new SppdService();
 
     
     
@@ -119,7 +125,7 @@ export default function AppProviderLayoutService({matches}:Route.ComponentProps)
             const param = (!loaderDataKiriman?.mustLoadSheetNeedSiswaIfExist) ? 
                         instDataEnloaded?.param.filter(s => s.tab !== namaTab('datasiswa')): 
                         instDataEnloaded.param;
-            // console.log('param call', param)
+            
             if(db.length > 0 && st.dataSiswa.data.length === 0){
                 store.dispatch(setAllSiswa({
                     data:db,
@@ -136,7 +142,7 @@ export default function AppProviderLayoutService({matches}:Route.ComponentProps)
                     {
                     loading: textLoading + textRombelFase,
                     success: (data) => {
-                        // console.log('respon api', data)
+                        
                         if(data) {
                             const decidedRombel = loaderDataKiriman?.sourceKelas ? rombelKeuangan?.rombel :  rombel ;
                                 data.forEach(({success,data,detailResponse})=>{
@@ -167,7 +173,7 @@ export default function AppProviderLayoutService({matches}:Route.ComponentProps)
         if(!instDataEnloaded) return;
         
         if(preventSecondLoad.current) return;
-        // console.log('data Enload', dataEnloaded)
+        
         buildStore()
         preventSecondLoad.current = false
 
@@ -187,7 +193,11 @@ export default function AppProviderLayoutService({matches}:Route.ComponentProps)
                                             <CrudProtaProvider service={serviceProta}>
                                                 <CrudTabunganProvider service={serviceTabungan}>
                                                     <SuratKeluarCrudProvider service={serviceSuratKeluar}>
-                                                        <Outlet/>
+                                                        <SuratMasukCrudProvider service={serviceSuratMasuk}>
+                                                            <CrudSppdProvider service={serviceSppd}>
+                                                                <Outlet/>
+                                                            </CrudSppdProvider>
+                                                        </SuratMasukCrudProvider>
                                                     </SuratKeluarCrudProvider>
                                                 </CrudTabunganProvider>
                                             </CrudProtaProvider>

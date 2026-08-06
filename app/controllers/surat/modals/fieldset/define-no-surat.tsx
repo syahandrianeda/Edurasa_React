@@ -25,7 +25,7 @@ export default function(){
         const tgl = currentData.tglsurat;
         const indexBulan = tgl.getMonth();
         const tahun = tgl.getFullYear()
-        const sufix = `/${romawi[indexBulan]}/${tahun}`
+        const sufix = `${romawi[indexBulan]}/${tahun}`
         return `${prefix}/${noUrut}-${namaSekolah}/${sufix}`;
     },[prefix, currentData.nosurat, currentData.id_nosurat, currentData.tglsurat])
 
@@ -46,7 +46,7 @@ export default function(){
         <div className="bg-linear-to-tl  from-sky-300 to-sky-100 p-2 dark:text-sky-600 rounded-2xl">
             <h4 className="text-lg font-bold text-center border-b-2 border-double border-sky-400">Nomor dan Tanggal Surat</h4>
             <div className="grid grid-cols-3 gap-1">
-                <NoSuratUrutField/>
+                <NoSuratUrutField currentData={currentData} setCurrentData={setCurrentData}/>
                 <TanggalSurat/>
             </div>
             <KlasifikasiSurat prefix={prefix} onChangePrefix={handleKlasifikasi}/>

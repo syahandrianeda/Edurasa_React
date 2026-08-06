@@ -17,14 +17,14 @@ export default class AbsensiRepositoryImplements extends AppScriptSheet implemen
                 auth
             };
         const action =  await this.postBody(paramCallKaldikAndAbsensi);
-        console.log('action absen', action);
+        
         return action.collections.map(this.responActionRead);
     }
     
     async refreshAbsensi(): Promise<ApiResponse<Record<string, any>>> {
         
         const action = await this.postBody(this.paramSheetAbsensiJenjang);
-        console.log('action absen repfes', action);
+        
         return this.responActionRead(action);
     }
     async uploadFileRepo(param: ParamFile): Promise<any> {

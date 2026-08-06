@@ -1,7 +1,8 @@
 import { Navigate } from "react-router";
 import type { controlDropdownKelas } from "~/components/dropdowns/rombel-dropdown";
 import type { Route } from "./+types/redirect-surat";
-import { sheetSurat_suratKeluar } from "~/domain/enloaded/intial-enloaded/by-sheet/surat";
+import { sheetSurat_sppd, sheetSurat_suratKeluar, sheetSurat_suratMasuk } from "~/domain/enloaded/intial-enloaded/by-sheet/surat";
+import {sheetTendik_pangkatGolongan, sheetTendik_riwayatIdAkun } from "~/domain/enloaded/intial-enloaded/by-sheet/tendik";
 
 
 export function meta({matches}: Route.MetaArgs) {
@@ -34,7 +35,14 @@ export function clientLoader({}:Route.ComponentProps){
         titleTambahan:'Administrasi Surat', 
         controlKelas: settingRombel,
         pesanLoading:'Mempersiapkan Administrasi Surat',
-        sheetNeeded: [sheetSurat_suratKeluar]
+        sheetNeeded: [
+                sheetSurat_suratKeluar,
+                sheetSurat_suratMasuk,
+                sheetSurat_sppd, 
+                sheetTendik_riwayatIdAkun,
+                sheetTendik_pangkatGolongan
+                
+        ]
         // sheetNeeded: defineTabunganRombelNeededRedirect,//[sheetAkun_dataSiswa],
         // mustLoadSheetNeedSiswaIfExist:true
     
@@ -44,6 +52,6 @@ export default function RedirectToTabunganSiswaPage({loaderData}:Route.Component
     
     return(
     
-    <Navigate to="/arsip-surat/surat-keluar" replace />
+    <Navigate to="/arsip-surat/surat-masuk" replace />
     )
 }

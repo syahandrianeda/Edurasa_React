@@ -1,13 +1,17 @@
-import { ModalEdura, ModalFooterEdura } from "~/components/modals/modal-components";
+import { ModalEdura} from "~/components/modals/modal-components";
 import { useModal } from "~/components/modals/modal-provider";
-import type { SuratKeluarSheetType } from "~/types/surat/surat-keluar-sheet-type";
 import { titleModal } from "./title-modal";
+import type { SppdAppType } from "~/types/surat/sppd-app-type";
+import SwitchFormTemplate from "./templates/switch-next-modal-form";
 
 export default function NextModalSurat(){
-    const { state, actions, nextState } = useModal<SuratKeluarSheetType>();
-    const open = state.isOpen && ['EDIT-CUSTOM'].includes(state?.type!);
+    const { state, actions, nextState } = useModal<SppdAppType>();
+    const open = state.isOpen && [
+        'EDIT-CUSTOM', 'EDIT SPPD', 'EDIT JUMLAH HARI',
+        'EDIT TEMPAT SPPD'
+    ].includes(state?.type!);
         // state.type === "EDIT KEUANGAN";
-    const typeBack = nextState ?? 'INFO';
+    
     
 
     return (
@@ -19,13 +23,11 @@ export default function NextModalSurat(){
             }}
             
             actions={actions} 
-            className="sm:min-w-5xl  md:min-w-2xl lg:min-w-5xl gap-0 overflow-x-auto"
-            title={()=>"Next Modal"}
+            className="min-w-10/12 gap-0 overflow-x-auto"
+            title={()=>titleModal(state)}
         >
-            {typeBack}
-            <ModalFooterEdura>
-                <button onClick={()=>actions.open(typeBack)}>Kembali</button>
-            </ModalFooterEdura>
+            <SwitchFormTemplate state={state}/>
+            
         </ModalEdura>
     )
 }

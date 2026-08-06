@@ -55,29 +55,16 @@ export default class UploadGambarSoalService {
             message:'Upload berhasil',
             source:'API'
        */
-      console.log(resp)
+      
       const data = resp?.data ?? resp;
       if(resp.success){
         const url = data && urlImgDrive(data.idfile);
         return url;
       }
       return NoImage
-    //   const possible = data?.url || data?.src || data?.link || data?.fileUrl || data?.webContentLink || data?.data || data;
-    //   if (typeof possible === "string" && possible.length > 0) {
-    //     onProgress?.(100);
-    //     return possible;
-    //   }
 
-    //   // If resp is string
-    //   if (typeof resp === "string" && resp.length > 0) {
-    //     onProgress?.(100);
-    //     return resp;
-    //   }
-
-    //   onProgress?.(0);
-    //   return "";
     } catch (err) {
-      console.error("UploadGambarSoalService.uploadFile error", err);
+      
       onProgress?.(0);
       return NoImage;
     }

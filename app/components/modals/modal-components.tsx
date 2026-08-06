@@ -39,7 +39,12 @@ export function ModalEdura({
                         }
                     }}
             // className={cn("p-0 flex flex-col gap-2 overflow-y-auto outline-0 ring-0 border-0 w-full min-h-[calc(100vh-72px)] translate-y-0 top-[5%] dark:bg-gray-600 transition-all duration-500", className, shake)}
-            className={cn("p-0 flex z-50 flex-col gap-2 overflow-y-auto outline-0 ring-0 border-0 w-full md:min-h-[calc(100vh-72px)] min-h-[calc(100vh-100px)] translate-y-0 top-[5%] dark:bg-gray-600 transition-all duration-500", className, shake)}
+            className={cn(`p-0 flex z-50 flex-col gap-2 overflow-y-auto outline-0 ring-0 border-0 
+                        min-w-11/12  
+                        h-10/12
+                        md:h-11/12
+                        bg-linear-to-br from-sky-100 to-sky-50
+                        translate-y-0 top-[5%] dark:bg-gray-600 transition-all duration-500`, className, shake)}
                     >
                 <ModalHeaderEdura title={(title && title()) || 'Modal'} description={description}/>
                 
@@ -61,7 +66,7 @@ export function ModalHeaderEdura({title="Title Modal", description=""}:{title?:s
 export function ModalFooterEdura({children}:{children:ReactNode}){
     return (
         // <DialogFooter className="fixed bottom-0 w-full bg-linear-to-tr from-sky-600 to-sky-100/5 dark:from-sky-800 dark:to-sky-400 py-2 px-12 md:px-3 gap-2 min-h-16 flex sm:justify-center items-center inner-shadow-sky-800">
-        <DialogFooter className="fixed bottom-0 w-full bg-linear-to-tr from-sky-600 to-sky-100/5 dark:from-sky-800 dark:to-sky-400 py-2 px-12 max-h-9 md:min-h-16 md:px-3 gap-2 flex sm:justify-center items-center inner-shadow-sky-800">
+        <DialogFooter className="fixed bottom-0 z-50 w-full bg-linear-to-tr from-sky-600 to-sky-100/85 dark:from-sky-800 dark:to-sky-400 py-2 px-12 max-h-12 md:min-h-16 md:px-3 gap-2 flex sm:justify-center items-center inner-shadow-sky-800">
                     {children}
             </DialogFooter>
     )

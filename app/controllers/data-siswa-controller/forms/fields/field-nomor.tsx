@@ -6,7 +6,7 @@ import type { SiswaType } from "~/types/siswa";
 export function NoKK({className}:{className?:string}){
     const {currentData, setCurrentData} = useFormEdura<SiswaType>();
     return (
-        <Fields className={cn("mt-3 w-10/12 mx-auto",className)}>
+        <Fields className={cn("mt-3 md:w-10/12 w-5/12",className)}>
             <InputText
                 id="no_kk"
                 value={currentData?.nokk??""}
@@ -26,7 +26,7 @@ export function NoKK({className}:{className?:string}){
 export function NoAkte({className}:{className?:string}){
     const {currentData, setCurrentData} = useFormEdura<SiswaType>();
     return (
-        <Fields className={cn("mt-3 w-10/12 mx-auto",className)}>
+        <Fields className={cn("mt-3 md:w-10/12 w-11/12",className)}>
             <InputText
                 id="no_akte"
                 value={currentData?.dapo_noregistrasiaktalahir??""}
@@ -46,7 +46,7 @@ export function NoAkte({className}:{className?:string}){
 export function NoHp({className}:{className?:string}){
      const {currentData, setCurrentData} = useFormEdura<SiswaType>();
     return (
-        <Fields className={cn("mt-3 w-10/12 mx-auto",className)}>
+        <Fields className={cn("mt-3 md:w-10/12 w-6/12 md:mx-auto",className)}>
             <InputText
                 id="no_hp"
                 value={currentData?.pd_hp??""}

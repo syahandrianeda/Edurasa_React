@@ -3,6 +3,7 @@ import type { InterfaceMapel } from "~/types/mapel/mapel";
 
 export default class OrmKurikulum{
     private dataKurikulum: ormKurikulumInterface[] = [];
+    private readonly namaKurikulum = 'kurmer'
     constructor(private dataSelector:resourcesKurikulum, private mapelKoleksi:InterfaceMapel[]){}
     createData(){
         const { cp, fase, atp } = this.dataSelector;
@@ -92,7 +93,36 @@ export default class OrmKurikulum{
     }
 
     atpOrm(){
+        const { cp, fase:faseSelector, atp } = this.dataSelector;
+        const koleksiMapel = new Map<number, ormKurikulumInterface>()
+        atp.forEach(itemAtp=>{
+            /** temukan fase dari Cp */
+            const relationCp = cp.find(s=>s.idbaris === itemAtp.foreignkey_elemencp);
+            if(relationCp){
+                const {idbaris, kodemapel, fase} = relationCp;
+                const mapelServerProperty= this.mapelKoleksi?.find(s=>s.kode === kodemapel && s.kelompok === this.namaKurikulum);
+                if(mapelServerProperty){
+                    if(!koleksiMapel.has(mapelServerProperty.id)){
+                        koleksiMapel.set(mapelServerProperty.id, {
+                                mapel_nama:mapelServerProperty.nama,
+                                mapel_kode:mapelServerProperty.kode,
+                                mapel_kode_umum:mapelServerProperty.kode_umum,
+                                mapel_khusus_penganut:mapelServerProperty.penganut,
+                                mapel_id: mapelServerProperty.id,
+                                fase: []
+                                
+                        })
+                    };
 
+                }
+
+                const findFaseInDataSelector = faseSelector.find(s=>s.fase === fase);
+
+
+                
+            }
+
+        })
     }
     
 }

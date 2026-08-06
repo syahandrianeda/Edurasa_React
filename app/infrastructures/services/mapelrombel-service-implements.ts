@@ -29,8 +29,7 @@ export default class MapelRombelServiceImplements implements MapelRombelServiceI
             action:'upsert'
         }
         this.repo.paramKurikulumJpMapel = paramUpdate;
-        console.log(param, this.repo.paramKurikulumJpMapel);
-        // return {success:false,data:[]}
+        
         return this.repo.update(this.repo.paramKurikulumJpMapel)
     }
 }

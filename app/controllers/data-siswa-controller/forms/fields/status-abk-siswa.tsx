@@ -8,7 +8,7 @@ export default function SelectAbk({className}:{className?:string}){
     const {currentData, setCurrentData} = useFormEdura<SiswaType>();
     
     return (
-        <Fields className={cn("mt-2 mb-0 w-6/12", className)}>
+        <Fields className={cn("mt-2 mb-0 md:w-6/12 w-5/12", className)}>
             <SelectField 
                 id='abk_siswa'
                 value={currentData?.dapo_kebutuhankhusus ??""}

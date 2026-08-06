@@ -261,3 +261,9 @@ export function getLabelTanggalBetweenDate(start:Date, end:Date):string{
         }
         
     }
+
+export function getEndDate(tanggal: Date, jumlahHari: number): Date {
+    const hasil = new Date(tanggal);
+    hasil.setDate(hasil.getDate() + (jumlahHari-1));
+    return hasil;
+}

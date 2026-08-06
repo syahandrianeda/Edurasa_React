@@ -7,7 +7,7 @@ export default function NamaSiswa({className}:{className?:string}){
     const {currentData, setCurrentData} = useFormEdura<SiswaType>();
     
     return (
-        <Fields className={cn("mt-3 w-10/12",className)}>
+        <Fields className={cn("mt-3 md:w-10/12 w-5/12",className)}>
             <InputText
                 id="pd_nama"
                 value={currentData?.pd_nama?.toUpperCase()??""}

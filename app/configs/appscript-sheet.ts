@@ -12,11 +12,18 @@ export interface ParamRequestAppScript{
 }
 
 export interface ParamUpdateRecord<T> extends ParamRequestAppScript{
+    /** versi lama
+     * 
     formData: string//,'{"no":"9","data":"19","data3":"03/02/2023 edited"}',
     byRow : number, 
     autoId?: keyof T,
     stringFormat?:string ,//["data"]',
     filter?: string,//'{"jenjang":"6"}'
+     */
+    data: string,
+    key_match:keyof T,
+    key_index:keyof T,
+    schema?:string ,
 }
 
 export interface ParamUpsert<T> extends ParamRequestAppScript{
@@ -83,7 +90,11 @@ export default class AppScriptSheet extends AppScriptConfig{
     protected KurikulumTabProta : ParamRequestAppScript = {idss:'',tab:''};
 
     protected sheetSuratTabSuratKeluar:ParamRequestAppScript = {idss:'', tab:''}
+    protected sheetSuratTabSuratMasuk:ParamRequestAppScript = {idss:'', tab:''}
     
+    protected sheetSuratTabSppd:ParamRequestAppScript = {idss:'', tab:''};
+
+    protected sheetTendikTabRiwayatIdAkun:ParamRequestAppScript = {idss:'', tab:''};
 
     constructor(){
         super();
@@ -144,6 +155,10 @@ export default class AppScriptSheet extends AppScriptConfig{
     }
     get sheetSurat():string{
         return this.currentMacro['ss_surat']
+    }
+
+    get sheetTendik():string{
+        return this.currentMacro['ss_tendik']
     }
     /** id sheet Absensi: */
     sheetAbsensi(jenjang:number): string{
@@ -536,6 +551,45 @@ export default class AppScriptSheet extends AppScriptConfig{
         return this.sheetSuratTabSuratKeluar;
     }
 
+    set paramSheetSuratTabSppd(additionalParam:Record<string, any>){
+        const tab = this.isDev?'trial_sppd':'sppd';
+        this.sheetSuratTabSppd =  {
+            idss: this.sheetSurat,
+            tab,
+            ...additionalParam
+        }
+    }
+
+    get paramSheetSuratTabSppd(){
+        return this.sheetSuratTabSppd
+    }
+
+    
+    set paramSheetTendikTabRiwayatIdAkun(additionalParam:Record<string, any>){
+        const tab = this.isDev?'trial_riwayat_id_akun':'riwayat_id_akun';
+        this.sheetTendikTabRiwayatIdAkun =  {
+            idss: this.sheetTendik,
+            tab,
+            ...additionalParam
+        }
+    }
+
+    get paramSheetTendikTabRiwayatIdAkun(){
+        return this.sheetTendikTabRiwayatIdAkun
+    }
+
+    set paramSheetSuratTabSuratMasuk(additionalParam:Record<string, any>){
+        const tab = this.isDev?'trial_surat_masuk':'surat_masuk'
+        this.sheetSuratTabSuratMasuk = {
+            tab,
+            idss:this.sheetSurat,
+            ...additionalParam
+        }
+    }
+    get paramSheetSuratTabSuratMasuk(){
+        return this.sheetSuratTabSuratMasuk;
+    }
+    
     dataAuth(){
         this.paramSheetAkunTabUser = {};
         const sheetTabAkun = this.paramSheetAkunTabUser;
@@ -550,5 +604,6 @@ export default class AppScriptSheet extends AppScriptConfig{
         }
         return null
     }
+
 
 }

@@ -72,7 +72,7 @@ function TambahEditKaldik(){
         })
     },[])
     return (
-        <div className="grid grid-cols-1 gap-2 space-x-2 md:grid-cols-2 bg-linear-to-tl from-sky-400 to-sky-300 p-2  h-[calc(100vh-12.5rem)]  md:overflow-y-auto scrol-h-custom">
+        <div className="grid grid-cols-1 gap-2 space-x-2 md:grid-cols-2 bg-linear-to-tl from-sky-400 to-sky-300 p-2  md:overflow-y-auto scrol-h-custom">
             <div className="border rounded-2xl bg-sky-500/50 border-sky-500 inset-shadow-sky-600 shadow-lg p-1 md:overflow-y-auto scrol-h-custom">
                 <InputKeterangan/>
                 <div className="flex flex-col md:flex-row gap-1">

@@ -1,0 +1,16 @@
+export type SppdSheetType = {
+    idbaris: number,
+    refrensi_suratkeluar: number,
+    ptk_diperintah: number,
+    ptk_golongan: string,
+    ptk_jabatan: string,
+    ptk_maksudsppd: string,
+    ptk_tempatsppd: string,
+    ptk_starttgl: string,
+    ptk_durasisppd: number,
+    ptk_nosppd: string,
+    resume: string,
+    arsip_nosppd: string,
+    versiupload: string,
+    hapus: string,
+}

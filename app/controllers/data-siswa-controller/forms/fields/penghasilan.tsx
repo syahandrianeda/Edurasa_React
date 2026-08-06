@@ -7,7 +7,7 @@ import type{ SiswaType } from "~/types/siswa";
 export function PenghasilanUmum({id,label,value, onChange, className}:{id:string, label:string, value:string, onChange:(v:string)=>void,className?:string}){
 
     return (
-        <Fields className={cn("mt-2 mb-0 w-10/12", className)}>
+        <Fields className={cn("mt-2 mb-0 md:w-10/12", className)}>
                     <SelectField 
                         id={id}
                         value={value}

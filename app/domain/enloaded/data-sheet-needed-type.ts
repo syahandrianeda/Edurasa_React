@@ -9,5 +9,5 @@ export interface DataSheetNeeeded{
      * // id adalah key suatu data di Spreadsheet dan 9 adalah value-nya
      * filter: JSON.stringify(objekFilter) 
      * */
-     params?: Record<string, unknown>;
+    params?: Record<string, unknown>;
 }

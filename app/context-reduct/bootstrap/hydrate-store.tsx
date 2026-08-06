@@ -169,7 +169,28 @@ export function hydratePreloadedState(): Partial<RootState> {
       data: [],
       name:'surat_keluar',
       loaded:false
+    },
+    riwayatIdAkun:{
+      data: [],
+      name:'riwayat_id_akun',
+      loaded:false
+    },
+    sppd:{
+      data: [],
+      name:'sppd',
+      loaded:false
+    },
+    pangkatGolongan:{
+      name:'pangkat_golongan',
+      data:[],
+      loaded:false
+    },
+    suratMasuk:{
+      data: [],
+      name:'surat_masuk',
+      loaded:false
     }
+
 
   };
 }

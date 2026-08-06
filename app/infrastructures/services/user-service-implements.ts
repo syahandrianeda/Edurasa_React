@@ -10,7 +10,7 @@ export default class UserServiceImplements implements UserServiceInterface{
 
     }
     async update(param: paramUpdateUserService): Promise<ApiResponse<Record<string, any>>> {
-       
+
         const parameter:paramUpdateUserRepository={
             data:JSON.stringify(param.data),
             action:'updateUser'

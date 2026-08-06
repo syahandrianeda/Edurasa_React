@@ -185,7 +185,7 @@ function GroupKeaktifan(){
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-1 min-h-100 pt-2 px-1">
             <div className="flex flex-col rounded-s-xl border-0 inner-shadow-sky-100 bg-linear-to-br from-sky-600 to-sky-400">
-                <div className="m-1 inner-shadow-sky-600 shadow-md shadow-sky-300 bg-sky-600/50 rounded-2xl flex flex-col justify-center h-full items-center">
+                <div className="m-1 inner-shadow-sky-600 shadow-md shadow-sky-300 bg-sky-600/50 rounded-2xl flex flex-col justify-center gap-4 h-full items-center">
                     <SelectKeaktifan/>
                     <KalendarMasukTanggal/>
                     <AwalKelas/>
@@ -260,25 +260,25 @@ function GroupIdentitas(){
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-1 min-h-100 pt-2">
             <div className="flex flex-col rounded-tl-xl border-0 inner-shadow-sky-100 bg-linear-to-br from-sky-600 to-sky-400">
-                <div className="m-1 inner-shadow-sky-600 shadow-md shadow-sky-300 bg-sky-600/50 rounded-2xl flex flex-col justify-start items-baseline h-full ps-4 ">
+                <div className="m-1 inner-shadow-sky-600 shadow-md shadow-sky-300 bg-sky-600/50 rounded-2xl flex flex-col justify-start items-baseline h-full md:ps-4 ">
                     <NamaSiswa/>
                     <SelectGender/>
                     <SelectAgama/>
                 </div>
             </div>
             <div className="flex flex-col rounded-tr-xl border-0 inner-shadow-sky-100 bg-linear-to-bl from-sky-600 to-sky-400">
-                <div className="m-1 inner-shadow-sky-600 shadow-md shadow-sky-300 bg-sky-600/50 rounded-2xl flex flex-col justify-start h-full items-center">
+                <div className="m-1 inner-shadow-sky-600 shadow-md shadow-sky-300 bg-sky-600/50 rounded-2xl flex flex-col justify-start h-full md:items-center">
                     <TempatLahir/>
                     <KalendarTanggalLahir/>
                 </div>
             </div>
             <div className="flex flex-col rounded-bl-xl border-0 inner-shadow-sky-100 bg-linear-to-tr from-sky-600 to-sky-400">
-                <div className="m-1 inner-shadow-sky-600 shadow-md shadow-sky-300 bg-sky-600/50 rounded-2xl flex flex-col justify-center h-full items-center">
+                <div className="m-1 inner-shadow-sky-600 shadow-md shadow-sky-300 bg-sky-600/50 rounded-2xl flex flex-col justify-center h-full md:items-center">
                     <SelectAbk/>
                 </div>
             </div>
             <div className="flex flex-col rounded-br-xl border-0 inner-shadow-sky-100 bg-linear-to-tl from-sky-600 to-sky-400">
-                <div className="m-1 inner-shadow-sky-600 shadow-md shadow-sky-300 bg-sky-600/50 rounded-2xl flex flex-col justify-center h-full items-center">
+                <div className="m-1 inner-shadow-sky-600 shadow-md shadow-sky-300 bg-sky-600/50 rounded-2xl flex flex-col justify-center h-full md:items-center">
                     <SaudaraDiKeluarga/>
                     <AnakUrutanDiKeluarga/>
                 </div>
@@ -292,25 +292,25 @@ function GroupTokenDanNomor(){
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-1 min-h-100 pt-2">
             <div className="flex flex-col rounded-tl-xl border-0 inner-shadow-sky-100 bg-linear-to-br from-sky-600 to-sky-400">
-                <div className="m-1 inner-shadow-sky-600 shadow-md shadow-sky-300 bg-sky-600/50 rounded-2xl flex flex-col justify-center items-center h-full ps-4 ">
+                <div className="m-1 inner-shadow-sky-600 shadow-md shadow-sky-300 bg-sky-600/50 rounded-2xl flex flex-col justify-center md:items-center h-full">
                     <Token/>
                 </div>
             </div>
             <div className="flex flex-col rounded-tr-xl border-0 inner-shadow-sky-100 bg-linear-to-bl from-sky-600 to-sky-400">
-                <div className="m-1 inner-shadow-sky-600 shadow-md shadow-sky-300 bg-sky-600/50 rounded-2xl flex flex-col justify-center h-full items-center">
+                <div className="m-1 inner-shadow-sky-600 shadow-md shadow-sky-300 bg-sky-600/50 rounded-2xl flex flex-col justify-center h-full md:items-center">
                     <NoNis/>
                     <NoNisn/>
                     <NoNIK/>
                 </div>
             </div>
             <div className="flex flex-col rounded-bl-xl border-0 inner-shadow-sky-100 bg-linear-to-tr from-sky-600 to-sky-400">
-                <div className="m-1 inner-shadow-sky-600 shadow-md shadow-sky-300 bg-sky-600/50 rounded-2xl flex flex-col justify-center h-full items-center">
+                <div className="m-1 inner-shadow-sky-600 shadow-md shadow-sky-300 bg-sky-600/50 rounded-2xl flex flex-col justify-center h-full md:items-center">
                     <NoAkte/>
                     <NoKK/>
                 </div>
             </div>
             <div className="flex flex-col rounded-br-xl border-0 inner-shadow-sky-100 bg-linear-to-tl from-sky-600 to-sky-400">
-                <div className="m-1 inner-shadow-sky-600 shadow-md shadow-sky-300 bg-sky-600/50 rounded-2xl flex flex-col justify-center h-full items-center">
+                <div className="m-1 inner-shadow-sky-600 shadow-md shadow-sky-300 bg-sky-600/50 rounded-2xl flex flex-col justify-center h-full md:items-center">
                     <NoHp/>
                 </div>
             </div>
@@ -351,7 +351,7 @@ function GroupDokumen(){
         <FilePreviewProvider>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-1 min-h-100 pt-2 justify-center">
                 <div className="flex flex-col rounded-tl-xl border-0 inner-shadow-sky-100 bg-linear-to-br from-sky-600 to-sky-400">
-                    <div className="m-1 inner-shadow-sky-600 shadow-md shadow-sky-300 bg-sky-600/50 rounded-2xl flex flex-col justify-center items-center h-full ps-4 ">
+                    <div className="m-1 inner-shadow-sky-600 shadow-md shadow-sky-300 bg-sky-600/50 rounded-2xl flex flex-col justify-center items-center h-full px-4">
                         <FileAkteKelahiran/>
                         <FileKartuKeluarga/>
                     </div>
@@ -388,7 +388,7 @@ function InputanBantu(){
         return (
             <>
                 <div className="flex flex-col rounded-tr-xl border-0 inner-shadow-sky-100 bg-linear-to-bl from-sky-600 to-sky-400">
-                    <div className="m-1 inner-shadow-sky-600 shadow-md shadow-sky-300 bg-sky-600/50 rounded-2xl flex flex-col justify-center h-full items-center">
+                    <div className="m-1 inner-shadow-sky-600 shadow-md shadow-sky-300 bg-sky-600/50 rounded-2xl flex flex-col md:justify-center h-full items-center">
                         <NamaSiswa/>
                         <TempatLahir/>
                         <KalendarTanggalLahir/>
@@ -430,7 +430,7 @@ function InputanBantu(){
 function GroupOrangTua(){
     
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-1 min-h-100 pt-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-1 h-98 pt-2 scrol-h-custom">
             <div className="flex flex-col rounded-tl-xl border-0 inner-shadow-sky-100 bg-linear-to-br from-sky-600 to-sky-400">
                 <div className="m-1 inner-shadow-sky-600 shadow-md shadow-sky-300 bg-sky-600/50 rounded-2xl flex flex-col justify-start items-center h-full">
                     <div className="rounded-t-xl p-2 font-extrabold uppercase text-2xl text-sky-100 dark:text-sky-200">ayah</div>
