@@ -1,8 +1,9 @@
-import type { controlDropdownKelas } from "~/components/dropdowns/rombel-dropdown";
 import type { Route } from "./+types/sk-siswa-aktif";
-import { sheetSurat_sppd, sheetSurat_suratKeluar, sheetSurat_suratMasuk } from "~/domain/enloaded/intial-enloaded/by-sheet/surat";
-import { sheetTendik_pangkatGolongan, sheetTendik_riwayatIdAkun } from "~/domain/enloaded/intial-enloaded/by-sheet/tendik";
+import type { controlDropdownKelas } from "~/components/dropdowns/rombel-dropdown";
 import { sheetMasterInduk_riwayatRombel } from "~/domain/enloaded/intial-enloaded/by-sheet/master-induk";
+import SuketSiswaAktifPage from "~/pages/surat/suket-siswa-aktif-page";
+import { sheetSurat_sppd, sheetSurat_suratKeluar, sheetSurat_suratMasuk } from "~/domain/enloaded/intial-enloaded/by-sheet/surat";
+import { sheetTendik_riwayatIdAkun, sheetTendik_pangkatGolongan } from "~/domain/enloaded/intial-enloaded/by-sheet/tendik";
 
 
 
@@ -42,10 +43,10 @@ export function clientLoader({}:Route.ComponentProps){
      *  */    
      
     return {
-        titleTambahan:'Koleksi Bank Soal',
+        titleTambahan:'Surat Keterangan Siswa Aktif',
         controlKelas: settingRombel,
         toolbarTabs: undefined,//ConfigToolbarSelectMapel
-        showExport:false,
+        showExport:true,
         sheetNeeded: [
                         sheetSurat_suratKeluar,
                         sheetSurat_suratMasuk,
@@ -63,20 +64,11 @@ export function clientLoader({}:Route.ComponentProps){
 }
 
 
-// export async function clientAction({ request }: Route.ActionArgs){
-//     const instCall  = new EnsurLoadedApiService();
-//     const paramReq = ((await request.formData()).get('parameter'));
-//     const json = JSON.parse(paramReq as string);
-//     const data = await instCall.callNeeded(json);
-//     return data
-// }
-
-export default function SuratMasukHarianRoute() {
-    
-   
+export default function SuratSiswaAktifRoute() {
     return(
         <div className="p-1">
-            Hello World
+            <h3 className="text-2xl uppercase font-extrabold text-center mb-3">Daftar Surat Keterangan Siswa Aktif</h3>
+            <SuketSiswaAktifPage/>
         </div>
     )
 }

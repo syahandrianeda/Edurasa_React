@@ -90,13 +90,13 @@ export const KlasifikasiNoSurat:KlasifikasiSuratKemendegriType[]=[
         value:'422.8',
         description:'Surat Keterangan Diterima di sekolah',
         source:'Permendagri No.78 Th.2012',
-        template:'Surat Keterangan Diterima di sekolah',
+        template:'Surat Keterangan Diterima',
     },
     {
         value:'422.9',
         description:'Surat Keterangan Pindah sekolah',
         source:'Permendagri No.78 Th.2012',
-        template:'Surat Keterangan Pindah sekolah',
+        template:'Surat Keterangan Pindah',
     },
     {
         value:'425',

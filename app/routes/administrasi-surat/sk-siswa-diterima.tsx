@@ -1,13 +1,11 @@
+
+import type { Route } from "./+types/sk-siswa-diterima";
 import type { controlDropdownKelas } from "~/components/dropdowns/rombel-dropdown";
-import type { Route } from "./+types/sppd";
-import FormulirSuratSppdPage from "~/pages/surat/formulir-surat-keluar-sppd";
-import { sheetSurat_sppd, sheetSurat_suratKeluar, sheetSurat_suratMasuk } from "~/domain/enloaded/intial-enloaded/by-sheet/surat";
-import { sheetTendik_pangkatGolongan, sheetTendik_riwayatIdAkun } from "~/domain/enloaded/intial-enloaded/by-sheet/tendik";
 import { sheetMasterInduk_riwayatRombel } from "~/domain/enloaded/intial-enloaded/by-sheet/master-induk";
-import { useAppSelector } from "~/context-reduct/hook";
-import { DataOrmSuratKeluarSelector } from "~/context-reduct/selectores/surat-keluar-selector";
-import { getNumberFromString } from "~/lib/get-number";
-import { useMemo } from "react";
+import { sheetSurat_sppd, sheetSurat_suratKeluar, sheetSurat_suratMasuk } from "~/domain/enloaded/intial-enloaded/by-sheet/surat";
+import { sheetTendik_riwayatIdAkun, sheetTendik_pangkatGolongan } from "~/domain/enloaded/intial-enloaded/by-sheet/tendik";
+import SuketSiswaDiterimaDariPindahanPage from "~/pages/surat/suket-siswa-diterima-sekolah";
+
 
 
 
@@ -20,7 +18,7 @@ export function meta({matches}: Route.MetaArgs) {
     
     return [
         {
-            title: mainTitle + ' | Surat'
+            title: mainTitle + ' | Bank Soal'
         },
         { 
             name: "description", 
@@ -46,10 +44,10 @@ export function clientLoader({}:Route.ComponentProps){
      *  */    
      
     return {
-        titleTambahan:'Buat SPPD',
+        titleTambahan:'Surat Keterangan Diterima',
         controlKelas: settingRombel,
         toolbarTabs: undefined,//ConfigToolbarSelectMapel
-        showExport:false,
+        showExport:true,
         sheetNeeded: [
                         sheetSurat_suratKeluar,
                         sheetSurat_suratMasuk,
@@ -58,8 +56,8 @@ export function clientLoader({}:Route.ComponentProps){
                         sheetTendik_pangkatGolongan,
                         sheetMasterInduk_riwayatRombel
                         
-                ],
-                pesanLoading:'Mempersiapkan Surat Masuk dan Surat Keluar (termasuk sppd dan riwayat tugas PTK)',
+                ]
+                // pesanLoading:'Mempersiapkan ATP',
                 // addPesanRombel:{isAdd:true, type:'rombel', includeFaseName:true},
                 // sheetNeeded: defineCreateItemSoalNeeded
         
@@ -67,16 +65,11 @@ export function clientLoader({}:Route.ComponentProps){
 }
 
 
-export default function SppdRoute() {
-    const sortir = useAppSelector(DataOrmSuratKeluarSelector);
-            
-        // const pagination =  usePagination(sortir)
-        const nextNoSurat = useMemo(()=>getNumberFromString(sortir[0]?.id_nosurat) + 1,[sortir]);    
-        
-
+export default function SuratSiswaDiterimaRoute() {
     return(
         <div className="p-1">
-            <FormulirSuratSppdPage nextNoSurat={nextNoSurat}/>
+            <h3 className="text-2xl uppercase font-extrabold text-center mb-3">Daftar Surat Keterangan Diterima</h3>
+            <SuketSiswaDiterimaDariPindahanPage />
         </div>
     )
 }

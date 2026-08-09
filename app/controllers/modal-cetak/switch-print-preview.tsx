@@ -16,6 +16,9 @@ import PrintSuketSiswaAktif from "../surat/modals/templates/print-suket-siswa-ak
 import PrintFormatLampiranSuketSiswaAktif from "../surat/modals/templates/print-suket-siswa-aktif-lampiran";
 import PrintFormatLampiranSuketNisn from "../surat/modals/templates/print-suket-nisn-lampiran";
 import PrintSuketKelakuanBaikFormatLampiran from "../surat/modals/templates/print-suket-kelakuan-baik-lampiran";
+import PrintSuketDiterimaPindahan from "../surat/modals/templates/print-suket-diterima-pindahan";
+import PrintSuketDiterimaPindahanLampiran from "../surat/modals/templates/print-suket-diterima-pindahan-lampiran";
+import PrintSuketMutasi from "../surat/modals/templates/print-suket-mutasi";
 
 export default function SwitchPrintPreviewPage(){
     const {state} = useModal()
@@ -33,6 +36,14 @@ export default function SwitchPrintPreviewPage(){
             return <PrintSuketSiswaAktif data={(state.payload as {data:SiswaType}).data } surat_keluar={(state.payload as {surat_keluar:DataOrmSuratKeluarType}).surat_keluar } />
         case "PRINT SUKET NISN":
             return <PrintSuketNisn data={(state.payload as {data:SiswaType}).data } surat_keluar={(state.payload as {surat_keluar:DataOrmSuratKeluarType}).surat_keluar } />
+        case "PRINT SUKET MUTASI":
+            return <PrintSuketMutasi data={(state.payload as {data:SiswaType}).data } surat_keluar={(state.payload as {surat_keluar:DataOrmSuratKeluarType}).surat_keluar } />
+        case "PRINT SUKET MUTASI FORMAT LAMPIRAN":
+            return <div>TIDAK TERSEDIA FORMAT MUTASI DALAM BENTUK LAMPIRAN</div>
+        case "PRINT SUKET PINDAHAN":
+            return <PrintSuketDiterimaPindahan data={(state.payload as {data:SiswaType}).data } surat_keluar={(state.payload as {surat_keluar:DataOrmSuratKeluarType}).surat_keluar } />
+        case "PRINT SUKET PINDAHAN FORMAT LAMPIRAN":
+            return <PrintSuketDiterimaPindahanLampiran data={(state.payload as {data:SiswaType}).data } surat_keluar={(state.payload as {surat_keluar:DataOrmSuratKeluarType}).surat_keluar } />
         case "PRINT SUKET KELAKUAN BAIK":
             return <PrintSuketKelakuanBaik data={(state.payload as {data:SiswaType}).data } surat_keluar={(state.payload as {surat_keluar:DataOrmSuratKeluarType}).surat_keluar } />
         case "PRINT SUKET SISWA AKTIF FORMAT LAMPIRAN":

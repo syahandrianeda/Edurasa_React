@@ -14,7 +14,9 @@ export type KeyIdentitasInti =
     | 'kelas'
     | 'orang_tua'
     | 'ayah'
-    | 'ibu';
+    | 'ibu'
+    | 'awal_kelas'
+    ;
 
 ;
 export interface IdentitasIntiSiswaType{
@@ -79,6 +81,12 @@ export const initialIdentitasInti:IdentitasIntiSiswaType[]=[
         label: 'Nama Ibu',
         labelShort: 'Nama Ibu',
         value: (data)=>data.pd_namaibu
+    },
+    {
+        key:'awal_kelas',
+        label: 'Diterima di kelas',
+        labelShort: 'Diterima di kelas',
+        value: (data)=>data.awal_kelas
     }
 
 ]

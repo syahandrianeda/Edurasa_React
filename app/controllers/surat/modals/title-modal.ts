@@ -23,8 +23,6 @@ export function titleModal(state:ModalState):string{
             return "Edit Tempat SPPD"
         case "HAPUS SUKET ITEM SISWA":
             return "Hapus Siswa di Surat Keterangan"
-        case "HAPUS SUKET ITEM SISWA":
-            return "Hapus Siswa di Surat Keterangan"
         case 'EDIT SUKET ITEM SISWA':
             return "Pilih/Edit Siswa"
         default:

@@ -4,7 +4,7 @@ export type templateSuratType=
 | 'Surat Keterangan Aktif'
 | 'Surat Keterangan NISN'
 | 'Surat Perintah'
-| 'Surat Keterangan Diterima di sekolah'
-| 'Surat Keterangan Pindah sekolah'
+| 'Surat Keterangan Diterima'
+| 'Surat Keterangan Pindah'
 | 'Surat Pengantar'
 ;

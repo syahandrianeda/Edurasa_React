@@ -38,7 +38,7 @@ export default function CellPersonalSiswaTemplate({data}:{data:DataOrmSuratKelua
                             <TooltipComp content={`${display.moreText}`}>
                                 <Button role="button" 
                                         variant="ghost" 
-                                        className="h-4 cursor-pointer text-[8px]  text-sky-600 font-bold p-0 m-0 hover:bg-transparent" 
+                                        className="h-4 cursor-pointer text-[8px]  text-rose-600 font-bold p-0 m-0 hover:bg-transparent" 
                                         onClick={()=>actions.open('INFO', data, {closeOnOutsideClick:false}   )}>
                                     <p className="capitalize">{display.moreText}
                                     </p>

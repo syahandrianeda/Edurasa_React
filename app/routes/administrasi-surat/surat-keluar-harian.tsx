@@ -40,21 +40,21 @@ export function clientLoader({}:Route.ComponentProps){
         }
         
     return {
-        titleTambahan:'Surat Keluar',
+        titleTambahan:'Buat Surat Keluar',
         controlKelas: settingRombel,
         toolbarTabs: undefined,//ConfigToolbarSelectMapel
         showExport:false,
         sheetNeeded: [
                         
                 sheetSurat_suratKeluar,
-                // sheetSurat_suratMasuk,
-                // sheetSurat_sppd, 
-                // sheetTendik_riwayatIdAkun,
-                // sheetTendik_pangkatGolongan,
+                sheetSurat_suratMasuk,
+                sheetSurat_sppd, 
+                sheetTendik_riwayatIdAkun,
+                sheetTendik_pangkatGolongan,
                 sheetMasterInduk_riwayatRombel
                 
-        ]
-                // pesanLoading:'Mempersiapkan ATP',
+        ],
+        pesanLoading:'Mempersiapkan Surat Keluar',
                 // addPesanRombel:{isAdd:true, type:'rombel', includeFaseName:true},
                 // sheetNeeded: defineCreateItemSoalNeeded
         

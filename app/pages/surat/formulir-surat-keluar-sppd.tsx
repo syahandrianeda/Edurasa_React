@@ -187,7 +187,7 @@ export default function FormulirSuratSppdPage({nextNoSurat}:{nextNoSurat:number}
 
     return (
         <div className="p-1 mb-9">
-            <h3 className="text-xl font-bold text-center mb-7">Form Input Surat Masuk</h3>
+            <h3 className="text-xl font-bold text-center mb-7">Form Buat SPPD</h3>
             <FormInputSuratMasuk 
                     suratMasuk={suratMasuk}
                     setSuratMasuk={setSuratMasuk}

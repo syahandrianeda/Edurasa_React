@@ -139,10 +139,10 @@ export default [
                     route('surat-masuk', "routes/administrasi-surat/surat-masuk.tsx"),
                     route('create-surat-masuk', "routes/administrasi-surat/surat-masuk-harian.tsx"),
                     route('sk-siswa-aktif', "routes/administrasi-surat/sk-siswa-aktif.tsx"),
-                    // route('sk-nisn', "routes/administrasi-surat/sk-nisn.tsx"),
-                    // route('sk-kb', "routes/administrasi-surat/sk-kb.tsx"),
-                    // route('sk-siswa-diterima', "routes/administrasi-surat/sk-siswa-diterima.tsx"),
-                    // route('sk-siswa-mutasi', "routes/administrasi-surat/sk-siswa-mutasi"),
+                    route('sk-nisn', "routes/administrasi-surat/sk-nisn.tsx"),
+                    route('sk-kb', "routes/administrasi-surat/sk-kb.tsx"),
+                    route('sk-siswa-diterima', "routes/administrasi-surat/sk-siswa-diterima.tsx"),
+                    route('sk-siswa-mutasi', "routes/administrasi-surat/sk-siswa-mutasi.tsx"),
                 ])
             ])
         ]),

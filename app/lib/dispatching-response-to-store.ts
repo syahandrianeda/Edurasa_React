@@ -228,7 +228,7 @@ export default async function DispatchingResponseToStore(success:boolean, data:R
         }
         
         if(detailResponse?.namaTab === namaTab('surat_keluar')){
-            console.log('surat keluar')
+            
             store.dispatch(setSuratKeluar(data as unknown as SuratKeluarSheetType[]))
         }
         
@@ -246,9 +246,8 @@ export default async function DispatchingResponseToStore(success:boolean, data:R
             store.dispatch(setSuratMasuk(data as unknown as SuratMasukSheetType[]))
         }
 
-
         if(detailResponse?.namaTab === namaTab('riwayat_rombel')){
-            console.log('didaftarkan', 'riwayat_rombel')
+            
             store.dispatch(setRiwayatRombel(data as unknown as RiwayatRombelSheetType[]))
         }
 

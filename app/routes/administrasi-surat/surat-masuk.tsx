@@ -54,17 +54,8 @@ export function clientLoader({}:Route.ComponentProps){
 }
 
 
-// export async function clientAction({ request }: Route.ActionArgs){
-//     const instCall  = new EnsurLoadedApiService();
-//     const paramReq = ((await request.formData()).get('parameter'));
-//     const json = JSON.parse(paramReq as string);
-//     const data = await instCall.callNeeded(json);
-//     return data
-// }
-
 export default function SuratMasukRoute() {
-    
-   
+
     return(
         <div className="p-1">
             <h3 className="text-2xl uppercase font-extrabold text-center mb-3">Daftar Surat Masuk</h3>

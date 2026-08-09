@@ -16,6 +16,10 @@ export default function FormPreviewTemplate({state}:{state:ModalState<DataOrmSur
             return <SuratKeteranganResumePreview/>
         case 'Surat Keterangan NISN':
             return <SuratKeteranganResumePreview/>
+        case 'Surat Keterangan Diterima':
+            return <SuratKeteranganResumePreview/>
+        case 'Surat Keterangan Pindah':
+            return <SuratKeteranganResumePreview/>
         default:
             return <InfoResumeSuratKeluarLainnya/>
     }
