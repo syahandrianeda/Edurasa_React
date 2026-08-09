@@ -3,6 +3,7 @@
 //   ProblemValidate,
 // } from "~/types";
 
+import type { SiswaWithValidation } from "~/context-reduct/selectores/data-siswa-aktif";
 import type { GropPefixNisType } from "../entities/group-prefix-nis-type";
 import type { ProblemValidate } from "../infrastructures/ProblemValidate";
 
@@ -11,10 +12,18 @@ export default class DuplicateNisn {
   validate(groups: GropPefixNisType[]): GropPefixNisType[] {
 
     for (const group of groups) {
+      const groupSiswa = group.data;
+      this.validateInSiswaValidation(groupSiswa);
+      
+    }
 
-      const map = new Map<string, typeof group.data>();
+    return groups;
+  }
+  
+  validateInSiswaValidation(groupSiswa:SiswaWithValidation[]){
+    const map = new Map<string, typeof groupSiswa>();
 
-      for (const siswa of group.data) {
+      for (const siswa of groupSiswa) {
 
         // Abaikan NISN yang sudah tidak valid
         if (siswa.validation.errors.nisn !== undefined) {
@@ -47,9 +56,5 @@ export default class DuplicateNisn {
           siswa.validation.duplicate.nisn = problem;
         }
       }
-    }
-
-    return groups;
   }
-
 }

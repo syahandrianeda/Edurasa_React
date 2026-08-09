@@ -25,10 +25,10 @@ export default function ModalPraCetak<T>(){
             }}
             
             actions={actions} 
-            className="w-[calc(100vw-5rem)] lg:min-w-3xl overflow-x-auto pt-0"
-            title={()=>"Pracetak"}
+            className="w-[calc(100vw-5rem)] print:w-[210mm] lg:min-w-3xl overflow-x-auto pt-0"
+            title={()=>state.type || 'Pra Cetak'}
         >   
-            <div className="gap-0 h-100 pb-2 overflow-y-auto scrol-h-custom font-times-new-roman">
+            <div className="gap-0 h-[calc(100vh-12rem)] pb-2  overflow-y-auto scrol-h-custom font-times-new-roman">
                 <div ref={exportRef}
                     className="text-black px-4 py-2 mt-0 [&>div]:bg-white print:bg-white bg-gray-300 print:shadow-none flex flex-col gap-2">
                     <SwitchPrintPreviewPage/>

@@ -6,4 +6,5 @@ export type templateSuratType=
 | 'Surat Perintah'
 | 'Surat Keterangan Diterima di sekolah'
 | 'Surat Keterangan Pindah sekolah'
+| 'Surat Pengantar'
 ;

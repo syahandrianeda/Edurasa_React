@@ -189,6 +189,11 @@ export function hydratePreloadedState(): Partial<RootState> {
       data: [],
       name:'surat_masuk',
       loaded:false
+    },
+    riwayatRombel:{
+      data: [],
+      name:'riwayat_rombel',
+      loaded:false
     }
 
 

@@ -6,6 +6,8 @@ import type { UserPtk } from "~/types";
 import type { RiwayatAkunAppType } from "~/types/tendik/riwayat-akun-app-type";
 import type RiwayatIdAkunClass from "~/domain/tendik/riwayat-id-akun-class";
 import type { SppdAppType } from "~/types/surat/sppd-app-type";
+import type { SiswaType } from "~/types/siswa";
+import type RiwayatRombelClass from "~/domain/rombel/riwayat-rombel-class";
 
 interface TemplateSuratKeluarType{
     hasTemplate:boolean,
@@ -19,11 +21,12 @@ export default class TemplateSuratKeluar{
     }
     private readonly dataKlasifikasi:KlasifikasiSuratKemendegriType[] = []
     private readonly riwayatAkun:RiwayatIdAkunClass = undefined as unknown as RiwayatIdAkunClass;
+    private readonly riwayatRombelSiswa:RiwayatRombelClass = undefined as unknown as RiwayatRombelClass;
 
-    constructor(riwayatAkunInstance:RiwayatIdAkunClass, private readonly sppdData:SppdAppType[] = []){
+    constructor(riwayatAkunInstance:RiwayatIdAkunClass, private readonly sppdData:SppdAppType[] = [], riwayatRombel:RiwayatRombelClass){
         this.riwayatAkun = riwayatAkunInstance;
         this.dataKlasifikasi = KlasifikasiNoSurat;
-        
+        this.riwayatRombelSiswa = riwayatRombel
     }
     get dataKlasifikasiHasTemplate():KlasifikasiSuratKemendegriType[]{
         return this.dataKlasifikasi.filter(s=>s.hasOwnProperty('template'))
@@ -48,7 +51,7 @@ export default class TemplateSuratKeluar{
             const personalSppdTypeArray:(SppdAppType)[] = [];
             if(target_ptk.length === 0){
                     const find = this.sppdData.filter(s=>s.refrensi_suratkeluar === idsurat).map(sppd=>{
-                            const found = this.riwayatAkun.getAkunInDate(sppd.ptk_diperintah, tglSurat);
+                            const found = this.riwayatAkun?.getAkunInDate(sppd.ptk_diperintah, tglSurat);
                             const isNipBerlaku = found?.nip && found?.tgl_nip_start && found?.tgl_nip_start <= tglSurat;
                             const nip = isNipBerlaku ? found?.nip : undefined;
                             return {...sppd, ptk_nama: found?.nama_guru, ptk_nip: nip, ptk_nosppd:nosurat}
@@ -73,7 +76,24 @@ export default class TemplateSuratKeluar{
         }
         return this;
     }
-    
+    setPersonalSiswa(allSiswa:SiswaType[], tglSurat:Date, idSiswa:number[]):this{
+        if(this.resultTemplate.dataTemplate && this.resultTemplate.hasTemplate){
+            const result:SiswaType[]=[]
+            for(const id of idSiswa){
+                const findSiswa = allSiswa.find(s=>s.id === id);
+                const nama_rombel = this.riwayatRombelSiswa?.getRombelSiswaInTapel(id,tglSurat) ??'';
+                const rombel = this.riwayatRombelSiswa.getRiwayatRombelSiswa(id); 
+                
+                if(findSiswa){
+                    const newData:SiswaType = {...findSiswa, nama_rombel}
+                    result.push(newData);
+                }
+            }
+            this.resultTemplate.dataTemplate!.personalSiswaType =result;
+            
+        }
+        return this;
+    }
     build(){
         return structuredClone(this.resultTemplate);
     }

@@ -5,6 +5,7 @@ import { cn } from "~/lib/utils";
 export default function ButtonDeleteAwesome({labelButton, className, children, ...props}:ComponentProps<'button'> & {labelButton:string, children?:ReactNode}){
     return (
         <button
+            type="button"
             className={cn("group flex h-fit w-fit items-center justify-center gap-[0.5em] rounded-full bg-[#c60808] px-3 py-1  overflow-hidden text-white shadow-[inset_0px_-4px_4px_0px_#f05b5b,0px_0px_0px_2px_#f9d1d1,0px_4px_0px_0px_#A60000] duration-250 hover:translate-y-[0.25em] active:translate-y-[0.5em] active:shadow-[inset_0px_-4px_4px_0px_#f05b5b,0px_0px_0px_2px_#f9d1d1]",className)}
             {...props}
         >

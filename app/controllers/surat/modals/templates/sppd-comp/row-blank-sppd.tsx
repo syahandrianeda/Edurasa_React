@@ -2,7 +2,6 @@ export default function RowBlankSppd({romawi}:{romawi:string}){
     return (
         <tr>
             <td className="border border-black px-2">
-                
                 <div className="flex flex-col justify-between min-h-24">
                     <table className="w-fit leading-4">
                         <tbody>
@@ -20,7 +19,6 @@ export default function RowBlankSppd({romawi}:{romawi:string}){
                             </tr>
                         </tbody>
                     </table>
-                    {/* <div className="border-t border-gray-600 ms-2 w-11/12">NIP. </div> */}
                 </div>
             </td>
             <td className="border border-black px-2">

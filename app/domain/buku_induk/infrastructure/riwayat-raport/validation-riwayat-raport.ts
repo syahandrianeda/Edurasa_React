@@ -2,6 +2,7 @@ import type { SiswaType } from "~/types/siswa";
 import type { ProblemRiwayat } from "../../value-objects/RiwayatRaportSiswaType";
 import { DefineNis } from "../nis/DefineNis";
 import { getNumberFromString } from "~/lib/get-number";
+import { currentTapel } from "~/lib/current-tapel";
 
 export class ValidationPreRequesiteRiwayatRaport{
     private validation:ProblemRiwayat[] = [];
@@ -46,6 +47,25 @@ export class ValidationPreRequesiteRiwayatRaport{
 
     fristPrefix(){
         return this.siswa.prefix
+    }
+
+    lastTapel(){
+        const tapelToday = currentTapel({variant:'short'});
+        const last = this.hasKeluarTgl() ?currentTapel({variant:'short',date:this.dataSiswa.keluar_tgl}):tapelToday;
+        return this.isStatusAkive()?
+                Number(tapelToday)
+                :Number(last)
+    }
+
+    /** countJenjang
+     * menghitung banyak jenjang dihitung dari tapel awal masuk, 
+     * sampai akhir tapel (masih aktif, sudah lulus, atau invalid)
+     */
+    countJenjang(){
+        const awal = this.fristPrefix();
+        const akhir = this.lastTapel();
+        const selisih = akhir - Number(awal);
+        return selisih/101
     }
 
     lastJenjang(){

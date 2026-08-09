@@ -6,9 +6,7 @@ import { usePagination } from "~/hooks/use-pagination";
 
 export default function SuratMasukPage(){
     const sortir = useAppSelector(DtoSuratMasukSelector);
-        
-        const pagination =  usePagination(sortir.sort((a,b)=>b.tglsurat.getTime() - a.tglsurat.getTime()))
-        
+    const pagination =  usePagination(sortir.sort((a,b)=>b.tglsurat.getTime() - a.tglsurat.getTime()))
         
     return (
         <>

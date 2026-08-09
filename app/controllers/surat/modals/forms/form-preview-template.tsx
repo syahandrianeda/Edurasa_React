@@ -1,6 +1,8 @@
 import type { ModalState } from "~/components/modals/modal-provider";
 import type { DataOrmSuratKeluarType } from "~/domain/surat-orm/entity/surat-orm-type";
 import SppdResumePreview from "../templates/sppd-resume";
+import SuratKeteranganResumePreview from "../templates/surat-keterangan-siswa-resume";
+import InfoResumeSuratKeluarLainnya from "../templates/resume-surat-keluar-lainnya";
 
 export default function FormPreviewTemplate({state}:{state:ModalState<DataOrmSuratKeluarType>}){
     const template = state.payload?.dataTemplate?.name
@@ -9,13 +11,13 @@ export default function FormPreviewTemplate({state}:{state:ModalState<DataOrmSur
             // return <SppdResumePreview state={state}/>;
             return <SppdResumePreview/>;
         case 'Surat Keterangan Berkelakuan Baik':
-            return <p>SKKB</p>;
+            return <SuratKeteranganResumePreview/>;
         case 'Surat Keterangan Aktif':
-            return <p>Suket NISN</p>
+            return <SuratKeteranganResumePreview/>
         case 'Surat Keterangan NISN':
-            return <p>Suket NISN</p>
+            return <SuratKeteranganResumePreview/>
         default:
-            return <p>Not Found</p>
+            return <InfoResumeSuratKeluarLainnya/>
     }
 
 }

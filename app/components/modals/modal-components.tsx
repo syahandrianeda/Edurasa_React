@@ -40,10 +40,13 @@ export function ModalEdura({
                     }}
             // className={cn("p-0 flex flex-col gap-2 overflow-y-auto outline-0 ring-0 border-0 w-full min-h-[calc(100vh-72px)] translate-y-0 top-[5%] dark:bg-gray-600 transition-all duration-500", className, shake)}
             className={cn(`p-0 flex z-50 flex-col gap-2 overflow-y-auto outline-0 ring-0 border-0 
-                        min-w-11/12  
+                        md:w-10/12  
                         h-10/12
+                        w-full
+                        
                         md:h-11/12
                         bg-linear-to-br from-sky-100 to-sky-50
+                        scrol-h-custom
                         translate-y-0 top-[5%] dark:bg-gray-600 transition-all duration-500`, className, shake)}
                     >
                 <ModalHeaderEdura title={(title && title()) || 'Modal'} description={description}/>

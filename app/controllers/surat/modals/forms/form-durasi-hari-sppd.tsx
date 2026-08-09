@@ -8,7 +8,6 @@ import { Field} from "~/components/ui/field";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import TableWithScrolling from "~/components/tabels/table-with-scrolling";
-
 import type { DataOrmSuratKeluarType } from "~/domain/surat-orm/entity/surat-orm-type";
 import ButtonUpdateTglSPPD from "../../crud/button-update-tgl-sppd";
 
@@ -93,14 +92,10 @@ export default function FormDurasiHariSppd(){
                     </div>
                 </div>
             </div>  
-
             <ModalFooterEdura>
                     {/* <button type="button" onClick={()=>nextState ? actions.open(nextState.type, nextState.payload, nextState.configModal  ):actions.close()}>Kembali</button> */}
                     <ButtonUpdateTglSPPD nextState={nextState as ModalState<DataOrmSuratKeluarType>}/>
             </ModalFooterEdura>
         </>
-
-        
-        
     )
 } 

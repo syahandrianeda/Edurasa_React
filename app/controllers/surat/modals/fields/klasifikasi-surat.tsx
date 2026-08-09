@@ -1,4 +1,3 @@
-import { useFormEdura } from "~/components/form-custom/form-edura";
 import { Label } from "~/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "~/components/ui/select";
 import { KlasifikasiNoSurat} from "~/domain/surat/klasifikasi-surat-permendagri";
@@ -7,9 +6,10 @@ import type{ SuratKeluarAppType } from "~/types/surat/surat-keluar-app-type";
 export interface KlasifikasiSuratProps {
     prefix?: string, 
     onChangePrefix: (v:string)=>void
+    setCurrentData:(updater: (draft: SuratKeluarAppType) => void) => void
 }
-export default function KlasifikasiSurat({prefix, onChangePrefix}:KlasifikasiSuratProps){
-    const {setCurrentData} = useFormEdura<SuratKeluarAppType>()
+export default function KlasifikasiSurat({prefix, onChangePrefix, setCurrentData}:KlasifikasiSuratProps){
+    
     const sourceSelected = KlasifikasiNoSurat.find(s=>s.value === prefix)
     const sourceSelectedKlasifikasi = sourceSelected?.source;
     return (
@@ -26,6 +26,10 @@ export default function KlasifikasiSurat({prefix, onChangePrefix}:KlasifikasiSur
                         if(Selected && Selected.template){
                             setCurrentData(draft=>{
                                 draft.indekssurat = Selected.template ?? ''
+                            })
+                        }else{
+                            setCurrentData(draft=>{
+                                draft.indekssurat = ''
                             })
                         }
                     }}

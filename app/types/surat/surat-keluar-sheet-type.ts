@@ -12,5 +12,5 @@ export interface SuratKeluarSheetType{
             user: number,
             target_siswa: string,
             target_ptk: string,
-            refrensi_suratmasuk: number,
+            refrensi_suratmasuk: number|string,
 }

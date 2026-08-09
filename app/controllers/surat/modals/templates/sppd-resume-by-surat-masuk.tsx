@@ -1,7 +1,7 @@
 import { TdEdura, ThEdura, TRowEdura } from "~/components/tabels/tabel-components";
 import TableWithScrolling from "~/components/tabels/table-with-scrolling";
 import { useModal} from "~/components/modals/modal-provider";
-import {  File,  NotebookPenIcon,  Printer, UserIcon } from "lucide-react";
+import {  File,  NotebookPenIcon,  Printer,  UserIcon } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import TooltipComp from "~/components/ui_edura/tooltip-comp";
 import TriggerEditWaktuSppd from "../trigers/triger-edit-waktu-sppd";
@@ -14,6 +14,7 @@ import { DataOrmSuratKeluarSelector } from "~/context-reduct/selectores/surat-ke
 import { useMemo } from "react";
 import TriggerEditTempatSppd from "../trigers/triger-edit-tempat-perjalanan";
 
+
 export default function SppdResumePreviewBySuratMasuk(){
     const {state, actions } = useModal<SuratMasukAppType>();
     const dataSuratKeluar = useAppSelector(DataOrmSuratKeluarSelector);
@@ -22,7 +23,7 @@ export default function SppdResumePreviewBySuratMasuk(){
     },[state.payload?.idbaris, dataSuratKeluar])
     const dataForm = dataTemplate
     const dataSppd = dataForm?.dataTemplate?.personalSppdType ?? [];
-    console.log({dataForm})
+    
     if(!dataForm) return (
         <div className="border m-3 flex justify-center gap-2 h-80 items-center">
             <p className="font-bold text-center mb-3">Surat masuk ini tidak dijadikan sumber/refrensi Surat Keluar SPPD</p>
@@ -31,7 +32,7 @@ export default function SppdResumePreviewBySuratMasuk(){
     return (
         <div className="border m-3 flex flex-col gap-2">
             <h3 className="font-bold uppercase text-center mb-3">Informasi SPPD</h3>
-            <TableWithScrolling className="border-none md:w-10/12 w-full mx-auto">
+            <TableWithScrolling inModal={true} className="border-none md:w-10/12 w-full mx-auto">
                 <tbody>
                     <tr>
                         <td className="px-1 w-3/12 text-nowrap">Jenis Surat</td>
@@ -90,7 +91,7 @@ export default function SppdResumePreviewBySuratMasuk(){
                     </tr>
                 </tbody>
             </TableWithScrolling>
-            <TableWithScrolling className="w-10/12 mx-auto mb-3">
+            <TableWithScrolling inModal={true} className="w-10/12 mx-auto mb-3">
                 <thead>
                     <TRowEdura>
                         <ThEdura>No</ThEdura>
@@ -142,7 +143,6 @@ export default function SppdResumePreviewBySuratMasuk(){
                                         ><NotebookPenIcon className="[text-shadow:0px_1px_1px_0px_#950000]"/></Button>
                                     </TooltipComp>
                                         )
-
                                     }
                                     </div>
                                 </TdEdura>
@@ -157,20 +157,18 @@ export default function SppdResumePreviewBySuratMasuk(){
                                     </TdEdura>  
                                 }
                             </TRowEdura>
-
-                                
                             )
                         )
                     }
                 </tbody>
             </TableWithScrolling>
-                <div className="text-xs">
-                    <ul className="list-disc list-outside pl-5">
-                        <li className="list-item">Jabatan/Tugas dalam SPPD jabatan yang ditugaskan dalam perjalanan dinas. Bukan sekadar Jabatan yang disandang di sekolah</li>
-                        <li className="list-item">Misalnya, sebagai 'Pembina Pramuka', 'Panitia SPMB', dll sesuai dengan yang ditugaskan</li>
-                        <li className="list-item">Anda dapat mengubah jabatan atau identitas SPPD di <strong>Edit Data PTK</strong></li>
-                    </ul>
-                </div>
+            <div className="text-xs">
+                <ul className="list-disc list-outside pl-5">
+                    <li className="list-item">Jabatan/Tugas dalam SPPD jabatan yang ditugaskan dalam perjalanan dinas. Bukan sekadar Jabatan yang disandang di sekolah</li>
+                    <li className="list-item">Misalnya, sebagai 'Pembina Pramuka', 'Panitia SPMB', dll sesuai dengan yang ditugaskan</li>
+                    <li className="list-item">Anda dapat mengubah jabatan atau identitas SPPD di <strong>Edit Data PTK</strong></li>
+                </ul>
+            </div>
         </div>
     )
 }

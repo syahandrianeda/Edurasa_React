@@ -1,20 +1,9 @@
-import {useState } from "react";
+import {useEffect, useState } from "react";
 import { useImmer } from "use-immer";
-import { CalendarPicker, CalendarPickerKaldik } from "~/components/form-custom/calendar";
-import { useAppSelector } from "~/context-reduct/hook";
-import { DataOrmSuratKeluarSelector } from "~/context-reduct/selectores/surat-keluar-selector";
-import AsalSurat from "~/controllers/surat/modals/fields/asal-surat-masuk";
-import KlasifikasiSuratTemplate from "~/controllers/surat/modals/fields/klasifikasi-surat-template";
-import NoSuratField from "~/controllers/surat/modals/fields/no-surat";
-import PerihalSurat from "~/controllers/surat/modals/fields/perihal-surat";
-import TujuanSurat from "~/controllers/surat/modals/fields/tujuan-surat";
-import UnggahanFileSuratMasuk from "~/controllers/surat/modals/fieldset/unggahan-file-surat-masuk";
-import { KlasifikasiNoSurat } from "~/domain/surat/klasifikasi-surat-permendagri";
-import { getNumberFromString } from "~/lib/get-number";
+import { KlasifikasiNoSurat, SppdValueTemplate } from "~/domain/surat/klasifikasi-surat-permendagri";
 import { isDev } from "~/lib/nama-tab-environment";
 import type { SuratKeluarAppType } from "~/types/surat/surat-keluar-app-type";
 import type{ SuratMasukAppType } from "~/types/surat/surat-masuk-app-type";
-import FormulirSuratBaru from "./formulir-surat-keluar-baru";
 import ButtonSaveAwesome from "~/components/button-awesome/save-button";
 import { Loader } from "lucide-react";
 import { useCrudSuratMasuk } from "~/controllers/surat/crud/surat-masuk-crud-provider";
@@ -31,16 +20,18 @@ import type { SppdAppType } from "~/types/surat/sppd-app-type";
 import DispatchingResponseToStore from "~/lib/dispatching-response-to-store";
 import type { SuratKeluarSheetType } from "~/types/surat/surat-keluar-sheet-type";
 import type { SppdSheetType } from "~/types/surat/sppd-sheet-type";
+import FormInputSuratMasuk from "../../controllers/surat/forms/formulir-surat-masuk";
+import FormulirSuratKeluarSppd from "~/controllers/surat/forms/formulir-surat-keluar-sppd";
 
-export default function FormulirSuratKeluarUmumPage(){
+export default function FormulirSuratSppdPage({nextNoSurat}:{nextNoSurat:number}){
+    const prefixResource = SppdValueTemplate.value
     const {state:stateSuratMasuk, actions:postSuratMasuk} = useCrudSuratMasuk();
     const {state:stateSuratKeluar, actions:postSuratKeluar} = useCrudSuratKeluar();
     const {state:stateSppd, actions:postSppd} = useSppdCrudProvider();
     const {id:user, name} = getSessionApp<UserPtk>()!;
-    const dataSuratKeluar = useAppSelector(DataOrmSuratKeluarSelector);
-    const nextNoSurat = getNumberFromString(dataSuratKeluar[0]?.id_nosurat) + 1;
     const idfile= isDev?'1CSOjBivY2iRpL_vOzALa-rAmIIF26apb':'';
-    const [prefix, setPrefix] = useState<string>('');
+    const [prefix, setPrefix] = useState<string>(prefixResource);
+    
     const initialSuratMasuk:SuratMasukAppType={
         idbaris: 0,
         tglditerima: new Date(),
@@ -48,21 +39,21 @@ export default function FormulirSuratKeluarUmumPage(){
         asalsurat: '',
         tglsurat: new Date(),
         perihal: '',
-        indekssurat: '',
+        indekssurat: 'SPPD',
         ditujukkankepada: '',
         idfile:idfile,
         status: 'diarsipkan',
         oleh: name,
         user:user
-
     }
+
     const initialSuratKeluar:SuratKeluarAppType = {
         idbaris:0,
         nosurat: "",
-        id_nosurat: nextNoSurat.toString(),
+        id_nosurat: nextNoSurat?.toString(),
         tglsurat: new Date(),
         perihal: "",
-        indekssurat: "",
+        indekssurat: "SPPD",
         ditujukkankepada: "",
         idfile: "",
         status: "",
@@ -72,15 +63,23 @@ export default function FormulirSuratKeluarUmumPage(){
         target_ptk: [],
         refrensi_suratmasuk: 0,
     }
+
     const [suratMasuk, setSuratMasuk] = useImmer<SuratMasukAppType>(initialSuratMasuk);
     const [suratKeluar, setSuratKeluar] =  useImmer<SuratKeluarAppType>(initialSuratKeluar);
     const [sppd, setSppd] =  useImmer<SppdAppType[]>([]);
 
+    useEffect(()=>{
+        setSuratKeluar(draft=>{
+            draft.id_nosurat = nextNoSurat?.toString();
+        });
+    },[nextNoSurat]);
     
-    const handleDate = (value:string|Date)=>{
-        if(!value) return;
+    const handlePrihal = (value:string)=>{
         setSuratMasuk(draft=>{
-            draft.tglsurat = typeof(value) === 'string'? new Date(value):value;
+            draft.perihal = value;
+        })
+        setSuratKeluar(draft=>{
+            draft.perihal = value
         })
     }
 
@@ -100,12 +99,14 @@ export default function FormulirSuratKeluarUmumPage(){
         }
         
     };
+
     const reset = ()=>{
         setSuratKeluar(initialSuratKeluar);
         setSuratMasuk(initialSuratMasuk);
         setSppd([]);
-        setPrefix('');
+        setPrefix(prefixResource);
     }
+
     const onSubmit = async()=>{
         /**
          * validation level 1: validation Surat Masuk
@@ -137,7 +138,6 @@ export default function FormulirSuratKeluarUmumPage(){
                 if(success){
                     const responseDataSuratMasuk = (data as unknown as SuratMasukSheetType[]);
                     DispatchingResponseToStore(success,responseDataSuratMasuk,detailResponse!);
-
                     
                     /** lanjut ke surat keluar, jika paramSheetKeluar !== undefined atau sppd */;
                     if(paramSuratKeluar){
@@ -146,6 +146,7 @@ export default function FormulirSuratKeluarUmumPage(){
                         const dtoSuratKeluar = DtoSuratKeluar.toSheet(updateParamSuratKeluar)
                         const {success:successSuratKeluar, data:responsSuratKeluar, detailResponse:detailResponseSuratKeluar} = await postSuratKeluar.update(dtoSuratKeluar);
                         const dataSuratKeluar = responsSuratKeluar as unknown as SuratKeluarSheetType[];
+
                         DispatchingResponseToStore(successSuratKeluar,dataSuratKeluar ,detailResponseSuratKeluar!);
                         
                         if(successSuratKeluar){
@@ -186,16 +187,25 @@ export default function FormulirSuratKeluarUmumPage(){
 
     return (
         <div className="p-1 mb-9">
-            <h3 className="text-xl font-bold text-center mb-7">Form Input Surat Keluar</h3>
-            
-                    <FormulirSuratBaru 
+            <h3 className="text-xl font-bold text-center mb-7">Form Input Surat Masuk</h3>
+            <FormInputSuratMasuk 
+                    suratMasuk={suratMasuk}
+                    setSuratMasuk={setSuratMasuk}
+                    prefix={prefix}
+                    handleKlasifikasi={handleKlasifikasi}
+                    handlePrihal={handlePrihal}
+                    />
+            {
+                suratMasuk.indekssurat === 'SPPD' && suratMasuk.idfile !== '' && (
+                    <FormulirSuratKeluarSppd
                             prefix={prefix} 
                             suratKeluar={suratKeluar} 
                             setSuratKeluar={setSuratKeluar}
                             sppd={sppd}
                             setSppd={setSppd}
                             />
-            
+                )
+            }
             <div className="border bg-linear-to-tl mt-7 from-sky-300 to-sky-200 rounded-2xl p-4">
                 <ButtonSaveAwesome className="px-2 py-0 mx-auto"  type='button' onClick={onSubmit} labelButton="Simpan"  
                         disabled={

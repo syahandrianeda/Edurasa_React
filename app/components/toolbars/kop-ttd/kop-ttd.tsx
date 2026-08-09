@@ -376,7 +376,7 @@ export function KontenBottomTtd({side, typePerson}:Partial<dataColum>){
 export function KomponenKop({type, dataColumn}: kopKontentType){
     if(type === 'none') return null;
     return (
-        <table className='w-full mb-14' data-word="kop">
+        <table className='w-full mb-9' data-word="kop">
             <tbody>
                 <tr>
                     {

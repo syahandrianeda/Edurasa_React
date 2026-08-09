@@ -6,7 +6,7 @@ import ButtonTooltip from "../ui_edura/button-tooltip";
 import { cn } from "~/lib/utils";
 import { classNameStatus } from "~/lib/get-classname-status-siswa";
 
-export default function TableWithScrolling({children, className}:{children:ReactNode,className?:string}){
+export default function TableWithScrolling({children, className, inModal}:{children:ReactNode,className?:string, inModal?:boolean}){
     const { topScrollRef,
             bottomScrollRef,
             tableContainerRef,
@@ -16,7 +16,7 @@ export default function TableWithScrolling({children, className}:{children:React
     return (
         <div className="relative">
                 <div ref={topScrollRef}
-                    className="sticky top-13 z-10 overflow-x-auto scrol-h-custom print:hidden" >
+                    className={`sticky ${inModal?'top-0':'top-13'} z-10 overflow-x-auto scrol-h-custom print:hidden`} >
                     <div style={{ width: tableWidth+'px', height: 1 }}className="cursor-move"/>
                 </div>
                 <div

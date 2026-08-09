@@ -20,48 +20,45 @@ import { NAMA_SEKOLAH } from "~/domain/identitas_aplikasi/identitas-aplikasi";
 
 
 export default function FormEditTempatSppd(){
-    const {state, actions:actionModal, nextState} = useModal<SppdAppType>();
-    const {currentData:data, setCurrentData} = useFormEdura<SppdAppType>()
+    const {actions:actionModal} = useModal<SppdAppType>();
+    const {currentData:data} = useFormEdura<SppdAppType>()
     const {actions:postSppd, state:stateSppd} = useSppdCrudProvider();
-    const {actions:postSuratKeluar, state:stateSuratKeluar} = useCrudSuratKeluar();
+    const {state:stateSuratKeluar} = useCrudSuratKeluar();
     const suratKeluarSelector =useAppSelector(DataOrmSuratKeluarSelector);
     const [tempatTugas, setTempatTugas] = React.useState<string>(data.ptk_tempatsppd)
     
-    
-        const backButton = ()=>{
-            const foundSelector = suratKeluarSelector.find(s=>s.idbaris === data?.refrensi_suratkeluar );
-            actionModal.open('INFO', foundSelector, {closeOnOutsideClick:false})
-    
-        }
-        const onSubmit = ()=>{
-            
-            const dataSppd = new BuildSppd()
-                                .setIdbaris(data.idbaris)
-                                .setTempatSppd(tempatTugas)
-                                .data
-            toast.promise(
-                    postSppd.update(dataSppd),
-                    {
-                        loading: 'Mengupdate SPPD',
-                        success: (response) => {
-                            // const data = response.data as SppdSheetType[];
-                            console.log('respons sppd', response)
-                            const {success,data,detailResponse} = response;
-                            if(detailResponse){
-                                DispatchingResponseToStore(success,data as SppdSheetType[],detailResponse)
-                            }
-                            
-                            return 'Pemanggilan data telah selesai' 
-                        },
-                        error: `Gagal mengupdate SPDD`,
-                        finally(){
-                            
-                        },
-                        // closeButton:true,
+    const backButton = ()=>{
+        const foundSelector = suratKeluarSelector.find(s=>s.idbaris === data?.refrensi_suratkeluar );
+        actionModal.open('INFO', foundSelector, {closeOnOutsideClick:false})
+
+    }
+
+    const onSubmit = ()=>{
+        const dataSppd = new BuildSppd()
+                            .setIdbaris(data.idbaris)
+                            .setTempatSppd(tempatTugas)
+                            .data
+        toast.promise(
+            postSppd.update(dataSppd),
+            {
+                loading: 'Mengupdate SPPD',
+                success: (response) => {
+                    const {success,data,detailResponse} = response;
+                    if(detailResponse){
+                        DispatchingResponseToStore(success,data as SppdSheetType[],detailResponse)
                     }
-                )
-                
-        }
+                    
+                    return 'Pemanggilan data telah selesai' 
+                },
+                error: `Gagal mengupdate SPDD`,
+                finally(){
+                    
+                },
+                closeButton:true,
+            }
+        )
+    }
+
     return (
         <>
             <div className="flex flex-col gap-y-1 pt-4 space-y-4 md:h-72 min-h-98 border-2 items-center">

@@ -1,5 +1,5 @@
 import { TriangleAlert, X } from "lucide-react";
-import { FormEdura, useFormEdura } from "~/components/form-custom/form-edura";
+import { FormEdura} from "~/components/form-custom/form-edura";
 import type { DataOrmSuratKeluarType } from "~/domain/surat-orm/entity/surat-orm-type";
 import { useCrudSuratKeluar } from "../../crud/surat-keluar-crud-provider";
 import { ModalFooterEdura } from "~/components/modals/modal-components";
@@ -8,9 +8,9 @@ import ButtonSaveAwesome from "~/components/button-awesome/save-button";
 import ButtonDeleteSuratKeluar from "../../crud/button-delete-surat-keluar";
 
 export default function FormDeleteSuratKeluar({state}:{state:ModalState}){
+    const {state:stateCrud} = useCrudSuratKeluar();
+    const {actions} = useModal()
     
-        const {state:stateCrud} = useCrudSuratKeluar();
-        const {actions} = useModal()
     return (
         <FormEdura<DataOrmSuratKeluarType>  data={state.payload as unknown as DataOrmSuratKeluarType}>
             <fieldset disabled={stateCrud.isSubmitting} className="h-98 flex items-center justify-center">

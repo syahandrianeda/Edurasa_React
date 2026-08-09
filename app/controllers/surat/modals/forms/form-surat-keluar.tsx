@@ -23,7 +23,6 @@ export default function FormSuratKeluar<DataOrmSuratKeluarType>({state}:{state:M
                 <ModalFooterEdura>
                     <ButtonUpdateSuratKeluar/>
                 </ModalFooterEdura>
-
             </fieldset>
         </FormEdura>
                 

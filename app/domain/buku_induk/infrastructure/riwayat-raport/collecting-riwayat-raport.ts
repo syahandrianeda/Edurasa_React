@@ -5,7 +5,8 @@ import type { ValidationPreRequesiteRiwayatRaport } from "./validation-riwayat-r
 export class CollectingRiwayatRaport{
     private resultColllection:PredicatableRiwayatRaport={
             isValid:false,
-            prediksiKelas:[]
+            prediksiKelas:[],
+            shouldBeFixed:[]
         }
     constructor(private readonly validate:ValidationPreRequesiteRiwayatRaport){}
 
@@ -18,7 +19,7 @@ export class CollectingRiwayatRaport{
             const currentNisTapel = Number(currentTapel({variant:'short'}))
             let i:number = kelasAwal
             let prefix:number = Number(this.validate.fristPrefix());
-            while(prefix < currentNisTapel){
+            while(prefix <= currentNisTapel){
                 const data:RiwayatRaportSiswa = {
                     tapel:prefix.toString(),
                     rombelInTapel:i+sufixRombel
@@ -31,7 +32,9 @@ export class CollectingRiwayatRaport{
             
             this.resultColllection = {
                 isValid: prediksi.length>0,
-                prediksiKelas:prediksi
+                prediksiKelas:prediksi,
+                shouldBeFixed: this.validate.dataValidation.map(m=>m?.message ?? '')
+                
             }
         }else{
             this.resultColllection={

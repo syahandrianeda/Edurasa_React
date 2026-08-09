@@ -6,6 +6,8 @@ import { InstanceRiwayatIdAkun } from "./riwayat-id-akun-selector";
 import { DtoSppdSelector } from "./dto-sppd-selector";
 import DtoSuratMasuk from "~/dtos/dto-surat-masuk";
 import { DtoSuratMasukSelector } from "./surat-masuk-selector";
+import { selectAllSiswaDTO } from "./data-siswa-aktif";
+import { InstanceOfRiwayatRombel } from "./riwayat-rombel-selector";
 
 export const PureSuratKeluarSelector = (state:RootState)=> state.suratKeluar.data;//Prota;
 
@@ -20,7 +22,10 @@ export const DataOrmSuratKeluarSelector = createSelector([
     DtoSuratKeluarSelector,
     InstanceRiwayatIdAkun,
     DtoSppdSelector,
-    DtoSuratMasukSelector
-],(dto, instanceAkun, dtoSppd, suratMasuk)=>{
-    return new OrmSuratKeluar(dto,instanceAkun,dtoSppd,suratMasuk).build().data
+    DtoSuratMasukSelector,
+    selectAllSiswaDTO,
+    InstanceOfRiwayatRombel
+
+],(dto, instanceAkun, dtoSppd, suratMasuk,siswa,riwayatRombel)=>{
+    return new OrmSuratKeluar(dto,instanceAkun,dtoSppd,suratMasuk, siswa, riwayatRombel).build().data
 })

@@ -59,7 +59,7 @@ export default class DtoSuratKeluar{
             user                : resolveNumber(data.user ),
             target_siswa        : Array.isArray(data.target_siswa)?data.target_siswa.join(", "):data.target_siswa,//data.target_siswa.length===0?"":data.target_siswa.join(", "),
             target_ptk          : Array.isArray(data.target_ptk)?data.target_ptk.join(", "):data.target_ptk,//data.target_ptk.length===0?"":data.target_ptk.join(", "),
-            refrensi_suratmasuk: resolveNumber(data.refrensi_suratmasuk),
+            refrensi_suratmasuk: resolveString(data.refrensi_suratmasuk,""),
         }
     }
     static arrayToSheet(data:SuratKeluarAppType[]):SuratKeluarSheetType[]{
@@ -105,16 +105,16 @@ export default class DtoSuratKeluar{
         }
         if (data.target_ptk !== undefined) {
             result.target_ptk = Array.isArray(data.target_ptk)
-                ? data.target_ptk.map(resolveNumber).join(",")
+                ? data.target_ptk.map(resolveNumber).join(", ")
                 : resolveString(data.target_ptk);
         }
         if (data.target_siswa !== undefined) {
             result.target_siswa = Array.isArray(data.target_siswa)
-                ? data.target_siswa.map(resolveNumber).join(",")
+                ? data.target_siswa.map(resolveNumber).join(", ")
                 : resolveString(data.target_siswa);
         }
         if (data.refrensi_suratmasuk !== undefined) {
-            result.refrensi_suratmasuk = resolveNumber(data.refrensi_suratmasuk);
+            result.refrensi_suratmasuk = resolveString(data.refrensi_suratmasuk,'');
         }
 
         return result;

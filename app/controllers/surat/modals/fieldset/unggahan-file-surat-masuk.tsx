@@ -1,10 +1,8 @@
 import { FilePreviewProvider, SectionPreview } from "~/components/form-custom/files-input";
 import { FileUploadSuratMasuk } from "../fields/unggah-file-surat-masuk.js";
-
 import type{ SuratMasukAppType } from "~/types/surat/surat-masuk-app-type.js";
 
 export default function({currentData, setCurrentData}:{currentData:SuratMasukAppType, setCurrentData:(updater: (draft: SuratMasukAppType) => void) => void}){
-    // const {currentData, setCurrentData} = useFormEdura<SuratMasukAppType>()
     return (
         <FilePreviewProvider>
             <div className="bg-linear-to-tl md:w-1/2 min-h-80 shadow-lg shadow-sky-400 from-sky-300 to-sky-100 p-2 dark:text-sky-600 rounded-2xl">

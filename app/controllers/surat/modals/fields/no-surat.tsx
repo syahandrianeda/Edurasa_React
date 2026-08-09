@@ -12,6 +12,8 @@ export interface NoSuratFieldProps{
 }
 
 export default function NoSuratField({inputValue, handleChange, disable, className}:NoSuratFieldProps){
+    
+        
     return (
         <Field className={cn("relative mt-7", className)} orientation="horizontal">
             <Label htmlFor="id_nosurat" className="absolute dark:bg-gray-700 border-s-2 border-t border-sky-500 bg-sky-50 dark:text-sky-100 ps-1 text-[10px] dark:border-b-0 top-0 left-0 py-0 pe-4 rounded-se-2xl -translate-y-3.5 w-fit">Nomor Surat</Label>

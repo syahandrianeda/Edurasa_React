@@ -45,7 +45,6 @@ export default function TableSppdHalDua({data}:{data:SppdAppType}){
                 </tr>
                 <tr>
                     <td className="border border-black px-2">
-                        
                         <div className="flex flex-col justify-between items-center min-h-37">
                             <table className="w-fit leading-4">
                                 <tbody>
@@ -133,7 +132,6 @@ export default function TableSppdHalDua({data}:{data:SppdAppType}){
                         </p>
                     </td>
                 </tr>
-
             </tbody>
         </table>
     )

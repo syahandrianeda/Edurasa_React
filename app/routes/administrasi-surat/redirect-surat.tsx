@@ -3,6 +3,7 @@ import type { controlDropdownKelas } from "~/components/dropdowns/rombel-dropdow
 import type { Route } from "./+types/redirect-surat";
 import { sheetSurat_sppd, sheetSurat_suratKeluar, sheetSurat_suratMasuk } from "~/domain/enloaded/intial-enloaded/by-sheet/surat";
 import {sheetTendik_pangkatGolongan, sheetTendik_riwayatIdAkun } from "~/domain/enloaded/intial-enloaded/by-sheet/tendik";
+import { sheetMasterInduk_riwayatRombel } from "~/domain/enloaded/intial-enloaded/by-sheet/master-induk";
 
 
 export function meta({matches}: Route.MetaArgs) {
@@ -40,7 +41,8 @@ export function clientLoader({}:Route.ComponentProps){
                 sheetSurat_suratMasuk,
                 sheetSurat_sppd, 
                 sheetTendik_riwayatIdAkun,
-                sheetTendik_pangkatGolongan
+                sheetTendik_pangkatGolongan,
+                sheetMasterInduk_riwayatRombel
                 
         ]
         // sheetNeeded: defineTabunganRombelNeededRedirect,//[sheetAkun_dataSiswa],

@@ -49,7 +49,7 @@ export default function(){
                 <NoSuratUrutField currentData={currentData} setCurrentData={setCurrentData}/>
                 <TanggalSurat/>
             </div>
-            <KlasifikasiSurat prefix={prefix} onChangePrefix={handleKlasifikasi}/>
+            <KlasifikasiSurat prefix={prefix} onChangePrefix={handleKlasifikasi} setCurrentData={setCurrentData}/>
             <NoSuratField disable={disableInputNoSurat} inputValue={currentData.nosurat} handleChange={handleInputNoSurat}/>
         </div>
     )

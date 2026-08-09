@@ -15,7 +15,7 @@ export default function InfoSuratMasuk({data}:{data:SuratMasukAppType}){
     const dataTemplate = useMemo(()=>{
         return dataSuratKeluar.find(s=>s.refrensi_suratmasuk === data.idbaris);
     },[data, dataSuratKeluar])
-    console.log({dataTemplate, data, dataSuratKeluar})
+    
     return (
         <>
             <div className="flex md:h-98 items-center justify-center border rounded-3xl p-4 bg-white dark:bg-white">

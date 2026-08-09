@@ -7,7 +7,7 @@ import type { SuratMasukAppType } from "~/types/surat/surat-masuk-app-type";
 
 export default function TriggerEditSuratMasuk({dataForm, state}:{dataForm:DataOrmSuratKeluarType, state:ModalState}){
     const { actions} = useModal<SuratMasukAppType>();
-    console.log(dataForm.dataSuratMasuk?.asalsurat)
+    
     return(
         <div className="flex items-center gap-2 w-full justify-between border-b-2 border-sky-500 border-dotted">
             <span>{dataForm.dataSuratMasuk?.asalsurat} No {dataForm.dataSuratMasuk?.nosurat} (id: {dataForm?.dataSuratMasuk?.idbaris})</span>

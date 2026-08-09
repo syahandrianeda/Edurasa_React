@@ -55,6 +55,8 @@ import { setPangkatGolongan } from "~/context-reduct/global-state/tendik/pangkat
 import type { PangkatGolonganSheetType } from "~/types/tendik/pangkat-golongan-sheet-type";
 import { setSuratMasuk } from "~/context-reduct/global-state/surat/surat-masuk-slice";
 import type { SuratMasukSheetType } from "~/types/surat/surat-masuk-sheet-type";
+import { setRiwayatRombel } from "~/context-reduct/global-state/buku-induk/riwayat-rombel-slice";
+import type { RiwayatRombelSheetType } from "~/types/buku-induk/riwayat-rombel";
 
 
 export default async function DispatchingResponseToStore(success:boolean, data:Record<string, any>[],detailResponse:Record<string,any>, rombelAktif?:string){
@@ -226,6 +228,7 @@ export default async function DispatchingResponseToStore(success:boolean, data:R
         }
         
         if(detailResponse?.namaTab === namaTab('surat_keluar')){
+            console.log('surat keluar')
             store.dispatch(setSuratKeluar(data as unknown as SuratKeluarSheetType[]))
         }
         
@@ -241,6 +244,12 @@ export default async function DispatchingResponseToStore(success:boolean, data:R
         }
         if(detailResponse?.namaTab === namaTab('surat_masuk')){
             store.dispatch(setSuratMasuk(data as unknown as SuratMasukSheetType[]))
+        }
+
+
+        if(detailResponse?.namaTab === namaTab('riwayat_rombel')){
+            console.log('didaftarkan', 'riwayat_rombel')
+            store.dispatch(setRiwayatRombel(data as unknown as RiwayatRombelSheetType[]))
         }
 
 }

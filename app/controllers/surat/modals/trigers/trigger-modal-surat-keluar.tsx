@@ -4,7 +4,6 @@ import type { DataOrmSuratKeluarType } from "~/domain/surat-orm/entity/surat-orm
 import type { SwitchTriggerModalProps } from "./trigger-modal-props";
 
 export default function SwitchTriggerModalSuratKeluar({actions,data: m}:SwitchTriggerModalProps<DataOrmSuratKeluarType>){
-    // const hasTemplate = m.hasTemplate;
     const ActionTriggerHasTemplate: TriggerTable<DataOrmSuratKeluarType>[] = [
             {
                 label: 'Info',

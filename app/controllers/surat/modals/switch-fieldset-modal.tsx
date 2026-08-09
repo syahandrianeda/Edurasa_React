@@ -25,7 +25,7 @@ export default function SwitchFieldsetModalSurat(){
         case "EDIT SURAT MASUK":
             return <FormEditSuratMasuk data={state.payload as unknown as SuratMasukAppType}/>
         default:
-            return <p>Test Dulu</p>
+            return <p>Not Found</p>
     }
 }
     

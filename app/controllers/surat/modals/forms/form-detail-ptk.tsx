@@ -19,49 +19,46 @@ import { InputText } from "~/components/fields/fields";
 
 
 export default function FormDetailPtk(){
-    const {state, actions:actionModal, nextState} = useModal<SppdAppType>();
-    const {currentData:data, setCurrentData} = useFormEdura<SppdAppType>()
+    const {actions:actionModal} = useModal<SppdAppType>();
+    const {currentData:data} = useFormEdura<SppdAppType>()
     const {actions:postSppd, state:stateSppd} = useSppdCrudProvider();
-    const {actions:postSuratKeluar, state:stateSuratKeluar} = useCrudSuratKeluar();
+    const { state:stateSuratKeluar} = useCrudSuratKeluar();
     const suratKeluarSelector =useAppSelector(DataOrmSuratKeluarSelector);
     const [jabatanTugas, setJabatanTugas] = React.useState<string>(data.ptk_jabatan)
     
-    
-        const backButton = ()=>{
-            const foundSelector = suratKeluarSelector.find(s=>s.idbaris === data?.refrensi_suratkeluar );
-            actionModal.open('INFO', foundSelector, {closeOnOutsideClick:false})
-    
-        }
-        const onSubmit = ()=>{
-            // console.log(data, currentData)
-            const dtoSppd:Partial<SppdAppType> = {idbaris:data.idbaris, ptk_jabatan:jabatanTugas }
-            const dataSppd = new BuildSppd()
-                                .setIdbaris(data.idbaris)
-                                .setPtkJabatan(jabatanTugas)
-                                .data
-            toast.promise(
-                    postSppd.update(dataSppd),
-                    {
-                        loading: 'Mengupdate SPPD',
-                        success: (response) => {
-                            // const data = response.data as SppdSheetType[];
-                            console.log('respons sppd', response)
-                            const {success,data,detailResponse} = response;
-                            if(detailResponse){
-                                DispatchingResponseToStore(success,data as SppdSheetType[],detailResponse)
-                            }
-                            
-                            return 'Pemanggilan data telah selesai' 
-                        },
-                        error: `Gagal mengupdate SPDD`,
-                        finally(){
-                            
-                        },
-                        // closeButton:true,
+    const backButton = ()=>{
+        const foundSelector = suratKeluarSelector.find(s=>s.idbaris === data?.refrensi_suratkeluar );
+        actionModal.open('INFO', foundSelector, {closeOnOutsideClick:false})
+
+    }
+
+    const onSubmit = ()=>{
+        const dataSppd = new BuildSppd()
+                            .setIdbaris(data.idbaris)
+                            .setPtkJabatan(jabatanTugas)
+                            .data;
+        toast.promise(
+            postSppd.update(dataSppd),
+            {
+                loading: 'Mengupdate SPPD',
+                success: (response) => {
+                    const {success,data,detailResponse} = response;
+                    
+                    if(detailResponse){
+                        DispatchingResponseToStore(success,data as SppdSheetType[],detailResponse)
                     }
-                )
-                
-        }
+                    
+                    return 'Pemanggilan data telah selesai' 
+                },
+                error: `Gagal mengupdate SPDD`,
+                finally(){
+                    
+                },
+                closeButton:true,
+            }
+        )
+    }
+
     return (
         <>
             <div className="flex flex-col gap-y-1 pt-4 space-y-4 md:h-72 min-h-98 border-2 items-center">
@@ -110,7 +107,6 @@ export default function FormDetailPtk(){
                     </div>
                 </div>
             </div>  
-
             <ModalFooterEdura>
                 <div className="flex w-full mt-2 gap-2">
                     <ButtonDeleteAwesome className="px-2 py-0  bg-rose-500"  type='button' onClick={backButton} labelButton="Kembali"  
@@ -126,8 +122,5 @@ export default function FormDetailPtk(){
                 </div>
             </ModalFooterEdura>
         </>
-
-        
-        
     )
 } 

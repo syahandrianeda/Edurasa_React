@@ -5,13 +5,14 @@ import TableWithScrolling from "~/components/tabels/table-with-scrolling";
 import SwitchTriggerModalSuratKeluar from "../modals/trigers/trigger-modal-surat-keluar";
 import type { DataOrmSuratKeluarType } from "~/domain/surat-orm/entity/surat-orm-type";
 import { Button } from "~/components/ui/button";
-import CellPersonalTypeTemplate from "./cell-personal-type-template";
+import CellPersonalTypeTemplate from "./guru/cell-personal-type-template";
 import urlFileDrive from "~/lib/url-fil-drive";
+import CellPersonalSiswaTemplate from "./siswa/cell-personal-siswa-template";
 
 
 export default function TableSuratKeluar({data, startIndex=0}:{data:DataOrmSuratKeluarType[], startIndex:number}){
     const {state, actions} = useModal<DataOrmSuratKeluarType>();
-    
+     
     return (
         <TableWithScrolling className="text-[10px]">
             <thead>
@@ -31,7 +32,7 @@ export default function TableSuratKeluar({data, startIndex=0}:{data:DataOrmSurat
                     data.length ? (
                         data.map((m, i)=>
                             <TRowEdura key={m.idbaris}>
-                                <TdEdura className="print:hidden">
+                                <TdEdura className={`print:hidden`}>
                                     <SwitchTriggerModalSuratKeluar
                                         data={m}
                                         actions={actions}
@@ -44,7 +45,11 @@ export default function TableSuratKeluar({data, startIndex=0}:{data:DataOrmSurat
                                 <TdEdura className="text-wrap">{m.indekssurat}</TdEdura>
                                 <TdEdura className="text-wrap">{m.perihal}
                                     {
-                                        m.hasTemplate && m.dataTemplate?.personalSppdType?.length && <CellPersonalTypeTemplate data={m.dataTemplate.personalSppdType} />
+                                        m.hasTemplate && m.dataTemplate?.personalSppdType?.length! >0 && <CellPersonalTypeTemplate data={m?.dataTemplate?.personalSppdType!} />
+                                    }
+                                    {
+                                        m.hasTemplate && m.dataTemplate?.personalSiswaType?.length! > 0 && <CellPersonalSiswaTemplate data={m}/>
+                                        
                                     }
                                 </TdEdura>
                                 <TdEdura className="text-[8px] align-middle">
@@ -57,7 +62,6 @@ export default function TableSuratKeluar({data, startIndex=0}:{data:DataOrmSurat
                         <TRowEdura>
                             <TdEdura colSpan={8} className="text-center">Belum ada data</TdEdura>
                         </TRowEdura>
-
                     )
                 }
             </tbody>

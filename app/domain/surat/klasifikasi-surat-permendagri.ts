@@ -8,7 +8,14 @@ export type KlasifikasiSuratKemendegriType = {
     source?:string
     template?:templateSuratType
 }
-
+type ValueTemplate={
+    value:string,
+    template:templateSuratType;
+}
+export const SppdValueTemplate:ValueTemplate = {
+    value:'424.3',
+    template:'SPPD'
+}
 export const KlasifikasiNoSurat:KlasifikasiSuratKemendegriType[]=[
     {
         value:'421.2',
@@ -35,10 +42,12 @@ export const KlasifikasiNoSurat:KlasifikasiSuratKemendegriType[]=[
         temporary:'Surat Tugas'
     },
     {
-        value:'424.3',
+        // value:'424.3',
+        value: SppdValueTemplate['value'],
         description:'SPPD (Administrasi Tenaga Pengajar)',
         source:'Permendagri No.78 Th.2012',
-        template:'SPPD'
+        // template:'SPPD'
+        template:SppdValueTemplate['template']
     },
     {
         value:'424.4',
@@ -51,7 +60,7 @@ export const KlasifikasiNoSurat:KlasifikasiSuratKemendegriType[]=[
         description:'Surat Pengantar',
         source:'Permendagri No.78 Th.2012',
         temporary:'Surat Pengantar',
-        template:'Surat Perintah'
+        template:'Surat Pengantar'
     },
     {
         value:'422',

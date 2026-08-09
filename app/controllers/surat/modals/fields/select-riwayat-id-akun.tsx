@@ -13,7 +13,7 @@ export default function SelectRiwayatIdAkun({activeDate, values, setValues}:{act
                         <label
                             key={item.idbaris}
                             
-                            className="m-1 cursor-pointer rounded-lg border px-1 py-0 shadow-lg bg-sky-200/90 shadow-sky-400 text-center has-checked:bg-green-300 text-nowrap truncate"
+                            className="m-1 cursor-pointer align-middle rounded-lg border px-1 py-0 shadow-sm bg-sky-200  shadow-sky-400 text-center has-checked:bg-green-300 has-checked:text-sky-900 text-nowrap truncate"
                         >
                             {item.nama_guru}
                             <input

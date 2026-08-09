@@ -10,7 +10,7 @@ import { useImmer } from "use-immer";
 import { useAppSelector } from "~/context-reduct/hook";
 import BuildSppd from "~/domain/surat/sppd/build-sppd";
 import ButtonDeleteAwesome from "~/components/button-awesome/delete-button";
-import { StepBackIcon } from "lucide-react";
+import { Loader, StepBackIcon } from "lucide-react";
 import ButtonSaveAwesome from "~/components/button-awesome/save-button";
 import { InstancePangkatGolonganSelector } from "~/context-reduct/selectores/pangkat-golongan-selector";
 import DtoSppd from "~/dtos/dto-sppd";
@@ -132,11 +132,11 @@ export default function FormPtkYangDiperintah(){
     }
     return (
         <>
-            <div className="flex gap-4 flex-col md:flex-row pt-4 px-2  border-2">
-                <div className="relative w-5/12 pt-3 border md:h-72 min-h-72 overflow-y-auto scrol-h-custom">
+            <div className="flex gap-4 flex-col md:flex-row pt-4 px-2 border-2 h-[calc(100vh-13rem)] overflow-y-auto]">
+                <div className="relative md:w-5/12 pt-3 border overflow-y-auto scrol-h-custom">
                     <div className="border-2 border-sky-300 border-dotted rounded-md p-2">
                     <span className="absolute top-0 left-1  bg-white">Preview Surat Tugas:</span>
-                        <TableWithScrolling className="table-auto w-full border-none">
+                        <TableWithScrolling inModal={true} className="table-auto w-full border-none">
                             <tbody>
                                 <tr><td colSpan={3} className="text-center">...</td></tr>
                                 <tr><td colSpan={3} className="text-center font-extrabold">MEMERINTAHKAN</td></tr>
@@ -168,10 +168,10 @@ export default function FormPtkYangDiperintah(){
                         
                     </div>
                 </div>
-                <div className="relative w-7/12 pt-3 border place-items-center md:h-72 min-h-72 overflow-y-auto scrol-h-custom p-2">
+                <div className="relative md:w-7/12 pt-3 border place-items-center overflow-y-auto scrol-h-custom p-2">
                     <div className="border-2 p-4 border-dotted rounded-md border-sky-300">
                         <span className="md:absolute top-0 left-4 bg-white">Ptk Aktif di tanggal ini:</span>
-                        <SelectRiwayatIdAkun activeDate={currentData.tglsurat} values={idPtk} setValues={onChangePtk}/>
+                        <SelectRiwayatIdAkun  activeDate={currentData.tglsurat} values={idPtk} setValues={onChangePtk}/>
                     </div>
                 </div>
                 
@@ -186,14 +186,11 @@ export default function FormPtkYangDiperintah(){
                         disabled={stateSppd.isSubmitting||stateSuratKeluar.isSubmitting}
                     >
                         {
-                            // (stateSppd.isSubmitting||stateSuratKeluar.isSubmitting) && <Loader size={12} className="animate-spin self-center"/>
+                            (stateSppd.isSubmitting||stateSuratKeluar.isSubmitting) && <Loader size={12} className="animate-spin self-center"/>
                         }
                     </ButtonSaveAwesome> 
                 </div>
             </ModalFooterEdura>
         </>
-
-        
-        
     )
 } 

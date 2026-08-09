@@ -6,14 +6,17 @@ import SwitchFieldsetModalSurat from "./switch-fieldset-modal";
 export default function ModalSurat(){
     const { state, actions } = useModal();
     const open = state.isOpen && [
-        'INFO', 'EDIT', 'HAPUS',
-        'INFO SURAT MASUK', 'EDIT SURAT MASUK', 'HAPUS SURAT MASUK',
+        'INFO',
+        'EDIT',
+        'HAPUS',
+        'INFO SURAT MASUK',
+        'EDIT SURAT MASUK',
+        'HAPUS SURAT MASUK',
     ].includes(state?.type!);
-        // state.type === "EDIT KEUANGAN"
+        
 
     return (
         <ModalEdura 
-            // state={state} 
             state={{
                 ...state,
                 isOpen: open

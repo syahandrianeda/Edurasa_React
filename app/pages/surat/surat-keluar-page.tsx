@@ -8,9 +8,7 @@ import { getNumberFromString } from "~/lib/get-number";
 
 
 export default function SuratKeluarPage(){
-    // const sortir = useAppSelector(DtoSuratKeluarSelector);
     const sortir = useAppSelector(DataOrmSuratKeluarSelector);
-    
     const pagination =  usePagination(sortir)
     const nextNoSurat = getNumberFromString(sortir[0]?.id_nosurat) + 1;
     

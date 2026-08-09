@@ -7,7 +7,7 @@ export default function WrapperTitimangsaTtd({data}:{data:SppdAppType}){
         <div className="flex justify-end mt-4">
             <div className="w-fit">
                 <TitiMangsaSppd data={data}/>
-                <PenandaTanganSppd atasan={data}/>
+                <PenandaTanganSppd atasan={data} className="h-42"/>
             </div>
         </div>
     )
