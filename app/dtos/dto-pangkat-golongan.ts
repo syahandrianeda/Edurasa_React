@@ -14,6 +14,7 @@ export default class DtoPangkatGolongan{
             start_at        : data.start_at === ""?undefined:new Date(data.start_at),
             end_at          : data.end_at === ""?undefined:new Date(data.end_at),
             asn             : resolveString(data.asn),
+            daftar_pangkat_id: data.daftar_pangkat_id ? resolveNumber(data.daftar_pangkat_id):undefined
         }
     }
     
@@ -28,6 +29,7 @@ export default class DtoPangkatGolongan{
             start_at        : resolveString(data.start_at),
             end_at          : resolveString(data.end_at),
             asn             : resolveString(data.asn),
+            daftar_pangkat_id: resolveString(data.asn,undefined),
         }
     }
     static arrayFromSheet(data:Record<string, any>[]):PangkatGolonganSheetType[]{

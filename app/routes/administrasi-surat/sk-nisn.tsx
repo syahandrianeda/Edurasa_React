@@ -4,6 +4,7 @@ import { sheetSurat_sppd, sheetSurat_suratKeluar, sheetSurat_suratMasuk } from "
 import SuketNisnPage from "~/pages/surat/suket-nisn-page";
 import type { Route } from "./+types/sk-nisn";
 import { sheetTendik_pangkatGolongan, sheetTendik_riwayatIdAkun } from "~/domain/enloaded/intial-enloaded/by-sheet/tendik";
+import { TabConfigKopTtd } from "~/components/toolbars/config-default-toolbar";
 
 
 export function meta({matches}: Route.MetaArgs) {
@@ -43,7 +44,7 @@ export function clientLoader({}:Route.ComponentProps){
     return {
         titleTambahan:'Surat Keterangan NISN',
         controlKelas: settingRombel,
-        toolbarTabs: undefined,//ConfigToolbarSelectMapel
+        toolbarTabs: {...TabConfigKopTtd, defaultValue:'tabTtd'},
         showExport:true,
         sheetNeeded: [
                         sheetSurat_suratKeluar,

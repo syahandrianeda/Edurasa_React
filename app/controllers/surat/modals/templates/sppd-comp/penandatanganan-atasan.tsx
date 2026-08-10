@@ -9,13 +9,12 @@ interface TtdSppdProps{
     includeJabatan?:boolean,
     className?:string
 }
-export default function PenandaTanganSppd({atasan, includeJabatan=true,className}:TtdSppdProps){
+export default function PenandaTanganAtasan({atasan, includeJabatan=true,className}:TtdSppdProps){
     
     
     return <TandatanganAtasan 
                 tgl={atasan.ptk_starttgl} 
-                // atasanDari={atasan.ptk_jabatan as AtasanType}
-                atasanDari={'Guru Kelas'}
+                atasanDari={atasan.ptk_jabatan as AtasanType}
                 includeJabatan={includeJabatan}
                 className={className}
                 />

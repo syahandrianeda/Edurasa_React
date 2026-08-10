@@ -1,4 +1,4 @@
-import { CalendarCog, FileInput, FileOutput, FileSymlinkIcon, IdCardIcon, PlaneLanding, PlaneTakeoff, UserCircle, UserIcon, UserPlus, UsersIcon, UserXIcon } from "lucide-react"
+import { FileInput, FileOutput, FileSymlinkIcon, IdCardIcon, PenBoxIcon,  PlaneTakeoff,  UserIcon, UserPlus, UsersIcon, UserStar, UserXIcon} from "lucide-react"
 import type { typeSidebarFiturKonten } from "~/types"
 
 export const SubfiturAdminsitrsiSurat: typeSidebarFiturKonten[] = [
@@ -39,11 +39,31 @@ export const SubfiturAdminsitrsiSurat: typeSidebarFiturKonten[] = [
                 description:'Input Surat Keluar Untuk Hari Ini',
                 permission: 'view administrasi surat'
             },
+            
+        ]
+    },
+    {
+        groupTitle:'SPPD',
+        breadCrumbs:[
             {
                 title: 'SPPD',
                 href: '/arsip-surat/sppd',
                 icon: PlaneTakeoff,
-                description:'Input Surat Keluar Untuk Hari Ini',
+                description:'Daftar Surat Keluar jenis SPPD',
+                permission: 'view administrasi surat'
+            },
+            {
+                title: 'Buat SPPD',
+                href: '/arsip-surat/buat-sppd',
+                icon: PenBoxIcon,
+                description:'Buat SPPD',
+                permission: 'view administrasi surat'
+            },
+            {
+                title: 'Golongan Pangkat PTK',
+                href: '/arsip-surat/golongan-pangkat-ptk',
+                icon: UserStar,
+                description:'Buat SPPD',
                 permission: 'view administrasi surat'
             },
         ]

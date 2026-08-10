@@ -1,13 +1,15 @@
 import type { DataOrmSuratKeluarType } from "~/domain/surat-orm/entity/surat-orm-type";
 import {Fragment} from 'react';
+import type { SppdAppType } from "~/types/surat/sppd-app-type";
 
 
-export default function ListPtkSuratPerintah({data}:{data:DataOrmSuratKeluarType}){
+export default function ListPtkSuratPerintah({data}:{data:SppdAppType[]}){
     return (
         <table className="inline mt-2">
                 <tbody>
                     {
-                        data.dataTemplate?.personalSppdType && data.dataTemplate?.personalSppdType.map((m,i)=>
+                        // data.dataTemplate?.personalSppdType && data.dataTemplate?.personalSppdType?.map((m,i)=>
+                        data.map((m,i)=>
                             <Fragment key={i}>
                                     <tr>
                                         <td rowSpan={5} className="align-top px-2">{i+1}.</td>

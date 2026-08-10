@@ -1,5 +1,6 @@
 import type { RiwayatAkunAppType } from "~/types/tendik/riwayat-akun-app-type";
 import type { RiwayatAkunSheetType } from "../types/tendik/riwayat-akun-sheet-type";
+import { resolveNumber, resolveString } from "./_resolver";
 
 export default class DtoRiwayatIdAkun{
     
@@ -15,6 +16,7 @@ export default class DtoRiwayatIdAkun{
             nip                 : String(respon.nip),
             tgl_nip_start       : String(respon.tgl_nip_start),
             asn                 : String(respon.asn),
+            duk                 : resolveString(respon.duk,"")
         }
     }
 
@@ -34,6 +36,7 @@ export default class DtoRiwayatIdAkun{
             nip                 : data.nip,
             tgl_nip_start       : data.tgl_nip_start==''?undefined:new Date(data.tgl_nip_start),
             asn                 : data.asn,
+            duk                 : data.duk===""?null:resolveNumber(data.duk)
         }
     }
 

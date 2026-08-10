@@ -8,4 +8,5 @@ export interface PangkatGolonganSheetType{
         start_at: string,
         end_at: string,
         asn: string,
+        daftar_pangkat_id:string
 }

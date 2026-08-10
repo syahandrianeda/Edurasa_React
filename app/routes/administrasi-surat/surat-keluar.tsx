@@ -5,6 +5,7 @@ import { sheetSurat_sppd, sheetSurat_suratKeluar, sheetSurat_suratMasuk } from "
 import { useAppSelector } from "~/context-reduct/hook";
 import { sheetTendik_pangkatGolongan, sheetTendik_riwayatIdAkun } from "~/domain/enloaded/intial-enloaded/by-sheet/tendik";
 import { sheetMasterInduk_riwayatRombel } from "~/domain/enloaded/intial-enloaded/by-sheet/master-induk";
+import { TabConfigKopTtd } from "~/components/toolbars/config-default-toolbar";
 
 
 
@@ -37,7 +38,7 @@ export function clientLoader({}:Route.ComponentProps){
     return {
         titleTambahan:'Surat Keluar',
         controlKelas: settingRombel,
-        toolbarTabs: undefined,//ConfigToolbarSelectMapel
+        toolbarTabs:{...TabConfigKopTtd, defaultValue:'tabTtd'},
         showExport:true,
         sheetNeeded: [
             sheetSurat_suratKeluar,

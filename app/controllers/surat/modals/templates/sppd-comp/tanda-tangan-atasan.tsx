@@ -11,7 +11,7 @@ export type TandatanganAtasanProps={
 export default function TandatanganAtasan({tgl, atasanDari='Guru Kelas', className, includeJabatan=true}:TandatanganAtasanProps){
     const atasanPegawai = useDataAtasan(tgl, atasanDari)
     return (
-        <div className={cn("flex flex-col justify-between h-36", className)}>
+        <div className={cn("flex flex-col justify-between min-w-1/2 h-36", className)}>
             <p className="text-nowrap">{includeJabatan ? atasanPegawai.jabatan:''}</p>
             <div className="text-nowrap">
                 <p><u><strong>{atasanPegawai.name}</strong></u></p>

@@ -7,7 +7,7 @@ import type { SppdAppType } from "~/types/surat/sppd-app-type";
 
 export default function TableSppdHalSatu({data}:{data:SppdAppType}){
     const kepsek = useAppSelector(InstanceRiwayatIdAkun).getAkunAktifInDate(data.ptk_starttgl)
-    const atasanPegawai = AtasanPegawai(data.ptk_jabatan,kepsek)
+    const atasanPegawai = AtasanPegawai('Guru Kelas',kepsek)
     
     return (
         <table className="w-full leading-normal mt-5">

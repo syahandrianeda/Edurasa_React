@@ -7,6 +7,9 @@ import InfoSuratMasuk from "./templates/info-surat-masuk";
 import type { SuratMasukAppType } from "~/types/surat/surat-masuk-app-type";
 import FormEditSuratMasuk from "./forms/form-edit-surat-masuk";
 import FormDeleteSuratMasuk from "./forms/form-delete-surat-masuk";
+import type { IdAkunDanPangkat } from "~/domain/tendik/entities/id-akun-dan-pangkat";
+import FormInfoRiwayatAkun from "~/controllers/tendik/modal/form-info-riwayat-akun";
+import FormInfoRiwayatPangkat from "~/controllers/tendik/modal/form-info-riwayat-pangkat";
 
 export default function SwitchFieldsetModalSurat(){
     const {state, actions } = useModal<DataOrmSuratKeluarType>()
@@ -24,8 +27,12 @@ export default function SwitchFieldsetModalSurat(){
             return <InfoSuratMasuk data={state.payload as unknown as SuratMasukAppType}/>
         case "EDIT SURAT MASUK":
             return <FormEditSuratMasuk data={state.payload as unknown as SuratMasukAppType}/>
+        case "INFO RIWAYAT AKUN":
+            return <FormInfoRiwayatAkun dataAkun={state.payload as unknown as IdAkunDanPangkat}/>
+        case "EDIT PANGKAT PTK":
+            return <FormInfoRiwayatPangkat dataAkun={state.payload as unknown as IdAkunDanPangkat}/>
         default:
-            return <p>Not Found</p>
+            return <p>Not Found {state.type}</p>
     }
 }
     

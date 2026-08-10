@@ -37,7 +37,6 @@ export default class RiwayatIdAkunClass{
                 return end >= date;
             }
             return start! <= date || end! >= date 
-
         });
     }
 }

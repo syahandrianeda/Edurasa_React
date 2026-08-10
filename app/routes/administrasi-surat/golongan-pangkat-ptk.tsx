@@ -1,14 +1,12 @@
+import type { Route } from "./+types/golongan-pangkat-ptk";
 import type { controlDropdownKelas } from "~/components/dropdowns/rombel-dropdown";
-import type { Route } from "./+types/surat-masuk";
-import SuratMasukPage from "~/pages/surat/surat-masuk-page";
 import { sheetSurat_sppd, sheetSurat_suratKeluar, sheetSurat_suratMasuk } from "~/domain/enloaded/intial-enloaded/by-sheet/surat";
 import { sheetTendik_pangkatGolongan, sheetTendik_riwayatIdAkun } from "~/domain/enloaded/intial-enloaded/by-sheet/tendik";
 import { sheetMasterInduk_riwayatRombel } from "~/domain/enloaded/intial-enloaded/by-sheet/master-induk";
+import DaftarSuratSppdPage from "~/pages/surat/daftar-surat-sppd";
+import { NAMA_SEKOLAH } from "~/domain/identitas_aplikasi/identitas-aplikasi";
+import GolonganPangkatPtkGuruPage from "~/pages/tendik/golongan-pangkat-ptk-page";
 import { TabConfigKopTtd } from "~/components/toolbars/config-default-toolbar";
-
-
-
-
 
 
 export function meta({matches}: Route.MetaArgs) {
@@ -36,31 +34,39 @@ export function clientLoader({}:Route.ComponentProps){
             description:'Rombel yang Anda Ampu',
             typeKelas:'jenjang'
         }
-        
-     
+    /** sediakan data apa yang dibutuhkan untuk halaman ini
+     * misal, butuh:
+     * [ 
+     *  {sheet:'kurikulum', tab:'elemen_cp'},
+     *  {sheet:'kurikulum', tab:'Atp'},
+     *  {sheet:'kurikulum', tab:'Atp'},
+     * ]
+     *  */    
+
     return {
-        titleTambahan:'Surat Masuk',
+        titleTambahan:'Golongan Pangkat PTK',
         controlKelas: settingRombel,
-        toolbarTabs: {...TabConfigKopTtd, defaultValue:'tabTtd'},
-        showExport:true,
+        toolbarTabs: {...TabConfigKopTtd, defaultValue:'tabTtd'},//ConfigToolbarSelectMapel
+        showExport:false,
         sheetNeeded: [
-            sheetSurat_suratKeluar,
-            sheetSurat_suratMasuk,
-            sheetSurat_sppd, 
-            sheetTendik_riwayatIdAkun,
-            sheetTendik_pangkatGolongan,
-            sheetMasterInduk_riwayatRombel
-        ]
+                        sheetTendik_riwayatIdAkun,
+                        sheetTendik_pangkatGolongan,
+                        sheetMasterInduk_riwayatRombel
+                ],
+                pesanLoading:'Mempersiapkan Surat Masuk dan Surat Keluar (termasuk sppd dan riwayat tugas PTK)',
+                // addPesanRombel:{isAdd:true, type:'rombel', includeFaseName:true},
+                // sheetNeeded: defineCreateItemSoalNeeded
+        
     };
 }
 
 
-export default function SuratMasukRoute() {
-
+export default function GolonganPangkatRoute() {
+        
     return(
         <div className="p-1">
-            <h3 className="text-2xl uppercase font-extrabold text-center mb-3">Daftar Surat Masuk</h3>
-            <SuratMasukPage/>
+            <h3 className="text-2xl uppercase font-extrabold text-center mb-3">Daftar Urut Kepangkatan PTK {NAMA_SEKOLAH}</h3>
+            <GolonganPangkatPtkGuruPage/>
         </div>
     )
 }

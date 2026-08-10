@@ -1,3 +1,4 @@
+import { TabConfigKopTtd } from "~/components/toolbars/config-default-toolbar";
 import type { Route } from "./+types/sk-siswa-mutasi";
 import type { controlDropdownKelas } from "~/components/dropdowns/rombel-dropdown";
 import { sheetMasterInduk_riwayatRombel } from "~/domain/enloaded/intial-enloaded/by-sheet/master-induk";
@@ -45,7 +46,7 @@ export function clientLoader({}:Route.ComponentProps){
     return {
         titleTambahan:'Surat Keterangan Mutasi',
         controlKelas: settingRombel,
-        toolbarTabs: undefined,//ConfigToolbarSelectMapel
+        toolbarTabs: {...TabConfigKopTtd, defaultValue:'tabTtd'},
         showExport:true,
         sheetNeeded: [
                         sheetSurat_suratKeluar,

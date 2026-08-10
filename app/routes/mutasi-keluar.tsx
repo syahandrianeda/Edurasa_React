@@ -22,8 +22,8 @@ export function meta({matches}: Route.MetaArgs) {
         },
     ];
 }
+
 export async function clientLoader({}:Route.ComponentProps){
-   
     const settingRombel: controlDropdownKelas ={
         showControlKelas:false,
         title: 'Rombel',
@@ -47,6 +47,5 @@ export default function MutasiKeluarRoute({loaderData}:Route.ComponentProps) {
     
     return (
                 <MutasiKeluarPage/>
-    
-)
+    )
 }

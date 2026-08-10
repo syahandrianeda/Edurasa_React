@@ -44,7 +44,6 @@ const HeadingTable:HeadingTableType<SiswaType>[]=[
                 label: 'Tempat, Tanggal Lahir',
                 colSpan:2
             },
-           
         ]
     },
     {

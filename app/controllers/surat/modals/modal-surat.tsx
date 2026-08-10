@@ -12,6 +12,9 @@ export default function ModalSurat(){
         'INFO SURAT MASUK',
         'EDIT SURAT MASUK',
         'HAPUS SURAT MASUK',
+        'INFO RIWAYAT AKUN',
+        'EDIT JABATAN PTK',
+        'EDIT PANGKAT PTK'
     ].includes(state?.type!);
         
 

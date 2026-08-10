@@ -1,10 +1,12 @@
 import { ForkKnifeCrossedIcon, Info, PencilIcon } from "lucide-react";
+import CopyText from "~/components/copy-paste/inline-comp-clipboard";
 import { ActionButtonTable, type TriggerTable } from "~/components/dropdowns/dropdown-action-table";
 import { useModal } from "~/components/modals/modal-provider";
 import { TdEdura, ThEdura, TRowEdura } from "~/components/tabels/tabel-components";
 import type { HeadingTableType, KeyModelTable } from "~/components/tabels/table-interface";
 import TableWithScrolling, { HeadingTableEduraWithSort } from "~/components/tabels/table-with-scrolling";
 import { HeadingTableWithSortValidation } from "~/components/tabels/table-with-scrolling-validation";
+import TooltipComp from "~/components/ui_edura/tooltip-comp";
 import type { SiswaWithValidation } from "~/context-reduct/selectores/data-siswa-aktif";
 import type { DataCompareValidAppWithDapodik } from "~/domain/dapodik/sincronize-data-dapodik";
 import { formatTanggalIndonesia } from "~/lib/date-helper";
@@ -145,7 +147,11 @@ export default function TableSinkronDapodik({data}:{data:DataCompareValidAppWith
                                                     <span className="line-through">{data.nisn}</span>
                                                     {data.nisn===""?null:(<br/>)}
                                                     <span className="text-blue-600">
-                                                        {dataCompare[0]?.nisn}
+                                                            <CopyText text={dataCompare[0]?.nisn}>
+                                                                <TooltipComp content="Copy NISN">
+                                                                    <span>{dataCompare[0]?.nisn}</span>
+                                                                </TooltipComp>
+                                                            </CopyText>
                                                     </span>
                                                 </>
                                             )

@@ -4,6 +4,7 @@ import { sheetMasterInduk_riwayatRombel } from "~/domain/enloaded/intial-enloade
 import SuketSiswaAktifPage from "~/pages/surat/suket-siswa-aktif-page";
 import { sheetSurat_sppd, sheetSurat_suratKeluar, sheetSurat_suratMasuk } from "~/domain/enloaded/intial-enloaded/by-sheet/surat";
 import { sheetTendik_riwayatIdAkun, sheetTendik_pangkatGolongan } from "~/domain/enloaded/intial-enloaded/by-sheet/tendik";
+import { TabConfigKopTtd } from "~/components/toolbars/config-default-toolbar";
 
 
 
@@ -45,7 +46,7 @@ export function clientLoader({}:Route.ComponentProps){
     return {
         titleTambahan:'Surat Keterangan Siswa Aktif',
         controlKelas: settingRombel,
-        toolbarTabs: undefined,//ConfigToolbarSelectMapel
+        toolbarTabs: {...TabConfigKopTtd, defaultValue:'tabTtd'},
         showExport:true,
         sheetNeeded: [
                         sheetSurat_suratKeluar,

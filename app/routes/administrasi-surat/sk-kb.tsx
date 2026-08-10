@@ -4,6 +4,7 @@ import type { controlDropdownKelas } from "~/components/dropdowns/rombel-dropdow
 import { sheetSurat_sppd, sheetSurat_suratKeluar, sheetSurat_suratMasuk } from "~/domain/enloaded/intial-enloaded/by-sheet/surat";
 import { sheetMasterInduk_riwayatRombel } from "~/domain/enloaded/intial-enloaded/by-sheet/master-induk";
 import { sheetTendik_pangkatGolongan, sheetTendik_riwayatIdAkun } from "~/domain/enloaded/intial-enloaded/by-sheet/tendik";
+import { TabConfigKopTtd } from "~/components/toolbars/config-default-toolbar";
 
 export function meta({matches}: Route.MetaArgs) {
     const rootMeta = matches.find(m => m?.id === 'root')?.meta;
@@ -42,7 +43,7 @@ export function clientLoader({}:Route.ComponentProps){
     return {
         titleTambahan:'Surat Keterangan Berkelakuan Baik',
         controlKelas: settingRombel,
-        toolbarTabs: undefined,//ConfigToolbarSelectMapel
+        toolbarTabs: {...TabConfigKopTtd, defaultValue:'tabTtd'},
         showExport:true,
         sheetNeeded: [
                         sheetSurat_suratKeluar,

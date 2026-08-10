@@ -1,14 +1,10 @@
-import type { controlDropdownKelas } from "~/components/dropdowns/rombel-dropdown";
 import type { Route } from "./+types/sppd";
-import FormulirSuratSppdPage from "~/pages/surat/formulir-surat-keluar-sppd";
+import type { controlDropdownKelas } from "~/components/dropdowns/rombel-dropdown";
 import { sheetSurat_sppd, sheetSurat_suratKeluar, sheetSurat_suratMasuk } from "~/domain/enloaded/intial-enloaded/by-sheet/surat";
 import { sheetTendik_pangkatGolongan, sheetTendik_riwayatIdAkun } from "~/domain/enloaded/intial-enloaded/by-sheet/tendik";
 import { sheetMasterInduk_riwayatRombel } from "~/domain/enloaded/intial-enloaded/by-sheet/master-induk";
-import { useAppSelector } from "~/context-reduct/hook";
-import { DataOrmSuratKeluarSelector } from "~/context-reduct/selectores/surat-keluar-selector";
-import { getNumberFromString } from "~/lib/get-number";
-import { useMemo } from "react";
-
+import DaftarSuratSppdPage from "~/pages/surat/daftar-surat-sppd";
+import { TabConfigKopTtd } from "~/components/toolbars/config-default-toolbar";
 
 
 export function meta({matches}: Route.MetaArgs) {
@@ -44,11 +40,11 @@ export function clientLoader({}:Route.ComponentProps){
      *  {sheet:'kurikulum', tab:'Atp'},
      * ]
      *  */    
-     
+
     return {
         titleTambahan:'Buat SPPD',
         controlKelas: settingRombel,
-        toolbarTabs: undefined,//ConfigToolbarSelectMapel
+        toolbarTabs: {...TabConfigKopTtd, defaultValue:'tabTtd'},
         showExport:false,
         sheetNeeded: [
                         sheetSurat_suratKeluar,
@@ -68,15 +64,11 @@ export function clientLoader({}:Route.ComponentProps){
 
 
 export default function SppdRoute() {
-    const sortir = useAppSelector(DataOrmSuratKeluarSelector);
-            
-        // const pagination =  usePagination(sortir)
-        const nextNoSurat = useMemo(()=>getNumberFromString(sortir[0]?.id_nosurat) + 1,[sortir]);    
         
-
     return(
         <div className="p-1">
-            <FormulirSuratSppdPage nextNoSurat={nextNoSurat}/>
+            <h3 className="text-2xl uppercase font-extrabold text-center mb-3">Daftar Surat Keluar SPPD</h3>
+            <DaftarSuratSppdPage/>
         </div>
     )
 }

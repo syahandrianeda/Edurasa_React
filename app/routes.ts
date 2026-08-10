@@ -135,6 +135,7 @@ export default [
                     index('routes/administrasi-surat/redirect-surat.tsx'),
                     route('surat-keluar', "routes/administrasi-surat/surat-keluar.tsx"),
                     route('create-surat-keluar', "routes/administrasi-surat/surat-keluar-harian.tsx"),
+                    route('buat-sppd', "routes/administrasi-surat/buat-sppd.tsx"),
                     route('sppd', "routes/administrasi-surat/sppd.tsx"),
                     route('surat-masuk', "routes/administrasi-surat/surat-masuk.tsx"),
                     route('create-surat-masuk', "routes/administrasi-surat/surat-masuk-harian.tsx"),
@@ -143,6 +144,7 @@ export default [
                     route('sk-kb', "routes/administrasi-surat/sk-kb.tsx"),
                     route('sk-siswa-diterima', "routes/administrasi-surat/sk-siswa-diterima.tsx"),
                     route('sk-siswa-mutasi', "routes/administrasi-surat/sk-siswa-mutasi.tsx"),
+                    route('golongan-pangkat-ptk', "routes/administrasi-surat/golongan-pangkat-ptk.tsx"),
                 ])
             ])
         ]),

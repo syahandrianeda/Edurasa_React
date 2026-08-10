@@ -9,4 +9,5 @@ export interface RiwayatAkunAppType{
     nip: string,
     tgl_nip_start?: Date,
     asn: string,
+    duk:number|null
 }

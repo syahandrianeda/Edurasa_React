@@ -9,4 +9,5 @@ export interface RiwayatAkunSheetType  {
     nip: string,
     tgl_nip_start: string,
     asn: string,
+    duk: string|null
 }

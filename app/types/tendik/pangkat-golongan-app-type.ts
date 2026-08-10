@@ -8,4 +8,5 @@ export interface PangkatGolonganAppType{
         start_at?: Date,
         end_at?: Date,
         asn: string,
+        daftar_pangkat_id?:number
 }

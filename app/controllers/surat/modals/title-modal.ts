@@ -24,7 +24,11 @@ export function titleModal(state:ModalState):string{
         case "HAPUS SUKET ITEM SISWA":
             return "Hapus Siswa di Surat Keterangan"
         case 'EDIT SUKET ITEM SISWA':
-            return "Pilih/Edit Siswa"
+            return "Pilih/Edit Siswa";
+        case "INFO RIWAYAT AKUN":
+            return "Info Riwayat PTK";
+        case "EDIT PANGKAT PTK":
+            return "Edit Pangkat dan Golongan"
         default:
             return 'Modal'
     }
