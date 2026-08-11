@@ -1,10 +1,9 @@
 import { useModal } from "~/components/modals/modal-provider"
-import { TdEdura, ThEdura, TRowEdura } from "~/components/tabels/tabel-components"
+import { TdEdura, TdEduraFreeze, ThEdura, THEduraFreeze, TRowEdura } from "~/components/tabels/tabel-components"
 import TableWithScrolling from "~/components/tabels/table-with-scrolling"
 import { useAppSelector } from "~/context-reduct/hook"
 import { OrmTendikInstance } from "~/context-reduct/selectores/orm-tendik-selector"
 import SwitchTriggerModalEditAkun from "~/controllers/tendik/triger-modal/edit-pangkat-golongan"
-import { NAMA_SEKOLAH } from "~/domain/identitas_aplikasi/identitas-aplikasi"
 
 export default function GolonganPangkatPtkGuruPage(){
     const Data = useAppSelector(OrmTendikInstance)
@@ -14,7 +13,7 @@ export default function GolonganPangkatPtkGuruPage(){
             <TableWithScrolling>
                 <thead>
                     <TRowEdura>
-                        <ThEdura rowSpan={2} className="print:hidden">Aksi</ThEdura>
+                        <THEduraFreeze stateFreeze={true} rowSpan={2} className="print:hidden">Aksi</THEduraFreeze>
                         <ThEdura rowSpan={2}>No</ThEdura>
                         <ThEdura rowSpan={2}>Nama Guru</ThEdura>
                         <ThEdura rowSpan={2}>Jabatan</ThEdura>
@@ -34,9 +33,9 @@ export default function GolonganPangkatPtkGuruPage(){
                     {
                         Data.getIdDanPangkatCurrent(new Date()).map((item, i)=>
                             <TRowEdura key={item.idbaris}>
-                                <TdEdura>
+                                <TdEduraFreeze stateFreeze={true}>
                                     < SwitchTriggerModalEditAkun actions={actions} data={item}/>
-                                </TdEdura>
+                                </TdEduraFreeze>
                                 <TdEdura>{i+1}</TdEdura>
                                 <TdEdura>{item.nama_guru}</TdEdura>
                                 <TdEdura>{item.jabatan}</TdEdura>

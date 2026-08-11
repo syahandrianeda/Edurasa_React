@@ -12,11 +12,6 @@ export default function SwitchTriggerModalEditAkun({actions,data: m}:SwitchTrigg
                 icon: Info,
                 callback: (m) => actions.open('INFO RIWAYAT AKUN', m,{closeOnOutsideClick:false})
             },
-            // {
-            //     label: 'Edit Jabatan',
-            //     icon: PencilIcon,
-            //     callback: (m) => actions.open('EDIT JABATAN PTK', m,{closeOnOutsideClick:false})
-            // },
             {
                 label: 'Edit Pangkat',
                 icon: PencilIcon,

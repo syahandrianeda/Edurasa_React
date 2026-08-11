@@ -1,9 +1,7 @@
 import type { Route } from "./+types/golongan-pangkat-ptk";
 import type { controlDropdownKelas } from "~/components/dropdowns/rombel-dropdown";
-import { sheetSurat_sppd, sheetSurat_suratKeluar, sheetSurat_suratMasuk } from "~/domain/enloaded/intial-enloaded/by-sheet/surat";
 import { sheetTendik_pangkatGolongan, sheetTendik_riwayatIdAkun } from "~/domain/enloaded/intial-enloaded/by-sheet/tendik";
 import { sheetMasterInduk_riwayatRombel } from "~/domain/enloaded/intial-enloaded/by-sheet/master-induk";
-import DaftarSuratSppdPage from "~/pages/surat/daftar-surat-sppd";
 import { NAMA_SEKOLAH } from "~/domain/identitas_aplikasi/identitas-aplikasi";
 import GolonganPangkatPtkGuruPage from "~/pages/tendik/golongan-pangkat-ptk-page";
 import { TabConfigKopTtd } from "~/components/toolbars/config-default-toolbar";

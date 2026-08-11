@@ -95,6 +95,7 @@ export default class AppScriptSheet extends AppScriptConfig{
     protected sheetSuratTabSppd:ParamRequestAppScript = {idss:'', tab:''};
 
     protected sheetTendikTabRiwayatIdAkun:ParamRequestAppScript = {idss:'', tab:''};
+    protected sheetTendikTabPangkatGolongan:ParamRequestAppScript = {idss:'', tab:''};
 
     constructor(){
         super();
@@ -588,6 +589,18 @@ export default class AppScriptSheet extends AppScriptConfig{
     }
     get paramSheetSuratTabSuratMasuk(){
         return this.sheetSuratTabSuratMasuk;
+    }
+
+    set paramSheetTendikTabPangkatGolongan(additionalParam:Record<string, any>){
+        const tab = this.isDev?'trial_pangkat_golongan':'pangkat_golongan'
+        this.sheetTendikTabPangkatGolongan = {
+            tab,
+            idss:this.sheetTendik,
+            ...additionalParam
+        }
+    }
+    get paramSheetTendikTabPangkatGolongan(){
+        return this.sheetTendikTabPangkatGolongan
     }
     
     dataAuth(){

@@ -46,6 +46,8 @@ import { CrudSppdProvider } from "~/controllers/surat/crud/sppd-crud-provider";
 import SppdService from "~/infrastructures/services/sppd-service";
 import SuratMasukService from "~/infrastructures/services/surat-masuk-service";
 import { SuratMasukCrudProvider } from "~/controllers/surat/crud/surat-masuk-crud-provider";
+import PangkatGolonganService from "~/infrastructures/services/PangkatGolonganService";
+import { CrudPangkatGolonganProvider } from "~/controllers/tendik/crud/crud-tendik-provider";
 /**
  * `AppProviderLayoutService`, menyediakan:
  *  * ensurLoadedStateService
@@ -90,6 +92,7 @@ export default function AppProviderLayoutService({matches}:Route.ComponentProps)
     const serviceSuratKeluar        = new SuratKeluarService();
     const serviceSuratMasuk         = new SuratMasukService();
     const serviceSppd               = new SppdService();
+    const servicePangkatGolongan    = new PangkatGolonganService();
 
     
     
@@ -195,7 +198,9 @@ export default function AppProviderLayoutService({matches}:Route.ComponentProps)
                                                     <SuratKeluarCrudProvider service={serviceSuratKeluar}>
                                                         <SuratMasukCrudProvider service={serviceSuratMasuk}>
                                                             <CrudSppdProvider service={serviceSppd}>
-                                                                <Outlet/>
+                                                                <CrudPangkatGolonganProvider service={servicePangkatGolongan}>
+                                                                    <Outlet/>
+                                                                </CrudPangkatGolonganProvider>
                                                             </CrudSppdProvider>
                                                         </SuratMasukCrudProvider>
                                                     </SuratKeluarCrudProvider>
