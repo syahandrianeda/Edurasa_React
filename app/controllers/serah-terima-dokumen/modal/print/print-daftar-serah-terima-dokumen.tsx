@@ -69,7 +69,7 @@ export default function PrintSerahTerimaDokumenModal({data}:{data:SerahTerimaDok
                 <tbody>
                     {
                         data.additional_info.map((item,i)=>
-                            <TRowEdura key={item.id}>
+                            <TRowEdura key={item.id+'_'+i}>
                                 <TdEdura>{i+1}</TdEdura>
                                 {
                                     Object.entries(item).map(([k, v])=>

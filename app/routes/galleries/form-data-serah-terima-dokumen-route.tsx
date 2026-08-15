@@ -1,9 +1,10 @@
 import type { controlDropdownKelas } from "~/components/dropdowns/rombel-dropdown";
-import { TabConfigKopTtd } from "~/components/toolbars/config-default-toolbar";
 import type { Route } from "./+types/form-data-serah-terima-dokumen-route";
 import { sheetAkun_dataSiswa } from "~/domain/enloaded/intial-enloaded/by-sheet/akun";
 import { sheetGallery_serahTerimaDokumen, sheetGallery_transaksiSerahTerimaDokumen } from "~/domain/enloaded/intial-enloaded/by-sheet/gallery";
 import { sheetTendik_pangkatGolongan, sheetTendik_riwayatIdAkun } from "~/domain/enloaded/intial-enloaded/by-sheet/tendik";
+import KoleksiFormDaftarSerahTerimaDokumen from "~/pages/galeries/koleksi-form-daftar-serah-terima";
+import { ConfigToolbarKoleksiSerahTerimaDokumen } from "~/controllers/serah-terima-dokumen/toolbar/config-toolbar-koleksi-serah-terima";
 
 
 export function meta({matches}: Route.MetaArgs) {
@@ -43,8 +44,8 @@ export function clientLoader({}:Route.ComponentProps){
     return {
         titleTambahan:'Formulir Serah Terima Dokumen',
         controlKelas: settingRombel,
-        toolbarTabs: {...TabConfigKopTtd, defaultValue:'tabTtd'},//ConfigToolbarSelectMapel
-        showExport:false,
+        toolbarTabs: ConfigToolbarKoleksiSerahTerimaDokumen,//ConfigToolbarSelectMapel
+        showExport:true,
         sheetNeeded: [
                     sheetAkun_dataSiswa,
                     sheetGallery_serahTerimaDokumen,
@@ -62,11 +63,8 @@ export function clientLoader({}:Route.ComponentProps){
 
 
 export default function FormDataSerahTerimaDokumenRoute() {
-        
-    return(
-        <div className="p-1">
-            <h3 className="text-2xl uppercase font-extrabold text-center mb-3">Formulir Serah Terima Dokumen</h3>
-            Coming soon!
-        </div>
-    )
+    
+    return ( 
+        <KoleksiFormDaftarSerahTerimaDokumen/>
+        )
 }
