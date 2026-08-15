@@ -20,6 +20,7 @@ export function GenerateNodeToolbar({defaultValue, tabList, contentList}:TabsCon
 
 
 export const TabConfigKopTtd:TabsConfigProps = {
+    defaultValue:'tabTtd',
     tabList:[
         {
             value: 'tabTtd',

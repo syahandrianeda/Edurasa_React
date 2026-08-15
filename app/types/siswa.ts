@@ -132,3 +132,20 @@ export interface WithStatusAktif {
     aktif?: StatusAktif
 }
 
+export interface OrangTuaType{
+    nama_ayah:string, 
+    nama_ibu:string
+}
+export interface TtlType{
+    tempat:string,
+    tgl_lahir:Date,
+    ttl:string
+}
+export interface InfoPersonalSiswa extends SiswaType{
+    tempat_tanggal_lahir?:TtlType,
+    orang_tua?:OrangTuaType
+    rombel?:string
+    no_ijazah?:string
+    no_transkip?:string
+
+}

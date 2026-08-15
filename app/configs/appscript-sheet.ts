@@ -97,6 +97,9 @@ export default class AppScriptSheet extends AppScriptConfig{
     protected sheetTendikTabRiwayatIdAkun:ParamRequestAppScript = {idss:'', tab:''};
     protected sheetTendikTabPangkatGolongan:ParamRequestAppScript = {idss:'', tab:''};
 
+    protected sheetGalleryTabSerahTerimaDokumen:ParamRequestAppScript={idss:'', tab:''}
+    protected sheetGalleryTabTransaksiSerahTerima:ParamRequestAppScript={idss:'', tab:''}
+
     constructor(){
         super();
         this.sheetAkunTabUser                   = {idss:this.sheetAkun, tab:'user'}
@@ -160,6 +163,9 @@ export default class AppScriptSheet extends AppScriptConfig{
 
     get sheetTendik():string{
         return this.currentMacro['ss_tendik']
+    }
+    get sheetGallery():string{
+        return this.currentMacro['ss_gallery']
     }
     /** id sheet Absensi: */
     sheetAbsensi(jenjang:number): string{
@@ -601,6 +607,19 @@ export default class AppScriptSheet extends AppScriptConfig{
     }
     get paramSheetTendikTabPangkatGolongan(){
         return this.sheetTendikTabPangkatGolongan
+    }
+
+    set paramSheetGalleryTabSerahTerimaDokumen(additionalParam:Record<string, any>){
+        const tab = this.isDev?'trial_serah_terima_dokumen':'serah_terima_dokumen'
+        this.sheetGalleryTabSerahTerimaDokumen = {
+            tab,
+            idss:this.sheetGallery,
+            ...additionalParam
+        }
+    }
+    
+    get paramSheetGalleryTabSerahTerimaDokumen(){
+        return this.sheetGalleryTabSerahTerimaDokumen
     }
     
     dataAuth(){

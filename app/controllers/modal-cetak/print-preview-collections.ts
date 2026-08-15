@@ -17,5 +17,6 @@ export default function isPrintPreviewModal(type:ModalState['type']):boolean{
             'PRINT SUKET NISN FORMAT LAMPIRAN',
             'PRINT SUKET PINDAHAN FORMAT LAMPIRAN',
             'PRINT SUKET MUTASI FORMAT LAMPIRAN',
+            'PRINT DAFTAR SERAH TERIMA'
         ].includes(type!)
 }

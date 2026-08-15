@@ -1,5 +1,7 @@
+import type { IdAkunDanPangkat } from "~/domain/tendik/entities/id-akun-dan-pangkat";
 import urlImgDrive from "~/lib/url-img-drive";
 import type { UserFriends, UserPtk } from "~/types";
+import type { InfoPersonalPtk } from "~/types/akun-sheet";
 
 
 /**
@@ -49,20 +51,33 @@ export default class DTOUser{
         return []
     }
     
-        private static normalizeFriends(dto: any): UserFriends {
-            return {
-                id: Number(dto.id),
-                name: dto.guru_namalengkap,
-                email: dto.email,
-                sekolah: dto.sekolah,
-                kepsek_name: dto.kepsek_namalengkap,
-                kepsek_nip: dto.kepsek_nip,
-                avatar: dto.idpoto_potoguru ? urlImgDrive(dto.idpoto_potoguru) : undefined,
-                jabatan: dto.gurukelas_gmp,
-                nip: dto.guru_nip,
-                kelas_ampu: dto.kelasampu.split(','),
-                kode_mapel_ampu: dto.kelas,
-                roles: dto.gurukelas_gmp,
-            }
+    private static normalizeFriends(dto: any): UserFriends {
+        return {
+            id: Number(dto.id),
+            name: dto.guru_namalengkap,
+            email: dto.email,
+            sekolah: dto.sekolah,
+            kepsek_name: dto.kepsek_namalengkap,
+            kepsek_nip: dto.kepsek_nip,
+            avatar: dto.idpoto_potoguru ? urlImgDrive(dto.idpoto_potoguru) : undefined,
+            jabatan: dto.gurukelas_gmp,
+            nip: dto.guru_nip,
+            kelas_ampu: dto.kelasampu.split(','),
+            kode_mapel_ampu: dto.kelas,
+            roles: dto.gurukelas_gmp,
         }
+    }
+
+    static normalizeInfoPersonalPtk(data:IdAkunDanPangkat):InfoPersonalPtk{
+        return {
+            ...data,
+            gol_ruang: data.current_golongan_pangkat?.golongan +'/'+ data.current_golongan_pangkat?.ruang,
+            pangkat: data.current_golongan_pangkat?.pangkat,
+            status_ptk: data.asn,
+            pangkat_gol_ruang: data.current_golongan_pangkat?.pangkat +'-'+ data.current_golongan_pangkat?.golongan +'/'+ data.current_golongan_pangkat?.ruang,
+        }
+    }
+    static arrayNormalizeInfoPersonalPtk(data:IdAkunDanPangkat[]):InfoPersonalPtk[]{
+        return data.map(this.normalizeInfoPersonalPtk);
+    }
 }

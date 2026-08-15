@@ -19,6 +19,8 @@ import PrintSuketKelakuanBaikFormatLampiran from "../surat/modals/templates/prin
 import PrintSuketDiterimaPindahan from "../surat/modals/templates/print-suket-diterima-pindahan";
 import PrintSuketDiterimaPindahanLampiran from "../surat/modals/templates/print-suket-diterima-pindahan-lampiran";
 import PrintSuketMutasi from "../surat/modals/templates/print-suket-mutasi";
+import type { SerahTerimaDokumenAppType } from "~/types/galleries/serah-terima-dokumen-app-type";
+import PrintSerahTerimaDokumenModal from "../serah-terima-dokumen/modal/print/print-daftar-serah-terima-dokumen";
 
 export default function SwitchPrintPreviewPage(){
     const {state} = useModal()
@@ -52,6 +54,8 @@ export default function SwitchPrintPreviewPage(){
             return <PrintFormatLampiranSuketNisn data={(state.payload as {data:SiswaType}).data } surat_keluar={(state.payload as {surat_keluar:DataOrmSuratKeluarType}).surat_keluar } />
         case "PRINT SUKET KELAKUAN BAIK FORMAT LAMPIRAN":
             return <PrintSuketKelakuanBaikFormatLampiran data={(state.payload as {data:SiswaType}).data } surat_keluar={(state.payload as {surat_keluar:DataOrmSuratKeluarType}).surat_keluar } />
+        case 'PRINT DAFTAR SERAH TERIMA':
+            return <PrintSerahTerimaDokumenModal data={state.payload as unknown as SerahTerimaDokumenAppType}/>
         default:
             return <p>on proses {type}</p>
     }

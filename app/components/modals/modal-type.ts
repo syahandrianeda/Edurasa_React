@@ -32,4 +32,6 @@ export type ModalType =
     | 'INFO RIWAYAT AKUN'
     | 'EDIT JABATAN PTK'
     | 'EDIT PANGKAT PTK'
+    | 'PRINT DAFTAR SERAH TERIMA'
+    | 'PREVIEW DAFTAR SERAH TERIMA'
     | null;

@@ -57,6 +57,10 @@ import { setSuratMasuk } from "~/context-reduct/global-state/surat/surat-masuk-s
 import type { SuratMasukSheetType } from "~/types/surat/surat-masuk-sheet-type";
 import { setRiwayatRombel } from "~/context-reduct/global-state/buku-induk/riwayat-rombel-slice";
 import type { RiwayatRombelSheetType } from "~/types/buku-induk/riwayat-rombel";
+import { setSerahTerimaDokumen } from "~/context-reduct/global-state/galleries/serah-terima-dokumen-slice";
+import type { SerahTerimaDokumenSheetType } from "~/types/galleries/serah-terima-dokumen-sheet-type";
+import { setTransaksiSerahTerimaDokumen } from "~/context-reduct/global-state/galleries/transaksi-serah-terima-dokumen-slice";
+import type { TransaksiSerahTerimaDokumenSheetType } from "~/types/galleries/transaksi-serah-terima-dokumen";
 
 
 export default async function DispatchingResponseToStore(success:boolean, data:Record<string, any>[],detailResponse:Record<string,any>, rombelAktif?:string){
@@ -249,6 +253,14 @@ export default async function DispatchingResponseToStore(success:boolean, data:R
         if(detailResponse?.namaTab === namaTab('riwayat_rombel')){
             
             store.dispatch(setRiwayatRombel(data as unknown as RiwayatRombelSheetType[]))
+        }
+        if(detailResponse?.namaTab === namaTab('serah_terima_dokumen')){
+            
+            store.dispatch(setSerahTerimaDokumen(data as unknown as SerahTerimaDokumenSheetType[]))
+        }
+        if(detailResponse?.namaTab === namaTab('transaksi_serah_terima')){
+            
+            store.dispatch(setTransaksiSerahTerimaDokumen(data as unknown as TransaksiSerahTerimaDokumenSheetType[]))
         }
 
 }

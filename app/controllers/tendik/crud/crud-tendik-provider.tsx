@@ -5,4 +5,4 @@ import type { PangkatGolonganSheetType } from "~/types/tendik/pangkat-golongan-s
 export const {
     CrudProvider: CrudPangkatGolonganProvider,
     useCrud: useCrudPangkatGolongan,
-} = createCrudProvider<PangkatGolonganSheetType, TendikPangkatGolonganServiceInterface>()
+} = createCrudProvider<PangkatGolonganSheetType, TendikPangkatGolonganServiceInterface>();

@@ -32,6 +32,8 @@ export interface AccesUser{
     level:string,
     keterangan: string
 }
+/**
+ * 
 export interface UserPtk extends User{
     jabatan: string,
     kelas_ampu: string[],
@@ -44,6 +46,7 @@ export interface UserPtk extends User{
     permission:AccesUser[],
     friends: UserFriends[]
 }
+*/
 
 export interface UserFriends extends User{
     jabatan: string,
@@ -54,6 +57,11 @@ export interface UserFriends extends User{
     sekolah: string,
     kepsek_name: string,
     kepsek_nip: string,
+}
+
+export interface UserPtk extends UserFriends{
+    permission:AccesUser[],
+    friends: UserFriends[]
 }
 
 export interface NavItem {

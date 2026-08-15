@@ -1,4 +1,6 @@
-import type { AccesUser } from ".";
+import type { IdAkunDanPangkat } from "~/domain/tendik/entities/id-akun-dan-pangkat";
+import type { AccesUser, UserPtk } from ".";
+import type { TtlType } from "./siswa";
 
 export interface CredentialSheet{
     username:string, 
@@ -50,4 +52,13 @@ export interface FriendSheet{
         jenjang:string,
         idabsen:number,
         aktif:string,
+}
+
+
+export interface InfoPersonalPtk extends IdAkunDanPangkat{
+    gol_ruang?:string,
+    pangkat?:string,
+    status_ptk?:string,
+    pangkat_gol_ruang?:string
+
 }

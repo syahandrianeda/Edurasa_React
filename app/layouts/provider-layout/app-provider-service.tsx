@@ -48,6 +48,8 @@ import SuratMasukService from "~/infrastructures/services/surat-masuk-service";
 import { SuratMasukCrudProvider } from "~/controllers/surat/crud/surat-masuk-crud-provider";
 import PangkatGolonganService from "~/infrastructures/services/PangkatGolonganService";
 import { CrudPangkatGolonganProvider } from "~/controllers/tendik/crud/crud-tendik-provider";
+import { CrudSerahTerimaProvider } from "~/controllers/serah-terima-dokumen/cruds/crud-provider-serah-terima-dokumen";
+import SerahTerimaDokumenService from "~/infrastructures/services/serah-terima-dokumen-service";
 /**
  * `AppProviderLayoutService`, menyediakan:
  *  * ensurLoadedStateService
@@ -93,6 +95,7 @@ export default function AppProviderLayoutService({matches}:Route.ComponentProps)
     const serviceSuratMasuk         = new SuratMasukService();
     const serviceSppd               = new SppdService();
     const servicePangkatGolongan    = new PangkatGolonganService();
+    const serviceSerahTerimaDokumen = new SerahTerimaDokumenService();
 
     
     
@@ -199,7 +202,9 @@ export default function AppProviderLayoutService({matches}:Route.ComponentProps)
                                                         <SuratMasukCrudProvider service={serviceSuratMasuk}>
                                                             <CrudSppdProvider service={serviceSppd}>
                                                                 <CrudPangkatGolonganProvider service={servicePangkatGolongan}>
-                                                                    <Outlet/>
+                                                                    <CrudSerahTerimaProvider service={serviceSerahTerimaDokumen}>
+                                                                        <Outlet/>
+                                                                    </CrudSerahTerimaProvider>
                                                                 </CrudPangkatGolonganProvider>
                                                             </CrudSppdProvider>
                                                         </SuratMasukCrudProvider>

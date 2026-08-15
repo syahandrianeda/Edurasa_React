@@ -119,7 +119,6 @@ export default [
                 ],
                 )
             ]),
-            //app\layouts\sub-layouts\sub-tabungan-siswa.tsx
             layout("layouts/sub-layouts/sub-tabungan-siswa.tsx",[
                 ...prefix('tabungan',[
                     index('routes/tabungan/redirect-tabungan.tsx'),
@@ -145,6 +144,14 @@ export default [
                     route('sk-siswa-diterima', "routes/administrasi-surat/sk-siswa-diterima.tsx"),
                     route('sk-siswa-mutasi', "routes/administrasi-surat/sk-siswa-mutasi.tsx"),
                     route('golongan-pangkat-ptk', "routes/administrasi-surat/golongan-pangkat-ptk.tsx"),
+                ])
+            ]),
+            layout("layouts/sub-layouts/sub-galery.tsx",[
+                ...prefix('gallery',[
+                    index('routes/galleries/entry-point-gallery.tsx'),
+                    route('gallery-schools', 'routes/galleries/gallery-schools.tsx'),
+                    route('create-daftar-serah-terima-dokumen', 'routes/galleries/create-daftar-serah-terima-dokumen-route.tsx'),
+                    route('form-data-serah-terima-dokumen', 'routes/galleries/form-data-serah-terima-dokumen-route.tsx')
                 ])
             ])
         ]),

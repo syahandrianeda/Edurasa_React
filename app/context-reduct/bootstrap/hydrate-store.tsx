@@ -194,6 +194,16 @@ export function hydratePreloadedState(): Partial<RootState> {
       data: [],
       name:'riwayat_rombel',
       loaded:false
+    },
+    serahTerimaDokumen:{
+      data:[],
+      name:'serah_terima_dokumen',
+      loaded:false
+    },
+    transaksiSerahterimaDokumen:{
+      data: [],
+      name: 'transaksi_serah_terima',
+      loaded:false
     }
 
 

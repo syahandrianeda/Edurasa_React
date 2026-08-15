@@ -1,8 +1,6 @@
 import { Loader, SaveIcon } from "lucide-react";
 import ButtonSaveAwesome from "~/components/button-awesome/save-button";
-import type { ItemAtpAsProtaEditable, protaApp, protaSheetApp } from "~/types/kurikulum/prota-orm";
 
-// export default function BtnSaveProta({dataSetter, dataAsal, dataServer}:{dataSetter:ItemAtpAsProtaEditable[], dataAsal:ItemAtpAsProtaEditable[], dataServer:protaSheetApp[]}){
 export default function BtnSaveProta({isSubmitting, onClikButton}:{isSubmitting:boolean, onClikButton:()=>void}){
     
     return (

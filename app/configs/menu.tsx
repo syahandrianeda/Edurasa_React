@@ -138,9 +138,10 @@ export const DataMenu: typeKoleksiMenu[] = [
     },
     {
         title: "Galeri File", 
-        routeName: "arsip-dokumen",
+        routeName: "gallery",
         urlIcon: MenuIcons["galeri"],
-        permission: 'view arsip-dokumen',   
+        permission: 'view arsip-dokumen',
+        hasRoute:true   
     },
     {
         title: "Olah Keuangan", 

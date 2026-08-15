@@ -1,6 +1,7 @@
+import type { User, UserFriends, UserPtk } from "~/types"
 import type { PangkatGolonganAppType } from "~/types/tendik/pangkat-golongan-app-type"
 
-export interface IdAkunDanPangkat{
+export interface IdAkunDanPangkat extends Partial<UserFriends>{
     idbaris                     : number,          
     user_id                     : number,          
     nama_guru                   : string,

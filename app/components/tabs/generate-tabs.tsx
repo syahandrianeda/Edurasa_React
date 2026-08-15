@@ -16,7 +16,7 @@ export interface TabsConfigProps{
     contentList: TabsContentList[];
 }
 
-export default function GenerateTabs({defaultValue='tab1', tabList, contentList}:TabsConfigProps){
+export default function GenerateTabs({defaultValue='tabTtd', tabList, contentList}:TabsConfigProps){
     
     return (
         <Tabs defaultValue={defaultValue} className="gap-0" >
