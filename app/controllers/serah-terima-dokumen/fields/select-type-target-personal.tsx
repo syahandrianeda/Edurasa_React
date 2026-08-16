@@ -12,7 +12,7 @@ export default function SelectTypeTargetPersonal({value, setValue,disabled}:hand
     const handlePerson =(v:string)=>{
         setPersonal(v);
         setValue(draft=>{
-            draft.type_target = v as PersonalTypeEnum;
+            draft.type_target = v as keyof typeof PersonalTypeEnum;
             draft.target_person = [];
         });
     };

@@ -50,6 +50,8 @@ import PangkatGolonganService from "~/infrastructures/services/PangkatGolonganSe
 import { CrudPangkatGolonganProvider } from "~/controllers/tendik/crud/crud-tendik-provider";
 import { CrudSerahTerimaProvider } from "~/controllers/serah-terima-dokumen/cruds/crud-provider-serah-terima-dokumen";
 import SerahTerimaDokumenService from "~/infrastructures/services/serah-terima-dokumen-service";
+import { CrudTransaksiSerahTerimaProvider } from "~/controllers/transaksi-serah-terima-dokumen/crud-provider-transaksi-serah-terima";
+import TransaksiSerahTerimaDokumenService from "~/infrastructures/services/transaksi-serah-terima-service";
 /**
  * `AppProviderLayoutService`, menyediakan:
  *  * ensurLoadedStateService
@@ -79,23 +81,24 @@ export default function AppProviderLayoutService({matches}:Route.ComponentProps)
     const textFase = loaderDataKiriman?.addPesanRombel &&  (loaderDataKiriman?.addPesanRombel?.includeFaseName? `/Fase ${getFaseByRombel(rombel)}`: '' )||'';
     const textRombelFase:string = loaderDataKiriman?.addPesanRombel?.isAdd ? ` di kelas ${textRombelJenjang}${textFase}`: `` ;
     
-    /** semua infrastructure service diinstansi di sini */;
-    const sericeSiswa               = new KesiswaanServiceImplements();
-    const serviceKaldik             = new KaldikServiceImplements();
-    const serviceAbsensi            = new AbsensiServiceImplements();
-    const serviceMapelRombel        = new MapelRombelServiceImplements();
-    const serviceElemen             = new ElemenCpServiceImplements();
-    const serviceTpFase             = new FaseTpServiceImplements();
-    const serviceAtp                = new AtpServiceImplements();
-    const serviceSettingJadwal      = new SettingJadwalService();
-    const serviceSebaranJadwal      = new JadwalMapelServiceImplements();
-    const serviceProta              = new ProtaServiceImplements();
-    const serviceTabungan           = new TabunganServiceImplements();
-    const serviceSuratKeluar        = new SuratKeluarService();
-    const serviceSuratMasuk         = new SuratMasukService();
-    const serviceSppd               = new SppdService();
-    const servicePangkatGolongan    = new PangkatGolonganService();
-    const serviceSerahTerimaDokumen = new SerahTerimaDokumenService();
+    /** semua infrastructure service diinstansiasi di sini */;
+    const sericeSiswa                           = new KesiswaanServiceImplements();
+    const serviceKaldik                         = new KaldikServiceImplements();
+    const serviceAbsensi                        = new AbsensiServiceImplements();
+    const serviceMapelRombel                    = new MapelRombelServiceImplements();
+    const serviceElemen                         = new ElemenCpServiceImplements();
+    const serviceTpFase                         = new FaseTpServiceImplements();
+    const serviceAtp                            = new AtpServiceImplements();
+    const serviceSettingJadwal                  = new SettingJadwalService();
+    const serviceSebaranJadwal                  = new JadwalMapelServiceImplements();
+    const serviceProta                          = new ProtaServiceImplements();
+    const serviceTabungan                       = new TabunganServiceImplements();
+    const serviceSuratKeluar                    = new SuratKeluarService();
+    const serviceSuratMasuk                     = new SuratMasukService();
+    const serviceSppd                           = new SppdService();
+    const servicePangkatGolongan                = new PangkatGolonganService();
+    const serviceSerahTerimaDokumen             = new SerahTerimaDokumenService();
+    const serviceTransaksiSerahTerimaDokumen    = new TransaksiSerahTerimaDokumenService();
 
     
     
@@ -203,7 +206,9 @@ export default function AppProviderLayoutService({matches}:Route.ComponentProps)
                                                             <CrudSppdProvider service={serviceSppd}>
                                                                 <CrudPangkatGolonganProvider service={servicePangkatGolongan}>
                                                                     <CrudSerahTerimaProvider service={serviceSerahTerimaDokumen}>
-                                                                        <Outlet/>
+                                                                        <CrudTransaksiSerahTerimaProvider service={serviceTransaksiSerahTerimaDokumen}>
+                                                                            <Outlet/>
+                                                                        </CrudTransaksiSerahTerimaProvider>
                                                                     </CrudSerahTerimaProvider>
                                                                 </CrudPangkatGolonganProvider>
                                                             </CrudSppdProvider>

@@ -22,7 +22,7 @@ export default function FieldsetNamaKegiatan({value, setValue}:handleProps){
         }
 
     return (
-        <div className="flex gap-2 flex-col md:flex-row w-fit">
+        <div className="flex gap-2 flex-col md:flex-row w-full">
             <Field className="relative mt-4 md:w-8/12">
                 <InputText 
                     label="Nama Kegiatan" 

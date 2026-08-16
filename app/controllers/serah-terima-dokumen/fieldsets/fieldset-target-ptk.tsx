@@ -92,6 +92,7 @@ export default function FieldsetTargetPtk({value, setValue}:handleProps){
 
         for(const item of ptkSelected){
             let ob:any = {
+                id:item.id,
                 name:item.nama_guru,
             }
             for(const key of property){;
@@ -153,7 +154,7 @@ export default function FieldsetTargetPtk({value, setValue}:handleProps){
                     <AccordionCustomeTrigger label="Pilih Property" className="pb-0 mb-0"/>
                     <AccordionContent>
                         <div className="border rounded-b-xl relative flex flex-col md:flex-row bg-sky-50 gap-2 text-xs">
-                            <div className="border p-2 w-full md:w-5/12">
+                            <div className="border p-2 w-full md:w-fit">
                                 <Field className="[&>label]:align-middle [&>label]:flex [&>label]:items-center [&>label]:w-full [&>label]:gap-2">
                                     {
                                         OptionsPropertiesDataPtkUI.map((m, i)=>( 
@@ -168,7 +169,7 @@ export default function FieldsetTargetPtk({value, setValue}:handleProps){
                                     }
                                 </Field>
                             </div>
-                            <div className="border w-full p-4">
+                            <div className="border overflow-x-auto p-4">
                                 <TableWithScrolling className="text-[8px] border-0">
                                     <thead>
                                         <TRowEdura>

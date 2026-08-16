@@ -15,7 +15,7 @@ export default function SelectTypeJenisKegiatan({value, setValue,disabled}:handl
             })
         }else{
             setValue?.(draft=>{
-                draft.jenis = v as JenisSerahTerimaEnum
+                draft.jenis = v as keyof typeof JenisSerahTerimaEnum
             })
         }
     }

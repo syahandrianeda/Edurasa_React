@@ -108,6 +108,7 @@ export default function FieldsetTargetSiswa({value, setValue}:handleProps){
 
         for(const item of siswaSelected){
             let ob:any = {
+                id:item.id,
                 pd_nama:item.pd_nama,
             }
 
@@ -202,7 +203,7 @@ export default function FieldsetTargetSiswa({value, setValue}:handleProps){
                                     }
                                 </Field>
                             </div>
-                            <div className="border w-screen p-4">
+                            <div className="border w-full p-4 overflow-x-auto">
                                 <TableWithScrolling className="text-[8px] border-0">
                                     <thead>
                                         <TRowEdura>

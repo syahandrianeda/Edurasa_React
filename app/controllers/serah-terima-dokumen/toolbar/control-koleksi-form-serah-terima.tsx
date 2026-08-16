@@ -8,29 +8,32 @@ import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group";
 import { Switch } from "~/components/ui/switch";
 import { setSerahTerimaDokumen } from "~/context-reduct/global-state/galleries/serah-terima-dokumen-slice";
 import { useAppSelector } from "~/context-reduct/hook";
-import { DtoSerahTerimaSelector } from "~/context-reduct/selectores/serah-terima-selector";
+import { DtoSerahTerimaSelector, OrmSerahTerimaWithTransaksiSelector } from "~/context-reduct/selectores/serah-terima-selector";
+import type { SerahTerimaWithTransaksi } from "~/domain/serah-terima/entities/orm-serah-terima-type";
+import OrmSerahTerimaTransaksi from "~/domain/serah-terima/service/orm-serah-terima-transaksi";
 import type { SerahTerimaDokumenAppType } from "~/types/galleries/serah-terima-dokumen-app-type";
 
 
 export default function ControlKoleksiFormSerahTerimaDokumen(){
-    const data = useAppSelector(DtoSerahTerimaSelector) as SerahTerimaDokumenAppType[];
+    const data = useAppSelector(OrmSerahTerimaWithTransaksiSelector) ;//as SerahTerimaDokumenAppType[];
     const [selectedItem, setSelectedItem] = useState<string>();
     const [fillTgl, setFillTgl]=useState<boolean>(true);
     const [kolomEvidence, setKolomEvidence] = useState<string>('poto')
     const {value, updateExtra} = useFilterContext<{
-        daftarSerahTerimaDokumen?:SerahTerimaDokumenAppType,
+        daftarSerahTerimaDokumen?:SerahTerimaWithTransaksi,
         kolom_evidence?:string,
         fillTgl?:boolean
     }>();
 
     useEffect(()=>{
         if(!data) return;
-        setSelectedItem(data[data.length-1].idbaris.toString())
+        if(value?.extra?.daftarSerahTerimaDokumen) return
         updateExtra(draft=>{
             draft.daftarSerahTerimaDokumen = data[data.length-1];
             draft.fillTgl = true
         })
-    },[data])
+        setSelectedItem(data[data.length-1]?.idbaris.toString())
+    },[data])   
 
     const dataKeyValue: Array<{ key: string; value: string | number }> = data.map((m) => ({
         key: m.idbaris.toString(),
@@ -38,12 +41,12 @@ export default function ControlKoleksiFormSerahTerimaDokumen(){
     }));
 
     const handleSelected = (v:string)=>{
-        console.log(v)
+        
         setSelectedItem(v);
         setKolomEvidence('poto')
         const found = data.find(s=>s.idbaris === Number(v));
         if(found){
-            console.log(found);
+            
             updateExtra(draft=>{
                 draft.daftarSerahTerimaDokumen = found
             })
@@ -58,7 +61,7 @@ export default function ControlKoleksiFormSerahTerimaDokumen(){
                 draft.kolom_evidence = value
             })
         }
-        console.log({checked, value})
+        
     }
 
     const handleFillTgl = (v:boolean)=>{

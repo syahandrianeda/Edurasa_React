@@ -180,7 +180,7 @@ export default function AbsensiSiswaBulananPage() {
                     }
                 </tfoot>
             </TableWithScrolling>
-            <div className="flex gap-2 mt-5 text-[10px]" data-word="img">
+            <div className="flex gap-2 mt-5 text-[10px] overflow-x-auto" data-word="img">
                 <div className="w-full">
                     <span className="font-bold">
                         Keterangan: 

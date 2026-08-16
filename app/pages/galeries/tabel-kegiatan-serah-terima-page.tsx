@@ -37,7 +37,7 @@ export default function TableKegiatanSerahTerimaPage({data}:{data:SerahTerimaDok
                                 <SwitchTriggerModalSerahTerimaDokumen actions={actions} data={m}/>
                             </TdEduraFreeze>
                             <TdEdura>{i+1}.</TdEdura>
-                            <TdEdura>{m.nama_kegiatan}</TdEdura>
+                            <TdEdura className="text-wrap min-w-32">{m.nama_kegiatan}</TdEdura>
                             <TdEdura>{JenisSerahTerimaEnum[m.jenis as keyof typeof JenisSerahTerimaEnum]}</TdEdura>
                             <TdEdura>{m.start_date.toLocaleDateString('id-ID', {dateStyle:'full'})}</TdEdura>
                             <TdEdura>{m.item_barang?.map((item,i)=><p key={i}>{i+1}. {item}</p>)}</TdEdura>

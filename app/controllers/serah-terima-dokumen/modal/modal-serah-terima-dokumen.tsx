@@ -1,7 +1,7 @@
 import { ModalEdura } from "~/components/modals/modal-components";
 import { useModal } from "~/components/modals/modal-provider";
 import { titleModal } from "./title-modal-serah-terima-dokumen";
-import SwitchFieldsetSerahTerimaDokumen from "./triggers/switch-field-serah-terima-dokumen";
+import SwitchFieldsetSerahTerimaDokumen from "./switch-field-serah-terima-dokumen";
 
 export default function ModalSerahTerimaDokumen(){
     const { state, actions } = useModal();
@@ -10,6 +10,8 @@ export default function ModalSerahTerimaDokumen(){
         'INFO',
         'EDIT',
         'HAPUS',
+        'HAPUS TRANSAKSI SERAH TERIMA',
+        'EDIT TRANSAKSI SERAH TERIMA'
     ].includes(state?.type!);
         
 

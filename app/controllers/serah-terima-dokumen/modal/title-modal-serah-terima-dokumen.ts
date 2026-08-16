@@ -9,6 +9,10 @@ export function titleModal(state:ModalState):string{
             return 'Edit Daftar Serah Terima Dokumen';
         case "HAPUS":
             return 'HAPUS DATA';
+        case "EDIT TRANSAKSI SERAH TERIMA":
+            return 'Transaksi Penyerahan/Penerimaan'
+        case "HAPUS TRANSAKSI SERAH TERIMA":
+            return 'Hapus Transaksi'
         default:
             return 'Modal'
     }

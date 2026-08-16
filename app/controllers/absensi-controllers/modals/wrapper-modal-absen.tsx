@@ -29,7 +29,7 @@ export default function ModalFiturAbsen(){
             <ModalEdura 
                 state={state} 
                 actions={actions} 
-                className="md:overflow-y-auto scrol-h-custom gap-0 overflow-x-auto"
+                className="md:min-w-10/12 md:overflow-y-auto scrol-h-custom gap-0 overflow-x-auto"
                 title={()=>SwitchTitle(state)}
             >
                 {state && <SwitchKontenModalAbsen state={state}/>}

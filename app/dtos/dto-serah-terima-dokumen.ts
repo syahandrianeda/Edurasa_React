@@ -19,7 +19,7 @@ export default class DtoSerahTerimaDokumen{
             keterangan      : resolveString(data.keterangan),
             akses_user      : data.akses_user===""?[]:JSON.parse(data.akses_user),
             target_person   : data.target_person===""?[]:JSON.parse(data.target_person),
-            type_target     :data.type_target,// getEnumKey(PersonalTypeEnum,data.type_target),
+            type_target     :  data.type_target,// getEnumKey(PersonalTypeEnum,data.type_target),
             item_barang     : data.item_barang === ""? []: JSON.parse(data.item_barang),
             additional_info : data.additional_info === ''?[] :JSON.parse(data.additional_info),//DtoSerahTerimaDokumen.parsePersonalSiswa(data.additional_info) : DtoSerahTerimaDokumen.parsePersonalPtk(data.addtional_info)
             status           : resolveString(data.status)

@@ -621,6 +621,19 @@ export default class AppScriptSheet extends AppScriptConfig{
     get paramSheetGalleryTabSerahTerimaDokumen(){
         return this.sheetGalleryTabSerahTerimaDokumen
     }
+
+    set paramSheetGalleryTabTransaksiSerahTerimaDokumen(additionalParam:Record<string, any>){
+        const tab = this.isDev?'trial_transaksi_serah_terima':'transaksi_serah_terima'
+        this.sheetGalleryTabTransaksiSerahTerima = {
+            tab,
+            idss:this.sheetGallery,
+            ...additionalParam
+        }
+    }
+    
+    get paramSheetGalleryTabTransaksiSerahTerimaDokumen(){
+        return this.sheetGalleryTabTransaksiSerahTerima
+    }
     
     dataAuth(){
         this.paramSheetAkunTabUser = {};

@@ -28,7 +28,7 @@ export default function AksesFormulirSerahTerimaDokumen({value,setValue}:handleP
     return (
         <div className="mt-7 relative text-sm bg-linear-to-bl from-sky-200  to-purple-400 rounded-tr-2xl rounded-b-2xl p-2 shadow-lg shadow-purple-500">
             <div className="absolute -top-4 left-0 ps-1 pe-4 rounded-tr-2xl text-xs bg-sky-200">Akses Formulir</div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-x-3 md:grid-rows-10 md:grid-flow-col w-full">
+            <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-x-3 md:grid-rows-10 md:grid-flow-col">
                 {
                     friends?.map((m,i)=>
                         <Field key={m.id}>

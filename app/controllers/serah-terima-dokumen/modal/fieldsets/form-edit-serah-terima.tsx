@@ -18,15 +18,15 @@ export default function FormEditSerahTerimaDokumen(){
     const canEdit = !serahTerimaDokumen.akses_user.includes(myId?.id as number);
     
     return (
-        <div className="border rounded-2xl  mx-5 my-5 p-4 flex flex-col bg-linear-to-r from-sky-300 via-purple-400 md:max-h-[calc(100vh-13rem)] overflow-y-auto scrol-h-custom to-amber-500 gap-2">
+        <div className="border rounded-2xl mx-5 my-5 p-4 flex flex-col bg-linear-to-r from-sky-300 via-purple-400 md:max-h-[calc(100vh-13rem)] overflow-y-auto scrol-h-custom to-amber-500 gap-2">
             <FieldsetNamaKegiatan value={serahTerimaDokumen} setValue={setSerahTerimaDokumen as Updater<SerahTerimaDokumenAppType>}/>
             <AksesFormulirSerahTerimaDokumen value={serahTerimaDokumen} setValue={setSerahTerimaDokumen as  Updater<SerahTerimaDokumenAppType>}/>
             <FieldsetJenisKegiatanDanPersonal disabled={canEdit} value={serahTerimaDokumen} setValue={setSerahTerimaDokumen as  Updater<SerahTerimaDokumenAppType>}/>
             {
-                serahTerimaDokumen?.type_target === 'SISWA' as PersonalTypeEnum && <FieldsetTargetSiswa value={serahTerimaDokumen} setValue={setSerahTerimaDokumen as  Updater<SerahTerimaDokumenAppType>}/>
+                serahTerimaDokumen?.type_target === 'SISWA' && <FieldsetTargetSiswa value={serahTerimaDokumen} setValue={setSerahTerimaDokumen as  Updater<SerahTerimaDokumenAppType>}/>
             }
             {
-                serahTerimaDokumen?.type_target === 'PTK' as PersonalTypeEnum && <FieldsetTargetPtk value={serahTerimaDokumen} setValue={setSerahTerimaDokumen as  Updater<SerahTerimaDokumenAppType>}/>
+                serahTerimaDokumen?.type_target === 'PTK' && <FieldsetTargetPtk value={serahTerimaDokumen} setValue={setSerahTerimaDokumen as  Updater<SerahTerimaDokumenAppType>}/>
             }
             <FieldsetItemsDokumen value={serahTerimaDokumen} setValue={setSerahTerimaDokumen as  Updater<SerahTerimaDokumenAppType>}/>
             <FieldsetKeteranganKegiatanSerahTerima value={serahTerimaDokumen} setValue={setSerahTerimaDokumen as  Updater<SerahTerimaDokumenAppType>}/>

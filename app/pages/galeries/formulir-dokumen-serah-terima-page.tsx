@@ -77,16 +77,16 @@ export default function FormulirDokumenSerahTerimaDokumen(){
     }
     return (
         <>
-            <div className="border rounded-2xl md:w-11/12 overflow-x-auto mx-auto my-5 p-2 md:p-4 flex flex-col bg-linear-to-r from-sky-300 via-purple-400 to-amber-500 gap-2">
+            <div className="border rounded-2xl md:w-3xl mx-auto my-5 p-2 md:p-4 flex flex-col bg-linear-to-r from-sky-300 via-purple-400 to-amber-500 gap-2">
                 <fieldset  disabled={state.isSubmitting}>
                     <FieldsetNamaKegiatan value={serahTerimaDokumen} setValue={setSerahTerimaDokumen}/>
                     <AksesFormulirSerahTerimaDokumen value={serahTerimaDokumen} setValue={setSerahTerimaDokumen}/>
                     <FieldsetJenisKegiatanDanPersonal value={serahTerimaDokumen} setValue={setSerahTerimaDokumen}/>
                     {
-                        serahTerimaDokumen?.type_target === 'SISWA' as PersonalTypeEnum && <FieldsetTargetSiswa value={serahTerimaDokumen} setValue={setSerahTerimaDokumen}/>
+                        serahTerimaDokumen?.type_target === 'SISWA' as keyof typeof PersonalTypeEnum && <FieldsetTargetSiswa value={serahTerimaDokumen} setValue={setSerahTerimaDokumen}/>
                     }
                     {
-                        serahTerimaDokumen?.type_target === 'PTK' as PersonalTypeEnum && <FieldsetTargetPtk value={serahTerimaDokumen} setValue={setSerahTerimaDokumen}/>
+                        serahTerimaDokumen?.type_target === 'PTK' as keyof typeof PersonalTypeEnum && <FieldsetTargetPtk value={serahTerimaDokumen} setValue={setSerahTerimaDokumen}/>
                     }
                     <FieldsetItemsDokumen value={serahTerimaDokumen} setValue={setSerahTerimaDokumen}/>
                     <FieldsetKeteranganKegiatanSerahTerima value={serahTerimaDokumen} setValue={setSerahTerimaDokumen}/>

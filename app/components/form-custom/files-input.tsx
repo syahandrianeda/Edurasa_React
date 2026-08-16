@@ -177,7 +177,7 @@ export function SectionPreview({className=''}:{className?:string}){
     if(!previewUrl) {
         return (
         <div className="flex flex-col rounded-tr-xl border-0 h-full inner-shadow-sky-100 bg-linear-to-bl from-sky-600 to-sky-400">
-            <div className="m-1 inner-shadow-sky-600 shadow-md shadow-sky-300 bg-sky-600/50 rounded-2xl flex flex-col justify-center h-full items-center">
+            <div className={cn("m-1 inner-shadow-sky-600 shadow-md shadow-sky-300 bg-sky-600/50 rounded-2xl flex flex-col justify-center h-full items-center",className)}>
                 Preview Not Found
             </div>
         </div>
