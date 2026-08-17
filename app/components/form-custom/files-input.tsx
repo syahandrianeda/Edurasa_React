@@ -161,7 +161,7 @@ export function FileIframeViewer() {
             <iframe
             src={previewUrl}
             // className="w-95 h-95"//{`${isRotatedVertical(rotate)?'w-100 h-100':'w-full h-full'}`}
-            className="h-80"//{`${isRotatedVertical(rotate)?'w-100 h-100':'w-full h-full'}`}
+            className="h-80 w-60"//{`${isRotatedVertical(rotate)?'w-100 h-100':'w-full h-full'}`}
             style={{
                 transform: `rotate(${rotate}deg)`,
                 // width: isRotatedVertical(rotate) ? "100%" : "50%",

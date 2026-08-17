@@ -68,7 +68,7 @@ function DataKelasAmpu({typeKelas,sourceKelas}:{typeKelas:typeKelasDropdown, sou
     
     const dataKelas =  typeKelas === 'rombel'? filterRombelByKelasAmpu(DataRombelUI, user?.kelas_ampu??[]): uniqueRombelByJenjang(filterRombelByKelasAmpu(DataRombelUI, user?.kelas_ampu??[]));
     const stateKelasTabungan  = useAppSelector(KategoriKeuanganCurrentAkun)
-    console.log({stateKelasTabungan})
+    
     const findKelasTabungan  = stateKelasTabungan.find(s=>s.kategori === 'tabungan');
     const kelasTabungan  = findKelasTabungan?.akses_kelas ?? [];
     const kategori = findKelasTabungan?.kategori ?? 'tabungan'

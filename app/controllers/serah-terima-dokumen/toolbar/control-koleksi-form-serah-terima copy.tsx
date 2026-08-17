@@ -7,8 +7,6 @@ import { Label } from "~/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group";
 import { Switch } from "~/components/ui/switch";
 import { setSerahTerimaDokumen } from "~/context-reduct/global-state/galleries/serah-terima-dokumen-slice";
-import type { BuktiSerahTerima } from "~/context-reduct/global-state/ui-fokus/ui-fokus-collection";
-import { setFokusBuktiSerahTerima, setFokusFillTgl, setFokusSerahTerimaDokumen } from "~/context-reduct/global-state/ui-fokus/ui-fokus-slice";
 import { useAppDispatch, useAppSelector } from "~/context-reduct/hook";
 import { DtoSerahTerimaSelector, OrmSerahTerimaWithTransaksiSelector } from "~/context-reduct/selectores/serah-terima-selector";
 import type { SerahTerimaWithTransaksi } from "~/domain/serah-terima/entities/orm-serah-terima-type";
@@ -17,13 +15,27 @@ import type { SerahTerimaDokumenAppType } from "~/types/galleries/serah-terima-d
 
 
 export default function ControlKoleksiFormSerahTerimaDokumen(){
-    const data = useAppSelector(OrmSerahTerimaWithTransaksiSelector) 
-    const fokusUi = useAppSelector(s=>s.uiFokusToolbar.data);
+    const data = useAppSelector(OrmSerahTerimaWithTransaksiSelector) ;//as SerahTerimaDokumenAppType[];
     const dispatch = useAppDispatch();
-    // const [selectedItem, setSelectedItem] = useState<string>(fokusUi?.serahTerimaDokumen?.toString()??'');
-    // const [fillTgl, setFillTgl]=useState<boolean>(fokusUi.fillTgl);
-    // const [kolomEvidence, setKolomEvidence] = useState<string>(fokusUi.buktiSerahTerima ??'poto')
-    
+    const [selectedItem, setSelectedItem] = useState<string>();
+    const [fillTgl, setFillTgl]=useState<boolean>(true);
+    const [kolomEvidence, setKolomEvidence] = useState<string>('poto')
+    const {value, updateExtra} = useFilterContext<{
+        daftarSerahTerimaDokumen?:SerahTerimaWithTransaksi,
+        kolom_evidence?:string,
+        fillTgl?:boolean
+    }>();
+
+    useEffect(()=>{
+        if(!data) return;
+        if(value?.extra?.daftarSerahTerimaDokumen) return
+        updateExtra(draft=>{
+            draft.daftarSerahTerimaDokumen = data[data.length-1];
+            draft.fillTgl = true
+        })
+        setSelectedItem(data[data.length-1]?.idbaris.toString())
+    },[data])   
+
     const dataKeyValue: Array<{ key: string; value: string | number }> = data.map((m) => ({
         key: m.idbaris.toString(),
         value: m.nama_kegiatan,
@@ -31,39 +43,35 @@ export default function ControlKoleksiFormSerahTerimaDokumen(){
 
     const handleSelected = (v:string)=>{
         
-        // setSelectedItem(v);
-        // setKolomEvidence('poto')
+        setSelectedItem(v);
+        setKolomEvidence('poto')
         const found = data.find(s=>s.idbaris === Number(v));
         if(found){
-            dispatch(setFokusSerahTerimaDokumen(found.idbaris))
-            // updateExtra(draft=>{
-            //     draft.daftarSerahTerimaDokumen = found
-            // })
+            
+            updateExtra(draft=>{
+                draft.daftarSerahTerimaDokumen = found
+            })
         }
     }
 
     const handleEvidence = (e:ChangeEvent<HTMLInputElement>)=>{
         const {checked, value} = e.currentTarget;
         if(checked){
-            // setKolomEvidence(value);
-            // updateExtra(draft=>{
-            //     draft.kolom_evidence = value
-            // })
-            dispatch(setFokusBuktiSerahTerima(value as BuktiSerahTerima))
+            setKolomEvidence(value);
+            updateExtra(draft=>{
+                draft.kolom_evidence = value
+            })
         }
         
     }
 
     const handleFillTgl = (v:boolean)=>{
-        // setFillTgl(v);
-        dispatch(setFokusFillTgl(v))
-        // updateExtra(draft=>{
-        //     draft.fillTgl = v;
-        // })
+        setFillTgl(v);
+        updateExtra(draft=>{
+            draft.fillTgl = v;
+        })
     }
 
-    const isPoto = fokusUi.buktiSerahTerima === 'poto'
-    const isTgl = fokusUi.fillTgl === true;
     return (
         <div className="bg-linear-to-br from-sky-300 to-sky-200  dark:from-sky-800 dark:to-sky-700 grid grid-cols-1 md:grid-cols-2 px-2 py-6 gap-1">
             <div className='relative flex flex-col px-2 inner-shadow-sky-700  border shadow-sky-300 shadow-sm  bg-linear-to-tl from-sky-400 to-sky-300 dark:from-sky-800 dark:to-sky-700 rounded-s-lg rounded-bl-lg border-b-none border-e-none'>
@@ -73,8 +81,7 @@ export default function ControlKoleksiFormSerahTerimaDokumen(){
                     data={dataKeyValue}
                     labelClassName="max-w-11/12"
                     fieldClassName="w-full mt-7"
-                    // value={selectedItem}
-                    value={fokusUi?.serahTerimaDokumen?.toString() ??''}
+                    value={selectedItem}
                     setValue={handleSelected}
                     keySelected="key"
                     labelSelected="value"
@@ -85,11 +92,11 @@ export default function ControlKoleksiFormSerahTerimaDokumen(){
                         Piihan kolom bukti penyerahan dapat berupa poto/tanda tangan. Tinggal pilih di sini:
                     </div>
                     <div className="gap-2 text-xs item-center flex justify-start">
-                        <input name="kolom_evidence" id="kolom_poto" type="radio" className="w-4 h-4 ms-3 align-middle" value="poto" checked={isPoto} onChange={handleEvidence}/>
+                        <input name="kolom_evidence" id="kolom_poto" type="radio" className="w-4 h-4 ms-3 align-middle" value="poto" checked={kolomEvidence === 'poto'} onChange={handleEvidence}/>
                         <label htmlFor="kolom_poto" className=" text-xs">Kolom Poto</label>
                     </div>
                     <div className="gap-2 item-center mb-3 flex justify-start">
-                        <input name="kolom_evidence" id="kolom_ttd" type="radio" className="w-4 h-4 ms-3 align-middle" value="ttd" checked={!isPoto}  onChange={handleEvidence}/>
+                        <input name="kolom_evidence" id="kolom_ttd" type="radio" className="w-4 h-4 ms-3 align-middle" value="ttd" checked={kolomEvidence === 'ttd'}  onChange={handleEvidence}/>
                         <label htmlFor="kolom_ttd" className=" text-xs">Kolom Tanda Tangan</label>
                     </div>
                 </div>
@@ -97,8 +104,8 @@ export default function ControlKoleksiFormSerahTerimaDokumen(){
             <div className='relative flex flex-col ps-2 inner-shadow-sky-700  border shadow-sky-300 shadow-sm  bg-linear-to-tl from-sky-400 to-sky-300 dark:from-sky-800 dark:to-sky-700 rounded-e-lg rounded-br-lg border-b-none border-e-none'>
                 <div className="relative mt-7 text-xs border gap-2  bg-sky-100 space-y-0 rounded-tr-2xl min-h-12 pt-4 flex ps-4">
                     <div  className="absolute data-[variant=label]:text-xs -top-4 font-normal left-0 bg-sky-100 ps-1 pe-4 rounded-tr-2xl">Kolom Tanggal (Penyerahan)</div>
-                    <Switch size="sm" checked={isTgl} onCheckedChange={handleFillTgl} id="id-fill-tgl"/>
-                    <label htmlFor="id-fill-tgl">{isTgl?'Isikan Tanggal Kegiatan':'Kosongkan Tanggal'}</label>
+                    <Switch size="sm" checked={fillTgl} onCheckedChange={handleFillTgl} id="id-fill-tgl"/>
+                    <label htmlFor="id-fill-tgl">{fillTgl?'Isikan Tanggal Kegiatan':'Kosongkan Tanggal'}</label>
                 </div>
             </div>
         </div>

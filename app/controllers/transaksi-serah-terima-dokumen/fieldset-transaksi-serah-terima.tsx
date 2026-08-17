@@ -16,7 +16,7 @@ import { toast } from "sonner";
 import DispatchingResponseToStore from "~/lib/dispatching-response-to-store";
 
 export default function FieldsetTransaksiSerahTerima(){
-    const {state, actions:modal}=useModal()
+    const {actions:modal}=useModal()
     const {currentData} = useFormEdura<TransaksiEventType>();
     const {state:statePost, actions:post} = useCrudTransaksiSerahTerimaProvider();
     const user = getSessionApp<UserPtk>()?.name;
@@ -68,7 +68,6 @@ export default function FieldsetTransaksiSerahTerima(){
                     console.error((er));
                     return 'Gagal merespon';
                 }
-
             }
         )
     }
@@ -87,7 +86,7 @@ export default function FieldsetTransaksiSerahTerima(){
                             <p className="text-[10px]">Untuk keperluan dokumentasi, silakan upload Poto penyerahan</p>
                             <UploadBuktiPeneyerahan currentData={formDataTransaksi} setCurrentData={setFormDataTransaksi}/>
                             <div className="overflow-x-hidden scrol-h-custom">
-                                <SectionPreview className="min-h-48"/>
+                                <SectionPreview className="min-h-48 "/>
                             </div>
                         </div>
                     </FilePreviewProvider>
@@ -96,8 +95,7 @@ export default function FieldsetTransaksiSerahTerima(){
             </div>
                 <ModalFooterEdura>
                     {
-                        // state.type === 'HAPUS'?<ButtonSendDeleteSerahTerimaDokumen/>:<ButtonSendEditSerahTerimaDokumen/>
-                        state.type === 'HAPUS'?'button hapus':<ButtonUpdateTransaksiSerahTerimaDokumen disabled={statePost.isSubmitting} onSubmit={onSubmit}/>
+                        <ButtonUpdateTransaksiSerahTerimaDokumen disabled={statePost.isSubmitting} onSubmit={onSubmit}/>
                     }
                 </ModalFooterEdura>
         </>

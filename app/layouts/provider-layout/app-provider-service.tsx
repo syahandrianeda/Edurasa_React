@@ -52,6 +52,9 @@ import { CrudSerahTerimaProvider } from "~/controllers/serah-terima-dokumen/crud
 import SerahTerimaDokumenService from "~/infrastructures/services/serah-terima-dokumen-service";
 import { CrudTransaksiSerahTerimaProvider } from "~/controllers/transaksi-serah-terima-dokumen/crud-provider-transaksi-serah-terima";
 import TransaksiSerahTerimaDokumenService from "~/infrastructures/services/transaksi-serah-terima-service";
+import DispatchingResponseToFokusUi from "~/lib/dispatching-response-to-fokus-ui";
+
+
 /**
  * `AppProviderLayoutService`, menyediakan:
  *  * ensurLoadedStateService
@@ -156,7 +159,8 @@ export default function AppProviderLayoutService({matches}:Route.ComponentProps)
                             const decidedRombel = loaderDataKiriman?.sourceKelas ? rombelKeuangan?.rombel :  rombel ;
                                 data.forEach(({success,data,detailResponse})=>{
                                     if(detailResponse){
-                                        DispatchingResponseToStore(success,data,detailResponse,decidedRombel)
+                                        DispatchingResponseToStore(success,data,detailResponse,decidedRombel);
+                                        DispatchingResponseToFokusUi();
                                     }
                                 })
                             }

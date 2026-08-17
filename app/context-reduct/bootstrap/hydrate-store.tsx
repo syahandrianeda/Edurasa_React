@@ -6,6 +6,7 @@ import type { RootState } from "../store";
 import { KoleksiIdFileByApp } from "~/types/absensi-siswa";
 import { KoleksiMapel } from "~/domain/mapel/koleksi-mapel";
 import type { InterfaceMapel } from "~/types/mapel/mapel";
+import { initialUiFokusCollection } from "../global-state/ui-fokus/ui-fokus-collection";
 
 export function hydratePreloadedState(): Partial<RootState> {
   if (typeof window === "undefined") {
@@ -204,6 +205,10 @@ export function hydratePreloadedState(): Partial<RootState> {
       data: [],
       name: 'transaksi_serah_terima',
       loaded:false
+    },
+    uiFokusToolbar:{
+      data:initialUiFokusCollection,
+      name:'UiFokus'
     }
 
 
