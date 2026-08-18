@@ -1,28 +1,15 @@
-import { useEffect, useState, type ChangeEvent, type ChangeEventHandler } from "react";
+import {  type ChangeEvent } from "react";
 import { SelectCommonsField } from "~/components/selects/select-commons";
-import { useFilterContext } from "~/components/toolbars/state-toolbar/state-toolbar";
-import { Field, FieldDescription, FieldLabel, FieldLegend, FieldSet } from "~/components/ui/field";
-import { Input } from "~/components/ui/input";
-import { Label } from "~/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group";
 import { Switch } from "~/components/ui/switch";
-import { setSerahTerimaDokumen } from "~/context-reduct/global-state/galleries/serah-terima-dokumen-slice";
 import type { BuktiSerahTerima } from "~/context-reduct/global-state/ui-fokus/ui-fokus-collection";
 import { setFokusBuktiSerahTerima, setFokusFillTgl, setFokusSerahTerimaDokumen } from "~/context-reduct/global-state/ui-fokus/ui-fokus-slice";
 import { useAppDispatch, useAppSelector } from "~/context-reduct/hook";
-import { DtoSerahTerimaSelector, OrmSerahTerimaWithTransaksiSelector } from "~/context-reduct/selectores/serah-terima-selector";
-import type { SerahTerimaWithTransaksi } from "~/domain/serah-terima/entities/orm-serah-terima-type";
-import OrmSerahTerimaTransaksi from "~/domain/serah-terima/service/orm-serah-terima-transaksi";
-import type { SerahTerimaDokumenAppType } from "~/types/galleries/serah-terima-dokumen-app-type";
-
+import { OrmSerahTerimaWithTransaksiSelector } from "~/context-reduct/selectores/serah-terima-selector";
 
 export default function ControlKoleksiFormSerahTerimaDokumen(){
     const data = useAppSelector(OrmSerahTerimaWithTransaksiSelector) 
     const fokusUi = useAppSelector(s=>s.uiFokusToolbar.data);
     const dispatch = useAppDispatch();
-    // const [selectedItem, setSelectedItem] = useState<string>(fokusUi?.serahTerimaDokumen?.toString()??'');
-    // const [fillTgl, setFillTgl]=useState<boolean>(fokusUi.fillTgl);
-    // const [kolomEvidence, setKolomEvidence] = useState<string>(fokusUi.buktiSerahTerima ??'poto')
     
     const dataKeyValue: Array<{ key: string; value: string | number }> = data.map((m) => ({
         key: m.idbaris.toString(),
@@ -30,50 +17,36 @@ export default function ControlKoleksiFormSerahTerimaDokumen(){
     }));
 
     const handleSelected = (v:string)=>{
-        
-        // setSelectedItem(v);
-        // setKolomEvidence('poto')
         const found = data.find(s=>s.idbaris === Number(v));
+
         if(found){
             dispatch(setFokusSerahTerimaDokumen(found.idbaris))
-            // updateExtra(draft=>{
-            //     draft.daftarSerahTerimaDokumen = found
-            // })
         }
     }
 
     const handleEvidence = (e:ChangeEvent<HTMLInputElement>)=>{
         const {checked, value} = e.currentTarget;
         if(checked){
-            // setKolomEvidence(value);
-            // updateExtra(draft=>{
-            //     draft.kolom_evidence = value
-            // })
             dispatch(setFokusBuktiSerahTerima(value as BuktiSerahTerima))
         }
         
     }
 
     const handleFillTgl = (v:boolean)=>{
-        // setFillTgl(v);
         dispatch(setFokusFillTgl(v))
-        // updateExtra(draft=>{
-        //     draft.fillTgl = v;
-        // })
     }
 
     const isPoto = fokusUi.buktiSerahTerima === 'poto'
     const isTgl = fokusUi.fillTgl === true;
+
     return (
         <div className="bg-linear-to-br from-sky-300 to-sky-200  dark:from-sky-800 dark:to-sky-700 grid grid-cols-1 md:grid-cols-2 px-2 py-6 gap-1">
             <div className='relative flex flex-col px-2 inner-shadow-sky-700  border shadow-sky-300 shadow-sm  bg-linear-to-tl from-sky-400 to-sky-300 dark:from-sky-800 dark:to-sky-700 rounded-s-lg rounded-bl-lg border-b-none border-e-none'>
                 <SelectCommonsField
-                    
                     label="Koleksi Dokumen Serah Terima Dokumen/Barang"
                     data={dataKeyValue}
                     labelClassName="max-w-11/12"
                     fieldClassName="w-full mt-7"
-                    // value={selectedItem}
                     value={fokusUi?.serahTerimaDokumen?.toString() ??''}
                     setValue={handleSelected}
                     keySelected="key"

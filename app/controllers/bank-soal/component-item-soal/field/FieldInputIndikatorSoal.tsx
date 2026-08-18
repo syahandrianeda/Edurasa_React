@@ -1,6 +1,6 @@
 import { InputTextArea } from "~/components/fields/fields";
-import {WrapperContentForm} from "./wrapper-content-form";
-import { useCreateItemSoalContext } from "../reducer-item-soal/immer-reducer-context";
+import {WrapperContentForm} from "../wrapper-content-form";
+import { useCreateItemSoalContext } from "../../reducer-item-soal/immer-reducer-context";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { TaksonomiMatcher, type LkLevel, type Taksonomi } from "~/domain/taksonomi";
 import { useAppSelector } from "~/context-reduct/hook";

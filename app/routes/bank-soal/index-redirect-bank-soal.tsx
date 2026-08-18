@@ -2,6 +2,7 @@ import { Navigate, useNavigation } from "react-router";
 
 import { TopProgressBarFetch } from "~/components/ui_edura/top-progress-bar";
 import type { Route } from "./+types/index-redirect-bank-soal";
+import { defineCreateItemSoalNeeded } from "~/domain/enloaded/intial-enloaded/by-route-page/banksoal/create-item-soal-needed";
 
 export function meta({matches}: Route.MetaArgs) {
     const rootMeta = matches.find(m => m?.id === 'root')?.meta;
@@ -24,7 +25,11 @@ export function meta({matches}: Route.MetaArgs) {
 export async function clientLoader({}:Route.ComponentProps){
     
 
-    return {titleTambahan:'Data Rombel', data:[]};
+    return {
+        titleTambahan:'Data Rombel', 
+        addPesanRombel:{isAdd:true, type:'rombel', includeFaseName:true},
+                        sheetNeeded: defineCreateItemSoalNeeded,
+    };
 }
 export default function RedirectKesiswaan({loaderData}:Route.ComponentProps) {
 

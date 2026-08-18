@@ -13,8 +13,8 @@ export default function PenandaTanganAtasan({atasan, includeJabatan=true,classNa
     
     
     return <TandatanganAtasan 
-                tgl={atasan.ptk_starttgl} 
-                atasanDari={atasan.ptk_jabatan as AtasanType}
+                tgl={atasan?.ptk_starttgl} 
+                atasanDari={atasan?.ptk_jabatan as AtasanType}
                 includeJabatan={includeJabatan}
                 className={className}
                 />

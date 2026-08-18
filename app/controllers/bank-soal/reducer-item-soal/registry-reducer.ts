@@ -82,8 +82,6 @@ export class setBentukSoalReducer implements ReducerCommand<BankSoalAppType,setB
     }
 }
 export class setCreatorItemSoalReducer implements ReducerCommand<BankSoalAppType,setCreatorItemSoal>{
-    // type:'creator',
-    // payload:string
     execute(state: Draft<BankSoalAppType>, action: setCreatorItemSoal): void {
         state.oleh = action.payload;
     }
@@ -92,17 +90,12 @@ export class setItemSoalReducer implements ReducerCommand<BankSoalAppType, setIt
     execute(state: Draft<BankSoalAppType>, action: setItemSoal): void {
         
         Object.assign(state, action.payload);
-        // for (const key in action.payload) {
-        //     state[key] = action.payload[key];
-        // }
+        
     }
 }
 export class resetItemSoalReducer implements ReducerCommand<BankSoalAppType, resetItemSoal>{
     execute(state: Draft<BankSoalAppType>, action: resetItemSoal):  Draft<BankSoalAppType> {
-        // Object.assign(state, initialCreateItemSoal);
-        // delete state.json_alat_jawab;
-        // delete state.snapshot_kurikulum;
-        // state = initialCreateItemSoal
+        
         return structuredClone(
             initialCreateItemSoal,
         );
@@ -110,12 +103,7 @@ export class resetItemSoalReducer implements ReducerCommand<BankSoalAppType, res
 }
 export class InitializeItemSoalReducer implements ReducerCommand<BankSoalAppType, initializeItemSoal>{
     execute(state:Draft<BankSoalAppType>, action: initializeItemSoal):void{
-        /**
-         * bentukSoal:ListBentukSoalType,
-                 creator:string,
-                 rombel:string,
-                 mapel:string,
-         */
+        
         const { kurikulum, 
                 bentukSoal,
                 creator,

@@ -1,4 +1,4 @@
-import {WrapperContentForm} from "./wrapper-content-form";
+import {WrapperContentForm} from "../wrapper-content-form";
 
 export function FieldInputMateriPokok(){
     return (

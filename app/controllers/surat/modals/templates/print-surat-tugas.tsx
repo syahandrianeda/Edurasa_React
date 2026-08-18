@@ -26,7 +26,7 @@ export default function PrintSuratTugasSppd({data}:{data:DataOrmSuratKeluarType}
             <p className="my-4 indent-2">Untuk melakasanakan : {data.perihal}</p>
             <div className="flex justify-between items-end text-center me-2 mt-5 flex-col">
                 <p className="text-center w-1/2">{KABUPATEN_KOTA}, {data.tglsurat.toLocaleDateString('id-ID', {dateStyle:'long'})}</p>
-                <PenandaTanganAtasan atasan={foundKepsek[0]!}/>
+                <PenandaTanganAtasan atasan={sampling[0]!}/>
             </div>
         </div>
         <div className="border print:border-0 h-[310mm] p-2">

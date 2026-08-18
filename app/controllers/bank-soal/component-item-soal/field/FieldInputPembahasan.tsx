@@ -1,10 +1,10 @@
-import { WrapperContentForm} from "./wrapper-content-form";
+import { WrapperContentForm} from "../wrapper-content-form";
 import TiptapEditorSoal from "~/components/editor-tip-tap/rte-formulir/TiptapEditorSoal";
 import { useEffect, useMemo, useState } from "react";
 import { type JSONContent } from "@tiptap/react";
 import { HtmlRenderer } from "~/components/editor-tip-tap/renderer/HtmlRenderer";
 
-import { useCreateItemSoalContext } from "../reducer-item-soal/immer-reducer-context";
+import { useCreateItemSoalContext } from "../../reducer-item-soal/immer-reducer-context";
 import TiptapEditorSoalSimple from "~/components/editor-tip-tap/rte-formulir/TiptapEditorSoalSimple";
 
 export function FieldInputPembahasan(){

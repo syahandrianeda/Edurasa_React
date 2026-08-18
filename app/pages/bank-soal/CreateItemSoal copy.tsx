@@ -19,11 +19,23 @@ export function CreateItemSoal() {
     const fokusMapel = useAppSelector(s=>s.fokusMapel.data.nama);
     const bloom = useAppSelector(TaksonomiBloomInstance);
     const me = getSessionApp<UserPtk>();
-    const {fokusBentukSoal, fokusAtp, fokusEditor} = useAppSelector(state=>state.uiFokusToolbar.data)
+    
+    const {value} = useFilterContext<{
+        fokusBentukSoal?: ListBentukSoalType;
+        fokusAtp?: AtpAsOrm | undefined;
+        fokusEditor?:EditorSoalType
+    }>();
     const { action} = useCreateItemSoalContext();
     
     useEffect(() => {
-        const kurikulum = fokusAtp;
+        if (value?.extra) { return; }
+
+        action({ type: "reset", });
+
+    }, [value?.extra, action]);
+
+    useEffect(() => {
+        const kurikulum = value?.extra?.fokusAtp;
         if (!kurikulum) return;
 
         action({ type: "propertyKurikulum", payload: kurikulum, });
@@ -38,16 +50,16 @@ export function CreateItemSoal() {
             }
         })
         
-        }, [ fokusAtp, action, ]);
+        }, [ value?.extra?.fokusAtp, action, ]);
 
     useEffect(() => {
-        const bentuk = fokusBentukSoal;
+        const bentuk = value?.extra?.fokusBentukSoal;
 
         if (!bentuk) return;
 
         action({ type: "bentuk_soal", payload: bentuk, });
 
-    }, [ fokusBentukSoal, action, ]);
+    }, [ value?.extra?.fokusBentukSoal, action, ]);
 
     useEffect(() => {
 
@@ -77,15 +89,15 @@ export function CreateItemSoal() {
         }, [ fokusMapel, action,
     ]);    
 
-    if(!fokusAtp){
+    if(!value?.extra?.fokusAtp){
         return <MessageNotReady/>
     } 
     
-    switch(fokusEditor?.name){
+    switch(value?.extra?.fokusEditor?.name){
         case 'formulir':
-            return <FormulirItemSoal bentukSoal={fokusBentukSoal}  description={fokusEditor?.description}/>;
+            return <FormulirItemSoal bentukSoal={value?.extra?.fokusBentukSoal}  description={value?.extra?.fokusEditor?.description}/>;
         case 'copy_paste':
-            return <p>Copast {fokusEditor?.description}</p>;
+            return <p>Copast {value?.extra?.fokusEditor?.description}</p>;
         default:
             return <MessageNotReady/>
             
@@ -99,15 +111,6 @@ function MessageNotReady(){
             <p>Aplikasi Belum Siap</p>
             <div className="border rounded-3xl p-3 bg-amber-100">
                     Periksa Kurikulum, aplikasi tidak bisa mendeteksi Kurikulum Anda
-            </div>
-            <div className="w-full text-start md:ps-5">Periksa:
-                <ul className="list-disc list-inside">
-                    <li>Mapel</li>
-                    <li>Cp</li>
-                    <li>TP</li>
-                    <li>Atp, dan</li>
-                    <li>Jadwal Pelajaran</li>
-                </ul>
             </div>
         </div>
     )

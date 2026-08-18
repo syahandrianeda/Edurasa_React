@@ -49,7 +49,7 @@ export default class OrmProta{
     }
 
     get pengampuMapel(){
-        return this.dataguru.friends.find(s=>s.kode_mapel_ampu === this.fokusMapel.kode)?.name ?? this.dataguru.friends.find(s=>s.kode_mapel_ampu === this.namaRombel)?.name// ??this.dataguru.name;
+        return this.dataguru?.friends.find(s=>s.kode_mapel_ampu === this.fokusMapel.kode)?.name ?? this.dataguru?.friends.find(s=>s.kode_mapel_ampu === this.namaRombel)?.name// ??this.dataguru.name;
     }
 
     get namaRombel():string{

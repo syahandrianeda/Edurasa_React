@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { WrapperContentForm } from "./wrapper-content-form";
+import { WrapperContentForm } from "../wrapper-content-form";
 import type { TaksonomiAppLevelingType } from "~/types/taksonomi/taksonomi-app";
 import { useAppSelector } from "~/context-reduct/hook";
 import { TaksonomiBloomInstance, TaksonomiBloomPureSelector } from "~/context-reduct/selectores/taksonomi-selector";
@@ -8,7 +8,7 @@ import { SelectField } from "~/components/fields/fields";
 import { TaksonomiMatcher, type LkLevel } from "~/domain/taksonomi";
 import TableWithScrolling from "~/components/tabels/table-with-scrolling";
 import { TdEdura, ThEdura, TRowEdura } from "~/components/tabels/tabel-components";
-import { useCreateItemSoalContext } from "../reducer-item-soal/immer-reducer-context";
+import { useCreateItemSoalContext } from "../../reducer-item-soal/immer-reducer-context";
 import { Button } from "~/components/ui/button";
 
 export function FieldSelectLevelKognitif(){

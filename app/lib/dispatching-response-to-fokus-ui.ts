@@ -27,7 +27,6 @@ export default async function DispatchingResponseToFokusUi(){
         const own_orm = orm.filter(s=>s.akses_user.includes(user_id??0));//[orm.length - 1]
         const firstOrm = own_orm[own_orm.length-1];
         store.dispatch(setFokusSerahTerimaDokumen(firstOrm.idbaris));
-        
     }
 
 
