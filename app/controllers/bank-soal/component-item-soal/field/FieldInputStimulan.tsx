@@ -9,8 +9,8 @@ import TiptapEditorSoalSimple from "~/components/editor-tip-tap/rte-formulir/Tip
 
 
 export function FieldInputStimulan(){
-    const {action} = useCreateItemSoalContext();
-    const [valueJson, setValueJson] = useState<JSONContent | null>(null);
+    const {action, data} = useCreateItemSoalContext();
+    const [valueJson, setValueJson] = useState<JSONContent | null>(data.stimulus as unknown as JSONContent);
 
     const stimulusHtml = useMemo(()=>{
         return  HtmlRenderer({document:valueJson})

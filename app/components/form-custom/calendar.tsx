@@ -14,7 +14,8 @@ export interface CalendarProps{
     handleChangeDate: (value:Date|string)=>void
     name?: string,
     placeholder?: string
-    className?:string
+    className?:string,
+    isLimited?:boolean
 }
 
 export function CalendarPicker({
@@ -24,7 +25,8 @@ export function CalendarPicker({
     currentDate,
     handleChangeDate,
     placeholder,
-    className
+    className,
+    isLimited=true
 }: CalendarProps){
 const [open, setOpen] = React.useState(false)
 
@@ -108,8 +110,9 @@ const [open, setOpen] = React.useState(false)
                     onMonthChange={setMonth}
                     onSelect={onSelectDate}
                     className="bg-white"
-                    disabled={(date) =>
-                            date > new Date() || date < new Date("1900-01-01")
+                    disabled={(date) => isLimited
+                              ? date > new Date() || date < new Date("1900-01-01")
+                              : false
                             }
                     />
                 </PopoverContent>

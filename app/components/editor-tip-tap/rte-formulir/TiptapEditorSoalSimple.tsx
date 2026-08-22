@@ -125,12 +125,15 @@ export default function TiptapEditorSoalSimple({ valueJson, onChangeJson }: Prop
             content: valueJson, 
             editorProps:{
                 attributes: {
-                    class:'focus:outline-none focus:ring-1 bg-white focus:ring-blue-500 p-2 border-s border-b border-e border-t-none'
+                    class:'focus:outline-none focus:ring-1 bg-white focus:ring-blue-500 p-2 border-s border-b border-e border-t-none',
+                    
                 }
+                
             },
             onUpdate({ editor }) {
                 onChangeJson?.(editor.getJSON())
             },
+            
         });
     
     const { editorStateData} = createOptionsToggleMenuTiptap(editor);
@@ -166,7 +169,7 @@ export default function TiptapEditorSoalSimple({ valueJson, onChangeJson }: Prop
             
             <BubbleMenuAsContextMenu editor={editor} editorStateData={ editorStateData}/>
             
-            <EditorContent editor={editor} className="editor-document"/>
+            <EditorContent editor={editor} className="editor-document" placeholder='ketik di sini'/>
             <div className='bottom-0 bg-slate-200 w-full flex justify-between'>
                 <div className="text-xs p-1 flex items-center gap-2">Shortcut <ShortcutGuider/></div>
                 <div className="text-xs p-1">Powered By Tiptap</div>

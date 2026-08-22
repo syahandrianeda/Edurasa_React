@@ -89,6 +89,7 @@ function TabPraDesainItemSoal(){
         if(checked){
             if(name === 'fokusBentukSoal'){
                 const found = ListBentukSoal.find(s=>s.name === value);
+                console.log(found)
                 if(found){
                     dispatch(setFokusBentukSoal(found));
                 }

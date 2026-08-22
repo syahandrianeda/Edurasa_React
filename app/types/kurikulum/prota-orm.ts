@@ -74,6 +74,8 @@ export type AtpAsOrm={
     tp_as_cp_id?:number,
     cp_description?:string,
     cp_id?:number,
+    elemen?:string,
+    lingkup_materi?:string,
     kelas:number[],
     kodemapel?:string;
     mapelname?:string

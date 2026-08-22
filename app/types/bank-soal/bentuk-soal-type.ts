@@ -9,7 +9,7 @@ export interface PgTunggal {
     formatOpsi:FormatElemen,
     opsiPilihanTabel?:OpsiPilihanTabel[],
     // type: 'radio',
-    valid:number
+    valid?:number
 }
 export interface OpsiPilihanTabel{
     row:number,
@@ -24,7 +24,7 @@ export interface PgKompleks {
     formatOpsi:FormatElemen,
     tableHeader?:OpsiPilihanJawabanTable
     // type:'checkbox',
-    valid:number[]
+    valid?:number[]
 }
 export interface OpsiPilihanJawaban{
     // label:string|ReactNode

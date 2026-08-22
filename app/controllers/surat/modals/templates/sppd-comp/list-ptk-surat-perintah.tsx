@@ -14,7 +14,6 @@ export default function ListPtkSuratPerintah({data}:{data:SppdAppType[]}){
                                     <tr>
                                         <td rowSpan={5} className="align-top px-2">{i+1}.</td>
                                     </tr>
-
                                     <tr>
                                         <td className="px-2">Nama</td>
                                         <td className="px-2">:</td>

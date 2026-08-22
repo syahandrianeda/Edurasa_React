@@ -1,5 +1,10 @@
 import type { AtpAsOrm } from "../kurikulum/prota-orm";
-import type { PgKompleks, PgTunggal, PilihanBenarSalahType, PilihanMenjodohkan } from "./bentuk-soal-type";
+import type { BenarSalahType } from "./bentuk-soal/benar-salah-type";
+// import type { PgKompleks, PgTunggal, PilihanBenarSalahType, PilihanMenjodohkan } from "./bentuk-soal-type";
+import type { JsonAlatJawab } from "./bentuk-soal/json-alat-jawab-type";
+import type { MenjodohkanType } from "./bentuk-soal/menjodohkan-type";
+import type { PgKompleksType } from "./bentuk-soal/pg-kompleks-type";
+import type { PgTunggalType } from "./bentuk-soal/pg-type";
 
 export interface BankSoalSheetType{
     idbaris: number,
@@ -17,7 +22,7 @@ export interface BankSoalSheetType{
     ruang_lingkup: string,
     stimulus: string,
     pertanyaan: string,
-    auto_koreksi: number,
+    auto_koreksi: string,
     jawaban: string,
     pembahasan_penskoran: string,
     json_alat_jawab: string,
@@ -57,7 +62,9 @@ export interface BankSoalAppType{
     pertanyaan:string,
     jawaban:string|number|string[]|number[],
     pembahasan_penskoran:string,
-    json_alat_jawab?:PgTunggal|PgKompleks|PilihanBenarSalahType|PilihanMenjodohkan,
+    // json_alat_jawab?:PgTunggal|PgKompleks|PilihanBenarSalahType|PilihanMenjodohkan,
+    // json_alat_jawab?: JsonAlatJawab
+    json_alat_jawab?:JsonAlatJawabTupple
     snapshot_kurikulum?: AtpAsOrm,//SnapshotAtpType,
     oleh:string,
     refrensi:string,
@@ -65,6 +72,12 @@ export interface BankSoalAppType{
     auto_koreksi: string,
 
 }
+export type JsonAlatJawabTupple = 
+    | PgTunggalType
+    | PgKompleksType
+    | MenjodohkanType
+    | BenarSalahType;
+
 /** ganti dengan AtpAsOrm
  * ---------
  * type AtpAsOrm tidak punya ini:

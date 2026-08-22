@@ -11,8 +11,8 @@ export default function PreviewModalItemSoal({state}:{state:ModalState<BankSoalA
             Misalnya soal ini diterapkan di nomor 4:
             <div className="border p-2 rounded-2xl">
                 <ol start={2} className=" list-decimal list-outside pl-6 ">
-                    <li>...</li>
-                    <li>...</li>
+                    <li> ... </li>
+                    <li> ... </li>
                     
                     <li className="align-top ps-2">
                         <div

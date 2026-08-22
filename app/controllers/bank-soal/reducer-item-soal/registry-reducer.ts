@@ -32,6 +32,7 @@ export class setPropertyKurikulumReducer implements ReducerCommand<BankSoalAppTy
         state.kurikulum = 'kurmer'
         state.kode_mapel = action.payload.kodemapel ?? '';
         state.snapshot_kurikulum = action.payload
+        state.ruang_lingkup= action.payload.lingkup_materi ??''
         // if(!state.indikator_soal){
             const text = `Siswa dapat ${action.payload.atp_as_tp_description} dengan benar`;
             state.indikator_soal = text;
@@ -46,19 +47,25 @@ export class setBentukSoalReducer implements ReducerCommand<BankSoalAppType,setB
         state.bentuk_soal = action.payload.name;
         state.auto_koreksi = action.payload.way_correction;
         /** Jika action.payload.name === 'pg' */
-        if(action.payload.name === 'pg' ){
+        if(['pg', 'pg_kompleks'].includes(action.payload.name) ){
             state.json_alat_jawab = {
                 OpsiPilihanJawaban:[],
                 formatOpsi:'vertical',
-                tableHeader:undefined,
+                // tableHeader:undefined,
                 valid:[0],
                 // type: 'radio',
-            }
+            };
+            //tambahin jawaban;
+            
         };
         
         /** action.payload === 'menjodohkan' */
         if(action.payload.name === 'menjodohkan'){
             state.json_alat_jawab = {
+                OpsiPilihanJawaban:[],
+                formatOpsi:'vertical',
+                // tableHeader:undefined,
+                valid:[],
                 opsiKiri:[],
                 opsiKanan:[],
             }
@@ -67,8 +74,13 @@ export class setBentukSoalReducer implements ReducerCommand<BankSoalAppType,setB
         /** action.payload.name === 'benar_salah' */
         if(action.payload.name === 'benar_salah'){
             state.json_alat_jawab = {
+                OpsiPilihanJawaban:[],
+                formatOpsi:'vertical',
+                // tableHeader:undefined,
+                valid:[0],
                 listPernyataan:[],
-                formatTampilan:'vertical',
+                // formatTampilan:'vertical',
+                // formatOpsi:'vertical',
             }
         };
         

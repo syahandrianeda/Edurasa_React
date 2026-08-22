@@ -252,7 +252,17 @@ export function OptionInteractionItemSoal({bentukSoal}:{bentukSoal:ListBentukSoa
                                         <OpsiTable abjadCollections={arrayAbjad}/>
                                     )
                                 }
-                
+                <div className="overflow-x-auto col-span-12">
+                    <pre>
+                        {
+                            data?.json_alat_jawab && Object.entries(data?.json_alat_jawab!).map(([Key, value], i)=>
+                                <div key={i}>{Key} = {
+                                        Array.isArray(value)? value.map((ar, ii)=><p key={ii}>{JSON.stringify(ar)}</p>):JSON.stringify(value)
+                                    }</div>
+                            )
+                        }
+                    </pre>
+                </div>
         </div>
 
     )

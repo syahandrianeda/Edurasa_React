@@ -100,6 +100,9 @@ export default class AppScriptSheet extends AppScriptConfig{
     protected sheetGalleryTabSerahTerimaDokumen:ParamRequestAppScript={idss:'', tab:''}
     protected sheetGalleryTabTransaksiSerahTerima:ParamRequestAppScript={idss:'', tab:''}
 
+    protected sheetBankSoalTabBankSoal: ParamRequestAppScript={idss:'', tab:''}
+    protected sheetBankSoalTaksonomiBloom: ParamRequestAppScript={idss:'', tab:''}
+
     constructor(){
         super();
         this.sheetAkunTabUser                   = {idss:this.sheetAkun, tab:'user'}
@@ -166,6 +169,10 @@ export default class AppScriptSheet extends AppScriptConfig{
     }
     get sheetGallery():string{
         return this.currentMacro['ss_gallery']
+    }
+
+    get sheetBankSoal():string{
+        return this.currentMacro['ss_bank_soal']
     }
     /** id sheet Absensi: */
     sheetAbsensi(jenjang:number): string{
@@ -633,6 +640,19 @@ export default class AppScriptSheet extends AppScriptConfig{
     
     get paramSheetGalleryTabTransaksiSerahTerimaDokumen(){
         return this.sheetGalleryTabTransaksiSerahTerima
+    }
+
+    set paramSheetBankSoalTabBankSoal(additionalParam:Record<string, any>){
+        const tab = this.isDev?'trial_bank_soal':'bank_soal'
+        this.sheetBankSoalTabBankSoal = {
+            tab,
+            idss:this.sheetBankSoal,
+            ...additionalParam
+        }
+    }
+    
+    get paramSheetBankSoalTabBankSoal(){
+        return this.sheetBankSoalTabBankSoal
     }
     
     dataAuth(){

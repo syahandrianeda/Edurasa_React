@@ -3,6 +3,7 @@ export interface ElemenCpType {
     kodemapel:string,
     fase:string,
     elemen:string,
+    lingkup_materi:string,
     cp_utama:string,
     kode_elemen:number,
     cp_kunci:string,

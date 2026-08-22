@@ -76,7 +76,7 @@ export default function FormDurasiHariSppd(){
                             id="id_tgl_surat"
                             className="col-span-2  border-2 border-sky-500 rounded-md p-2 "
                             label="Tanggal Berangkat"
-                            
+                            isLimited={false}
                             currentDate={data?.ptk_starttgl ?? new Date()}
                             handleChangeDate={handleDate}
                             />

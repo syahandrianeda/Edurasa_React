@@ -5,6 +5,7 @@ import { CreateItemSoal } from "~/pages/bank-soal/CreateItemSoal";
 import { CreateItemSoalProvider } from "~/controllers/bank-soal/reducer-item-soal/immer-reducer-context";
 import { initialCreateItemSoal } from "~/controllers/bank-soal/reducer-item-soal/Initial-item-soal";
 import { defineCreateItemSoalNeeded } from "~/domain/enloaded/intial-enloaded/by-route-page/banksoal/create-item-soal-needed";
+import CreateItemSoalPage from "~/pages/bank-soal/CreateItemSoalPage";
 
 export function meta({matches}: Route.MetaArgs) {
     const rootMeta = matches.find(m => m?.id === 'root')?.meta;
@@ -53,7 +54,7 @@ export default function BankSoalRoute() {
     return(
         // <CreateItemSoalProvider dataImmer={dataBankSoalApp} actionImmer={setDataBankSoalApp}>
         <CreateItemSoalProvider initialData ={initialCreateItemSoal}>
-            <CreateItemSoal/>
+            <CreateItemSoalPage/>
         
         </CreateItemSoalProvider>
     )

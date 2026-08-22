@@ -8,8 +8,8 @@ import { useCreateItemSoalContext } from "../../reducer-item-soal/immer-reducer-
 import TiptapEditorSoalSimple from "~/components/editor-tip-tap/rte-formulir/TiptapEditorSoalSimple";
 
 export function FieldInputPembahasan(){
-    const {action} = useCreateItemSoalContext();
-    const [valueJson, setValueJson] = useState<JSONContent | null>(null);
+    const {action, data} = useCreateItemSoalContext();
+    const [valueJson, setValueJson] = useState<JSONContent | null>(data.pembahasan_penskoran as unknown as JSONContent);
 
     const stimulusHtml = useMemo(()=>{
         return  HtmlRenderer({document:valueJson})

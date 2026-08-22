@@ -202,6 +202,7 @@ export default class OrmProta{
                 tp_as_cp_description:undefined,
                 tp_as_cp_id:undefined,
                 invalid:true,
+                
                 message:[
                     'cp tidak ditemukan untuk idbaris '+ dataAtp.foreignkey_elemencp,
                     'kode mapel tidak terdeteksi karena tidak terhubung ke cp maupun tp pada tiap fase'
@@ -214,7 +215,8 @@ export default class OrmProta{
                 obCp.cp_description = dataCp.cp_utama;
                 obCp.cp_id = dataCp.idbaris;
                 obCp.kodemapel = dataCp.kodemapel;
-                
+                obCp.elemen = dataCp.elemen;
+                obCp.lingkup_materi = dataCp.lingkup_materi;
                 obCp.fase=dataCp.fase;
                 /** 
                  * meskipun data berikut telah ditemukan, ormATP belum tentu valid 

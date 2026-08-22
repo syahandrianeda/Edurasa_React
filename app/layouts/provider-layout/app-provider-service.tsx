@@ -53,6 +53,8 @@ import SerahTerimaDokumenService from "~/infrastructures/services/serah-terima-d
 import { CrudTransaksiSerahTerimaProvider } from "~/controllers/transaksi-serah-terima-dokumen/crud-provider-transaksi-serah-terima";
 import TransaksiSerahTerimaDokumenService from "~/infrastructures/services/transaksi-serah-terima-service";
 import DispatchingResponseToFokusUi from "~/lib/dispatching-response-to-fokus-ui";
+import { CrudBankSoalProvider } from "~/controllers/bank-soal/cruds/crud-provider-bank-soal";
+import BanksoalService from "~/infrastructures/services/bank-soal-service";
 
 
 /**
@@ -102,6 +104,7 @@ export default function AppProviderLayoutService({matches}:Route.ComponentProps)
     const servicePangkatGolongan                = new PangkatGolonganService();
     const serviceSerahTerimaDokumen             = new SerahTerimaDokumenService();
     const serviceTransaksiSerahTerimaDokumen    = new TransaksiSerahTerimaDokumenService();
+    const serviceBankSoal                       = new BanksoalService();
 
     
     
@@ -211,7 +214,9 @@ export default function AppProviderLayoutService({matches}:Route.ComponentProps)
                                                                 <CrudPangkatGolonganProvider service={servicePangkatGolongan}>
                                                                     <CrudSerahTerimaProvider service={serviceSerahTerimaDokumen}>
                                                                         <CrudTransaksiSerahTerimaProvider service={serviceTransaksiSerahTerimaDokumen}>
-                                                                            <Outlet/>
+                                                                            <CrudBankSoalProvider service={serviceBankSoal}>
+                                                                                <Outlet/>
+                                                                            </CrudBankSoalProvider>
                                                                         </CrudTransaksiSerahTerimaProvider>
                                                                     </CrudSerahTerimaProvider>
                                                                 </CrudPangkatGolonganProvider>
