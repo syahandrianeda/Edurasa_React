@@ -17,6 +17,7 @@ export default function ButtonAddCp(){
         kode_elemen: data?.currentFase?.elemen_cp?.length + 1,
         cp_kunci:'',
         taksonomibloom:'',
+        lingkup_materi:''
     };
     
     const handleClick = ()=> actions.open('TAMBAH', objekKosong,{closeOnOutsideClick:false})

@@ -53,7 +53,7 @@ export function FormEdura<T>({children, data}:{children:ReactNode, data:T}){
     
     return (
         <EduraContext value={value}>
-            <form method='post' className="overflow-x-auto overflow-y-auto scrol-h-custom">
+            <form method='post' className="overflow-x-auto overflow-y-auto scrol-h-custom flex-1 min-h-0">
                 {children}
             </form>
         </EduraContext>

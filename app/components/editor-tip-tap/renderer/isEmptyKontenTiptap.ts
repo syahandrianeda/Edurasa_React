@@ -1,4 +1,4 @@
-import type { JSONContent } from "@tiptap/core";
+import type { HTMLContent, JSONContent } from "@tiptap/core";
 
 export function isEmptyTiptapContent(
     document: JSONContent | JSONContent[] | null | undefined

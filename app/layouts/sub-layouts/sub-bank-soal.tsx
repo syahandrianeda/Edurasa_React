@@ -16,6 +16,7 @@ import { Outlet } from "react-router";
 import ModalFiturKurikulum from "~/controllers/kurikulum/modals/modal-kurikulum";
 import type { Route } from "./+types/sub-bank-soal";
 import { SubFiturBankSoal } from "~/features/subfitur-bank-soal";
+import ModalBankSoal from "~/controllers/bank-soal/modal/modal-bank-soal";
 
 export default function SubBankSoalLayout({matches}:Route.ComponentProps) {
     
@@ -46,7 +47,7 @@ export default function SubBankSoalLayout({matches}:Route.ComponentProps) {
                             <PrintAreaWithKopTtd>
                                 <ModalProvider>
                                     <Outlet/>
-                                    <ModalFiturKurikulum/>
+                                    <ModalBankSoal/>
                                 </ModalProvider>
                             </PrintAreaWithKopTtd>
                             

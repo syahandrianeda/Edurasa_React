@@ -49,7 +49,7 @@ export function GenerateTabsForModal({defaultValue, tabList, contentList}:TabsCo
                     ))
                 }
             </TabsList>
-            <div className="bg-linear-to-br md:px-2 from-sky-300 to-sky-200 dark:from-sky-700 dark:to-sky-600  md:w-full  overflow-y-scroll scrol-h-custom">    
+            <div className="bg-linear-to-br md:px-2 from-sky-300 to-sky-200 dark:from-sky-700 dark:to-sky-600  md:w-fulloverflow-y-scroll scrol-h-custom">    
                     {
                         contentList.map((m,index)=>(
                             <TabsContent key={index} value={m.value} className="flex flex-col gap-0 text-sm md:w-auto">{m.element}</TabsContent>

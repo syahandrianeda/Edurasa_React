@@ -111,6 +111,7 @@ export default [
                 ...prefix('bank-soal',[
                     index("routes/bank-soal/index-redirect-bank-soal.tsx"),
                     route("create-item-soal","routes/bank-soal/create-item-soal.tsx"),
+                    route("create-items-soal","routes/bank-soal/upload-masal-soal.tsx"),
                     route("koleksi-bank-soal","routes/bank-soal/koleksi-bank-soal.tsx"),
                     route("create-paket-soal","routes/bank-soal/create-paket-soal.tsx"),
                     route("koleksi-paket-soal","routes/bank-soal/koleksi-paket-soal.tsx"),

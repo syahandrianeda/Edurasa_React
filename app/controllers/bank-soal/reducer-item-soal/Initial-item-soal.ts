@@ -14,11 +14,12 @@ export const initialCreateItemSoal={
         ruang_lingkup:'',
         stimulus:'',
         pertanyaan:'',
-        jawaban:'',//string|number|string[]|number[],
+        jawaban:[],//string|number|string[]|number[],
         pembahasan_penskoran:'',//string,
         // json_alat_jawab?:PgTunggal|PgKompleks|PilihanBenarSalahType|PilihanMenjodohkan,
         // snapshot_kurikulum:propertyKuriklum,
         oleh:'',
         refrensi:'',
-        auto_koreksi:''
+        auto_koreksi:'',
+        status:''
     }

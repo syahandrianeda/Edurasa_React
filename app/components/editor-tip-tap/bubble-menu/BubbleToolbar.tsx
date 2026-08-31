@@ -43,6 +43,7 @@ export function BubbleToolbar({
                     "p-1",
 
                     "shadow-lg",
+                    "z-10",
 
                     className,
 

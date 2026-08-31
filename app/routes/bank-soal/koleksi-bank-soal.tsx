@@ -1,6 +1,12 @@
 import type { controlDropdownKelas } from "~/components/dropdowns/rombel-dropdown";
 import type { Route } from "./+types/koleksi-bank-soal";
 import { defineCreateItemSoalNeeded } from "~/domain/enloaded/intial-enloaded/by-route-page/banksoal/create-item-soal-needed";
+import { useAppSelector } from "~/context-reduct/hook";
+import { DtoBankSoalSelector, PureBankSoalSelector } from "~/context-reduct/selectores/bank-soal-selector";
+import { usePagination } from "~/hooks/use-pagination";
+import AppPagination from "~/components/pagination/app-pagination";
+import TableKoleksiBankSoal from "~/controllers/koleksi-bank-soal/tabel-koleksi-bank-soal";
+import { getNumberFromString } from "~/lib/get-number";
 
 
 
@@ -24,9 +30,9 @@ export function meta({matches}: Route.MetaArgs) {
 export function clientLoader({}:Route.ComponentProps){
     
     const settingRombel: controlDropdownKelas ={
-            showControlKelas:false,
-            title: 'Rombel',
-            description:'Rombel yang Anda Ampu',
+            showControlKelas:true,
+            title: 'Kelas',
+            description:'Kelas',
             typeKelas:'jenjang'
         }
     /** sediakan data apa yang dibutuhkan untuk halaman ini
@@ -42,7 +48,7 @@ export function clientLoader({}:Route.ComponentProps){
         titleTambahan:'Koleksi Bank Soal',
         controlKelas: settingRombel,
         toolbarTabs: undefined,//ConfigToolbarSelectMapel
-        showExport:false,
+        showExport:true,
                 // pesanLoading:'Mempersiapkan ATP',
                 addPesanRombel:{isAdd:true, type:'rombel', includeFaseName:true},
                 sheetNeeded: defineCreateItemSoalNeeded
@@ -60,11 +66,19 @@ export function clientLoader({}:Route.ComponentProps){
 // }
 
 export default function KoleksiBankSoalRoute() {
+    const dataSoalAsal = useAppSelector(DtoBankSoalSelector);
+    const kelas = useAppSelector(s=>s.fokusRombel.value)
+    const dataSoal = dataSoalAsal.filter(s=>s.status === '' && s.fase_jenjang.includes(getNumberFromString(kelas)))
+    const pagination =  usePagination(dataSoal)
     
-   
+
     return(
         <div className="p-1">
-            Hello Koleksi Bank Soal
+            <h3 className="text-2xl text-center font-extrabold uppercase mb-7">Koleksi Bank Soal kelas {getNumberFromString(kelas)} </h3>
+            <TableKoleksiBankSoal data={pagination.items ?? []} startIndex={pagination.startIndex}/>
+            {
+                pagination && <AppPagination pagination={pagination} />
+            }
         </div>
     )
 }

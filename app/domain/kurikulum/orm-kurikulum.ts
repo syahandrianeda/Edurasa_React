@@ -63,7 +63,8 @@ export default class OrmKurikulum{
                         tp_fase_properties:collectElemenCpInFase,
                         cp_utama:dataCp.cp_utama,
                         index:dataCp.kode_elemen,
-                        countItem: countFase
+                        countItem: countFase,
+                        lingkup_materi:dataCp.lingkup_materi
                     }
                     collectFaseOrmFase.push(objElemenCpInFase);
                     

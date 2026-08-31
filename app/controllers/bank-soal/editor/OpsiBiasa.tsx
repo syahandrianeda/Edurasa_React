@@ -37,7 +37,7 @@ export default function OpsiBiasa({ countOpsi, handlerSettingOpsiJawaban }: Opsi
     // );
     useEffect(()=>{
         handlerSettingOpsiJawaban?.(opsiJawaban as OpsiPilihanJawaban[], 1);
-        console.log('effext opsiJawaban', opsiJawaban,countOpsi)
+        
     },[opsiJawaban])
     const handleSetOpsiJawaban = useCallback(
         (index:number, content:string)=>{
@@ -54,7 +54,7 @@ export default function OpsiBiasa({ countOpsi, handlerSettingOpsiJawaban }: Opsi
                 }else{
                     // prevState.splice(index,1);
                     prevState = prevState.filter(s=>s.index !== index)
-                    console.log('prevState', prevState)
+                    
                     return [
                         ...prevState.filter(s=>s.index !== index),
                         {
@@ -64,7 +64,7 @@ export default function OpsiBiasa({ countOpsi, handlerSettingOpsiJawaban }: Opsi
                 };
                 
             });
-            console.log('item opsi dibuat', index, content, opsiJawaban);
+            
         },[countOpsi]
     )
     return (

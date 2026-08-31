@@ -23,12 +23,15 @@ import ParagraphToolbarGroup from '../menu/ParagraphToolbarGroup';
 import TextAlignToolbarGroup from '../menu/TextAlignToolbarGroup';
 import ListOrderToolbarGroup from '../menu/ListOrderToolbarGroup';
 import ShortcutGuider from './ShortcutGuider';
+import TooltipComp from '~/components/ui_edura/tooltip-comp';
+import PasteImage from '~/components/editor-tiptap/extension/paste-image-extension';
+import UploadGambarSoalService from '~/infrastructures/services/upload-gambar-soal-service-implements';
 
 type Props = {
     // value?: Content;
     // onChange?: (html: Content) => void;
     valueJson?:Content;
-    onChangeJson?:React.Dispatch<React.SetStateAction<JSONContent | null>>
+    onChangeJson?:React.Dispatch<React.SetStateAction<JSONContent|null>>
 };
 
 
@@ -46,7 +49,7 @@ export default function TiptapEditorSoalSimple({ valueJson, onChangeJson }: Prop
     const editor = useEditor({
             extensions: [
                 StarterKit.configure({
-                   //....
+                    
                 }),
                 TextAlign.configure({
                     types: ['heading', 'paragraph'],
@@ -77,7 +80,21 @@ export default function TiptapEditorSoalSimple({ valueJson, onChangeJson }: Prop
                         
                     },
                 }), 
-                // MathInline,               
+                // MathInline,  
+                PasteImage.configure({
+                    // Use client-side base64 upload flow via UploadGambarSoalService
+                    upload: async (file: File, onProgress?: (p: number) => void) => {
+                        try {
+                            const svc = new UploadGambarSoalService();
+                            const url = await svc.uploadFile(file, onProgress);
+                            
+                            return url;
+                        } catch (err) {
+                            console.error("upload error", err);
+                            return "";
+                        }
+                    },
+                }),             
                 Image.configure({
                     inline:true,
                     allowBase64: true,
@@ -125,7 +142,7 @@ export default function TiptapEditorSoalSimple({ valueJson, onChangeJson }: Prop
             content: valueJson, 
             editorProps:{
                 attributes: {
-                    class:'focus:outline-none focus:ring-1 bg-white focus:ring-blue-500 p-2 border-s border-b border-e border-t-none',
+                    class:'focus:outline-none focus:ring-1 bg-white dark:text-black focus:ring-blue-500 p-2 border-s border-b border-e border-t-none',
                     
                 }
                 
@@ -136,6 +153,34 @@ export default function TiptapEditorSoalSimple({ valueJson, onChangeJson }: Prop
             
         });
     
+    React.useEffect(() => {
+
+        if (!editor) {
+            return;
+        }
+
+        const currentJson = editor.getJSON();
+
+        if ( JSON.stringify(currentJson) === JSON.stringify(valueJson) ) {
+            return;
+        }
+
+        editor.commands.setContent(
+            valueJson ?? {
+                type: "doc",
+                content: [
+                    {
+                        type: "paragraph",
+                    },
+                ],
+            },
+            {
+                emitUpdate: false,
+            }
+        );
+
+    }, [editor, valueJson]);
+    
     const { editorStateData} = createOptionsToggleMenuTiptap(editor);
     
     const addTable = React.useCallback(() => {
@@ -144,7 +189,7 @@ export default function TiptapEditorSoalSimple({ valueJson, onChangeJson }: Prop
 
     return (
         <div 
-            className="border border-slate-400 bg-slate-300 rounded-md p-0 w-full overflow-clip">
+            className="border border-slate-400 bg-slate-300 dark:bg-slate-600 dark:text-white rounded-md p-0 w-full overflow-clip">
             <div className="grid grid-cols-3 gap-1 space-y-1 space-x-1 px-2 justify-center">
                 <GroupToolbar className='flex-row justify-between'>
                     <PopoverFormPecahanBiasa pecahan={pecahanBiasa} editor={editor} openPop={openPop} setOpenPop={setOpenPop}/>
@@ -153,27 +198,30 @@ export default function TiptapEditorSoalSimple({ valueJson, onChangeJson }: Prop
                     <AdditionalButtonDegree editor={editor}/>
                     <PopoverFormulaLatex editor={editor} valueLatex={valueLatex} openPop={openPopFormula} setOpenPop={setOpenPopFormula}/>
                 </GroupToolbar>
-                <GroupToolbar className='flex-row justify-center'>
+                <GroupToolbar className='flex-row justify-evenly w-full gap-2'>
                     <PopoverFormImage editor={editor} openPop={openPopGambar} setOpenPop={setOpenPopGambar}/>
-                    <Button 
-                        variant="outline" 
-                        tabIndex={-1} 
-                        title="Buat Tabel" 
-                        className="p-0 leading-0 gap-0 flex flex-col has-[>svg]:p-0 h-4 min-w-4 bg-transparent mt-1"
-                        onClick={addTable}
-                        >
-                        <Table2Icon className="size-3"/>
-                    </Button>
+                    <TooltipComp content="Masukkan Tabel">
+                        <Button 
+                            type="button"
+                            variant="outline" 
+                            tabIndex={-1} 
+                            title="Buat Tabel" 
+                            className="p-0 leading-0 gap-0 flex flex-col has-[>svg]:p-0 h-4 min-w-4 bg-transparent mt-1"
+                            onClick={addTable}
+                            >
+                            <Table2Icon className="size-3"/>
+                        </Button>
+                    </TooltipComp>
+                    <div className="py-1">
+                    <ShortcutGuider/>
+                    </div>
                 </GroupToolbar>
             </div> 
             
             <BubbleMenuAsContextMenu editor={editor} editorStateData={ editorStateData}/>
             
             <EditorContent editor={editor} className="editor-document" placeholder='ketik di sini'/>
-            <div className='bottom-0 bg-slate-200 w-full flex justify-between'>
-                <div className="text-xs p-1 flex items-center gap-2">Shortcut <ShortcutGuider/></div>
-                <div className="text-xs p-1">Powered By Tiptap</div>
-            </div>
+            
         </div>
     )
 }

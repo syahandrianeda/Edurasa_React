@@ -7,4 +7,4 @@ export const DtoBankSoalSelector = createSelector(
     [
         PureBankSoalSelector
     ],
-    (data)=>DtoBankSoal.arrrayFromSheetToApp(data))
+    (data)=>DtoBankSoal.arrrayFromSheetToApp(data).sort((a, b)=>b.idbaris - a.idbaris))

@@ -26,6 +26,7 @@ export interface OrmKurikulumMerdekaType{
     index:number,
     taksonomibloom?:string,
     countItem:number,
+    lingkup_materi:string
 }
 
 export interface OrmFaseKurikulumType{

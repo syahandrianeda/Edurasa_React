@@ -85,6 +85,10 @@ export default class OrmProta{
     get realKodeMapel(){
         return this.fokusMapel.kode;
     }
+
+    get data(){
+        return this.dataAtpOrm;
+    }
     
     createKoleksiMapelInJadwal(){
         const hariKeys = ['sn','sl','rb','km','jm','sb'] as const;

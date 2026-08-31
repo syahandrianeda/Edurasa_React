@@ -22,7 +22,7 @@ export const ConfigToolbarDesainPraSoal:TabsConfigProps =  {
                 value: 'tab1',
                 label: 'Setting'
             },
-            ...TabConfigKopTtd.tabList
+            // ...TabConfigKopTtd.tabList
             
         ],
         contentList:[
@@ -30,7 +30,7 @@ export const ConfigToolbarDesainPraSoal:TabsConfigProps =  {
                 value:'tab1',
                 element:<TabPraDesainItemSoal/>
             },
-            ...TabConfigKopTtd.contentList
+            // ...TabConfigKopTtd.contentList
         ]
 }
 function TabPraDesainItemSoal(){

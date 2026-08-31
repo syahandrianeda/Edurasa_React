@@ -15,6 +15,7 @@ import { Separator } from "~/components/ui/separator";
 import ButtonCommitAwesome from "~/components/button-awesome/commit-button";
 import type { Editor } from "@tiptap/react";
 import InsertImage from "../utils/upload-gambar-tiptap";
+import TooltipComp from "~/components/ui_edura/tooltip-comp";
 
 export function PopoverFormImage({  editor, openPop, setOpenPop }: {editor: Editor, openPop:boolean, setOpenPop: React.Dispatch<React.SetStateAction<boolean>>}) {
     // const [openPop, setOpenPop] = React.useState(false);
@@ -42,11 +43,13 @@ export function PopoverFormImage({  editor, openPop, setOpenPop }: {editor: Edit
     }
     return (
         <Popover onOpenChange={setOpenPop} open={openPop}>
-        <PopoverTrigger asChild>
-            <Button variant="outline" tabIndex={-1} title="Masukkan Gambar" className="p-0 leading-0 gap-0 flex flex-col has-[>svg]:p-0 h-4 min-w-4 bg-transparent mt-1">
-                <ImagePlusIcon className="size-3"/>
-            </Button>
-        </PopoverTrigger>
+        <TooltipComp content="Masukkan Gambar">
+            <PopoverTrigger asChild>
+                <Button variant="outline" type="button"  tabIndex={-1} title="Masukkan Gambar" className="p-0 leading-0 gap-0 flex flex-col has-[>svg]:p-0 h-4 min-w-4 bg-transparent mt-1">
+                    <ImagePlusIcon className="size-3"/>
+                </Button>
+            </PopoverTrigger>
+        </TooltipComp>
         <PopoverContent className="w-96" align="end">
             <PopoverHeader>
             <PopoverTitle>Insert Gambar</PopoverTitle>

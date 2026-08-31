@@ -24,7 +24,7 @@ export default function TableWithScrolling({children, className, inModal}:{child
                     className="overflow-x-auto scrol-h-custom print:overflow-visible"
                 >
                     <div ref={tableContainerRef} >
-                        <TableEdura className={cn("text-xs w-full bg-white leading-normal select-none",className)}>
+                        <TableEdura className={cn("text-xs w-full bg-white dark:bg-slate-600 dark:text-black leading-normal select-none",className)}>
                             {children}
                         </TableEdura>
                     </div>

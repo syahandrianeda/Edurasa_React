@@ -36,3 +36,24 @@ export function HtmlRenderer({
     //     .map(node => renderNodeHtml(node))
     //     .join("");
 }
+export function HtmlRendererNotEmpty({
+    document,
+}: DocumentRendererProps): string {
+    if (!document) {
+        return "";
+    }
+    if (isEmptyTiptapContent(document)) {
+        return "";
+    }
+
+
+    if (Array.isArray(document)) {
+        return document
+            .map(node => renderNodeHtml(node))
+            .join("");
+    }
+
+    return (document.content ?? [])
+        .map(node => renderNodeHtml(node))
+        .join("");
+}

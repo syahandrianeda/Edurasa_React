@@ -8,11 +8,14 @@ import type { EditorSoalType } from "~/types/bank-soal/editor-soal";
 type UiFokusSliceType = {
     data: UiFokusCollection,
     name: 'UiFokus',
+    loaded:boolean
 }
 
 const initialState:UiFokusSliceType ={
     data: initialUiFokusCollection,
-    name: 'UiFokus'
+    name: 'UiFokus',
+    loaded:true
+
 }
 
 const UiFokusSlice = createSlice({

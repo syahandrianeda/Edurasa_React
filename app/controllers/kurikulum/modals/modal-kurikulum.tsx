@@ -14,7 +14,7 @@ import type { ModalType } from "~/components/modals/modal-type";
 
 export default function ModalFiturKurikulum(){
     
-        const { state, actions } = useModal<ormKurikulumInterface|BankSoalAppType>();
+        const { state, actions } = useModal<ormKurikulumInterface>();
     
         return (
             <ModalEdura 
@@ -55,8 +55,7 @@ function switchJudulModalKurikulum(stateType:ModalType){
             return 'Hapus Mata pelajaran di kelas Anda';
         case 'EDIT PROTA':
             return 'Edit Prota';
-        case 'PREVIEW ITEM SOAL':
-            return 'Preview Item Soal';
+        
         default:
             return 'MODAL'
     }
@@ -88,9 +87,7 @@ function SwitchContentForm({state}:{state:ModalState}){
             <FormModifikasiProta state={state}/>
         )
     }
-    if(stateType === 'PREVIEW ITEM SOAL'){
-        return <PreviewModalItemSoal state={state as ModalState<BankSoalAppType>}/>
-    }
+    
     return <div className="bg-sky-50">Menyusul</div>
 }
 

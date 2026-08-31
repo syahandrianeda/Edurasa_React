@@ -28,19 +28,21 @@ export default class DtoBankSoal{
                 materi_pokok:resolveString(data.materi_pokok),
                 indikator_soal:resolveString(data.indikator_soal),
                 lk:resolveString(data.lk),
+                taksonomi:data.taksonomi===""?undefined:DtoBankSoal.parseJson(data.taksonomi),
                 ruang_lingkup:resolveString(data.ruang_lingkup),
                 stimulus:resolveString(data.stimulus),
                 pertanyaan:resolveString(data.pertanyaan),
-                jawaban:this.parseJson(data.jawaban),
+                jawaban:DtoBankSoal.parseJson(data.jawaban),
                 pembahasan_penskoran:resolveString(data.pembahasan_penskoran),
                 // json_alat_jawab?:PgTunggal|PgKompleks|PilihanBenarSalahType|PilihanMenjodohkan,
                 // json_alat_jawab?: JsonAlatJawab
-                json_alat_jawab:this.parseJsonAlatJawab(data.json_alat_jawab),
-                snapshot_kurikulum: this.parseJsonSnapshotKurikulum(data.snapshot_kurikulum),//SnapshotAtpType,
+                json_alat_jawab:DtoBankSoal.parseJsonAlatJawab(data.json_alat_jawab),
+                snapshot_kurikulum: DtoBankSoal.parseJsonSnapshotKurikulum(data.snapshot_kurikulum),//SnapshotAtpType,
                 oleh:resolveString(data.oleh),
                 refrensi:resolveString(data.refrensi),
                 //-------
                 auto_koreksi: resolveString(data.auto_koreksi),
+                status: resolveString(data.status),
         }
         
     }
@@ -68,6 +70,7 @@ export default class DtoBankSoal{
                 materi_pokok:resolveString(data.materi_pokok),
                 indikator_soal:resolveString(data.indikator_soal),
                 lk:resolveString(data.lk),
+                taksonomi:data.taksonomi ? JSON.stringify(data.taksonomi):'',
                 ruang_lingkup:resolveString(data.ruang_lingkup),
                 stimulus:resolveString(data.stimulus),
                 pertanyaan:resolveString(data.pertanyaan),
@@ -81,6 +84,7 @@ export default class DtoBankSoal{
                 refrensi:resolveString(data.refrensi),
                 //-------
                 auto_koreksi: resolveString(data.auto_koreksi),
+                status: resolveString(data.status),
         }
         
     }

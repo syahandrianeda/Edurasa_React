@@ -206,6 +206,11 @@
     .editor-document li {
         @apply my-1;
     }
+    .editor-document p,
+    .editor-document img
+     {
+        @apply m-0;
+    }
     /* ==========================================================
      * IMAGE RESIZER (Tiptap)
      * ========================================================== */

@@ -16,6 +16,7 @@ import ButtonSaveAwesome from "~/components/button-awesome/save-button";
 import ButtonCommitAwesome from "~/components/button-awesome/commit-button";
 import type { Editor } from "@tiptap/react";
 import type { PecahanBiasa } from "../type";
+import TooltipComp from "~/components/ui_edura/tooltip-comp";
 
 export function PopoverFormPecahanBiasa({ pecahan, editor, openPop, setOpenPop }: {pecahan: PecahanBiasa|null,editor: Editor, openPop:boolean, setOpenPop: React.Dispatch<React.SetStateAction<boolean>>}) {
     // const [openPop, setOpenPop] = React.useState(false);
@@ -45,13 +46,16 @@ export function PopoverFormPecahanBiasa({ pecahan, editor, openPop, setOpenPop }
 
     return (
         <Popover onOpenChange={setOpenPop} open={openPop}>
-        <PopoverTrigger asChild>
-            <Button variant="outline" tabIndex={-1} className="p-0 leading-0 gap-0 flex flex-col has-[>svg]:p-0 h-4 min-w-4 bg-transparent mt-1">
-                <SquareDashed className="size-2"/>
-                <span className="border-b border-black w-2"></span>
-                <SquareDashed className="size-2"/>
-            </Button>
-        </PopoverTrigger>
+        <TooltipComp content="Pecahan Biasa">
+            <PopoverTrigger asChild>
+                    <Button variant="outline" type="button" tabIndex={-1} className="p-0 leading-0 gap-0 flex flex-col has-[>svg]:p-0 h-4 min-w-4 bg-transparent my-1">
+                        <SquareDashed className="size-2"/>
+                        <span className="border-b border-black w-2"></span>
+                        <SquareDashed className="size-2"/>
+                    </Button>
+
+            </PopoverTrigger>
+        </TooltipComp>
         <PopoverContent className="w-64" align="end">
             <PopoverHeader>
             <PopoverTitle>Pecahan Biasa</PopoverTitle>

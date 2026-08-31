@@ -12,6 +12,7 @@ import {
 import { Separator } from '~/components/ui/separator';
 import { Field, FieldGroup } from '~/components/ui/field';
 import ButtonCommitAwesome from '~/components/button-awesome/commit-button';
+import TooltipComp from '~/components/ui_edura/tooltip-comp';
 
 export default function PopoverFormulaLatex({editor, valueLatex, openPop, setOpenPop }:{editor:Editor, valueLatex?:string|null,openPop:boolean, setOpenPop: React.Dispatch<React.SetStateAction<boolean>>}){
     // const [openPop, setOpenPop] = React.useState(false);
@@ -97,11 +98,13 @@ export default function PopoverFormulaLatex({editor, valueLatex, openPop, setOpe
         }    
     return (
         <Popover onOpenChange={setOpenPop} open={openPop}>
-        <PopoverTrigger asChild>
-            <Button variant="outline" tabIndex={-1} className="p-0 leading-0 gap-0 flex flex-col has-[>svg]:p-0 h-4 min-w-4 bg-transparent mt-1">
-                <Sigma/>
-            </Button>
-        </PopoverTrigger>
+        <TooltipComp content="Teks Editor Matematika">
+            <PopoverTrigger asChild>
+                <Button variant="outline" type="button" tabIndex={-1} className="p-0 leading-0 gap-0 flex flex-col has-[>svg]:p-0 h-4 min-w-4 bg-transparent mt-1">
+                    <Sigma/>
+                </Button>
+            </PopoverTrigger>
+        </TooltipComp>
         <PopoverContent className="w-full" align="end" 
         
             onInteractOutside={(event) => {

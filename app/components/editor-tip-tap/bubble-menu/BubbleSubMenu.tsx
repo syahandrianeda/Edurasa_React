@@ -150,7 +150,7 @@ export function BubbleSubMenu({
 
                 "border",
 
-                "bg-background",
+                "bg-background z-20",
 
                 "shadow-lg",
 

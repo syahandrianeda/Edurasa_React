@@ -68,15 +68,16 @@ export function SelectTypeJudul() {
     
         <Fields className="mx-auto max-w-1/2 mt-4">
             <SelectField 
-            onChange={e => onChange(e.target.value as TypeComponent)}
-            value={value.activeJudulType}
-            labelSelect="Pilih Tipe Judul" 
-            className="bg-white">
-                {
-                    InitializeJudul.map((m,i)=>(
-                        <option key={i} value={m.type}>{m.label}</option>
-                    ))
-                }
+              onChange={e => onChange(e.target.value as TypeComponent)}
+              value={value.activeJudulType}
+              labelSelect="Pilih Tipe Judul" 
+              className="bg-white"
+              >
+                  {
+                      InitializeJudul.map((m,i)=>(
+                          <option key={i} value={m.type}>{m.label}</option>
+                      ))
+                  }
             </SelectField>
         </Fields>
     )

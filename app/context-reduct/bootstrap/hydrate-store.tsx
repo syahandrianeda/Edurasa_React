@@ -208,7 +208,8 @@ export function hydratePreloadedState(): Partial<RootState> {
     },
     uiFokusToolbar:{
       data:initialUiFokusCollection,
-      name:'UiFokus'
+      name:'UiFokus',
+      loaded:true
     }
 
 

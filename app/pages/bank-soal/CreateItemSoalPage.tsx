@@ -19,10 +19,11 @@ import DtoBankSoal from '~/dtos/dto-bank-soal';
 import { toast } from 'sonner';
 import { useCrudBankSoalProvider } from '~/controllers/bank-soal/cruds/crud-provider-bank-soal';
 import DispatchingResponseToStore from '~/lib/dispatching-response-to-store';
+import dataFormItemSoalNormalize from '~/domain/bank-soal/normalizer-data-form-soal';
 
 export default function CreateItemSoalPage(){
     const Rombel = useAppSelector(state=>state.fokusRombel.value);
-    const fokusMapel = useAppSelector(s=>s.fokusMapel.data.nama);
+    const fokusMapel = useAppSelector(s=>s.fokusMapel.data);
     const bloom = useAppSelector(TaksonomiBloomInstance);
     const me = getSessionApp<UserPtk>();
     const {fokusBentukSoal, fokusAtp} = useAppSelector(state=>state.uiFokusToolbar.data)
@@ -42,7 +43,8 @@ export default function CreateItemSoalPage(){
             action({
                 type:'set_item_soal',
                 payload:{
-                    lk:match?.LK
+                    lk:match?.LK,
+                    taksonomi:match
                 }
             })
             
@@ -79,13 +81,15 @@ export default function CreateItemSoalPage(){
         action({
             type: "set_item_soal",
             payload: {
-                mapel_name: fokusMapel,
+                mapel_name: fokusMapel.nama,
+                kode_mapel: fokusMapel.kode,
             },
         });
         }, [ fokusMapel, action,
     ]);  
     
     const onPreview = ()=>{
+        
         const {isValid, message} = ValidationItemSoal(data);
         if(!isValid){
             alert(message);
@@ -100,21 +104,25 @@ export default function CreateItemSoalPage(){
             return;
         }
         const dtoBankSoal = DtoBankSoal.fromAppToSheet(data);
+        const kondisionalBentukSoal = dataFormItemSoalNormalize(dtoBankSoal, fokusBentukSoal!)
         toast.promise(
-            Post.update(dtoBankSoal),
+            Post.update(kondisionalBentukSoal),
             {
-                loading:'',
+                loading:'memproses item soal',
                 success:(response)=>{
                     const {success, data:dataRespon, detailResponse} = response;
                     DispatchingResponseToStore(success,dataRespon as BankSoalSheetType[], detailResponse!);
+                    action({type:'reset'})
+                    action({ type: "bentuk_soal", payload: fokusBentukSoal! });
                     action({
-                            type:'set_item_soal',
-                            payload:{
-                                pertanyaan:'',
-                                stimulus:'',
-                                json_alat_jawab:{ OpsiPilihanJawaban:[], formatOpsi:'vertical', valid:[0]}
-                            }
-                        })
+                            type: "set_item_soal",
+                            payload: {
+                                mapel_name: fokusMapel.nama,
+                                kode_mapel: fokusMapel.kode,
+                            },
+                        });
+                    
+                    
                     return 'Berhasil'
                 },
                 error:(er)=>{
@@ -123,11 +131,6 @@ export default function CreateItemSoalPage(){
                 }
             }
         )
-        /** reset
-         * 
-       
-         */
-
     }
     
     if(!fokusAtp) return <NotReadyCreateItemSoal/>

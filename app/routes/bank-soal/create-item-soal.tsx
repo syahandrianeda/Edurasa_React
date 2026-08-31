@@ -1,7 +1,6 @@
 import type { controlDropdownKelas } from "~/components/dropdowns/rombel-dropdown";
 import type { Route } from "./+types/create-item-soal";
 import { ConfigToolbarDesainPraSoal } from "~/controllers/bank-soal/toolbar/config-toolbar-create-soal";
-import { CreateItemSoal } from "~/pages/bank-soal/CreateItemSoal";
 import { CreateItemSoalProvider } from "~/controllers/bank-soal/reducer-item-soal/immer-reducer-context";
 import { initialCreateItemSoal } from "~/controllers/bank-soal/reducer-item-soal/Initial-item-soal";
 import { defineCreateItemSoalNeeded } from "~/domain/enloaded/intial-enloaded/by-route-page/banksoal/create-item-soal-needed";

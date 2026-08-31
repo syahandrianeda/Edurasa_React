@@ -1,5 +1,3 @@
-import type { ReactNode } from "react";
-
 export type FormatElemen = 'table'|'square'|'horizontal'|'vertical';
 
 
@@ -53,6 +51,7 @@ export interface JumlahBarisMenulisRapih{
 export interface ListBentukSoalType{
     name:string,
     description:string,
+    shortName?:string
     way_correction:'auto'|'manual'|'semi-auto';
     
 

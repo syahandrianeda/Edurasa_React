@@ -1,14 +1,27 @@
-import type { ModalState } from "~/components/modals/modal-provider";
-import { ScrollArea } from "~/components/ui/scroll-area";
+import { SkipBack } from "lucide-react";
+import ButtonCommitAwesome from "~/components/button-awesome/commit-button";
+import { ModalFooterEdura } from "~/components/modals/modal-components";
+import type { ModalActions, ModalState } from "~/components/modals/modal-provider";
+import PratinjauItemSoalModal from "~/controllers/koleksi-bank-soal/views/pratinjau-soal-di-modal";
 import type { BankSoalAppType } from "~/types/bank-soal/bank-soal-type";
-import type { PgKompleks, PgTunggal } from "~/types/bank-soal/bentuk-soal-type";
 
-export default function PreviewModalItemSoal({state}:{state:ModalState<BankSoalAppType>}){
+export default function PreviewModalItemSoal({state, actions}:{state:ModalState<BankSoalAppType>, actions:ModalActions<BankSoalAppType>}){
     console.log(state.payload)
     return (
-        <div className="p-2 border editor-document  overflow-y-scroll h-96 scrol-h-custom">
+        <>
+        <div className="p-2 border editor-document h-[calc(100vh-11rem)] border-black overflow-y-scroll scrol-h-custom">
             <h3 className="text-xl text-center">Preview Soal <span className="uppercase">{state.payload?.bentuk_soal}</span></h3>
-            Misalnya soal ini diterapkan di nomor 4:
+            <PratinjauItemSoalModal currentData={state.payload as BankSoalAppType}/>
+        </div>
+        <ModalFooterEdura>
+            <ButtonCommitAwesome onClick={()=>actions.close()} className="py-0 px-4" labelButton="Kembali"><SkipBack size={12}/></ButtonCommitAwesome>
+        </ModalFooterEdura>
+        </>
+    )
+}
+
+/**
+ * Misalnya soal ini diterapkan di nomor 4:
             <div className="border p-2 rounded-2xl">
                 <ol start={2} className=" list-decimal list-outside pl-6 ">
                     <li> ... </li>
@@ -72,6 +85,4 @@ export default function PreviewModalItemSoal({state}:{state:ModalState<BankSoalA
                     </li>
                 </ul>
             </div>
-        </div>
-    )
-}
+ */

@@ -46,6 +46,9 @@ function EditContenCP(){
     const handleChangeElemen = (v:string)=> setCurrentData(draft=>{
         draft.elemen = v
     });
+    const handleChangeLingkupMateri = (v:string)=> setCurrentData(draft=>{
+        draft.lingkup_materi = v
+    });
     const handleInputChange = (v:string)=>{
         setCurrentData(draft=>{
             draft.cp_utama = v;
@@ -69,6 +72,11 @@ function EditContenCP(){
                         </Field>
                         <Field className="relative mt-4 w-1/4">
                             <InputText type="number" label="Index" value={currentData.index} onChange={(e)=>handleInputIndexChange(e.target.value)}/>
+                        </Field>
+                    </div>
+                    <div className="flex md:flex-row flex-col gap-2">
+                        <Field className="relative mt-4 w-full">
+                            <InputText label="Lingkup Materi" value={currentData.lingkup_materi} onChange={(e)=>handleChangeLingkupMateri(e.currentTarget.value)}/>
                         </Field>
                     </div>
                     <Field className="relative mt-4">
@@ -116,6 +124,12 @@ function CreateContenCP(){
             draft.kode_elemen = v;
         })
     }
+    const handleInputLingkupMateriChange = (vt:string)=>{
+        
+        setCurrentData(draft=>{
+            draft.lingkup_materi = vt;
+        })
+    }
     
     return (
         <fieldset disabled={stateCrud.isSubmitting}>
@@ -129,6 +143,9 @@ function CreateContenCP(){
                             <InputText type="number" label="Index" value={currentData.kode_elemen} onChange={(e)=>handleInputIndexChange(e.target.value)}/>
                         </Field>
                     </div>
+                    <Field className="relative mt-4 w-full">
+                            <InputText type="text" label="Lingkup Materi" value={currentData.lingkup_materi} onChange={(e)=>handleInputLingkupMateriChange(e.target.value)}/>
+                        </Field>
                     <Field className="relative mt-4">
                         <InputTextArea className="scrol-h-custom" label="Capaian Pembelajaran" value={currentData.cp_utama} onChange={(e)=>handleInputChange(e.target.value)}/>
                     </Field>
@@ -143,6 +160,8 @@ function CreateContenCP(){
                         <p className="italic border p-2 text-xs text-black">{currentData.elemen}</p>
                         <p className="font-bold dark:text-black">CP (Yang sedang Anda Edit)</p>
                         <p className="italic border p-2 text-xs text-black">{currentData.cp_utama}</p>
+                        <p className="font-bold dark:text-black">Lingkup Materi</p>
+                        <p className="italic border p-2 text-xs text-black">{currentData.lingkup_materi}</p>
                         <p className="font-bold dark:text-black">Index</p>
                         <p className="italic border p-2 text-xs text-black">{currentData.kode_elemen}</p>
                     </div>

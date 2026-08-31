@@ -15,6 +15,7 @@ import {
 import { Separator } from "~/components/ui/separator";
 import type { PecahanCampuran } from "../type";
 import ButtonCommitAwesome from "~/components/button-awesome/commit-button";
+import TooltipComp from "~/components/ui_edura/tooltip-comp";
 
 export function PopoverFormPecahanCampuran({ pecahan, editor, openPop, setOpenPop }: {pecahan: PecahanCampuran|null,editor: Editor, openPop:boolean, setOpenPop: React.Dispatch<React.SetStateAction<boolean>>;}) {
     const [satuan, setSatuan] = React.useState(1);
@@ -42,16 +43,19 @@ export function PopoverFormPecahanCampuran({ pecahan, editor, openPop, setOpenPo
         }
     return (
         <Popover onOpenChange={setOpenPop} open={openPop}>
-        <PopoverTrigger asChild>
-            <Button variant="outline" tabIndex={-1} className="p-0 leading-0 gap-0 flex has-[>svg]:p-0 h-4 min-w-4 bg-transparent mt-1">
-                <SquareDashed className="size-2"/>
-                <div className="flex flex-col items-center">
-                    <SquareDashed className="size-2"/>
-                    <span className="border-b border-black w-full"></span>
-                    <SquareDashed className="size-2"/>
-                </div>
-            </Button>
-        </PopoverTrigger>
+        <TooltipComp content="Pecahan Campuran">
+            <PopoverTrigger asChild>
+                    <Button variant="outline" tabIndex={-1} type="button" className="p-0 leading-0 gap-0 flex has-[>svg]:p-0 h-4 min-w-8 bg-transparent my-1">
+                        <SquareDashed className="size-2"/>
+                        <div className="flex flex-col items-center">
+                            <SquareDashed className="size-2"/>
+                            <span className="border-b border-black w-full"></span>
+                            <SquareDashed className="size-2"/>
+                        </div>
+                    </Button>
+
+            </PopoverTrigger>
+        </TooltipComp>
         <PopoverContent className="w-64" align="start">
             <PopoverHeader>
             <PopoverTitle>Pecahan Campuran</PopoverTitle>

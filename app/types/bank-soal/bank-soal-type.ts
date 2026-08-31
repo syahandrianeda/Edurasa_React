@@ -1,4 +1,5 @@
 import type { AtpAsOrm } from "../kurikulum/prota-orm";
+import type { TaksonomiAppType } from "../taksonomi/taksonomi-app";
 import type { BenarSalahType } from "./bentuk-soal/benar-salah-type";
 // import type { PgKompleks, PgTunggal, PilihanBenarSalahType, PilihanMenjodohkan } from "./bentuk-soal-type";
 import type { JsonAlatJawab } from "./bentuk-soal/json-alat-jawab-type";
@@ -19,6 +20,7 @@ export interface BankSoalSheetType{
     materi_pokok: string,
     indikator_soal: string,
     lk: string,
+    taksonomi:string,
     ruang_lingkup: string,
     stimulus: string,
     pertanyaan: string,
@@ -29,7 +31,7 @@ export interface BankSoalSheetType{
     snapshot_kurikulum: string,
     oleh: string,
     refrensi: string,
-
+    status:string
 
 };
 
@@ -57,10 +59,12 @@ export interface BankSoalAppType{
     materi_pokok:string,
     indikator_soal:string,
     lk:string,
+    taksonomi?:TaksonomiAppType
     ruang_lingkup:string,
     stimulus:string,
     pertanyaan:string,
-    jawaban:string|number|string[]|number[],
+    // jawaban:string|number|string[]|number[],
+    jawaban:string[]|string[][],
     pembahasan_penskoran:string,
     // json_alat_jawab?:PgTunggal|PgKompleks|PilihanBenarSalahType|PilihanMenjodohkan,
     // json_alat_jawab?: JsonAlatJawab
@@ -70,6 +74,7 @@ export interface BankSoalAppType{
     refrensi:string,
     //-------
     auto_koreksi: string,
+    status: string
 
 }
 export type JsonAlatJawabTupple = 

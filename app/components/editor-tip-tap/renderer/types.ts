@@ -1,4 +1,4 @@
-import type { JSONContent } from "@tiptap/react";
+import type { HTMLContent, JSONContent } from "@tiptap/react";
 
 export interface DocumentRendererProps {
     document: JSONContent | JSONContent[] | null;
