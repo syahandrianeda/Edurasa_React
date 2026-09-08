@@ -73,7 +73,7 @@ export function FieldSelectLevelKognitif(){
         },[analysis])
     return (
             <WrapperContentForm keyTitle='Level Kognitif (Refrensi Taksonomi Bloom)'>
-                <div className="border mt-4 mb-2">
+                <div className="mt-4 mb-2">
                     <Field className="relative">
                         <SelectField
                             labelSelect="Pilih Level Kognitif (LK)"
@@ -96,7 +96,7 @@ export function FieldSelectLevelKognitif(){
                         </SelectField>
                     </Field>
                 </div>
-                <div className="border">
+                <div className="p-1">
                     <TableWithScrolling className="text-[10px]">
                         <thead>
                             <TRowEdura>
@@ -110,7 +110,7 @@ export function FieldSelectLevelKognitif(){
                         </thead>
                         <tbody>
                             {
-                                selectedLk.Cognitif.map((row, index)=>
+                                selectedLk && selectedLk.Cognitif.map((row, index)=>
                                     <TRowEdura key={index}>
                                         <TdEdura>{row.name}</TdEdura>
                                         <TdEdura>{row.description}</TdEdura>

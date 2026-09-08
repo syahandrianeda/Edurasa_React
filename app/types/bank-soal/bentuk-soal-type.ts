@@ -53,6 +53,7 @@ export interface ListBentukSoalType{
     description:string,
     shortName?:string
     way_correction:'auto'|'manual'|'semi-auto';
+    petunjukPengisian?:string
     
 
 }

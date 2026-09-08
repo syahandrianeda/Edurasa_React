@@ -43,11 +43,11 @@ export function InfoToolbarAbsensiBulanan() {
             // console.log('cek user di tab selectMapel', user?.kode_mapel_ampu, fokus.kode)
             // dispatch(setFokusMapel(fokus))
             const fokusMapelC:fokusMapel = {
-    data:fokus,
-    disabled,
-    name:'fokusMapel',
-    loaded:true
-}
+                        data:fokus,
+                        disabled,
+                        name:'fokusMapel',
+                        loaded:true
+                    }
             dispatch(setFokusMapel(fokusMapelC))
         }
         useEffect(()=>{

@@ -88,8 +88,8 @@ export default class OrmAbsensi{
                     count_he++;
                     if(isCountedDataAbsen){
                         if(findAbsenSiswa?.kehadiran === 'Sakit') count_Sakit++;
-                        if(findAbsenSiswa?.kehadiran === 'Ijin') count_Sakit++;
-                        if(findAbsenSiswa?.kehadiran === 'Alpa') count_Sakit++;
+                        if(findAbsenSiswa?.kehadiran === 'Ijin') count_Ijin++;
+                        if(findAbsenSiswa?.kehadiran === 'Alpa') count_Alpa++;
                         if(findAbsenSiswa?.kehadiran === '' ||( findAbsenSiswa?.kehadiran !== 'Sakit' && findAbsenSiswa?.kehadiran !== 'Ijin' && findAbsenSiswa?.kehadiran !== 'Alpa' )) count_Hadir++;
                         //kehadiran yang dianggap dihitung:
                         kehadiranChecker =findAbsenSiswa?.kehadiran||'Hadir'
@@ -255,6 +255,7 @@ export default class OrmAbsensi{
             siswa.dataAbsen.forEach((absen) => {
 
             const kehadiran = absen.kehadiran
+
             if (!kehadiran) return
             if (absen.isLibur) return
 
@@ -278,6 +279,8 @@ export default class OrmAbsensi{
             count: tanggalMap[tgl] ?? 0
             }))
         }))
+        
+        
         return [
             {
                 kehadiran:'Hadir',

@@ -10,7 +10,7 @@ export function renderNodeHtml(
 
         case "paragraph": {
 
-            return `<p style="${renderTextAlign(node)}">${renderChildren(node)}</p>`;
+            return `<p style="${renderTextAlign(node)}" ${renderClass(node)}>${renderChildren(node)}</p>`;
         }
 
         case "heading": {
@@ -135,6 +135,14 @@ function renderChildren(
 
 }
 
+function renderClass(node:JSONContent):string|undefined{
+    const className = node.attrs?.class
+    if(!className) return ''
+    if(className){
+        return `class:"${className}"`
+    }
+
+}
 /**
  * Render text-align.
  */

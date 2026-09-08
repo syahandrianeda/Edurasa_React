@@ -17,6 +17,7 @@ import ModalFiturKurikulum from "~/controllers/kurikulum/modals/modal-kurikulum"
 import type { Route } from "./+types/sub-bank-soal";
 import { SubFiturBankSoal } from "~/features/subfitur-bank-soal";
 import ModalBankSoal from "~/controllers/bank-soal/modal/modal-bank-soal";
+import NextModalPaketSoal from "~/controllers/paket-soal/modal/next-modal-paket";
 
 export default function SubBankSoalLayout({matches}:Route.ComponentProps) {
     
@@ -48,6 +49,7 @@ export default function SubBankSoalLayout({matches}:Route.ComponentProps) {
                                 <ModalProvider>
                                     <Outlet/>
                                     <ModalBankSoal/>
+                                    <NextModalPaketSoal/>
                                 </ModalProvider>
                             </PrintAreaWithKopTtd>
                             

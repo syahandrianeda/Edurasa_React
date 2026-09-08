@@ -184,7 +184,7 @@ export default function ModalEditItemSoal(){
     },[])
 
     useEffect(()=>{
-        console.log('apakah pindah kelas mempengaruhi effect ini?')
+        
         const number = Number(selectedAtpId)
         const found = promes?.find(s=>s.atp_as_tp_id === number);
         setCurrentData(draft=>{
@@ -199,7 +199,7 @@ export default function ModalEditItemSoal(){
     },[selectedAtpId, promes]);
     
     useEffect(()=>{
-        console.log('pindah kelas takosoonomi juga harusnya berdampak')
+        
         setCurrentData(draft=>{
             draft.taksonomi = memoTaksonomi
             draft.lk = memoTaksonomi?.LK ?? 'LK1'

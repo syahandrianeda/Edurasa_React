@@ -6,7 +6,7 @@ import PreviewKunciJawaban from "./preview-kunci-jawaban-pembahasan";
 export default function CardSoalPreview({noDisplay, data}:{noDisplay:number, data:BankSoalAppType}){
     const shortNameBentukSoal = (name:string)=>ListBentukSoal.find(s=>s.name === name)?.shortName
     return (
-        <div className="border mt-4 rounded-b-xl relative text-[12px] shadow-lg">
+        <div className="border mt-4 rounded-b-xl relative text-[12px] shadow-lg bg-sky-100">
             {/* badge */}
             <div className="absolute -top-1 -translate-y-1/2 left-1 flex justify-center gap-2 text-[10px]">
                 <div className="h-4 min-w-4 border-sky-400 rounded-tr-2xl ps-1 pe-4 bg-linear-to-b from-sky-300 to-sky-50 border-t">{data.mapel_name}</div>

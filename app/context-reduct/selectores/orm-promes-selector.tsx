@@ -6,6 +6,8 @@ import { jadwalPelajaranAppSelector } from "./jadwal-pelajaran-selector";
 import { getSessionRombel } from "~/infrastructures/session-storage/rombel-session";
 import { DtoProtaSelector } from "./prota-selector";
 import OrmPromes from "~/domain/kurikulum/orm-promes";
+import { DtoMapellAllRombelSelector } from "./mapel-rombel-selector";
+import OrmProta from "~/domain/kurikulum/orm-prota";
 
 
 export const OrmPromesInstanceSelector = createSelector([
@@ -15,7 +17,8 @@ export const OrmPromesInstanceSelector = createSelector([
     (state:RootState)=>state.fokusMapel.data,
     (state:RootState)=>state.fokusRombel.value,
     (state:RootState)=>state.auth.user,
-    DtoProtaSelector
+    DtoProtaSelector,
+    DtoMapellAllRombelSelector,
     ],(
         kaldik,
         cpFaseAtp,
@@ -23,8 +26,30 @@ export const OrmPromesInstanceSelector = createSelector([
         fokusMapel,
         rombel,
         user,
-        prota
-    )=> user && new OrmPromes(cpFaseAtp,jadwal,kaldik,fokusMapel,rombel ?? getSessionRombel(),user,prota).init());
+        prota,
+        jpMapel
+    )=> user && new OrmPromes(cpFaseAtp,jadwal,kaldik,fokusMapel,rombel ?? getSessionRombel(),user,prota, jpMapel).init());
+
+
+export const OrmProtaInstanceSelector = createSelector([
+    instanceOfKaldik,
+    KurmerDtoSelector,
+    jadwalPelajaranAppSelector,
+    (state:RootState)=>state.fokusMapel.data,
+    (state:RootState)=>state.fokusRombel.value,
+    (state:RootState)=>state.auth.user,
+    DtoProtaSelector,
+    DtoMapellAllRombelSelector,
+    ],(
+        kaldik,
+        cpFaseAtp,
+        jadwal,
+        fokusMapel,
+        rombel,
+        user,
+        prota,
+        jpMapel
+    )=> user && new OrmProta(cpFaseAtp,jadwal,kaldik,fokusMapel,rombel ?? getSessionRombel(),user,prota, jpMapel).init());
 
 export const FokusAtpMapelInCurrentRombel = createSelector([
     OrmPromesInstanceSelector

@@ -26,6 +26,7 @@ import ShortcutGuider from './ShortcutGuider';
 import TooltipComp from '~/components/ui_edura/tooltip-comp';
 import PasteImage from '~/components/editor-tiptap/extension/paste-image-extension';
 import UploadGambarSoalService from '~/infrastructures/services/upload-gambar-soal-service-implements';
+import Paragraph from '@tiptap/extension-paragraph'
 
 type Props = {
     // value?: Content;
@@ -49,10 +50,25 @@ export default function TiptapEditorSoalSimple({ valueJson, onChangeJson }: Prop
     const editor = useEditor({
             extensions: [
                 StarterKit.configure({
+                    // paragraph:
                     
                 }),
+                // Paragraph.extend({
+                //     addAttributes() {
+                //         return {
+                //             class: {
+                //                 renderHTML: attributes => {
+                //                 return {
+                //                     class: attributes.class,
+                //                 }
+                //                 },
+
+                //             },
+                //         };
+                //     },
+                // }),
                 TextAlign.configure({
-                    types: ['heading', 'paragraph'],
+                    types: ['heading'],
                 }),
                 // Math,
                 Math.configure({
@@ -134,6 +150,7 @@ export default function TiptapEditorSoalSimple({ valueJson, onChangeJson }: Prop
                                         };
                                     },
                                 },
+                               
                             };
                         },
                     })
@@ -147,6 +164,7 @@ export default function TiptapEditorSoalSimple({ valueJson, onChangeJson }: Prop
                 }
                 
             },
+            injectCSS:true,
             onUpdate({ editor }) {
                 onChangeJson?.(editor.getJSON())
             },

@@ -1,0 +1,285 @@
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { TdEdura, ThEdura, TRowEdura } from "~/components/tabels/tabel-components";
+import TableWithScrolling from "~/components/tabels/table-with-scrolling";
+import { useFilterContext } from "~/components/toolbars/state-toolbar/state-toolbar"
+import type{ PraSettingPaket } from "~/domain/paket-soal/entities/pra-setting-paket"
+import KopPaketSoal from "~/controllers/paket-soal/components/kop-paket-soal";
+import IdentitasPaketSoal from "~/controllers/paket-soal/components/identitas-paket-soal";
+import KolomNilaiPaket from "~/controllers/paket-soal/components/kolom-nilai";
+import GroupedAtpHasManySOal from "~/domain/bank-soal/relational-soal/services/grouping-soal-atp-has-many-soal";
+import PetunjukUmumPaketSoal from "~/controllers/paket-soal/components/petunjuk-umum";
+import { useImmer } from "use-immer";
+import type { PaketSoalDesign } from "~/domain/paket-soal/result/paket-soal";
+import { createPaketSoalDesign, getGlobalIndex, getNoSoal } from "~/domain/paket-soal/result/create-design";
+import { useModal } from "~/components/modals/modal-provider";
+import type { BankSoalAppType } from "~/types/bank-soal/bank-soal-type";
+import type { DisplayFormatItemSoal } from "~/domain/paket-soal/result/display-format-item-soal";
+import type { ListBentukSoalType } from "~/types/bank-soal/bentuk-soal-type";
+import type { InitialItemSoalImplemented } from "~/controllers/paket-soal/modal/initial-item-soal-implemented";
+import ItemSoalPreview from "~/controllers/paket-soal/components/item-soal-preview";
+import TooltipComp from "~/components/ui_edura/tooltip-comp";
+import ButtonCommitAwesome from "~/components/button-awesome/commit-button";
+import { DatabaseZapIcon, Eye, FileCheck, FileCheckCorner, FileKey2Icon, FilePlus2, Loader, SaveIcon, SaveOff } from "lucide-react";
+import { useCrudPaketSoalProvider } from "~/controllers/paket-soal/crud/paket-soal-crud-provider";
+import { useDraftPaketSoal } from "~/hooks/use-draft-paket-soal";
+
+
+export default function CreatePaketSoalPage(){
+    const {actions} = useModal<BankSoalAppType>();
+    const {actions:post, state} = useCrudPaketSoalProvider()
+    const {value:data} = useFilterContext<PraSettingPaket>();
+    const {hasDraft,saveDraft, reset} = useDraftPaketSoal()
+    const setting = data.extra;
+    const [paketSoal, setPaketSoal] = useImmer<PaketSoalDesign|undefined>(undefined);
+
+    useEffect(()=>{
+        if(!setting) return;
+        const rest =  createPaketSoalDesign(setting)
+        setPaketSoal(rest);
+    }, [setting])
+    
+    const dataSebaran = useMemo(()=>{
+        if(!data?.extra?.kurikulum ) return []
+        const  grouping = GroupedAtpHasManySOal.buildGroup(data.extra.kurikulum);//groupBy(data?.extra?.kurikulum, (item)=>item?.mapelname!)
+        return grouping;
+    }, [data?.extra?.kurikulum]);
+
+    const UpsertSoal = useCallback( (v: DisplayFormatItemSoal) => {
+                setPaketSoal(draft => {
+                    if (!draft) return
+
+                    const group = draft.data.find( item => item.bentukSoal.name === v.bentuk_soal?.name )
+
+                    if (!group) return
+
+                    const indexItem = group.dataSoal.findIndex( item => item.index === v.index )
+
+                    if (indexItem >= 0) {
+                        // UPDATE
+                        group.dataSoal[indexItem] = v
+                    } else {
+                        // INSERT
+                        group.dataSoal.push(v)
+                    }
+                    // opsional, tetapi saya sarankan
+                    group.dataSoal.sort( (a, b) => a.index - b.index )
+                })
+            },
+            [setPaketSoal]
+        )
+
+    const handleClickSlot = useCallback((indexBentuk:number, indexSoal:number, ListBentukSoal:ListBentukSoalType, currentDisplay?:DisplayFormatItemSoal) =>{
+        if(!setting) return;
+        const noUrutDisplay = getNoSoal(setting, indexBentuk, indexSoal);
+        const noIndex = getGlobalIndex(setting, indexBentuk, indexSoal);
+        
+        const dataModal:InitialItemSoalImplemented = {
+            currentItemSoal: currentDisplay ?? {no_soal:noUrutDisplay, index:noIndex, bentuk_soal:ListBentukSoal, showStimulus:true},
+            curriculumProvider:setting.kurikulum,
+            triggerUpsert:UpsertSoal,
+            paketSoalHasIplemented:paketSoal?.data?.map((m=>m.dataSoal)).flat() ?? []
+        }
+        actions.open('ADD ITEM SOAL PAKET', dataModal, { closeOnOutsideClick:false })
+    }, [paketSoal?.data]);
+
+    const onSubmit = async ()=>{
+        console.log(paketSoal)
+        reset();
+    }
+    return (
+        <div className="p-1">
+            {
+                (data?.extra?.identitas && data.extra.identitas.showKop && data?.extra?.dataKopCustom) && (
+                    <KopPaketSoal data={data?.extra?.dataKopCustom}/>
+                )
+            }
+            {
+                (data?.extra?.identitas && data.extra.identitas.showIdentitas && data.extra.koleksi_mapel && data.extra.target_paket) && (
+                    <IdentitasPaketSoal data={data.extra.identitas} mapel={data.extra.koleksi_mapel} />
+                )
+            }
+            
+            {
+                (data?.extra?.identitas && data.extra.identitas.showKolom) && (
+                    <KolomNilaiPaket/>
+                )
+            }
+
+            <ol className="list-[upper-alpha] list-outside marker:font-bold pl-5 align-top">
+                    {
+                        (data?.extra?.identitas && data.extra.identitas?.showSebaranTp) && (
+                                <li><strong className="uppercase">Sebaran Kompetensi Butir Soal</strong>
+                                    {
+                                        (data?.extra?.identitas && data.extra.identitas.showSebaranTp) && (
+                                        
+                                            <TableWithScrolling className="w-11/12 mx-auto text-[10px]">
+                                                <thead>
+                                                    <TRowEdura>
+                                                        <ThEdura>Mata Pelajaran</ThEdura>
+                                                        <ThEdura>CP</ThEdura>
+                                                        <ThEdura>TP</ThEdura>
+                                                        <ThEdura>No. Soal</ThEdura>
+                                                    </TRowEdura>
+                                                </thead>
+                                                <tbody>
+                                                    {
+                                                        dataSebaran.map((mapel, iMapel)=>
+                                                            mapel.hasTp.map((tp, iTp)=>
+                                                                tp.hasAtp.map((atp, iAtp)=>
+                                                                    <TRowEdura key={iMapel+'_'+iTp+'_'+iAtp}>
+                                                                        {
+                                                                            (iTp === 0 && iAtp === 0 ) && (
+                                                                                <TdEdura rowSpan={mapel.countAtp}>{mapel.mapelName}</TdEdura>
+                                                                            )
+                                                                        }
+                                                                        {
+                                                                            iAtp === 0 && (
+                                                                                <TdEdura className="text-wrap" rowSpan={tp.hasAtp.length}>{tp.tp_description}</TdEdura>
+                                                                            )
+                                                                        }
+                                                                        <TdEdura className="text-wrap">{atp.atp_description}</TdEdura>
+                                                                        <TdEdura/>
+                                                                    </TRowEdura>
+                                                                )
+                                                            )
+                                                        )
+
+                                                        // dataSebaran && Object.entries(dataSebaran).map(([mapelname, kurikulum], iKurikulum)=>
+                                                        //     kurikulum.map((tpAtp, itpAtp)=>
+                                                        //         <TRowEdura key={itpAtp}>
+                                                        //             {   itpAtp=== 0  && (
+                                                        //                 <>
+                                                        //                     <TdEdura rowSpan={kurikulum.length}>{itpAtp + 1+iKurikulum}</TdEdura>
+                                                        //                     <TdEdura rowSpan={kurikulum.length}>{mapelname}</TdEdura>
+                                                        //                 </>)
+                                                        //             }
+                                                        //             <TdEdura className="text-wrap">{tpAtp?.atp_as_tp_id}</TdEdura>
+                                                        //             <TdEdura className="text-wrap" >{tpAtp?.atp_as_tp_description}</TdEdura>
+                                                        //             <TdEdura className="text-wrap"></TdEdura>
+                                                        //         </TRowEdura>
+                                                        //     )
+                                                        // )
+                                                    }
+                                                </tbody>
+                                            </TableWithScrolling>
+                                        )
+
+                                    }
+                                        
+                                    
+                                </li>
+                        )
+                    }
+                    {
+                        (data?.extra?.identitas && data.extra.identitas.showPetunjuk) && (
+                            <li><strong>PETUNJUK UMUM</strong>
+                            <PetunjukUmumPaketSoal/>
+                            </li>
+                        )
+                    }
+                    {
+                        (data?.extra?.identitas && data.extra?.count_bentuk_soal && data.extra?.count_bentuk_soal.length>0) && (
+                            <li>
+                                <strong>TAMPILAN SOAL PETUNJUK KHUSUS</strong>
+                                <ol className="list-[upper-roman] list-outside ps-4">
+
+                                    {
+                                        data.extra?.count_bentuk_soal?.map((soal, indexBentuk) => {
+                                            const cekStartNumber = paketSoal?.data[indexBentuk]?.startNumber
+                                            const dataSoal =  paketSoal?.data
+                                                                        .find(
+                                                                            item =>
+                                                                                item.bentukSoal.name ===
+                                                                                soal.dataBentukSoal.name
+                                                                        )
+                                                                        ?.dataSoal;
+                                            
+                                            return (
+                                                    <li key={indexBentuk}>{soal.description}
+                                                        <ol start={cekStartNumber} className="list-decimal ps-4 marker:font-normal">
+                                                            {Array.from(
+                                                                { length: soal.count },
+                                                                (_, indexSoal) => {
+
+                                                                    const globalIndex = getGlobalIndex(
+                                                                        data.extra!,
+                                                                        indexBentuk,
+                                                                        indexSoal
+                                                                    )
+
+                                                                    const dataItem = dataSoal?.find(
+                                                                        item => item.index === globalIndex
+                                                                    )
+
+                                                                    return (
+                                                                        <li
+                                                                            key={indexSoal}
+                                                                            onClick={() =>
+                                                                                handleClickSlot(
+                                                                                    indexBentuk,
+                                                                                    indexSoal,
+                                                                                    soal.dataBentukSoal,
+                                                                                    dataItem
+                                                                                )
+                                                                            }
+                                                                            className="cursor-pointer align-top mb-3"
+                                                                        >
+                                                                            {
+                                                                                dataItem
+                                                                                    ? 
+                                                                                        <ItemSoalPreview data={dataItem}/>
+                                                                                    : `Klik untuk mengambahkan item soal ${soal.dataBentukSoal.description}`
+                                                                            }
+                                                                        </li>
+                                                                    )
+                                                                }
+                                                            )}
+                                                        </ol>
+                                                    </li>
+                                                )
+                                            }
+                                        )
+                                    }
+                                </ol>
+                            </li>
+                        )
+                    }
+            </ol>
+            <div className="sticky print:hidden bg-sky-300 bottom-5 mt-64 py-2 md:bottom-0 flex gap-2 justify-center">
+                <TooltipComp content="Kisi-kisi">
+                    <ButtonCommitAwesome labelButton="Kisi-kisi" className="px-4 py-0 mb-2" onClick={()=>console.log('prev')}><FileCheck size={14}/></ButtonCommitAwesome>
+                </TooltipComp>
+                <TooltipComp content="Kisi-kisi dan soal">
+                    <ButtonCommitAwesome labelButton="Kisi-kisi dan Soal" className="px-4 py-0 mb-2" onClick={()=>console.log('prev')}><FileCheckCorner size={14}/></ButtonCommitAwesome>
+                </TooltipComp>
+                <TooltipComp content="Kunci Jawaban">
+                    <ButtonCommitAwesome labelButton="Kunci Jawaban" className="px-4 py-0 mb-2" onClick={()=>console.log('prev')}><FileKey2Icon size={14}/></ButtonCommitAwesome>
+                </TooltipComp>
+                <TooltipComp content="Simpan Soal ke Server">
+                    <ButtonCommitAwesome 
+                        labelButton="Simpan" className="px-4 py-0 mb-2" 
+                        disabled={state.isSubmitting} 
+                        onClick={onSubmit}
+                        >
+                        {
+                            state.isSubmitting ? <Loader size={12} className="animate-spin self-center"/>:<DatabaseZapIcon size={12}/>
+                        }
+
+                    </ButtonCommitAwesome>
+                </TooltipComp>
+                <TooltipComp content="Jadikan Draft, Anda tinggal kerjakan nanti">
+                    <ButtonCommitAwesome labelButton="Draft" className="px-4 py-0 mb-2" onClick={()=>{
+                        if(paketSoal){
+                            saveDraft(paketSoal)
+                            
+                        }else{
+                            alert('Draft belum siap')}
+                            
+                        } 
+                        }>
+                            <SaveIcon size={14}/></ButtonCommitAwesome>
+                </TooltipComp>
+            </div>
+        </div>
+    )
+}

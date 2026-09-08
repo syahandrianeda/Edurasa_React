@@ -55,6 +55,8 @@ import TransaksiSerahTerimaDokumenService from "~/infrastructures/services/trans
 import DispatchingResponseToFokusUi from "~/lib/dispatching-response-to-fokus-ui";
 import { CrudBankSoalProvider } from "~/controllers/bank-soal/cruds/crud-provider-bank-soal";
 import BanksoalService from "~/infrastructures/services/bank-soal-service";
+import { CrudPaketSoalProvider } from "~/controllers/paket-soal/crud/paket-soal-crud-provider";
+import PaketSoalService from "~/infrastructures/services/paket-soal-service";
 
 
 /**
@@ -105,6 +107,7 @@ export default function AppProviderLayoutService({matches}:Route.ComponentProps)
     const serviceSerahTerimaDokumen             = new SerahTerimaDokumenService();
     const serviceTransaksiSerahTerimaDokumen    = new TransaksiSerahTerimaDokumenService();
     const serviceBankSoal                       = new BanksoalService();
+    const servicePaketSOal                      = new PaketSoalService();
 
     
     
@@ -215,7 +218,9 @@ export default function AppProviderLayoutService({matches}:Route.ComponentProps)
                                                                     <CrudSerahTerimaProvider service={serviceSerahTerimaDokumen}>
                                                                         <CrudTransaksiSerahTerimaProvider service={serviceTransaksiSerahTerimaDokumen}>
                                                                             <CrudBankSoalProvider service={serviceBankSoal}>
-                                                                                <Outlet/>
+                                                                                <CrudPaketSoalProvider service={servicePaketSOal}>
+                                                                                    <Outlet/>
+                                                                                </CrudPaketSoalProvider>
                                                                             </CrudBankSoalProvider>
                                                                         </CrudTransaksiSerahTerimaProvider>
                                                                     </CrudSerahTerimaProvider>

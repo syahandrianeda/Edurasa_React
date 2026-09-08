@@ -267,3 +267,35 @@ export function getEndDate(tanggal: Date, jumlahHari: number): Date {
     hasil.setDate(hasil.getDate() + (jumlahHari-1));
     return hasil;
 }
+
+/**
+ * Menghitung lama hari secara inklusif (start & end dihitung)
+ * @param start_tgl
+ * @param end_tgl
+ * @returns number (minimal 0)
+ */
+export function durasiMenit(
+  start_tgl: string | Date,
+  end_tgl: string | Date
+): number {
+  if (!start_tgl || !end_tgl) return 0;
+
+  const start = new Date(start_tgl);
+  const end = new Date(end_tgl);
+
+  if (isNaN(start.getTime()) || isNaN(end.getTime())) return 0;
+
+  // normalisasi jam
+  // start.setHours(0, 0, 0, 0);
+  // end.setHours(0, 0, 0, 0);
+
+  const diffTime = end.getTime() - start.getTime();
+
+  // jika end < start → 0
+  if (diffTime < 0) return 0;
+
+  const diffDays = Math.floor(diffTime / (1000 * 60 ));
+
+  // +1 karena inklusif
+  return diffDays 
+}

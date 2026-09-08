@@ -36,7 +36,7 @@ interface AppPaginationProps {
 
 export default function AppPagination({
     pagination,
-    pageSizeOptions = [10, 20, 50, 100],
+    pageSizeOptions = [5, 10, 20, 50, 100],
 }: AppPaginationProps) {
 
     const {

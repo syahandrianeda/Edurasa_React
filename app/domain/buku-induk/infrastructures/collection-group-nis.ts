@@ -22,8 +22,8 @@ export default class CollectionGroupNis{
 
         }
         return [...nisMap.entries()].map(([groupNis, data]) => ({
-            groupNis,
-            data,
-    })).sort((a, b)=>b.groupNis.localeCompare(a.groupNis));
+                    groupNis,
+                    data,
+            })).sort((a, b)=>b.groupNis.localeCompare(a.groupNis));
     }
 }
