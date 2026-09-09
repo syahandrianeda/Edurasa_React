@@ -7,11 +7,12 @@ import type { CountBentukSoalPaket } from '~/domain/paket-soal/entities/count-be
 import SoalItemFlex from '~/controllers/bank-soal/modal/soal-item-flex';
 import TooltipComp from '~/components/ui_edura/tooltip-comp';
 import { Button } from '~/components/ui/button';
+import type { PaketSoalDesign } from '~/domain/paket-soal/result/paket-soal';
 
 export default function ToolbarContentJumlahSoal(){
-    const {value, updateExtra} = useFilterContext<PraSettingPaket>();
-    const [strukturSoal, setStrukturSoal] = useState<CountBentukSoalPaket[]>(value.extra?.count_bentuk_soal ?? []);
-    const [backToOne, setBackToOne] = useState<boolean>(value.extra?.nomorSoalUrut!! ?? true)
+    const {value, updateExtra} = useFilterContext<PaketSoalDesign>();
+    const [strukturSoal, setStrukturSoal] = useState<CountBentukSoalPaket[]>(value?.extra?.setting?.count_bentuk_soal ?? []);
+    const [backToOne, setBackToOne] = useState<boolean>(value?.extra?.setting?.nomorSoalUrut!! ?? true)
 
     // const onChangeCountSoal = useCallback((v:string, name:string)=>{
     //     setStrukturSoal((prev)=>{
@@ -84,9 +85,15 @@ export default function ToolbarContentJumlahSoal(){
             });
         };
     useEffect(()=>{
+        // updateExtra(draft=>{
+        //     draft.count_bentuk_soal = strukturSoal
+        // })
         updateExtra(draft=>{
-            draft.count_bentuk_soal = strukturSoal
+            const setting = (draft.setting ?? {}) as NonNullable<typeof draft.setting>;
+            setting.count_bentuk_soal = strukturSoal
+            draft.setting = setting;
         })
+        
     },[strukturSoal, updateExtra]);
     
     const moveUp = useCallback((index: number) => {
@@ -129,8 +136,13 @@ export default function ToolbarContentJumlahSoal(){
 
     },[])
     useEffect(()=>{
+        // updateExtra(draft=>{
+        //     draft.nomorSoalUrut = backToOne
+        // })
         updateExtra(draft=>{
-            draft.nomorSoalUrut = backToOne
+            const setting = (draft.setting ?? {}) as NonNullable<typeof draft.setting>;
+            setting.nomorSoalUrut = backToOne
+            draft.setting = setting;
         })
     },[backToOne, updateExtra])
     

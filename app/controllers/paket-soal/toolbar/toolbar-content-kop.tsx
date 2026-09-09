@@ -10,13 +10,14 @@ import logoSekolah from '../../../images/ratujaya1.png';
 import { HtmlRenderer } from '~/components/editor-tip-tap/renderer/HtmlRenderer';
 import { initialKopSoal } from './initial-kop';
 import { renderNodeHtml } from '~/components/editor-tip-tap/renderer/NodeHtmlRenderer';
+import type { PaketSoalDesign } from '~/domain/paket-soal/result/paket-soal';
 
 
 export default function ToolbarContentKop(){
     
-    const {value, updateExtra} = useFilterContext<PraSettingPaket>()
-    const isShowKOp = value.extra?.identitas.showKop;
-    const [dataKop, setDataKop] = useState<string[]>(value.extra?.dataKopCustom ?? [])
+    const {value, updateExtra} = useFilterContext<PaketSoalDesign>()
+    const isShowKOp = value?.extra?.setting?.identitas.showKop;
+    const [dataKop, setDataKop] = useState<string[]>(value?.extra?.setting?.dataKopCustom ?? [])
     
     const handleInput = (index:number, value:string)=>{
         setDataKop(prev=> prev.map((m, i)=>i === index? value: m) )
@@ -24,7 +25,10 @@ export default function ToolbarContentKop(){
     
     useEffect(()=>{
         updateExtra(draft=>{
-            draft.dataKopCustom = dataKop
+            const setting = (draft.setting ?? {}) as NonNullable<typeof draft.setting>;
+            setting.dataKopCustom = dataKop;
+            // draft.dataKopCustom = dataKop
+            draft.setting = setting;
         })
     }, [dataKop, updateExtra])
     return (
@@ -55,7 +59,7 @@ export default function ToolbarContentKop(){
                     
                     </>
                 ):(
-                    <div className="w-full h-full justify-center items-center">
+                    <div className="w-full min-h-24 flex justify-center items-center">
                         Anda tidak menyertakan KOP Naskah di dalam paket soal
                        
                     </div>

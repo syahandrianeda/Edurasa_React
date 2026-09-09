@@ -18,7 +18,7 @@ type Props={
 export default function ControlTerapkanEdit({data, modeDisplay, setModeDisplay, showStimulus, setShowStimulus, handleApply, handleEdit}:Props){
     const {currentData} = useFormEdura<DisplayFormatItemSoal>();
     return (
-        <div className="flex justify-evenly items-center w-full bg-amber-400 py-1 rounded-b-2xl gap-2">
+        <div className="flex justify-evenly items-center w-full bg-linear-to-r from-sky-300 via-amber-300 to-purple-400 border-t border-sky-400 shadow shadow-sky-100 py-1 rounded-b-2xl gap-2">
             
             <PopoverDisplayOpsi
                 data={data} 

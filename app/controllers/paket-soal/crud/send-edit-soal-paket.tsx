@@ -56,7 +56,7 @@ export default function SendEditSoalPaket({data}:{data:BankSoalAppType}){
     }
     return (
         <ButtonCommitAwesome 
-            labelButton="Simpan" 
+            labelButton="Simpan dan Terapkan" 
             className="py-0 px-2 text-sm"
             onClick={onSubmit}
             disabled={state.isSubmitting}

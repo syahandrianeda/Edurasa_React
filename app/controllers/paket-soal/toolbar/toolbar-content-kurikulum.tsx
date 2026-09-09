@@ -11,17 +11,20 @@ import { OrmPromesInstanceSelector } from '~/context-reduct/selectores/orm-prome
 import QueryAtpHasItemSoal from '~/domain/bank-soal/relational-soal/services/query-atp-has-many-soal';
 import type { AtpHasManySoalType } from '~/domain/bank-soal/relational-soal/type';
 import {type PraSettingPaket } from "~/domain/paket-soal/entities/pra-setting-paket"
+import type { PaketSoalDesign } from '~/domain/paket-soal/result/paket-soal';
+import { useDraftPaketSoal } from '~/hooks/use-draft-paket-soal';
 import { getNumberFromString } from '~/lib/get-number';
 
 export default function ToolbarContentKurikulum(){
     const mapelSelector = useAppSelector(CurrentMapelInActiveRombel);
     const dataKurikulum = useAppSelector(OrmPromesInstanceSelector);
-    const kurikulumHasManySoal = useAppSelector(AtpHasManySoalSelector)
+    const kurikulumHasManySoal = useAppSelector(AtpHasManySoalSelector);
+    const {saveDraft} = useDraftPaketSoal()
     const currentJenjang = useAppSelector(s=>getNumberFromString(s.fokusRombel.value))
-    const {value:data, updateExtra} = useFilterContext<PraSettingPaket>();
-    const [isMultiMapel, setIsMultiMapel] = useState<boolean>(data.extra?.koleksi_mapel?.isMultiple ?? false);
-    const [koleksiMapel, setKoleksiMapel] = useState<string[]>(data.extra?.koleksi_mapel?.data ??[]);
-    const [koleksiAtp, setKoleksiAtp] = useState<AtpHasManySoalType[]>(data.extra?.kurikulum ?? []);
+    const {value:data, updateExtra} = useFilterContext<PaketSoalDesign>();
+    const [isMultiMapel, setIsMultiMapel] = useState<boolean>(data?.extra?.setting?.koleksi_mapel?.isMultiple ?? false);
+    const [koleksiMapel, setKoleksiMapel] = useState<string[]>(data?.extra?.setting?.koleksi_mapel?.data ??[]);
+    const [koleksiAtp, setKoleksiAtp] = useState<AtpHasManySoalType[]>(data?.extra?.setting?.kurikulum ?? []);
     
     const handleMultiple = (e:ChangeEvent<HTMLInputElement>)=>{
         const {checked} = e.currentTarget;
@@ -38,7 +41,10 @@ export default function ToolbarContentKurikulum(){
     const handleIdentitasMultiMapel =(e:ChangeEvent<HTMLInputElement>)=>{
         const {value} = e.currentTarget;
         updateExtra(draft=>{
-            draft.identitas = {...draft.identitas, dataIdentitas:value}
+            const setting = (draft.setting ?? {}) as NonNullable<typeof draft.setting>
+            setting.identitas = {...(setting.identitas ?? {}), dataIdentitas:value} as NonNullable<typeof setting.identitas>
+            draft.setting = setting;
+            // draft.identitas = {...draft.identitas, dataIdentitas:value}
         })
     }
 
@@ -70,7 +76,11 @@ export default function ToolbarContentKurikulum(){
     useEffect(()=>{
         
         updateExtra(draft=>{
-            draft.koleksi_mapel = koleksiMapelMemo;
+            // draft.koleksi_mapel = koleksiMapelMemo;
+            const setting = (draft.setting ?? {}) as NonNullable<typeof draft.setting>
+            setting.koleksi_mapel = koleksiMapelMemo;
+            draft.setting = setting;
+
         })
     }, [koleksiMapelMemo, updateExtra]);
     
@@ -80,9 +90,22 @@ export default function ToolbarContentKurikulum(){
     }, [koleksiAtp, setKoleksiAtp])
 
     useEffect(()=>{
+        console.log('effect karena perubahan kurikulumHasManySoal')
+    },[kurikulumHasManySoal]);
+
+    useEffect(()=>{
         updateExtra(draft=>{
-            draft.kurikulum = koleksiAtp;
-        })  
+            // draft.kurikulum = koleksiAtp;
+            const setting = (draft.setting ?? {}) as NonNullable<typeof draft.setting>;
+            setting.kurikulum = koleksiAtp;
+            draft.setting = setting;
+        });
+
+        // saveDraft(prev=>{
+        //     if(!prev) return null
+        // }
+
+        // )
     }, [koleksiAtp, updateExtra]);
 
     
@@ -110,7 +133,7 @@ export default function ToolbarContentKurikulum(){
                     isMultiMapel && (
                         <div className='mt-4'>Untuk Lintas Mata Pelajaran, identitas paket menggunakan Tema, sialakan isi nama tema di sini:
                             <Field className='relative mt-4'>
-                                <InputText label="Tema:" type='text' value={data.extra?.identitas.dataIdentitas ?? ''} onChange={handleIdentitasMultiMapel}/>
+                                <InputText label="Tema:" type='text' value={data?.extra?.setting?.identitas.dataIdentitas ?? ''} onChange={handleIdentitasMultiMapel}/>
                             </Field>
                         </div>
                     )

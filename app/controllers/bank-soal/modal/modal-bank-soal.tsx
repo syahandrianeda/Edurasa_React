@@ -8,8 +8,11 @@ import ModalEditItemSoal from "~/controllers/koleksi-bank-soal/modal/edit-item-s
 import HapusItemKoleksiSoal from "~/controllers/koleksi-bank-soal/modal/hapus-item-soal";
 import AddItemSoalPaketModal from "~/controllers/paket-soal/modal/add-item-soal-paket";
 import type { InitialItemSoalImplemented } from "~/controllers/paket-soal/modal/initial-item-soal-implemented";
-import ModalEditItemSoalPaket from "~/controllers/koleksi-bank-soal/modal/edit-item-soal-paket";
+import ModalEditItemSoalPaket from "~/controllers/paket-soal/modal/edit-item-soal-paket";
 import FormPaketSoal from "~/controllers/paket-soal/modal/form-paket-soa";
+import type { DataCpKisiKisiType } from "~/domain/paket-soal/entities/kisi-kisi-nested-map-type";
+import PreviewKisiKisi from "~/controllers/paket-soal/modal/preview-kisi-kisi";
+import type { PaketSoalDesign } from "~/domain/paket-soal/result/paket-soal";
 
 export default function ModalBankSoal(){
     const {state, actions} = useModal<BankSoalAppType>()
@@ -18,7 +21,9 @@ export default function ModalBankSoal(){
         'EDIT',
         'HAPUS',
         'ADD ITEM SOAL PAKET',
-        'PREVIEW ITEM SOAL'
+        'PREVIEW ITEM SOAL',
+        'PREVIEW KISI-KISI',
+        'PREVIEW KISI-KISI DAN SOALNYA',
     ].includes(state?.type!);
 
     return (
@@ -29,13 +34,14 @@ export default function ModalBankSoal(){
             }}
             
                 actions={actions} 
-                className="sm:min-w-5xl  md:min-w-2xl lg:min-w-5xl gap-0 overflow-x-auto"
+                className={SwitchWidthByType(state.type)}
                 title={()=>switchJudulBankSoal(state.type)}
             >
                 <SwitchContentFormBankSoal state={state} actions={actions}/>
             </ModalEdura>
                 )
 }
+
 function switchJudulBankSoal(type:ModalType){
     switch(type){
         case 'EDIT':
@@ -46,10 +52,22 @@ function switchJudulBankSoal(type:ModalType){
             return 'Preview Soal'
         case 'ADD ITEM SOAL PAKET':
             return 'Tambah/Edit Item Soal'
+        case 'PREVIEW KISI-KISI':
+            return 'Preview Kisi-kisi'
         default:
             return 'Modal'
     }
 }
+
+function SwitchWidthByType(type:ModalType):string{
+    switch(type){
+        case "PREVIEW KISI-KISI":
+            return "sm:min-w-5xl  md:min-w-2xl lg:min-w-6xl gap-0 overflow-x-auto"
+        default:
+            return "sm:min-w-5xl  md:min-w-2xl lg:min-w-5xl gap-0 overflow-x-auto"
+    }
+}
+
 function SwitchContentFormBankSoal ({state, actions}:{state:ModalState<BankSoalAppType>, actions:ModalActions<BankSoalAppType>}){
     switch(state.type){
         case 'EDIT':
@@ -60,6 +78,10 @@ function SwitchContentFormBankSoal ({state, actions}:{state:ModalState<BankSoalA
             return <PreviewModalItemSoal state={state} actions={actions}/>
         case 'ADD ITEM SOAL PAKET':
             return <AddItemSoalPaketModal state={state as unknown as ModalState<InitialItemSoalImplemented>}/>
+        case 'PREVIEW KISI-KISI':
+            return <PreviewKisiKisi state={state as unknown as ModalState<PaketSoalDesign>} version="v1"/>
+        case 'PREVIEW KISI-KISI DAN SOALNYA':
+            return <PreviewKisiKisi state={state as unknown as ModalState<PaketSoalDesign>} version="v1"/>
         // case 'EDIT ITEM SOAL PAKET':
         //     return<FormPaketSoal state={state as unknown as ModalState<InitialItemSoalImplemented>}><ModalEditItemSoalPaket/></FormPaketSoal>;
         default:

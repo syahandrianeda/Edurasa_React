@@ -22,33 +22,34 @@ import ButtonCommitAwesome from "~/components/button-awesome/commit-button";
 import { DatabaseZapIcon, Eye, FileCheck, FileCheckCorner, FileKey2Icon, FilePlus2, Loader, SaveIcon, SaveOff } from "lucide-react";
 import { useCrudPaketSoalProvider } from "~/controllers/paket-soal/crud/paket-soal-crud-provider";
 import { useDraftPaketSoal } from "~/hooks/use-draft-paket-soal";
-import DataKisiKisi from "~/domain/paket-soal/infrastructure/data-kisi-kisi-class";
 
 
 export default function CreatePaketSoalPage(){
-    const {actions} = useModal();
+    const {actions} = useModal<BankSoalAppType>();
     const {actions:post, state} = useCrudPaketSoalProvider()
-    const {value:data} = useFilterContext<PaketSoalDesign>();
+    const {value:data} = useFilterContext<PraSettingPaket>();
     const {hasDraft,draft, saveDraft, reset} = useDraftPaketSoal()
-    const setting = useMemo(()=>data.extra?.setting, [data.extra?.setting]);
+    const setting = data.extra;
     const [paketSoal, setPaketSoal] = useImmer<PaketSoalDesign|undefined>(undefined);
 
+    // useEffect(()=>{
+    //     if(!setting) return;
+    //     console.log('effexct setting', setting)
+    //     const rest =  createPaketSoalDesign(setting)
+    //     setPaketSoal(rest);
+    // }, [setting])
     useEffect(()=>{
-        if(!setting) return
-
-        if(!draft){
-            const dataKosong = createPaketSoalDesign(setting);
-            setPaketSoal(dataKosong)
-        }else{
-            setPaketSoal(draft)
-        }
-    },[data, draft, setting, setPaketSoal])
+        if(!setting) return;
+        console.log({setting})
+        const rest =  createPaketSoalDesign(setting)
+        setPaketSoal(rest);
+    },[setting, draft])
     
     const dataSebaran = useMemo(()=>{
-        if(!setting?.kurikulum ) return []
-        const  grouping = GroupedAtpHasManySOal.buildGroup(setting.kurikulum);//groupBy(setting?.kurikulum, (item)=>item?.mapelname!)
+        if(!data?.extra?.kurikulum ) return []
+        const  grouping = GroupedAtpHasManySOal.buildGroup(data.extra.kurikulum);//groupBy(data?.extra?.kurikulum, (item)=>item?.mapelname!)
         return grouping;
-    }, [setting?.kurikulum]);
+    }, [data?.extra?.kurikulum]);
 
     const UpsertSoal = useCallback( (v: DisplayFormatItemSoal) => {
                 setPaketSoal(draft => {
@@ -88,53 +89,36 @@ export default function CreatePaketSoalPage(){
         actions.open('ADD ITEM SOAL PAKET', dataModal, { closeOnOutsideClick:false })
     }, [paketSoal?.data]);
 
-    const KisiKisiInstance = useMemo(()=>{
-        if(!paketSoal) return;
-
-        return new DataKisiKisi(paketSoal)
-        },[paketSoal])
-
     const onSubmit = async ()=>{
-        
+        console.log(paketSoal)
         reset();
     }
-
-    const onHandleKisiKisi =(versi:'v1'|'v2')=>{
-        console.log(versi)
-        // if(!KisiKisiInstance) return;
-        // const versiMapel = KisiKisiInstance.generate();
-        actions.open('PREVIEW KISI-KISI', paketSoal, { closeOnOutsideClick:false })
-    }
-
-    const onHandlePenskoran = () =>{
-        console.log(paketSoal?.data)
-    }
-
+    console.log({...paketSoal, draft})
     return (
         <div className="p-1">
             {
-                (setting?.identitas && setting.identitas.showKop && setting?.dataKopCustom) && (
-                    <KopPaketSoal data={setting?.dataKopCustom}/>
+                (data?.extra?.identitas && data.extra.identitas.showKop && data?.extra?.dataKopCustom) && (
+                    <KopPaketSoal data={data?.extra?.dataKopCustom}/>
                 )
             }
             {
-                (setting?.identitas && setting.identitas.showIdentitas && setting.koleksi_mapel && setting.target_paket) && (
-                    <IdentitasPaketSoal data={setting.identitas} mapel={setting.koleksi_mapel} />
+                (data?.extra?.identitas && data.extra.identitas.showIdentitas && data.extra.koleksi_mapel && data.extra.target_paket) && (
+                    <IdentitasPaketSoal data={data.extra.identitas} mapel={data.extra.koleksi_mapel} />
                 )
             }
             
             {
-                (setting?.identitas && setting.identitas.showKolom) && (
+                (data?.extra?.identitas && data.extra.identitas.showKolom) && (
                     <KolomNilaiPaket/>
                 )
             }
 
             <ol className="list-[upper-alpha] list-outside marker:font-bold pl-5 align-top">
                     {
-                        (setting?.identitas && setting.identitas?.showSebaranTp) && (
+                        (data?.extra?.identitas && data.extra.identitas?.showSebaranTp) && (
                                 <li><strong className="uppercase">Sebaran Kompetensi Butir Soal</strong>
                                     {
-                                        (setting?.identitas && setting.identitas.showSebaranTp) && (
+                                        (data?.extra?.identitas && data.extra.identitas.showSebaranTp) && (
                                         
                                             <TableWithScrolling className="w-11/12 mx-auto text-[10px]">
                                                 <thead>
@@ -195,20 +179,20 @@ export default function CreatePaketSoalPage(){
                         )
                     }
                     {
-                        (setting?.identitas && setting.identitas.showPetunjuk) && (
+                        (data?.extra?.identitas && data.extra.identitas.showPetunjuk) && (
                             <li><strong>PETUNJUK UMUM</strong>
                             <PetunjukUmumPaketSoal/>
                             </li>
                         )
                     }
                     {
-                        (setting?.identitas && setting?.count_bentuk_soal && setting?.count_bentuk_soal.length>0) && (
+                        (data?.extra?.identitas && data.extra?.count_bentuk_soal && data.extra?.count_bentuk_soal.length>0) && (
                             <li>
                                 <strong>TAMPILAN SOAL PETUNJUK KHUSUS</strong>
                                 <ol className="list-[upper-roman] list-outside ps-4">
 
                                     {
-                                        setting?.count_bentuk_soal?.map((soal, indexBentuk) => {
+                                        data.extra?.count_bentuk_soal?.map((soal, indexBentuk) => {
                                             const cekStartNumber = paketSoal?.data[indexBentuk]?.startNumber
                                             const dataSoal =  paketSoal?.data
                                                                         .find(
@@ -226,7 +210,7 @@ export default function CreatePaketSoalPage(){
                                                                 (_, indexSoal) => {
 
                                                                     const globalIndex = getGlobalIndex(
-                                                                        setting!,
+                                                                        data.extra!,
                                                                         indexBentuk,
                                                                         indexSoal
                                                                     )
@@ -271,13 +255,13 @@ export default function CreatePaketSoalPage(){
             </ol>
             <div className="sticky print:hidden bg-sky-300 bottom-5 mt-64 py-2 md:bottom-0 flex gap-2 justify-center">
                 <TooltipComp content="Kisi-kisi">
-                    <ButtonCommitAwesome labelButton="Kisi-kisi" className="px-4 py-0 mb-2" onClick={()=>onHandleKisiKisi('v1')}><FileCheck size={14}/></ButtonCommitAwesome>
+                    <ButtonCommitAwesome labelButton="Kisi-kisi" className="px-4 py-0 mb-2" onClick={()=>console.log('prev')}><FileCheck size={14}/></ButtonCommitAwesome>
                 </TooltipComp>
                 <TooltipComp content="Kisi-kisi dan soal">
-                    <ButtonCommitAwesome labelButton="Kisi-kisi dan Soal" className="px-4 py-0 mb-2" onClick={()=>onHandleKisiKisi('v2')}><FileCheckCorner size={14}/></ButtonCommitAwesome>
+                    <ButtonCommitAwesome labelButton="Kisi-kisi dan Soal" className="px-4 py-0 mb-2" onClick={()=>console.log('prev')}><FileCheckCorner size={14}/></ButtonCommitAwesome>
                 </TooltipComp>
                 <TooltipComp content="Kunci Jawaban">
-                    <ButtonCommitAwesome labelButton="Penskoran" className="px-4 py-0 mb-2" onClick={onHandlePenskoran}><FileKey2Icon size={14}/></ButtonCommitAwesome>
+                    <ButtonCommitAwesome labelButton="Kunci Jawaban" className="px-4 py-0 mb-2" onClick={()=>console.log('prev')}><FileKey2Icon size={14}/></ButtonCommitAwesome>
                 </TooltipComp>
                 <TooltipComp content="Simpan Soal ke Server">
                     <ButtonCommitAwesome 

@@ -1,6 +1,7 @@
 import type { PaketSoalDesign } from "~/domain/paket-soal/result/paket-soal";
 import { getDraft, hasDraft, removeDraft, saveDraft } from "./draft-storage";
 import { DRAFT_STORAGE_KEY } from "./draft-soal";
+import { mapPaketSoalDesignDTO } from "./dto-paket-soal";
 
 
 export function savePaketSoalDraft(
@@ -15,9 +16,10 @@ export function savePaketSoalDraft(
 export function getPaketSoalDraft():
     PaketSoalDesign | null {
 
-    return getDraft<PaketSoalDesign>(
+    const data =  getDraft<PaketSoalDesign>(
         DRAFT_STORAGE_KEY.PAKET_SOAL
     );
+    return data ? mapPaketSoalDesignDTO(data):null
 }
 
 export function removePaketSoalDraft(): void {

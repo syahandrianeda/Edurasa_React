@@ -8,17 +8,18 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "~
 import { useAppSelector } from '~/context-reduct/hook';
 import {type PraSettingPaket } from "~/domain/paket-soal/entities/pra-setting-paket"
 import type { TypePaketSoal } from '~/domain/paket-soal/entities/type-paket';
+import type { PaketSoalDesign } from '~/domain/paket-soal/result/paket-soal';
 import { DataRombelUI } from '~/domain/rombel/data-rombel';
 import { getSessionRombel } from '~/infrastructures/session-storage/rombel-session';
 import { getNumberFromString } from '~/lib/get-number';
 
 export default function ToolbarContentTargetPaket(){
-    const {value, updateExtra} = useFilterContext<PraSettingPaket>();
+    const {value, updateExtra} = useFilterContext<PaketSoalDesign>();
     const rombel = useAppSelector(s=> s.fokusRombel.value) ?? getSessionRombel() as string
     const jenjang = useMemo(()=>getNumberFromString(rombel), [rombel])
-    const [targetPaket, setTargetPaket] = useState<TypePaketSoal>(value.extra?.target_paket ?? 'rombel');
-    // const [dataTargetRombel, setDataTargetRombel] = useState<string[]>(value.extra?.data_target ?? [])
-    const [dataKelas, setDataKelas] = useState<string>(value.extra?.identitas.kelas ?? jenjang.toString())
+    const [targetPaket, setTargetPaket] = useState<TypePaketSoal>(value?.extra?.setting?.target_paket ?? 'rombel');
+    // const [dataTargetRombel, setDataTargetRombel] = useState<string[]>(value?.extra?.setting?.data_target ?? [])
+    const [dataKelas, setDataKelas] = useState<string>(value?.extra?.setting?.identitas.kelas ?? jenjang.toString())
 
     const koleksiRombel = useMemo(()=>DataRombelUI.filter(s=>s.active && s.jenjang === jenjang),[jenjang])
     
@@ -51,14 +52,20 @@ export default function ToolbarContentTargetPaket(){
 
     useEffect(()=>{
         updateExtra(draft=>{
-            draft.target_paket = targetPaket;
+            // draft.target_paket = targetPaket;
+            const setting = (draft.setting ?? {}) as NonNullable<typeof draft.setting>;
+            setting.target_paket = targetPaket;
+            draft.setting = setting;
             // draft.identitas = {...draft.identitas, kelas: dataKelas}
         })
     }, [targetPaket, updateExtra])
 
     useEffect(()=>{
         updateExtra(draft=>{
-            draft.identitas = {...draft.identitas, kelas: dataKelas}
+            // draft.identitas = {...draft.identitas, kelas: dataKelas}
+            const setting = (draft.setting ??{}) as NonNullable<typeof draft.setting>
+            setting.identitas = {...(setting.identitas ?? {}), kelas: dataKelas} as NonNullable<typeof setting.identitas>
+            draft.setting = setting;
         })
     },[dataKelas])
     

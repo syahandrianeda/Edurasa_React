@@ -5,25 +5,38 @@ import CalendarTime from "~/components/ui/calender-time";
 import { Field } from "~/components/ui/field";
 import type { PraSettingPaket } from "~/domain/paket-soal/entities/pra-setting-paket";
 import { initialKopSoal, initialStringKop } from "./initial-kop";
+import type { PaketSoalDesign } from "~/domain/paket-soal/result/paket-soal";
 
 
 
 export default function ToolbarContentIdentitas(){
-    const {value:data, setValue, updateExtra} = useFilterContext<PraSettingPaket>();
-    console.log({data}, data.extra)
+    const {value:data, setValue, updateExtra} = useFilterContext<PaketSoalDesign>();
     
-    const [startTime, setStartTime] = useState<Date>( data.extra?.identitas?.start_time ?? new Date());
-    const [durasi, setDurasi] = useState<number>(data.extra?.identitas?.durasi ?? 60);
+    
+    const [startTime, setStartTime] = useState<Date>( data.extra?.setting?.identitas?.start_time ?? new Date());
+    const [durasi, setDurasi] = useState<number>(data.extra?.setting?.identitas?.durasi ?? 60);
     
     const handleShowElemen = (e:ChangeEvent<HTMLInputElement>)=>{
         const {name, value, checked} = e.currentTarget;
         
-        updateExtra(draft=>
-            draft.identitas = {...draft.identitas, [name]:checked}
+        updateExtra(draft=>{
+            const setting = (draft.setting ?? {}) as NonNullable<typeof draft.setting>;
+                    setting.identitas = {
+                        ...setting.identitas,
+                        [name]: checked,
+                    } as NonNullable<typeof setting.identitas>;
+            draft.setting = setting;
+                // draft.setting?.identitas = {...draft.setting.identitas, [name]:checked}
+            }
         )
+            
+        
         if(name === 'showKop' && checked){
             updateExtra(draft=>{
-                draft.dataKopCustom = initialStringKop
+                const setting = (draft.setting ?? {}) as NonNullable<typeof draft.setting>
+                setting.dataKopCustom = initialStringKop;
+                draft.setting = setting;
+                // draft.dataKopCustom = initialStringKop
             })
         }
     }
@@ -31,7 +44,13 @@ export default function ToolbarContentIdentitas(){
     const handleNamaIdentitas = (e:ChangeEvent<HTMLInputElement>)=>{
         const {value} = e.currentTarget;
         updateExtra(draft=>{
-            draft.identitas = {...draft.identitas, nama:value}
+            // draft.identitas = {...draft.identitas, nama:value}
+            const setting = (draft.setting ?? {}) as NonNullable<typeof draft.setting>;
+            setting.identitas = {
+                ...setting.identitas,
+                nama: value,
+            } as NonNullable<typeof setting.identitas>;
+            draft.setting = setting;
         })
     };
 
@@ -46,20 +65,39 @@ export default function ToolbarContentIdentitas(){
     
     useEffect(()=>{
         updateExtra(draft=>{
-            draft.identitas = {...draft.identitas, start_time:waktuAwal}
+            const setting = (draft.setting ?? {}) as NonNullable<typeof draft.setting>;
+            setting.identitas = {
+                ...setting.identitas,
+                start_time: waktuAwal,
+            } as NonNullable<typeof setting.identitas>;
+            draft.setting = setting;
         })
     },[waktuAwal])
     
     useEffect(()=>{
         updateExtra(draft=>{
-            draft.identitas = {...draft.identitas, end_time:waktuAkhir}
+            const setting = (draft.setting ?? {}) as NonNullable<typeof draft.setting>
+            setting.identitas = { ...setting.identitas, end_time:waktuAkhir} as NonNullable<typeof setting.identitas>;
+            draft.setting = setting;
+            // draft.identitas = {...draft.identitas, end_time:waktuAkhir}
         })
     },[waktuAkhir]);
 
     useEffect(()=>{
-        updateExtra(draft=>{
-            draft.identitas = {...draft.identitas, durasi}
+        /** kode dari ChatGPT */
+        updateExtra(draft => {
+            const setting = (draft.setting ?? {}) as NonNullable<typeof draft.setting>;
+
+            setting.identitas = {
+                ...(setting.identitas ?? {}),
+                durasi: durasi,
+            } as NonNullable<typeof setting.identitas>;
+
+            draft.setting = setting;
         })
+        // updateExtra(draft=>{
+        //     draft.identitas = {...draft.identitas, durasi}
+        // })
     },[durasi]);
 
 
@@ -67,28 +105,28 @@ export default function ToolbarContentIdentitas(){
         <div className="grid md:grid-cols-2 grid-cols-1 bg-linear-to-br from-sky-400 to-sky-300  dark:from-sky-800 dark:to-sky-700 px-1 py-6 gap-1">
             <div className='inner-shadow-sky-700 text-xs  border shadow-sky-300 shadow-sm  bg-linear-to-tl from-sky-400 to-sky-300 dark:from-sky-800 dark:to-sky-700 rounded-lg outline-ring py-2 px-2'>
                 <Field className="relative mt-4">
-                    <InputText label="Nama Paket" value={data.extra?.identitas.nama ??''} onChange={handleNamaIdentitas}/>
+                    <InputText label="Nama Paket" value={data.extra?.setting?.identitas.nama ??''} onChange={handleNamaIdentitas}/>
                 </Field>
                 <div className="border mt-7 relative columns-2 p-2 rounded-e-xl rounded-b-xl bg-white dark:bg-input/30 inner-shadow-sky-700 dark:shadow dark:shadow-sky-300">
                     <div className="absolute -top-4 left-0 ps-1 pe-4 rounded-tr-2xl text-gray-500 bg-white dark:bg-input/30 dark:shadow-xs dark:shadow-sky-300">Tampiilkan Elemen Naskah berikut:</div>
                     <Field orientation="horizontal">
-                        <input type="checkbox" id="show-kop" name="showKop" checked={data?.extra?.identitas?.showKop ?? false} onChange={handleShowElemen}/>
+                        <input type="checkbox" id="show-kop" name="showKop" checked={data?.extra?.setting?.identitas?.showKop ?? false} onChange={handleShowElemen}/>
                         <label htmlFor="show-kop" className="w-full">Kop Naskah</label>
                     </Field>
                     <Field orientation="horizontal">
-                        <input type="checkbox" id="show-identitas" name="showIdentitas" checked={data?.extra?.identitas?.showIdentitas ?? false} onChange={handleShowElemen}/>
+                        <input type="checkbox" id="show-identitas" name="showIdentitas" checked={data?.extra?.setting?.identitas?.showIdentitas ?? false} onChange={handleShowElemen}/>
                         <label htmlFor="show-identitas" className="w-full">Identitas Paket</label>
                     </Field>
                     <Field orientation="horizontal">
-                        <input type="checkbox" id="show-kolom-nilai" name="showKolom" checked={data?.extra?.identitas?.showKolom ?? false} onChange={handleShowElemen}/>
+                        <input type="checkbox" id="show-kolom-nilai" name="showKolom" checked={data?.extra?.setting?.identitas?.showKolom ?? false} onChange={handleShowElemen}/>
                         <label htmlFor="show-kolom-nilai" className="w-full">Kolom Penilaian</label>
                     </Field>
                     <Field orientation="horizontal">
-                        <input type="checkbox" id="showSebaranTp" name="showSebaranTp" checked={data?.extra?.identitas?.showSebaranTp ?? false} onChange={handleShowElemen}/>
+                        <input type="checkbox" id="showSebaranTp" name="showSebaranTp" checked={data?.extra?.setting?.identitas?.showSebaranTp ?? false} onChange={handleShowElemen}/>
                         <label htmlFor="showSebaranTp" className="w-full">Sebaran ATP</label>
                     </Field>
                     <Field orientation="horizontal">
-                        <input type="checkbox" id="show-petunjuk" name="showPetunjuk" checked={data?.extra?.identitas?.showPetunjuk ?? false} onChange={handleShowElemen}/>
+                        <input type="checkbox" id="show-petunjuk" name="showPetunjuk" checked={data?.extra?.setting?.identitas?.showPetunjuk ?? false} onChange={handleShowElemen}/>
                         <label htmlFor="show-petunjuk" className="w-full">Petunjuk Umum Pengisian</label>
                     </Field>
                 </div>

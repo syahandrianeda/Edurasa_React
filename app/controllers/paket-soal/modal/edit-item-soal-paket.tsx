@@ -1,36 +1,41 @@
-import {useCallback, useEffect, useMemo, useState, type ChangeEvent, type SetStateAction} from 'react';
+import {useCallback, useEffect, useMemo, useState} from 'react';
 import { useFormEdura } from '~/components/form-custom/form-edura';
 import { type JsonAlatJawabTupple, type BankSoalAppType } from '~/types/bank-soal/bank-soal-type';
 import { FieldSet } from '~/components/ui/field';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs';
-import ContentTabSoal from './fieldset/modal-tabs/conten-tab-soal';
-import { type Content, type JSONContent } from '@tiptap/react';
+import ContentTabSoal from '../../koleksi-bank-soal/modal/fieldset/modal-tabs/conten-tab-soal';
+import {type JSONContent } from '@tiptap/react';
 import { HtmlRenderer } from '~/components/editor-tip-tap/renderer/HtmlRenderer';
 import type { OpsiPilihanJawabanType } from '~/types/bank-soal/bentuk-soal/json-alat-jawab-type';
 import type { FormatElemen } from '~/types/bank-soal/bentuk-soal-type';
-import ContentTabOpsiJawab from './fieldset/modal-tabs/content-tab-opsi-jawab';
+import ContentTabOpsiJawab from '../../koleksi-bank-soal/modal/fieldset/modal-tabs/content-tab-opsi-jawab';
 import { useAppSelector } from '~/context-reduct/hook';
 import { OrmPromesInstanceSelector } from '~/context-reduct/selectores/orm-promes-selector';
-import ContentTabIndikatorSoal from './fieldset/modal-tabs/content-tab-indikator-soal';
+import ContentTabIndikatorSoal from '../../koleksi-bank-soal/modal/fieldset/modal-tabs/content-tab-indikator-soal';
 import { ListBentukSoal } from '~/domain/bank-soal/list-bentuk-soal';
-import ContentTabKurikulum from './fieldset/modal-tabs/content-tab-kurikulum';
+import ContentTabKurikulum from '../../koleksi-bank-soal/modal/fieldset/modal-tabs/content-tab-kurikulum';
 import { TaksonomiBloomInstance } from '~/context-reduct/selectores/taksonomi-selector';
 import { TaksonomiMatcher } from '~/domain/taksonomi';
-import ContentTabLevelSoal from './fieldset/modal-tabs/content-tab-level-soal';
-import ContentTabPratinjauSoalModal from './fieldset/modal-tabs/content-tab-pratinjau';
-import ContentTabPembahasan from './fieldset/modal-tabs/content-tab-pembahasan';
+import ContentTabLevelSoal from '../../koleksi-bank-soal/modal/fieldset/modal-tabs/content-tab-level-soal';
+import ContentTabPratinjauSoalModal from '../../koleksi-bank-soal/modal/fieldset/modal-tabs/content-tab-pratinjau';
+import ContentTabPembahasan from '../../koleksi-bank-soal/modal/fieldset/modal-tabs/content-tab-pembahasan';
 import { getSessionApp } from '~/infrastructures/session-storage/app-session';
 import type { UserPtk } from '~/types';
 import { ModalFooterEdura } from '~/components/modals/modal-components';
 import { useCrudBankSoalProvider } from '~/controllers/bank-soal/cruds/crud-provider-bank-soal';
-import ButtonCommitAwesome from '~/components/button-awesome/commit-button';
 import { useModal } from '~/components/modals/modal-provider';
-import SendEditSoalPaket from './crud-buttons/send-edit-soal-paket';
+import SendEditSoalPaket from '../crud/send-edit-soal-paket';
 import type { InitialItemSoalImplemented } from '~/controllers/paket-soal/modal/initial-item-soal-implemented';
-import SendCopySoalPaket from './crud-buttons/send-copy-soal-paket';
+import SendCopySoalPaket from '../crud/send-copy-soal-paket';
+import SendSoalBaruPaket from '../crud/send-soal-baru-paket';
+import ContentTabSoalPaket from '~/controllers/koleksi-bank-soal/modal/fieldset/modal-tabs/conten-tab-soal-paket';
+import { useFilterContext } from '~/components/toolbars/state-toolbar/state-toolbar';
+import {type PaketSoalDesign } from '~/domain/paket-soal/result/paket-soal';
 
-export default function ModalEditItemSoalPaket(){
+export default function ModalEditItemSoalPaket({mode}:{mode?:string}){
+    
     /**source of truth */
+    const {value} = useFilterContext<PaketSoalDesign>()
     const Prota = useAppSelector(OrmPromesInstanceSelector);
     const bloom = useAppSelector(TaksonomiBloomInstance);
     const user = getSessionApp<UserPtk>()?.name;
@@ -150,17 +155,18 @@ export default function ModalEditItemSoalPaket(){
     },[currentData.bentuk_soal, setOpsiTunggal, setKunciPgTunggal, setOpsiPgKompleks]);
 
     const promes = useMemo(()=>{
-        
-        return Prota?.data.filter(s=>s.kodemapel === currentData.kode_mapel && s.kelas.includes(kelas));
-    }, [kelas, Prota]);
-
+    //     const kurikulumHasSelected = value.extra?.setting?.kurikulum ?? []
+    //     return Prota?.data.filter(s=>s.kodemapel === currentData.kode_mapel && s.kelas.includes(kelas));
+    // }, [kelas, Prota]);
+        if(!value.extra?.setting?.kurikulum) return [];
+        return value.extra.setting.kurikulum;//?.filter(s=>s.kodemapel === currentData.kode_mapel)
+    },[value.extra?.setting?.kurikulum])
     
     const handleSelectjenjang = useCallback((v:string)=>{
         setKelas(Number(v));
         setCurrentData(draft=>{
-            const faseJenjang = [...new Set([...draft.fase_jenjang, Number(v)])]
-            draft.jenjang_khusus = Number(v)
-            // draft.fase_jenjang = faseJenjang;
+            
+            draft.jenjang_khusus = Number(v);
         })
     },[])
     
@@ -283,7 +289,7 @@ export default function ModalEditItemSoalPaket(){
                 </TabsList>
                 <div className="bg-linear-to-br md:px-2 from-sky-300 to-sky-200 md:h-[calc(100vh-12rem)] dark:from-sky-700 dark:to-sky-600  md:w-fulloverflow-y-scroll scrol-h-custom">
                     <TabsContent className="flex flex-col gap-0 text-sm md:w-auto" value="tabSoal">
-                        <ContentTabSoal currentData={currentData} 
+                        <ContentTabSoalPaket currentData={currentData} 
                                 valueJsonStimulus={valueJsonStimulus} 
                                 actionStimulus={setValueJsonStimulus}
                                 valueJsonPertanyaan={valueJsonPertanyaan} 
@@ -370,9 +376,18 @@ export default function ModalEditItemSoalPaket(){
             </Tabs>
             <ModalFooterEdura>
                 <div className="w-full flex justify-center gap-x-2">
-                    <SendCopySoalPaket data={currentData}/>
-                    <SendEditSoalPaket data={currentData}/>
-                    {/* <ButtonCommitAwesome labelButton='Terapkan' onClick={backButton} className='py-0 px-2 text-xs'/> */}
+                    {
+                        mode && mode ==='tambah_baru'?
+                        (
+                            <SendSoalBaruPaket data={currentData}/>
+                        ):(
+                            <>
+                                
+                                <SendEditSoalPaket data={currentData}/>
+                            </>
+                        )
+                    }
+                    
                 </div>
             </ModalFooterEdura>
         </FieldSet>

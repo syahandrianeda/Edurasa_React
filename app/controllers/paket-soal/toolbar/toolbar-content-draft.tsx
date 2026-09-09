@@ -8,22 +8,23 @@ import type { PraSettingPaket } from "~/domain/paket-soal/entities/pra-setting-p
 
 
 export default function ToolbarContentDraft(){
-    const { value, updateExtra } = useFilterContext<PraSettingPaket | undefined>();
+    const { value, updateExtra } = useFilterContext<PaketSoalDesign | undefined>();
 
-    const { draft, hasDraft, loadDraft } = useDraftPaketSoal();
+    const { draft, hasDraft, saveDraft, loadDraft } = useDraftPaketSoal();
 
     const handleLoadDraft = useCallback(() => {
 
+        
         const loadedDraft = loadDraft();
-
         if (!loadedDraft?.setting) {
             return;
         }
+        
 
         updateExtra(extra => {
             Object.assign(
                 extra,
-                loadedDraft.setting
+                {...loadedDraft}
             );
         });
 
@@ -39,7 +40,7 @@ export default function ToolbarContentDraft(){
             >
                 Lanjutkan Draft
             </Button>
-            :'Tidak PUnya Draft'}
+            :'Draft tidak tersedia'}
         </div>
     )
 }
