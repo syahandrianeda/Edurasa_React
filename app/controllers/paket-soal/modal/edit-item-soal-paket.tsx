@@ -3,7 +3,7 @@ import { useFormEdura } from '~/components/form-custom/form-edura';
 import { type JsonAlatJawabTupple, type BankSoalAppType } from '~/types/bank-soal/bank-soal-type';
 import { FieldSet } from '~/components/ui/field';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs';
-import ContentTabSoal from '../../koleksi-bank-soal/modal/fieldset/modal-tabs/conten-tab-soal';
+// import ContentTabSoal from '../../koleksi-bank-soal/modal/fieldset/modal-tabs/conten-tab-soal';
 import {type JSONContent } from '@tiptap/react';
 import { HtmlRenderer } from '~/components/editor-tip-tap/renderer/HtmlRenderer';
 import type { OpsiPilihanJawabanType } from '~/types/bank-soal/bentuk-soal/json-alat-jawab-type';
@@ -26,7 +26,7 @@ import { useCrudBankSoalProvider } from '~/controllers/bank-soal/cruds/crud-prov
 import { useModal } from '~/components/modals/modal-provider';
 import SendEditSoalPaket from '../crud/send-edit-soal-paket';
 import type { InitialItemSoalImplemented } from '~/controllers/paket-soal/modal/initial-item-soal-implemented';
-import SendCopySoalPaket from '../crud/send-copy-soal-paket';
+// import SendCopySoalPaket from '../crud/send-copy-soal-paket';
 import SendSoalBaruPaket from '../crud/send-soal-baru-paket';
 import ContentTabSoalPaket from '~/controllers/koleksi-bank-soal/modal/fieldset/modal-tabs/conten-tab-soal-paket';
 import { useFilterContext } from '~/components/toolbars/state-toolbar/state-toolbar';
@@ -53,7 +53,7 @@ export default function ModalEditItemSoalPaket({mode}:{mode?:string}){
     
     /** PG Tunggal */
     const [opsiPgTunggal, setOpsiTunggal] = useState<OpsiPilihanJawabanType[]>(currentData.json_alat_jawab?.OpsiPilihanJawaban ?? []);
-    const [countOpsiPgTunggal, setCountOpsiPgTunggal] = useState<number>(4);
+    // const [countOpsiPgTunggal, setCountOpsiPgTunggal] = useState<number>(4);
     const kunciPgPertama = currentData?.json_alat_jawab?.valid && currentData?.json_alat_jawab?.valid.filter((s, i)=> i === 0);
     const [kunciPgTunggal, setKunciPgTunggal] = useState<number[]>([0] );
     const [formatOpsiPgTunggal, setFormatOpsiPgTunggal] = useState<FormatElemen>('vertical');
@@ -154,13 +154,14 @@ export default function ModalEditItemSoalPaket({mode}:{mode?:string}){
         }
     },[currentData.bentuk_soal, setOpsiTunggal, setKunciPgTunggal, setOpsiPgKompleks]);
 
-    const promes = useMemo(()=>{
-    //     const kurikulumHasSelected = value.extra?.setting?.kurikulum ?? []
-    //     return Prota?.data.filter(s=>s.kodemapel === currentData.kode_mapel && s.kelas.includes(kelas));
-    // }, [kelas, Prota]);
-        if(!value.extra?.setting?.kurikulum) return [];
-        return value.extra.setting.kurikulum;//?.filter(s=>s.kodemapel === currentData.kode_mapel)
-    },[value.extra?.setting?.kurikulum])
+    const 
+    promes = useMemo(()=>{
+        const kurikulumHasSelected = value.extra?.setting?.kurikulum ?? []
+        return Prota?.data.filter(s=>s.kodemapel === currentData.kode_mapel && s.kelas.includes(kelas) && kurikulumHasSelected.some((asal)=>s.atp_as_tp_id === asal.atp_as_tp_id));
+    }, [kelas, Prota]);
+    //     if(!value.extra?.setting?.kurikulum) return [];
+    //     return value.extra.setting.kurikulum;//?.filter(s=>s.kodemapel === currentData.kode_mapel)
+    // },[value.extra?.setting?.kurikulum])
     
     const handleSelectjenjang = useCallback((v:string)=>{
         setKelas(Number(v));

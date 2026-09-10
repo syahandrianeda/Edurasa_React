@@ -38,6 +38,9 @@ export default function SendCopySoalPaket({data}:{data:BankSoalAppType}){
                         error:(er)=>{
                             console.log(er);
                             return 'Gagal'
+                        },
+                        finally:()=>{
+                            actions.close();
                         }
                     }
                 )

@@ -10,7 +10,7 @@ import type { PraSettingPaket } from "~/domain/paket-soal/entities/pra-setting-p
 export default function ToolbarContentDraft(){
     const { value, updateExtra } = useFilterContext<PaketSoalDesign | undefined>();
 
-    const { draft, hasDraft, saveDraft, loadDraft } = useDraftPaketSoal();
+    const { draft, hasDraft, saveDraft, reset,  loadDraft } = useDraftPaketSoal();
 
     const handleLoadDraft = useCallback(() => {
 
@@ -32,14 +32,19 @@ export default function ToolbarContentDraft(){
 
 
     return (
-        <div className="min-h-24 flex items-center justify-center">
-            {draft ? <Button
-                type="button"
-                variant={"outline"}
-                onClick={handleLoadDraft}
-            >
-                Lanjutkan Draft
-            </Button>
+        <div className="min-h-24 gap-2 flex items-center justify-center">
+            {draft ? (
+                <>
+                <Button
+                        type="button"
+                        variant={"outline"}
+                        onClick={handleLoadDraft}
+                    >
+                        Lanjutkan Draft
+                    </Button>
+                    <Button type="button" variant="secondary" onClick={reset}>Hapus Draft</Button>
+                </>
+            )
             :'Draft tidak tersedia'}
         </div>
     )

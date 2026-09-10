@@ -14,13 +14,13 @@ export default function SendEditSoalPaket({data}:{data:BankSoalAppType}){
     const {actions:Post, state} = useCrudBankSoalProvider();
     
     const onSubmit = ()=>{
-        console.log(data);
+        
         const checkValid = ValidationItemSoal(data);
         if(!checkValid.isValid){
             alert(checkValid.message);
             return;
         }
-        console.log('klo muncul berarti lolos');
+        
         /** masalah:
          * Jika soal edit ini sudah dijadikan refrensi soal pada paket soal, maka:
          * - soal paket soal tetap pake yang lama? atau
@@ -39,17 +39,33 @@ export default function SendEditSoalPaket({data}:{data:BankSoalAppType}){
                     const {success, data:dataRespon, detailResponse} = response;
                     DispatchingResponseToStore(success,dataRespon as BankSoalSheetType[], detailResponse!);
                     // actionModal.close();
-                    const currentItemSoal = {...(nextState?.payload as InitialItemSoalImplemented)?.currentItemSoal, data_soal:data}
-                    const dataFix = {...(nextState?.payload as InitialItemSoalImplemented), currentItemSoal }
-                    const fn = (nextState?.payload as InitialItemSoalImplemented)?.triggerUpsert;
-                    console.log({fn, currentItemSoal})
-                    fn(currentItemSoal)
+                    // const currentItemSoal = {...(nextState?.payload as InitialItemSoalImplemented)?.currentItemSoal, data_soal:data}
+                    
+                    // const fn = (nextState?.payload as InitialItemSoalImplemented)?.triggerUpsert;
+                    
+                    // fn(currentItemSoal)
+                     const bankSoal = (dataRespon as BankSoalSheetType[]);
+                     const lastItemBankSoal = bankSoal.find(s=>s.idbaris === data.idbaris);
+                    if(bankSoal && lastItemBankSoal){
+                        console.log({bankSoal, dataRespon})
+                        const data_soal = DtoBankSoal.fromSheetToApp(lastItemBankSoal);
+                        const currentItemSoal = {...(nextState?.payload as InitialItemSoalImplemented)?.currentItemSoal, data_soal}
+                        // const dataFix = {...(nextState?.payload as InitialItemSoalImplemented), currentItemSoal }
+                        const fn = (nextState?.payload as InitialItemSoalImplemented)?.triggerUpsert;
+                        
+                        fn(currentItemSoal);
+
+                    }
                     actionsModal.close();
                     return 'Berhasil diedit dan diterapkan';
                 },
                 error:(er)=>{
                     console.log(er);
+                    actionsModal.close()
                     return 'Gagal'
+                },
+                finally:()=>{
+                    actionsModal.close();
                 }
             }
         )

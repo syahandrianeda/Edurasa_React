@@ -15,6 +15,7 @@ export default class BankSoalRepository extends AppScriptSheet implements BankSo
         try{
             this.paramSheetBankSoalTabBankSoal = param
             const respon =  await this.postBody(this.paramSheetBankSoalTabBankSoal);
+            
             return this.responActionRead(respon);
         }catch(er){
             return this.responActionError(er);

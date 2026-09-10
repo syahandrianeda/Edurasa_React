@@ -20,6 +20,7 @@ export default function SendSoalBaruPaket({data}:{data:BankSoalAppType}){
             alert(checkValid.message);
             return;
         }
+        console.log('data yang dikirim', data)
         const dtoBankSoal = DtoBankSoal.fromAppToSheet(data);
         
         toast.promise(
@@ -32,13 +33,17 @@ export default function SendSoalBaruPaket({data}:{data:BankSoalAppType}){
                     
                     /** itemSoalBaru dari server */
                     const bankSoal = (dataRespon as BankSoalSheetType[]);
-                    const lastItemBankSoal = bankSoal[bankSoal.length -1];
-                    const data_soal = DtoBankSoal.fromSheetToApp(lastItemBankSoal);
-                    const currentItemSoal = {...(nextState?.payload as InitialItemSoalImplemented)?.currentItemSoal, data_soal}
-                    // const dataFix = {...(nextState?.payload as InitialItemSoalImplemented), currentItemSoal }
-                    const fn = (nextState?.payload as InitialItemSoalImplemented)?.triggerUpsert;
-                    
-                    fn(currentItemSoal);
+                    console.log({bankSoal, dataRespon})
+                    if(bankSoal){
+                        const lastItemBankSoal = bankSoal[bankSoal?.length-1];
+                        const data_soal = DtoBankSoal.fromSheetToApp(lastItemBankSoal);
+                        const currentItemSoal = {...(nextState?.payload as InitialItemSoalImplemented)?.currentItemSoal, data_soal}
+                        // const dataFix = {...(nextState?.payload as InitialItemSoalImplemented), currentItemSoal }
+                        const fn = (nextState?.payload as InitialItemSoalImplemented)?.triggerUpsert;
+                        
+                        fn(currentItemSoal);
+
+                    }
                     
                     actionsModal.close();
                     
@@ -47,6 +52,9 @@ export default function SendSoalBaruPaket({data}:{data:BankSoalAppType}){
                 error:(er)=>{
                     console.log(er);
                     return 'Gagal'
+                },
+                finally:()=>{
+                    actionsModal.close();
                 }
             }
         )

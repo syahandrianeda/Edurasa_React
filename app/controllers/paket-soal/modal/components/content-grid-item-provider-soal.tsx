@@ -15,10 +15,10 @@ export default function ContentGridItemProvider({noDisplay, data, trigger}:{noDi
     const [showStimulus, setShowStimulus] = useState<boolean>(currentData.showStimulus)
     const handleApply = useCallback(()=>{
         
-        const {snapshot_kurikulum, ...other} = data;
+        // const {snapshot_kurikulum, ...other} = data;
         // const {hasSoal, ...realAtpOrm} = snapshot_kurikulum
         const newDataForm:DisplayFormatItemSoal = {...currentData, format_display:modeDisplay, showStimulus, data_soal:data}
-        console.log(snapshot_kurikulum)
+        
         trigger(newDataForm);
         actions.close();
     }, [currentData, data]);

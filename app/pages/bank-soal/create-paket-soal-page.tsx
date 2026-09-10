@@ -23,27 +23,42 @@ import { DatabaseZapIcon, Eye, FileCheck, FileCheckCorner, FileKey2Icon, FilePlu
 import { useCrudPaketSoalProvider } from "~/controllers/paket-soal/crud/paket-soal-crud-provider";
 import { useDraftPaketSoal } from "~/hooks/use-draft-paket-soal";
 import DataKisiKisi from "~/domain/paket-soal/infrastructure/data-kisi-kisi-class";
+import { ValidationPaketSoal } from "~/controllers/paket-soal/modal/validation-paket-soal";
 
 
 export default function CreatePaketSoalPage(){
     const {actions} = useModal();
     const {actions:post, state} = useCrudPaketSoalProvider()
     const {value:data} = useFilterContext<PaketSoalDesign>();
-    const {hasDraft,draft, saveDraft, reset} = useDraftPaketSoal()
+    const {draft, saveDraft, reset} = useDraftPaketSoal();
+    
     const setting = useMemo(()=>data.extra?.setting, [data.extra?.setting]);
     const [paketSoal, setPaketSoal] = useImmer<PaketSoalDesign|undefined>(undefined);
 
-    useEffect(()=>{
-        if(!setting) return
+    // useEffect(()=>{
+    //     if(!setting) return
 
-        if(!draft){
-            const dataKosong = createPaketSoalDesign(setting);
+    //     if(!draft){
+    //         const dataKosong = createPaketSoalDesign(setting);
+    //         setPaketSoal(dataKosong)
+    //     }else{
+    //         setPaketSoal(draft)
+    //     }
+    // },[ draft, setting, setPaketSoal])
+
+    useEffect(()=>{
+        if(!setting) return;
+        if(!data.extra?.data) {
+            const dataKosong = createPaketSoalDesign(setting)
             setPaketSoal(dataKosong)
-        }else{
-            setPaketSoal(draft)
+            return
         }
-    },[data, draft, setting, setPaketSoal])
-    
+        
+            setPaketSoal(data.extra)
+        
+            
+    }, [setting, data.extra, setPaketSoal])
+    console.log(paketSoal, data.extra)
     const dataSebaran = useMemo(()=>{
         if(!setting?.kurikulum ) return []
         const  grouping = GroupedAtpHasManySOal.buildGroup(setting.kurikulum);//groupBy(setting?.kurikulum, (item)=>item?.mapelname!)
@@ -88,22 +103,35 @@ export default function CreatePaketSoalPage(){
         actions.open('ADD ITEM SOAL PAKET', dataModal, { closeOnOutsideClick:false })
     }, [paketSoal?.data]);
 
-    const KisiKisiInstance = useMemo(()=>{
-        if(!paketSoal) return;
-
-        return new DataKisiKisi(paketSoal)
-        },[paketSoal])
-
+   
     const onSubmit = async ()=>{
-        
+        if(!paketSoal) return;
+        const validation = ValidationPaketSoal(paketSoal);
+        if(!validation.isValid){
+            alert(validation.message.join('\r\n'))
+            return;
+        }
         reset();
     }
 
     const onHandleKisiKisi =(versi:'v1'|'v2')=>{
-        console.log(versi)
+        console.log({versi})
+        if(!paketSoal) return
+
+        const validation = ValidationPaketSoal(paketSoal);
+        if(!validation.isValid){
+            alert(validation.message.join('\r\n'))
+            return;
+        }
         // if(!KisiKisiInstance) return;
         // const versiMapel = KisiKisiInstance.generate();
-        actions.open('PREVIEW KISI-KISI', paketSoal, { closeOnOutsideClick:false })
+        if(versi === 'v1'){
+            actions.open('PREVIEW KISI-KISI', paketSoal, { closeOnOutsideClick:false })
+        }else{
+            actions.open('PREVIEW KISI-KISI DAN SOALNYA', paketSoal, { closeOnOutsideClick:false })
+
+        }
+
     }
 
     const onHandlePenskoran = () =>{
@@ -204,19 +232,14 @@ export default function CreatePaketSoalPage(){
                     {
                         (setting?.identitas && setting?.count_bentuk_soal && setting?.count_bentuk_soal.length>0) && (
                             <li>
-                                <strong>TAMPILAN SOAL PETUNJUK KHUSUS</strong>
+                                <strong>PETUNJUK KHUSUS</strong>
                                 <ol className="list-[upper-roman] list-outside ps-4">
 
                                     {
                                         setting?.count_bentuk_soal?.map((soal, indexBentuk) => {
-                                            const cekStartNumber = paketSoal?.data[indexBentuk]?.startNumber
-                                            const dataSoal =  paketSoal?.data
-                                                                        .find(
-                                                                            item =>
-                                                                                item.bentukSoal.name ===
-                                                                                soal.dataBentukSoal.name
-                                                                        )
-                                                                        ?.dataSoal;
+                                            
+                                            const cekStartNumber = paketSoal?.data?.[indexBentuk]?.startNumber
+                                            const dataSoal =  paketSoal?.data?.find( item => item.bentukSoal.name === soal.dataBentukSoal.name ) ?.dataSoal;
                                             
                                             return (
                                                     <li key={indexBentuk}>{soal.description}

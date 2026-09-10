@@ -1,6 +1,7 @@
 import type { JsonAlatJawabTupple } from "~/types/bank-soal/bank-soal-type";
 import type { PaketSoalDesign } from "../result/paket-soal";
 import type { KisiKisiMapelType } from "../entities/kisi-kisi-nested-map-type";
+import type { DisplayFormatItemSoal } from "../result/display-format-item-soal";
 
 
 export default class DataKisiKisi{
@@ -11,7 +12,7 @@ export default class DataKisiKisi{
     }
 
     get dataKontenSoal(){
-        return this.PaketSoal.data
+        return this.PaketSoal.data ?? []
     }
     
     get dataSoal(){
@@ -46,7 +47,7 @@ export default class DataKisiKisi{
                                                                                         atp_id:number,
                                                                                         dataMateriPokok:Map<string, {
                                                                                                     materiPokok:string,
-                                                                                                    dataSoal: dataKontenKisiKisi[]
+                                                                                                    dataSoal: DisplayFormatItemSoal[]
                                                                                                 }>
                                                                                         /** data kisi-kisi:
                                                                                          * - materi pokok
@@ -69,12 +70,12 @@ export default class DataKisiKisi{
             const kodeMapel = data_soal?.kode_mapel ?? '';
             const mapelName = data_soal?.mapel_name ??'';
             const cp_id = data_soal?.snapshot_kurikulum?.cp_id ?? 0;
-            const cp_description = data_soal?.snapshot_kurikulum?.cp_description ?? '';
+            const cp_description = data_soal?.snapshot_kurikulum?.cp_description ?? 'CP_notFound';
             const elemen = data_soal?.snapshot_kurikulum?.elemen ?? '';
             const tp_id = data_soal?.snapshot_kurikulum?.tp_as_cp_id ?? 0;
-            const tp_description = data_soal?.snapshot_kurikulum?.tp_as_cp_description ?? '';
+            const tp_description = data_soal?.snapshot_kurikulum?.tp_as_cp_description ?? 'TP_notFound';
             const atp_id =data_soal?.snapshot_kurikulum?.atp_as_tp_id ?? 0; //data_soal?.kd_id
-            const atp_description = data_soal?.snapshot_kurikulum?.atp_as_tp_description ?? '';
+            const atp_description = data_soal?.snapshot_kurikulum?.atp_as_tp_description ?? 'ATP_notFound';
             const materi_pokok = data_soal?.materi_pokok ?? ''
 
 
@@ -133,56 +134,57 @@ export default class DataKisiKisi{
                 )
             }
 
-            materiPokok.dataMateriPokok.get(materi_pokok)!.dataSoal.push({
-                indikatorSoal: data_soal?.indikator_soal ?? '',
-                bentukSoal: data.bentuk_soal?.name ?? '',
-                lk: data_soal?.lk ?? 'LK1',
-                noSoal:data.no_soal,
-                jawaban: data_soal?.jawaban ?? [],
-                pertanyaan: data_soal?.pertanyaan ?? '',
-                stimulus: data_soal?.stimulus ?? '',
-                jsonAlatJawab:(data_soal?.json_alat_jawab ?? []) as JsonAlatJawabTupple,
-                pembahasanPenskoran: data_soal?.pembahasan_penskoran ?? ''
-            })
+            materiPokok.dataMateriPokok.get(materi_pokok)!.dataSoal.push(data)
         }
 
         return [...mapMapel.entries()].map(([mapelkey, mapelValue])=>{
-
+            let countRow=0
             const dataCp = [...mapelValue.dataCp.entries()].map(([cpKey, cpValue])=>{
                 const {dataTp:sourceTp, cp_description, cp_id, elemen} = cpValue;
+                let countCpRow = 0
                     const dataTp = [...sourceTp.entries()].map(([tpKey, tpValue])=>{
                         const {tp_description, tp_id, dataAtp:sourceAtp} = tpValue;
+                        let countTpRow = 0
                             const dataAtp = [...sourceAtp.entries()].map(([keyAtp, valueAtp])=>{
+                                let countAtpRow = 0
                                 const {atp_id, atp_description, dataMateriPokok:sourceMateriPokok} = valueAtp;
                                     const dataMateriPokok = [...sourceMateriPokok.entries()].map(([keyMateri,valueMateri])=>{
-                                        const {materiPokok, dataSoal} = valueMateri
+                                        const {materiPokok, dataSoal} = valueMateri;
+                                        countRow += dataSoal.length
+                                        countCpRow += dataSoal.length;
+                                        countTpRow += dataSoal.length;
+                                        countAtpRow += dataSoal.length
                                         return {
-                                            materiPokok, dataSoal
+                                            materiPokok, dataSoal, countRow:dataSoal.length
                                         }
                                     })
 
                                 return { 
                                     atp_id, 
                                     atp_description, 
-                                    dataMateriPokok
+                                    dataMateriPokok,
+                                    countRow:countAtpRow
                                 }
                             })
 
                         return {
                             tp_description, 
                             tp_id,
-                            dataAtp
+                            dataAtp,
+                            countRow:countTpRow
                         }
-                    })
+                    });
+
                 return {
-                    cp_id, cp_description, dataTp, elemen
+                    cp_id, cp_description, dataTp, elemen, countRow:countCpRow
                 }
             })
             
             return  { 
                 kodeMapel : mapelValue.kodeMapel,
                 mapelName : mapelValue.mapelName,
-                dataCp : dataCp,//mapelValue.dataCp
+                dataCp : dataCp,//mapelValue.dataCp,
+                countRow
 
             }
         })

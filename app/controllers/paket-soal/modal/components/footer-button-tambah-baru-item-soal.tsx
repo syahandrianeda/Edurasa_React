@@ -24,7 +24,7 @@ export default function ModalFooterButtonTambahBaruItemSoal({currentData, AtpAsO
 
 
      const onAddNewItemSOal = ()=>{
-                console.log({currentData, itemAtpSelected});
+                
                 if(!itemAtpSelected) return
                 const snapshot_kurikulum = itemAtpSelected
                 const kode_mapel = itemAtpSelected?.kodemapel!
@@ -64,7 +64,7 @@ export default function ModalFooterButtonTambahBaruItemSoal({currentData, AtpAsO
                             auto_koreksi,
                             status:''
         }
-        console.log(state.payload)
+        
                 actions.open('ADD NEW ITEM SOAL PAKET', initialCreateItemSoal,  {closeOnOutsideClick:false, backToModalType:state})
             }
 

@@ -27,7 +27,7 @@ export default function SidebarKurikulumControl({
     
     const displayKurikulum = useMemo(()=>{
         if(!data || !KurikulumHasMany) return []
-        console.log(data.length, {data}, KurikulumHasMany?.data.filter(s=>data.map(m=>m.atp_as_tp_id).includes(s.atp_as_tp_id)));
+        
         const updateData =  KurikulumHasMany.data.filter(s=>data.map(m=>m.atp_as_tp_id).includes(s.atp_as_tp_id));
         return GroupedAtpHasManySOal.buildGroup(updateData)
     },[data])

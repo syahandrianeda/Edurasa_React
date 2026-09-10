@@ -54,6 +54,8 @@ function switchJudulBankSoal(type:ModalType){
             return 'Tambah/Edit Item Soal'
         case 'PREVIEW KISI-KISI':
             return 'Preview Kisi-kisi'
+        case 'PREVIEW KISI-KISI DAN SOALNYA':
+            return 'Preview Kisi-kisi + Soal'
         default:
             return 'Modal'
     }
@@ -62,6 +64,8 @@ function switchJudulBankSoal(type:ModalType){
 function SwitchWidthByType(type:ModalType):string{
     switch(type){
         case "PREVIEW KISI-KISI":
+            return "sm:min-w-5xl  md:min-w-2xl lg:min-w-6xl gap-0 overflow-x-auto"
+       case "PREVIEW KISI-KISI DAN SOALNYA":
             return "sm:min-w-5xl  md:min-w-2xl lg:min-w-6xl gap-0 overflow-x-auto"
         default:
             return "sm:min-w-5xl  md:min-w-2xl lg:min-w-5xl gap-0 overflow-x-auto"
@@ -81,7 +85,7 @@ function SwitchContentFormBankSoal ({state, actions}:{state:ModalState<BankSoalA
         case 'PREVIEW KISI-KISI':
             return <PreviewKisiKisi state={state as unknown as ModalState<PaketSoalDesign>} version="v1"/>
         case 'PREVIEW KISI-KISI DAN SOALNYA':
-            return <PreviewKisiKisi state={state as unknown as ModalState<PaketSoalDesign>} version="v1"/>
+            return <PreviewKisiKisi state={state as unknown as ModalState<PaketSoalDesign>} version="v2"/>
         // case 'EDIT ITEM SOAL PAKET':
         //     return<FormPaketSoal state={state as unknown as ModalState<InitialItemSoalImplemented>}><ModalEditItemSoalPaket/></FormPaketSoal>;
         default:
