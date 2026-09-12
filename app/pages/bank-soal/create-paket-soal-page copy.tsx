@@ -55,7 +55,7 @@ export default function CreatePaketSoalPage(){
                 setPaketSoal(draft => {
                     if (!draft) return
 
-                    const group = draft.data.find( item => item.bentukSoal.name === v.bentuk_soal?.name )
+                    const group = draft.data?.find( item => item.bentukSoal.name === v.bentuk_soal?.name )
 
                     if (!group) return
 
@@ -193,9 +193,8 @@ export default function CreatePaketSoalPage(){
 
                                     {
                                         data.extra?.count_bentuk_soal?.map((soal, indexBentuk) => {
-                                            const cekStartNumber = paketSoal?.data[indexBentuk]?.startNumber
-                                            const dataSoal =  paketSoal?.data
-                                                                        .find(
+                                            const cekStartNumber = paketSoal?.data?.[indexBentuk]?.startNumber
+                                            const dataSoal =  paketSoal?.data?.find(
                                                                             item =>
                                                                                 item.bentukSoal.name ===
                                                                                 soal.dataBentukSoal.name

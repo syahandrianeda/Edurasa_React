@@ -6,6 +6,6 @@ import type { DataSoalDesign } from "./session-soal";
 export interface PaketSoalDesign{
     // draft: any;
     setting?:PraSettingPaket,
-    data:DataSoalDesign[]
+    data?:DataSoalDesign[] 
 }
 

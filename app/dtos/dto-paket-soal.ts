@@ -38,11 +38,14 @@ export class PaketSoalDTO {
             lintas_mapel        : this.numberToBoolean( data.lintas_mapel ),
             kode_mapel          : this.stringToStringArray( data.kode_mapel ),
             id_banksoal         : this.stringToNumberArray( data.id_banksoal ),
-            json_setting        : this.parseJsonSetting( data.json_setting ),
+            json_setting        : data.json_setting ? this.parseJsonSetting( data.json_setting ):undefined,
             json_desain         : this.parseJsonDesain( data.json_desain )
         };
     }
 
+    static arrayFromSheet (data:PaketSoalSheetType[]):PaketSoalAppType[]{
+        return data.map(this.fromSheet)
+    }
 
     /**
      * Mengubah data dari format App menjadi format Sheet.
@@ -71,8 +74,10 @@ export class PaketSoalDTO {
             lintas_mapel    : this.booleanToNumber( data.lintas_mapel ),
             kode_mapel      : this.stringArrayToString( data.kode_mapel ),
             id_banksoal     : this.numberArrayToString( data.id_banksoal ),
-            json_setting    : this.stringifyJsonSetting( data.json_setting ),
-            json_desain     : this.stringifyJsonDesain( data.json_desain )
+            json_setting    : data.json_setting ? this.stringifyJsonSetting( data.json_setting ): undefined,
+            // json_desain     : this.stringifyJsonDesain( data.json_desain )
+            user            : data.user,
+            
         };
     }
 
@@ -248,7 +253,7 @@ export class PaketSoalDTO {
 
         this.validateObject( value.identitas, 'json_setting.identitas' );
 
-        if (!(value.identitas.start_time instanceof Date)) {
+        if (!(value?.identitas?.start_time instanceof Date)) {
             throw new Error(
                 'json_setting.identitas.start_time harus berupa Date.'
             );

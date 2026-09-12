@@ -13,7 +13,7 @@ export default function TableKoleksiBankSoal({data, startIndex}:{data:BankSoalAp
         <TableWithScrolling>
                 <thead>
                     <TRowEdura>
-                        <ThEdura>Status</ThEdura>
+                        <ThEdura className="print:hidden">Status</ThEdura>
                         <ThEdura>Soal</ThEdura>
                         <ThEdura className="text-wrap">Metadata Soal (Properti Kurikulum)</ThEdura>
                     </TRowEdura>
@@ -28,10 +28,10 @@ export default function TableKoleksiBankSoal({data, startIndex}:{data:BankSoalAp
                         ) : (
                             data.map((m, i) => (
                                 <TRowEdura key={i} className={`${m.kd_id === 0 ?'odd:bg-rose-100 even:bg-rose-100':''}`}>
-                                    <TdEdura className="text-center">
+                                    <TdEdura className="text-center print:hidden">
                                         <SwitchTriggerModalEditItemBankSoal actions={actions} data={m}/>
                                     </TdEdura>
-                                    <TdEdura className="min-w-sm max-w-sm">
+                                    <TdEdura className="min-w-sm max-w-md">
                                         <CardSoalPreview noDisplay={(startIndex+i+1)} data={m}/>
                                     </TdEdura>
                                     <TdEdura className="text-wrap">

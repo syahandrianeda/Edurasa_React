@@ -2,6 +2,7 @@ import OpsiSoalPreview from "~/controllers/koleksi-bank-soal/views/opsi-soal-pre
 import type { DisplayFormatItemSoal } from "~/domain/paket-soal/result/display-format-item-soal";
 
 export default function ItemSoalPreview({data}:{data:DisplayFormatItemSoal}){
+    
     return (
         <>
             {/* stimulus */}
@@ -15,6 +16,7 @@ export default function ItemSoalPreview({data}:{data:DisplayFormatItemSoal}){
                 data.data_soal?.pertanyaan && <div className="editor-document [&>p]:m-0 [&>img]:m-0"
                     dangerouslySetInnerHTML={{__html: data.data_soal?.pertanyaan}}/>
             }
+            
             {
                 data.data_soal && ( <OpsiSoalPreview data={data.data_soal} setDisplay={data.format_display}/> )
             }

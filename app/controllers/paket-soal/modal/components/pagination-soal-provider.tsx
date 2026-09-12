@@ -1,4 +1,3 @@
-import TableKoleksiBankSoal from "~/controllers/koleksi-bank-soal/tabel-koleksi-bank-soal";
 import { AppPagination } from "~/domain/pagination";
 import { usePagination } from "~/hooks/use-pagination";
 import type { BankSoalAppType } from "~/types/bank-soal/bank-soal-type";

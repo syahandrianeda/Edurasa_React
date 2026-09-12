@@ -1,5 +1,8 @@
 import type { controlDropdownKelas } from "~/components/dropdowns/rombel-dropdown";
 import type { Route } from "./+types/koleksi-paket-soal";
+import { useAppSelector } from "~/context-reduct/hook";
+import { getNumberFromString } from "~/lib/get-number";
+import { defineCreateItemSoalNeeded } from "~/domain/enloaded/intial-enloaded/by-route-page/banksoal/create-item-soal-needed";
 
 
 export function meta({matches}: Route.MetaArgs) {
@@ -33,13 +36,21 @@ export function clientLoader({}:Route.ComponentProps){
         titleTambahan:'Koleksi Paket Soal',
         controlKelas: settingRombel,
         toolbarTabs: undefined,//ConfigToolbarSelectMapel
-        showExport:false
+        showExport:true,
+                addPesanRombel:{isAdd:true, type:'rombel', includeFaseName:true},
+                sheetNeeded: defineCreateItemSoalNeeded
+        
     };
 }
 
 export default function KoleksiPaketSoalRoute() {
-    
+    const kelas = useAppSelector(s=>s.fokusRombel.value);
+    const koleksiPaketSoal = useAppSelector(s=>s.paketSoal);
+    console.log({koleksiPaketSoal})
     return(
-        <p>Hello Page Koleksi Paket SOal</p>
+        <div className="p-1">
+            <h3 className="text-2xl text-center font-extrabold uppercase">Koleksi Paket Soal kelas {getNumberFromString(kelas)} </h3>
+            
+        </div>
     )
 }

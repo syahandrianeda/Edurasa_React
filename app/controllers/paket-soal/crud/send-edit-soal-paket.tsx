@@ -47,7 +47,7 @@ export default function SendEditSoalPaket({data}:{data:BankSoalAppType}){
                      const bankSoal = (dataRespon as BankSoalSheetType[]);
                      const lastItemBankSoal = bankSoal.find(s=>s.idbaris === data.idbaris);
                     if(bankSoal && lastItemBankSoal){
-                        console.log({bankSoal, dataRespon})
+                        
                         const data_soal = DtoBankSoal.fromSheetToApp(lastItemBankSoal);
                         const currentItemSoal = {...(nextState?.payload as InitialItemSoalImplemented)?.currentItemSoal, data_soal}
                         // const dataFix = {...(nextState?.payload as InitialItemSoalImplemented), currentItemSoal }

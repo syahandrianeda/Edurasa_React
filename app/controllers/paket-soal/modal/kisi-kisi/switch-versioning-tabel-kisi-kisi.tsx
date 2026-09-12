@@ -8,7 +8,7 @@ type Props = {
     InstanceDataKisikisi: DataKisiKisi
 }
 export default function SwitchVersioningKisiKisi({version, InstanceDataKisikisi, isMultiple}:Props){
-    console.log(version)
+    
     switch(version){
         case 'v1':
             return <TableKisiKisi KisiKisiInstance={InstanceDataKisikisi} isMultiple={isMultiple}/>;

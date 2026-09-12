@@ -88,7 +88,7 @@ export default function ContentTabOpsiJawab ({
                             <TRowEdura>
                                 <TdEdura className='border-0 w-12'>Kelas</TdEdura>
                                 <TdEdura className='border-0 w-5'>:</TdEdura>
-                                <TdEdura className='border-0'>{currentData.snapshot_kurikulum?.kelas?.join(' dan ')}</TdEdura>
+                                <TdEdura className='border-0 text-wrap'>{currentData.snapshot_kurikulum?.kelas?.join(' dan ')}</TdEdura>
                             </TRowEdura>
                             <TRowEdura>
                                 <TdEdura className='border-0'>Elemen</TdEdura>
@@ -108,7 +108,7 @@ export default function ContentTabOpsiJawab ({
                             <TRowEdura>
                                 <TdEdura className='border-0'>Lingkup Materi</TdEdura>
                                 <TdEdura className='border-0'>:</TdEdura>
-                                <TdEdura className='border-0'>{currentData.snapshot_kurikulum?.lingkup_materi}</TdEdura>
+                                <TdEdura className='border-0 text-wrap'>{currentData.snapshot_kurikulum?.lingkup_materi}</TdEdura>
                             </TRowEdura>
                         </tbody>
                     </TableWithScrolling>

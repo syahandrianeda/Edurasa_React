@@ -29,7 +29,7 @@ export default function TableKisiKisi({isMultiple, KisiKisiInstance}:Props){
                             <ThEdura className="text-wrap">Indikator Soal</ThEdura>
                             <ThEdura className="text-wrap">No Soal</ThEdura>
                             <ThEdura className="text-wrap">Bentuk Soal</ThEdura>
-                            <ThEdura className="text-wrap">Instrumen Soal</ThEdura>
+                            <ThEdura className="text-nowrap">Instrumen Soal</ThEdura>
                             <ThEdura className="text-wrap">Kunci Jawaban/Penskoran</ThEdura>
                         </TRowEdura>
                         
@@ -42,7 +42,7 @@ export default function TableKisiKisi({isMultiple, KisiKisiInstance}:Props){
                             <ThEdura className="text-wrap">Indikator Soal</ThEdura>
                             <ThEdura className="text-wrap">No Soal</ThEdura>
                             <ThEdura className="text-wrap">Bentuk Soal</ThEdura>
-                            <ThEdura className="text-wrap">Instrumen Soal</ThEdura>
+                            <ThEdura className="text-nowrap">Instrumen Soal</ThEdura>
                             <ThEdura className="text-wrap">Kunci Jawaban/Penskoran</ThEdura>
                         </TRowEdura>
 

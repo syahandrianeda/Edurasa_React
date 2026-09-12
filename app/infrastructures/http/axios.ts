@@ -4,7 +4,7 @@ import { ApiErrors } from './api-errors'
 
 const axiosInstance = axios.create({
 //   baseURL: import.meta.env.VITE_API_URL,
-    timeout: 360000,
+    timeout: 720000,
 })
 
 /* ============================

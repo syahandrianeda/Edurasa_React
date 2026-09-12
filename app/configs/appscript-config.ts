@@ -145,7 +145,7 @@ export class AppScriptConfig {
                         }
                     }
             );
-            
+            // console.log('post axios', pos)
             //reponse axios data yang dibutuhkan, biarkan class turuunannya yang membungkus type data response-nya
             if(pos.data.hasOwnProperty('auth')){
                 
@@ -157,7 +157,7 @@ export class AppScriptConfig {
             
             return pos.data;
         }catch(error){
-            
+            console.log(error)
             return this.responActionError(error);
         }finally{
 

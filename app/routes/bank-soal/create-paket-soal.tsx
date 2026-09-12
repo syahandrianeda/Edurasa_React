@@ -1,6 +1,5 @@
 import type { Route } from "./+types/create-paket-soal";
 import type { controlDropdownKelas } from "~/components/dropdowns/rombel-dropdown";
-import ImportSoalPage from "~/controllers/bank-soal/import-soal/page/import-soal";
 import { ConfigCreatePaketSoal } from "~/controllers/paket-soal/toolbar/config-toolbar-create-paket";
 import { defineCreateItemSoalNeeded } from "~/domain/enloaded/intial-enloaded/by-route-page/banksoal/create-item-soal-needed";
 import CreatePaketSoalPage from "~/pages/bank-soal/create-paket-soal-page";

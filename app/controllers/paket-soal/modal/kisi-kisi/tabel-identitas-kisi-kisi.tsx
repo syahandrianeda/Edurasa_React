@@ -9,12 +9,13 @@ type Props = {
     identitas: IdentitasKontenPaket,
     isMultiple: boolean;
     koleksiMapel:string[],
-    KisiKisiInstance:DataKisiKisi
+    KisiKisiInstance:DataKisiKisi,
+    isKisi:boolean
 }
-export default function TableIdentitasKisikisi ({identitas, isMultiple, koleksiMapel, KisiKisiInstance}:Props){
+export default function TableIdentitasKisikisi ({identitas, isMultiple, koleksiMapel, KisiKisiInstance, isKisi=true}:Props){
     const Penyusun = getSessionApp<UserPtk>()?.name ?? '-';
     return (
-        <div className="flex justify-between mt-7 text-[12px]">
+        <div className={`flex justify-between mt-7 ${isKisi?"text-[12px]":"text-[10px]"}`}>
             <div className="w-full p-1">
                 <table className="w-full">
                     <tbody>
@@ -77,27 +78,27 @@ export default function TableIdentitasKisikisi ({identitas, isMultiple, koleksiM
                 </table>
             </div>
             <div className="w-full p-1 flex justify-end items-start">
-                <table className="w-9/12">
+                <table className={isKisi?"w-9/12":"w-11/12"}>
                     <tbody>
                         <tr>
-                            <td className="px-2 text-nowrap w-5">Pelaksanaan</td>
-                            <td className="px-2 w-1">:</td>
-                            <td className="px">{identitas.start_time?.toLocaleDateString('id-ID', {dateStyle:'full'})}</td>
+                            <td className="px-2 text-nowrap w-5 align-top">Pelaksanaan</td>
+                            <td className="px-2 w-1 align-top">:</td>
+                            <td className="px-2 align-top">{identitas.start_time?.toLocaleDateString('id-ID', {dateStyle:'full'})}</td>
                         </tr>
                         <tr>
-                            <td className="px-2 text-nowrap">Alokasi Waktu</td>
-                            <td className="px-2">:</td>
-                            <td className="px">{identitas.durasi} menit</td>
+                            <td className="px-2 align-top text-nowrap">Alokasi Waktu</td>
+                            <td className="px-2 align-top">:</td>
+                            <td className="px-2 align-top">{identitas.durasi} menit</td>
                         </tr>
                         <tr>
-                            <td className="px-2 text-nowrap">Jumlah Butir Soal</td>
-                            <td className="px-2">:</td>
-                            <td className="px">{KisiKisiInstance?.dataSoal?.length}</td>
+                            <td className="px-2 align-top text-nowrap">Jumlah Butir Soal</td>
+                            <td className="px-2 align-top">:</td>
+                            <td className="px-2 align-top">{KisiKisiInstance?.dataSoal?.length}</td>
                         </tr>
                         <tr>
                             <td className="px-2 text-nowrap align-top">Rincian Butir Soal</td>
                             <td className="px-2 align-top">:</td>
-                            <td className="px align-top">
+                            <td className="px-2 align-top">
                                 <ol>
                                     {
                                         KisiKisiInstance?.dataKontenSoal?.map((m, index)=>

@@ -5,10 +5,8 @@ import { useModal } from "~/components/modals/modal-provider";
 import { useAppSelector } from "~/context-reduct/hook";
 import type { AtpHasManySoalType } from "~/domain/bank-soal/relational-soal/type";
 import type { DisplayFormatItemSoal } from "~/domain/paket-soal/result/display-format-item-soal";
-import { getSessionApp } from "~/infrastructures/session-storage/app-session";
 import { getSessionRombel } from "~/infrastructures/session-storage/rombel-session";
 import { getNumberFromString } from "~/lib/get-number";
-import type { UserPtk } from "~/types";
 import type { BankSoalAppType, JsonAlatJawabTupple } from "~/types/bank-soal/bank-soal-type";
 import type { AtpAsOrm } from "~/types/kurikulum/prota-orm";
 
@@ -70,7 +68,9 @@ export default function ModalFooterButtonTambahBaruItemSoal({currentData, AtpAsO
 
     return (
         <ModalFooterEdura>
-            <ButtonCommitAwesome labelButton="Buat baru" className="py-0 px-2" onClick={onAddNewItemSOal}/>
+            <div className="w-full flex justify-end me-3">
+                <ButtonCommitAwesome labelButton="Buat baru" className="py-0 px-2" onClick={onAddNewItemSOal}/>
+            </div>
         </ModalFooterEdura>
     )
 }

@@ -8,11 +8,9 @@ import ModalEditItemSoal from "~/controllers/koleksi-bank-soal/modal/edit-item-s
 import HapusItemKoleksiSoal from "~/controllers/koleksi-bank-soal/modal/hapus-item-soal";
 import AddItemSoalPaketModal from "~/controllers/paket-soal/modal/add-item-soal-paket";
 import type { InitialItemSoalImplemented } from "~/controllers/paket-soal/modal/initial-item-soal-implemented";
-import ModalEditItemSoalPaket from "~/controllers/paket-soal/modal/edit-item-soal-paket";
-import FormPaketSoal from "~/controllers/paket-soal/modal/form-paket-soa";
-import type { DataCpKisiKisiType } from "~/domain/paket-soal/entities/kisi-kisi-nested-map-type";
 import PreviewKisiKisi from "~/controllers/paket-soal/modal/preview-kisi-kisi";
 import type { PaketSoalDesign } from "~/domain/paket-soal/result/paket-soal";
+import PreviewKunciJawabanPenskoran from "~/controllers/paket-soal/modal/preview-kunci-jawaban";
 
 export default function ModalBankSoal(){
     const {state, actions} = useModal<BankSoalAppType>()
@@ -24,6 +22,7 @@ export default function ModalBankSoal(){
         'PREVIEW ITEM SOAL',
         'PREVIEW KISI-KISI',
         'PREVIEW KISI-KISI DAN SOALNYA',
+        'PREVIEW KUNCI JAWABAN PAKET SOAL'
     ].includes(state?.type!);
 
     return (
@@ -55,7 +54,9 @@ function switchJudulBankSoal(type:ModalType){
         case 'PREVIEW KISI-KISI':
             return 'Preview Kisi-kisi'
         case 'PREVIEW KISI-KISI DAN SOALNYA':
-            return 'Preview Kisi-kisi + Soal'
+            return 'Preview Kisi-kisi + Soal';
+         case 'PREVIEW KUNCI JAWABAN PAKET SOAL':
+            return 'Kunci Jawaban, pembahasan, dan penskoran'
         default:
             return 'Modal'
     }
@@ -67,6 +68,8 @@ function SwitchWidthByType(type:ModalType):string{
             return "sm:min-w-5xl  md:min-w-2xl lg:min-w-6xl gap-0 overflow-x-auto"
        case "PREVIEW KISI-KISI DAN SOALNYA":
             return "sm:min-w-5xl  md:min-w-2xl lg:min-w-6xl gap-0 overflow-x-auto"
+        case 'PREVIEW KUNCI JAWABAN PAKET SOAL':
+            return "w-[calc(100vw-5rem)] print:w-[210mm] lg:min-w-3xl overflow-x-auto pt-0"
         default:
             return "sm:min-w-5xl  md:min-w-2xl lg:min-w-5xl gap-0 overflow-x-auto"
     }
@@ -86,6 +89,8 @@ function SwitchContentFormBankSoal ({state, actions}:{state:ModalState<BankSoalA
             return <PreviewKisiKisi state={state as unknown as ModalState<PaketSoalDesign>} version="v1"/>
         case 'PREVIEW KISI-KISI DAN SOALNYA':
             return <PreviewKisiKisi state={state as unknown as ModalState<PaketSoalDesign>} version="v2"/>
+        case 'PREVIEW KUNCI JAWABAN PAKET SOAL':
+            return <PreviewKunciJawabanPenskoran state={state as unknown as ModalState<PaketSoalDesign>}/>
         // case 'EDIT ITEM SOAL PAKET':
         //     return<FormPaketSoal state={state as unknown as ModalState<InitialItemSoalImplemented>}><ModalEditItemSoalPaket/></FormPaketSoal>;
         default:

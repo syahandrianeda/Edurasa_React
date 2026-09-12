@@ -7,15 +7,32 @@ export default class PaketSoalRepository extends AppScriptSheet implements Paket
     constructor(){
         super()
     }
+    
     async uploadFile(param: ParamFile): Promise<ApiResponse<unknown> | { success: boolean; data: any; message: string; source: string; }> {
+         
         return await this.postBody(param);
     }
 
     async update(param: Record<string, any>): Promise<ApiResponse<PaketSoalSheetType>> {
-        return await this.postBody(param)
+        // return await this.postBody(param)
+        try{
+                this.paramSheetBankSoalTabPaketSoal = param
+                const respon =  await this.postBody(this.paramSheetBankSoalTabPaketSoal);
+                
+                return this.responActionRead(respon);
+            }catch(er){
+                return this.responActionError(er);
+            }
     }
 
     async create(param: Record<string, any>): Promise<ApiResponse<PaketSoalSheetType>> {
-        return await this.postBody(param);
+         try{
+                this.paramSheetBankSoalTabPaketSoal = param
+                const respon =  await this.postBody(this.paramSheetBankSoalTabPaketSoal);
+                
+                return this.responActionRead(respon);
+            }catch(er){
+                return this.responActionError(er);
+            }
     }
 }

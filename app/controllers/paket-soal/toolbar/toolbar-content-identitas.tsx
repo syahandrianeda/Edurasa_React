@@ -3,9 +3,8 @@ import { InputText } from "~/components/fields/fields";
 import { useFilterContext } from "~/components/toolbars/state-toolbar/state-toolbar";
 import CalendarTime from "~/components/ui/calender-time";
 import { Field } from "~/components/ui/field";
-import type { PraSettingPaket } from "~/domain/paket-soal/entities/pra-setting-paket";
-import { initialKopSoal, initialStringKop } from "./initial-kop";
 import type { PaketSoalDesign } from "~/domain/paket-soal/result/paket-soal";
+import { initialStringKop } from "./initial-kop";
 
 
 
@@ -26,7 +25,7 @@ export default function ToolbarContentIdentitas(){
                         [name]: checked,
                     } as NonNullable<typeof setting.identitas>;
             draft.setting = setting;
-                // draft.setting?.identitas = {...draft.setting.identitas, [name]:checked}
+                
             }
         )
             

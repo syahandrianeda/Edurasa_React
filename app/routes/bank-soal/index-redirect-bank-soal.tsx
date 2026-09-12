@@ -27,8 +27,8 @@ export async function clientLoader({}:Route.ComponentProps){
 
     return {
         titleTambahan:'Data Rombel', 
+        sheetNeeded: defineCreateItemSoalNeeded,
         addPesanRombel:{isAdd:true, type:'rombel', includeFaseName:true},
-                        sheetNeeded: defineCreateItemSoalNeeded,
     };
 }
 export default function RedirectKesiswaan({loaderData}:Route.ComponentProps) {

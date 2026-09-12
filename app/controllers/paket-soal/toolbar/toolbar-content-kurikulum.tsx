@@ -89,9 +89,7 @@ export default function ToolbarContentKurikulum(){
         setKoleksiAtp(newKoleksi)
     }, [koleksiAtp, setKoleksiAtp])
 
-    useEffect(()=>{
-        console.log('effect karena perubahan kurikulumHasManySoal')
-    },[kurikulumHasManySoal]);
+    
 
     useEffect(()=>{
         updateExtra(draft=>{
@@ -101,11 +99,7 @@ export default function ToolbarContentKurikulum(){
             draft.setting = setting;
         });
 
-        // saveDraft(prev=>{
-        //     if(!prev) return null
-        // }
-
-        // )
+        
     }, [koleksiAtp, updateExtra]);
 
     

@@ -37,7 +37,7 @@ export default function PgPreview({data, setDisplay}:{data:BankSoalAppType, setD
                     <ol start={1} className="list-[upper-alpha] flex flex-row gap-2 overflow-y-auto scrol-h-custom @container list-outside pl-5 align-top">
                             {
                                 data.json_alat_jawab && (data.json_alat_jawab as PgTunggalType).OpsiPilihanJawaban.map((m,i)=>
-                                        <li className="align-top ps-2 w-full text-[clamp(8px,2cqw,10px)]" key={m.index + "_"+ i}>
+                                        <li className="align-top ps-2 w-full text-[clamp(12px,2cqw,14px)]" key={m.index + "_"+ i}>
                                             <div className="text-wrap editor-document" dangerouslySetInnerHTML={{__html:m.content}}/>
                                         </li>
                                 

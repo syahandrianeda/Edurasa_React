@@ -8,12 +8,21 @@ import SoalItemFlex from '~/controllers/bank-soal/modal/soal-item-flex';
 import TooltipComp from '~/components/ui_edura/tooltip-comp';
 import { Button } from '~/components/ui/button';
 import type { PaketSoalDesign } from '~/domain/paket-soal/result/paket-soal';
+import { data } from 'react-router';
+import { InfoToolbarMutasiLaporan } from '~/controllers/data-siswa-controller/config-toolbar';
 
 export default function ToolbarContentJumlahSoal(){
     const {value, updateExtra} = useFilterContext<PaketSoalDesign>();
     const [strukturSoal, setStrukturSoal] = useState<CountBentukSoalPaket[]>(value?.extra?.setting?.count_bentuk_soal ?? []);
     const [backToOne, setBackToOne] = useState<boolean>(value?.extra?.setting?.nomorSoalUrut!! ?? true)
 
+    useEffect(()=>{
+         updateExtra(draft=>{
+            const setting = (draft.setting ?? {}) as NonNullable<typeof draft.setting>;
+            setting.count_bentuk_soal = value?.extra?.setting?.count_bentuk_soal ?? []
+            draft.setting = setting;
+        })
+    },[value?.extra?.setting?.count_bentuk_soal, updateExtra])
     // const onChangeCountSoal = useCallback((v:string, name:string)=>{
     //     setStrukturSoal((prev)=>{
     //         const defineBentukSoal = ListBentukSoal.find(s=>s.name === name);
@@ -84,6 +93,7 @@ export default function ToolbarContentJumlahSoal(){
                 return next;
             });
         };
+
     useEffect(()=>{
         // updateExtra(draft=>{
         //     draft.count_bentuk_soal = strukturSoal
@@ -136,13 +146,32 @@ export default function ToolbarContentJumlahSoal(){
 
     },[])
     useEffect(()=>{
-        // updateExtra(draft=>{
-        //     draft.nomorSoalUrut = backToOne
-        // })
         updateExtra(draft=>{
             const setting = (draft.setting ?? {}) as NonNullable<typeof draft.setting>;
-            setting.nomorSoalUrut = backToOne
+            setting.nomorSoalUrut = backToOne as NonNullable<typeof setting.nomorSoalUrut>
             draft.setting = setting;
+
+            if (!draft.data) return 
+
+                let startNumber = 1;
+
+                draft.data.forEach((item, index) => {
+                    item.startNumber = startNumber;
+                    item.dataSoal.forEach((soal, iSoal)=>{
+                        soal.no_soal = iSoal + startNumber
+                    })
+
+                    const count = draft.setting?.count_bentuk_soal?.[index]?.count ?? 0;
+
+                    if (!backToOne) {
+                        startNumber += count;
+                    } else {
+                        startNumber =1;//+= count;
+                    }
+                });
+           
+            
+            
         })
     },[backToOne, updateExtra])
     

@@ -41,4 +41,5 @@ export type ModalType =
     | 'EDIT ITEM SOAL PAKET'
     | 'PREVIEW KISI-KISI'
     | 'PREVIEW KISI-KISI DAN SOALNYA'
+    | 'PREVIEW KUNCI JAWABAN PAKET SOAL'
     | null;

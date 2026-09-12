@@ -19,7 +19,7 @@ export default function SendCopySoalPaket({data}:{data:BankSoalAppType}){
                     alert(checkValid.message);
                     return;
                 }
-                console.log('klo muncul berarti lolos');
+                
 
                 const newData = {...data, idbaris:0}
                 const dtoBankSoal = DtoBankSoal.fromAppToSheet(newData);

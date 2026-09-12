@@ -24,14 +24,45 @@ import { useCrudPaketSoalProvider } from "~/controllers/paket-soal/crud/paket-so
 import { useDraftPaketSoal } from "~/hooks/use-draft-paket-soal";
 import DataKisiKisi from "~/domain/paket-soal/infrastructure/data-kisi-kisi-class";
 import { ValidationPaketSoal } from "~/controllers/paket-soal/modal/validation-paket-soal";
+import TableSebaranKompetensiPaketSoal from "~/controllers/paket-soal/components/sebaran-kompetensi-paket-soal";
+import type { PaketSoalSheetType } from "~/types/bank-soal/entities/paket-soal-sheet-type";
+import DtoPaketSoalDesainType from "~/dtos/dto-paket-soal-desain";
+import { toast } from "sonner";
+import DispatchingResponseToStore from "~/lib/dispatching-response-to-store";
+import { getSessionRombel } from "~/infrastructures/session-storage/rombel-session";
+import { createInitialSetting } from "./intialPaketSoal";
+
 
 
 export default function CreatePaketSoalPage(){
     const {actions} = useModal();
     const {actions:post, state} = useCrudPaketSoalProvider()
-    const {value:data} = useFilterContext<PaketSoalDesign>();
+    const {value:data, setValue, updateExtra} = useFilterContext<PaketSoalDesign>();
     const {draft, saveDraft, reset} = useDraftPaketSoal();
+    const kelas = getSessionRombel();
     
+    const initialSetting:PraSettingPaket = {
+        identitas: {
+            nama:'',
+            start_time: new Date(),
+            durasi: 60,
+            kelas,
+            showKolom:false,
+            showIdentitas:false,
+            showKop:false,
+            showSebaranTp:false,
+            dataIdentitas:'',
+            showPetunjuk:false
+        },
+        target_paket:'rombel',
+        data_target:[],
+        koleksi_mapel:{isMultiple:false, data:[]},
+        count_bentuk_soal:[],
+        kurikulum:[],
+        nomorSoalUrut:true,
+        dataKopCustom:[]
+
+    }
     const setting = useMemo(()=>data.extra?.setting, [data.extra?.setting]);
     const [paketSoal, setPaketSoal] = useImmer<PaketSoalDesign|undefined>(undefined);
 
@@ -48,8 +79,8 @@ export default function CreatePaketSoalPage(){
 
     useEffect(()=>{
         if(!setting) return;
+        const dataKosong = createPaketSoalDesign(setting)
         if(!data.extra?.data) {
-            const dataKosong = createPaketSoalDesign(setting)
             setPaketSoal(dataKosong)
             return
         }
@@ -58,19 +89,40 @@ export default function CreatePaketSoalPage(){
         
             
     }, [setting, data.extra, setPaketSoal])
-    console.log(paketSoal, data.extra)
-    const dataSebaran = useMemo(()=>{
-        if(!setting?.kurikulum ) return []
-        const  grouping = GroupedAtpHasManySOal.buildGroup(setting.kurikulum);//groupBy(setting?.kurikulum, (item)=>item?.mapelname!)
-        return grouping;
-    }, [setting?.kurikulum]);
+    // useEffect(() => {
+    //     if (!setting) return;
+
+    //     if (paketSoal) return;
+
+    //     if (data.extra?.data) {
+    //         setPaketSoal(data.extra);
+    //         return;
+    //     }
+
+    //     setPaketSoal(createPaketSoalDesign(setting));
+    // }, [setting, data.extra, paketSoal]);
+    
+    const resetPaketSoal = useCallback(() => {
+            const setting = createInitialSetting();
+
+            updateExtra(draft => {
+                draft.setting = setting;
+                draft.data =undefined;
+            });
+
+            setPaketSoal(undefined);
+
+            reset();
+        }, [updateExtra, reset]);
 
     const UpsertSoal = useCallback( (v: DisplayFormatItemSoal) => {
+                
                 setPaketSoal(draft => {
-                    if (!draft) return
-
-                    const group = draft.data.find( item => item.bentukSoal.name === v.bentuk_soal?.name )
-
+                    if (!draft) return ;//draft= createPaketSoalDesign(initialSetting)
+                    
+                    const group = draft.data?.find( item => item.bentukSoal.name === v.bentuk_soal?.name )
+                    
+                    
                     if (!group) return
 
                     const indexItem = group.dataSoal.findIndex( item => item.index === v.index )
@@ -86,11 +138,15 @@ export default function CreatePaketSoalPage(){
                     group.dataSoal.sort( (a, b) => a.index - b.index )
                 })
             },
-            [setPaketSoal]
+            [setPaketSoal, paketSoal]
         )
 
     const handleClickSlot = useCallback((indexBentuk:number, indexSoal:number, ListBentukSoal:ListBentukSoalType, currentDisplay?:DisplayFormatItemSoal) =>{
         if(!setting) return;
+        if(setting.kurikulum.length===0){
+            alert('Belum memilih kurikulum');
+            return ;
+        }
         const noUrutDisplay = getNoSoal(setting, indexBentuk, indexSoal);
         const noIndex = getGlobalIndex(setting, indexBentuk, indexSoal);
         
@@ -100,8 +156,9 @@ export default function CreatePaketSoalPage(){
             triggerUpsert:UpsertSoal,
             paketSoalHasIplemented:paketSoal?.data?.map((m=>m.dataSoal)).flat() ?? []
         }
+        
         actions.open('ADD ITEM SOAL PAKET', dataModal, { closeOnOutsideClick:false })
-    }, [paketSoal?.data]);
+    }, [paketSoal, actions]);
 
    
     const onSubmit = async ()=>{
@@ -111,11 +168,41 @@ export default function CreatePaketSoalPage(){
             alert(validation.message.join('\r\n'))
             return;
         }
-        reset();
+        
+        const instans = new DtoPaketSoalDesainType(paketSoal);
+        const valid = instans.validToSend();
+        
+        if(!valid.isValid){
+            const konfirmasi = confirm(valid.message.join('\r\n')+'. Anda ingin melanjutkannya? Jika dilanjut, ini akan disimpan di server sebagai paket soal yang tidak lemngkap.')
+            if(!konfirmasi) return;
+
+        }
+        
+        toast.promise(
+            // post.create(paketSoal),
+            post.create(paketSoal),
+            {
+                loading:'Sedang menyimpan',
+                success:(respon)=>{
+                    const {success, data, detailResponse} = respon;
+                    reset();
+                    DispatchingResponseToStore(success, data as PaketSoalSheetType[], detailResponse!)
+                    
+                    resetPaketSoal();
+                    
+                    return 'Sukses tersimpan'
+                },
+                error:(error)=>{
+                    console.log(error);
+                    return 'Gagal menyimpan'
+                }
+            }
+        )
+        //reset();
     }
 
-    const onHandleKisiKisi =(versi:'v1'|'v2')=>{
-        console.log({versi})
+    const onHandleKisiKisi =useCallback((versi:'v1'|'v2')=>{
+        
         if(!paketSoal) return
 
         const validation = ValidationPaketSoal(paketSoal);
@@ -132,14 +219,21 @@ export default function CreatePaketSoalPage(){
 
         }
 
-    }
+    },[paketSoal, actions])
 
     const onHandlePenskoran = () =>{
-        console.log(paketSoal?.data)
+        if(!paketSoal)return
+         const validation = ValidationPaketSoal(paketSoal);
+        if(!validation.isValid){
+            alert(validation.message.join('\r\n'))
+            return;
+        }
+        actions.open('PREVIEW KUNCI JAWABAN PAKET SOAL', paketSoal, {closeOnOutsideClick:false})
+        
     }
-
+    
     return (
-        <div className="p-1">
+        <div className="p-1]">
             {
                 (setting?.identitas && setting.identitas.showKop && setting?.dataKopCustom) && (
                     <KopPaketSoal data={setting?.dataKopCustom}/>
@@ -162,58 +256,8 @@ export default function CreatePaketSoalPage(){
                         (setting?.identitas && setting.identitas?.showSebaranTp) && (
                                 <li><strong className="uppercase">Sebaran Kompetensi Butir Soal</strong>
                                     {
-                                        (setting?.identitas && setting.identitas.showSebaranTp) && (
-                                        
-                                            <TableWithScrolling className="w-11/12 mx-auto text-[10px]">
-                                                <thead>
-                                                    <TRowEdura>
-                                                        <ThEdura>Mata Pelajaran</ThEdura>
-                                                        <ThEdura>CP</ThEdura>
-                                                        <ThEdura>TP</ThEdura>
-                                                        <ThEdura>No. Soal</ThEdura>
-                                                    </TRowEdura>
-                                                </thead>
-                                                <tbody>
-                                                    {
-                                                        dataSebaran.map((mapel, iMapel)=>
-                                                            mapel.hasTp.map((tp, iTp)=>
-                                                                tp.hasAtp.map((atp, iAtp)=>
-                                                                    <TRowEdura key={iMapel+'_'+iTp+'_'+iAtp}>
-                                                                        {
-                                                                            (iTp === 0 && iAtp === 0 ) && (
-                                                                                <TdEdura rowSpan={mapel.countAtp}>{mapel.mapelName}</TdEdura>
-                                                                            )
-                                                                        }
-                                                                        {
-                                                                            iAtp === 0 && (
-                                                                                <TdEdura className="text-wrap" rowSpan={tp.hasAtp.length}>{tp.tp_description}</TdEdura>
-                                                                            )
-                                                                        }
-                                                                        <TdEdura className="text-wrap">{atp.atp_description}</TdEdura>
-                                                                        <TdEdura/>
-                                                                    </TRowEdura>
-                                                                )
-                                                            )
-                                                        )
-
-                                                        // dataSebaran && Object.entries(dataSebaran).map(([mapelname, kurikulum], iKurikulum)=>
-                                                        //     kurikulum.map((tpAtp, itpAtp)=>
-                                                        //         <TRowEdura key={itpAtp}>
-                                                        //             {   itpAtp=== 0  && (
-                                                        //                 <>
-                                                        //                     <TdEdura rowSpan={kurikulum.length}>{itpAtp + 1+iKurikulum}</TdEdura>
-                                                        //                     <TdEdura rowSpan={kurikulum.length}>{mapelname}</TdEdura>
-                                                        //                 </>)
-                                                        //             }
-                                                        //             <TdEdura className="text-wrap">{tpAtp?.atp_as_tp_id}</TdEdura>
-                                                        //             <TdEdura className="text-wrap" >{tpAtp?.atp_as_tp_description}</TdEdura>
-                                                        //             <TdEdura className="text-wrap"></TdEdura>
-                                                        //         </TRowEdura>
-                                                        //     )
-                                                        // )
-                                                    }
-                                                </tbody>
-                                            </TableWithScrolling>
+                                        (setting?.identitas && setting.identitas.showSebaranTp && paketSoal) && (
+                                            <TableSebaranKompetensiPaketSoal paketSoal={paketSoal}/>
                                         )
 
                                     }
@@ -271,12 +315,15 @@ export default function CreatePaketSoalPage(){
                                                                             }
                                                                             className="cursor-pointer align-top mb-3"
                                                                         >
+                                                                            
                                                                             {
+
                                                                                 dataItem
                                                                                     ? 
                                                                                         <ItemSoalPreview data={dataItem}/>
-                                                                                    : `Klik untuk mengambahkan item soal ${soal.dataBentukSoal.description}`
+                                                                                    : <p className="text-rose-600">Klik untuk mengambahkan item soal <strong>{soal.dataBentukSoal.description}</strong></p>
                                                                             }
+
                                                                         </li>
                                                                     )
                                                                 }

@@ -20,7 +20,7 @@ export default function SendSoalBaruPaket({data}:{data:BankSoalAppType}){
             alert(checkValid.message);
             return;
         }
-        console.log('data yang dikirim', data)
+        
         const dtoBankSoal = DtoBankSoal.fromAppToSheet(data);
         
         toast.promise(
@@ -33,7 +33,8 @@ export default function SendSoalBaruPaket({data}:{data:BankSoalAppType}){
                     
                     /** itemSoalBaru dari server */
                     const bankSoal = (dataRespon as BankSoalSheetType[]);
-                    console.log({bankSoal, dataRespon})
+                    
+                    
                     if(bankSoal){
                         const lastItemBankSoal = bankSoal[bankSoal?.length-1];
                         const data_soal = DtoBankSoal.fromSheetToApp(lastItemBankSoal);
@@ -43,11 +44,11 @@ export default function SendSoalBaruPaket({data}:{data:BankSoalAppType}){
                         
                         fn(currentItemSoal);
 
+                        return 'Berhasil disimpan di server dan diterapkan di paket soal';
                     }
                     
-                    actionsModal.close();
                     
-                    return 'Berhasil disimpan di server dan diterapkan di paket soal';
+                    return 'Soal berhasil disimpan, tapi soal gagal diterapkan. Coba lagi!'
                 },
                 error:(er)=>{
                     console.log(er);

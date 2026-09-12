@@ -7,10 +7,12 @@ export default class BankSoalRepository extends AppScriptSheet implements BankSo
     constructor(){
         super()
     }
+    
     async uploadFile(param: ParamFile): Promise<ApiResponse<unknown> | { success: boolean; data: any; message: string; source: string; }> {
         return  await this.postBody(this.paramSheetBankSoalTabBankSoal);
         
     }
+
     async update(param: Record<string, any>): Promise<ApiResponse<BankSoalSheetType>> {
         try{
             this.paramSheetBankSoalTabBankSoal = param
@@ -21,6 +23,7 @@ export default class BankSoalRepository extends AppScriptSheet implements BankSo
             return this.responActionError(er);
         }
     }
+
     async create(param: Record<string, any>): Promise<ApiResponse<BankSoalSheetType>> {
         try{
             this.paramSheetBankSoalTabBankSoal = param

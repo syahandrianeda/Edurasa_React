@@ -12,23 +12,28 @@ export interface PaketSoalAppType{
     lintas_mapel:boolean,
     kode_mapel:string[],
     id_banksoal:number[],
-    json_setting: PraSettingBaku,
+    json_setting?: PraSettingBaku,
     json_desain: DataSoalDesignBaku
 }
 
 export interface PraSettingBaku{
-        identitas           : IdentitasKontenPaket,
+        identitas?           : IdentitasKontenPaket,
         dataKopCustom       : string[],
-        koleksi_mapel       : KoleksiMapelPaketSoal, 
+        koleksi_mapel?       : KoleksiMapelPaketSoal, 
         data_target         : string[]
-        count_bentuk_soal   : CountBentukSoalPaket[],
+        count_bentuk_soal   : countBentukSoalPaketBaku[],
         kurikulum           : number[];//AtpAsOrm[]
         nomorSoalUrut       : boolean
 }
 
+export interface countBentukSoalPaketBaku{
+    dataBentukSoal:ListBentukSoalType['name'],
+    count:number
+    description:string
+}
 export interface DataSoalDesignBaku{
     startNumber:number,
-    bentukSoal:ListBentukSoalType
+    bentukSoal:ListBentukSoalType['name']
     petunjukPengisian:string,
     dataSoal:DisplayFormatItemSoalBaku[]
 }

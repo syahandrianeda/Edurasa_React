@@ -5,6 +5,9 @@ import { dataURLToFile, encodeFileToBase64, isImageFile } from "~/domain/image/f
 import { resizeImageForUpload } from "~/domain/image/image-resizer";
 import type { ApiResponse, ParamFile } from "~/configs/appscript-config";
 import type { PaketSoalSheetType } from "~/types/bank-soal/entities/paket-soal-sheet-type";
+import { currentTapel, currentTapelProperties } from "~/lib/current-tapel";
+import DtoPaketSoalDesainType from "~/dtos/dto-paket-soal-desain";
+import type { PaketSoalDesign } from "~/domain/paket-soal/result/paket-soal";
 
 export default class PaketSoalService implements PaketSoalServiceInterface{
     constructor(public repo:PaketSoalRepositoryInterface = new PaketSoalRepository()){}
@@ -39,10 +42,45 @@ export default class PaketSoalService implements PaketSoalServiceInterface{
         }
 
     async create(param: Record<string, any>): Promise<ApiResponse<PaketSoalSheetType>> {
-        return await this.repo.create(param);
+        
+        const instancePaketSoal = new DtoPaketSoalDesainType(param as PaketSoalDesign)
+        const paramFile = instancePaketSoal.toParamFile();
+        const dataJson = instancePaketSoal.toPaketSoalSheetType();
+        const parameter = {
+            paramFile:JSON.stringify(paramFile),
+            data:JSON.stringify([dataJson]),
+            key_match:'idbaris',
+            key_index:'idbaris',
+            action:'upsertUploadTxt',
+            schema:JSON.stringify({
+                    idbaris:'number',
+                    lintas_mapel:'number'
+                    
+                    
+            }),
+        }
+        return await this.repo.create(parameter);
     }
 
     async update(param: Record<string, any>): Promise<ApiResponse<PaketSoalSheetType>> {
-        return await this.update(param);
+         const instancePaketSoal = new DtoPaketSoalDesainType(param as PaketSoalDesign)
+        const paramFile = instancePaketSoal.toParamFile();
+        const dataJson = instancePaketSoal.toPaketSoalSheetType();
+        const parameter = {
+            paramFile:JSON.stringify(paramFile),
+            data:JSON.stringify([dataJson]),
+            key_match:'idbaris',
+            key_index:'idbaris',
+            action:'upsertUploadTxt',
+            schema:JSON.stringify({
+                    idbaris:'number',
+                    lintas_mapel:'number',
+                    start_time: 'datetime',
+                    durasi: 'number'
+                    
+                    
+            }),
+        }
+        return await this.repo.create(parameter);
     }
 }

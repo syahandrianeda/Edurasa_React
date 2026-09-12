@@ -26,7 +26,7 @@ export default function TableKisiKisiDanSoal({isMultiple, KisiKisiInstance}:Prop
                             <ThEdura className="text-wrap">Tujuan Pembelajaran</ThEdura>
                             <ThEdura className="text-wrap">Materi Pokok</ThEdura>
                             <ThEdura className="text-wrap">Level Kognitif</ThEdura>
-                            <ThEdura className="text-wrap">Indikator Soal</ThEdura>
+                            <ThEdura className="text-nowrap">Indikator Soal</ThEdura>
                             <ThEdura className="text-wrap">No Soal</ThEdura>
                             <ThEdura className="text-wrap">Bentuk Soal</ThEdura>
                             
@@ -38,7 +38,7 @@ export default function TableKisiKisiDanSoal({isMultiple, KisiKisiInstance}:Prop
                             <ThEdura className="text-wrap">Tujuan Pembelajaran</ThEdura>
                             <ThEdura className="text-wrap">Materi Pokok</ThEdura>
                             <ThEdura className="text-wrap">Level Kognitif</ThEdura>
-                            <ThEdura className="text-wrap">Indikator Soal</ThEdura>
+                            <ThEdura className="text-nowrap">Indikator Soal</ThEdura>
                             <ThEdura className="text-wrap">No Soal</ThEdura>
                             <ThEdura className="text-wrap">Bentuk Soal</ThEdura>
                         </TRowEdura>

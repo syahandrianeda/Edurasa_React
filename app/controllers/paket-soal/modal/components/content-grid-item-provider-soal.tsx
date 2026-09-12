@@ -1,4 +1,3 @@
-import CardSoalPreview from "~/controllers/koleksi-bank-soal/views/card-soal-preview";
 import type { BankSoalAppType } from "~/types/bank-soal/bank-soal-type";
 import ControlTerapkanEdit from "./control-terapkan-dan-edit";
 import CardSoalPreviewDisplay from "./card-soal-privew-display";
@@ -21,7 +20,7 @@ export default function ContentGridItemProvider({noDisplay, data, trigger}:{noDi
         
         trigger(newDataForm);
         actions.close();
-    }, [currentData, data]);
+    }, [currentData, data, modeDisplay, trigger]);
 
     const handleEdit = useCallback(()=>{
         if(!currentData.data_soal){

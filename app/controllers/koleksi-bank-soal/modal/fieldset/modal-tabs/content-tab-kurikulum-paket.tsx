@@ -25,7 +25,7 @@ export default function ContentTabKurikulumPaketSoal ({
     handleSelectKurikulum
 }:Props){
     const {value} = useFilterContext<PaketSoalDesign>();
-    console.log(value.extra?.setting?.kurikulum)
+    
     return (
             <div className='flex flex-col md:flex-row md:px-2 gap-1 mt-2 text-sm pb-2 overflow-y-auto scrol-h-custom'>
                     <div className="md:w-72 hidden bg-sky-50 dark:bg-slate-400 shadow-lg shadow-sky-500 border-sky-300 px-1 pt-2 rounded-s-2xl gap-2 md:flex md:flex-col">

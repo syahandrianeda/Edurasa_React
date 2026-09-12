@@ -1,10 +1,10 @@
 import type { PaketSoalDesign } from "~/domain/paket-soal/result/paket-soal";
 
-type alertPaketSoal = {
+export type AlertPaketSoal = {
     isValid:boolean;
     message:string[];
 }
-export function ValidationPaketSoal(data:PaketSoalDesign):alertPaketSoal{
+export function ValidationPaketSoal(data:PaketSoalDesign):AlertPaketSoal{
     let isValid = true;
     const message:string[]=[];
     
