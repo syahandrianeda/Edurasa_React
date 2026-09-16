@@ -67,13 +67,13 @@ export default function CreatePaketSoalPage(){
         }, [updateExtra, reset]);
 
     const UpsertSoal = useCallback( (v: DisplayFormatItemSoal) => {
-                console.log('upsertSoal', v)
+                
                 setPaketSoal(draft => {
                     if (!draft) return ;//draft= createPaketSoalDesign(initialSetting)
-                    console.log({draft});
+                    
                     const group = draft.data?.find( item => item.bentukSoal.name === v.bentuk_soal?.name )
                     
-                    console.log(draft)
+                    
                     if (!group) return
 
                     const indexItem = group.dataSoal.findIndex( item => item.index === v.index )
@@ -100,7 +100,7 @@ export default function CreatePaketSoalPage(){
         }
         const noUrutDisplay = getNoSoal(setting, indexBentuk, indexSoal);
         const noIndex = getGlobalIndex(setting, indexBentuk, indexSoal);
-        console.log({currentDisplay})
+        
         const dataModal:InitialItemSoalImplemented = {
             currentItemSoal: currentDisplay ?? {no_soal:noUrutDisplay, index:noIndex, bentuk_soal:ListBentukSoal, showStimulus:true},
             curriculumProvider:setting.kurikulum,

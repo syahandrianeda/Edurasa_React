@@ -109,16 +109,16 @@ export default function EditPublikasiPaketSoal(){
         targetPaket,
         namaPublikasi
     ])
-    console.log('currentData Edit',{currentData})
+    
     const onSubmit = useCallback(()=>{
         const dto = DtoPublikasiPaketStatic.fromAppValidationToSheet(currentData)
-        console.log(currentData, dto);
+        
         toast.promise(
             post.update(dto),
             {
                 loading:'sedang mengupdate',
                 success: (respon)=>{
-                    console.log({respon});
+                    
                     const {success, data, detailResponse} = respon;
                     if(detailResponse){
                         DispatchingResponseToStore(success, data as PublikasiPaketSheetType[], detailResponse)

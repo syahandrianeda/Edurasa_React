@@ -1,6 +1,6 @@
 import { TdEdura, ThEdura, TRowEdura } from "~/components/tabels/tabel-components";
 import TableWithScrolling from "~/components/tabels/table-with-scrolling";
-import type { PaketSoalAppType, PaketSoalAppWithPublikasi } from "~/types/bank-soal/entities/paket-soal-app-type";
+import type { PaketSoalAppWithPublikasi } from "~/types/bank-soal/entities/paket-soal-app-type";
 import { groupByToArray } from "~/lib/group-by";
 import ButtonCommitAwesome from "~/components/button-awesome/commit-button";
 import TriggerPaketSoal from "~/controllers/koleksi-paket-soal/triggers/trigger-paket";

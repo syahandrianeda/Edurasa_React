@@ -7,7 +7,6 @@ import KoleksiPaketSoalPage from "~/pages/bank-soal/koleksi-paket-soal-page";
 import { instancePaketSoalSheet } from "~/context-reduct/selectores/paket-soal-selector";
 import { useMemo } from "react";
 import { getSessionRombel } from "~/infrastructures/session-storage/rombel-session";
-import { sheetBankSoal_publikasiPaket } from "~/domain/enloaded/intial-enloaded/by-sheet/bank-soal";
 
 
 export function meta({matches}: Route.MetaArgs) {
@@ -59,7 +58,7 @@ export default function KoleksiPaketSoalRoute() {
 
     }, [koleksiPaketSoal])
     
-    console.log('route', {data})
+    
     return(
         <div className="p-1">
             <h3 className="text-2xl text-center font-extrabold uppercase">Koleksi Paket Soal kelas {jenjang} </h3>

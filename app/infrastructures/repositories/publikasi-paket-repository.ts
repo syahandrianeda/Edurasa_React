@@ -12,7 +12,7 @@ export default class PublikasiPaketRepository extends AppScriptSheet implements 
         try{
             this.paramSheetBankSoalTabPublikasiPaket = param;
             const respon = await this.postBody(this.paramSheetBankSoalTabPublikasiPaket);
-            console.log(this.paramSheetBankSoalTabPublikasiPaket, respon)
+            
             return this.responActionRead(respon)
 
         }catch(err){

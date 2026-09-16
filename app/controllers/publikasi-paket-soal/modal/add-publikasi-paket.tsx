@@ -119,14 +119,14 @@ export default function  AddPublikasiPaketSoal(){
             return;
         }
         const dto = DtoPublikasiPaketStatic.fromAppToSheet(currentData)
-        console.log(currentData, dto);
+        
 
         toast.promise(
             post.update(dto),
             {
                 loading:'sedang mengupdate',
                 success: (respon)=>{
-                    console.log({respon});
+                    
                     const {success, data, detailResponse} = respon;
                     if(detailResponse){
                         DispatchingResponseToStore(success, data as PublikasiPaketSheetType[], detailResponse)
@@ -141,7 +141,7 @@ export default function  AddPublikasiPaketSoal(){
             }
         )
     },[currentData])
-    console.log('currentData Add',{currentData})
+    
     return (
         <fieldset disabled={state.isSubmitting}>
             <WrapperContent className="grid md:grid-cols-2 grid-cols-1 gap-2 w-full text-sm">

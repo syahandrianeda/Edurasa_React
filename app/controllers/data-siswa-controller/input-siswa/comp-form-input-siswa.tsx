@@ -44,9 +44,9 @@ export default function FormPesertaDidikBaru({data}:{data:SiswaType}){
             <fieldset disabled={state.isSubmitting}>
                 <div className="bg-linear-to-tr from-sky-300 to-sky-100 p-1 rounded-xl">
                     <h5 className="text-center">Pertama kali diterima</h5>
-                    <div className="bg-linear-to-tr from-sky-600 to-sky-100 p-1 rounded-sm flex flex-col md:flex-row justify-around items-center">
+                    <div className="bg-linear-to-tr from-sky-600 to-sky-100 p-1 rounded-sm flex flex-col gap-2 md:flex-row justify-around items-center">
                         <KalendarMasukTanggal/>
-                        <AwalKelasSiswaBaru activeOnly={true} className="w-9/12 md:w-3/12 mt-4"/>
+                        <AwalKelasSiswaBaru activeOnly={true} className="w-9/12 md:w-4/12 mt-6"/>
                     </div>
                     <h5 className="text-center">Sekolah Asal</h5>
                     <div className="bg-linear-to-tr from-sky-600 to-sky-100 p-1 rounded-sm flex flex-col md:flex-row gap-2">

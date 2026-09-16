@@ -13,7 +13,7 @@ export default function KalendarMasukTanggal(){
         <CalendarPicker
             id="id_masuk_tgl"
             label="Tanggal Diterima"
-            className="w-10/12"
+            className="w-10/12 md:w-3/12"
             currentDate={currentData.masuk_tgl}
             handleChangeDate={handleDate}/>
     )

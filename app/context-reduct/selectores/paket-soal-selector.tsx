@@ -1,8 +1,8 @@
-import { createSelector, createSlice } from "@reduxjs/toolkit";
+import { createSelector} from "@reduxjs/toolkit";
 import type { RootState } from "../store";
 import { AtpHasManySoalSelector } from "./bank-soal-selector";
 import DtoPaketSoalSheetClass from "~/dtos/dto-paket-soal-sheet-class";
-import { PublikasiPaketSoalAppSelector, PublikasiPaketSoalAppStaticSelector } from "./publikasi-paket-soal";
+import {  PublikasiPaketSoalAppStaticSelector } from "./publikasi-paket-soal";
 
 
 export const PurePaketSoalSelector = (state:RootState)=> state.paketSoal.data;

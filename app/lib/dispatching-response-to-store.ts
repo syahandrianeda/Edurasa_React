@@ -272,8 +272,7 @@ export default async function DispatchingResponseToStore(success:boolean, data:R
             store.dispatch(setPaketSoal(data as unknown as PaketSoalSheetType[]));
         }
         if(detailResponse?.namaTab === namaTab('publikasi_paket')){
-            console.log('data publikasi paket asal', data)
             store.dispatch(setPublikasiPaket(data as unknown as PublikasiPaketSheetType[]))
         }
-        console.log(detailResponse)
+        
 }

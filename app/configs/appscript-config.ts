@@ -183,7 +183,7 @@ export class AppScriptConfig {
             }else{
                 // console.log('post body TIDAK memanggil Auth pada action', param.action);
             }
-            console.log({pos})
+            
             return pos.data;
         } catch (error) {
                    
@@ -258,7 +258,7 @@ export class AppScriptConfig {
     
     /** === Convert Respon */
     responActionRead<T>(respon:Record<string, any>):ApiResponse<T>{
-        console.log('responActitonRead', respon)
+        
         return {
             success: respon.success ?? respon?.info?.findTab,
             data: respon.data,

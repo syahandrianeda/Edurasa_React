@@ -6,7 +6,7 @@ import type { IdentitasKontenPaket } from "~/domain/paket-soal/entities/identita
 import type { PraSettingBaku } from "~/types/bank-soal/entities/PraSettingBaku";
 import type { AtpHasManySoalType } from "~/domain/bank-soal/relational-soal/type";
 import { ListBentukSoal } from "~/domain/bank-soal/list-bentuk-soal";
-import type { TypePaketSoal } from "~/domain/paket-soal/entities/type-paket";
+
 import { getNumberFromString } from "~/lib/get-number";
 import type { PublikasiPaketAppType } from "~/types/bank-soal/entities/publikasi-paket-app-type";
 
