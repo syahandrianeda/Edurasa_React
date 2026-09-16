@@ -8,8 +8,10 @@ import { getSessionApp } from "~/infrastructures/session-storage/app-session";
 import { currentTapel, currentTapelProperties } from "~/lib/current-tapel";
 import { normalizeFileName } from "~/lib/normalized-filename";
 import type{ UserPtk } from "~/types";
-import type { DataSoalDesignBaku, PraSettingBaku } from "~/types/bank-soal/entities/paket-soal-app-type";
+import type { DataSoalDesignBaku } from "~/types/bank-soal/entities/DataSoalDesignBaku";
+// import type { DataSoalDesignBaku, PraSettingBaku } from "~/types/bank-soal/entities/paket-soal-app-type";
 import type { PaketSoalSheetType } from "~/types/bank-soal/entities/paket-soal-sheet-type";
+import type { PraSettingBaku } from "~/types/bank-soal/entities/PraSettingBaku";
 
 export default class DtoPaketSoalDesainType extends DataKisiKisi{
     constructor( PaketSoal:PaketSoalDesign){
@@ -43,17 +45,21 @@ export default class DtoPaketSoalDesainType extends DataKisiKisi{
         const target_asesmen = this.dataSetting?.target_paket ?? 'rombel'
         const target_rombel = this.dataSetting?.identitas?.kelas ?? ''
 
+
         const nama_paket =( this.dataSettingIdentitas?.nama ?? 'Paket Soal ' + new Date().getTime()) + (this.dataCountItemHasImplemented !==0 ? ' BELUM LENGKAP':'');
         const lintas_mapel = this.isMultiple ? 1 : 0;
-        const kode_mapel = this.stringArrayToString(this.dataKoleksiMapelPaket);//this.dataSetting?.koleksi_mapel?.data?.join(', ') ?? '';
         const id_banksoal = this.numberArrayToString(this.dataSoal.map(m=>m.data_soal?.idbaris ?? 0));// this.dataSoal.map(m=>m.data_soal?.idbaris).join(', ');
         const json_setting = this.JsonSetting;
         const user = getSessionApp<UserPtk>()?.name ?? '';
         const start_time = this.dataSettingIdentitas?.start_time.toLocaleString() ?? new Date().toLocaleString();
         const durasi = this.dataSettingIdentitas?.durasi ?? 60;
+        const idbaris = this.dataSetting?.idbaris ?? 0;
+        
+        const mapel_name = this.stringArrayToString(this.dataKoleksiMapelPaket);//this.dataSetting?.koleksi_mapel?.data?.join(', ') ?? '';
+        const kode_mapel = this.stringArrayToString(this.kodeMapel);//this.dataSetting?.koleksi_mapel?.data?.join(', ') ?? '';
         
         return {
-            idbaris                     : 0,
+            idbaris                     ,
             target_asesmen              ,//: 'rombel',
             target_rombel               ,//: 'string',
             nama_paket                  ,//: 'string',
@@ -65,7 +71,10 @@ export default class DtoPaketSoalDesainType extends DataKisiKisi{
             user,
             start_time,
             durasi,
-            kurikulum_name:'kurmer'
+            kurikulum_name:'kurmer',
+            status:'',
+            is_complete: this.dataCountItemHasImplemented ===0 ?1:0,
+            mapel_name
 
         
         }

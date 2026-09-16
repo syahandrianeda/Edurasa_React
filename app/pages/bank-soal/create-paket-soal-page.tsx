@@ -40,42 +40,8 @@ export default function CreatePaketSoalPage(){
     const {value:data, setValue, updateExtra} = useFilterContext<PaketSoalDesign>();
     const {draft, saveDraft, reset} = useDraftPaketSoal();
     const kelas = getSessionRombel();
-    
-    const initialSetting:PraSettingPaket = {
-        identitas: {
-            nama:'',
-            start_time: new Date(),
-            durasi: 60,
-            kelas,
-            showKolom:false,
-            showIdentitas:false,
-            showKop:false,
-            showSebaranTp:false,
-            dataIdentitas:'',
-            showPetunjuk:false
-        },
-        target_paket:'rombel',
-        data_target:[],
-        koleksi_mapel:{isMultiple:false, data:[]},
-        count_bentuk_soal:[],
-        kurikulum:[],
-        nomorSoalUrut:true,
-        dataKopCustom:[]
-
-    }
     const setting = useMemo(()=>data.extra?.setting, [data.extra?.setting]);
     const [paketSoal, setPaketSoal] = useImmer<PaketSoalDesign|undefined>(undefined);
-
-    // useEffect(()=>{
-    //     if(!setting) return
-
-    //     if(!draft){
-    //         const dataKosong = createPaketSoalDesign(setting);
-    //         setPaketSoal(dataKosong)
-    //     }else{
-    //         setPaketSoal(draft)
-    //     }
-    // },[ draft, setting, setPaketSoal])
 
     useEffect(()=>{
         if(!setting) return;
@@ -84,24 +50,9 @@ export default function CreatePaketSoalPage(){
             setPaketSoal(dataKosong)
             return
         }
-        
             setPaketSoal(data.extra)
-        
-            
     }, [setting, data.extra, setPaketSoal])
-    // useEffect(() => {
-    //     if (!setting) return;
-
-    //     if (paketSoal) return;
-
-    //     if (data.extra?.data) {
-    //         setPaketSoal(data.extra);
-    //         return;
-    //     }
-
-    //     setPaketSoal(createPaketSoalDesign(setting));
-    // }, [setting, data.extra, paketSoal]);
-    
+   
     const resetPaketSoal = useCallback(() => {
             const setting = createInitialSetting();
 
@@ -116,13 +67,13 @@ export default function CreatePaketSoalPage(){
         }, [updateExtra, reset]);
 
     const UpsertSoal = useCallback( (v: DisplayFormatItemSoal) => {
-                
+                console.log('upsertSoal', v)
                 setPaketSoal(draft => {
                     if (!draft) return ;//draft= createPaketSoalDesign(initialSetting)
-                    
+                    console.log({draft});
                     const group = draft.data?.find( item => item.bentukSoal.name === v.bentuk_soal?.name )
                     
-                    
+                    console.log(draft)
                     if (!group) return
 
                     const indexItem = group.dataSoal.findIndex( item => item.index === v.index )
@@ -149,7 +100,7 @@ export default function CreatePaketSoalPage(){
         }
         const noUrutDisplay = getNoSoal(setting, indexBentuk, indexSoal);
         const noIndex = getGlobalIndex(setting, indexBentuk, indexSoal);
-        
+        console.log({currentDisplay})
         const dataModal:InitialItemSoalImplemented = {
             currentItemSoal: currentDisplay ?? {no_soal:noUrutDisplay, index:noIndex, bentuk_soal:ListBentukSoal, showStimulus:true},
             curriculumProvider:setting.kurikulum,
@@ -179,6 +130,7 @@ export default function CreatePaketSoalPage(){
         }
         
         toast.promise(
+            // post.create(paketSoal),
             // post.create(paketSoal),
             post.create(paketSoal),
             {
@@ -233,111 +185,107 @@ export default function CreatePaketSoalPage(){
     }
     
     return (
-        <div className="p-1]">
-            {
-                (setting?.identitas && setting.identitas.showKop && setting?.dataKopCustom) && (
-                    <KopPaketSoal data={setting?.dataKopCustom}/>
-                )
-            }
-            {
-                (setting?.identitas && setting.identitas.showIdentitas && setting.koleksi_mapel && setting.target_paket) && (
-                    <IdentitasPaketSoal data={setting.identitas} mapel={setting.koleksi_mapel} />
-                )
-            }
-            
-            {
-                (setting?.identitas && setting.identitas.showKolom) && (
-                    <KolomNilaiPaket/>
-                )
-            }
+        <div className="p-1">
+                {
+                    (setting?.identitas && setting.identitas.showKop && setting?.dataKopCustom) && (
+                        <KopPaketSoal data={setting?.dataKopCustom}/>
+                    )
+                }
+                {
+                    (setting?.identitas && setting.identitas.showIdentitas && setting.koleksi_mapel && setting.target_paket) && (
+                        <IdentitasPaketSoal data={setting.identitas} mapel={setting.koleksi_mapel} />
+                    )
+                }
+                {
+                    (setting?.identitas && setting.identitas.showKolom) && (
+                        <KolomNilaiPaket/>
+                    )
+                }
 
             <ol className="list-[upper-alpha] list-outside marker:font-bold pl-5 align-top">
-                    {
-                        (setting?.identitas && setting.identitas?.showSebaranTp) && (
-                                <li><strong className="uppercase">Sebaran Kompetensi Butir Soal</strong>
-                                    {
-                                        (setting?.identitas && setting.identitas.showSebaranTp && paketSoal) && (
-                                            <TableSebaranKompetensiPaketSoal paketSoal={paketSoal}/>
-                                        )
-
-                                    }
-                                        
-                                    
-                                </li>
-                        )
-                    }
-                    {
-                        (setting?.identitas && setting.identitas.showPetunjuk) && (
-                            <li><strong>PETUNJUK UMUM</strong>
+                {
+                    (setting?.identitas && setting.identitas?.showSebaranTp) && (
+                        <li><strong className="uppercase">Sebaran Kompetensi Butir Soal</strong>
+                            {
+                                (setting?.identitas && setting.identitas.showSebaranTp && paketSoal) && (
+                                    <TableSebaranKompetensiPaketSoal paketSoal={paketSoal}/>
+                                )
+                            }
+                        </li>
+                    )
+                }
+                {
+                    (setting?.identitas && setting.identitas.showPetunjuk) && (
+                        <li>
+                            <strong>PETUNJUK UMUM</strong>
                             <PetunjukUmumPaketSoal/>
-                            </li>
-                        )
-                    }
-                    {
-                        (setting?.identitas && setting?.count_bentuk_soal && setting?.count_bentuk_soal.length>0) && (
-                            <li>
-                                <strong>PETUNJUK KHUSUS</strong>
-                                <ol className="list-[upper-roman] list-outside ps-4">
+                        </li>
+                    )
+                }
+                {
+                    (setting?.identitas && setting?.count_bentuk_soal && setting?.count_bentuk_soal.length>0) && (
+                        <li>
+                            <strong>PETUNJUK KHUSUS</strong>
+                            <ol className="list-[upper-roman] list-outside ps-4">
+                                {
+                                    setting?.count_bentuk_soal?.map((soal, indexBentuk) => {
+                                        
+                                        const cekStartNumber = paketSoal?.data?.[indexBentuk]?.startNumber
+                                        const dataSoal =  paketSoal?.data?.find( item => item.bentukSoal.name === soal.dataBentukSoal.name ) ?.dataSoal;
+                                        
+                                        return (
+                                                <li key={indexBentuk}>{soal.description}
+                                                    <ol start={cekStartNumber} className="list-decimal ps-4 marker:font-normal">
+                                                        {Array.from(
+                                                            { length: soal.count },
+                                                            (_, indexSoal) => {
 
-                                    {
-                                        setting?.count_bentuk_soal?.map((soal, indexBentuk) => {
-                                            
-                                            const cekStartNumber = paketSoal?.data?.[indexBentuk]?.startNumber
-                                            const dataSoal =  paketSoal?.data?.find( item => item.bentukSoal.name === soal.dataBentukSoal.name ) ?.dataSoal;
-                                            
-                                            return (
-                                                    <li key={indexBentuk}>{soal.description}
-                                                        <ol start={cekStartNumber} className="list-decimal ps-4 marker:font-normal">
-                                                            {Array.from(
-                                                                { length: soal.count },
-                                                                (_, indexSoal) => {
+                                                                const globalIndex = getGlobalIndex(
+                                                                    setting!,
+                                                                    indexBentuk,
+                                                                    indexSoal
+                                                                )
 
-                                                                    const globalIndex = getGlobalIndex(
-                                                                        setting!,
-                                                                        indexBentuk,
-                                                                        indexSoal
-                                                                    )
+                                                                const dataItem = dataSoal?.find(
+                                                                    item => item.index === globalIndex
+                                                                )
 
-                                                                    const dataItem = dataSoal?.find(
-                                                                        item => item.index === globalIndex
-                                                                    )
-
-                                                                    return (
-                                                                        <li
-                                                                            key={indexSoal}
-                                                                            onClick={() =>
-                                                                                handleClickSlot(
-                                                                                    indexBentuk,
-                                                                                    indexSoal,
-                                                                                    soal.dataBentukSoal,
-                                                                                    dataItem
-                                                                                )
-                                                                            }
-                                                                            className="cursor-pointer align-top mb-3"
-                                                                        >
-                                                                            
-                                                                            {
-
+                                                                return (
+                                                                    <li
+                                                                        key={indexSoal}
+                                                                        onClick={() =>
+                                                                            handleClickSlot(
+                                                                                indexBentuk,
+                                                                                indexSoal,
+                                                                                soal.dataBentukSoal,
                                                                                 dataItem
-                                                                                    ? 
-                                                                                        <ItemSoalPreview data={dataItem}/>
-                                                                                    : <p className="text-rose-600">Klik untuk mengambahkan item soal <strong>{soal.dataBentukSoal.description}</strong></p>
-                                                                            }
+                                                                            )
+                                                                        }
+                                                                        className="cursor-pointer align-top mb-3"
+                                                                    >
+                                                                        
+                                                                        {
 
-                                                                        </li>
-                                                                    )
-                                                                }
-                                                            )}
-                                                        </ol>
-                                                    </li>
-                                                )
-                                            }
-                                        )
-                                    }
-                                </ol>
-                            </li>
-                        )
-                    }
+                                                                            dataItem
+                                                                                ? 
+                                                                                    <ItemSoalPreview data={dataItem}/>
+                                                                                : <p className="text-rose-600">Klik untuk mengambahkan item soal <strong>{soal.dataBentukSoal.description}</strong></p>
+                                                                        }
+
+                                                                    </li>
+                                                                )
+                                                            }
+                                                        )}
+                                                    </ol>
+                                                </li>
+                                            )
+                                        }
+                                    )
+                                }
+                            </ol>
+                        </li>
+                    )
+                }
             </ol>
             <div className="sticky print:hidden bg-sky-300 bottom-5 mt-64 py-2 md:bottom-0 flex gap-2 justify-center">
                 <TooltipComp content="Kisi-kisi">
@@ -351,14 +299,13 @@ export default function CreatePaketSoalPage(){
                 </TooltipComp>
                 <TooltipComp content="Simpan Soal ke Server">
                     <ButtonCommitAwesome 
-                        labelButton="Simpan" className="px-4 py-0 mb-2" 
+                        labelButton="Simpan" 
+                        className="px-4 py-0 mb-2" 
                         disabled={state.isSubmitting} 
-                        onClick={onSubmit}
-                        >
+                        onClick={onSubmit} >
                         {
                             state.isSubmitting ? <Loader size={12} className="animate-spin self-center"/>:<DatabaseZapIcon size={12}/>
                         }
-
                     </ButtonCommitAwesome>
                 </TooltipComp>
                 <TooltipComp content="Jadikan Draft, Anda tinggal kerjakan nanti">

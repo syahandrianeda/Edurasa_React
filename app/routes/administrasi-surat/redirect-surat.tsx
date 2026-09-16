@@ -1,4 +1,4 @@
-import { Navigate } from "react-router";
+import { Navigate, redirect } from "react-router";
 import type { controlDropdownKelas } from "~/components/dropdowns/rombel-dropdown";
 import type { Route } from "./+types/redirect-surat";
 import { sheetSurat_sppd, sheetSurat_suratKeluar, sheetSurat_suratMasuk } from "~/domain/enloaded/intial-enloaded/by-sheet/surat";
@@ -25,35 +25,37 @@ export function meta({matches}: Route.MetaArgs) {
 }
 
 export function clientLoader({}:Route.ComponentProps){
-    const settingRombel: controlDropdownKelas ={
-                showControlKelas:false,
-                title: 'Akses kelas',
-                description:'Akses Rombel',
-                typeKelas:'rombel',
-                // sourceKelas:'tabungan',
-            }
-    return {
-        titleTambahan:'Administrasi Surat', 
-        controlKelas: settingRombel,
-        pesanLoading:'Mempersiapkan Administrasi Surat',
-        sheetNeeded: [
-                sheetSurat_suratKeluar,
-                sheetSurat_suratMasuk,
-                sheetSurat_sppd, 
-                sheetTendik_riwayatIdAkun,
-                sheetTendik_pangkatGolongan,
-                sheetMasterInduk_riwayatRombel
+    // const settingRombel: controlDropdownKelas ={
+    //             showControlKelas:false,
+    //             title: 'Akses kelas',
+    //             description:'Akses Rombel',
+    //             typeKelas:'rombel',
+    //             // sourceKelas:'tabungan',
+    //         }
+    // return {
+    //     titleTambahan:'Administrasi Surat', 
+    //     controlKelas: settingRombel,
+    //     pesanLoading:'Mempersiapkan Administrasi Surat',
+    //     sheetNeeded: [
+    //             sheetSurat_suratKeluar,
+    //             sheetSurat_suratMasuk,
+    //             sheetSurat_sppd, 
+    //             sheetTendik_riwayatIdAkun,
+    //             sheetTendik_pangkatGolongan,
+    //             sheetMasterInduk_riwayatRombel
                 
-        ]
-        // sheetNeeded: defineTabunganRombelNeededRedirect,//[sheetAkun_dataSiswa],
-        // mustLoadSheetNeedSiswaIfExist:true
+    //     ]
+    //     // sheetNeeded: defineTabunganRombelNeededRedirect,//[sheetAkun_dataSiswa],
+    //     // mustLoadSheetNeedSiswaIfExist:true
     
-    };
+    // };
+    return redirect("/arsip-surat/surat-masuk")
 }
 export default function RedirectToTabunganSiswaPage({loaderData}:Route.ComponentProps) {
     
-    return(
+    // return(
     
-    <Navigate to="/arsip-surat/surat-masuk" replace />
-    )
+    // <Navigate to="/arsip-surat/surat-masuk" replace />
+    // )
+    return null
 }

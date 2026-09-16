@@ -5,6 +5,7 @@ import ToolbarContentKurikulum from "./toolbar-content-kurikulum";
 import ToolbarContentJumlahSoal from "./toolbar-content-jumlah-soal";
 import ToolbarContentKop from "./toolbar-content-kop";
 import ToolbarContentDraft from "./toolbar-content-draft";
+import ToolbarReset from "./toolbar-reset";
 
 export const ConfigCreatePaketSoal:TabsConfigProps = {
     defaultValue:'tab1',
@@ -32,6 +33,10 @@ export const ConfigCreatePaketSoal:TabsConfigProps = {
         {
             value:'tab6',
             label: 'Draft'
+        },
+        {
+            value:'tab7',
+            label: 'Reset'
         }
     ],
     contentList:[
@@ -58,6 +63,10 @@ export const ConfigCreatePaketSoal:TabsConfigProps = {
         {
             value:'tab6',
             element:<ToolbarContentDraft/>
+        },
+        {
+            value:'tab7',
+            element:<ToolbarReset/>
         }
     ]
 }

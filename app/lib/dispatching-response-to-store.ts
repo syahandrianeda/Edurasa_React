@@ -63,6 +63,8 @@ import { setTransaksiSerahTerimaDokumen } from "~/context-reduct/global-state/ga
 import type { TransaksiSerahTerimaDokumenSheetType } from "~/types/galleries/transaksi-serah-terima-dokumen";
 import { setPaketSoal } from "~/context-reduct/global-state/bank-soal/paket-soal-slice";
 import type { PaketSoalSheetType } from "~/types/bank-soal/entities/paket-soal-sheet-type";
+import { setPublikasiPaket } from "~/context-reduct/global-state/bank-soal/publikasi-paket-slice";
+import type { PublikasiPaketSheetType } from "~/types/bank-soal/entities/publikasi-paket-sheet-type";
 
 
 export default async function DispatchingResponseToStore(success:boolean, data:Record<string, any>[],detailResponse:Record<string,any>, rombelAktif?:string){
@@ -266,8 +268,12 @@ export default async function DispatchingResponseToStore(success:boolean, data:R
         }
          
         if(detailResponse?.namaTab === namaTab('paket_soal')){
-            console.log('paket soal',namaTab('paket_soal'),{data})
+            
             store.dispatch(setPaketSoal(data as unknown as PaketSoalSheetType[]));
+        }
+        if(detailResponse?.namaTab === namaTab('publikasi_paket')){
+            console.log('data publikasi paket asal', data)
+            store.dispatch(setPublikasiPaket(data as unknown as PublikasiPaketSheetType[]))
         }
         console.log(detailResponse)
 }

@@ -7,6 +7,7 @@ import type { kopColumn, kopKontentType } from "~/components/toolbars/kop-ttd/co
 import type { AtpHasManySoalType, GroupingAtpHasManySoalType } from "~/domain/bank-soal/relational-soal/type"
 
 export interface PraSettingPaket {
+    idbaris?            : number,
     identitas           : IdentitasKontenPaket,
     target_paket        : TypePaketSoal,
     dataKopCustom       : string[],

@@ -215,6 +215,11 @@ export function hydratePreloadedState(): Partial<RootState> {
       data:[],
       name: 'paket_soal',
       loaded: false
+    },
+    publikasiPaket:{
+      data: [],
+      name:'publikasi_paket',
+      loaded:false
     }
 
 

@@ -7,6 +7,29 @@ export default function ItemSoalPreview({data}:{data:DisplayFormatItemSoal}){
         <>
             {/* stimulus */}
             {
+                data.data_soal ? (
+                        <>{
+                            (data.showStimulus && data.data_soal?.stimulus && data.data_soal?.stimulus !=="") && (
+                                <div className="editor-document [&>p]:m-0 [&>img]:m-0"
+                                    dangerouslySetInnerHTML={{__html:data.data_soal?.stimulus}}/>
+                            )
+
+                        }
+            
+                        {
+                            data.data_soal?.pertanyaan && <div className="editor-document [&>p]:m-0 [&>img]:m-0"
+                            dangerouslySetInnerHTML={{__html: data.data_soal?.pertanyaan}}/>
+                        }
+                        
+                        {
+                            data.data_soal && ( <OpsiSoalPreview data={data.data_soal} setDisplay={data.format_display}/> )
+                        }
+                        </>
+                ):(
+                    <p className="text-rose-600">Klik untuk mengambahkan item soal <strong>{data.bentuk_soal?.description}</strong></p>
+                )
+            }
+            {/* {
                 (data.showStimulus && data.data_soal?.stimulus && data.data_soal?.stimulus !=="") && (
                     <div className="editor-document [&>p]:m-0 [&>img]:m-0"
                         dangerouslySetInnerHTML={{__html:data.data_soal?.stimulus}}/>
@@ -19,7 +42,7 @@ export default function ItemSoalPreview({data}:{data:DisplayFormatItemSoal}){
             
             {
                 data.data_soal && ( <OpsiSoalPreview data={data.data_soal} setDisplay={data.format_display}/> )
-            }
+            } */}
         </>
     )
 }

@@ -57,6 +57,8 @@ import { CrudBankSoalProvider } from "~/controllers/bank-soal/cruds/crud-provide
 import BanksoalService from "~/infrastructures/services/bank-soal-service";
 import { CrudPaketSoalProvider } from "~/controllers/paket-soal/crud/paket-soal-crud-provider";
 import PaketSoalService from "~/infrastructures/services/paket-soal-service";
+import { CrudPublikasiPaketSoalProvider } from "~/controllers/publikasi-paket-soal/crud/crud-publikasi-paket-provider";
+import PubliksiPaketSoalService from "~/infrastructures/services/publikasi-paket-service";
 
 
 /**
@@ -108,6 +110,7 @@ export default function AppProviderLayoutService({matches}:Route.ComponentProps)
     const serviceTransaksiSerahTerimaDokumen    = new TransaksiSerahTerimaDokumenService();
     const serviceBankSoal                       = new BanksoalService();
     const servicePaketSOal                      = new PaketSoalService();
+    const servicePublikasiPaketSoal             = new PubliksiPaketSoalService()
 
     
     
@@ -133,72 +136,73 @@ export default function AppProviderLayoutService({matches}:Route.ComponentProps)
     
     
     const buildStore = useCallback(async()=>{
+        preventSecondLoad.current = true;
         const api = new EnsurLoadedApiService();
         const db =  await indexDbSiswa();
-        
-        if(instDataEnloaded?.param && instDataEnloaded?.param?.length>0){
-            preventSecondLoad.current = true;
-            
-            // const param = (db && db.length > 0) ? dataEnloaded.param.filter(s => s.tab !== namaTab('datasiswa')): dataEnloaded.param;
-            const param = (!loaderDataKiriman?.mustLoadSheetNeedSiswaIfExist) ? 
-                        instDataEnloaded?.param.filter(s => s.tab !== namaTab('datasiswa')): 
-                        instDataEnloaded.param;
-            
-            if(db.length > 0 && st.dataSiswa.data.length === 0){
-                store.dispatch(setAllSiswa({
-                    data:db,
-                    name:'datasiswa',
-                    loaded:true,
-                    source:'indexDB'
-                }))
-            }
-            // const param = dataEnloaded.param;
-            if(param.length === 0) return;
-            
-            toast.promise(
-                api.callNeeded(param),
-                    {
-                    loading: textLoading + textRombelFase,
-                    success: (data) => {
-                        
-                        if(data) {
-                            const decidedRombel = loaderDataKiriman?.sourceKelas ? rombelKeuangan?.rombel :  rombel ;
-                                data.forEach(({success,data,detailResponse})=>{
-                                    if(detailResponse){
-                                        DispatchingResponseToStore(success,data,detailResponse,decidedRombel);
-                                        DispatchingResponseToFokusUi();
-                                    }
-                                })
-                            }
-                        
-                        return 'Pemanggilan data telah selesai' 
-                    },
-                    error: `Gagal memuat data ${loaderDataKiriman.titleTambahan}`,
-                    finally(){
-                        preventSecondLoad.current = false
-                    },
-                    closeButton:true,
+        try{
+            if(instDataEnloaded?.param && instDataEnloaded?.param?.length>0){
+                
+                // const param = (db && db.length > 0) ? dataEnloaded.param.filter(s => s.tab !== namaTab('datasiswa')): dataEnloaded.param;
+                const param = (!loaderDataKiriman?.mustLoadSheetNeedSiswaIfExist) ? 
+                            instDataEnloaded?.param.filter(s => s.tab !== namaTab('datasiswa')): 
+                            instDataEnloaded.param;
+                
+                if(db.length > 0 && st.dataSiswa.data.length === 0){
+                    store.dispatch(setAllSiswa({
+                        data:db,
+                        name:'datasiswa',
+                        loaded:true,
+                        source:'indexDB'
+                    }))
                 }
-            )
+                // const param = dataEnloaded.param;
+                if(param.length === 0) return;
+                
 
-            
+                toast.promise(
+                    api.callNeeded(param),
+                        {
+                        loading: textLoading + textRombelFase,
+                        success: (data) => {
+                            
+                            if(data) {
+                                const decidedRombel = loaderDataKiriman?.sourceKelas ? rombelKeuangan?.rombel :  rombel ;
+                                    data.forEach(({success,data,detailResponse})=>{
+                                        if(detailResponse){
+                                            DispatchingResponseToStore(success,data,detailResponse,decidedRombel);
+                                            DispatchingResponseToFokusUi();
+                                        }
+                                    })
+                                }
+                            
+                            return 'Pemanggilan data telah selesai' 
+                        },
+                        error: `Gagal memuat data ${loaderDataKiriman.titleTambahan}`,
+                        finally(){
+                            preventSecondLoad.current = false
+                        },
+                        
+                        closeButton:true,
+                    }
+                )
+    
+                
+            }
+
+        }finally {
+                        preventSecondLoad.current = false
         }
     },[ instDataEnloaded?.param, loaderDataKiriman?.mustLoadSheetNeedSiswaIfExist]);
 
-    useEffect( ()=>{
-        /** cegah saat user logout */
-        if(!user) return;
+    useEffect(() => {
         
-        if(!instDataEnloaded) return;
-        
-        if(preventSecondLoad.current) return;
-        
-        buildStore()
-        preventSecondLoad.current = false
+        if (!user) return;
+        if (!instDataEnloaded) return;
+        if (preventSecondLoad.current) return;
 
-    },[user,buildStore, instDataEnloaded]);
-    
-    
+        void buildStore();
+    }, [user, buildStore, instDataEnloaded]);
+
     return (
         <SiswaCrudProvider service={sericeSiswa}>
             <KaldikCrudProvider service={serviceKaldik}>
@@ -219,7 +223,9 @@ export default function AppProviderLayoutService({matches}:Route.ComponentProps)
                                                                         <CrudTransaksiSerahTerimaProvider service={serviceTransaksiSerahTerimaDokumen}>
                                                                             <CrudBankSoalProvider service={serviceBankSoal}>
                                                                                 <CrudPaketSoalProvider service={servicePaketSOal}>
-                                                                                    <Outlet/>
+                                                                                    <CrudPublikasiPaketSoalProvider service={servicePublikasiPaketSoal}>
+                                                                                        <Outlet/>
+                                                                                    </CrudPublikasiPaketSoalProvider>
                                                                                 </CrudPaketSoalProvider>
                                                                             </CrudBankSoalProvider>
                                                                         </CrudTransaksiSerahTerimaProvider>

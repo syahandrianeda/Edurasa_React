@@ -4,6 +4,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import {  Settings, type LucideIcon } from "lucide-react"
 import type { ReactNode } from "react"
 import TooltipComp from "../ui_edura/tooltip-comp"
+import ButtonCommitAwesome from "../button-awesome/commit-button"
 
 
 export interface ActionDropdownTable<T>{
@@ -30,14 +31,21 @@ export function DropdownButtonsModal({
             <DropdownMenuTrigger>
                 <TooltipComp content={`Aksi`}>
                     <Button
-                        className={cn("bg-transparent hover:bg-transparent focus:bg-transparent active:bg-transparent shadow-none border-0 outline-0 ring-0", className)}
+                        className={cn("flex h-fit w-fit px-2 py-1 items-center justify-center gap-[0.5em] rounded-ful",
+                                    "bg-sky-700 text-white shadow-[inset_0px_-4px_4px_0px_var(--color-sky-600),0px_0px_4px_1px_var(--color-sky-100),0px_4px_0px_0px_var(--color-sky-800)]",
+                                    "active:shadow-[inset_0px_-4px_4px_0px_var(--color-sky-600),1px_0px_2px_1px_#f9d1d1]", 
+                                    "duration-250 hover:translate-y-[0.25em] active:translate-y-[0.5em]",
+                                    className)}
                         variant="outline"   
                         size="icon"
                         asChild
                     >
-                        <Settings className="h-4 w-4 outline-0 border-0 ring-0 border-transparent mx-auto"/>
+                        <Settings size={12} className="h-2 w-2 outline-0 border-0 ring-0 border-transparent mx-auto"/>
                     </Button>
-                </TooltipComp>
+                    {/* <ButtonCommitAwesome className={cn('px-2 py-0 border-0 outline-0 ring-0 justify-center', className)} labelButton="">
+                        <Settings className="h-3 w-3 outline-0 border-0 ring-0 border-transparent mx-auto" size={10}/>
+                    </ButtonCommitAwesome> */}
+                </TooltipComp> 
             </DropdownMenuTrigger>
             {children}
         </DropdownMenu>
@@ -67,6 +75,34 @@ export function DropdownButtonsModalNonIcon({
 export function ActionButtonTable<T>({data, trigger}:ActionDropdownTable<T>){
     return (
         <DropdownButtonsModal>
+            <DropdownMenuContent  align="start" className="bg-transparent shadow-none border-0 outline-1">
+                {
+                    trigger.map(({label, icon:Icon, callback}, index)=>(
+                        <DropdownMenuItem 
+                            key={index} 
+                            tabIndex={-1}
+                            className="group w-60 md:w-10 overflow-hidden rounded-none first-of-type:rounded-t-lg md:first-of-type:rounded-t-full last-of-type:rounded-b-lg md:last-of-type:rounded-b-full border-l    bg-linear-to-l from-sky-500 to-sky-100 border-sky-950 transition-width duration-300 md:hover:w-30 hover:border-gray-200 hover:shadow-lg hover:rounded-e-full first-of-type:hover:rounded-t-full last-of-type:hover:rounded-b-full has-focus:w-60 focus:bg-gray-500 hover:bg-gray-100 has-focus:shadow-lg"
+                            >
+                                
+                                    <button
+                                        tabIndex={-1}
+                                        onClick={()=>callback(data)}
+                                        className="peer flex w-full select-none cursor-pointer items-center gap-2.5 p-1 text-left text-sky-900 transition-width active:scale-95"
+                                        >
+                                        <Icon  className="aspect-square size-4 text-sky-900" />
+                                        <div className="text-xs text-nowrap">{label}</div>
+                                    </button>
+                        </DropdownMenuItem>
+                    ))
+                }
+            </DropdownMenuContent>
+        </DropdownButtonsModal>
+    )
+}
+
+export function ActionButtonTableMini<T>({data, trigger}:ActionDropdownTable<T>){
+    return (
+        <DropdownButtonsModal className=" bg-green-700 text-white shadow-[inset_0px_-4px_4px_0px_var(--color-green-600),0px_0px_4px_1px_var(--color-green-100),0px_4px_0px_0px_var(--color-green-800)] active:shadow-[inset_0px_-4px_4px_0px_var(--color-green-600),1px_0px_2px_1px_#f9d1d1]">
             <DropdownMenuContent  align="start" className="bg-transparent shadow-none border-0 outline-1">
                 {
                     trigger.map(({label, icon:Icon, callback}, index)=>(

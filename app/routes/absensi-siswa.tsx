@@ -1,6 +1,6 @@
 
 import type { controlDropdownKelas } from "~/components/dropdowns/rombel-dropdown";
-import { Navigate } from "react-router";
+import { Navigate, redirect } from "react-router";
 import type { Route } from "./+types/absensi-siswa";
 import { defineAbsenRombelNeeded } from "~/domain/enloaded/intial-enloaded/by-route-page/absensi/absensi-needed";
 
@@ -23,26 +23,28 @@ export function meta({matches}: Route.MetaArgs) {
 }
 
 export function clientLoader({}:Route.ComponentProps){
-    const settingRombel: controlDropdownKelas ={
-            showControlKelas:true,
-            title: 'Rombel',
-            description:'Rombel yang Anda Ampu',
-            typeKelas:'rombel'
-        }
+    // const settingRombel: controlDropdownKelas ={
+    //         showControlKelas:true,
+    //         title: 'Rombel',
+    //         description:'Rombel yang Anda Ampu',
+    //         typeKelas:'rombel'
+    //     }
         
 
-    return {
-        titleTambahan:'Hari ini',
-        controlKelas: settingRombel,
-        pesanLoading:'Memanggil Data Absen Hari ini',
-        addPesanRombel:{isAdd:true, type:'rombel', includeFaseName:false},
-        sheetNeeded:defineAbsenRombelNeeded,
-        mustLoadSheetNeedSiswaIfExist:true
-    };
+    // return {
+    //     titleTambahan:'Hari ini',
+    //     controlKelas: settingRombel,
+    //     pesanLoading:'Memanggil Data Absen Hari ini',
+    //     addPesanRombel:{isAdd:true, type:'rombel', includeFaseName:false},
+    //     sheetNeeded:defineAbsenRombelNeeded,
+    //     mustLoadSheetNeedSiswaIfExist:true
+    // };
+    return redirect("/absensi-siswa/absensi-hari-ini")
 }
 
 export default function AbsensiSiswa() {
-    return(
-        <Navigate to="/absensi-siswa/absensi-hari-ini" replace />
-    )
+    // return(
+    //     <Navigate to="/absensi-siswa/absensi-hari-ini" replace />
+    // )
+    return null
 }

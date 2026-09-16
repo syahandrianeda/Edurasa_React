@@ -1,4 +1,4 @@
-import { Navigate, useNavigation } from "react-router";
+import { Navigate, redirect, useNavigation } from "react-router";
 
 import { TopProgressBarFetch } from "~/components/ui_edura/top-progress-bar";
 import type { Route } from "./+types/index-redirect-bank-soal";
@@ -22,24 +22,31 @@ export function meta({matches}: Route.MetaArgs) {
     ];
 }
 
-export async function clientLoader({}:Route.ComponentProps){
+// export async function clientLoader({}:Route.ClientLoaderArgs){
     
 
-    return {
-        titleTambahan:'Data Rombel', 
-        sheetNeeded: defineCreateItemSoalNeeded,
-        addPesanRombel:{isAdd:true, type:'rombel', includeFaseName:true},
-    };
+//     return {
+//         titleTambahan:'Data Rombel', 
+//         sheetNeeded: defineCreateItemSoalNeeded,
+//         addPesanRombel:{isAdd:true, type:'rombel', includeFaseName:true},
+//     };
+// }
+
+
+export async function clientLoader({}: Route.ClientLoaderArgs) {
+    // Langsung redirect dari sisi client loader tanpa merender komponen kosong
+    return redirect("/bank-soal/create-item-soal");
 }
-export default function RedirectKesiswaan({loaderData}:Route.ComponentProps) {
 
-    const navigation = useNavigation();
-    const isLoading = navigation.state === "loading" || navigation.state === "submitting";
+export default function RedirectKesiswaan({loaderData}:Route.ComponentProps) {
+    return null
+    // const navigation = useNavigation();
+    // const isLoading = navigation.state === "loading" || navigation.state === "submitting";
     
-    return(<>
-        <TopProgressBarFetch active={isLoading} />
-        <h1>Sambil nunggu kopi</h1>
-        <Navigate to="/bank-soal/create-item-soal" replace />
-    </>
-    )
+    // return(<>
+    //     <TopProgressBarFetch active={isLoading} />
+    //     <h1>Sambil nunggu kopi</h1>
+    //     <Navigate to="/bank-soal/create-item-soal" replace />
+    // </>
+    // )
 }

@@ -32,6 +32,7 @@ export default function CalendarTime({date, setDate}:CalendarTimeProps) {
             newDate.setHours(parseInt(value));
         } else if (type === "minute") {
             newDate.setMinutes(parseInt(value));
+            newDate.setSeconds(0,0)
         }
         setDate(newDate);
         }

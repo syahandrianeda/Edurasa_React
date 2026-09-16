@@ -48,7 +48,7 @@ export function clientLoader({}:Route.ComponentProps){
         controlKelas: settingRombel,
         toolbarTabs: undefined,//ConfigToolbarSelectMapel
         showExport:true,
-                addPesanRombel:{isAdd:true, type:'rombel', includeFaseName:true},
+                addPesanRombel:{isAdd:true, type:'jenjang', includeFaseName:true},
                 sheetNeeded: defineCreateItemSoalNeeded
         
     };
@@ -66,7 +66,7 @@ export function clientLoader({}:Route.ComponentProps){
 export default function KoleksiBankSoalRoute() {
     const dataSoalAsal = useAppSelector(DtoBankSoalSelector);
     const kelas = useAppSelector(s=>s.fokusRombel.value)
-    const dataSoal = useMemo(()=> dataSoalAsal.filter(s=>s.status === '' && s.fase_jenjang.includes(getNumberFromString(kelas))),[dataSoalAsal])
+    const dataSoal = useMemo(()=> dataSoalAsal.filter(s=>s.status === '' && s.fase_jenjang.includes(getNumberFromString(kelas))),[dataSoalAsal, kelas])
    
 
     // const normalizedFilters = filters as BankSoalFilterType;

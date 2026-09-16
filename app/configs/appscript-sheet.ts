@@ -104,6 +104,8 @@ export default class AppScriptSheet extends AppScriptConfig{
     protected sheetBankSoalTaksonomiBloom: ParamRequestAppScript={idss:'', tab:''}
     protected sheetBankSoalTabPaketSoal: ParamRequestAppScript={idss:'',tab:''}
 
+    protected sheetBankSoalTabPublikasiPaket: ParamRequestAppScript = {idss:'', tab:''};
+
     constructor(){
         super();
         this.sheetAkunTabUser                   = {idss:this.sheetAkun, tab:'user'}
@@ -669,6 +671,18 @@ export default class AppScriptSheet extends AppScriptConfig{
         return this.sheetBankSoalTabBankSoal;
     }
 
+    set paramSheetBankSoalTabPublikasiPaket(additionalParam:Record<string, any>){
+        const tab = this.isDev? 'trial_publikasi_paket':'publikasi_paket';
+        this.sheetBankSoalTabPublikasiPaket = {
+            idss:this.sheetBankSoal,
+            tab,
+            ...additionalParam
+        }
+    }
+
+    get paramSheetBankSoalTabPublikasiPaket(){
+        return this.sheetBankSoalTabPublikasiPaket;
+    }
 
     dataAuth(){
         this.paramSheetAkunTabUser = {};

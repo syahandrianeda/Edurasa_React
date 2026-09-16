@@ -5,17 +5,9 @@ import { useFilter } from "~/hooks/use-filter-options";
 import type { BankSoalAppType } from "~/types/bank-soal/bank-soal-type";
 
 export default function KoleksiBankSoalPage({dataSoal}:{dataSoal:BankSoalAppType[]}){
-    const filterState = useFilter<
-    BankSoalAppType,
-    'bentuk_soal' | 'kode_mapel'
-        >(dataSoal);
+    const filterState = useFilter< BankSoalAppType, 'bentuk_soal' | 'kode_mapel' >(dataSoal);
         
-    const {
-        filters,
-        filteredData,
-        setFilter,
-        resetFilter
-    } = filterState;
+    const { filters, filteredData, setFilter, resetFilter } = filterState;
     const pagination =  usePagination(filteredData)
     
     return (

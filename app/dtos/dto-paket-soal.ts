@@ -3,7 +3,9 @@
  * ========================================================= */
 
 import type { IdentitasKontenPaket } from "~/domain/paket-soal/entities/identitas-paket";
-import type { DataSoalDesignBaku, PaketSoalAppType, PraSettingBaku } from "~/types/bank-soal/entities/paket-soal-app-type";
+import type { PaketSoalAppType } from "~/types/bank-soal/entities/paket-soal-app-type";
+import type { DataSoalDesignBaku } from "~/types/bank-soal/entities/DataSoalDesignBaku";
+import type { PraSettingBaku } from "~/types/bank-soal/entities/PraSettingBaku";
 import type { PaketSoalSheetType } from "~/types/bank-soal/entities/paket-soal-sheet-type";
 
 export class PaketSoalDTO {
@@ -76,7 +78,7 @@ export class PaketSoalDTO {
             id_banksoal     : this.numberArrayToString( data.id_banksoal ),
             json_setting    : data.json_setting ? this.stringifyJsonSetting( data.json_setting ): undefined,
             // json_desain     : this.stringifyJsonDesain( data.json_desain )
-            user            : data.user,
+            user            : data.useu,
             
         };
     }

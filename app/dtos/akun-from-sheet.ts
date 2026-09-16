@@ -78,7 +78,7 @@ export default class DTOSheetUser{
         try {
             const parsed = JSON.parse(raw)
             if (Array.isArray(parsed)) {
-            return parsed.map(this.normalizeFriends)
+                return parsed.map(this.normalizeFriends)
             }
         } catch {
             // 3️⃣ CSV / pipe string fallback

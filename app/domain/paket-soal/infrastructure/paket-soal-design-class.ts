@@ -1,4 +1,6 @@
-import type { countBentukSoalPaketBaku, DataSoalDesignBaku, DisplayFormatItemSoalBaku } from "~/types/bank-soal/entities/paket-soal-app-type";
+import type { DisplayFormatItemSoalBaku } from "~/types/bank-soal/entities/DisplayFormatItemSoalBaku";
+import type { DataSoalDesignBaku } from "~/types/bank-soal/entities/DataSoalDesignBaku";
+import type { countBentukSoalPaketBaku } from "~/types/bank-soal/entities/countBentukSoalPaketBaku";
 import type { IdentitasKontenPaket } from "../entities/identitas-paket";
 import type { PraSettingPaket } from "../entities/pra-setting-paket";
 import type { PaketSoalDesign } from "../result/paket-soal";
@@ -115,6 +117,22 @@ export default class PaketSoalDesignClass{
     get atpIdsSoal(): number[]{
         return this.dataSetting?.kurikulum?.map(m=>m.atp_as_tp_id) ?? []
     }
+
+    
+    /**
+     * @return koleksi namaMapel;
+     */
+
+    get namaMapel():string[]{
+        const koleksiMapel = this.dataSetting?.kurikulum?.map(m=>m.mapelname ?? '') ?? []
+        return [...new Set([...koleksiMapel])]
+    }
+    get kodeMapel():string[]{
+        const koleksiMapel = this.dataSetting?.kurikulum?.map(m=>m.kodemapel ?? '') ?? []
+        return [...new Set([...koleksiMapel])]
+    }
+
+
     /** 
      * @return PaketSoal.data = Array< {index:number, no_soal:number, data_soal:BankSoalAppType, formatElemen:elemenFormat, bentukSoal:ListBentukSoal}
      */

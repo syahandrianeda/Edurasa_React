@@ -8,10 +8,13 @@ export interface PaketSoalSheetType{
     lintas_mapel:number,
     kode_mapel:string,
     id_banksoal:string,
-    json_setting?: string,
-    // json_desain:string
+    json_setting: string,
     start_time:string,
+    id_file_json?:string,
     durasi:number,
     kurikulum_name:string,
-    user:string
+    user:string,
+    status:string,
+    is_complete:number, 
+    mapel_name:string
 }

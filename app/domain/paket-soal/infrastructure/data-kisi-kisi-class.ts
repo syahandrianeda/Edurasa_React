@@ -6,7 +6,8 @@ import type { SebaranPropertyKurikulumNoSoalPaket } from "../entities/sebaran-pr
 import type { IdentitasKontenPaket } from "../entities/identitas-paket";
 import type { DataSoalDesign } from "../result/session-soal";
 import type { PraSettingPaket } from "../entities/pra-setting-paket";
-import type { countBentukSoalPaketBaku, DataSoalDesignBaku } from "~/types/bank-soal/entities/paket-soal-app-type";
+import type { DataSoalDesignBaku } from "~/types/bank-soal/entities/DataSoalDesignBaku";
+import type { countBentukSoalPaketBaku } from "~/types/bank-soal/entities/countBentukSoalPaketBaku";
 import type { KoleksiMapelPaketSoal } from "../entities/koleksi-mapel-paket-soal";
 import PaketSoalDesignClass from "./paket-soal-design-class";
 

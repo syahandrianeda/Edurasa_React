@@ -11,6 +11,20 @@ import type { InitialItemSoalImplemented } from "~/controllers/paket-soal/modal/
 import PreviewKisiKisi from "~/controllers/paket-soal/modal/preview-kisi-kisi";
 import type { PaketSoalDesign } from "~/domain/paket-soal/result/paket-soal";
 import PreviewKunciJawabanPenskoran from "~/controllers/paket-soal/modal/preview-kunci-jawaban";
+import ModalAsyncPaketSoal from "~/controllers/koleksi-paket-soal/modal/modal-async";
+import KisiKisiSoalServer from "~/controllers/koleksi-paket-soal/modal/kisi-kisi-soal-server";
+import PembahasanPenskoranServer from "~/controllers/koleksi-paket-soal/modal/pembahasan-penskoran";
+import PreviewPaketSoalServer from "~/controllers/koleksi-paket-soal/modal/peview-paket-soal";
+import EditSettingPaketSoalServer from "~/controllers/koleksi-paket-soal/modal/edit-setting-paket-soal";
+import type { PaketSoalAppType, PaketSoalAppWithPublikasi } from "~/types/bank-soal/entities/paket-soal-app-type";
+import HapusSettingPaketSoalServer from "~/controllers/koleksi-paket-soal/modal/hapus-setting-paket-soal";
+import WrapperFormPublikasiPaket from "~/controllers/publikasi-paket-soal/modal/wraper-form";
+import type { PublikasiPaketAppType, PublikasiPaketAppValidWithPaketSoal } from "~/types/bank-soal/entities/publikasi-paket-app-type";
+import InfoPublikasiPaketSoal from "~/controllers/publikasi-paket-soal/modal/info-publikasi";
+import EditPublikasiPaketSoal from "~/controllers/publikasi-paket-soal/modal/edit-publikasi-paket";
+import HapusPublikasiPaketSoal from "~/controllers/publikasi-paket-soal/modal/hapus-publikasi-paket";
+import AddPublikasiPaketSoal from "~/controllers/publikasi-paket-soal/modal/add-publikasi-paket";
+import WrapperFormAddPublikasiPaket from "~/controllers/publikasi-paket-soal/modal/wraper-form-add-publikasi";
 
 export default function ModalBankSoal(){
     const {state, actions} = useModal<BankSoalAppType>()
@@ -22,7 +36,18 @@ export default function ModalBankSoal(){
         'PREVIEW ITEM SOAL',
         'PREVIEW KISI-KISI',
         'PREVIEW KISI-KISI DAN SOALNYA',
-        'PREVIEW KUNCI JAWABAN PAKET SOAL'
+        'PREVIEW KUNCI JAWABAN PAKET SOAL',
+        'EDIT PAKET SOAL',
+        'PREVIEW PAKET SOAL',
+        'PREVIEW KISI-KISI SERVER',
+        'PREVIEW KISI-KISI DAN SOALNYA SERVER',
+        'PREVIEW KUNCI JAWABAN SERVER',
+        'HAPUS PAKET SOAL',
+        'INFO PUBLIKASI PAKET SOAL',
+        'ADD PUBLIKASI PAKET SOAL',
+        'EDIT PUBLIKASI PAKET SOAL',
+        'HAPUS PUBLIKASI PAKET SOAL',
+        'ADD PUBLIKASI PAKET SOAL'
     ].includes(state?.type!);
 
     return (
@@ -58,7 +83,7 @@ function switchJudulBankSoal(type:ModalType){
          case 'PREVIEW KUNCI JAWABAN PAKET SOAL':
             return 'Kunci Jawaban, pembahasan, dan penskoran'
         default:
-            return 'Modal'
+            return  type as string
     }
 }
 
@@ -69,6 +94,14 @@ function SwitchWidthByType(type:ModalType):string{
        case "PREVIEW KISI-KISI DAN SOALNYA":
             return "sm:min-w-5xl  md:min-w-2xl lg:min-w-6xl gap-0 overflow-x-auto"
         case 'PREVIEW KUNCI JAWABAN PAKET SOAL':
+            return "w-[calc(100vw-5rem)] print:w-[210mm] lg:min-w-3xl overflow-x-auto pt-0"
+        case "PREVIEW KISI-KISI SERVER":
+            return "sm:min-w-5xl  md:min-w-2xl lg:min-w-6xl gap-0 overflow-x-auto"
+       case "PREVIEW KISI-KISI DAN SOALNYA SERVER":
+            return "sm:min-w-5xl  md:min-w-2xl lg:min-w-6xl gap-0 overflow-x-auto"
+        case 'PREVIEW KUNCI JAWABAN SERVER':
+            return "w-[calc(100vw-5rem)] print:w-[210mm] lg:min-w-3xl overflow-x-auto pt-0"
+        case 'PREVIEW PAKET SOAL':
             return "w-[calc(100vw-5rem)] print:w-[210mm] lg:min-w-3xl overflow-x-auto pt-0"
         default:
             return "sm:min-w-5xl  md:min-w-2xl lg:min-w-5xl gap-0 overflow-x-auto"
@@ -91,8 +124,33 @@ function SwitchContentFormBankSoal ({state, actions}:{state:ModalState<BankSoalA
             return <PreviewKisiKisi state={state as unknown as ModalState<PaketSoalDesign>} version="v2"/>
         case 'PREVIEW KUNCI JAWABAN PAKET SOAL':
             return <PreviewKunciJawabanPenskoran state={state as unknown as ModalState<PaketSoalDesign>}/>
-        // case 'EDIT ITEM SOAL PAKET':
-        //     return<FormPaketSoal state={state as unknown as ModalState<InitialItemSoalImplemented>}><ModalEditItemSoalPaket/></FormPaketSoal>;
+        
+        /** KOLEKSI PAKET SOAL */
+        case 'EDIT PAKET SOAL':
+            return <ModalAsyncPaketSoal state={state as unknown as ModalState<PaketSoalAppType>}><EditSettingPaketSoalServer/></ModalAsyncPaketSoal>
+        case 'PREVIEW PAKET SOAL':
+            return <ModalAsyncPaketSoal state={state as unknown as ModalState<PaketSoalAppType>}><PreviewPaketSoalServer/></ModalAsyncPaketSoal>
+        case 'PREVIEW KISI-KISI SERVER':
+            return <ModalAsyncPaketSoal state={state as unknown as ModalState<PaketSoalAppType>}><KisiKisiSoalServer version="v1"/></ModalAsyncPaketSoal>
+        case 'PREVIEW KISI-KISI DAN SOALNYA SERVER':
+            return <ModalAsyncPaketSoal state={state as unknown as ModalState<PaketSoalAppType>}><KisiKisiSoalServer version="v2"/></ModalAsyncPaketSoal>
+        case 'PREVIEW KUNCI JAWABAN SERVER':
+            return <ModalAsyncPaketSoal state={state as unknown as ModalState<PaketSoalAppType>}><PembahasanPenskoranServer/></ModalAsyncPaketSoal>
+       case 'HAPUS PAKET SOAL':
+            return <ModalAsyncPaketSoal state={state as unknown as ModalState<PaketSoalAppType>}><HapusSettingPaketSoalServer/></ModalAsyncPaketSoal>
+
+        /** PUBLIKASI PAKET SOAL */
+        case 'INFO PUBLIKASI PAKET SOAL':
+            return <WrapperFormPublikasiPaket state={state as unknown as ModalState<PublikasiPaketAppValidWithPaketSoal>}><InfoPublikasiPaketSoal/></WrapperFormPublikasiPaket>
+        case 'EDIT PUBLIKASI PAKET SOAL':
+            return <WrapperFormPublikasiPaket state={state as unknown as ModalState<PublikasiPaketAppValidWithPaketSoal>}><EditPublikasiPaketSoal/></WrapperFormPublikasiPaket>
+            
+        case 'HAPUS PUBLIKASI PAKET SOAL':
+            return <WrapperFormPublikasiPaket state={state as unknown as ModalState<PublikasiPaketAppValidWithPaketSoal>}><HapusPublikasiPaketSoal/></WrapperFormPublikasiPaket>
+            
+        case 'ADD PUBLIKASI PAKET SOAL':
+            return <WrapperFormAddPublikasiPaket state={state as unknown as ModalState<PaketSoalAppWithPublikasi>}><AddPublikasiPaketSoal/></WrapperFormAddPublikasiPaket>
+                
         default:
             return <p>MODAL UTAMA</p>
     }

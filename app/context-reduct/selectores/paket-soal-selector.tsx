@@ -1,19 +1,23 @@
-import { createSelector } from "@reduxjs/toolkit";
+import { createSelector, createSlice } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
-import { PaketSoalDTO } from "~/dtos/dto-paket-soal";
+import { AtpHasManySoalSelector } from "./bank-soal-selector";
+import DtoPaketSoalSheetClass from "~/dtos/dto-paket-soal-sheet-class";
+import { PublikasiPaketSoalAppSelector, PublikasiPaketSoalAppStaticSelector } from "./publikasi-paket-soal";
+
 
 export const PurePaketSoalSelector = (state:RootState)=> state.paketSoal.data;
 
-// export const DtoPaketSoalSelector = createSelector(
-//     [PurePaketSoalSelector],
-//     (dto)=>PaketSoalDTO.arrayFromSheet(dto)
-// )
-
-// export const DtoPaketSoalDomainApp = createSelector(
-//     [
-//         DtoPaketSoalSelector
-//     ],
-//     (dto)=> {
-//         return []
-//     }
-// )
+export const instancePaketSoalSheet = createSelector(
+    [
+        PurePaketSoalSelector,
+        AtpHasManySoalSelector,
+        (state:RootState)=>state.fokusRombel.value,
+        // PublikasiPaketSoalAppSelector
+        PublikasiPaketSoalAppStaticSelector
+    ],
+    (paketSoal, atpHasBankSoal, rombel, publikasi)=>{
+        if(!atpHasBankSoal || !paketSoal || paketSoal.length===0 ||!rombel) return;
+        
+        return  new DtoPaketSoalSheetClass(paketSoal, atpHasBankSoal.data, rombel, publikasi).init();
+    }
+)

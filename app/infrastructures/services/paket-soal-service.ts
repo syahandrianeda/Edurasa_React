@@ -63,24 +63,38 @@ export default class PaketSoalService implements PaketSoalServiceInterface{
     }
 
     async update(param: Record<string, any>): Promise<ApiResponse<PaketSoalSheetType>> {
-         const instancePaketSoal = new DtoPaketSoalDesainType(param as PaketSoalDesign)
-        const paramFile = instancePaketSoal.toParamFile();
-        const dataJson = instancePaketSoal.toPaketSoalSheetType();
         const parameter = {
-            paramFile:JSON.stringify(paramFile),
-            data:JSON.stringify([dataJson]),
-            key_match:'idbaris',
-            key_index:'idbaris',
-            action:'upsertUploadTxt',
+            data: JSON.stringify([param]),
+            key_match: 'idbaris',
+            key_index: 'idbaris',
+            action:'upsert',
             schema:JSON.stringify({
                     idbaris:'number',
-                    lintas_mapel:'number',
-                    start_time: 'datetime',
-                    durasi: 'number'
+                    lintas_mapel:'number'
                     
                     
             }),
+
+
         }
-        return await this.repo.create(parameter);
+        // const instancePaketSoal = new DtoPaketSoalDesainType(param as PaketSoalDesign)
+        // const paramFile = instancePaketSoal.toParamFile();
+        // const dataJson = instancePaketSoal.toPaketSoalSheetType();
+        // const parameter = {
+        //     paramFile:JSON.stringify(paramFile),
+        //     data:JSON.stringify([dataJson]),
+        //     key_match:'idbaris',
+        //     key_index:'idbaris',
+        //     action:'upsertUploadTxt',
+        //     schema:JSON.stringify({
+        //             idbaris:'number',
+        //             lintas_mapel:'number',
+        //             start_time: 'datetime',
+        //             durasi: 'number'
+                    
+                    
+        //     }),
+        // }
+        return await this.repo.update(parameter);
     }
 }

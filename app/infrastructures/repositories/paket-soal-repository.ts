@@ -18,7 +18,7 @@ export default class PaketSoalRepository extends AppScriptSheet implements Paket
         try{
                 this.paramSheetBankSoalTabPaketSoal = param
                 const respon =  await this.postBody(this.paramSheetBankSoalTabPaketSoal);
-                
+                console.log(respon)
                 return this.responActionRead(respon);
             }catch(er){
                 return this.responActionError(er);

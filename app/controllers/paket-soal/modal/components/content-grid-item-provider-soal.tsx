@@ -11,16 +11,16 @@ export default function ContentGridItemProvider({noDisplay, data, trigger}:{noDi
     const {currentData} = useFormEdura<DisplayFormatItemSoal>();
     const {actions, state} = useModal()
     const [modeDisplay, setModeDisplay] = useState<FormatElemen>(currentData?.format_display ?? 'vertical')
-    const [showStimulus, setShowStimulus] = useState<boolean>(currentData.showStimulus)
+    const [showStimulus, setShowStimulus] = useState<boolean>(true)
     const handleApply = useCallback(()=>{
         
         // const {snapshot_kurikulum, ...other} = data;
         // const {hasSoal, ...realAtpOrm} = snapshot_kurikulum
         const newDataForm:DisplayFormatItemSoal = {...currentData, format_display:modeDisplay, showStimulus, data_soal:data}
-        
+        console.log({newDataForm})
         trigger(newDataForm);
         actions.close();
-    }, [currentData, data, modeDisplay, trigger]);
+    }, [currentData, data, modeDisplay, trigger, actions, showStimulus]);
 
     const handleEdit = useCallback(()=>{
         if(!currentData.data_soal){
@@ -29,7 +29,7 @@ export default function ContentGridItemProvider({noDisplay, data, trigger}:{noDi
         }
         actions.open('EDIT ITEM SOAL PAKET', currentData.data_soal, {closeOnOutsideClick:false, backToModalType:state})
     }, []);
-    
+    console.log({showStimulus, modeDisplay, currentData, data})
     return (
         <div className="border rounded shadow-xs flex justify-between flex-col grid-2 shadow-sky-100 bg-linear-to-br from-sky-300 via-purple-300 to-amber-300 px-1">
             <CardSoalPreviewDisplay noDisplay={noDisplay} data={data} modeDisplay={modeDisplay} showStimulus={showStimulus}/>

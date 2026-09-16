@@ -9,8 +9,6 @@ export default function PaginationSoalProvider({data, trigger}:{data:BankSoalApp
     const pagination = usePagination(data, {initialPageSize:5});
     return (
         <div className="p-2 flex flex-col justify-between h-full">
-            {/* <TableKoleksiBankSoal data={pagination.items ?? []} startIndex={pagination.startIndex}/>
-             */}
             <WrapperGridPaginationSelectingItemSoal>
                 {
                     pagination.items.map((m, i)=><ContentGridItemProvider key={i} noDisplay={i+pagination.startIndex + 1} data={m} trigger={trigger}/>)
