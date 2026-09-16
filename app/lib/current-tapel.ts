@@ -21,8 +21,8 @@ export function currentTapel({variant='long', date = new Date()}:{variant?:varia
     return firstYear +'/' + lastYear +' ('+ semester+')';
 }
 
-export function currentTapelProperties({variant='firstYear'}:{variant?:variantCurrentTapelProperties}):number|string {
-    let date = new Date();
+export function currentTapelProperties({variant='firstYear', tgl=new Date()}:{variant?:variantCurrentTapelProperties, tgl?:Date}):number|string {
+    let date = new Date(tgl);
     let currentYear = date.getFullYear();
     let firstYear = date.getMonth()>5?currentYear:currentYear - 1;
     let lastYear = date.getMonth()>5? currentYear + 1: currentYear;

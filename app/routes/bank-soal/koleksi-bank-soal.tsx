@@ -2,11 +2,10 @@ import type { controlDropdownKelas } from "~/components/dropdowns/rombel-dropdow
 import type { Route } from "./+types/koleksi-bank-soal";
 import { defineCreateItemSoalNeeded } from "~/domain/enloaded/intial-enloaded/by-route-page/banksoal/create-item-soal-needed";
 import { useAppSelector } from "~/context-reduct/hook";
-import { DtoBankSoalSelector, PureBankSoalSelector } from "~/context-reduct/selectores/bank-soal-selector";
-import { usePagination } from "~/hooks/use-pagination";
-import AppPagination from "~/components/pagination/app-pagination";
-import TableKoleksiBankSoal from "~/controllers/koleksi-bank-soal/tabel-koleksi-bank-soal";
+import { DtoBankSoalSelector} from "~/context-reduct/selectores/bank-soal-selector";
 import { getNumberFromString } from "~/lib/get-number";
+import KoleksiBankSoalPage from "~/pages/bank-soal/koleksi-bank-soal-page";
+import { useMemo } from "react";
 
 
 
@@ -49,8 +48,7 @@ export function clientLoader({}:Route.ComponentProps){
         controlKelas: settingRombel,
         toolbarTabs: undefined,//ConfigToolbarSelectMapel
         showExport:true,
-                // pesanLoading:'Mempersiapkan ATP',
-                addPesanRombel:{isAdd:true, type:'rombel', includeFaseName:true},
+                addPesanRombel:{isAdd:true, type:'jenjang', includeFaseName:true},
                 sheetNeeded: defineCreateItemSoalNeeded
         
     };
@@ -68,17 +66,15 @@ export function clientLoader({}:Route.ComponentProps){
 export default function KoleksiBankSoalRoute() {
     const dataSoalAsal = useAppSelector(DtoBankSoalSelector);
     const kelas = useAppSelector(s=>s.fokusRombel.value)
-    const dataSoal = dataSoalAsal.filter(s=>s.status === '' && s.fase_jenjang.includes(getNumberFromString(kelas)))
-    const pagination =  usePagination(dataSoal)
-    
+    const dataSoal = useMemo(()=> dataSoalAsal.filter(s=>s.status === '' && s.fase_jenjang.includes(getNumberFromString(kelas))),[dataSoalAsal, kelas])
+   
+
+    // const normalizedFilters = filters as BankSoalFilterType;
 
     return(
         <div className="p-1">
-            <h3 className="text-2xl text-center font-extrabold uppercase mb-7">Koleksi Bank Soal kelas {getNumberFromString(kelas)} </h3>
-            <TableKoleksiBankSoal data={pagination.items ?? []} startIndex={pagination.startIndex}/>
-            {
-                pagination && <AppPagination pagination={pagination} />
-            }
+            <h3 className="text-2xl text-center font-extrabold uppercase">Koleksi Bank Soal kelas {getNumberFromString(kelas)} </h3>
+            <KoleksiBankSoalPage dataSoal={dataSoal}/>
         </div>
     )
 }

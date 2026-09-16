@@ -104,10 +104,10 @@ export function TextKontenKopSoal({
 }){
     return (
         <>
-            <p contentEditable={true} spellCheck={false} suppressContentEditableWarning className="text-center font-arial uppercase font-bold text-2xl mb-0 leading-none">{pertama}</p>
-            <p contentEditable={true} spellCheck={false} suppressContentEditableWarning className="text-center font-arial uppercase font-bold text-4xl mb-0 leading-none">{kedua}</p>
-            <p contentEditable={true} spellCheck={false} suppressContentEditableWarning className="text-center font-arial uppercase font-extrabold text-2xl mb-1 mt-0 leading-none">{ketiga}</p>
-            <p contentEditable={true} spellCheck={false} suppressContentEditableWarning className="text-center font-arial text-xl mb-0 leading-none">{alamat_1}</p>
+        <p contentEditable={true} spellCheck={false} suppressContentEditableWarning className="text-center font-arial uppercase font-bold text-2xl mb-0 leading-none">{pertama}</p>
+        <p contentEditable={true} spellCheck={false} suppressContentEditableWarning className="text-center font-arial uppercase font-bold text-4xl mb-0 leading-none">{kedua}</p>
+        <p contentEditable={true} spellCheck={false} suppressContentEditableWarning className="text-center font-arial uppercase font-extrabold text-2xl mb-1 mt-0 leading-none">{ketiga}</p>
+        <p contentEditable={true} spellCheck={false} suppressContentEditableWarning className="text-center font-arial text-xl mb-0 leading-none">{alamat_1}</p>
             {alamat_2 && <p className="text-center font-arial  mb-0 leading-none">{alamat_2}</p>}
         </>
     )

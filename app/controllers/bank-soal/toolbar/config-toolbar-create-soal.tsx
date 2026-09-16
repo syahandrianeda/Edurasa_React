@@ -210,9 +210,7 @@ function TabPraDesainItemSoal(){
                                                             className="hidden peer"
                                                             id={'atp_'+tp.atp_as_tp_id}
                                                             value={tp.atp_as_tp_id}
-                                                            // checked={value?.extra?.fokusAtp?.atp_as_tp_id === tp.atp_as_tp_id}
                                                             checked={fokusAtp?.atp_as_tp_id === tp.atp_as_tp_id}
-                                                            // onChange={() => updateExtra(draft=>{ draft.fokusAtp = tp })}
                                                             onChange={handleChangeFokus}
                                                         />
                                                     <label htmlFor={'atp_'+tp.atp_as_tp_id} className="cursor-pointer w-full">

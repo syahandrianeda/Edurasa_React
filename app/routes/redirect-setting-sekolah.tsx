@@ -1,5 +1,5 @@
 
-import { Navigate } from "react-router";
+import { Navigate, redirect } from "react-router";
 import type { Route } from "./+types/redirect-setting-sekolah";
 
 export function meta({matches}: Route.MetaArgs) {
@@ -23,12 +23,14 @@ export function meta({matches}: Route.MetaArgs) {
 export async function clientLoader({}:Route.ComponentProps){
      
 
-    return {titleTambahan:'Tempat Tugas'};
+    // return {titleTambahan:'Tempat Tugas'};
+    return redirect("/setting-sekolah/tempat-tugas")
 }
 export default function RedirectTempatTugas({loaderData}:Route.ComponentProps) {
     
-    return(
+    // return(
     
-    <Navigate to="/setting-sekolah/tempat-tugas" replace />
-    )
+    // <Navigate to="/setting-sekolah/tempat-tugas" replace />
+    // )
+    return null
 }

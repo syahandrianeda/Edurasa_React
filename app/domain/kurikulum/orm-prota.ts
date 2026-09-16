@@ -6,6 +6,7 @@ import type OrmKaldik from "../kaldik/orm-kaldik";
 import { getNumberFromString } from "~/lib/get-number";
 import getFaseByRombel from "~/lib/get-fase-by-rombel";
 import type { UserPtk } from "~/types";
+import type { jp_mapelApp } from "~/types/mapel/jp_mapel";
 type KodeHari = 'mg' | 'sn' | 'sl' | 'rb' | 'km' | 'jm' | 'sb';
 
 const HARI: Record<
@@ -42,7 +43,8 @@ export default class OrmProta{
         protected fokusMapel:InterfaceMapel,
         protected currentRombel:string,
         protected dataguru:UserPtk,
-        protected protaServer:protaSheetApp[]
+        protected protaServer:protaSheetApp[],
+        public jpMapel:jp_mapelApp[],
     ){}
     get dataPerhitunganJp(){
         return this.koleksiMapelInJadwal 
@@ -215,10 +217,11 @@ export default class OrmProta{
 
             const dataCp = cp.find(s=>s.idbaris === dataAtp.foreignkey_elemencp);
             if(dataCp){
-                
+                const namaMapel = this.jpMapel?.find(s=>s.kode === dataCp.kodemapel);
                 obCp.cp_description = dataCp.cp_utama;
                 obCp.cp_id = dataCp.idbaris;
                 obCp.kodemapel = dataCp.kodemapel;
+                obCp.mapelname= namaMapel?.nama_mapel ?? dataCp.kodemapel;
                 obCp.elemen = dataCp.elemen;
                 obCp.lingkup_materi = dataCp.lingkup_materi;
                 obCp.fase=dataCp.fase;
@@ -324,6 +327,16 @@ export default class OrmProta{
                 !s.invalid && 
                 s.kelas.includes(this.namaJenjang) && 
                 s.kodemapel === this.fokusMapel.kode
+            );
+    }
+    /**
+     * @info Atp dalam mapel tertentu yang valid, dalam suatu jenjang (bukan hanya rombel)
+     */
+    get dataAllAtpValidInRombel(){
+        return this.dataAtpOrm.filter(s=>
+                !s.invalid && 
+                s.kelas.includes(this.namaJenjang)
+
             );
     }
     

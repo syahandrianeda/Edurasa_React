@@ -210,6 +210,16 @@ export function hydratePreloadedState(): Partial<RootState> {
       data:initialUiFokusCollection,
       name:'UiFokus',
       loaded:true
+    },
+    paketSoal:{
+      data:[],
+      name: 'paket_soal',
+      loaded: false
+    },
+    publikasiPaket:{
+      data: [],
+      name:'publikasi_paket',
+      loaded:false
     }
 
 

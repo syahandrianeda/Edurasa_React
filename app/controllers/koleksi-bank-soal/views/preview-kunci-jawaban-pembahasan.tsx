@@ -1,11 +1,12 @@
 import {useMemo} from 'react';
 import type { BankSoalAppType } from "~/types/bank-soal/bank-soal-type";
 import KunciJawabanPreview from './kunci-jawaban-preview';
+import { cn } from '~/lib/utils';
 
-export default function PreviewKunciJawaban({data}:{data:BankSoalAppType}){
+export default function PreviewKunciJawaban({data, className}:{data:BankSoalAppType, className?:string}){
     const isExistKunciJawaban= useMemo(()=>['pg', 'pg_kompleks','menjodohkan', 'benar_salah'].includes(data.bentuk_soal),[data.bentuk_soal]);
     return (
-        <div className='border'>
+        <div className={cn('mt-2', className)}>
             {
                 isExistKunciJawaban && (
                     <div className='flex gap-2'>

@@ -19,7 +19,7 @@ export default function PratinjauItemSoalModal({currentData}:{currentData:BankSo
                                         <ol start={1} className="list-[upper-alpha] list-outside pl-5">
                                             {
                                                 currentData.json_alat_jawab && (currentData.json_alat_jawab as PgTunggalType).OpsiPilihanJawaban.map((m,i)=>
-                                                        <li className="align-top ps-2" key={m.index}>
+                                                        <li className="align-top ps-2" key={m.index+'_'+i}>
                                                             <div dangerouslySetInnerHTML={{__html:m.content}}/>
                                                         </li>
                                                 

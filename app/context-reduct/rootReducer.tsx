@@ -45,6 +45,8 @@ import serahTerimaDokumenReducer from './global-state/galleries/serah-terima-dok
 import transaksiSerahTerimaDokumenReducer from './global-state/galleries//transaksi-serah-terima-dokumen-slice'
 
 import uiFokusReducer from './global-state/ui-fokus/ui-fokus-slice';
+import paketSoalReducer from './global-state/bank-soal/paket-soal-slice';
+import publikasiPaketReducer from './global-state/bank-soal/publikasi-paket-slice'
 
 const rootReducer = combineReducers({
     auth: authReducer,
@@ -84,7 +86,9 @@ const rootReducer = combineReducers({
     riwayatRombel: riwayatRombelReducer,
     serahTerimaDokumen: serahTerimaDokumenReducer,
     transaksiSerahterimaDokumen: transaksiSerahTerimaDokumenReducer,
-    uiFokusToolbar: uiFokusReducer
+    uiFokusToolbar: uiFokusReducer,
+    paketSoal: paketSoalReducer,
+    publikasiPaket: publikasiPaketReducer
 })
 
 export default rootReducer

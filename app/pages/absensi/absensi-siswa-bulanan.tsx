@@ -24,7 +24,7 @@ export default function AbsensiSiswaBulananPage() {
     const data = useMemo(()=>{
         return ormAbsen.dataAbsenInThisMonth(tgl, isSabtuLibur).filter(s=>s.exist_in_this_month)
     }, [ormAbsen, isSabtuLibur, tgl]);
-    
+    console.log({data})
     const rekapData = useMemo(()=>{
         return ormAbsen.rekapSIAPerDateCurrentMonth(data);
     },[data])

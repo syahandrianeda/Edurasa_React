@@ -13,23 +13,13 @@ export default function SendCopySoal({data}:{data:BankSoalAppType}){
     const {actions:Post, state} = useCrudBankSoalProvider();
     
     const onSubmit = ()=>{
-        console.log(data);
+        
                 const checkValid = ValidationItemSoal(data);
                 if(!checkValid.isValid){
                     alert(checkValid.message);
                     return;
                 }
-                console.log('klo muncul berarti lolos');
-                /** masalah:
-                 * Jika soal edit ini sudah dijadikan refrensi soal pada paket soal, maka:
-                 * - soal paket soal tetap pake yang lama? atau
-                 * - soal paket turut diperbarui [x]
-                 * 
-                 * jika soal diperbaruinya adalah dihapus? bagaimana paket soalnya?
-                 * - soal paket masih pake data yang lama? (diambil dari file json), atau
-                 * - soal paket turut dihapus dan paket yang telah diperabur
-                 */
-                // karena disalin, idbaris diubah;
+                
                 const newData = {...data, idbaris:0}
                 const dtoBankSoal = DtoBankSoal.fromAppToSheet(newData);
                 toast.promise(

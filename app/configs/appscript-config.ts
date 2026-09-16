@@ -132,20 +132,49 @@ export class AppScriptConfig {
             },
             body: new  URLSearchParams(param)
         })
-        return await fetching.json();
+        const pos= await fetching.json();
+        
+        if(pos.hasOwnProperty('auth')){
+            
+             this.checkAkun(pos.auth);
+        }
+        return pos
     }
-
+    async getBody(param:Record<string, any>){
+        const send = await axios.get(this.appCrudUrl + new URLSearchParams(param));
+        return await send.data
+    }
     /** === method post dengan axios */
     async postBody(param:Record<string, any>){
-        
+        // console.log("[APPSCRIPT DEBUG]", {
+        //     currentMacroKey: this.currentMacroKey,
+        //     currentMacro: this.currentMacro,
+        //     appCrudId: this.appCrudId,
+        //     appCrudUrl: this.appCrudUrl,
+        //     action: param.action,
+        //     param
+        // });
         try{
-            const pos = await axios.post(this.appCrudUrl,param, {
+            const pos = await axios.post(this.appCrudUrl,
+                        param, 
+                        // new URLSearchParams(
+                        //     Object.entries(param).reduce<Record<string, string>>(
+                        //         (acc, [key, value]) => {
+                        //             acc[key] = String(value);
+                        //             return acc;
+                        //         },
+                        //         {}
+                        //     )
+                        // ),
+                        
+                        {
                         headers: {
                             'Content-Type': 'application/x-www-form-urlencoded' 
+                            // 'Content-Type': 'application/json'
                         }
                     }
             );
-            
+            // console.log('post axios', pos)
             //reponse axios data yang dibutuhkan, biarkan class turuunannya yang membungkus type data response-nya
             if(pos.data.hasOwnProperty('auth')){
                 
@@ -156,11 +185,10 @@ export class AppScriptConfig {
             }
             
             return pos.data;
-        }catch(error){
-            
+        } catch (error) {
+                   
+                console.log(error);
             return this.responActionError(error);
-        }finally{
-
         }
         // const pos = await axios.post(this.appCrudUrl,param, {
         //     headers: {
@@ -232,18 +260,57 @@ export class AppScriptConfig {
     responActionRead<T>(respon:Record<string, any>):ApiResponse<T>{
         
         return {
-            success: respon.info.findTab,
+            success: respon.success ?? respon?.info?.findTab,
             data: respon.data,
-            error:(!respon.info.findTab)? {
+            error:(!respon.info?.findTab)? {
                         code:'EROR',
                         message: 'Data Gagal di load di reponse Read',
-                        details: respon.info
-                    }:undefined,
-            message:respon.info.findTab?'Berhasil dipanggil':'Data Gagal di load (lihat detail error)',//respon.info,
+                        details: respon
+                    }:respon.message,
+            message:respon.info?.findTab?'Berhasil dipanggil':'Data Gagal di load (lihat detail error)',//respon.info,
             source:'API',
             detailResponse:respon.info
         }
     }
+    
+    // responActionError<T>(error: unknown): ApiResponse<T> {
+    //         if (error instanceof ApiErrors) {
+    //             return {
+    //                 success: false,
+    //                 message: error.message,
+    //                 error: {
+    //                     code: `HTTP_${error.status ?? 'UNKNOWN'}`,
+    //                     message: error.message,
+    //                     details: error.payload
+    //                 },
+    //                 source: 'API'
+    //             };
+    //         }
+
+    //         if (axios.isAxiosError(error)) {
+    //             return {
+    //                 success: false,
+    //                 message: error.message,
+    //                 error: {
+    //                     code: error.code ?? 'AXIOS_ERROR',
+    //                     message: error.message,
+    //                     details: error.response?.data
+    //                 },
+    //                 source: 'API'
+    //             };
+    //         }
+
+    //         return {
+    //             success: false,
+    //             message: error instanceof Error ? error.message : 'Unknown error',
+    //             error: {
+    //                 code: 'UNKNOWN_ERROR',
+    //                 message: error instanceof Error ? error.message : String(error),
+    //                 details: error
+    //             },
+    //             source: 'API'
+    //         };
+    //     }
     responActionError<T>(error: unknown): ApiResponse<T> {
     if (error instanceof ApiErrors) {
         return {
@@ -252,8 +319,9 @@ export class AppScriptConfig {
             message: error?.message,
             error: {
                 code: `HTTP_${error.status ?? 'UNKNOWN'}`,
-                message: error.message,
-                details: error.payload
+                message: error?.message,
+                details: error?.payload,
+                
         },
         source: 'API'
         }

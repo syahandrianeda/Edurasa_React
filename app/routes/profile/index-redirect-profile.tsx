@@ -1,4 +1,4 @@
-import { Navigate, useNavigation } from "react-router";
+import { Navigate, redirect, useNavigation } from "react-router";
 
 import { TopProgressBarFetch } from "~/components/ui_edura/top-progress-bar";
 import type { Route } from "./+types/index-redirect-profile";
@@ -27,17 +27,19 @@ export function meta({matches}: Route.MetaArgs) {
 export async function clientLoader({}:Route.ComponentProps){
     
 
-    return {titleTambahan:'Profile', data:[]};
+    // return {titleTambahan:'Profile', data:[]};
+    return redirect("/profile/about")
 }
 export default function RedirectKesiswaan({loaderData}:Route.ComponentProps) {
 
-    const navigation = useNavigation();
-    const isLoading = navigation.state === "loading" || navigation.state === "submitting";
+    // const navigation = useNavigation();
+    // const isLoading = navigation.state === "loading" || navigation.state === "submitting";
     
-    return(<>
-        <TopProgressBarFetch active={isLoading} />
-        <h1>Sambil nunggu kopi</h1>
-        <Navigate to="/profile/about" replace />
-    </>
-    )
+    // return(<>
+    //     <TopProgressBarFetch active={isLoading} />
+    //     <h1>Sambil nunggu kopi</h1>
+    //     <Navigate to="/profile/about" replace />
+    // </>
+    // )
+    return null
 }

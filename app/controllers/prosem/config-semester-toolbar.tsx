@@ -40,45 +40,38 @@ export function InfoToolbarAbsensiBulanan() {
             // const fokus = KoleksiMapel.find(s=>s.kode === e.currentTarget.value) as InterfaceMapel;
             const fokus = mapelRombel?.find(s=>s.kode === e.currentTarget.value) as InterfaceMapel;
             
-            // console.log('cek user di tab selectMapel', user?.kode_mapel_ampu, fokus.kode)
-            // dispatch(setFokusMapel(fokus))
             const fokusMapelC:fokusMapel = {
-    data:fokus,
-    disabled,
-    name:'fokusMapel',
-    loaded:true
-}
+                        data:fokus,
+                        disabled,
+                        name:'fokusMapel',
+                        loaded:true
+                    }
             dispatch(setFokusMapel(fokusMapelC))
         }
         useEffect(()=>{
             const fokus = user?.roles === 'Guru Mapel'?KoleksiMapel.find(s=>s.kode === user?.kode_mapel_ampu) as InterfaceMapel:KoleksiMapel.find(s=>s.kode === 'PKN') as InterfaceMapel;
             
-            // console.log('cek user di tab effext', user?.kode_mapel_ampu, fokus.kode)
             dispatch(setFokusMapel({
                 data:fokus,
                 disabled
-                // user?.roles !== "Guru Mapel"?true:false
             } as fokusMapel))
         },[user,KoleksiMapel])
-    const { setValue, value } = useFilterContext()
-    const handleChangeBulan = (
-        e: React.ChangeEvent<HTMLSelectElement>
-    ) => {
-        setValue({semester:Number(e.currentTarget.value)})
-    }
-
-    useEffect(()=>{
-        const now = new Date().getMonth();
-        if(now>5){
-            setValue({semester:1})
-        }else{
-            setValue({semester:2})
+        
+        const { setValue, value } = useFilterContext()
+        const handleChangeBulan = (
+            e: React.ChangeEvent<HTMLSelectElement>
+        ) => {
+            setValue({semester:Number(e.currentTarget.value)})
         }
-    },[])
 
-    
-
-    
+        useEffect(()=>{
+            const now = new Date().getMonth();
+            if(now>5){
+                setValue({semester:1})
+            }else{
+                setValue({semester:2})
+            }
+        },[])
 
     return (
         <div className="mt-2 flex  w-full py-2 rounded-xl bg-linear-to-r from-sky-300 to-sky-100 dark:from-sky-600 dark:to-sky-500 flex-col justify-center mx-auto border border-sky-400/50 align-middle gap-1 items-center">

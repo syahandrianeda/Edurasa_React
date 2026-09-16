@@ -5,7 +5,7 @@ export function WrapperContentForm({keyTitle,children}:{keyTitle:string|ReactNod
     return (
         <WrapRelative className="rounded-tr-2xl pe-2 mt-6 shadow-md shadow-sky-800">  
             <div className="absolute -top-5 left-0 ps-1 pe-4 font-bold bg-linear-to-tl from-sky-300 via-amber-300 to-purple-300 rounded-tr-2xl">{keyTitle}</div>
-            <div className="border-b border-s mt-1">{children}</div>
+            <div className="mt-1">{children}</div>
         </WrapRelative>
     )
 }

@@ -14,7 +14,7 @@ export default function TableCp(){
     const {actions} = useModal<OrmKurikulumMerdekaType>();
     const dataGroupElemen = useMemo(()=>{
         return data?.currentFase && groupByOriginalOrder(data.currentFase?.elemen_cp, (m)=>m.elemen)}, [data.currentFase?.elemen_cp])
-    console.log({dataGroupElemen});
+    
 
     const ActionTrigger: TriggerTable<OrmKurikulumMerdekaType>[] = [
         {

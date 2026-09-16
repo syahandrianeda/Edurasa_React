@@ -92,3 +92,43 @@ export function toBoolean(boolean:any):boolean{
   }
   return false
 }
+
+export function stringArrayToString( value: string[] ): string {
+
+        // if (!Array.isArray(value)) {
+        //     return '';
+        // }
+
+        return value
+            .map(item => String(item).trim())
+            // .filter(Boolean)
+            .join(', ');
+    }
+    
+export function stringToArrayString(value:string):string[]{
+        if(!value) return [];
+        return value.split(',').map(m=>String(m).trim()).filter(Boolean);
+    }
+
+export function stringToArrayNumber(value:string): number[]{
+        if(!value) return [];
+        return value.toString().split(',').map(m=> Number(m))
+    }
+
+export function  numberArrayToString( value: number[] ): string {
+
+        if (!Array.isArray(value)) {
+            return '';
+        }
+
+        return value
+            .filter(item => Number.isFinite(item))
+            .join(', ');
+    }
+
+    /** resolver untuk memastikan `item` menjadi number type, jika bermasalah, maka 0  */
+export function makeSureNumber(item:any):number{
+        if(!item) return 0
+        const n = Number(item);
+        return isNaN(n) ? 0 : n;
+    }

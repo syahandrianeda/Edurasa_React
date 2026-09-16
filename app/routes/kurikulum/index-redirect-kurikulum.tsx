@@ -1,4 +1,4 @@
-import { Navigate } from "react-router";
+import { Navigate, redirect } from "react-router";
 
 import { ConfigToolbarSelectMapel } from "~/controllers/kurikulum/toolbar/config-toolbar-select.mapel";
 import { defineCpTpAtpNeeded } from "~/domain/enloaded/intial-enloaded/by-route-page/kurikulum/cp-needed";
@@ -23,30 +23,32 @@ export function meta({matches}: Route.MetaArgs) {
     ];
 }
 
-export async function clientLoader({}:Route.ComponentProps){
-     const settingRombel: controlDropdownKelas ={
-            showControlKelas:true,
-            title: 'Rombel',
-            description:'Rombel yang Anda Ampu',
-            typeKelas:'rombel'
-        }
+export function clientLoader({}:Route.ComponentProps){
+    //  const settingRombel: controlDropdownKelas ={
+    //         showControlKelas:true,
+    //         title: 'Rombel',
+    //         description:'Rombel yang Anda Ampu',
+    //         typeKelas:'rombel'
+    //     }
         
 
-    return {
-        titleTambahan:'Capaian Pembelajaran',
-        controlKelas: settingRombel,
-        toolbarTabs: ConfigToolbarSelectMapel,
-        pesanLoading:'Mempersiapkan Capaian Pembelajaran',
-        addPesanRombel:{isAdd:true, type:'rombel', includeFaseName:true},
-        sheetNeeded: defineCpTpAtpNeeded,
+    // return {
+    //     titleTambahan:'Capaian Pembelajaran',
+    //     controlKelas: settingRombel,
+    //     toolbarTabs: ConfigToolbarSelectMapel,
+    //     pesanLoading:'Mempersiapkan Capaian Pembelajaran',
+    //     addPesanRombel:{isAdd:true, type:'rombel', includeFaseName:true},
+    //     sheetNeeded: defineCpTpAtpNeeded,
         
-        mustLoadSheetNeedSiswaIfExist:true
-    };
+    //     mustLoadSheetNeedSiswaIfExist:true
+    // };
+    return redirect("/kurikulum/cp")
 }
 export default function RedirectToCpPage({loaderData}:Route.ComponentProps) {
     
-    return(
+//     return(
     
-    <Navigate to="/kurikulum/cp" replace />
-    )
+//     <Navigate to="/kurikulum/cp" replace />
+//     )
+    return null
 }

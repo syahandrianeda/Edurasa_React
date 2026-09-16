@@ -8,6 +8,7 @@ export default class EnsurLoadedApiService implements EnsureLoadedApiServiceInte
     
     async callNeeded(paramSheet: Record<string, any>[]): Promise<ApiResponse<any>[]> {
         const auth = this.repo.dataAuth();
+        
         const param = {
             action:'readMultipleTab',
             source:JSON.stringify(paramSheet),

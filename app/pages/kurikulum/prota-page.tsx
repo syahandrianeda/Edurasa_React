@@ -3,6 +3,7 @@ import { useAppSelector } from "~/context-reduct/hook";
 import { jadwalPelajaranAppSelector } from "~/context-reduct/selectores/jadwal-pelajaran-selector";
 import { instanceOfKaldik } from "~/context-reduct/selectores/kaldik-selector";
 import { KurmerDtoSelector } from "~/context-reduct/selectores/kurmer-selector";
+import { OrmProtaInstanceSelector } from "~/context-reduct/selectores/orm-promes-selector";
 import { DtoProtaSelector } from "~/context-reduct/selectores/prota-selector";
 import TableKalkulasiJp from "~/controllers/prota/tables/tabel-kalkulasi-jp";
 import TableTitleProta from "~/controllers/prota/tables/tabel-title-prota";
@@ -18,11 +19,12 @@ export default function ProtaPage(){
     const rombel = useAppSelector(state=>state.fokusRombel.value);
     const prota = useAppSelector(DtoProtaSelector);
     const user = useAppSelector(state=>state.auth.user);
-    const instansiasi = useMemo(()=>{
-        const kaldik = ormKaldik;
-        const inprota = user && new OrmProta(cpFaseAtp,jadwal,kaldik,fokusMapel,rombel ?? getSessionRombel(),user,prota).init();//.createKoleksiMapelInJadwal().koleksiMapelInJadwal
-        return inprota
-    },[ormKaldik,fokusMapel,cpFaseAtp,jadwal,rombel,user,prota]);
+    const instansiasi = useAppSelector(OrmProtaInstanceSelector)
+    // const instansiasi = useMemo(()=>{
+    //     const kaldik = ormKaldik;
+    //     const inprota = user && new OrmProta(cpFaseAtp,jadwal,kaldik,fokusMapel,rombel ?? getSessionRombel(),user,prota).init();//.createKoleksiMapelInJadwal().koleksiMapelInJadwal
+    //     return inprota
+    // },[ormKaldik,fokusMapel,cpFaseAtp,jadwal,rombel,user,prota]);
     
     if(!instansiasi) return 'Not Found'
     return (

@@ -1,4 +1,4 @@
-import { Navigate } from "react-router";
+import { Navigate, redirect } from "react-router";
 import type { Route } from "./+types/redirect-tabungan";
 import { defineTabunganRombelNeededRedirect } from "~/domain/enloaded/intial-enloaded/by-route-page/tabungan/input-tabungan-needed";
 import type { controlDropdownKelas } from "~/components/dropdowns/rombel-dropdown";
@@ -23,27 +23,29 @@ export function meta({matches}: Route.MetaArgs) {
 }
 
 export function clientLoader({}:Route.ComponentProps){
-    const settingRombel: controlDropdownKelas ={
-                showControlKelas:true,
-                title: 'Akses kelas',
-                description:'Akses Rombel',
-                typeKelas:'rombel',
-                sourceKelas:'tabungan',
-            }
-    return {
-        titleTambahan:'Buku Tabungan Loading', 
-        controlKelas: settingRombel,
-        pesanLoading:'Mempersiapkan Hak Akses Keuangan',
-        sheetNeeded: defineTabunganRombelNeededRedirect,//[sheetAkun_dataSiswa],
-        sourceKelas:'tabungan',
-        mustLoadSheetNeedSiswaIfExist:true
+    // const settingRombel: controlDropdownKelas ={
+    //             showControlKelas:true,
+    //             title: 'Akses kelas',
+    //             description:'Akses Rombel',
+    //             typeKelas:'rombel',
+    //             sourceKelas:'tabungan',
+    //         }
+    // return {
+    //     titleTambahan:'Buku Tabungan Loading', 
+    //     controlKelas: settingRombel,
+    //     pesanLoading:'Mempersiapkan Hak Akses Keuangan',
+    //     sheetNeeded: defineTabunganRombelNeededRedirect,//[sheetAkun_dataSiswa],
+    //     sourceKelas:'tabungan',
+    //     mustLoadSheetNeedSiswaIfExist:true
     
-    };
+    // };
+    return redirect("/tabungan/tabungan-siswa" )
 }
 export default function RedirectToTabunganSiswaPage({loaderData}:Route.ComponentProps) {
     
-    return(
+    // return(
     
-    <Navigate to="/tabungan/tabungan-siswa" replace />
-    )
+    // <Navigate to="/tabungan/tabungan-siswa" replace />
+    // )
+    return null
 }

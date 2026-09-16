@@ -6,6 +6,7 @@ import { useAppSelector } from "~/context-reduct/hook";
 import { jadwalPelajaranAppSelector } from "~/context-reduct/selectores/jadwal-pelajaran-selector";
 import { instanceOfKaldik } from "~/context-reduct/selectores/kaldik-selector";
 import { KurmerDtoSelector } from "~/context-reduct/selectores/kurmer-selector";
+import { OrmPromesInstanceSelector } from "~/context-reduct/selectores/orm-promes-selector";
 import { DtoProtaSelector } from "~/context-reduct/selectores/prota-selector";
 import TableTitleProsem from "~/controllers/prosem/table-title-prosem";
 import OrmPromes from "~/domain/kurikulum/orm-promes";
@@ -22,13 +23,13 @@ export default function ProsemPage(){
     const user = useAppSelector(state=>state.auth.user);
     const {value} = useFilterContext();
     const semester = value.semester?? currentTapelProperties({variant:'getSemester'}) as number ;
+    const promes = useAppSelector(OrmPromesInstanceSelector)
     
-    
-    const promes = useMemo(()=>{
-        const kaldik = ormKaldik;
-        const inprota = user && new OrmPromes(cpFaseAtp,jadwal,kaldik,fokusMapel,rombel ?? getSessionRombel(),user,prota);//.buildPromes(2);//.createKoleksiMapelInJadwal().koleksiMapelInJadwal
-        return inprota
-    },[user,rombel,fokusMapel,cpFaseAtp,jadwal,prota, semester]);
+    // const promes = useMemo(()=>{
+    //     const kaldik = ormKaldik;
+    //     const inprota = user && new OrmPromes(cpFaseAtp,jadwal,kaldik,fokusMapel,rombel ?? getSessionRombel(),user,prota);//.buildPromes(2);//.createKoleksiMapelInJadwal().koleksiMapelInJadwal
+    //     return inprota
+    // },[user,rombel,fokusMapel,cpFaseAtp,jadwal,prota, semester]);
     
     const init = useMemo(()=>{
         return promes?.buildPromes(semester);

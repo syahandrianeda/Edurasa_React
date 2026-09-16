@@ -7,6 +7,7 @@ import type { ItemAtpAsProtaEditable } from "~/types/kurikulum/prota-orm";
 import type { OrmPromesResult, ProsemDay } from "~/types/prota_prosem/prosem-types";
 import type { resourcesKurikulum } from "~/types/kurikulum/kurikulum-type";
 import type { jadwalMapelAccordTableApp } from "~/types/setting_jadwal/jadwal_mapel";
+import type { jp_mapelApp } from "~/types/mapel/jp_mapel";
 
 /**
  * OrmPromes
@@ -29,9 +30,10 @@ export default class OrmPromes extends OrmProta{
         fokusMapel: InterfaceMapel,
         currentRombel: string,
         dataguru: UserPtk,
-        protaServer: protaSheetApp[]
+        protaServer: protaSheetApp[],
+        jpMapel:jp_mapelApp[]
     ){
-        super(cpFaseAtp, jadwal, kaldik, fokusMapel, currentRombel, dataguru, protaServer);
+        super(cpFaseAtp, jadwal, kaldik, fokusMapel, currentRombel, dataguru, protaServer, jpMapel);
     }
 
     /**

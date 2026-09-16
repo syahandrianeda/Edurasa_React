@@ -1,5 +1,12 @@
 import type { controlDropdownKelas } from "~/components/dropdowns/rombel-dropdown";
 import type { Route } from "./+types/koleksi-paket-soal";
+import { useAppSelector } from "~/context-reduct/hook";
+import { getNumberFromString } from "~/lib/get-number";
+import { defineCreateItemSoalNeeded } from "~/domain/enloaded/intial-enloaded/by-route-page/banksoal/create-item-soal-needed";
+import KoleksiPaketSoalPage from "~/pages/bank-soal/koleksi-paket-soal-page";
+import { instancePaketSoalSheet } from "~/context-reduct/selectores/paket-soal-selector";
+import { useMemo } from "react";
+import { getSessionRombel } from "~/infrastructures/session-storage/rombel-session";
 
 
 export function meta({matches}: Route.MetaArgs) {
@@ -33,13 +40,31 @@ export function clientLoader({}:Route.ComponentProps){
         titleTambahan:'Koleksi Paket Soal',
         controlKelas: settingRombel,
         toolbarTabs: undefined,//ConfigToolbarSelectMapel
-        showExport:false
+        showExport:true,
+                addPesanRombel:{isAdd:true, type:'jenjang', includeFaseName:true},
+                sheetNeeded: defineCreateItemSoalNeeded
+        
     };
 }
 
 export default function KoleksiPaketSoalRoute() {
+    const kelas = useAppSelector(s=>s.fokusRombel.value) ?? getSessionRombel();
+    const jenjang = getNumberFromString(kelas)
+    const koleksiPaketSoal = useAppSelector(instancePaketSoalSheet);
+    
+    const data = useMemo(()=>{
+        if(!koleksiPaketSoal) return [];
+        return koleksiPaketSoal.dataPaketSoalAppWithPublikasi.filter(s=> s.status === '')
+
+    }, [koleksiPaketSoal])
+    
     
     return(
-        <p>Hello Page Koleksi Paket SOal</p>
+        <div className="p-1">
+            <h3 className="text-2xl text-center font-extrabold uppercase">Koleksi Paket Soal kelas {jenjang} </h3>
+            {
+                <KoleksiPaketSoalPage dataPaket={data}/>
+            }
+        </div>
     )
 }

@@ -9,7 +9,7 @@ export default function ElemenCpPage(){
     const data = useAppSelector(PropertyKurikulumMapelAktifSelector);
     const data2 = useAppSelector(DataKurikulumSelector);
     const data4 = useAppSelector(KurmerDtoSelector);
-    console.log({data, data2, data4});
+    
         return (
         <div className="p-1">
             <h3 className="text-2xl text-center font-extrabold uppercase mb-0">Capaian Pembelajaran (CP)</h3>
