@@ -59,37 +59,81 @@ import { CrudPaketSoalProvider } from "~/controllers/paket-soal/crud/paket-soal-
 import PaketSoalService from "~/infrastructures/services/paket-soal-service";
 import { CrudPublikasiPaketSoalProvider } from "~/controllers/publikasi-paket-soal/crud/crud-publikasi-paket-provider";
 import PubliksiPaketSoalService from "~/infrastructures/services/publikasi-paket-service";
+import SaveResponseToIndexedDB from "~/infrastructures/iDb/indexDb-save";
 
+export default function AppProviderLayoutService({
+    matches,
+}: Route.ComponentProps) {
 
-/**
- * `AppProviderLayoutService`, menyediakan:
- *  * ensurLoadedStateService
- *  * menginstansiasi seluruh service implements di sini saja, tidak di sembarang tempat
- *  * merender/menaruh seluruh crudProvider);
- *  * mengambil `matches` untuk mendapatkan `DataSheetNeeded` appScript yang harus dipanggil
- *  
- */
-export default function AppProviderLayoutService({matches}:Route.ComponentProps){
+    /**
+     * ============================================================
+     * STATE / REDUX
+     * ============================================================
+     */
+
     const st = store.getState();
-    const preventSecondLoad = useRef(false);
-    const user = useAppSelector(state => state.auth.user);
-    const rombel = useAppSelector(s=>s.fokusRombel.value) ?? getSessionRombel();
-    const rombelKeuangan = useAppSelector(FokusRombelKeuangan)
-    const loaderDataKiriman = matches.at(-1)?.loaderData as { 
-            toolbarTabs?: TabsConfigProps,
-            titleTambahan:string, 
-            pesanLoading?:string,
-            controlKelas?:controlDropdownKelas
-            addPesanRombel?:{isAdd:boolean, type:'jenjang'|'rombel', includeFaseName?:boolean},
-            sheetNeeded?: (v?:string)=>DataSheetNeeeded[],
-            mustLoadSheetNeedSiswaIfExist?:boolean,
-            sourceKelas?:string
-        } 
-    const textLoading = loaderDataKiriman?.pesanLoading || `Memuat data yang dibutuhkan ${loaderDataKiriman.titleTambahan}`;
-    const textRombelJenjang = loaderDataKiriman?.addPesanRombel?.type === 'jenjang'? getNumberFromString(rombel): rombel;
-    const textFase = loaderDataKiriman?.addPesanRombel &&  (loaderDataKiriman?.addPesanRombel?.includeFaseName? `/Fase ${getFaseByRombel(rombel)}`: '' )||'';
-    const textRombelFase:string = loaderDataKiriman?.addPesanRombel?.isAdd ? ` di kelas ${textRombelJenjang}${textFase}`: `` ;
-    
+
+    const user = useAppSelector( state => state.auth.user );
+
+    const rombel = useAppSelector( s => s.fokusRombel.value ) ?? getSessionRombel();
+
+    const rombelKeuangan = useAppSelector(FokusRombelKeuangan);
+
+
+    /**
+     * ============================================================
+     * LOADER DATA DARI ROUTE
+     * ============================================================
+     */
+
+    const loaderDataKiriman = matches.at(-1)?.loaderData as {
+        toolbarTabs?: TabsConfigProps;
+        titleTambahan: string;
+        pesanLoading?: string;
+        controlKelas?: controlDropdownKelas;
+        addPesanRombel?: {
+            isAdd: boolean;
+            type: "jenjang" | "rombel";
+            includeFaseName?: boolean;
+        };
+        sheetNeeded?: (v?: string) => DataSheetNeeeded[];
+        mustLoadSheetNeedSiswaIfExist?: boolean;
+        sourceKelas?: string;
+    };
+
+
+    /**
+     * ============================================================
+     * TEXT LOADING
+     * ============================================================
+     */
+
+    const textLoading = loaderDataKiriman?.pesanLoading ?? `Memuat data yang dibutuhkan ${loaderDataKiriman.titleTambahan}`;
+
+    const textRombelJenjang = loaderDataKiriman?.addPesanRombel?.type === "jenjang"
+            ? getNumberFromString(rombel)
+            : rombel;
+
+    const textFase = loaderDataKiriman?.addPesanRombel && (
+            loaderDataKiriman.addPesanRombel.includeFaseName
+                ? `/Fase ${getFaseByRombel(rombel)}`
+                : ""
+        ) || "";
+
+    const textRombelFase = loaderDataKiriman?.addPesanRombel?.isAdd
+            ? ` di kelas ${textRombelJenjang}${textFase}`
+            : "";
+
+
+    /**
+     * ============================================================
+     * INFRASTRUCTURE SERVICE
+     *
+     * Tetap dipertahankan seperti kode asli.
+     * Belum ada perubahan arsitektur.
+     * ============================================================
+     */
+
     /** semua infrastructure service diinstansiasi di sini */;
     const sericeSiswa                           = new KesiswaanServiceImplements();
     const serviceKaldik                         = new KaldikServiceImplements();
@@ -112,96 +156,414 @@ export default function AppProviderLayoutService({matches}:Route.ComponentProps)
     const servicePaketSOal                      = new PaketSoalService();
     const servicePublikasiPaketSoal             = new PubliksiPaketSoalService()
 
-    
-    
-    const indexDbSiswa = useCallback(async()=>await new IndDbSiswaRepository().getAll(),[]) 
-    
-    const reqParam = useMemo(()=>{
-        if(loaderDataKiriman.sheetNeeded && typeof loaderDataKiriman.sheetNeeded === 'function'){
-            const decidedRombel = loaderDataKiriman?.sourceKelas ? rombelKeuangan?.rombel :  rombel ;
-            return loaderDataKiriman.sheetNeeded(decidedRombel);
-        }
-        if(Array.isArray(loaderDataKiriman.sheetNeeded)){
-            return loaderDataKiriman.sheetNeeded
-        }
-        return 
-    },[rombel,loaderDataKiriman.sheetNeeded, loaderDataKiriman?.sourceKelas, rombelKeuangan?.rombel])
-    
    
-    const instDataEnloaded = useMemo(()=> {
-        if(!reqParam) return;
-        return new BuildParamLoaded(st, reqParam).evaluate()
-    },[st, reqParam]);
-    
-    
-    
-    const buildStore = useCallback(async()=>{
-        preventSecondLoad.current = true;
-        const api = new EnsurLoadedApiService();
-        const db =  await indexDbSiswa();
-        try{
-            if(instDataEnloaded?.param && instDataEnloaded?.param?.length>0){
-                
-                // const param = (db && db.length > 0) ? dataEnloaded.param.filter(s => s.tab !== namaTab('datasiswa')): dataEnloaded.param;
-                const param = (!loaderDataKiriman?.mustLoadSheetNeedSiswaIfExist) ? 
-                            instDataEnloaded?.param.filter(s => s.tab !== namaTab('datasiswa')): 
-                            instDataEnloaded.param;
-                
-                if(db.length > 0 && st.dataSiswa.data.length === 0){
-                    store.dispatch(setAllSiswa({
-                        data:db,
-                        name:'datasiswa',
-                        loaded:true,
-                        source:'indexDB'
-                    }))
-                }
-                // const param = dataEnloaded.param;
-                if(param.length === 0) return;
-                
 
-                toast.promise(
-                    api.callNeeded(param),
-                        {
-                        loading: textLoading + textRombelFase,
-                        success: (data) => {
-                            
-                            if(data) {
-                                const decidedRombel = loaderDataKiriman?.sourceKelas ? rombelKeuangan?.rombel :  rombel ;
-                                    data.forEach(({success,data,detailResponse})=>{
-                                        if(detailResponse){
-                                            DispatchingResponseToStore(success,data,detailResponse,decidedRombel);
-                                            DispatchingResponseToFokusUi();
-                                        }
-                                    })
-                                }
-                            
-                            return 'Pemanggilan data telah selesai' 
-                        },
-                        error: `Gagal memuat data ${loaderDataKiriman.titleTambahan}`,
-                        finally(){
-                            preventSecondLoad.current = false
-                        },
-                        
-                        closeButton:true,
-                    }
-                )
-    
-                
+    /**
+     * ============================================================
+     * INDEX DB SISWA
+     *
+     * Tetap seperti kode asli.
+     * ============================================================
+     */
+
+    const indexDbSiswa = useCallback(
+        async () =>
+            await new IndDbSiswaRepository().getAll(),
+        []
+    );
+
+
+    /**
+     * ============================================================
+     * BUILD REQUEST PARAMETER
+     *
+     * Tidak diubah.
+     * ============================================================
+     */
+
+    const reqParam = useMemo(() => {
+
+        if ( loaderDataKiriman.sheetNeeded && typeof loaderDataKiriman.sheetNeeded === "function" ) {
+
+            const decidedRombel =
+                loaderDataKiriman?.sourceKelas
+                    ? rombelKeuangan?.rombel
+                    : rombel;
+
+            return loaderDataKiriman.sheetNeeded(
+                decidedRombel
+            );
+        }
+
+        if ( Array.isArray( loaderDataKiriman.sheetNeeded ) ) {
+
+            return loaderDataKiriman.sheetNeeded;
+        }
+
+        return;
+
+    }, [
+        rombel,
+        loaderDataKiriman.sheetNeeded,
+        loaderDataKiriman?.sourceKelas,
+        rombelKeuangan?.rombel,
+    ]);
+
+
+    /**
+     * ============================================================
+     * BUILD DATA ENLOADED
+     *
+     * Tidak diubah.
+     * ============================================================
+     */
+
+    const instDataEnloaded = useMemo(() => {
+
+        if (!reqParam) {
+            return;
+        }
+
+        return new BuildParamLoaded( st, reqParam ).evaluate();
+
+    }, [
+        st,
+        reqParam,
+    ]);
+
+
+    /**
+     * ============================================================
+     * LOAD CONTROL
+     *
+     * loadingRef
+     * ----------------
+     * Mencegah request berjalan bersamaan.
+     *
+     * loadedRef
+     * ----------------
+     * Menyimpan loadKey yang SUDAH berhasil.
+     *
+     * Keduanya berbeda fungsi.
+     * ============================================================
+     */
+
+    const loadingRef = useRef(false);
+    const loadedRef = useRef<Set<string>>(new Set());
+
+    /**
+     * ============================================================
+     * LOAD KEY
+     *
+     * Setiap kombinasi kebutuhan data mempunyai key sendiri.
+     *
+     * Contoh:
+     *
+     * 1A + sheet A,B  -> key A
+     * 1B + sheet A,B  -> key B
+     *
+     * Jadi ketika rombel berubah, request baru tetap bisa dilakukan.
+     * ============================================================
+     */
+
+    const loadKey = useMemo(() => {
+
+        if (!reqParam?.length) {
+            return null;
+        }
+
+        const decidedRombel = loaderDataKiriman?.sourceKelas
+                ? rombelKeuangan?.rombel
+                : rombel;
+
+        return JSON.stringify({
+            rombel: decidedRombel,
+            param: reqParam,
+        });
+
+    }, [
+        reqParam,
+        rombel,
+        rombelKeuangan?.rombel,
+        loaderDataKiriman?.sourceKelas,
+    ]);
+
+
+    /**
+     * ============================================================
+     * BUILD STORE
+     * ============================================================
+     */
+
+    const buildStore = useCallback(async () => {
+
+        /**
+         * Tidak ada request kalau tidak mempunyai loadKey.
+         */
+        if (!loadKey) {
+            return;
+        }
+
+
+        /**
+         * ========================================================
+         * CEK 1
+         *
+         * Data untuk kebutuhan ini sudah pernah berhasil dimuat.
+         *
+         * Jangan request lagi.
+         * ========================================================
+         */
+
+        if ( loadedRef.current.has(loadKey) ) {
+            return;
+        }
+
+
+        /**
+         * ========================================================
+         * CEK 2
+         *
+         * Ada request yang sedang berjalan.
+         *
+         * Jangan membuat request kedua.
+         * ========================================================
+         */
+
+        if ( loadingRef.current ) {
+
+            return;
+        }
+
+
+        /**
+         * Tandai bahwa request sedang berjalan.
+         */
+
+        loadingRef.current = true;
+
+
+        try {
+
+            /**
+             * ====================================================
+             * SERVICE API
+             * ====================================================
+             */
+
+            const api = new EnsurLoadedApiService();
+            /**
+             * ====================================================
+             * INDEX DB
+             * ====================================================
+             */
+
+            const db = await indexDbSiswa();
+            /**
+             * ====================================================
+             * PASTIKAN PARAMETER TERSEDIA
+             * ====================================================
+             */
+
+            if ( !instDataEnloaded?.param || instDataEnloaded.param.length === 0 ) {
+
+                return;
             }
 
-        }finally {
-                        preventSecondLoad.current = false
+
+            /**
+             * ====================================================
+             * FILTER DATA SISWA
+             *
+             * Logika asli dipertahankan.
+             * ====================================================
+             */
+
+            const param = !loaderDataKiriman?.mustLoadSheetNeedSiswaIfExist
+                    ? instDataEnloaded.param.filter( s => s.tab !== namaTab("datasiswa") )
+                    : instDataEnloaded.param;
+
+
+            /**
+             * ====================================================
+             * JIKA SISWA SUDAH ADA DI INDEX DB
+             * ====================================================
+             */
+
+            if ( db.length > 0 && st.dataSiswa.data.length === 0 ) {
+
+                store.dispatch(
+                    setAllSiswa({
+                        data: db,
+                        name: "datasiswa",
+                        loaded: true,
+                        source: "indexDB",
+                    })
+                );
+            }
+
+
+            /**
+             * ====================================================
+             * TIDAK ADA PARAMETER API
+             * ====================================================
+             */
+
+            if ( param.length === 0 ) {
+
+                return;
+            }
+
+
+            /**
+             * ====================================================
+             * API REQUEST
+             *
+             * Penting:
+             *
+             * await digunakan supaya kita benar-benar tahu
+             * kapan request selesai.
+             * ====================================================
+             */
+
+            await toast.promise(
+                api.callNeeded(param),
+                {
+                    loading:
+                        textLoading +
+                        textRombelFase,
+
+                    success: async data => {
+
+                        if (data) {
+
+                            const decidedRombel = loaderDataKiriman?.sourceKelas ? rombelKeuangan?.rombel : rombel;
+
+
+                            data.forEach( ({ success, data, detailResponse, }) => {
+
+                                    if ( detailResponse ) {
+                                        DispatchingResponseToStore(
+                                            success,
+                                            data,
+                                            detailResponse,
+                                            decidedRombel
+                                        );
+
+                                        DispatchingResponseToFokusUi();
+                                    }
+                                }
+                            );
+                        }
+
+                        return ( "Pemanggilan data telah selesai" );
+                    },
+
+                    error: `Gagal memuat data ${loaderDataKiriman.titleTambahan}`,
+
+                    closeButton: true,
+                }
+            );
+
+
+            /**
+             * ====================================================
+             * REQUEST BERHASIL
+             *
+             * Baru di sini loadKey disimpan.
+             *
+             * Kalau request gagal, bagian ini tidak akan tercapai.
+             * Artinya request berikutnya masih boleh mencoba lagi.
+             * ====================================================
+             */
+
+            loadedRef.current.add( loadKey );
+
+
+        } catch (error) {
+
+            /**
+             * ====================================================
+             * REQUEST GAGAL
+             *
+             * Jangan masukkan loadKey ke loadedRef.
+             *
+             * Dengan demikian user masih bisa mencoba request lagi.
+             * ====================================================
+             */
+
+            console.error( "[APP PROVIDER] gagal load:", error );
+
+
+        } finally {
+
+            /**
+             * ====================================================
+             * REQUEST SELESAI
+             *
+             * Baik sukses maupun gagal,
+             * request tidak lagi dianggap sedang berjalan.
+             * ====================================================
+             */
+
+            loadingRef.current = false;
         }
-    },[ instDataEnloaded?.param, loaderDataKiriman?.mustLoadSheetNeedSiswaIfExist]);
+
+    }, [
+        loadKey,
+        instDataEnloaded?.param,
+        loaderDataKiriman?.mustLoadSheetNeedSiswaIfExist,
+        loaderDataKiriman?.titleTambahan,
+        textLoading,
+        textRombelFase,
+        rombel,
+        rombelKeuangan?.rombel,
+        st.dataSiswa.data.length,
+        indexDbSiswa,
+    ]);
+
+
+    /**
+     * ============================================================
+     * EFFECT
+     * ============================================================
+     *
+     * Tidak menggunakan preventSecondLoad lagi.
+     *
+     * loadKey menjadi identitas kebutuhan data.
+     * ============================================================
+     */
 
     useEffect(() => {
-        
-        if (!user) return;
-        if (!instDataEnloaded) return;
-        if (preventSecondLoad.current) return;
 
+        if (!user) { return; }
+        if (!instDataEnloaded) { return; }
+        if (!loadKey) { return; }
+        
         void buildStore();
-    }, [user, buildStore, instDataEnloaded]);
+
+    }, [
+        user,
+        instDataEnloaded,
+        loadKey,
+        buildStore,
+    ]);
+
+
+    /**
+     * ============================================================
+     * RETURN
+     *
+     * Pertahankan return asli Anda di sini.
+     *
+     * Contoh:
+     *
+     * return <Outlet />;
+     *
+     * Jika provider Anda menggunakan JSX tertentu,
+     * gunakan return yang sekarang.
+     * ============================================================
+     */
 
     return (
         <SiswaCrudProvider service={sericeSiswa}>

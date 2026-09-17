@@ -140,7 +140,7 @@ export default class DtoPublikasiPaketStatic{
                 result[item] = Number(value);
             }
             if(keyDate.includes(item)){
-                result[item] = (value as Date).toString();//resolveDate(value)
+                result[item] = resolveDate(value)
             }
             if(keyEnum.includes(item)){
                 result[item] = value;

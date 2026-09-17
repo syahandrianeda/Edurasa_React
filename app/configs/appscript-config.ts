@@ -146,26 +146,26 @@ export class AppScriptConfig {
     }
     /** === method post dengan axios */
     async postBody(param:Record<string, any>){
-        // console.log("[APPSCRIPT DEBUG]", {
-        //     currentMacroKey: this.currentMacroKey,
-        //     currentMacro: this.currentMacro,
-        //     appCrudId: this.appCrudId,
-        //     appCrudUrl: this.appCrudUrl,
-        //     action: param.action,
-        //     param
-        // });
+        console.log("[APPSCRIPT DEBUG]", {
+            currentMacroKey: this.currentMacroKey,
+            currentMacro: this.currentMacro,
+            appCrudId: this.appCrudId,
+            appCrudUrl: this.appCrudUrl,
+            action: param.action,
+            param
+        });
         try{
             const pos = await axios.post(this.appCrudUrl,
-                        param, 
-                        // new URLSearchParams(
-                        //     Object.entries(param).reduce<Record<string, string>>(
-                        //         (acc, [key, value]) => {
-                        //             acc[key] = String(value);
-                        //             return acc;
-                        //         },
-                        //         {}
-                        //     )
-                        // ),
+                        // param, 
+                        new URLSearchParams(
+                            Object.entries(param).reduce<Record<string, string>>(
+                                (acc, [key, value]) => {
+                                    acc[key] = String(value);
+                                    return acc;
+                                },
+                                {}
+                            )
+                        ),
                         
                         {
                         headers: {
@@ -183,11 +183,19 @@ export class AppScriptConfig {
             }else{
                 // console.log('post body TIDAK memanggil Auth pada action', param.action);
             }
-            
+            console.log({pos})
             return pos.data;
         } catch (error) {
                    
                 console.log(error);
+                 console.log("[APPSCRIPT REQUEST] error", {
+                    url: this.appCrudUrl,
+                    macroKey: this.currentMacroKey,
+                    macro: this.currentMacro,
+                    param,
+                });
+  
+
             return this.responActionError(error);
         }
         // const pos = await axios.post(this.appCrudUrl,param, {
@@ -287,18 +295,18 @@ export class AppScriptConfig {
     //             };
     //         }
 
-    //         if (axios.isAxiosError(error)) {
-    //             return {
-    //                 success: false,
-    //                 message: error.message,
-    //                 error: {
-    //                     code: error.code ?? 'AXIOS_ERROR',
-    //                     message: error.message,
-    //                     details: error.response?.data
-    //                 },
-    //                 source: 'API'
-    //             };
-    //         }
+    //         // if (axios.isAxiosError(error)) {
+    //         //     return {
+    //         //         success: false,
+    //         //         message: error.message,
+    //         //         error: {
+    //         //             code: error.code ?? 'AXIOS_ERROR',
+    //         //             message: error.message,
+    //         //             details: error.response?.data
+    //         //         },
+    //         //         source: 'API'
+    //         //     };
+    //         // }
 
     //         return {
     //             success: false,
@@ -312,32 +320,46 @@ export class AppScriptConfig {
     //         };
     //     }
     responActionError<T>(error: unknown): ApiResponse<T> {
-    if (error instanceof ApiErrors) {
-        return {
-            success: false,
-            // data: null,
-            message: error?.message,
-            error: {
-                code: `HTTP_${error.status ?? 'UNKNOWN'}`,
-                message: error?.message,
-                details: error?.payload,
-                
-        },
-        source: 'API'
+                      
+//   if (axios.isAxiosError(error)) {
+//     console.log('[API ERROR]', {
+//       code: error.code,
+//       message: error.message,
+//       status: error.response?.status,
+//       data: error.response?.data,
+//       url: error.config?.url,
+//       method: error.config?.method,
+//     });
+//   }
+
+//   throw error;
+        if (error instanceof ApiErrors) {
+                return {
+                    success: false,
+                    // data: null,
+                    message: error?.message,
+                    error: {
+                        code: `HTTP_${error.status ?? 'UNKNOWN'}`,
+                        message: error?.message,
+                        details: error?.payload,
+                        
+                },
+                source: 'API'
+                }
+            }
+            
+            return {
+                success:false,
+                data: [error] as T,
+                message: 'Terjadi kesalahan tidak terduga',
+                error: {
+                    code: 'UNEXPECTED_ERROR',
+                    message: 'Terjadi kesalahan sistem | ',//+ error,
+                    details: {error:[error]}
+                },
+                source: 'API'
+            // }
         }
-    }
-    
-    return {
-        success: false,
-        // data: null,
-        message: 'Terjadi kesalahan tidak terduga',
-        error: {
-            code: 'UNEXPECTED_ERROR',
-            message: 'Terjadi kesalahan sistem | '+error,
-            details: {error:[error]}
-        },
-        source: 'API'
-    }
     }
 
     /** === upload file */

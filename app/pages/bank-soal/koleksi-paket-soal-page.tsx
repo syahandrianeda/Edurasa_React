@@ -85,7 +85,7 @@ export default function KoleksiPaketSoalPage({dataPaket}:{dataPaket:PaketSoalApp
                                             </TdEdura>
                                             <TdEdura className="text-[8px]">
                                                 <p>
-                                                    {paket.start_time.toLocaleString('id-ID', {dateStyle:'full'})}
+                                                    {paket?.start_time.toLocaleString('id-ID', {dateStyle:'full'})}
                                                 </p>
                                                 <p>Pkl.  : {paket.start_time.toLocaleString('id-ID', {timeStyle:'short'})} WIB. </p>
                                             </TdEdura>

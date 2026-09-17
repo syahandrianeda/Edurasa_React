@@ -25,7 +25,7 @@ import type { pembiasaanSheet } from "~/types/pembiasaan/pembiasaan";
 import { setDataProta } from "~/context-reduct/global-state/prota/prota-slice";
 import type { protaSheet } from "~/types/kurikulum/prota-orm";
 import {  setKaldikArray } from "~/context-reduct/global-state/kaldik-slice";
-import type { KaldikType } from "~/types/kaldik";
+import type { KaldikSheetType, KaldikType } from "~/types/kaldik";
 import { IndDbSiswaRepository } from "~/infrastructures/indexDb/db-datasiswa-repository";
 import { setTaksonomiBloom } from "~/context-reduct/global-state/taksonomi/taksonomi-slice";
 import type { TaksonomiSheetType } from "~/types/taksonomi/taksonomi-sheet";
@@ -65,6 +65,7 @@ import { setPaketSoal } from "~/context-reduct/global-state/bank-soal/paket-soal
 import type { PaketSoalSheetType } from "~/types/bank-soal/entities/paket-soal-sheet-type";
 import { setPublikasiPaket } from "~/context-reduct/global-state/bank-soal/publikasi-paket-slice";
 import type { PublikasiPaketSheetType } from "~/types/bank-soal/entities/publikasi-paket-sheet-type";
+import { IndDbKaldikRepository } from "~/infrastructures/iDb/idb-kaldik";
 
 
 export default async function DispatchingResponseToStore(success:boolean, data:Record<string, any>[],detailResponse:Record<string,any>, rombelAktif?:string){
@@ -161,7 +162,12 @@ export default async function DispatchingResponseToStore(success:boolean, data:R
         }
         
         if(detailResponse?.namaTab === namaTab('kalender')){
-            store.dispatch(setKaldikArray(data as unknown as KaldikType[]))
+            store.dispatch(setKaldikArray(data as unknown as KaldikType[]));
+            const repo = new IndDbKaldikRepository();
+                
+                await repo.saveBulkAgain(
+                  data as unknown as KaldikSheetType[]
+                );
         }
 
         if(detailResponse?.namaTab === namaTab('kelas_'+rombelAktif)){

@@ -15,7 +15,9 @@ export default class PubliksiPaketSoalService implements PublikasiPaketServiceIn
             action: 'upsert',
             schema:JSON.stringify({
                     idbaris:'number',
-                    lintas_mapel:'number'
+                    lintas_mapel:'number',
+                    start_time:'datetime',
+                    end_time:'datetime'
             }),
 
         }

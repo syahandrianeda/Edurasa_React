@@ -12,9 +12,19 @@ import type { Route } from "./+types/root";
 import "./app.css";
 import { ReduxProvider } from "./context-reduct/redux-provider";
 import { Toaster } from "sonner";
+import { useEffect } from "react";
+import { registerServiceWorker } from "./lib/register-service.worker";
 
 
 export const links: Route.LinksFunction = () => [
+   {
+    rel: "manifest",
+    href: "/manifest.webmanifest",
+  },
+    {
+    rel: "icon",
+    href: "/favicon.ico",
+  },
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
   {
     rel: "preconnect",
@@ -56,6 +66,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
+  useEffect(() => {
+    registerServiceWorker();
+  }, []);
+
   return (
     <>
       <ReduxProvider>

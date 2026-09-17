@@ -24,7 +24,7 @@ export interface KaldikSheetType {
     end_tgl:Date,
     oleh:string,
     aksi:string,
-    idbaris?:number,
+    idbaris:number,
     warna:string,
     libur_he_heb?: number,
     he: number,

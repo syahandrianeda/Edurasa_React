@@ -24,7 +24,7 @@ axiosInstance.interceptors.response.use(
       status: error.response?.status,
       url: error.config?.url,
       method: error.config?.method,
-      response: error.response?.data,
+      response: error.response,
       detaiL:error
     })
 

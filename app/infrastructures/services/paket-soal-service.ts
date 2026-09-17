@@ -54,7 +54,8 @@ export default class PaketSoalService implements PaketSoalServiceInterface{
             action:'upsertUploadTxt',
             schema:JSON.stringify({
                     idbaris:'number',
-                    lintas_mapel:'number'
+                    lintas_mapel:'number',
+                    start_time:'datetime'
                     
                     
             }),

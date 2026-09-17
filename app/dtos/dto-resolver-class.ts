@@ -60,7 +60,7 @@ export default class DtoResolverTypeClass{
 
     stringToArrayNumber(value:string): number[]{
         if(!value) return [];
-        return value.split(',').map(m=> Number(m))
+        return value.toString().split(',').map(m=> Number(m))
     }
 
     numberArrayToString( value: number[] ): string {

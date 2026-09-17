@@ -51,7 +51,7 @@ export default class DtoPaketSoalDesainType extends DataKisiKisi{
         const id_banksoal = this.numberArrayToString(this.dataSoal.map(m=>m.data_soal?.idbaris ?? 0));// this.dataSoal.map(m=>m.data_soal?.idbaris).join(', ');
         const json_setting = this.JsonSetting;
         const user = getSessionApp<UserPtk>()?.name ?? '';
-        const start_time = this.dataSettingIdentitas?.start_time.toLocaleString() ?? new Date().toLocaleString();
+        const start_time = this.dataSettingIdentitas?.start_time.toString() ?? new Date().toString();
         const durasi = this.dataSettingIdentitas?.durasi ?? 60;
         const idbaris = this.dataSetting?.idbaris ?? 0;
         
