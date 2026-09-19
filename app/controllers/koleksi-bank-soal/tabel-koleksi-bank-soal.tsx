@@ -9,7 +9,7 @@ import CardSoalPreview from "./views/card-soal-preview";
 export default function TableKoleksiBankSoal({data, startIndex}:{data:BankSoalAppType[], startIndex:number}){
     const {actions} = useModal<BankSoalAppType>();
     return (
-        <TableWithScrolling>
+        <TableWithScrolling className="select-text">
                 <thead>
                     <TRowEdura>
                         <ThEdura className="print:hidden">Status</ThEdura>

@@ -11,7 +11,7 @@ export default function TablePropertiKurikulum({
 
     }){
     if(!currentData.snapshot_kurikulum) return (
-        <TableWithScrolling className="text-[12px] border-0">
+        <TableWithScrolling className="text-[12px] border-0 select-text">
             <tbody>
                 <TRowEdura>
                     <td className="align-top px-1 border-b text-center text-rose-400 font-semibold">Tidak memiliki Properti Kurikulum</td>
@@ -20,7 +20,7 @@ export default function TablePropertiKurikulum({
         </TableWithScrolling>
     )
     return (
-            <TableWithScrolling className="text-[12px] border-0">
+            <TableWithScrolling className="text-[12px] border-0 select-text">
             <tbody>
                 <TRowEdura>
                     <td className="align-top px-1 border-b">Indikator Soal</td>
