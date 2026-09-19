@@ -1,5 +1,4 @@
 import macro from "../macro_react.json";
-// import axios from 'axios';
 import axios from '../infrastructures/http/axios'
 import { ApiErrors } from "~/infrastructures/http/api-errors";
 import DTOUser from "~/dtos/dto-user";
@@ -146,15 +145,8 @@ export class AppScriptConfig {
     }
     /** === method post dengan axios */
     async postBody(param:Record<string, any>){
-        console.log("[APPSCRIPT DEBUG]", {
-            currentMacroKey: this.currentMacroKey,
-            currentMacro: this.currentMacro,
-            appCrudId: this.appCrudId,
-            appCrudUrl: this.appCrudUrl,
-            action: param.action,
-            param
-        });
         try{
+          
             const pos = await axios.post(this.appCrudUrl,
                         // param, 
                         new URLSearchParams(
@@ -174,29 +166,34 @@ export class AppScriptConfig {
                         }
                     }
             );
-            // console.log('post axios', pos)
+            
             //reponse axios data yang dibutuhkan, biarkan class turuunannya yang membungkus type data response-nya
             if(pos.data.hasOwnProperty('auth')){
                 
                 this.checkAkun(pos.data.auth);
                 
-            }else{
-                // console.log('post body TIDAK memanggil Auth pada action', param.action);
             }
-            console.log({pos})
-            return pos.data;
+            
+            if(pos.status === 200 && pos.data){
+                if(pos.data){
+                    // console.log('pos.data', pos)
+                    return pos.data;
+                    
+                }else{
+                    
+                    // console.log('non pos.data', pos)
+                    return pos;
+                }
+            }else{
+                
+                // console.log('sukses status non 200', pos)
+                return new Error(pos.data.message)
+            }
         } catch (error) {
                    
-                console.log(error);
-                 console.log("[APPSCRIPT REQUEST] error", {
-                    url: this.appCrudUrl,
-                    macroKey: this.currentMacroKey,
-                    macro: this.currentMacro,
-                    param,
-                });
-  
-
-            return this.responActionError(error);
+            // console.log(error)
+            throw new Error('gagal memanggil script', { cause: [error]})
+            // throw error
         }
         // const pos = await axios.post(this.appCrudUrl,param, {
         //     headers: {
@@ -350,11 +347,11 @@ export class AppScriptConfig {
             
             return {
                 success:false,
-                data: [error] as T,
+                // data: [error] as T,
                 message: 'Terjadi kesalahan tidak terduga',
                 error: {
                     code: 'UNEXPECTED_ERROR',
-                    message: 'Terjadi kesalahan sistem | ',//+ error,
+                    message: 'Terjadi kesalahan sistem | '+ error,
                     details: {error:[error]}
                 },
                 source: 'API'

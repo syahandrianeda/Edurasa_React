@@ -18,15 +18,15 @@ axiosInstance.interceptors.response.use(
   },
 
   error => {
-    console.error('[AXIOS ERROR]', {
-      message: error.message,
-      code: error.code,
-      status: error.response?.status,
-      url: error.config?.url,
-      method: error.config?.method,
-      response: error.response,
-      detaiL:error
-    })
+    // console.error('[AXIOS ERROR]', {
+    //   message: error.message,
+    //   code: error.code,
+    //   status: error.response?.status,
+    //   url: error.config?.url,
+    //   method: error.config?.method,
+    //   response: error.response,
+    //   detaiL:error
+    // })
 
     if (error.response) {
       return Promise.reject(

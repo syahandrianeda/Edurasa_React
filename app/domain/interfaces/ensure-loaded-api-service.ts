@@ -3,7 +3,7 @@ import type EnsureLoadedApiRepositoryInterface from "./ensure-loaded-api-reposit
 
 export default interface EnsureLoadedApiServiceInterface<T=any>{
     repo:EnsureLoadedApiRepositoryInterface
-    callNeeded(param:Record<string,any>): Promise<ApiResponse<T>[]>
+    callNeeded(param:Record<string,any>): Promise<ApiResponse<T>>
     update(param:Record<string,any>): Promise<ApiResponse<T>>
     create(param:Record<string,any>): Promise<ApiResponse<T>>
 }

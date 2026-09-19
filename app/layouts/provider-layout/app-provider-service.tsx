@@ -59,7 +59,7 @@ import { CrudPaketSoalProvider } from "~/controllers/paket-soal/crud/paket-soal-
 import PaketSoalService from "~/infrastructures/services/paket-soal-service";
 import { CrudPublikasiPaketSoalProvider } from "~/controllers/publikasi-paket-soal/crud/crud-publikasi-paket-provider";
 import PubliksiPaketSoalService from "~/infrastructures/services/publikasi-paket-service";
-import SaveResponseToIndexedDB from "~/infrastructures/iDb/indexDb-save";
+
 
 export default function AppProviderLayoutService({
     matches,
@@ -413,7 +413,7 @@ export default function AppProviderLayoutService({
 
                 return;
             }
-
+            // console.log(param)
 
             /**
              * ====================================================
@@ -426,40 +426,39 @@ export default function AppProviderLayoutService({
              * ====================================================
              */
 
-            await toast.promise(
+            toast.promise(
                 api.callNeeded(param),
                 {
-                    loading:
-                        textLoading +
+                    loading: textLoading +
                         textRombelFase,
 
-                    success: async data => {
-
-                        if (data) {
+                    success: data => {
+                        // console.log('data respon', { data });
+                        if (data && Array.isArray(data)) {
 
                             const decidedRombel = loaderDataKiriman?.sourceKelas ? rombelKeuangan?.rombel : rombel;
 
 
-                            data.forEach( ({ success, data, detailResponse, }) => {
+                            data.forEach(({ success, data, detailResponse, }) => {
 
-                                    if ( detailResponse ) {
-                                        DispatchingResponseToStore(
-                                            success,
-                                            data,
-                                            detailResponse,
-                                            decidedRombel
-                                        );
+                                if (detailResponse) {
+                                    DispatchingResponseToStore(
+                                        success,
+                                        data,
+                                        detailResponse,
+                                        decidedRombel
+                                    );
 
-                                        DispatchingResponseToFokusUi();
-                                    }
+                                    DispatchingResponseToFokusUi();
                                 }
+                            }
                             );
                         }
 
-                        return ( "Pemanggilan data telah selesai" );
+                        return ("Pemanggilan data telah selesai");
                     },
 
-                    error: `Gagal memuat data ${loaderDataKiriman.titleTambahan}`,
+                    error:  data=>`Gagal memuat data ${loaderDataKiriman.titleTambahan} \r`+ data,
 
                     closeButton: true,
                 }
@@ -492,7 +491,7 @@ export default function AppProviderLayoutService({
              * ====================================================
              */
 
-            console.error( "[APP PROVIDER] gagal load:", error );
+            // console.error( "[APP PROVIDER] gagal load:", error );
 
 
         } finally {

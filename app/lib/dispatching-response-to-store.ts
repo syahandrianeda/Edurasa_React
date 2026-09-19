@@ -65,19 +65,25 @@ import { setPaketSoal } from "~/context-reduct/global-state/bank-soal/paket-soal
 import type { PaketSoalSheetType } from "~/types/bank-soal/entities/paket-soal-sheet-type";
 import { setPublikasiPaket } from "~/context-reduct/global-state/bank-soal/publikasi-paket-slice";
 import type { PublikasiPaketSheetType } from "~/types/bank-soal/entities/publikasi-paket-sheet-type";
-import { IndDbKaldikRepository } from "~/infrastructures/iDb/idb-kaldik";
+import { IndexDbTabNameRepository } from "~/infrastructures/iDb-vite/indexDb-tabname-repository";
 
 
 export default async function DispatchingResponseToStore(success:boolean, data:Record<string, any>[],detailResponse:Record<string,any>, rombelAktif?:string){
     // if(success){
         // ga boleh ada trial-nya, karena namanya bakal ngefek ke bawah
+        
+        const db = new IndexDbTabNameRepository(detailResponse.namaTab);
+        
         if(detailResponse?.namaTab === namaTab('mapel')){
             store.dispatch(setDataMapel(data as unknown as InterfaceMapelSheet[]));
+            await db.saveBulkAgain(data as unknown as InterfaceMapelSheet[])
         };
         
         // boleh ada trialnya, tapi saat ini tidak ada trial karena fitur baru
         if(detailResponse?.namaTab === namaTab('bank_soal')){
             store.dispatch(setBankSoal(data as unknown as BankSoalSheetType[]))
+            await db.saveBulkAgain(data as unknown as BankSoalSheetType[])
+
         }
         // datasiswa ada trial-nya
         if(detailResponse?.namaTab === namaTab('datasiswa')){
@@ -94,7 +100,7 @@ export default async function DispatchingResponseToStore(success:boolean, data:R
             // if(detailResponse.source === 'API'){
 
             // }
-            const db = new IndDbSiswaRepository();
+            // const db = new IndDbSiswaRepository();
             await db.saveBulkAgain(data as unknown as SiswaType[]);
             
             //simpan di session ini:
@@ -110,64 +116,80 @@ export default async function DispatchingResponseToStore(success:boolean, data:R
         //taksonomi belum dibuatkan store-nya
         if(detailResponse?.namaTab === namaTab('taksonomi_bloom')){
             store.dispatch(setTaksonomiBloom(data as unknown as TaksonomiSheetType[]))
+            await db.saveBulkAgain(data as unknown as TaksonomiSheetType[]);
+
             
         }
         
         // ada trial-nya
         if(detailResponse?.namaTab === namaTab('faseA')){
             store.dispatch(setFaseA(data as unknown as FaseKurikulumType[]))
+            await db.saveBulkAgain(data as unknown as FaseKurikulumType[]);
+            
         }
         
         // ada trial-nya;
         if(detailResponse?.namaTab === namaTab('faseB')){
             store.dispatch(setFaseB(data as unknown as FaseKurikulumType[]))
+            await db.saveBulkAgain(data as unknown as FaseKurikulumType[]);
         }
         
         // ada trial-nya:
         if(detailResponse?.namaTab === namaTab('elemen_cp')){
-            store.dispatch(setCp(data as unknown as ElemenCpType[]))
+            store.dispatch(setCp(data as unknown as ElemenCpType[]));
+            await db.saveBulkAgain(data as unknown as ElemenCpType[]);
+
         }
     
         // ada trial-nya:
         if(detailResponse?.namaTab === namaTab('faseC')){
             store.dispatch(setFaseC(data as unknown as FaseKurikulumType[]))
+            await db.saveBulkAgain(data as unknown as FaseKurikulumType[])
         }
         
         // ada trial-nya:
         if(detailResponse?.namaTab === namaTab('Atp')){
-            store.dispatch(setAtp(data as unknown as AtpKurikulumType[]))
+            store.dispatch(setAtp(data as unknown as AtpKurikulumType[]));
+            await db.saveBulkAgain(data as unknown as AtpKurikulumType[]);
+
         }
     
         // ada trial-nya:
         if(detailResponse?.namaTab === namaTab('jp_mapel')){
-            store.dispatch(setJpMapel(data as unknown as jp_mapelSheet[]))
+            store.dispatch(setJpMapel(data as unknown as jp_mapelSheet[]));
+            await db.saveBulkAgain(data as unknown as jp_mapelSheet[])
         }
         
         // ada trial-nya:
         if(detailResponse?.namaTab === namaTab('jadwal_mapel')){ 
             store.dispatch(setDataJadwalPelajaran(data as unknown as jadwalMapelAccordTable[]))
-            // store.dispatch(setJadwalMapel(data as unknown as jadwalMapelAccordTable[]))
+            await db.saveBulkAgain(data as unknown as jadwalMapelAccordTable[])
         }
         // ada trial-nya:
         if(detailResponse?.namaTab === namaTab('setting_jadwal')){
             store.dispatch(setSettingJadwalMapel(data as unknown as settingJadwalSheet[]))
+            await db.saveBulkAgain(data as unknown as settingJadwalSheet[]);
         }
         // ada trial-nya:
         if(detailResponse?.namaTab === namaTab('kegiatan_nonkbm')){
             store.dispatch(setDataJadwalPembiasaan(data as unknown as pembiasaanSheet[]))
+            await db.saveBulkAgain(data as unknown as pembiasaanSheet[])
         }
             // ada trial-nya:
         if(detailResponse?.namaTab === namaTab('prota')){
             store.dispatch(setDataProta(data as unknown as protaSheet[]))
+            await db.saveBulkAgain(data as unknown as protaSheet[])
         }
         
         if(detailResponse?.namaTab === namaTab('kalender')){
             store.dispatch(setKaldikArray(data as unknown as KaldikType[]));
-            const repo = new IndDbKaldikRepository();
+            await db.saveBulkAgain(data as unknown as KaldikType[])
+
+            // const repo = new IndDbKaldikRepository();
                 
-                await repo.saveBulkAgain(
-                  data as unknown as KaldikSheetType[]
-                );
+            //     await repo.saveBulkAgain(
+            //       data as unknown as KaldikSheetType[]
+            //     );
         }
 
         if(detailResponse?.namaTab === namaTab('kelas_'+rombelAktif)){
@@ -276,9 +298,14 @@ export default async function DispatchingResponseToStore(success:boolean, data:R
         if(detailResponse?.namaTab === namaTab('paket_soal')){
             
             store.dispatch(setPaketSoal(data as unknown as PaketSoalSheetType[]));
+            await db.saveBulkAgain(data as unknown as PaketSoalSheetType[])
+
         }
         if(detailResponse?.namaTab === namaTab('publikasi_paket')){
             store.dispatch(setPublikasiPaket(data as unknown as PublikasiPaketSheetType[]))
+            await db.saveBulkAgain(data as unknown as PublikasiPaketSheetType[]);
         }
         
+
+        //indexDb
 }

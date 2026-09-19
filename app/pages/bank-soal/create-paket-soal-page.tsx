@@ -1,18 +1,13 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { TdEdura, ThEdura, TRowEdura } from "~/components/tabels/tabel-components";
-import TableWithScrolling from "~/components/tabels/table-with-scrolling";
 import { useFilterContext } from "~/components/toolbars/state-toolbar/state-toolbar"
-import type{ PraSettingPaket } from "~/domain/paket-soal/entities/pra-setting-paket"
 import KopPaketSoal from "~/controllers/paket-soal/components/kop-paket-soal";
 import IdentitasPaketSoal from "~/controllers/paket-soal/components/identitas-paket-soal";
 import KolomNilaiPaket from "~/controllers/paket-soal/components/kolom-nilai";
-import GroupedAtpHasManySOal from "~/domain/bank-soal/relational-soal/services/grouping-soal-atp-has-many-soal";
 import PetunjukUmumPaketSoal from "~/controllers/paket-soal/components/petunjuk-umum";
 import { useImmer } from "use-immer";
 import type { PaketSoalDesign } from "~/domain/paket-soal/result/paket-soal";
 import { createPaketSoalDesign, getGlobalIndex, getNoSoal } from "~/domain/paket-soal/result/create-design";
 import { useModal } from "~/components/modals/modal-provider";
-import type { BankSoalAppType } from "~/types/bank-soal/bank-soal-type";
 import type { DisplayFormatItemSoal } from "~/domain/paket-soal/result/display-format-item-soal";
 import type { ListBentukSoalType } from "~/types/bank-soal/bentuk-soal-type";
 import type { InitialItemSoalImplemented } from "~/controllers/paket-soal/modal/initial-item-soal-implemented";
@@ -22,7 +17,6 @@ import ButtonCommitAwesome from "~/components/button-awesome/commit-button";
 import { DatabaseZapIcon, Eye, FileCheck, FileCheckCorner, FileKey2Icon, FilePlus2, Loader, SaveIcon, SaveOff } from "lucide-react";
 import { useCrudPaketSoalProvider } from "~/controllers/paket-soal/crud/paket-soal-crud-provider";
 import { useDraftPaketSoal } from "~/hooks/use-draft-paket-soal";
-import DataKisiKisi from "~/domain/paket-soal/infrastructure/data-kisi-kisi-class";
 import { ValidationPaketSoal } from "~/controllers/paket-soal/modal/validation-paket-soal";
 import TableSebaranKompetensiPaketSoal from "~/controllers/paket-soal/components/sebaran-kompetensi-paket-soal";
 import type { PaketSoalSheetType } from "~/types/bank-soal/entities/paket-soal-sheet-type";

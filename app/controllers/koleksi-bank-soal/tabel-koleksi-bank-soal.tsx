@@ -1,6 +1,5 @@
 import { TRowEdura, ThEdura, TdEdura } from "~/components/tabels/tabel-components";
 import TableWithScrolling from "~/components/tabels/table-with-scrolling";
-import SoalItemFlex from "../bank-soal/modal/soal-item-flex";
 import SwitchTriggerModalEditItemBankSoal from "./trigger-show-modal-from-table";
 import type { BankSoalAppType } from "~/types/bank-soal/bank-soal-type";
 import { useModal } from "~/components/modals/modal-provider";

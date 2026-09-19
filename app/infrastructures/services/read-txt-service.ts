@@ -7,7 +7,12 @@ export default class ReadTxtService implements ReadTxtServiceInterface{
     constructor(public repo:ReadTxtRepositoryInterface = new ReadTxtRepository()){}
 
     async readFile(param: Record<string, any>): Promise<ApiResponse<string>> {
-        const newParam = {idmateri: param.idFile, action:'readTxt'}
-        return await this.repo.readFile(newParam)
+        try{
+            const newParam = {idmateri: param.idFile, action:'readTxt'}
+            return await this.repo.readFile(newParam)
+
+        }catch(er){
+            throw new Error(er as string, {cause:er})
+        }
     }
 }

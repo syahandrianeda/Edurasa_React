@@ -1,9 +1,8 @@
 import { toast } from "sonner";
-import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import {useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { useModal, type ModalState } from "~/components/modals/modal-provider";
 import type { PaketSoalDesign } from "~/domain/paket-soal/result/paket-soal";
 import ReadTxtService from "~/infrastructures/services/read-txt-service";
-import CetakKisiKisiSoal from "~/controllers/paket-soal/modal/cetak-kisi-kisi-soal";
 import DataKisiKisi from "~/domain/paket-soal/infrastructure/data-kisi-kisi-class";
 import loadingGif from "~/images/barloading.gif"
 import { FormEdura } from "~/components/form-custom/form-edura";
@@ -48,7 +47,7 @@ export default function ModalAsyncPaketSoal({state, children}:{state:ModalState<
                         if(response.data){
                             const convertJson= JSON.parse(response.data as string);
                             const data = PaketSoalDesignParseDto.fromJson(convertJson);//
-                            console.log(data);
+                            
                             setPaketSoal({
                                     ...data,
                                     setting: {
@@ -64,9 +63,9 @@ export default function ModalAsyncPaketSoal({state, children}:{state:ModalState<
                     return 'Sukses memanggil, tapi data gagal dibentuk'
                 },
                 error:(er)=>{
-                    console.log(er);
+                    // console.log(er);
                     actions.close();
-                    return 'Gagal dipanggil, coba sekali lagi';
+                    return 'Gagal dipanggil, coba sekali lagi | '+er;
                 }
             }
 

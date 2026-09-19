@@ -12,8 +12,8 @@ import type { Route } from "./+types/root";
 import "./app.css";
 import { ReduxProvider } from "./context-reduct/redux-provider";
 import { Toaster } from "sonner";
-import { useEffect } from "react";
-import { registerServiceWorker } from "./lib/register-service.worker";
+
+import OnlineStatus from "./components/system/online-status";
 
 
 export const links: Route.LinksFunction = () => [
@@ -66,13 +66,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  useEffect(() => {
-    registerServiceWorker();
-  }, []);
-
+ 
   return (
     <>
       <ReduxProvider>
+          <OnlineStatus/>
           <Outlet />
           <Toaster/>
       </ReduxProvider>
