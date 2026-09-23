@@ -75,9 +75,10 @@ export const DataMenu: typeKoleksiMenu[] = [
     },
     {
         title: "KBM Asesmen", 
-        routeName: "kbm",
+        routeName: "penilaian",
         urlIcon: MenuIcons["kbm"],
         permission: 'view kbm',
+        hasRoute:true
     },
     
     {

@@ -28,6 +28,7 @@ export default function SwitchTriggerModalEditItemBankSoal({actions,data: m}:Swi
         <ActionButtonTable<BankSoalAppType>
             data={m}
             trigger={ActionTrigger}
+            
         />
     )
 }

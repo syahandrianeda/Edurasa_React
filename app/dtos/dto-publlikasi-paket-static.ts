@@ -1,11 +1,8 @@
 import type { PublikasiPaketAppType, PublikasiPaketAppValidWithPaketSoal } from "~/types/bank-soal/entities/publikasi-paket-app-type";
 import type { PublikasiPaketSheetType } from "~/types/bank-soal/entities/publikasi-paket-sheet-type";
-import { numberArrayToString, resolveDate, resolveString, stringArrayToString, stringToArrayNumber, stringToArrayString } from "./_resolver";
+import {resolveDate, resolveString, stringArrayToString, stringToArrayNumber, stringToArrayString } from "./_resolver";
 import type { PraSettingBaku } from "~/types/bank-soal/entities/PraSettingBaku";
 import type { IdentitasKontenPaket } from "~/domain/paket-soal/entities/identitas-paket";
-import type { countBentukSoalPaketBaku } from "~/types/bank-soal/entities/countBentukSoalPaketBaku";
-import type { CountBentukSoalPaket } from "~/domain/paket-soal/entities/count-bentuk-soal-paket";
-
 export default class DtoPublikasiPaketStatic{
     public static fromSheetToApp(data:PublikasiPaketSheetType):PublikasiPaketAppType{
         const result: any = {}
@@ -97,24 +94,7 @@ export default class DtoPublikasiPaketStatic{
         return date;
     }
     public static fromAppToSheet(data:PublikasiPaketAppType):PublikasiPaketSheetType{
-        console.log('data fromAppToSheet', data)
-        /**
-         idbaris             : number,
-             paket_soal_id	    : number,
-             start_time          : string,
-             end_time	        : string, 
-             durasi              : number,
-             target_type         : TypePaketSoal,
-             target_person       : string,
-             target_rombel       : string,
-             jenis_tagihan       : string,
-             status              : string,
-             id_file_setting     : string,
-             id_bank_soal        : string
-             nama_publikasi      : string,
-             oleh                : string,
-             json_setting        : string;
-         */
+        
         const result: any = {}
         const keyStringToString = ['jenis_tagihan', 'status', 'id_file_setting', 'nama_publikasi', 'oleh'];
         const keyArrayStringToString = ['target_rombel'];

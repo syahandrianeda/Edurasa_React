@@ -21,7 +21,6 @@ import ButtonCommitAwesome from "~/components/button-awesome/commit-button";
 import { useCrudPublikasiPaketSoal } from "../crud/crud-publikasi-paket-provider";
 import { Loader } from "lucide-react";
 import { useModal } from "~/components/modals/modal-provider";
-import type { PaketSoalAppWithPublikasi } from "~/types/bank-soal/entities/paket-soal-app-type";
 import DtoPublikasiPaketStatic from "~/dtos/dto-publlikasi-paket-static";
 import {toast} from 'sonner';
 import DispatchingResponseToStore from "~/lib/dispatching-response-to-store";
@@ -62,9 +61,7 @@ export default function  AddPublikasiPaketSoal(){
         setKoleksiIdSiswa([])
     },  [setTargetPaket, setDataKelas, setKoleksiIdSiswa])
 
-    const handleCheckTargetRombel = (
-            event: React.ChangeEvent<HTMLInputElement>
-        ) => {
+    const handleCheckTargetRombel = ( event: React.ChangeEvent<HTMLInputElement> ) => {
             const value = event.currentTarget.value;
 
             // Pilih seluruh rombel pada jenjang
@@ -97,7 +94,7 @@ export default function  AddPublikasiPaketSoal(){
             draft.durasi = durasi;
             draft.start_time = startTime;
             draft.end_time = endTime;
-            draft.target_person = koleksiIdSiswa,
+            draft.target_person = koleksiIdSiswa;
             draft.target_rombel = dataKelas
             draft.target_type = targetPaket
             draft.nama_publikasi = namaPublikasi
@@ -149,7 +146,7 @@ export default function  AddPublikasiPaketSoal(){
                     <Field className="relative">
                         <InputText type="text" value={namaPublikasi} onChange={(e)=>setNamaPublikasi(e.currentTarget.value)} label="Nama Publikasi"/>
                     </Field>
-                    <div className="flex gap-2">
+                    <div className="flex flex-col md:flex-row gap-2">
                         <div className="relative mt-7">
                             <div className="absolute -top-3 text-gray-500 left-1 dark:shadow-xs dark:shadow-sky-300 ps-1 pe-4 rounded-tr-2xl bg-white dark:bg-input/30 w-fit text-[10px]">Waktu Mulai</div>
                             <CalendarTime date={startTime} setDate={setStartTime}/>
@@ -159,7 +156,7 @@ export default function  AddPublikasiPaketSoal(){
                             <InputText label="Durasi (menit)" type="number" value={durasi} onChange={(e)=>setDurasi(Number(e.currentTarget.value))}/>
                         </div>
                     </div>
-                    <div className="flex gap-2">
+                    <div className="flex flex-col md:flex-row gap-2">
                         <div className="relative mt-7">
                             <div className="absolute -top-3 text-gray-500 left-1 dark:shadow-xs dark:shadow-sky-300 ps-1 pe-4 rounded-tr-2xl bg-white dark:bg-input/30 w-fit text-[10px]">
                                 Batas Akhir Pengerjaan online

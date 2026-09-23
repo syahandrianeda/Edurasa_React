@@ -7,10 +7,10 @@ export default class ReadTxtRepository extends AppScriptSheet implements ReadTxt
         
         try{
             const respon =  await this.postBody(param)
-            
+            console.log({respon})
             return {
                 success:true,
-                data: respon,
+                data: respon.data,
             }
             
 

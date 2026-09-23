@@ -93,7 +93,7 @@ export default function ToolbarContentKurikulum(){
 
     useEffect(()=>{
         updateExtra(draft=>{
-            // draft.kurikulum = koleksiAtp;
+            
             const setting = (draft.setting ?? {}) as NonNullable<typeof draft.setting>;
             setting.kurikulum = koleksiAtp;
             draft.setting = setting;

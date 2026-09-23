@@ -15,15 +15,16 @@ export default class EnsureLoadedApiRepository extends AppScriptSheet implements
     async callNeeded(param: Record<string, any>): Promise<ApiResponse<Record<string, any>>> {
         try{
             const respon = await this.postBody(param);
-            // console.log('repository sukses',{respon}, respon.success);
-            if(respon.success){
+            // console.log('repository sukses',{respon}, respon);
+            if(respon.collections){
                 return respon.collections.map(this.responActionRead);
             }else{
                 throw new Error(respon.message ?? 'respon repository tidak punya collections / success = false',{cause:respon})
             }
         }catch(error){
             // console.log('repository gagal',{error})
-            return this.responActionError(error);
+            // return this.responActionError(error);
+            throw new Error('error di repository', {cause:[error]})
         }
         
     }

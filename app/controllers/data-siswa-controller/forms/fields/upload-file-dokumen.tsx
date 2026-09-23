@@ -130,7 +130,7 @@ export function FileInputKartuKeluarga(){
             }else{
                 ShowToasterError(result.messsage);
             }
-            console.log(currentData);
+            
        
     };
     return (

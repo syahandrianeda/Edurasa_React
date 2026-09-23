@@ -29,6 +29,7 @@ export interface PublikasiPaketAppValidWithPaketSoal extends PublikasiPaketAppTy
     is_validPaketSoal :boolean;
     id_file_paket:string
 }
+
 // /**
 //  * tipe PublikasiPaketApp, tapi di relasikan untuk property:
 //  *  `target_person`, dan mengganti `id_bank_soal` dengan `bankSoal`

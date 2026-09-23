@@ -19,7 +19,7 @@ export default function ModalAsyncPaketSoal({state, children}:{state:ModalState<
     const [paketSoal, setPaketSoal] = useState<PaketSoalDesign>();
     const {actions} = useModal();
     const loadedIdRef = useRef<string | null>(null);
-   
+    
      useEffect(() => {
         if(!idFile) return;
         if (loadedIdRef.current === idFile) return;

@@ -119,6 +119,7 @@ export default class EnsurLoadedApiService implements EnsureLoadedApiServiceInte
                 const dataDb =  await this.loadFromIndexDb(paramSheet);
                     return dataDb.map(this.repo.responActionRead) as unknown as ApiResponse<any>;
         }catch(er){
+            console.log(er)
             throw new Error(er as string,{cause:er})
         }
         

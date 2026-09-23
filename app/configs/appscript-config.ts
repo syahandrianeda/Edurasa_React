@@ -145,19 +145,20 @@ export class AppScriptConfig {
     }
     /** === method post dengan axios */
     async postBody(param:Record<string, any>){
+        const start = performance.now();
         try{
           
             const pos = await axios.post(this.appCrudUrl,
-                        // param, 
-                        new URLSearchParams(
-                            Object.entries(param).reduce<Record<string, string>>(
-                                (acc, [key, value]) => {
-                                    acc[key] = String(value);
-                                    return acc;
-                                },
-                                {}
-                            )
-                        ),
+                        param, 
+                        // new URLSearchParams(
+                        //     Object.entries(param).reduce<Record<string, string>>(
+                        //         (acc, [key, value]) => {
+                        //             acc[key] = String(value);
+                        //             return acc;
+                        //         },
+                        //         {}
+                        //     )
+                        // ),
                         
                         {
                         headers: {
@@ -166,33 +167,47 @@ export class AppScriptConfig {
                         }
                     }
             );
-            
+            //   console.log(
+            //     "REQUEST SUCCESS",
+            //     `${((performance.now() - start) / 1000).toFixed(3)} s`,
+            //     pos.status
+            // );
             //reponse axios data yang dibutuhkan, biarkan class turuunannya yang membungkus type data response-nya
             if(pos.data.hasOwnProperty('auth')){
                 
                 this.checkAkun(pos.data.auth);
                 
             }
-            
-            if(pos.status === 200 && pos.data){
-                if(pos.data){
-                    // console.log('pos.data', pos)
-                    return pos.data;
-                    
-                }else{
-                    
-                    // console.log('non pos.data', pos)
-                    return pos;
-                }
+            // console.log('pos axios status 200', pos)
+            if(pos.data && pos.data.success){
+                return pos.data
             }else{
-                
-                // console.log('sukses status non 200', pos)
-                return new Error(pos.data.message)
+                throw new Error(pos.data.message, {cause: pos.data})
             }
+            // if(pos.status === 200 && pos.data){
+            //     if(pos.data){
+            //         console.log('pos.data', pos)
+            //         return pos.data;
+                    
+            //     }else{
+                    
+            //         console.log('non pos.data', pos)
+            //         return pos;
+            //     }
+            // }else{
+                
+            //     console.log('sukses status non 200', pos)
+            //     return new Error(pos.data.message)
+            // }
         } catch (error) {
-                   
-            // console.log(error)
-            throw new Error('gagal memanggil script', { cause: [error]})
+                    console.log(
+                        "REQUEST ERROR",
+                        `${((performance.now() - start) / 1000).toFixed(3)} s`,
+                        error
+                    );
+
+            
+            throw new Error('koneksi terputus', { cause: [error]})
             // throw error
         }
         // const pos = await axios.post(this.appCrudUrl,param, {
@@ -377,9 +392,11 @@ export class AppScriptConfig {
             const FixParam = Object.assign(defaultParam,param);
             
             const respon =  await this.postBody(FixParam);
+            // console.log('upload dokumen di siswa', respon)
             return {
-            success: true,
-            data: respon,
+                ...respon,
+            // success: true,
+            // data: respon.data,
             message:'Upload berhasil',
             source:'API'
         }

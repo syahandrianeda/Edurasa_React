@@ -57,6 +57,7 @@ export default class UploadGambarSoalService {
        */
       
       const data = resp?.data ?? resp;
+      
       if(resp.success){
         const url = data && urlImgDrive(data.idfile);
         return url;

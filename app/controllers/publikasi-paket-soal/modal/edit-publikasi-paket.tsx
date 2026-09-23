@@ -48,7 +48,9 @@ export default function EditPublikasiPaketSoal(){
 
     const koleksiRombel = useMemo(()=>DataRombelUI.filter(s=>s.active && s.jenjang === jenjang),[jenjang, DataRombelUI])
     const koleksiSiswaUI = useMemo(()=>siswa.filter(s=>s.jenjang === jenjang && dataKelas.includes(s.nama_rombel)),[dataKelas, jenjang]);
-    const koleksiListTagihan = useMemo(()=>ListJenisTagihan.filter(s=>s.kelas.includes(jenjang) && s.semester.includes(semester as number)),[jenjang, semester])
+    const koleksiListTagihan = useMemo(()=>ListJenisTagihan.filter(s=>s.kelas.includes(jenjang) && s.semester.includes(semester as number)),[jenjang, semester]);
+    // const disabledEditStartTime = useMemo(()=> startTime.getTime() < new Date().getTime(),[startTime])
+    // console.log({disabledEditStartTime})
 
     const onSelectTarget = useCallback((v:TypePaketSoal)=>{
         setTargetPaket(v);

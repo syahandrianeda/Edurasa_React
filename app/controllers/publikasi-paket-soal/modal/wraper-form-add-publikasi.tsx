@@ -17,6 +17,7 @@ export default function  WrapperFormAddPublikasiPaket ({state, children}:{state:
     const user = getSessionApp<UserPtk>()?.name ?? '';
     const jenjang = getNumberFromString(rombel);
     const dataPaket = state.payload
+    console.log({dataPaket})
     const newDataPublikasi = useMemo(()=>{
         const endTime = new Date(dataPaket?.start_time ?? new Date());
         endTime.setMinutes(60);

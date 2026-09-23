@@ -9,12 +9,14 @@ import {
 import { ScrollArea, ScrollBar } from "~/components/ui/scroll-area";
 import { cn } from "~/lib/utils";
 import { CalendarIcon } from "lucide-react";
+import type { PropsBase } from "node_modules/react-day-picker/dist/esm";
 
 export type CalendarTimeProps = {
     date:Date, 
-    setDate:React.Dispatch<React.SetStateAction<Date>>
+    setDate:React.Dispatch<React.SetStateAction<Date>>,
+    disableEdit?: boolean
 }
-export default function CalendarTime({date, setDate}:CalendarTimeProps) {
+export default function CalendarTime({date, setDate, disableEdit}:CalendarTimeProps) {
     // const [date, setDate] = React.useState<Date>();
     const [isOpen, setIsOpen] = React.useState(false);
     
@@ -49,6 +51,7 @@ export default function CalendarTime({date, setDate}:CalendarTimeProps) {
                 "dark:border dark:border-sky-900",
                 !date && "text-muted-foreground"
             )}
+            disabled={disableEdit}
             >
             <CalendarIcon className="mr-2 h-4 w-4" />
             {date ? (

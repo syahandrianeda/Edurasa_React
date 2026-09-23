@@ -1,3 +1,4 @@
+
 import { clientsClaim } from "workbox-core";
 import {
   cleanupOutdatedCaches,
@@ -39,6 +40,6 @@ setCatchHandler(async ({ event }) => {
   return Response.error();
 });
 
-self.skipWaiting();
+(self as ServiceWorkerGlobalScope & { skipWaiting: () => Promise<void> }).skipWaiting();
 
 clientsClaim();

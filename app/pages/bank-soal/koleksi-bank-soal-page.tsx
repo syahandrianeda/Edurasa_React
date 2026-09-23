@@ -12,12 +12,12 @@ export default function KoleksiBankSoalPage({dataSoal}:{dataSoal:BankSoalAppType
     
     return (
         <>
-        <BankSoalFilter setFilter={setFilter} filters={filters} />
-        <TableKoleksiBankSoal data={(pagination.items as BankSoalAppType[]) ?? []} startIndex={pagination.startIndex}/>
-        {
-            pagination && <AppPagination pagination={pagination} />
-        }
-       
+            <BankSoalFilter setFilter={setFilter} filters={filters} />
+            <TableKoleksiBankSoal data={(pagination.items as BankSoalAppType[]) ?? []} startIndex={pagination.startIndex}/>
+            {
+                pagination && <AppPagination pagination={pagination} />
+            }
         </>
     )
 }
+    

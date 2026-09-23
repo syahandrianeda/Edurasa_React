@@ -19,6 +19,11 @@ export default function validationAddPublikasi(data:PublikasiPaketAppType):warni
         isValid=false;
         message.push('file Setting belum terdeteksi');
     }
+    
+    if(data.target_type === 'siswa' && data.target_person.length === 0){
+        isValid=false;
+        message.push("Anda memilih tipe target siswa, tapi belum memilih siswanya")
+    }
     return {
         isValid, 
         message

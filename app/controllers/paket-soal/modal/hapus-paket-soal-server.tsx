@@ -52,7 +52,7 @@ export default function HapusPaketSoalServer({InstanceDataKisikisi}:{InstanceDat
     }
     return (
         <>
-            <div className="border-2 h-[calc(100vh-12rem)] border-black flex bg-rose-200">
+            <div className="border-2 md:h-[calc(100vh-12rem)] border-black flex flex-col md:flex-row bg-rose-200">
                 <div className="border border-rose-400 justify-items-stretch flex-1 m-2 bg-linear-to-bl from-sky-300 via-rose-300 to-purple-300 rounded-2xl shadow-sm shadow-rose-300 flex flex-col justify-center items-center">
                     <div className="text-2xl font-extrabold text-center">
                         <TriangleAlert size={72} className="text-rose-500 mx-auto"/>
@@ -62,8 +62,8 @@ export default function HapusPaketSoalServer({InstanceDataKisikisi}:{InstanceDat
                         <p><strong>{setting?.identitas?.nama}</strong></p>
                     </div>
                 </div>
-                <div className="border border-black flex-1 flex flex-col m-2 p-2 bg-linear-to-bl from-sky-300 via-rose-300 to-purple-300 rounded-2xl shadow-sm shadow-rose-300">
-                    <div className="border bg-white dark:text-black p-2 overflow-y-hidden text-wrap zoom-50">
+                <div className="border border-black flex-1 flex flex-col m-2 p-2 overflow-y-hidden bg-linear-to-bl from-sky-300 via-rose-300 to-purple-300 rounded-2xl shadow-sm shadow-rose-300">
+                    <div className="border bg-white dark:text-black p-2  text-wrap zoom-50">
                         {
                             (setting?.identitas && setting.identitas.showKop && setting?.dataKopCustom) && (
                                 <KopPaketSoal data={setting?.dataKopCustom}/>

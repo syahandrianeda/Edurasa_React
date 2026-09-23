@@ -1,0 +1,36 @@
+import type { PublikasiPaketAppType } from "~/types/bank-soal/entities/publikasi-paket-app-type";
+import type { TagihanPenilaianType } from "../type/tagihan-penilaian-type";
+import { ListJenisTagihan } from "~/domain/asesmen-penilaian/list-jenis-tagihan";
+
+
+export default class TagihanPenilaianClass{
+    private koleksiTagihanPenilaian:TagihanPenilaianType[]=[];
+    constructor(
+        private readonly dtoPublikasiPaket:PublikasiPaketAppType[], 
+        private readonly rombel:string
+    ){}
+    
+    get currentPublikasiPaketRombel():PublikasiPaketAppType[]{
+        return this.dtoPublikasiPaket.filter(s=>s.target_rombel.includes(this.rombel));
+    }
+    get rombelName():string{
+        return this.rombel
+    }
+
+    get dataTagihan():TagihanPenilaianType[]{
+        return this.koleksiTagihanPenilaian;
+    }
+
+    init():this{
+        /** build relasi */
+        const ListJenisTagihanMap = new Map(ListJenisTagihan.map(m=>[m.kode, m]))
+        this.koleksiTagihanPenilaian = this.currentPublikasiPaketRombel.map(item=>(
+            {
+                ...item, 
+                tagihan_type:ListJenisTagihanMap.get(item.jenis_tagihan)!,
+                source: item.paket_soal_id === 0? 'Non Paket Soal':'Paket Soal'
+            }
+        ))
+        return this;
+    }
+}

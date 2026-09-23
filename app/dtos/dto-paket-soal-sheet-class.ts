@@ -8,11 +8,15 @@ import type { AtpHasManySoalType } from "~/domain/bank-soal/relational-soal/type
 import { ListBentukSoal } from "~/domain/bank-soal/list-bentuk-soal";
 
 import { getNumberFromString } from "~/lib/get-number";
-import type { PublikasiPaketAppType } from "~/types/bank-soal/entities/publikasi-paket-app-type";
+import type { PublikasiPaketAppType, PublikasiPaketAppValidWithPaketSoal } from "~/types/bank-soal/entities/publikasi-paket-app-type";
+import type { TagihanPenilaianType } from "~/domain/penilaian/type/tagihan-penilaian-type";
+import type { TagihanAsessmenType } from "~/domain/penilaian/type/tagihan-assesmen-type";
+import { ListJenisTagihan } from "~/domain/asesmen-penilaian/list-jenis-tagihan";
 
 export default class DtoPaketSoalSheetClass extends DtoResolverTypeClass{
     private dataPaketSoalAppType:PaketSoalAppType[]=[];
     private dataPaketSoalAppWithPublikasiType:PaketSoalAppWithPublikasi[]=[];
+    private dataTagihanPenilaianRombel:TagihanAsessmenType[]=[]
     // private dataKontenSaolType:
     constructor(
             private readonly dataSheet: PaketSoalSheetType[], 
@@ -22,11 +26,17 @@ export default class DtoPaketSoalSheetClass extends DtoResolverTypeClass{
     ){
         super()
     }
+    get rombel():string{
+        return this.rombelArg
+    }
     get jenjang(){
         return getNumberFromString(this.rombelArg);
     }
+    get dataTagihanPenilaian(){
+        return this.dataTagihanPenilaianRombel
+    }
     /** getter dataSheet */;
-    get purDataSheet():PaketSoalSheetType[]{
+    get pureDataSheet():PaketSoalSheetType[]{
         return this.dataSheet;
     }
 
@@ -77,14 +87,80 @@ export default class DtoPaketSoalSheetClass extends DtoResolverTypeClass{
 
         }
     }
+
+    toPublikasiPaketAppValidWithPaketSoal(itemPaketSoal:PaketSoalSheetType):PublikasiPaketAppValidWithPaketSoal[]
+    {
+        const json_setting= this.parseJsonSettingBaku(itemPaketSoal.json_setting);// JSON.parse(itemPaketSoal.json_setting) 
+        // const t = this.publikasiPaket.filter(s=>s.paket_soal_id === itemPaketSoal.idbaris && s.status === '').map(m=> ({...m, id_file_paket:itemPaketSoal.id_file_json ?? '', is_validPaketSoal:(itemPaketSoal.id_file_json === m.id_file_setting), json_setting: JSON.parse(itemPaketSoal.json_setting) } ))
+        return this.publikasiPaket.map(m=> (
+            {
+                ...m, 
+                id_file_paket:itemPaketSoal.id_file_json ?? '', 
+                is_validPaketSoal:(itemPaketSoal.id_file_json === m.id_file_setting), 
+                json_setting
+            })
+        )
+    }
+    toTagihanAsessmen(data:PublikasiPaketAppType):TagihanAsessmenType{
+        const  paketSoal= this.pureDataSheet.find(s=>s.idbaris === data.paket_soal_id)
+        const {
+                idbaris,
+                paket_soal_id,
+                start_time,
+                end_time,
+                durasi,
+                target_type,
+                target_person,
+                target_rombel,
+                status,
+                id_file_setting,
+                id_bank_soal,
+                nama_publikasi,
+                oleh,
+
+                jenis_tagihan:sourceTagihan,
+                json_setting,
+
+
+        } = data;
+        const jenis_tagihan = ListJenisTagihan.find(s=>s.kode === sourceTagihan)!
+        const setting_tagihan= json_setting && this.convertPraSettingBakuToPraSettingPaket(json_setting);
+        const id_file_paket = paketSoal?.id_file_json ?? '';
+        const is_validPaketSoal = id_file_setting === id_file_paket;
+        //'Paket Soal'|'Non Paket Soal'
+        const source = paket_soal_id !== 0 ? 'Paket Soal' : "Non Paket Soal";
+        return {
+            idbaris,
+            paket_soal_id,
+            start_time,
+            end_time,
+            durasi,
+            target_type,
+            target_person,
+            target_rombel,
+            status,
+            id_file_setting ,
+            id_bank_soal    ,
+            nama_publikasi  ,
+            oleh            ,
+            
+            jenis_tagihan,
+            setting_tagihan,
+            is_validPaketSoal,
+            id_file_paket,
+            source,
+        }
+    }
     toPaketSoalAppWithPublikasiType(itemPaketSoal:PaketSoalSheetType):PaketSoalAppWithPublikasi{
         const paketSoalAppType = this.toPaketSoalAppType(itemPaketSoal);
-        const data_publikasi = this.publikasiPaket.filter(s=>s.paket_soal_id === itemPaketSoal.idbaris && s.status === '').map(m=> ({...m, id_file_paket:itemPaketSoal.id_file_json ?? '', is_validPaketSoal:(itemPaketSoal.id_file_json === m.id_file_setting), json_setting: JSON.parse(itemPaketSoal.json_setting) } ))
+        // const data_publikasi = this.publikasiPaket.filter(s=>s.paket_soal_id === itemPaketSoal.idbaris && s.status === '').map(m=> ({...m, id_file_paket:itemPaketSoal.id_file_json ?? '', is_validPaketSoal:(itemPaketSoal.id_file_json === m.id_file_setting), json_setting: JSON.parse(itemPaketSoal.json_setting) } ))
+        const data_publikasi = this.toPublikasiPaketAppValidWithPaketSoal(itemPaketSoal).filter(s=>s.paket_soal_id === itemPaketSoal.idbaris && s.status === '');//.map(m=> ({...m, id_file_paket:itemPaketSoal.id_file_json ?? '', is_validPaketSoal:(itemPaketSoal.id_file_json === m.id_file_setting), json_setting: JSON.parse(itemPaketSoal.json_setting) } ))
         return {...paketSoalAppType, data_publikasi }
     }
     init():this{
         this.dataPaketSoalAppType = this.dataSheet.map(m=>this.toPaketSoalAppType(m)).filter(s=>getNumberFromString(s.target_rombel)===this.jenjang);
         this.dataPaketSoalAppWithPublikasiType = this.dataSheet.map(m=>this.toPaketSoalAppWithPublikasiType(m)).filter(s=>getNumberFromString(s.target_rombel)===this.jenjang);
+        this.dataTagihanPenilaianRombel = this.publikasiPaket.map(m=>this.toTagihanAsessmen(m)).filter(s=>s.target_rombel.includes(this.rombelArg) && s.status === "");
         return this;
     }
     /**
@@ -95,9 +171,8 @@ export default class DtoPaketSoalSheetClass extends DtoResolverTypeClass{
 
     
     /** genterate data json_setting */
-    parseSettingPaketSoal(value:string): PraSettingPaket{
-        const praSettingBaku = this.parseJsonSettingBaku(value);
-        const kurikulum = this.AtpHasBankSoal.filter(item=>praSettingBaku.kurikulum.includes(item.atp_as_tp_id));//praSettingBaku.kurikulum?.map(m=> this.AtpHasBankSoal.find(s=>s.atp_as_tp_id === m)) ?? [];
+    convertPraSettingBakuToPraSettingPaket(praSettingBaku:PraSettingBaku):PraSettingPaket{
+         const kurikulum = this.AtpHasBankSoal.filter(item=>praSettingBaku.kurikulum.includes(item.atp_as_tp_id));//praSettingBaku.kurikulum?.map(m=> this.AtpHasBankSoal.find(s=>s.atp_as_tp_id === m)) ?? [];
         // const identitas = praSettingBaku.identitas!
         // const target_paket = praSettingBaku.data_target
         const count_bentuk_soal =   praSettingBaku.count_bentuk_soal.map(m=>{
@@ -108,6 +183,21 @@ export default class DtoPaketSoalSheetClass extends DtoResolverTypeClass{
             }
         })
         return {...praSettingBaku,  kurikulum, count_bentuk_soal} as PraSettingPaket;
+    }
+    parseSettingPaketSoal(value:string): PraSettingPaket{
+        const praSettingBaku = this.parseJsonSettingBaku(value);
+        return this.convertPraSettingBakuToPraSettingPaket(praSettingBaku)
+        // const kurikulum = this.AtpHasBankSoal.filter(item=>praSettingBaku.kurikulum.includes(item.atp_as_tp_id));//praSettingBaku.kurikulum?.map(m=> this.AtpHasBankSoal.find(s=>s.atp_as_tp_id === m)) ?? [];
+        // // const identitas = praSettingBaku.identitas!
+        // // const target_paket = praSettingBaku.data_target
+        // const count_bentuk_soal =   praSettingBaku.count_bentuk_soal.map(m=>{
+        //     const dataBentukSoal = ListBentukSoal.find(s=>s.name === m.dataBentukSoal)!
+        //     return {
+        //         ...m,
+        //         dataBentukSoal
+        //     }
+        // })
+        // return {...praSettingBaku,  kurikulum, count_bentuk_soal} as PraSettingPaket;
     }
     /**
      * Mengubah string JSON Sheet menjadi

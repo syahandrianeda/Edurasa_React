@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, type Dispatch, type ReactNode, type SetStateAction } from "react"
+import { createContext, useCallback, useContext, useMemo, useState, type Dispatch, type ReactNode, type SetStateAction } from "react"
 import type { SiswaType } from "~/types/siswa"
 import type { ModalType } from "./modal-type"
 
@@ -47,8 +47,7 @@ export function useModal<TPayload>() {
         throw new Error("useModal must be used within ModalProvider")
     }
 
-    return {
-    state: {
+    return { state: {
         ...context.state,
         payload: context.state.payload as TPayload | undefined,
         },
@@ -66,7 +65,7 @@ export default function ModalProvider({ children }: { children: ReactNode }) {
         configModal:DEFAULT_CONFIG_MODAL
     })
 
-    const open = (type: ModalState["type"], payload?: unknown, configModal?:ConfigModelType) => {
+    const open = useCallback((type: ModalState["type"], payload?: unknown, configModal?:ConfigModelType) => {
         setState(
             {
                 isOpen: true,
@@ -75,9 +74,9 @@ export default function ModalProvider({ children }: { children: ReactNode }) {
                 configModal:{...DEFAULT_CONFIG_MODAL, ...configModal},
             }
         )
-    }
+    },[])
 
-    const close = () => {
+    const close = useCallback(() => {
         setState(
             {
                 isOpen: false,
@@ -86,15 +85,32 @@ export default function ModalProvider({ children }: { children: ReactNode }) {
                 configModal:DEFAULT_CONFIG_MODAL
             }
         )
-    }
+    },[]);
+    const actions = useMemo(
+        () => ({
+            open,
+            close,
+        }),
+        [open, close],
+    );
+
+    const contextValue = useMemo(
+        () => ({
+            state,
+            setState,
+            actions,
+        }),
+        [state, actions],
+    );
 
     return (
         <ModalContext.Provider
-        value={{
-            state,
-            setState,
-            actions: { open, close },
-        }}
+        value={contextValue}
+        // value={{
+        //     state,
+        //     setState,
+        //     actions: { open, close },
+        // }}
         >
         {children}
         </ModalContext.Provider>

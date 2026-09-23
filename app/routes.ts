@@ -120,6 +120,15 @@ export default [
                 ],
                 )
             ]),
+            layout("layouts/sub-layouts/sub-asessment.tsx",[
+                ...prefix('penilaian',[
+                    index('routes/penilaian/redirect-penilaian-route.tsx'),
+                    route("list-penilaian", "routes/penilaian/list-penilaian-route.tsx"),
+                    route("kompetensi-tagihan-penilaian", "routes/penilaian/kompetensi-tagihan-penilaian-route.tsx"),
+                    route("tagihan-harian", "routes/penilaian/tagihan-harian-route.tsx"),
+                    route("remedial-pengayaan", "routes/penilaian/remedial-pengayaan-route.tsx"),
+                ])
+            ]),
             layout("layouts/sub-layouts/sub-tabungan-siswa.tsx",[
                 ...prefix('tabungan',[
                     index('routes/tabungan/redirect-tabungan.tsx'),

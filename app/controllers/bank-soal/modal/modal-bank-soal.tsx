@@ -28,7 +28,7 @@ import WrapperFormAddPublikasiPaket from "~/controllers/publikasi-paket-soal/mod
 
 export default function ModalBankSoal(){
     const {state, actions} = useModal<BankSoalAppType>()
-     const open = state.isOpen && [
+    const open = state.isOpen && [
         
         'EDIT',
         'HAPUS',
@@ -147,7 +147,7 @@ function SwitchContentFormBankSoal ({state, actions}:{state:ModalState<BankSoalA
             
         case 'HAPUS PUBLIKASI PAKET SOAL':
             return <WrapperFormPublikasiPaket state={state as unknown as ModalState<PublikasiPaketAppValidWithPaketSoal>}><HapusPublikasiPaketSoal/></WrapperFormPublikasiPaket>
-            
+            //actions.open('EDIT PUBLIKASI PAKET SOAL', m,{closeOnOutsideClick:false})
         case 'ADD PUBLIKASI PAKET SOAL':
             return <WrapperFormAddPublikasiPaket state={state as unknown as ModalState<PaketSoalAppWithPublikasi>}><AddPublikasiPaketSoal/></WrapperFormAddPublikasiPaket>
                 

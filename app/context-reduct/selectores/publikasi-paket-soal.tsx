@@ -2,6 +2,7 @@ import { createSelector} from "@reduxjs/toolkit";
 import type { RootState } from "../store";
 import DtoPublikasiPaket from "~/dtos/dto-publikasi-paket";
 import DtoPublikasiPaketStatic from "~/dtos/dto-publlikasi-paket-static";
+import TagihanPenilaianClass from "~/domain/penilaian/infrastucture/tagihan-penilian-class";
 
 export const InstancePublikasiPaketSoalSelector = createSelector(
     [
@@ -26,3 +27,15 @@ export const PublikasiPaketSoalAppStaticSelector = createSelector(
     ],
     (dto) => DtoPublikasiPaketStatic.arrayFromSheetToApp(dto)
 )
+
+// export const InstanceDataTagihanPenilaianSector = createSelector(
+//     [
+//         PublikasiPaketSoalAppStaticSelector,
+//         (state:RootState)=>state.fokusRombel.value,
+//         /** di sini seluruh respon pengerjaan */
+//     ],
+//     (dto, rombel)=>{
+//         if(!rombel) return
+//         return new TagihanPenilaianClass(dto, rombel).init();
+//     }
+// )

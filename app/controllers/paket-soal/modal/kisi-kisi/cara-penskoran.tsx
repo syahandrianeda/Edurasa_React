@@ -6,7 +6,7 @@ import type { DataSoalDesign } from "~/domain/paket-soal/result/session-soal";
 import SoalItemFlex from "~/controllers/bank-soal/modal/soal-item-flex";
 import { formatCurrency } from "~/lib/currency-format";
 
-export default function  CaraPenskoran({KisiKisiInstance}:{KisiKisiInstance:DataKisiKisi}){
+export default function  CaraPenskoran({KisiKisiInstance, modeCountSebaran=false}:{KisiKisiInstance:DataKisiKisi,modeCountSebaran?:boolean}){
      const KisikisiMappingMapel = useMemo(()=>{
                 if(!KisiKisiInstance)  return [];
                 return KisiKisiInstance.generateKoleksiNoSoalPaket()
@@ -61,7 +61,11 @@ export default function  CaraPenskoran({KisiKisiInstance}:{KisiKisiInstance:Data
                                                     mapel.koleksiBentukSoal.map((bentukSoal, iBentukSoal)=>{
                                                         const noSoalCollection = atp.dataBentukSoal.find(s=>s.nameBentukSoal === bentukSoal);
                                                         return (
-                                                            <TdEdura key={iBentukSoal}>{noSoalCollection?.noSoal?.join(',')}</TdEdura>
+                                                            <TdEdura key={iBentukSoal}>
+                                                                {
+                                                                    modeCountSebaran ? (noSoalCollection?.noSoal?.length + ' soal') : noSoalCollection?.noSoal?.join(',')
+                                                                }
+                                                            </TdEdura>
                                                         )
                                                     })
                                                 }
