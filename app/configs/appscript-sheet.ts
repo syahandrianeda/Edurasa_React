@@ -106,6 +106,8 @@ export default class AppScriptSheet extends AppScriptConfig{
 
     protected sheetBankSoalTabPublikasiPaket: ParamRequestAppScript = {idss:'', tab:''};
 
+    
+
     constructor(){
         super();
         this.sheetAkunTabUser                   = {idss:this.sheetAkun, tab:'user'}
@@ -131,6 +133,7 @@ export default class AppScriptSheet extends AppScriptConfig{
         //10
         this.KurikulumTabElemenCp               = {idss:this.sheetKurikulum, tab:'elemen_cp'};
         this.KurikulumTabProta                  = {idss:this.sheetKurikulum, tab:'prota'};
+
         /**deprecated:
             this.sheetMateriTabMapel                = {idss:this.sheetMateri, tab:'mapel'}
             this.sheetMateriTabJpMapel              = {idss:this.sheetMateri, tab:'jp_mapel'}

@@ -1,6 +1,9 @@
 
 import ProfileUser from "~/pages/profile/profile-user";
 import type { Route } from "../+types/about";
+import { getSessionApp } from "~/infrastructures/session-storage/app-session";
+import type { UserSiswa } from "~/types/user-siswa";
+import type { UserPtk } from "~/types";
 
 export function meta({matches}: Route.MetaArgs) {
     const rootMeta = matches.find(m => m?.id === 'root')?.meta;
@@ -33,6 +36,11 @@ export function clientLoader({}:Route.ComponentProps){
 
 export default function ProfileRoute() {
     
+    const whoAmI = getSessionApp<UserPtk|UserSiswa>();
+    if(whoAmI?.roles === 'Siswa'){
+        return null
+    }
+
     return(
         <ProfileUser/>
     )

@@ -18,7 +18,7 @@ export type SiswaAppScriptDTO =
 export class DTOSiswa {
     static fromApi(dto: Record<string, any>): SiswaType {
         return {
-                time_stamp: resolveDate(dto.time_stamp),
+                time_stamp: resolveDate(dto.time_stamp ),
                 id: resolveNumber(dto.id),
                 jenjang: resolveNumber(dto.jenjang),
                 nama_rombel: resolveString(dto.nama_rombel),

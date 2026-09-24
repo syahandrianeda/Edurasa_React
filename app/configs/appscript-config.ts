@@ -207,7 +207,7 @@ export class AppScriptConfig {
                     );
 
             
-            throw new Error('koneksi terputus', { cause: [error]})
+            throw new Error(error instanceof Error ? error.message : String(error), { cause: [error]})
             // throw error
         }
         // const pos = await axios.post(this.appCrudUrl,param, {

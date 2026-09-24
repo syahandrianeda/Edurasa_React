@@ -2,6 +2,7 @@ import IconMenu from "~/components/ui_edura/icon-menu";
 import { DataMenu } from "~/configs/menu";
 import { useAppSelector } from "~/context-reduct/hook";
 import PermissionMenu from "~/lib/permission-menu";
+import InfoSiswa from "./siswa/info-menu-siswa";
 
 
 export default function AppMenuPage() {
@@ -11,7 +12,10 @@ export default function AppMenuPage() {
 
     return(
         <>
-            <div className="flex items-baseline backdrop-blur-lg shadow-lg inset-14 ring-0 border-0 outline-0 py-4 justify-center max-w-5xl md:min-w-6xl my-0 md:my-2 mx-auto md:h-[calc(100vh-5rem)] rounded-4xl overflow-y-scroll scrol-h-custom">
+            <div className="flex flex-col items-baseline backdrop-blur-lg shadow-lg inset-14 ring-0 border-0 outline-0 py-4 justify-center max-w-5xl md:min-w-6xl my-0 md:my-2 mx-auto md:h-[calc(100vh-5rem)] rounded-4xl overflow-y-scroll scrol-h-custom">
+                {
+                    user?.jabatan === 'Siswa' && <InfoSiswa/>
+                }
                 <IconMenu menus={MenuPermission} />
             </div>
         </>

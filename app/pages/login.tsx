@@ -43,7 +43,7 @@ export default function LoginPage(
                 </div>
                 <div className="w-full lg:p-8">
                     <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-87.5">
-                        <h1>Login Page</h1>
+                        <h1>Login untuk PTK</h1>
                         <Form
                             className="flex flex-col gap-6"
                             

@@ -166,6 +166,19 @@ export default [
             ])
         ]),
     ]),
+    layout("layouts/app-siswa-layout.tsx",[
+        layout("layouts/provider-layout/siswa-app-provider-service.tsx",[
+            layout("layouts/siswa-sub-layout/sub-absensi.tsx",[
+                ...prefix('kehadiranku',[
+                        index('routes/siswa/kehadiranku.tsx'),
+                        route('hari-ini','routes/siswa/kehadiranku/hari-ini.tsx'),
+                        ]
+                    )
+
+                ]
+            )
+        ])
+    ])
 
 
 ] satisfies RouteConfig;

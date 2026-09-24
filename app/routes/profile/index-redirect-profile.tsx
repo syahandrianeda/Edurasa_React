@@ -2,6 +2,9 @@ import { Navigate, redirect, useNavigation } from "react-router";
 
 import { TopProgressBarFetch } from "~/components/ui_edura/top-progress-bar";
 import type { Route } from "./+types/index-redirect-profile";
+import { getSessionApp } from "~/infrastructures/session-storage/app-session";
+import type { UserPtk } from "~/types";
+import type { UserSiswa } from "~/types/user-siswa";
 
 
 
@@ -26,7 +29,6 @@ export function meta({matches}: Route.MetaArgs) {
 
 export async function clientLoader({}:Route.ComponentProps){
     
-
     // return {titleTambahan:'Profile', data:[]};
     return redirect("/profile/about")
 }

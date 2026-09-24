@@ -11,7 +11,8 @@ export function clientLoader(){
     const page = getSessionApp();
     
     if(!page){
-        throw redirect('/login');
+        // throw redirect('/login');
+        throw redirect('/');
     }
     return page;
 }
