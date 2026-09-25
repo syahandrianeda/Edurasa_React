@@ -15,8 +15,9 @@ export default class PublikasiPaketRepository extends AppScriptSheet implements 
             
             return this.responActionRead(respon)
 
-        }catch(err){
-            return await this.responActionError(err);
+        }catch(er){
+            // return await this.responActionError(err);
+             throw er instanceof Error ? er : new Error(String(er))
         }
     }
     
@@ -27,8 +28,9 @@ export default class PublikasiPaketRepository extends AppScriptSheet implements 
             const respon = this.postBody(this.paramSheetBankSoalTabPublikasiPaket);
             return this.responActionRead(respon);
 
-        }catch(err){
-            return this.responActionError(err);
-        }
+        }catch(er){
+                // return this.responActionError(error);
+                 throw er instanceof Error ? er : new Error(String(er))
+            }
     }
 }

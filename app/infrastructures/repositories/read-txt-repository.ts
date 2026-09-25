@@ -15,8 +15,8 @@ export default class ReadTxtRepository extends AppScriptSheet implements ReadTxt
             
 
         }catch(er){
-            console.log({er})
-            return this.responActionError(er)
-        }
+                // return this.responActionError(error);
+                 throw er instanceof Error ? er : new Error(String(er))
+            }
     }
 }

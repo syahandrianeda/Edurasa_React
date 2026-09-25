@@ -12,7 +12,7 @@ export default function PreviewKunciJawaban({data, className}:{data:BankSoalAppT
                     <div className='flex gap-2'>
                         <strong>Kunci Jawaban: </strong>
                         <div>
-                            <KunciJawabanPreview data={data.jawaban as string[]}/>
+                            {data.jawaban && <KunciJawabanPreview data={data.jawaban as string[]}/>}
                         </div>
                     </div>
                 )

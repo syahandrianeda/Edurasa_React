@@ -19,10 +19,31 @@ export const ProtaSlice = createSlice({
         setDataProta(state, action:PayloadAction<protaSheet[]>){
             state.data = action.payload
             state.loaded = true
-        }
+        },
+        
+                 upsertDataProta(
+                                        state,
+                                        action: PayloadAction<protaSheet[]>
+                                    ) {
+                                        const newData = action.payload;
+                            
+                                        const dataMap = new Map(
+                                            state.data.map(item => [item.idbaris, item])
+                                        );
+                            
+                                        for (const item of newData) {
+                                            dataMap.set(item.idbaris, {
+                                                ...dataMap.get(item.idbaris),
+                                                ...item,
+                                            });
+                                        }
+                                        state.name = 'prota'
+                                        state.data = Array.from(dataMap.values());
+                                        state.loaded=action.payload.length>0
+                                        },
     }
 });
 
-export const {setDataProta} = ProtaSlice.actions;
+export const {setDataProta, upsertDataProta} = ProtaSlice.actions;
 export default ProtaSlice.reducer;
 

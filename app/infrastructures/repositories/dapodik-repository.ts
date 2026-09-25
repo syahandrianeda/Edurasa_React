@@ -24,9 +24,9 @@ export default class DapodikRepositoryImplement extends AppScriptSheet implement
             const data = await this.postBody( this.paramSheetAkunTabDapodik);
             
             return this.responActionRead(data);
-        }catch(error){
-            return this.responActionError(error);
-        
-        }
+       }catch(er){
+                // return this.responActionError(error);
+                 throw er instanceof Error ? er : new Error(String(er))
+            }
     }
 }

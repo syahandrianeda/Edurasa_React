@@ -22,9 +22,32 @@ const TransaksiTransaksiSerahTerimaDokumenSlice = createSlice({
                         state.data = action.payload;
                         state.name = 'transaksi_serah_terima'
                         
-                    }
+                    },
+    
+            upsertTransaksiSerahTerimaDokumen(
+                state,
+                action: PayloadAction<TransaksiSerahTerimaDokumenSheetType[]>
+            ) {
+                const newData = action.payload;
+    
+                const dataMap = new Map(
+                    state.data.map(item => [item.idbaris, item])
+                );
+    
+                for (const item of newData) {
+                    dataMap.set(item.idbaris, {
+                        ...dataMap.get(item.idbaris),
+                        ...item,
+                    });
+                }
+    
+                state.data = Array.from(dataMap.values());
+    
+                state.loaded = true;
+                state.name = "transaksi_serah_terima";
+            },
     }
 });
 
-export const {setTransaksiSerahTerimaDokumen} = TransaksiTransaksiSerahTerimaDokumenSlice.actions;
+export const {setTransaksiSerahTerimaDokumen,upsertTransaksiSerahTerimaDokumen} = TransaksiTransaksiSerahTerimaDokumenSlice.actions;
 export default TransaksiTransaksiSerahTerimaDokumenSlice.reducer;

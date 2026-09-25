@@ -81,7 +81,7 @@ export default class EnsurLoadedApiService implements EnsureLoadedApiServiceInte
     
     
                 const data = await this.repo.callNeeded(param);
-                // console.log('data', {param, data})
+                console.log('data', {param, data})
     
                 /**
                  * ========================================================

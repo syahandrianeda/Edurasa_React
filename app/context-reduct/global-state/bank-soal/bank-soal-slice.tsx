@@ -20,8 +20,32 @@ const BankSoalSlice = createSlice({
         setBankSoal(state, action:PayloadAction<BankSoalSheetType[]>){
             state.data = action.payload;
             state.loaded = true;
-        }
+            state.name = 'bank_soal'
+        },
+        upsertBankSoal(
+            state,
+            action: PayloadAction<BankSoalSheetType[]>
+        ) {
+            const newData = action.payload;
+
+            const dataMap = new Map(
+                state.data.map(item => [item.idbaris, item])
+            );
+
+            for (const item of newData) {
+                dataMap.set(item.idbaris, {
+                    ...dataMap.get(item.idbaris),
+                    ...item,
+                });
+            }
+
+            state.data = Array.from(dataMap.values());
+
+            state.loaded = true;
+            state.name = "bank_soal";
+        },
+        
     }
 })
-export const {setBankSoal} = BankSoalSlice.actions;
+export const {setBankSoal, upsertBankSoal} = BankSoalSlice.actions;
 export default BankSoalSlice.reducer;

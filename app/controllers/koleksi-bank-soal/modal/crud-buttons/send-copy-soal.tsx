@@ -7,6 +7,8 @@ import DtoBankSoal from "~/dtos/dto-bank-soal";
 import type { BankSoalAppType, BankSoalSheetType } from "~/types/bank-soal/bank-soal-type";
 import {toast} from 'sonner';
 import DispatchingResponseToStore from "~/lib/dispatching-response-to-store";
+import dataFormItemSoalNormalize from "~/domain/bank-soal/normalizer-data-form-soal";
+import type { ListBentukSoalType } from "~/types/bank-soal/bentuk-soal-type";
 
 export default function SendCopySoal({data}:{data:BankSoalAppType}){
     const {actions:actionModal} = useModal<BankSoalAppType>();
@@ -22,9 +24,10 @@ export default function SendCopySoal({data}:{data:BankSoalAppType}){
                 
                 const newData = {...data, idbaris:0}
                 const dtoBankSoal = DtoBankSoal.fromAppToSheet(newData);
+                const par = dataFormItemSoalNormalize(dtoBankSoal, {name: data.bentuk_soal} as ListBentukSoalType)
                 toast.promise(
-                    Post.update(dtoBankSoal),
-                    {
+                            Post.update(par),
+                                {
                         loading:'Sedang mengupdate',
                         success:(response)=>{
                             const {success, data:dataRespon, detailResponse} = response;

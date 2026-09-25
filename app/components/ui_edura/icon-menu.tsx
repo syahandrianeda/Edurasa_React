@@ -3,7 +3,7 @@ import type { typeKoleksiMenu } from "~/types"
 
 export default function IconMenu({menus}:{menus:typeKoleksiMenu[]}){
     return (
-        <nav className="grid grid-cols-4 md:grid-cols-7 gap-4 md:gap-8 place-items-center justify-between">
+        <nav className="grid grid-cols-4 md:grid-cols-7 gap-4 md:gap-8 place-items-center justify-between mx-auto">
             {menus.map((item,index)=>{
                 return(
                     <div key={index} className="relative flex justify-center items-center overflow-hidden group ">

@@ -15,10 +15,10 @@ export default class SerahTerimaDokumenRepository extends AppScriptSheet impleme
         try{
             const response = await this.postBody(this.paramSheetGalleryTabSerahTerimaDokumen);
             return this.responActionRead(response)
-        }catch(er){
-            console.log(er);
-            return this.responActionError(er);
-        }
+      }catch(er){
+                // return this.responActionError(error);
+                 throw er instanceof Error ? er : new Error(String(er))
+            }
         
         
     }

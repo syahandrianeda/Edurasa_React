@@ -25,9 +25,10 @@ export default class ElemenCpRepository extends AppScriptSheet implements Elemen
         try{
             const respon = await this.postBody(param);
             return this.responActionRead(respon);
-        }catch(error){
-            return this.responActionError(error);
-        }
+        }catch(er){
+                // return this.responActionError(error);
+                 throw er instanceof Error ? er : new Error(String(er))
+            }
         
     }
 }

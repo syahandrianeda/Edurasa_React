@@ -8,6 +8,7 @@ import { getSessionRombel, saveSessionRombel } from "~/infrastructures/session-s
 import { store } from "~/context-reduct/redux-provider";
 import { setCredentials } from "~/context-reduct/global-state/auth-slice";
 import { setFokusRombel } from "~/context-reduct/global-state/fokus-rombel-slice";
+import { getNumberFromString } from "~/lib/get-number";
 
 interface MacroChild {
     [key: string]: string;
@@ -112,7 +113,14 @@ export class AppScriptConfig {
     /** ===== AppScript ===== */
 
     get appCrudId(): string {
-        return this.currentMacro?.["exec_crud"] ?? "edurasa_crud";
+        const testRombel = getSessionRombel();
+        let key = 'exec_crud'
+        if(testRombel){
+            key = "exec_crud_" + getNumberFromString(testRombel)
+        }
+        console.log(testRombel, key)
+        // return this.currentMacro?.["exec_crud"] ?? "edurasa_crud";
+        return this.currentMacro?.[key];// ?? "edurasa_crud";
     }
 
     get appCrudUrl(): string {
@@ -149,16 +157,16 @@ export class AppScriptConfig {
         try{
           
             const pos = await axios.post(this.appCrudUrl,
-                        param, 
-                        // new URLSearchParams(
-                        //     Object.entries(param).reduce<Record<string, string>>(
-                        //         (acc, [key, value]) => {
-                        //             acc[key] = String(value);
-                        //             return acc;
-                        //         },
-                        //         {}
-                        //     )
-                        // ),
+                        // param, 
+                        new URLSearchParams(
+                            Object.entries(param).reduce<Record<string, string>>(
+                                (acc, [key, value]) => {
+                                    acc[key] = String(value);
+                                    return acc;
+                                },
+                                {}
+                            )
+                        ),
                         
                         {
                         headers: {
@@ -172,18 +180,20 @@ export class AppScriptConfig {
             //     `${((performance.now() - start) / 1000).toFixed(3)} s`,
             //     pos.status
             // );
+            console.log({pos})
             //reponse axios data yang dibutuhkan, biarkan class turuunannya yang membungkus type data response-nya
-            if(pos.data.hasOwnProperty('auth')){
+            if(pos?.data && pos?.data?.hasOwnProperty('auth')){
                 
                 this.checkAkun(pos.data.auth);
                 
             }
             // console.log('pos axios status 200', pos)
-            if(pos.data && pos.data.success){
+            if(pos?.data && pos.data?.success){
                 return pos.data
             }else{
-                throw new Error(pos.data.message, {cause: pos.data})
+                throw new Error(pos?.data?.message , {cause: pos})
             }
+            throw new Error(pos?.data?.message ?? 'Script Berhasil merespon, tapi gagal dikembalikan', {cause: pos})
             // if(pos.status === 200 && pos.data){
             //     if(pos.data){
             //         console.log('pos.data', pos)

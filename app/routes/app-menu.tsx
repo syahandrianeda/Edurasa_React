@@ -24,7 +24,7 @@ export function meta({matches}: Route.MetaArgs) {
 export async function clientLoader({}:Route.ComponentProps){
     
 
-    return {titleTambahan:'Riwayat Tempat Tugas'};
+    return {titleTambahan:'Menu'};
 }
 export default function AppMenu({
     loaderData,

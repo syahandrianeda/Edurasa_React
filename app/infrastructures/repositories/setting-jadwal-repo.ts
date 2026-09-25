@@ -14,9 +14,10 @@ export default class SettingJadwalRepository extends AppScriptSheet implements S
             const respon = await this.postBody(param);
             
             return this.responActionRead(respon);
-        }catch(error){
-            return this.responActionError(error);
-        }  
+       }catch(er){
+                // return this.responActionError(error);
+                 throw er instanceof Error ? er : new Error(String(er))
+            }
     }
     async update(param: Record<string, any>): Promise<ApiResponse<settingJadwalSheet>> {
         try{
@@ -24,8 +25,9 @@ export default class SettingJadwalRepository extends AppScriptSheet implements S
             const respon = await this.postBody(this.paramKurikulumSettingJadwalMapel);
             
             return this.responActionRead(respon);
-        }catch(error){
-            return this.responActionError(error);
-        }  
+       }catch(er){
+                // return this.responActionError(error);
+                 throw er instanceof Error ? er : new Error(String(er))
+            }
     }   
 } 

@@ -30,8 +30,9 @@ export default class KaldikRepositoryImplements extends AppScriptSheet implement
     
                 return this.responActionRead(respon);
     
-            }catch(error){
-                return this.responActionError(error);
+            }catch(er){
+                // return this.responActionError(error);
+                 throw er instanceof Error ? er : new Error(String(er))
             }
         }
     async create(param:Record<string,any>): Promise<ApiResponse<KaldikType>>{

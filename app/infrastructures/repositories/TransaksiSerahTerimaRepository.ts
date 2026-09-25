@@ -15,9 +15,10 @@ export default class TransaksiSerahTerimaDokumenRepository extends AppScriptShee
             this.paramSheetGalleryTabTransaksiSerahTerimaDokumen = param
             const respon =  await this.postBody(this.paramSheetGalleryTabTransaksiSerahTerimaDokumen);
             return this.responActionRead(respon);
-        }catch(er){
-            return this.responActionError(er);
-        }
+       }catch(er){
+                // return this.responActionError(error);
+                 throw er instanceof Error ? er : new Error(String(er))
+            }
     }
     async update(param: Record<string, any>): Promise<ApiResponse<TransaksiSerahTerimaDokumenSheetType>> {
         try{
@@ -25,7 +26,8 @@ export default class TransaksiSerahTerimaDokumenRepository extends AppScriptShee
             const respon =  await this.postBody(this.paramSheetGalleryTabTransaksiSerahTerimaDokumen);
             return this.responActionRead(respon);
         }catch(er){
-            return this.responActionError(er);
-        }
+                // return this.responActionError(error);
+                 throw er instanceof Error ? er : new Error(String(er))
+            }
     }
 }

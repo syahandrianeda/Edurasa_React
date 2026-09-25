@@ -31,10 +31,19 @@ const Absensi = createSlice({
                 state.dataAbsensi[index] = action.payload;
             }
             
+        },
+        upsertAbsensiRombel(state, action:PayloadAction<dataAbsensiTypeSlice>){
+            const index = state.dataAbsensi.findIndex(s=>s.nama_rombel === action.payload.nama_rombel);
+            if(index === -1){
+                state.dataAbsensi.push(action.payload);
+            }else{
+                state.dataAbsensi[index] = action.payload;
+            }
+            
         }
     }
 
 });
 
-export const { setAbsensiRombel, } = Absensi.actions
+export const { setAbsensiRombel, upsertAbsensiRombel } = Absensi.actions
 export default Absensi.reducer

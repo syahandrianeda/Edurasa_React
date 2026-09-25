@@ -22,10 +22,33 @@ const PublikasiPaketSlice = createSlice(
                 state.data = action.payload,
                 state.name = 'publikasi_paket',
                 state.loaded = true
-            }
+            },
+            upsertPublikasiPaket(
+                state,
+                action: PayloadAction<PublikasiPaketSheetType[]>
+            ) {
+                const newData = action.payload;
+    
+                const dataMap = new Map(
+                    state.data.map(item => [item.idbaris, item])
+                );
+    
+                for (const item of newData) {
+                    dataMap.set(item.idbaris, {
+                        ...dataMap.get(item.idbaris),
+                        ...item,
+                    });
+                }
+    
+                state.data = Array.from(dataMap.values());
+    
+                state.loaded = true;
+                state.name = 'publikasi_paket';
+            },
+            
         }
     }
 )
 
-export const {setPublikasiPaket} = PublikasiPaketSlice.actions
+export const {setPublikasiPaket, upsertPublikasiPaket} = PublikasiPaketSlice.actions
 export default PublikasiPaketSlice.reducer;

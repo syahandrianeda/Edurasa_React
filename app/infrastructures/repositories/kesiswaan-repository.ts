@@ -46,9 +46,10 @@ export default class KesiswaanRepository extends AppScriptSheet implements Kesis
             saveIsianSiswa(formatIsianSiswa);
             
             return this.responActionRead(callData);
-        }catch(error){
-            return this.responActionError(error);
-        }
+        }catch(er){
+                // return this.responActionError(error);
+                 throw er instanceof Error ? er : new Error(String(er))
+            }
     }
     async loadAllSiswaAPI(): Promise<ApiResponse<SiswaType> | null> {
         

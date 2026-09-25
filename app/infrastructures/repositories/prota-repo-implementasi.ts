@@ -14,9 +14,10 @@ export default class ProtaRepositoryImplements extends AppScriptSheet implements
             const respon = await this.postBody(this.paramSheetMateriTabProta);
             
             return this.responActionRead(respon);
-        } catch (error) {
-            return this.responActionError(error);
-        }
+        }catch(er){
+                // return this.responActionError(error);
+                 throw er instanceof Error ? er : new Error(String(er))
+            }
     }
 
     async create(param: Record<string, any>): Promise<ApiResponse<protaSheet>> {
@@ -28,9 +29,10 @@ export default class ProtaRepositoryImplements extends AppScriptSheet implements
             // this.paramKurikulumProta = parameter;
             const respon = await this.postBody(parameter);
             return this.responActionRead(respon);
-        } catch (error) {
-            return this.responActionError(error);
-        }
+       }catch(er){
+                // return this.responActionError(error);
+                 throw er instanceof Error ? er : new Error(String(er))
+            }
     }
 
 }

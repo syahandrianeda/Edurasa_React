@@ -22,8 +22,9 @@ export default class SuratMasukRepository extends AppScriptSheet implements Sura
                 const respon = await this.postBody(parameter);
                 
                 return this.responActionRead(respon);
-            }catch(error){
-                return this.responActionError(error);
+            }catch(er){
+                // return this.responActionError(error);
+                 throw er instanceof Error ? er : new Error(String(er))
             }
     }
 
@@ -35,8 +36,9 @@ export default class SuratMasukRepository extends AppScriptSheet implements Sura
                 const respon = await this.postBody(parameter);
                 
                 return this.responActionRead(respon);
-            }catch(error){
-                return this.responActionError(error);
+           }catch(er){
+                // return this.responActionError(error);
+                 throw er instanceof Error ? er : new Error(String(er))
             }
     }
 }

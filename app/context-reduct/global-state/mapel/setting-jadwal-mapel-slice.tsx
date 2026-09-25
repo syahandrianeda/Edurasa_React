@@ -24,8 +24,28 @@ export const settingJadwalMapelSlice = createSlice({
             state.data = action.payload;
             state.name='setting_jadwal';
             state.loaded = true
-        }
+        }, 
+        upsertSettingJadwalMapel(
+                                state,
+                                action: PayloadAction<settingJadwalSheet[]>
+                            ) {
+                                const newData = action.payload;
+                    
+                                const dataMap = new Map(
+                                    state.data.map(item => [item.idbaris, item])
+                                );
+                    
+                                for (const item of newData) {
+                                    dataMap.set(item.idbaris, {
+                                        ...dataMap.get(item.idbaris),
+                                        ...item,
+                                    });
+                                }
+                                state.name = 'setting_jadwal'
+                                state.data = Array.from(dataMap.values());
+                                state.loaded=action.payload.length>0
+                                },
     }
 });
-export const {setSettingJadwalMapel} = settingJadwalMapelSlice.actions;
+export const {setSettingJadwalMapel, upsertSettingJadwalMapel} = settingJadwalMapelSlice.actions;
 export default settingJadwalMapelSlice.reducer;

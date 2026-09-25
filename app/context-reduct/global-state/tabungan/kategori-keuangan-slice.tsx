@@ -20,11 +20,32 @@ const KategoriKeuanganSlice = createSlice({
             state.data = actions.payload.data,
             state.name = 'kategori_akses',
             state.loaded = true;
-        }
+        },
+        upsertKategoriAkses_keuangan(
+                               state,
+                               action: PayloadAction<KategoriKeuanganSliceType>
+                           ) {
+                               const newData = action.payload.data;
+                   
+                               const dataMap = new Map(
+                                   state.data.map(item => [item.idbaris, item])
+                               );
+                   
+                               for (const item of newData) {
+                                   dataMap.set(item.idbaris, {
+                                       ...dataMap.get(item.idbaris),
+                                       ...item,
+                                   });
+                               }
+                               state.name = 'kategori_akses'
+                               state.data = Array.from(dataMap.values());
+                               state.loaded= newData.length>0
+                               },
+        
     }
     }
 )
 
-export const {setKategoriAkses_keuangan} = KategoriKeuanganSlice.actions;
+export const {setKategoriAkses_keuangan, upsertKategoriAkses_keuangan} = KategoriKeuanganSlice.actions;
 
 export default KategoriKeuanganSlice.reducer

@@ -12,9 +12,10 @@ export default class PangkatGolonganRepository extends AppScriptSheet implements
             this.paramSheetTendikTabPangkatGolongan = param;
             const response = await this.postBody(this.paramSheetTendikTabPangkatGolongan);
             return this.responActionRead(response)
-        }catch(er){
-            return this.responActionError(er);
-        }
+       }catch(er){
+                // return this.responActionError(error);
+                 throw er instanceof Error ? er : new Error(String(er))
+            }
     }
     async update(param: Record<string, any>): Promise<ApiResponse<PangkatGolonganSheetType>> {
         try{
@@ -22,7 +23,8 @@ export default class PangkatGolonganRepository extends AppScriptSheet implements
             const response = await this.postBody(this.paramSheetTendikTabPangkatGolongan);
             return this.responActionRead(response)
         }catch(er){
-            return this.responActionError(er);
-        }
+                // return this.responActionError(error);
+                 throw er instanceof Error ? er : new Error(String(er))
+            }
     }
 }

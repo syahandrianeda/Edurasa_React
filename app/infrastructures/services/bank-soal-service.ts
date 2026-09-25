@@ -40,9 +40,9 @@ export default class BanksoalService implements BankSoalServiceInterface{
         return await this.repo.uploadFile(dataParam);
     }
     async update(param: Record<string, any>): Promise<ApiResponse<BankSoalSheetType>> {
-        
         const parameter = {
-            data:JSON.stringify([param]),
+            // data:JSON.stringify([param]),
+            data: JSON.stringify([param]),
             key_match:'idbaris',
             key_index:'idbaris',
             action:'upsert',
@@ -52,8 +52,14 @@ export default class BanksoalService implements BankSoalServiceInterface{
                     jenjang_khusus: 'number',
                     
             }),
+            // filter: JSON.stringify({idbaris:3})
+            // key_return: JSON.stringify(['idbaris'])
         }
-        return await this.repo.update(parameter)
+        console.log({param, parameter})
+        const respon = this.repo.update(parameter);
+        console.log(respon);
+        return respon
+        // return await this.repo.update(parameter)
     }
     async create(param: Record<string, any>): Promise<ApiResponse<BankSoalSheetType>> {
         const parameter = {

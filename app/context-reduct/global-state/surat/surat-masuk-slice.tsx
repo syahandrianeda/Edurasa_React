@@ -24,11 +24,31 @@ const SuratMasukReducer = createSlice({
                 state.data = action.payload;
                 state.name = 'surat_masuk'
                 
-            }
+            },
+            upsertSuratMasuk(
+                                state,
+                                action: PayloadAction<SuratMasukSheetType[]>
+                            ) {
+                                const newData = action.payload;
+                    
+                                const dataMap = new Map(
+                                    state.data.map(item => [item.idbaris, item])
+                                );
+                    
+                                for (const item of newData) {
+                                    dataMap.set(item.idbaris, {
+                                        ...dataMap.get(item.idbaris),
+                                        ...item,
+                                    });
+                                }
+                                state.name ='surat_masuk'
+                                state.data = Array.from(dataMap.values());
+                                state.loaded=action.payload.length>0
+                                },
         }
     }
 );
 
 
-export const { setSuratMasuk} = SuratMasukReducer.actions
+export const { setSuratMasuk, upsertSuratMasuk} = SuratMasukReducer.actions
 export default SuratMasukReducer.reducer

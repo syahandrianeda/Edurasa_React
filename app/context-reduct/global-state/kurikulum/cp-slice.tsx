@@ -22,11 +22,34 @@ const CP = createSlice({
             state.data = action.payload
             state.loaded = true;
         },
+        upsertCp(
+            state,
+            action: PayloadAction<ElemenCpType[]>
+        ) {
+            const newData = action.payload;
+
+            const dataMap = new Map(
+                state.data.map(item => [item.idbaris, item])
+            );
+
+            for (const item of newData) {
+                dataMap.set(item.idbaris, {
+                    ...dataMap.get(item.idbaris),
+                    ...item,
+                });
+            }
+
+            state.data = Array.from(dataMap.values());
+
+            state.loaded = true;
+            state.name = "elemen_cp";
+        },
+        
         
     }
 });
 
-export const {setCp} = CP.actions;
+export const {setCp, upsertCp} = CP.actions;
 export default CP.reducer;
 
 

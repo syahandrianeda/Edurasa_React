@@ -13,9 +13,10 @@ export default class JadwalMapelRepoImplements extends AppScriptSheet implements
             this.paramKurikulumJadwalMapel = param;
             const respon = await this.postBody(this.paramKurikulumJadwalMapel);
             return this.responActionRead(respon);
-        }catch(error){
-            return this.responActionError(error);
-        }
+        }catch(er){
+                // return this.responActionError(error);
+                 throw er instanceof Error ? er : new Error(String(er))
+            }
     }
     create(param: Record<string, any>): Promise<ApiResponse<jadwalMapelAccordTable>> {
         return this.create(param)

@@ -8,6 +8,8 @@ import type { BankSoalAppType, BankSoalSheetType } from "~/types/bank-soal/bank-
 import {toast} from 'sonner'
 import DispatchingResponseToStore from "~/lib/dispatching-response-to-store";
 import type { InitialItemSoalImplemented } from "~/controllers/paket-soal/modal/initial-item-soal-implemented";
+import dataFormItemSoalNormalize from "~/domain/bank-soal/normalizer-data-form-soal";
+import type { ListBentukSoalType } from "~/types/bank-soal/bentuk-soal-type";
 
 export default function SendSoalBaruPaket({data}:{data:BankSoalAppType}){
     const {actions:actionsModal, state:stateModal, nextState} = useModal<InitialItemSoalImplemented>()
@@ -22,9 +24,9 @@ export default function SendSoalBaruPaket({data}:{data:BankSoalAppType}){
         }
         
         const dtoBankSoal = DtoBankSoal.fromAppToSheet(data);
-        
+        const par = dataFormItemSoalNormalize(dtoBankSoal, {name: data.bentuk_soal} as ListBentukSoalType)
         toast.promise(
-            Post.update(dtoBankSoal),
+                    Post.update(par),
             {
                 loading:'Sedang mengupdate',
                 success:(response)=>{

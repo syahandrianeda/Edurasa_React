@@ -36,7 +36,7 @@ export default function TableKunciJawabanPembahasan({ KisiKisiInstance}:Props){
                                 </thead>
                                 <tbody>
                                     {
-                                        data.dataSoal.map((soal, iSoal)=>
+                                        data?.dataSoal?.map((soal, iSoal)=>
                                             <TRowEdura key={iSoal}>
                                                 <TdEdura className="text-center ">{soal.no_soal}.</TdEdura>
                                                 {

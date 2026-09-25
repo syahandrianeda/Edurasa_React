@@ -21,7 +21,8 @@ export default class PaketSoalRepository extends AppScriptSheet implements Paket
                 console.log(respon)
                 return this.responActionRead(respon);
             }catch(er){
-                return this.responActionError(er);
+                // return this.responActionError(er);
+                 throw er instanceof Error ? er : new Error(String(er))
             }
     }
 
@@ -31,8 +32,9 @@ export default class PaketSoalRepository extends AppScriptSheet implements Paket
                 const respon =  await this.postBody(this.paramSheetBankSoalTabPaketSoal);
                 
                 return this.responActionRead(respon);
-            }catch(er){
-                return this.responActionError(er);
+           }catch(er){
+                // return this.responActionError(error);
+                 throw er instanceof Error ? er : new Error(String(er))
             }
     }
 }

@@ -30,6 +30,26 @@ const dataSiswa = createSlice({
             state.loading = action.payload.loading
         // state.token = action.payload.token
         },
+        upsertAllSiswa(
+                            state,
+                            action: PayloadAction<DataSiswa<SiswaType>>
+                        ) {
+                            const newData = action.payload.data;
+                
+                            const dataMap = new Map(
+                                state.data.map(item => [item.id, item])
+                            );
+                
+                            for (const item of newData) {
+                                dataMap.set(item.id, {
+                                    ...dataMap.get(item.id),
+                                    ...item,
+                                });
+                            }
+                            state.name ='datasiswa'
+                            state.data = Array.from(dataMap.values());
+                            state.loaded= newData.length>0
+                            },
         
         resetSiswa() {
             return initialState
@@ -37,5 +57,5 @@ const dataSiswa = createSlice({
     }
 });
 
-export const { setAllSiswa, resetSiswa } = dataSiswa.actions
+export const { setAllSiswa, resetSiswa, upsertAllSiswa } = dataSiswa.actions
 export default dataSiswa.reducer
