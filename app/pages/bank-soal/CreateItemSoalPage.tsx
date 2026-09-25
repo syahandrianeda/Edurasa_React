@@ -119,15 +119,20 @@ export default function CreateItemSoalPage(){
                             payload: {
                                 mapel_name: fokusMapel.nama,
                                 kode_mapel: fokusMapel.kode,
+                                jenjang_khusus: getNumberFromString(Rombel),
+                                pembahasan_penskoran:'',
+                                jawaban:[]
                             },
                         });
-                    
-                    
+                    if(fokusAtp){
+                        action({ type: "propertyKurikulum", payload: fokusAtp, });
+                    }
+
                     return 'Berhasil'
                 },
                 error:(er)=>{
                     console.log(er);
-                    return 'Gagal'
+                    return 'Gagal | '+er
                 }
             }
         )

@@ -10,6 +10,7 @@ import DispatchingResponseToStore from '~/lib/dispatching-response-to-store';
 import DispatchingResponseToFokusUi from '~/lib/dispatching-response-to-fokus-ui';
 import { store } from '~/context-reduct/redux-provider';
 import { siswaDefindeAbsenRombelNeeded } from '~/domain/enloaded/intial-enloaded/by-route-page/siswa/menu-needed';
+import RingkasanInfoSiswa from '~/controllers/info-siswa/ringkasan-info-siswa';
 
 export default function InfoSiswa(){
     const sheetNeeded = siswaDefindeAbsenRombelNeeded;
@@ -203,6 +204,7 @@ export default function InfoSiswa(){
     return (
         <div className="border-2 rounded-2xl bg-white min-h-[calc(100vh-12rem)] w-10/12 mx-auto p-4 ">
             <h3 className='text-xl text-center'>Selamat Datang {user?.name} (Kelas {rombel})</h3>
+            <RingkasanInfoSiswa/>
         </div>
     )
 }

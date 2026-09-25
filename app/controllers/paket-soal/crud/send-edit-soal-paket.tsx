@@ -65,7 +65,7 @@ export default function SendEditSoalPaket({data}:{data:BankSoalAppType}){
                 error:(er)=>{
                     console.log(er);
                     actionsModal.close()
-                    return 'Gagal'
+                    return 'Gagal '+ er
                 },
                 finally:()=>{
                     actionsModal.close();

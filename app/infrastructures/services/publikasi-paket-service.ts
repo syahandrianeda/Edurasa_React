@@ -17,6 +17,7 @@ export default class PubliksiPaketSoalService implements PublikasiPaketServiceIn
                     idbaris:'number',
                     lintas_mapel:'number',
                     start_time:'datetime',
+                    paket_soal_id:'number',
                     end_time:'datetime'
             }),
 

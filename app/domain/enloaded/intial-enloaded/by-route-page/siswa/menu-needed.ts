@@ -5,7 +5,7 @@ import { sheetBankSoal, sheetBankSoal_publikasiPaket } from "../../by-sheet/bank
 
 export const siswaDefindeAbsenRombelNeeded = (rombel?:string)=>[
         // sheetAkun_dataSiswa,
-        sheetBankSoal_publikasiPaket,
+        {...sheetBankSoal_publikasiPaket, exceptFilter:JSON.stringify({"paket_soal_id":0})},
         sheetKaldik_kalender,
         {sheet: 'absensi', tab:`${namaTab('kelas')}_${rombel}`,filter:JSON.stringify({rombel})},
 ]

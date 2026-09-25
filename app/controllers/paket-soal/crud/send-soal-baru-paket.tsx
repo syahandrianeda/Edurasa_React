@@ -54,7 +54,7 @@ export default function SendSoalBaruPaket({data}:{data:BankSoalAppType}){
                 },
                 error:(er)=>{
                     console.log(er);
-                    return 'Gagal'
+                    return 'Gagal '+ er
                 },
                 finally:()=>{
                     actionsModal.close();

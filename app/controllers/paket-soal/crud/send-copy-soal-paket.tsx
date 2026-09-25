@@ -40,7 +40,7 @@ export default function SendCopySoalPaket({data}:{data:BankSoalAppType}){
                         },
                         error:(er)=>{
                             console.log(er);
-                            return 'Gagal'
+                            return 'Gagal '+ er
                         },
                         finally:()=>{
                             actions.close();
