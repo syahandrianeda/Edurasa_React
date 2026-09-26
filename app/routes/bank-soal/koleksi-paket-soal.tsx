@@ -42,7 +42,8 @@ export function clientLoader({}:Route.ComponentProps){
         toolbarTabs: undefined,//ConfigToolbarSelectMapel
         showExport:true,
                 addPesanRombel:{isAdd:true, type:'jenjang', includeFaseName:true},
-                sheetNeeded: defineCreateItemSoalNeeded
+                sheetNeeded: defineCreateItemSoalNeeded,
+                
         
     };
 }

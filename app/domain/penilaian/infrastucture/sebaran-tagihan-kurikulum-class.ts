@@ -1,4 +1,5 @@
 import type { TagihanHasDataResponse } from "../type/tagihan-assesmen-type";
+import type { KategoriTagihanType } from "./KategoriTagihanType";
 export interface SebaranTagihanAssesmenKurikulumType{
     mapelName           : string, 
     mapelKode            : string,
@@ -23,12 +24,6 @@ interface dataAtp{
     slotAtp             : number,
     dataTagihan         : dataTagihan[]
 }
-type  KategoriTagihanType = 'harian'
-        | 'mid_semester'
-        | 'akhir_semester'
-        | 'remedial_pengayaan'
-        | 'ujian_sekolah';
-
 interface dataTagihan{
     kategori            : KategoriTagihanType
     dataInstrumen       : dataInstrumen[]

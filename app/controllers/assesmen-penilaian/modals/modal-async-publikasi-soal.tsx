@@ -67,7 +67,8 @@ export default function ModalAsyncPublikasiPaketSoal({state, children}:{state:Mo
                     console.log(er);
                     actions.close();
                     return 'Gagal dipanggil, coba sekali lagi | '+er;
-                }
+                },
+                closeButton:true,
             }
 
         )

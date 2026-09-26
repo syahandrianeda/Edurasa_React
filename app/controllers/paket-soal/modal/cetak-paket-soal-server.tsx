@@ -21,8 +21,8 @@ export default function CetakPaketSoalServer({InstanceDataKisikisi}:{InstanceDat
     const paketSoal = InstanceDataKisikisi.designPaket
     return (
         <>
-            <div className="bg-linear-to-tr from-sky-500 to-purple-300 w-full md:h-[calc(100vh-12rem)] px-2  overflow-y-auto scrol-h-custom">
-                <div ref={exportRef} className=" min-h-100 bg-white mx-auto shadow-lg shadow-gray-400  print:bg-white  print:shadow-none p-2">
+            <div className="bg-linear-to-tr from-sky-500 to-purple-300 h-[calc(100dvh-12rem)] md:h-[calc(100dvh-17rem)] lg:h-[calc(100dvh-12rem)] xs:h-[calc(100dvh-2rem)]  overflow-y-auto scrol-h-custom px-2">
+                <div ref={exportRef} className="bg-white dark:text-black mx-auto shadow-lg shadow-gray-400  print:bg-white  print:shadow-none p-2">
                 {
                     (setting?.identitas && setting.identitas.showKop && setting?.dataKopCustom) && (
                         <KopPaketSoal data={setting?.dataKopCustom}/>

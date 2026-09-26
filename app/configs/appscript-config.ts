@@ -115,9 +115,9 @@ export class AppScriptConfig {
     get appCrudId(): string {
         const testRombel = getSessionRombel();
         let key = 'exec_crud'
-        if(testRombel){
-            key = "exec_crud_" + getNumberFromString(testRombel)
-        }
+        // if(testRombel){
+        //     key = "exec_crud_" + getNumberFromString(testRombel)
+        // }
         console.log(testRombel, key)
         // return this.currentMacro?.["exec_crud"] ?? "edurasa_crud";
         return this.currentMacro?.[key];// ?? "edurasa_crud";

@@ -95,7 +95,7 @@ export function UserMenuContent({ user }: UserMenuContentProps) {
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
 
-                    {isSameUrl(url.pathname,'/menu')?(
+                    {(isSameUrl(url.pathname,'/menu')||isSameUrl(url.pathname, '/menu-siswa'))?(
                         <Link className="block w-full" to='/' role="button" onClick={cleanup}>
                             <Home className="mr-2" />
                             Beranda

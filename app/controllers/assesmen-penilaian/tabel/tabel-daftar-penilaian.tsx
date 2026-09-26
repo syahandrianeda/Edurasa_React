@@ -10,7 +10,7 @@ import TriggerEditRespon from "../triggers/trigger-edit-respon";
 export default function TableDaftarTagihanPenilaian({instanceClass}:{instanceClass?: TagihanPenilaianClass}){ 
     const dataTagihan = instanceClass ? instanceClass?.dataTagihanHasResponse ?? []:[];
     const {actions} = useModal()
-    
+    console.log({dataTagihan});
     return (
         <TableWithScrolling className="text-[10px]">
             <thead>
@@ -34,16 +34,34 @@ export default function TableDaftarTagihanPenilaian({instanceClass}:{instanceCla
                         dataTagihan.map((item, iItem)=>
                             <TRowEdura key={iItem} className={`${item.source === 'Non Paket Soal'?"text-rose-600":""}`}>
                                 {/* <TdEdura>-</TdEdura> */}
-                                <TdEdura className="print:hidden">
+                                <TdEdura className="print:hidden text-wrap">
                                     <div className="flex flex-col gap-2 min-h-14 mb-2 justify-center items-center">
                                         
                                         <TriggerEditTagihan actions={actions} data={item}/>
                                         <TriggerEditRespon actions={actions} data={item}/>
+                                        {
+                                            !item.is_validPaketSoal && (
+                                                <p className="text-[8px] text-amber-600">Sumber paket soal telah diubah, periksa Paket Soal yang telah dipublikasikan.</p>
+                                            )
+                                        }
 
                                     </div>
                                 </TdEdura>
                                 <TdEdura>{iItem + 1}</TdEdura>
-                                <TdEdura className="text-wrap">{item.nama_publikasi}</TdEdura>
+                                <TdEdura className="text-wrap">
+                                    {
+                                        item.is_validPaketSoal ? (
+                                            item.nama_publikasi
+                                        ):(
+                                            <>
+                                                <p className="line-through text-rose-600">{item.nama_publikasi}</p>
+                                                <p className="text-[8px] text-amber-800">Sumber paket soal telah diubah</p>
+                                            </>
+
+                                        )
+                                            
+                                    }
+                                </TdEdura>
                                 <TdEdura className="text-wrap">{item.jenis_tagihan.name}</TdEdura>
                                 <TdEdura className="text-center">{item.isMultiple ? 'Ya':'Tidak'}</TdEdura>
                                 <TdEdura className="text-wrap">
@@ -109,7 +127,7 @@ export default function TableDaftarTagihanPenilaian({instanceClass}:{instanceCla
 
                                     </div>
                                     <div className={`flex w-full justify-between gap-2 text-[8px] font-bold ${item.data_respons.length === item.peserta.length ?"text-green-600" : "text-amber-600"}`}>
-                                        <p>{item.data_respons.length}/{item.peserta.length}</p>
+                                        <p>{item.data_respons.filter(s=>s.sumber_respon !== 'siswa').length}/{item.peserta.length}</p>
                                         <p>Telah divalidasi</p>
 
                                     </div>

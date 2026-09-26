@@ -42,6 +42,7 @@ export default function SendCopySoalPaket({data}:{data:BankSoalAppType}){
                             console.log(er);
                             return 'Gagal '+ er
                         },
+                        closeButton:true,
                         finally:()=>{
                             actions.close();
                         }

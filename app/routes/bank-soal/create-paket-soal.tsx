@@ -40,7 +40,8 @@ export function clientLoader({}:Route.ComponentProps){
         showExport:false,
                         // pesanLoading:'Mempersiapkan ATP',
                         addPesanRombel:{isAdd:true, type:'rombel', includeFaseName:true},
-                        sheetNeeded: defineCreateItemSoalNeeded
+                        sheetNeeded: defineCreateItemSoalNeeded,
+                         mustLoadSheetNeedSiswaIfExist:true,
     };
 }
 

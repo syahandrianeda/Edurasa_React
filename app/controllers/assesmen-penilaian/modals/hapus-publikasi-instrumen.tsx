@@ -33,8 +33,9 @@ export default function HapusPubilikasiInstrumenSoal(){
                     },
                     error: (err)=>{
                         console.log(err);
-                        return 'Gagal'
-                    }
+                        return 'Gagal | '+ err
+                    },
+                    closeButton:true
                 }
             )
     }

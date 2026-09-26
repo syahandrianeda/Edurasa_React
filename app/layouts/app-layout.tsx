@@ -4,6 +4,7 @@ import { getSessionApp } from "~/infrastructures/session-storage/app-session";
 import type { Route } from "./+types/app-layout";
 import { ExportTargetProvider } from "./exports/export-target-provider";
 
+
 export function clientLoader({}:Route.ComponentProps){
     const page = getSessionApp();
     // console.log('session:\r',page)

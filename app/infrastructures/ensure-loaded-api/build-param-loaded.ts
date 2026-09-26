@@ -24,7 +24,16 @@ export default class BuildParamLoaded{
     public sheetToBeParam:DataSheetNeeeded[];
     
     constructor(private readonly stateRedux:RootState, private readonly sheetNeeded:DataSheetNeeeded[]){
-        this.sheetCollection = ['absensi', 'tabungan']
+        this.sheetCollection = [
+            'absensi', 
+            'tabungan', 
+            'nilai_1',
+            'nilai_2',
+            'nilai_3',
+            'nilai_4',
+            'nilai_5',
+            'nilai_6',
+        ]
         this.sheetToBeParam = [];
         this.reqParam =[]
     }
@@ -87,6 +96,16 @@ export default class BuildParamLoaded{
 
                 }
 
+                if(sheetRequest.includes('nilai_')){
+                    const jenjang = sheetRequest.replace('nilai_',"");
+                    const jenjangNumber = Number(jenjang);
+                    const foundData = this.state.responTagihan.data.find(s=>s.jenjang === jenjangNumber);
+                    
+                    if(!foundData){
+                        this.sheetToBeParam.push(sheet);
+                    }
+                }
+
             }else{
                 /** `name` di state redux identik dengan nama tab, 
                  * tapi kadang tab terdapat versiTrial*/
@@ -101,8 +120,9 @@ export default class BuildParamLoaded{
             }
         }
         const AppSheet = new AppScriptSheet();
-        this.sheetToBeParam.forEach(({sheet, tab, params})=>{
+        this.sheetToBeParam.forEach(({sheet, tab, ...params})=>{
             const idss = AppSheet.currentMacro['ss_'+sheet];
+            
         
                 const ob:ParamRequestAppScript = {
                     idss,

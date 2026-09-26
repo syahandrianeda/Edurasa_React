@@ -98,7 +98,7 @@ export default function LoginSiswa() {
                         setMessage("");
 
                         // Navigasi client-side
-                        navigate("/menu");
+                        navigate("/menu"); 
 
                         return "Login berhasil";
                     }

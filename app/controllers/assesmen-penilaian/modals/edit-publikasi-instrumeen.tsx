@@ -148,7 +148,8 @@ export default function EditPublikasiInstrumenTagihan(){
                     error: (err)=>{
                         console.log(err);
                         return 'Gagal mengupdate data | ' + err
-                    }
+                    },
+                    closeButton:true
                 }
             )
                     

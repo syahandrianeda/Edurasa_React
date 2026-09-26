@@ -163,8 +163,9 @@ export default function EditNonPaketSoal(){
                 },
                 error: (err)=>{
                     console.log(err);
-                    return 'Gagal'
-                }
+                    return 'Gagal '+err
+                },
+                closeButton:true
             }
         )
                 

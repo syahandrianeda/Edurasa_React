@@ -4,6 +4,7 @@ import AppContainer from "~/components/ui_edura/app-container"
 import App from "~/root"
 import type { Route } from "./+types/home-layout";
 import { getSessionApp } from "~/infrastructures/session-storage/app-session";
+import { Outlet } from "react-router";
 
 const navItems = [
     { title: "Beranda", href: "/", isActive: true },
@@ -23,7 +24,7 @@ export default function HomeLayout({loaderData}:Route.ComponentProps){
     return (
         <SidebarProvider defaultOpen={true} >
             <AppContainer navItems={navItems}>
-                <App/>
+                <Outlet/>
             </AppContainer>
         </SidebarProvider>
     )

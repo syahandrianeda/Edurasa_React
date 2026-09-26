@@ -1,4 +1,5 @@
 import { MenuIcons } from "~/lib/import-img-menu";
+import { isSameUrl } from "~/lib/utils";
 import type { typeKoleksiMenu } from "~/types";
 
 
@@ -150,5 +151,74 @@ export const DataMenu: typeKoleksiMenu[] = [
         urlIcon: MenuIcons["tabungan"],
         permission: 'view tabungan',   
         hasRoute:true
+    },
+
+
+    /** FItur untuk siswa */
+    {
+        title: "Informasiku", 
+        routeName: "menu-siswa",
+        urlIcon: MenuIcons["admin-panel"],
+        permission: 'view fitur siswa',   
+        hasRoute:true,
+        classNameIcon:'col-span-4 md:col-span-8',
+        showInRoute:true
+        
+    },
+    {
+        title: "Kehadiranku", 
+        routeName: "kehadiranku",
+        urlIcon: MenuIcons["absensi-siswa"],
+        permission: 'view fitur siswa',   
+        hasRoute:true
+    },
+    {
+        title: "Ulanganku", 
+        routeName: "ulanganku",
+        urlIcon: MenuIcons["rpp"],
+        permission: 'view fitur siswa',   
+        hasRoute:true
+    },
+    {
+        title: "7 Pembiasaanku", 
+        routeName: "aku-anak-hebat",
+        urlIcon: MenuIcons["rpp"],
+        permission: 'view fitur siswa',   
+        // hasRoute:true
+    },
+    {
+        title: "Dataku", 
+        routeName: "dataku",
+        urlIcon: MenuIcons["data_lemari"],
+        permission: 'view fitur siswa',   
+        // hasRoute:true
+    },
+    {
+        title: "Literasiku", 
+        routeName: "literasiku",
+        urlIcon: MenuIcons["literasi"],
+        permission: 'view fitur siswa',   
+        // hasRoute:true
+    },
+    {
+        title: "Nilai Raportku", 
+        routeName: "raportku",
+        urlIcon: MenuIcons["raport"],
+        permission: 'view fitur siswa',
+        // hasRoute:true
+    },
+    {
+        title: "Kegiatan Ekskulku", 
+        routeName: "ekstrakurikulerku",
+        urlIcon: MenuIcons["ekskrakurikuler"],
+        permission: 'view fitur siswa',
+        // hasRoute:true
+    },
+    {
+        title: "Tabunganku", 
+        routeName: "tabunganku",
+        urlIcon: MenuIcons["tabungan"],
+        permission: 'view fitur siswa',
+        // hasRoute:true
     },
 ];

@@ -162,7 +162,7 @@ export default function AddNonPaketSoalModal(){
                 },
                 error: (err)=>{
                     console.log(err);
-                    return 'Gagal'
+                    return 'Gagal '+ err
                 }
             }
         )

@@ -3,6 +3,7 @@ import type { AtpHasManySoalType } from "~/domain/bank-soal/relational-soal/type
 import type { PraSettingPaket } from "~/domain/paket-soal/entities/pra-setting-paket";
 import type { TypePaketSoal } from "~/domain/paket-soal/entities/type-paket";
 import type { AtpAsOrm } from "~/types/kurikulum/prota-orm";
+import type { NilaiSiswaAppType } from "~/types/penilaian/nilai-siswa-app-type";
 import type { SiswaType } from "~/types/siswa";
 
 
@@ -43,7 +44,7 @@ export interface TagihanAsessmenType{
 export interface TagihanHasDataResponse extends TagihanAsessmenType{
     isMultiple          : boolean,
     detail_target       : DetailTarget[];
-    data_respons        : ResponsTagihan[]
+    data_respons        : NilaiSiswaAppType[];//ResponsTagihan[]
     koleksi_mapelName   : string[],
     kurikulum_tagihan   : AtpHasManySoalType[],
     peserta             : SiswaType[],
@@ -56,14 +57,14 @@ export interface DetailTarget{
     current_rombel:boolean
 }
 
-export interface ResponsTagihan{
+interface ResponsTagihan{
     idbaris         : number,
     tokensiswa      : number,
     tagihan_id      : number,
     nilai           : NilaiTagihan[];
 }
 
-export interface NilaiTagihan{
+interface NilaiTagihan{
     no_soal     : number,
     index_soal  : number
     atp_id      : number,

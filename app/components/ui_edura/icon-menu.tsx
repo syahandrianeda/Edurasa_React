@@ -1,12 +1,19 @@
-import { Link } from "react-router"
+import { Link, useLocation } from "react-router"
+import { cn, isSameUrl } from "~/lib/utils"
 import type { typeKoleksiMenu } from "~/types"
 
-export default function IconMenu({menus}:{menus:typeKoleksiMenu[]}){
+export default function IconMenu({menus, className}:{menus:typeKoleksiMenu[], className?:string}){
+    const url = useLocation();
     return (
-        <nav className="grid grid-cols-4 md:grid-cols-7 gap-4 md:gap-8 place-items-center justify-between mx-auto">
+        <nav className={cn("grid grid-cols-4 md:grid-cols-7 gap-4 md:gap-8 place-items-center justify-between mx-auto", className)}>
             {menus.map((item,index)=>{
+                if(item.showInRoute){
+                    if(isSameUrl(url.pathname,'/menu-siswa')){
+                        return null
+                    }
+                }
                 return(
-                    <div key={index} className="relative flex justify-center items-center overflow-hidden group ">
+                    <div key={index} className={cn("relative flex justify-center items-center overflow-hidden group ", item.classNameIcon)}>
                         <Link to={`/${item.routeName}`} role="button">
                             <img src={item.urlIcon as string} className="rounded-full bg-radial-[at_50%_75%] from-sky-200 via-blue-400 to-sky-500 to-90% bg-cover  size-20 overflow-visible group-hover:scale-105 grayscale-75 group-hover:grayscale-0 transition-all duration-100 ease-linear"/>
                             <div className={`rounded-full ${item.hasRoute?'bg-green-500':'bg-gray-500'} h-3 w-3 text-center text-small absolute top-0 right-0`}></div>

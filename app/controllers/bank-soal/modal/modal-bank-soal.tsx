@@ -29,7 +29,7 @@ import WrapperFormAddPublikasiPaket from "~/controllers/publikasi-paket-soal/mod
 export default function ModalBankSoal(){
     const {state, actions} = useModal<BankSoalAppType>()
     const open = state.isOpen && [
-        
+        'INFO',
         'EDIT',
         'HAPUS',
         'ADD ITEM SOAL PAKET',
@@ -102,7 +102,8 @@ function SwitchWidthByType(type:ModalType):string{
         case 'PREVIEW KUNCI JAWABAN SERVER':
             return "w-[calc(100vw-5rem)] print:w-[210mm] lg:min-w-3xl overflow-x-auto pt-0"
         case 'PREVIEW PAKET SOAL':
-            return "w-[calc(100vw-5rem)] print:w-[210mm] lg:min-w-3xl overflow-x-auto pt-0"
+            // return "w-[calc(100vw-5rem)] print:w-[210mm] lg:min-w-3xl overflow-x-auto pt-0"
+            return "min-w-full print:w-[210mm] print:w-[210mm] lg:min-w-3xl h-[calc(100dvh-4rem)] md:min-w-5xl text-wrap overflow-x-auto scrol-h-custom p-0"
         default:
             return "sm:min-w-5xl  md:min-w-2xl lg:min-w-5xl gap-0 overflow-x-auto"
     }
@@ -110,6 +111,7 @@ function SwitchWidthByType(type:ModalType):string{
 
 function SwitchContentFormBankSoal ({state, actions}:{state:ModalState<BankSoalAppType>, actions:ModalActions<BankSoalAppType>}){
     switch(state.type){
+
         case 'EDIT':
             return <ModalProviderForm state={state}><ModalEditItemSoal/></ModalProviderForm>;
         case 'HAPUS':

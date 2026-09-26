@@ -2,6 +2,7 @@
 import { getSessionApp } from "~/infrastructures/session-storage/app-session";
 import { AppScriptConfig } from "./appscript-config";
 import type { UserPtk } from "~/types";
+import { getNumberFromString } from "~/lib/get-number";
 
 
 export interface ParamRequestAppScript{
@@ -106,7 +107,7 @@ export default class AppScriptSheet extends AppScriptConfig{
 
     protected sheetBankSoalTabPublikasiPaket: ParamRequestAppScript = {idss:'', tab:''};
 
-    
+    protected sheetNilaiTabResponTagihan:ParamRequestAppScript = {idss:'',tab:'respon_tagihan'};
 
     constructor(){
         super();
@@ -193,6 +194,11 @@ export default class AppScriptSheet extends AppScriptConfig{
         const idss = this.currentMacro.ss_absensi
         const tab = this.isDev?'trial_kelas_'+rombel:'kelas_'+rombel;
         return {idss, tab};
+    }
+    idssNilai(jenjang:number){
+        // const jenjang = getNumberFromString(rombel)
+        const key = 'nilai_'+jenjang;
+        return this.currentMacro[key]
     }
 
     set paramSheetAkunTabUser(additionalParam:Record<string, any>){
@@ -685,6 +691,30 @@ export default class AppScriptSheet extends AppScriptConfig{
 
     get paramSheetBankSoalTabPublikasiPaket(){
         return this.sheetBankSoalTabPublikasiPaket;
+    }
+
+    createSheetNilaiTabResponTagihan(rombel:string, additionalParam:Record<string, any>):void{
+        const jenjang = getNumberFromString(rombel);
+        const idss = this.idssNilai(jenjang);
+        const tab = this.isDev? 'trial_respon_tagihan_'+jenjang:'respon_tagihan_'+jenjang
+
+        this.sheetNilaiTabResponTagihan = {
+            idss,
+            tab
+        }
+    }
+
+    buildSheetNilaiTabTagihanRespon(rombel:string, additionalParam:Record<string, any>):ParamRequestAppScript{
+        const jenjang = getNumberFromString(rombel);
+        const idss = this.idssNilai(jenjang);
+        const tab = this.isDev? 'trial_respon_tagihan_'+jenjang:'respon_tagihan_'+jenjang;
+        
+
+        return {
+            idss,
+            tab,
+            ...additionalParam
+        }
     }
 
     dataAuth(){

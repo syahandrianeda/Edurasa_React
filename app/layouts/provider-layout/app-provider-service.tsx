@@ -426,7 +426,44 @@ export default function AppProviderLayoutService({
              * ====================================================
              */
 
-            toast.promise(
+            // toast.promise(
+            //     api.callNeeded(param),
+            //     {
+            //         loading: textLoading +
+            //             textRombelFase,
+
+            //         success: data => {
+            //             // console.log('data respon', { data });
+            //             if (data && Array.isArray(data)) {
+
+            //                 const decidedRombel = loaderDataKiriman?.sourceKelas ? rombelKeuangan?.rombel : rombel;
+
+
+            //                 data.forEach(({ success, data, detailResponse, }) => {
+
+            //                     if (detailResponse) {
+            //                         DispatchingResponseToStore(
+            //                             success,
+            //                             data,
+            //                             detailResponse,
+            //                             decidedRombel
+            //                         );
+
+            //                         DispatchingResponseToFokusUi();
+            //                     }
+            //                 }
+            //                 );
+            //             }
+
+            //             return ("Pemanggilan data telah selesai");
+            //         },
+
+            //         error:  data=>`Gagal memuat data ${loaderDataKiriman.titleTambahan} \r`+ data,
+
+            //         closeButton: true,
+            //     }
+            // );
+            const reqPromise = toast.promise(
                 api.callNeeded(param),
                 {
                     loading: textLoading +
@@ -434,7 +471,17 @@ export default function AppProviderLayoutService({
 
                     success: data => {
                         // console.log('data respon', { data });
-                        if (data && Array.isArray(data)) {
+                        
+                        return ("Pemanggilan data telah selesai");
+                    },
+
+                    error:  data=>`Gagal memuat data ${loaderDataKiriman.titleTambahan} \r`+ data,
+
+                    closeButton: true,
+                }
+            );
+            const data = await reqPromise.unwrap();
+            if (data && Array.isArray(data)) {
 
                             const decidedRombel = loaderDataKiriman?.sourceKelas ? rombelKeuangan?.rombel : rombel;
 
@@ -454,16 +501,6 @@ export default function AppProviderLayoutService({
                             }
                             );
                         }
-
-                        return ("Pemanggilan data telah selesai");
-                    },
-
-                    error:  data=>`Gagal memuat data ${loaderDataKiriman.titleTambahan} \r`+ data,
-
-                    closeButton: true,
-                }
-            );
-
 
             /**
              * ====================================================

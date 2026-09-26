@@ -220,6 +220,11 @@ export function hydratePreloadedState(): Partial<RootState> {
       data: [],
       name:'publikasi_paket',
       loaded:false
+    },
+    responTagihan:{
+      data:[],
+      name:'respon_tagihan',
+      loaded:false
     }
 
 

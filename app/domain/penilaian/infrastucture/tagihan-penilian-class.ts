@@ -12,6 +12,7 @@ import type { SiswaWithValidation } from "~/context-reduct/selectores/data-siswa
 import { getParseDateYYYYMMMDD } from "~/lib/date-helper";
 import SebaranTagihanKurikulumClass, { type SebaranTagihanAssesmenKurikulumType } from "./sebaran-tagihan-kurikulum-class";
 import type { PraSettingBaku } from "~/types/bank-soal/entities/PraSettingBaku";
+import type { NilaiSiswaAppType } from "~/types/penilaian/nilai-siswa-app-type";
 
 
 export default class TagihanPenilaianClass extends DtoPaketSoalSheetClass{
@@ -24,7 +25,8 @@ export default class TagihanPenilaianClass extends DtoPaketSoalSheetClass{
             rombel:string,
             publikasiPaket: PublikasiPaketAppType[],
             /** punya class ini sendiri */
-            private readonly allSiswa:SiswaWithValidation[]
+            private readonly allSiswa:SiswaWithValidation[],
+            private readonly responTagihan:NilaiSiswaAppType[]
         ){
             super(dataSheet,atpHasBankSoal,rombel,publikasiPaket)
         }
@@ -76,11 +78,12 @@ export default class TagihanPenilaianClass extends DtoPaketSoalSheetClass{
             const peserta               = detail_target.flatMap(item=>item.data_siswa);//this.siswaInCurrentDate(m.end_time).map(siswa=>siswa.data).filter(s=> s.nama_rombel === this.rombel);
             const count_instrumen       = m.setting_tagihan?.count_bentuk_soal?.map(cbt=>cbt.count) ?? []
             const total_instrumen       = count_instrumen.length > 0 ? count_instrumen?.reduce((a, b)=>a+Number(b)):0;
+            const data_respons        =  this.responTagihan.filter(s=>s.publikasi_id === m.idbaris )
             
             return {
                 ...m,
                 detail_target,
-                data_respons:[],
+                data_respons,
                 isMultiple,
                 koleksi_mapelName,
                 kurikulum_tagihan,

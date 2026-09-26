@@ -1,5 +1,6 @@
 import { type RouteConfig, index, layout, prefix, route } from "@react-router/dev/routes";
 
+
 export default [
     layout("layouts/auth-layout.tsx",[
         route("login","routes/login.tsx"),
@@ -10,9 +11,19 @@ export default [
         
     ]),
 
+    
     layout("layouts/menu-layout.tsx",[
-        route("menu","routes/app-menu.tsx"),
+        route("menu","routes/app-menu.tsx"), 
     ]),
+        // route('menu-siswa', "route/app-menu-siswa.tsx")
+    
+    layout("layouts/provider-layout/provider-layout-siswa.tsx", [
+        layout("layouts/menu-siswa-layout.tsx",[
+            route('menu-siswa', "routes/app-menu-siswa.tsx")
+        ]),
+
+    ]),
+
     
     
     layout("layouts/app-layout.tsx",[
@@ -29,11 +40,7 @@ export default [
                 ...prefix('profile',[
                     index("routes/profile/index-redirect-profile.tsx"),
                     route("about","routes/profile/about.tsx"), 
-                    // route("contact","routes/profile/contact.tsx"),
-                    // route("my-document","routes/profile/my-document.tsx"),
-                    // route("tugas-mengajar","routes/profile/tugas-mengajar.tsx"),
-                    // route("riwayat-tugas-mengajar","routes/profile/riwayat-tugas-mengajar.tsx")
-                ])
+                     ])
             ]),
             layout("layouts/sub-layouts/sub-buku-induk.tsx",[
                 ...prefix("buku-induk",[

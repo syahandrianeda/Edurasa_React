@@ -48,6 +48,8 @@ import uiFokusReducer from './global-state/ui-fokus/ui-fokus-slice';
 import paketSoalReducer from './global-state/bank-soal/paket-soal-slice';
 import publikasiPaketReducer from './global-state/bank-soal/publikasi-paket-slice'
 
+import responTagihanReducer from "./global-state/respon-siswa/response-tagihan-slice"
+
 const rootReducer = combineReducers({
     auth: authReducer,
     fokusRombel: fokusRombelReducer,
@@ -88,7 +90,8 @@ const rootReducer = combineReducers({
     transaksiSerahterimaDokumen: transaksiSerahTerimaDokumenReducer,
     uiFokusToolbar: uiFokusReducer,
     paketSoal: paketSoalReducer,
-    publikasiPaket: publikasiPaketReducer
+    publikasiPaket: publikasiPaketReducer,
+    responTagihan: responTagihanReducer
 })
 
 export default rootReducer

@@ -67,6 +67,7 @@ export default function SendEditSoalPaket({data}:{data:BankSoalAppType}){
                     actionsModal.close()
                     return 'Gagal '+ er
                 },
+                closeButton:true,
                 finally:()=>{
                     actionsModal.close();
                 }

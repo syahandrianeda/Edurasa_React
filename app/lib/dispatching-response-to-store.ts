@@ -66,12 +66,15 @@ import type { PaketSoalSheetType } from "~/types/bank-soal/entities/paket-soal-s
 import { setPublikasiPaket, upsertPublikasiPaket } from "~/context-reduct/global-state/bank-soal/publikasi-paket-slice";
 import type { PublikasiPaketSheetType } from "~/types/bank-soal/entities/publikasi-paket-sheet-type";
 import { IndexDbTabNameRepository } from "~/infrastructures/iDb-vite/indexDb-tabname-repository";
+import { getNumberFromString } from "./get-number";
+import { upsertResponTagihan } from "~/context-reduct/global-state/respon-siswa/response-tagihan-slice";
+import type { NilaiSiswaSheetType } from "~/types/penilaian/nilai-siswa-sheet-type";
 
 
 export default async function DispatchingResponseToStore(success:boolean, data:Record<string, any>[],detailResponse:Record<string,any>, rombelAktif?:string){
     // if(success){
         // ga boleh ada trial-nya, karena namanya bakal ngefek ke bawah
-        
+        const jenjang= getNumberFromString(rombelAktif ?? getSessionRombel());
         // const db = new IndexDbTabNameRepository(detailResponse.namaTab);
         
         if(detailResponse?.namaTab === namaTab('mapel')){
@@ -87,7 +90,7 @@ export default async function DispatchingResponseToStore(success:boolean, data:R
         }
         // datasiswa ada trial-nya
         if(detailResponse?.namaTab === namaTab('datasiswa')){
-            const db = new IndexDbTabNameRepository(detailResponse.namaTab);
+            // const db = new IndexDbTabNameRepository(detailResponse.namaTab);
             store.dispatch(upsertAllSiswa({
                 data : data as unknown as SiswaType[] ,
                 loaded : true,
@@ -100,13 +103,13 @@ export default async function DispatchingResponseToStore(success:boolean, data:R
             // if(detailResponse.source === 'API'){
 
             // }
-            // const db = new IndDbSiswaRepository();
-            await db.saveBulkAgain(data as unknown as SiswaType[]);
             
             //simpan di session ini:
             
             const formatIsianSiswa = detailResponse?.objKosong
             saveIsianSiswa(formatIsianSiswa);
+            const db = new IndDbSiswaRepository();
+            await db.saveBulkAgain(data as unknown as SiswaType[]);
         }
 
         if(detailResponse?.namaTab === namaTab('dapodik')){
@@ -314,6 +317,17 @@ export default async function DispatchingResponseToStore(success:boolean, data:R
         if(detailResponse?.namaTab === namaTab('publikasi_paket')){
             store.dispatch(upsertPublikasiPaket(data as unknown as PublikasiPaketSheetType[]))
             // await db.saveBulkAgain(data as unknown as PublikasiPaketSheetType[]);
+        }
+        
+         if(detailResponse?.namaTab === namaTab('respon_tagihan_'+jenjang)){
+            
+                store.dispatch(upsertResponTagihan(
+                    {
+                        jenjang: jenjang,
+                        data: detailResponse?.findTab? data as NilaiSiswaSheetType[]:[]
+                    }
+                ))
+            
         }
         
 
