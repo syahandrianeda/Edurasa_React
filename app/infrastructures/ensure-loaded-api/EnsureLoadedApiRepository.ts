@@ -23,8 +23,13 @@ export default class EnsureLoadedApiRepository extends AppScriptSheet implements
             }
         }catch(error){
             console.log('repository gagal',{error})
+            const message = error instanceof Error
+                ? error.message
+                : typeof error === 'string'
+                    ? error
+                    : 'Unknown repository error';
             // return this.responActionError(error);
-            throw new Error('error di repository', {cause:[error]})
+            throw new Error(message, { cause: error })
         }
         
     }

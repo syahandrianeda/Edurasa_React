@@ -9,6 +9,7 @@ import ModalProvider from "~/components/modals/modal-provider";
 import ModalBankSoal from "~/controllers/bank-soal/modal/modal-bank-soal";
 import NextModalPaketSoal from "~/controllers/paket-soal/modal/next-modal-paket";
 import { defineCreateItemSoalNeeded } from "~/domain/enloaded/intial-enloaded/by-route-page/banksoal/create-item-soal-needed";
+import { siswaDefindeAbsenRombelNeeded } from "~/domain/enloaded/intial-enloaded/by-route-page/siswa/menu-needed";
 
 
 
@@ -35,8 +36,8 @@ export async function clientLoader({}:Route.ComponentProps){
 
     return {
         titleTambahan:'Menu',
-         addPesanRombel:{isAdd:true, type:'rombel', includeFaseName:true},
-        sheetNeeded: defineCreateItemSoalNeeded,
+        addPesanRombel:{isAdd:true, type:'rombel', includeFaseName:true},
+        sheetNeeded: siswaDefindeAbsenRombelNeeded,
         mustLoadSheetNeedSiswaIfExist:true,
     };
 }

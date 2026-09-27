@@ -14,11 +14,13 @@ import RingkasanInfoSiswa from '~/controllers/info-siswa/ringkasan-info-siswa';
 import useEnsureLoaded from '~/hooks/use-ensure-loaded';
 import { getSessionApp } from '~/infrastructures/session-storage/app-session';
 import type { UserSiswa } from '~/types/user-siswa';
+import { InstanceDataTagihanPenilaianSector } from '~/context-reduct/selectores/daftar-tagihan-penilaian-selector';
 
 export default function InfoSiswa(){
     // const sheetNeeded = siswaDefindeAbsenRombelNeeded;
     const user = getSessionApp<UserSiswa>()
     const rombel = getSessionRombel();
+    const instancPaketSoal = useAppSelector(InstanceDataTagihanPenilaianSector);
 //    const {
 //         user,
 //         rombel,
@@ -28,7 +30,10 @@ export default function InfoSiswa(){
     return (
         <div className="border-2 rounded-2xl bg-white min-h-24 w-11/12 mx-auto p-2 mb-4 overflow-hidden">
             <h3 className='text-xl text-center'>Selamat Datang {user?.name} (Kelas {rombel})</h3>
-            <RingkasanInfoSiswa/>
+            {
+                (user && instancPaketSoal) && <RingkasanInfoSiswa instancPaketSoal={instancPaketSoal} user={user}/>
+
+            }
         </div>
     )
 }

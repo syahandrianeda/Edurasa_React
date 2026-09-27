@@ -1,12 +1,20 @@
 import { useCallback, useEffect, useMemo } from "react";
 import ButtonCommitAwesome from "~/components/button-awesome/commit-button";
 import { useModal } from "~/components/modals/modal-provider";
+import type { dataAbsenBulanan } from "~/domain/absensi/orm-absensi-type";
 import type { TagihanHasDataResponse } from "~/domain/penilaian/type/tagihan-assesmen-type";
 import type { CountdownResult } from "~/lib/get-count-down";
 import type { WithTimeStatus } from "~/lib/time-helper";
 import type { PublikasiPaketAppType } from "~/types/bank-soal/entities/publikasi-paket-app-type";
 
-export default function CardInfoItemSiswa({id, data, panggilModal, countdown}:{id:number, data:WithTimeStatus<TagihanHasDataResponse>, panggilModal:(data:WithTimeStatus<TagihanHasDataResponse>)=>void, countdown:CountdownResult}){
+type Props = {
+    id:number, 
+    data:WithTimeStatus<TagihanHasDataResponse>, 
+    hasAbsen?:dataAbsenBulanan,
+    panggilModal:(data:WithTimeStatus<TagihanHasDataResponse>)=>void, 
+    countdown:CountdownResult
+}
+export default function CardInfoItemSiswa({id, data, panggilModal, countdown, hasAbsen}:Props){
     /** statusnya belum dikerjakan */
 
         const hasResponsed = useMemo(()=> data.data_respons.find(s=>s.siswa_id === id && data.idbaris === s.publikasi_id),[]);
@@ -32,7 +40,8 @@ export default function CardInfoItemSiswa({id, data, panggilModal, countdown}:{i
                             hasResponsed ? (
                                 <p>Sudah dikerjakan</p>
                             ):(
-                                <ButtonCommitAwesome labelButton="Mulai Kerjakan" className="px-4 py-0 text-[10px]" onClick={()=>panggilModal(data)}/>
+
+                                <ButtonCommitAwesome labelButton={!hasAbsen?.idbaris_absen?'Absen Dulu':'Yuk Kerjakan'} className="px-4 py-0 text-[10px]" onClick={()=>panggilModal(data)}/>
 
                                 )
                             )

@@ -11,6 +11,7 @@ export interface NilaiSiswaSheetType{
     rombel: string,
     start_time: string,
     end_time:string,
+    skor_kd:string,
     
     /** untuk mengisi pg_1, essay_1, */
     [key:string]: string|number

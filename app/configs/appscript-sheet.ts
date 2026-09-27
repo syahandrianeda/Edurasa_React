@@ -197,7 +197,7 @@ export default class AppScriptSheet extends AppScriptConfig{
     }
     idssNilai(jenjang:number){
         // const jenjang = getNumberFromString(rombel)
-        const key = 'nilai_'+jenjang;
+        const key = 'ss_nilai_'+jenjang;
         return this.currentMacro[key]
     }
 
@@ -700,7 +700,8 @@ export default class AppScriptSheet extends AppScriptConfig{
 
         this.sheetNilaiTabResponTagihan = {
             idss,
-            tab
+            tab,
+            ...additionalParam
         }
     }
 

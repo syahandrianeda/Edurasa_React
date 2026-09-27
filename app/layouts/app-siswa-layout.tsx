@@ -19,7 +19,7 @@ export default function AppSiswaLayout({loaderData, matches}:Route.ComponentProp
 
     return (
         <ExportTargetProvider>
-            <SidebarProvider defaultOpen={true} className="flex-col">
+            <SidebarProvider defaultOpen={false} className="flex-col">
                 <Outlet />
             {!loaderData && <Navigate to="/" replace />}
             </SidebarProvider>

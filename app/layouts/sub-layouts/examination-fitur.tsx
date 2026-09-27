@@ -1,33 +1,33 @@
-import { Outlet } from "react-router";
-import AppSidebar from "~/components/ui_edura/app-sidebar";
-import AppWorkplace from "~/components/workplace/app-workplace";
-import { SubfiturAbsensiSiswa } from "~/features/subfitur-absensi-siswa";
-import PermissionFeature from "~/lib/permission-feature";
-
 import { useAppSelector } from "~/context-reduct/hook";
-import { SampleKontenTtdType } from "~/components/toolbars/kop-ttd/default-ttd";
-import { useMemo } from "react";
-import type { controlDropdownKelas } from "~/components/dropdowns/rombel-dropdown";
+import PermissionFeature from "~/lib/permission-feature";
 import type { TabsConfigProps } from "~/components/tabs/generate-tabs";
+import type { controlDropdownKelas } from "~/components/dropdowns/rombel-dropdown";
+import { useMemo } from "react";
+import { SampleKontenTtdType } from "~/components/toolbars/kop-ttd/default-ttd";
+import AppSidebar from "~/components/ui_edura/app-sidebar";
 import { TopProgressBarFetch } from "~/components/ui_edura/top-progress-bar";
+import AppWorkplace from "~/components/workplace/app-workplace";
 import { ToolbarFilterProvider } from "~/components/toolbars/state-toolbar/state-toolbar";
 import { ToolbarKopTtdProvider } from "~/components/toolbars/kop-ttd/kop-ttd";
+
 import PrintAreaWithKopTtd from "~/components/toolbars/kop-ttd/print-area-kopttd";
 import ModalProvider from "~/components/modals/modal-provider";
-import ModalDataSiswa from "~/controllers/data-siswa-controller/modal-data-siswa";
-import ModalSettingKaldik from "~/controllers/kaldik-controller/modal-kaldik/modal-setting-kaldik";
-import ModalFiturAbsen from "~/controllers/absensi-controllers/modals/wrapper-modal-absen";
-import type { Route } from "./+types/sub-absensi";
-import ToolbarLayout from "../sub-layouts/toolbar-layout";
+import { Outlet } from "react-router";
+import ModalFiturKurikulum from "~/controllers/kurikulum/modals/modal-kurikulum";
 
+import { SubFiturBankSoal } from "~/features/subfitur-bank-soal";
+import ModalBankSoal from "~/controllers/bank-soal/modal/modal-bank-soal";
+import NextModalPaketSoal from "~/controllers/paket-soal/modal/next-modal-paket";
 
+import ToolbarLayout from "~/layouts/sub-layouts/toolbar-layout";
+import type { Route } from "./+types/examination-fitur";
 
-export default function SubAbsensiSiswaLayout({matches}:Route.ComponentProps) {
+export default function SubExamLayout({matches}:Route.ComponentProps) {
     
     const user = useAppSelector(state=> state.auth.user);
     const active = useAppSelector(state=>state.loadedApi.loaded);
     const user_permission = user?.permission;
-    const result = PermissionFeature(user_permission ?? [], 'view absensi siswa', SubfiturAbsensiSiswa);
+    const result = PermissionFeature(user_permission ?? [], 'view fitur siswa', SubFiturBankSoal);
     const loaderDataKiriman = matches.at(-1)?.loaderData as { titleTambahan?: string, toolbarTabs?: TabsConfigProps, controlKelas:controlDropdownKelas, showExport?:boolean } | undefined
     const toolbarTabs = loaderDataKiriman?.toolbarTabs ?? undefined; 
     const controlKelas = loaderDataKiriman?.controlKelas ?? undefined; 
@@ -42,7 +42,7 @@ export default function SubAbsensiSiswaLayout({matches}:Route.ComponentProps) {
         }, []);
     
     return (
-        <AppSidebar showExport={showExport} desktopHeader="relative" title={"Absensi - "+ titleTambahan} controlKelas={controlKelas}>
+        <AppSidebar showExport={showExport} desktopHeader="relative" title={"Soal Online - "+ titleTambahan} controlKelas={controlKelas}>
             <TopProgressBarFetch active={active} /> 
             <AppWorkplace MainFitur={result}>
                 <ToolbarFilterProvider>
@@ -51,13 +51,17 @@ export default function SubAbsensiSiswaLayout({matches}:Route.ComponentProps) {
                             <PrintAreaWithKopTtd>
                                 <ModalProvider>
                                     <Outlet/>
-                                    <ModalFiturAbsen/>
+                                    <ModalBankSoal/>
+                                    <NextModalPaketSoal/>
                                 </ModalProvider>
                             </PrintAreaWithKopTtd>
+                            
                         </ToolbarLayout>
                     </ToolbarKopTtdProvider>
                 </ToolbarFilterProvider>
             </AppWorkplace>
+                
+            
         </AppSidebar>
     )
 }   

@@ -127,7 +127,7 @@ export default function TableDaftarTagihanPenilaian({instanceClass}:{instanceCla
 
                                     </div>
                                     <div className={`flex w-full justify-between gap-2 text-[8px] font-bold ${item.data_respons.length === item.peserta.length ?"text-green-600" : "text-amber-600"}`}>
-                                        <p>{item.data_respons.filter(s=>s.sumber_respon !== 'siswa').length}/{item.peserta.length}</p>
+                                        <p>{item.data_respons.filter(s=>!s.needValidate).length}/{item.peserta.length}</p>
                                         <p>Telah divalidasi</p>
 
                                     </div>

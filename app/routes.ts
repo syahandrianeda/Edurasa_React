@@ -17,12 +17,18 @@ export default [
     ]),
         // route('menu-siswa', "route/app-menu-siswa.tsx")
     
-    layout("layouts/provider-layout/provider-layout-siswa.tsx", [
-        layout("layouts/menu-siswa-layout.tsx",[
-            route('menu-siswa', "routes/app-menu-siswa.tsx")
-        ]),
-
-    ]),
+    // layout("layouts/provider-layout/provider-layout-siswa.tsx", [
+    //     layout("layouts/menu-siswa-layout.tsx",[
+    //         route('menu-siswa', "routes/app-menu-siswa.tsx")
+    //     ]),
+    //     layout("layouts/sub-layouts/examination-fitur.tsx",[
+    //        route("examining/:paketSoalId/mengerjakan", "routes/siswa/examining-route.tsx")
+    //     ]),
+    //     /**
+    //      layoutes()
+    //      */
+ 
+    // ]),
 
     
     
@@ -174,17 +180,30 @@ export default [
         ]),
     ]),
     layout("layouts/app-siswa-layout.tsx",[
-        layout("layouts/provider-layout/siswa-app-provider-service.tsx",[
-            layout("layouts/siswa-sub-layout/sub-absensi.tsx",[
-                ...prefix('kehadiranku',[
-                        index('routes/siswa/kehadiranku.tsx'),
-                        route('hari-ini','routes/siswa/kehadiranku/hari-ini.tsx'),
-                        ]
-                    )
+        // layout("layouts/provider-layout/siswa-app-provider-service.tsx",[
+        //     layout("layouts/siswa-sub-layout/sub-absensi.tsx",[
+        //         ...prefix('kehadiranku',[
+        //                 index('routes/siswa/kehadiranku.tsx'),
+        //                 route('hari-ini','routes/siswa/kehadiranku/hari-ini.tsx'),
+        //                 ]
+        //             )
 
-                ]
-            )
-        ])
+        //         ]
+        //     )
+        // ]),
+        layout("layouts/provider-layout/provider-layout-siswa.tsx", [
+            layout("layouts/menu-siswa-layout.tsx",[
+                route('menu-siswa', "routes/app-menu-siswa.tsx")
+            ]),
+            layout("layouts/sub-layouts/examination-fitur.tsx",[
+                route("examining/:paketSoalId/mengerjakan", "routes/siswa/examining-route.tsx")
+                ]),
+            /**
+             layoutes()
+            */
+
+        ]),
+
     ])
 
 

@@ -167,56 +167,56 @@ export const DataMenu: typeKoleksiMenu[] = [
     },
     {
         title: "Kehadiranku", 
-        routeName: "kehadiranku",
+        routeName: "#",//"kehadiranku",
         urlIcon: MenuIcons["absensi-siswa"],
         permission: 'view fitur siswa',   
         hasRoute:true
     },
     {
         title: "Ulanganku", 
-        routeName: "ulanganku",
+        routeName: "#",//"ulanganku",
         urlIcon: MenuIcons["rpp"],
         permission: 'view fitur siswa',   
         hasRoute:true
     },
     {
         title: "7 Pembiasaanku", 
-        routeName: "aku-anak-hebat",
+        routeName: "#",//"aku-anak-hebat",
         urlIcon: MenuIcons["rpp"],
         permission: 'view fitur siswa',   
         // hasRoute:true
     },
     {
         title: "Dataku", 
-        routeName: "dataku",
+        routeName: "#",//"dataku",
         urlIcon: MenuIcons["data_lemari"],
         permission: 'view fitur siswa',   
         // hasRoute:true
     },
     {
         title: "Literasiku", 
-        routeName: "literasiku",
+        routeName: "#",//"literasiku",
         urlIcon: MenuIcons["literasi"],
         permission: 'view fitur siswa',   
         // hasRoute:true
     },
     {
         title: "Nilai Raportku", 
-        routeName: "raportku",
+        routeName: "#",//"raportku",
         urlIcon: MenuIcons["raport"],
         permission: 'view fitur siswa',
         // hasRoute:true
     },
     {
         title: "Kegiatan Ekskulku", 
-        routeName: "ekstrakurikulerku",
+        routeName: "#",//"ekstrakurikulerku",
         urlIcon: MenuIcons["ekskrakurikuler"],
         permission: 'view fitur siswa',
         // hasRoute:true
     },
     {
         title: "Tabunganku", 
-        routeName: "tabunganku",
+        routeName: "#",//"tabunganku",
         urlIcon: MenuIcons["tabungan"],
         permission: 'view fitur siswa',
         // hasRoute:true

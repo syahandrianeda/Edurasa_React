@@ -23,11 +23,11 @@ export const siswaDefindeAbsenRombelNeeded = (rombel?:string)=>{
         return [
                 // ...CpNeeded, 
                 {...sheetAkun_dataSiswa, filter: user?.id && JSON.stringify({id: user.id})},
-                    sheetKurikulum_mapel,
-                    sheetKurikulum_jpMapel,
-                    sheetKurikulum_settingJadwal,
-                    sheetKurikulum_elemenCp,
-                    sheetKurikulum_atp,
+                sheetKurikulum_mapel,
+                sheetKurikulum_jpMapel,
+                sheetKurikulum_settingJadwal,
+                sheetKurikulum_elemenCp,
+                sheetKurikulum_atp,
                 fase,
                 tabNilai,
                 sheetKurikulum_prota,
@@ -41,6 +41,6 @@ export const siswaDefindeAbsenRombelNeeded = (rombel?:string)=>{
                 sheetKaldik_kalender,
                 
                 {...sheetBankSoal_publikasiPaket, exceptFilter:JSON.stringify({"paket_soal_id":0})},
-                {sheet: 'absensi', tab:`${namaTab('kelas')}_${rombel}`,filter:JSON.stringify({rombel})},
+                {sheet: 'absensi', tab:`${namaTab('kelas')}_${rombel}`,filter:JSON.stringify({kelas:rombel})},
         ]
 }

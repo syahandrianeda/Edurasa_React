@@ -11,6 +11,8 @@ import { ExportTargetProvider } from "./exports/export-target-provider";
 import ModalProvider from "~/components/modals/modal-provider";
 import ModalBankSoal from "~/controllers/bank-soal/modal/modal-bank-soal";
 import NextModalPaketSoal from "~/controllers/paket-soal/modal/next-modal-paket";
+import ModalResponTagihanSiswa from "~/controllers/respon-tagihan-siswa/modal/modal-utama";
+import ModalBantuResponseSiswa from "~/controllers/respon-tagihan-siswa/modal/modal-pembantu";
 
 export function clientLoader(){
     const page = getSessionApp<UserSiswa|UserPtk>();
@@ -27,7 +29,7 @@ export function clientLoader(){
     return page;
 }
 
-export default function AppLayout({loaderData}:Route.ComponentProps){
+export default function AppSiswaLayout({loaderData}:Route.ComponentProps){
      
 const navItems = [
     { title: currentTapel({variant:'long'}), href: "/", isActive: false }, 
@@ -35,16 +37,17 @@ const navItems = [
 ];
 
     return (
-        <ExportTargetProvider>
+        // <ExportTargetProvider>
             <ModalProvider>
-                <SidebarProvider defaultOpen={true}  className="flex-col">
+                {/* <SidebarProvider defaultOpen={true}  className="flex-col"> */}
                     <AppContainerMenu desktopHeader="fixed" navItems={navItems}>
                         <Outlet/>
                     </AppContainerMenu>
-                </SidebarProvider>
-                <ModalBankSoal/>
-                <NextModalPaketSoal/>
+                {/* </SidebarProvider> */}
+                {/* <Outlet/> */}
+                <ModalResponTagihanSiswa/>
+                <ModalBantuResponseSiswa/>
             </ModalProvider>
-        </ExportTargetProvider>
+        // </ExportTargetProvider>
     )
 }

@@ -1,12 +1,15 @@
 import type { KategoriTagihanType } from "~/domain/penilaian/infrastucture/KategoriTagihanType";
-import type { NilaiSiswaAppType, RisponsePenilaianSiswa } from "~/types/penilaian/nilai-siswa-app-type";
+import type { DataSkorMapel, KeyScore, NilaiSiswaAppType, RisponsePenilaianSiswa, SkorKdResponSiswaType } from "~/types/penilaian/nilai-siswa-app-type";
 import type { NilaiSiswaSheetType } from "~/types/penilaian/nilai-siswa-sheet-type";
 import { resolveDate } from "./_resolver";
 import { ListBentukSoal } from "~/domain/bank-soal/list-bentuk-soal";
 
 export default class DtoResponTagihanSiswa{
     static fromSheetToApp(data:NilaiSiswaSheetType):NilaiSiswaAppType{
+        console.log(data.skor_kd)
         const respon = DtoResponTagihanSiswa.creatResponAppFromSheet(data);
+        const skor_kd = DtoResponTagihanSiswa.createSkorKd(data.skor_kd);
+        const needValidate = respon.some(m=>m.bentuk_soal !== 'pg') && data.sumber_respon === 'siswa'
         return {
             idbaris         : Number(data.idbaris),//number,	
             siswa_id        : Number(data.siswa_id),//number,
@@ -17,16 +20,68 @@ export default class DtoResponTagihanSiswa{
             rombel          : String(data.rombel),//string,
             start_time      : resolveDate(data.start_time),//Date,
             end_time        : resolveDate(data.end_time),
-            respon          
+            respon,
+            skor_kd,
+            needValidate
         }
     }
-    static creatResponAppFromSheet(data:NilaiSiswaSheetType):RisponsePenilaianSiswa[]{
+    private static createSkorKd(data:string):SkorKdResponSiswaType[]{
+        const result = DtoResponTagihanSiswa.parsedJson(data);
+        console.log({result});
+        if (!result || typeof result !== "object" || Array.isArray(result)) return [];
+        const skor:SkorKdResponSiswaType[]=[]
+        const mapelMap = new Map<string, DataSkorMapel[]>();
+        for (const [key, rawValue] of Object.entries(result)) {
+            const value = rawValue as SkorKdResponSiswaType;
+            const kode_mapel = key.trim().split('_')[0];
+            const atp_id = Number(key.trim().split('_')[1]);
+            if(!mapelMap.has(kode_mapel)){
+                mapelMap.set(kode_mapel, [{
+                    atp_id,
+                    skor: Number(value),
+                }])
+                continue;
+            }
+            const nextMap = mapelMap.get(kode_mapel);
+            nextMap?.push({atp_id, skor: Number(value)})
+        }
+        
+        return [...mapelMap.entries()].map(([kode_mapel, valueMap])=>({
+            kode_mapel,
+            data:valueMap
+        }))
+        // return result;
+    }
+    private static parsedJson(value:string):unknown{
+        console.log(value);
+        if (!value?.trim()) {
+            return
+            // throw new Error(
+            //     `tidak boleh kosong.`
+            // );
+        }
+
+        try {
+            return JSON.parse(value);
+        } catch (error) {
+            return;
+            // throw new Error(
+            //     ` bukan JSON yang valid.`,
+            //     {
+            //         cause: error
+            //     }
+            // );
+        }
+
+    }
+    private static creatResponAppFromSheet(data:NilaiSiswaSheetType):RisponsePenilaianSiswa[]{
         const result:RisponsePenilaianSiswa[]=[];
         const keyPrefix = ListBentukSoal.map(m=>m.name);
+        const keySkor:KeyScore[]=[]
         let index = 0;
         for(const key in data){
             
-            console.log({keyPrefix, key})
+            
             /** key itu mengandung prefix 'pg_', 'isian_singkat_' */
             if(keyPrefix.some(item=>key.includes(item))){
                 let obj:RisponsePenilaianSiswa = Object.create(null);
@@ -34,16 +89,31 @@ export default class DtoResponTagihanSiswa{
                 
                 const number = split.pop()
                 obj.index = index;
-                obj.no_soal = Number(number);
+                obj.no_prefix = Number(number);
                 obj.respon = data[key] as string;
                 obj.bentuk_soal = split.join('_')
 
                 result.push(obj);
                 index++;
             }
-        }
 
-        return result;
+            if(key.includes('skor_')){
+                if(data[key]==="") continue;
+                const spliting = key.replace('skor_','');
+                const indexSkor = Number(spliting);
+                const skor = Number(data[key])
+                keySkor.push({index:indexSkor,skor })
+
+            }
+        }
+        const finalResult = result.map(m=>{
+            const found= keySkor.find(s=>s.index === m.index);
+            if(found){
+                return {...m, skor:found.skor}
+            }
+            return m
+        })
+        return finalResult;
     }
     static arrayFromSheetToApp(data:NilaiSiswaSheetType[]):NilaiSiswaAppType[]{
         return data.map(this.fromSheetToApp);
