@@ -463,25 +463,16 @@ export default function AppProviderLayoutService({
             //         closeButton: true,
             //     }
             // );
-            const reqPromise = toast.promise(
+            console.log({param})
+            toast.promise(
                 api.callNeeded(param),
                 {
                     loading: textLoading +
                         textRombelFase,
 
                     success: data => {
-                        // console.log('data respon', { data });
-                        
-                        return ("Pemanggilan data telah selesai");
-                    },
-
-                    error:  data=>`Gagal memuat data ${loaderDataKiriman.titleTambahan} \r`+ data,
-
-                    closeButton: true,
-                }
-            );
-            const data = await reqPromise.unwrap();
-            if (data && Array.isArray(data)) {
+                        console.log('data respon', data, {param});
+                         if (data && Array.isArray(data)) {
 
                             const decidedRombel = loaderDataKiriman?.sourceKelas ? rombelKeuangan?.rombel : rombel;
 
@@ -501,6 +492,36 @@ export default function AppProviderLayoutService({
                             }
                             );
                         }
+                        
+                        return ("Pemanggilan data telah selesai");
+                    },
+
+                    error:  data=>`Gagal memuat data ${loaderDataKiriman.titleTambahan} \r`+ data,
+
+                    closeButton: true,
+                }
+            );
+            // const data = await reqPromise.unwrap();
+            // if (data && Array.isArray(data)) {
+
+            //                 const decidedRombel = loaderDataKiriman?.sourceKelas ? rombelKeuangan?.rombel : rombel;
+
+
+            //                 data.forEach(({ success, data, detailResponse, }) => {
+
+            //                     if (detailResponse) {
+            //                         DispatchingResponseToStore(
+            //                             success,
+            //                             data,
+            //                             detailResponse,
+            //                             decidedRombel
+            //                         );
+
+            //                         DispatchingResponseToFokusUi();
+            //                     }
+            //                 }
+            //                 );
+            //             }
 
             /**
              * ====================================================
@@ -517,7 +538,7 @@ export default function AppProviderLayoutService({
 
 
         } catch (error) {
-
+            console.log(error)
             /**
              * ====================================================
              * REQUEST GAGAL

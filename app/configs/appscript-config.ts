@@ -155,7 +155,7 @@ export class AppScriptConfig {
     async postBody(param:Record<string, any>){
         const start = performance.now();
         try{
-          
+            console.log('this.appCrudUrl',this.appCrudUrl)
             const pos = await axios.post(this.appCrudUrl,
                         // param, 
                         new URLSearchParams(
@@ -188,7 +188,8 @@ export class AppScriptConfig {
                 
             }
             // console.log('pos axios status 200', pos)
-            if(pos?.data && pos.data?.success){
+            // if(pos?.data && pos.data?.success){
+            if(pos?.data){
                 return pos.data
             }else{
                 throw new Error(pos?.data?.message , {cause: pos})

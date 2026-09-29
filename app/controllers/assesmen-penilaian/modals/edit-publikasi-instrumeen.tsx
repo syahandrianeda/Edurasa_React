@@ -119,7 +119,8 @@ export default function EditPublikasiInstrumenTagihan(){
         namaPublikasi,
         targetPaket,
         koleksiIdSiswa,
-        durasi
+        durasi,
+        jenisTagihan
     ])
 
     const onSubmit = ()=>{
@@ -130,7 +131,7 @@ export default function EditPublikasiInstrumenTagihan(){
                 return;
             }
             
-            
+            console.log(currentData.jenis_tagihan)
     
             toast.promise(
                 post.update(dto),

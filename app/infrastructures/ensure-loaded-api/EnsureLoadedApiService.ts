@@ -44,34 +44,86 @@ export default class EnsurLoadedApiService implements EnsureLoadedApiServiceInte
          }
          
         */
-        try{
+        // try{
 
-                /**
-                 * ========================================================
-                 * OFFLINE
-                 *
-                 * Browser sudah mengetahui bahwa koneksi tidak tersedia.
-                 *
-                 * Jangan mencoba request ke Apps Script.
-                 * Langsung gunakan IndexedDB.
-                 * ========================================================
-                 */
-                // console.log({navigator})
-                if (!navigator.onLine) {
-                    const dataDb =  await this.loadFromIndexDb(paramSheet);
-                    return dataDb.map(this.repo.responActionRead) as unknown as ApiResponse<any>;
-                }
+        //         /**
+        //          * ========================================================
+        //          * OFFLINE
+        //          *
+        //          * Browser sudah mengetahui bahwa koneksi tidak tersedia.
+        //          *
+        //          * Jangan mencoba request ke Apps Script.
+        //          * Langsung gunakan IndexedDB.
+        //          * ========================================================
+        //          */
+        //         // // console.log({navigator})
+        //         // if (!navigator.onLine) {
+        //         //     // const dataDb =  await this.loadFromIndexDb(paramSheet);
+        //         //     // return dataDb.map(this.repo.responActionRead) as unknown as ApiResponse<any>;
+        //         // }
     
     
-                /**
-                 * ========================================================
-                 * ONLINE
-                 *
-                 * Coba mengambil data terbaru dari Apps Script.
-                 * ========================================================
-                 */
+        //         /**
+        //          * ========================================================
+        //          * ONLINE
+        //          *
+        //          * Coba mengambil data terbaru dari Apps Script.
+        //          * ========================================================
+        //          */
     
-                const auth = this.repo.dataAuth();
+        //         const auth = this.repo.dataAuth();
+    
+        //         const param = {
+        //         action: "readMultipleTab",
+        //         source: JSON.stringify(paramSheet),
+        //         auth,
+        //         };
+    
+    
+        //         const data = await this.repo.callNeeded(param);
+        //         console.log('data', {param, data})
+    
+        //         /**
+        //          * ========================================================
+        //          * API BERHASIL
+        //          *
+        //          * Pertahankan perilaku existing.
+        //          * ========================================================
+        //          */
+    
+        //         // if (data && Array.isArray(data) && data.some((item) => item.success)) {
+        //         // return data;
+        //         // }
+        //          if(data){
+        //             if(Array.isArray(data)){
+        //                 // console.log('respon service sukses, dan array', data);
+        //                 return data
+        //             }else{
+        //                 // console.log('respon service sukses, dan bukan array', data);
+        //                 throw new Error(data.error?.message ?? 'Service Gagal',{cause:data})
+        //             }
+        //         }else{
+        //             // console.log('dilempar error, karena data.succes false/ undefine', data)
+        //             throw new Error(data)
+        //         }
+    
+        //         /**
+        //          * ========================================================
+        //          * API GAGAL
+        //          *
+        //          * Gunakan IndexedDB sebagai fallback.
+        //          * ========================================================
+        //          */
+    
+        //         // return this.loadFromIndexDb(paramSheet);
+        //         // const dataDb =  await this.loadFromIndexDb(paramSheet);
+        //         //     return dataDb.map(this.repo.responActionRead) as unknown as ApiResponse<any>;
+        // }catch(er){
+        //     console.log(er)
+        //     throw new Error(er as string,{cause:er})
+        // }
+
+          const auth = this.repo.dataAuth();
     
                 const param = {
                 action: "readMultipleTab",
@@ -99,30 +151,14 @@ export default class EnsurLoadedApiService implements EnsureLoadedApiServiceInte
                         // console.log('respon service sukses, dan array', data);
                         return data
                     }else{
-                        // console.log('respon service sukses, dan bukan array', data);
+                        console.log('respon service sukses, dan bukan array', data);
                         throw new Error(data.error?.message ?? 'Service Gagal',{cause:data})
                     }
                 }else{
-                    // console.log('dilempar error, karena data.succes false/ undefine', data)
+                    console.log('dilempar error, karena data.succes false/ undefine', data)
                     throw new Error(data)
                 }
-    
-                /**
-                 * ========================================================
-                 * API GAGAL
-                 *
-                 * Gunakan IndexedDB sebagai fallback.
-                 * ========================================================
-                 */
-    
-                // return this.loadFromIndexDb(paramSheet);
-                const dataDb =  await this.loadFromIndexDb(paramSheet);
-                    return dataDb.map(this.repo.responActionRead) as unknown as ApiResponse<any>;
-        }catch(er){
-            console.log(er)
-            throw new Error(er as string,{cause:er})
-        }
-        
+            
     }
 
     /**

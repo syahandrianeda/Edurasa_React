@@ -2,7 +2,7 @@ import {useMemo} from 'react';
 import ButtonCommitAwesome from "~/components/button-awesome/commit-button";
 import { useModal } from "~/components/modals/modal-provider";
 import type TagihanPenilaianClass from "~/domain/penilaian/infrastucture/tagihan-penilian-class";
-import PraSetingBakuDefault from '~/domain/penilaian/model/default-praseting-baku';
+import PraSetingBakuDefault from '~/domain/penilaian/infrastucture/default-praseting-baku';
 import { getSessionApp } from '~/infrastructures/session-storage/app-session';
 import type { UserPtk } from '~/types';
 

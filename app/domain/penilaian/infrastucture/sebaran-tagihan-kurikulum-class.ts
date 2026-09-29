@@ -1,5 +1,9 @@
 import type { TagihanHasDataResponse } from "../type/tagihan-assesmen-type";
-import type { KategoriTagihanType } from "./KategoriTagihanType";
+import type { KategoriTagihanType } from "../type/KategoriTagihanType";
+
+/**
+ * @info type ini memnginstansiasi properti kurikulum menjadi group dengan kategori assesmen rapor ('harian', 'midsemester', 'akhirsemester')
+ */
 export interface SebaranTagihanAssesmenKurikulumType{
     mapelName           : string, 
     mapelKode            : string,
@@ -41,6 +45,10 @@ interface dataInstrumen{
     skor                : number
 }
 
+/**
+ * @info
+ * Class ini digunakan untuk menginstasiasi suatu data berbentuk Grouping Kurikulum. Fokusnya pada seluruh data sheet [publikasi_paket]
+ */
 export default class SebaranTagihanKurikulumClass{
     private  dataSebaranTagihanAssesmenKurikulumType:SebaranTagihanAssesmenKurikulumType[]=[]
     constructor(private readonly data: TagihanHasDataResponse[]){ };

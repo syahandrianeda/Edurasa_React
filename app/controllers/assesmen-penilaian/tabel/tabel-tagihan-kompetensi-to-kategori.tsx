@@ -1,7 +1,7 @@
 import { TdEdura, ThEdura, TRowEdura } from "~/components/tabels/tabel-components";
 import TableWithScrolling from "~/components/tabels/table-with-scrolling";
 import type TagihanPenilaianClass from "~/domain/penilaian/infrastucture/tagihan-penilian-class";
-import type { SebaranTagihanAssesmenKurikulumType } from "~/domain/penilaian/type/sebaran-tagihan-kuriklum-type";
+import type { SebaranTagihanAssesmenKurikulumType } from "~/domain/penilaian/model/sebaran-tagihan-kuriklum-type";
 
 export default function TableTagihanKompetensi({data, showIdentitas=true}:{data?:SebaranTagihanAssesmenKurikulumType[], showIdentitas?:boolean}){
     // const data = instansiasi?.dataSebaranTagihanKurikulum;
@@ -49,7 +49,7 @@ export default function TableTagihanKompetensi({data, showIdentitas=true}:{data?
                                                 <TdEdura className="text-wrap" rowSpan={tp.slotTp}>{tp.tp_description}</TdEdura>
                                             )
                                         }
-                                        <TdEdura className="text-wrap">{atp.atp_description}</TdEdura>
+                                        <TdEdura className="text-wrap">[{atp.atp_id}] {atp.atp_description}</TdEdura>
                                         <TdEdura>
                                             {
                                                 atp.dataTagihan.find(s=>s.kategori === 'harian')?.dataInstrumen?.map((harian, iHarian)=>

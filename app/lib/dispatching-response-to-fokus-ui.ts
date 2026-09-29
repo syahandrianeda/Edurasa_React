@@ -8,7 +8,7 @@ import DtoSerahTerimaDokumen from "~/dtos/dto-serah-terima-dokumen";
 import DtoTransaksiSerahTerimaDokumen from "~/dtos/dto-transaksi-serah-terima";
 
 
-export default async function DispatchingResponseToFokusUi(){
+export default function DispatchingResponseToFokusUi(){
     // if(detailResponse?.namaTab === namaTab('serah_terima_dokumen')){
             
     //         store.dispatch(setSerahTerimaDokumen(data as unknown as SerahTerimaDokumenSheetType[]))

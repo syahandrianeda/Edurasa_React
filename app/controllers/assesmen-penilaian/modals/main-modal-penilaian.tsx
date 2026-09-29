@@ -18,6 +18,8 @@ import PembahasanPenskoranServer from "~/controllers/koleksi-paket-soal/modal/pe
 import PreviewSebaranServer from "./preview-sebaran-server";
 import HapusPubilikasiInstrumenSoal from "./hapus-publikasi-instrumen";
 import PreviewSebaranPaketNonSoal from "./preview-sebaran-non-paket-soal";
+import AllInfoResponTagihan from "./all-info-respon-tagiihan";
+import PraKoreksiSoal from "./pra-koreksi-soal";
 
 export default function MainModalPenilaian(){
     const {state, actions} = useModal()
@@ -108,7 +110,10 @@ function SwitchContentFormBankSoal ({state}:{state:ModalState}){
             return <ModalAsyncPublikasiPaketSoal state={state as unknown as ModalState<TagihanHasDataResponse>}><KisiKisiSoalServer version="v1"/></ModalAsyncPublikasiPaketSoal>
          case 'PREVIEW SEBARAN KOMPETENSI SERVER':
             return <ModalAsyncPublikasiPaketSoal state={state as unknown as ModalState<TagihanHasDataResponse>}><PreviewSebaranServer/></ModalAsyncPublikasiPaketSoal>
-                                     
+        case "INFO RESPON TAGIHAN":
+            return <MainModalForm data={state.payload}><AllInfoResponTagihan/></MainModalForm>
+        case 'KOREKSI SOAL':
+            return <MainModalForm data={state.payload}><PraKoreksiSoal/></MainModalForm>
         default:
             return <div className="w-full min-h-32 flex justify-center items-center lowercase first-letter:uppercase gap-2"><strong>{state.type}</strong>  <span>on Proses Development</span></div>
     }

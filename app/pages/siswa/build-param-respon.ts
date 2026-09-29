@@ -1,5 +1,5 @@
 import type { AtpHasManySoalType } from "~/domain/bank-soal/relational-soal/type";
-import type { KategoriTagihanType } from "~/domain/penilaian/infrastucture/KategoriTagihanType";
+import type { KategoriTagihanType } from "~/domain/penilaian/type/KategoriTagihanType";
 import type { TagihanHasDataResponse } from "~/domain/penilaian/type/tagihan-assesmen-type";
 import type { NilaiSiswaAppType, RisponsePenilaianSiswa } from "~/types/penilaian/nilai-siswa-app-type";
 import type { NilaiSiswaSheetType } from "~/types/penilaian/nilai-siswa-sheet-type";

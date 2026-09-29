@@ -1,5 +1,5 @@
 import type { JenisTagihanPenilaiantype } from "~/domain/asesmen-penilaian/jenis-tagihan-type"
-import type { KategoriTagihanType } from "~/domain/penilaian/infrastucture/KategoriTagihanType"
+import type { KategoriTagihanType } from "~/domain/penilaian/type/KategoriTagihanType"
 
 export interface NilaiSiswaSheetType{
     idbaris: number,	

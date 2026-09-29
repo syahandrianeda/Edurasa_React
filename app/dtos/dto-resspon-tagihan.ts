@@ -1,15 +1,26 @@
-import type { KategoriTagihanType } from "~/domain/penilaian/infrastucture/KategoriTagihanType";
+import type { KategoriTagihanType } from "~/domain/penilaian/type/KategoriTagihanType";
 import type { DataSkorMapel, KeyScore, NilaiSiswaAppType, RisponsePenilaianSiswa, SkorKdResponSiswaType } from "~/types/penilaian/nilai-siswa-app-type";
 import type { NilaiSiswaSheetType } from "~/types/penilaian/nilai-siswa-sheet-type";
 import { resolveDate } from "./_resolver";
 import { ListBentukSoal } from "~/domain/bank-soal/list-bentuk-soal";
 
 export default class DtoResponTagihanSiswa{
+    static needValidasi(bentukSoal: string[], respon: string): boolean {
+        if(bentukSoal.every(s=>s === 'pg')){
+            return false
+        }else{
+            return respon === 'siswa'
+
+        }
+
+        
+    }
     static fromSheetToApp(data:NilaiSiswaSheetType):NilaiSiswaAppType{
-        console.log(data.skor_kd)
+        
         const respon = DtoResponTagihanSiswa.creatResponAppFromSheet(data);
         const skor_kd = DtoResponTagihanSiswa.createSkorKd(data.skor_kd);
-        const needValidate = respon.some(m=>m.bentuk_soal !== 'pg') && data.sumber_respon === 'siswa'
+        const bentukSoalArray = respon.map(m=>m.bentuk_soal);
+        const needValidate = DtoResponTagihanSiswa.needValidasi(bentukSoalArray, data.sumber_respon) ;//data.sumber_respon === 'siswa'? respon.every(m=>m.bentuk_soal==='pg'):true
         return {
             idbaris         : Number(data.idbaris),//number,	
             siswa_id        : Number(data.siswa_id),//number,
@@ -27,7 +38,7 @@ export default class DtoResponTagihanSiswa{
     }
     private static createSkorKd(data:string):SkorKdResponSiswaType[]{
         const result = DtoResponTagihanSiswa.parsedJson(data);
-        console.log({result});
+        
         if (!result || typeof result !== "object" || Array.isArray(result)) return [];
         const skor:SkorKdResponSiswaType[]=[]
         const mapelMap = new Map<string, DataSkorMapel[]>();
@@ -53,7 +64,7 @@ export default class DtoResponTagihanSiswa{
         // return result;
     }
     private static parsedJson(value:string):unknown{
-        console.log(value);
+        
         if (!value?.trim()) {
             return
             // throw new Error(

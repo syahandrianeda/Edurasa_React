@@ -55,7 +55,7 @@ export default function  CaraPenskoran({KisiKisiInstance, modeCountSebaran=false
                                                         <TdEdura rowSpan={tp.countRowTp} className="text-wrap">{tp.tp_description}</TdEdura>
                                                     )
                                                 }    
-                                                <TdEdura className="text-wrap">{atp.atp_description}</TdEdura>
+                                                <TdEdura className="text-wrap">[{atp.atp_id}] {atp.atp_description}</TdEdura>
                                                
                                                 {
                                                     mapel.koleksiBentukSoal.map((bentukSoal, iBentukSoal)=>{

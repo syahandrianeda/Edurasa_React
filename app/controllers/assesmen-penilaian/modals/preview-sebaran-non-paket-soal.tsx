@@ -9,7 +9,7 @@ import type DataKisiKisi from "~/domain/paket-soal/infrastructure/data-kisi-kisi
 import SebaranTagihanKurikulumClass from "~/domain/penilaian/infrastucture/sebaran-tagihan-kurikulum-class";
 import type { TagihanHasDataResponse } from "~/domain/penilaian/type/tagihan-assesmen-type";
 import { useExportTarget } from "~/layouts/exports/export-target-provider";
-import TableTagihanKompetensi from "../tabel/tabel-tagihan-kompetensi";
+import TableTagihanKompetensi from "../tabel/tabel-tagihan-kompetensi-to-kategori";
 
 export default function PreviewSebaranPaketNonSoal(){
     const {currentData} = useFormEdura<TagihanHasDataResponse>();

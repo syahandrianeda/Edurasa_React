@@ -29,7 +29,7 @@ export default function AppMenuSiswaPage() {
         <>
             <div className="flex flex-col items-center dark:text-black backdrop-blur-lg shadow-lg inset-14 ring-0 border-0 outline-0 py-4 justify-center my-0 md:my-2 mx-auto md:h-[calc(100vh-5rem)] rounded-4xl overflow-y-scroll scrol-h-custom">
                <div className="border-2 rounded-2xl bg-white  w-11/12 mx-auto p-2 mb-4 overflow-y-auto scrol-h-custom">
-                    <h3 className='text-xl text-center'>Selamat Datang {user?.name} (Kelas {user.rombel})</h3>
+                    <h3 className='text-xl text-center'>Selamat Datang {user?.name} (Kelas {user?.rombel})</h3>
                     {
                         (user && instancPaketSoal) && <RingkasanInfoSiswa 
                                                             instancPaketSoal={instancPaketSoal} 

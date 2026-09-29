@@ -6,7 +6,10 @@ import type { AtpAsOrm } from "~/types/kurikulum/prota-orm";
 import type { NilaiSiswaAppType } from "~/types/penilaian/nilai-siswa-app-type";
 import type { SiswaType } from "~/types/siswa";
 
-
+/** 
+ * @info type ini sebenarnya salinan/tiruan dari PublikasiPaketAppType
+ * Digunakan untuk kerpeluan prosessing dan kalkulasi terhadap data/tipe data lain
+ */
 export interface TagihanAsessmenType{
     // property ini turunan dari PublikasiPaketAppType:
     idbaris             : number,

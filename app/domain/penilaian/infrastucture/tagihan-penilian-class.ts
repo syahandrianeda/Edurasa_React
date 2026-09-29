@@ -14,7 +14,11 @@ import SebaranTagihanKurikulumClass, { type SebaranTagihanAssesmenKurikulumType 
 import type { PraSettingBaku } from "~/types/bank-soal/entities/PraSettingBaku";
 import type { NilaiSiswaAppType } from "~/types/penilaian/nilai-siswa-app-type";
 
-
+/** 
+ * @info Instansiasi pembuatan data KBM di fitur Guru _
+ * TagihanPenilaianClass adalah class untuk menginstasiasi data pada sheet [bank_soal] dan tab [publikasi_paket];
+ * Ini digunakan untuk mendata 
+ */
 export default class TagihanPenilaianClass extends DtoPaketSoalSheetClass{
     private tagihanHasResponse:TagihanHasDataResponse[]=[];
     private sebaranTagihanKurikulum: SebaranTagihanAssesmenKurikulumType[]=[];
@@ -78,7 +82,7 @@ export default class TagihanPenilaianClass extends DtoPaketSoalSheetClass{
             const peserta               = detail_target.flatMap(item=>item.data_siswa);//this.siswaInCurrentDate(m.end_time).map(siswa=>siswa.data).filter(s=> s.nama_rombel === this.rombel);
             const count_instrumen       = m.setting_tagihan?.count_bentuk_soal?.map(cbt=>cbt.count) ?? []
             const total_instrumen       = count_instrumen.length > 0 ? count_instrumen?.reduce((a, b)=>a+Number(b)):0;
-            const data_respons        =  this.responTagihan.filter(s=>s.publikasi_id === m.idbaris )
+            const data_respons        =  this.responTagihan.filter(s=>s.publikasi_id === m.idbaris );//.slice(count_instrumen.length)
             
             return {
                 ...m,

@@ -1,6 +1,6 @@
 import type { controlDropdownKelas } from "~/components/dropdowns/rombel-dropdown";
 import type { Route } from "./+types/kompetensi-tagihan-penilaian-route";
-import TableTagihanKompetensi from "~/controllers/assesmen-penilaian/tabel/tabel-tagihan-kompetensi";
+import TableTagihanKompetensi from "~/controllers/assesmen-penilaian/tabel/tabel-tagihan-kompetensi-to-kategori";
 import { useAppSelector } from "~/context-reduct/hook";
 import { InstanceDataTagihanPenilaianSector } from "~/context-reduct/selectores/daftar-tagihan-penilaian-selector";
 import { defineCreateItemSoalNeeded } from "~/domain/enloaded/intial-enloaded/by-route-page/banksoal/create-item-soal-needed";

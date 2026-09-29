@@ -79,6 +79,7 @@ export default function EditPublikasiPaketSoal(){
             setDataKelas([value]);
         };
     const onChangeJenisTagihan = (v:string)=>{
+        console.log(v)
         setCurrentData(draft=>{
             draft.jenis_tagihan = v
         })
@@ -113,27 +114,27 @@ export default function EditPublikasiPaketSoal(){
     ])
     
     const onSubmit = useCallback(()=>{
+        console.log(currentData.jenis_tagihan) 
         const dto = DtoPublikasiPaketStatic.fromAppValidationToSheet(currentData)
-        
-        toast.promise(
-            post.update(dto),
-            {
-                loading:'sedang mengupdate',
-                success: (respon)=>{
+        // toast.promise(
+        //     post.update(dto),
+        //     {
+        //         loading:'sedang mengupdate',
+        //         success: (respon)=>{
                     
-                    const {success, data, detailResponse} = respon;
-                    if(detailResponse){
-                        DispatchingResponseToStore(success, data as PublikasiPaketSheetType[], detailResponse)
-                    }
-                    modalAction.close();
-                    return 'berhasil'
-                },
-                error: (err)=>{
-                    console.log(err);
-                    return 'Gagal'
-                }
-            }
-        )
+        //             const {success, data, detailResponse} = respon;
+        //             if(detailResponse){
+        //                 DispatchingResponseToStore(success, data as PublikasiPaketSheetType[], detailResponse)
+        //             }
+        //             modalAction.close();
+        //             return 'berhasil'
+        //         },
+        //         error: (err)=>{
+        //             console.log(err);
+        //             return 'Gagal'
+        //         }
+        //     }
+        // )
     },[currentData])
     return (
         <fieldset disabled={state.isSubmitting}>

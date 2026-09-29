@@ -1,14 +1,7 @@
-import type { JsonAlatJawabTupple } from "~/types/bank-soal/bank-soal-type";
 import type { PaketSoalDesign } from "../result/paket-soal";
 import type { KisiKisiMapelType } from "../entities/kisi-kisi-nested-map-type";
 import type { DisplayFormatItemSoal } from "../result/display-format-item-soal";
 import type { SebaranPropertyKurikulumNoSoalPaket } from "../entities/sebaran-property-no-soal-paket";
-import type { IdentitasKontenPaket } from "../entities/identitas-paket";
-import type { DataSoalDesign } from "../result/session-soal";
-import type { PraSettingPaket } from "../entities/pra-setting-paket";
-import type { DataSoalDesignBaku } from "~/types/bank-soal/entities/DataSoalDesignBaku";
-import type { countBentukSoalPaketBaku } from "~/types/bank-soal/entities/countBentukSoalPaketBaku";
-import type { KoleksiMapelPaketSoal } from "../entities/koleksi-mapel-paket-soal";
 import PaketSoalDesignClass from "./paket-soal-design-class";
 
 
