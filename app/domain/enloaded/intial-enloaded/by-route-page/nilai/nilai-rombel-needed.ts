@@ -1,3 +1,4 @@
+import type { KategoriTagihanType } from "~/domain/penilaian/type/KategoriTagihanType";
 import { getNumberFromString } from "~/lib/get-number";
 import { namaTab } from "~/lib/nama-tab-environment";
 
@@ -13,4 +14,13 @@ export const defineNilaiSheetTabName = (rombel?:string, tabName?:string)=>{
 
 export const defineNilaiTabTagihanRespon = (rombel:string)=>{
     return defineNilaiSheetTabName(rombel, 'respon_tagihan');
+}
+
+export const defineNilaiPerKategori=(rombel:string, kategori:KategoriTagihanType)=>{
+     const jenjang = getNumberFromString(rombel);
+    const sheet = 'nilai_'+jenjang;
+    // const tabText = tabName+'_'+ jenjang;
+    const tabText = kategori;
+    const tab = namaTab(tabText)
+    return  {sheet, tab}
 }

@@ -17,15 +17,19 @@ export default function AllInfoResponTagihan(){
     const rombel = getSessionRombel();
     const dataRespon = useMemo(()=>{
         if(!currentData || !rombel) return [];
-        const instansiasi = new ResponAllSiswaInPublikasiPaket(currentData, rombel).build();
-        return instansiasi.dataResponCurrentRombel;
-    },[rombel, currentData])
+        // const instansiasi = new ResponAllSiswaInPublikasiPaket(currentData, rombel).build();
+        // return instansiasi.dataResponCurrentRombel;
+        return currentData.data_respons.filter(s=>s.rombel === rombel);
+    },[rombel, currentData]);
+    // console.log({dataRespon, dataResponse2:currentData.data_respons}, JSON.stringify(dataRespon)===JSON.stringify(currentData.data_respons))
+    
     const dataKurikulum = useMemo(()=>{
         if(!currentData) return ;
         
-        return GroupingSebaranKurikulum.buildGroupBentukSoalBasedOnKoleksiIdSoal(currentData.kurikulum_tagihan,currentData.id_bank_soal)
+        // return GroupingSebaranKurikulum.buildGroupBentukSoalBasedOnKoleksiIdSoal(currentData.kurikulum_tagihan,currentData.id_bank_soal)
+        return currentData.sebaran_kurikulum_by_bentuk_soal
     },[currentData])
-    console.log({currentData, dataRespon, dataKurikulum});
+    
     return (
         <div className="p-1">
             <h3 className='text-xl font-bold text-center'>Daftar Peserta Yang Merespon Tagihan Assesmen</h3>

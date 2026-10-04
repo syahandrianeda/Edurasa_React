@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useMemo, useState, type ChangeEvent} from 'react';
+import {useCallback, useEffect, useMemo, useState, type ChangeEvent, type MouseEvent} from 'react';
 import {  useFormEdura } from "~/components/form-custom/form-edura";
 import WrapperContent from "~/controllers/publikasi-paket-soal/modal/wrapper-content";
 import { InputText } from '~/components/fields/fields';
@@ -99,8 +99,9 @@ export default function EditPublikasiInstrumenTagihan(){
         const koleksi = checked 
                         ? [...koleksiIdSiswa, Number(value)]
                         : koleksiIdSiswa.filter(s=> s!==Number(value))
+                        
         setKoleksiIdSiswa(koleksi)
-    },[setKoleksiIdSiswa]);
+    },[setKoleksiIdSiswa, koleksiIdSiswa]);
 
     useEffect(()=>{
         setCurrentData(draft=>{
@@ -123,7 +124,8 @@ export default function EditPublikasiInstrumenTagihan(){
         jenisTagihan
     ])
 
-    const onSubmit = ()=>{
+    const onSubmit = (e: MouseEvent<HTMLButtonElement>)=>{
+        e.preventDefault();
             const dto = DtoTagihanHasDataResponse.fromTagihanHasDataResponseToPublikasiSheetType(currentData)
             const isValid = validationTagihanHasDataResponse(currentData);
             if(!isValid.isValid){
@@ -131,7 +133,7 @@ export default function EditPublikasiInstrumenTagihan(){
                 return;
             }
             
-            console.log(currentData.jenis_tagihan)
+            
     
             toast.promise(
                 post.update(dto),
@@ -277,13 +279,19 @@ export default function EditPublikasiInstrumenTagihan(){
                                                 <Label htmlFor={"id_siswa_"+siswa.id} className="text-[10px] w-full border-b-[0.5px] border-slate-300 checked:border-slate-600">
                                                     ({siswa.nama_rombel}) {siswa.pd_nama}
                                                 </Label>
-                                                <Input 
+                                                {/* <Input 
                                                     id={"id_siswa_"+siswa.id}  
                                                     type="checkbox" 
                                                     value={siswa.id} 
                                                     checked={koleksiIdSiswa.includes(siswa.id)} 
                                                     onChange={handleCheckeTargetPerson} 
-                                                    className="h-3 w-3"/>
+                                                    className="h-3 w-3"/> */}
+                                                    <Input 
+                                                        id={"id_siswa_"+siswa.id}  
+                                                        type="checkbox" value={siswa.id} 
+                                                        checked={koleksiIdSiswa.includes(siswa.id)} 
+                                                        onChange={handleCheckeTargetPerson} 
+                                                        className="h-3 w-3"/>
                                             </Field>
                                         )
                                     }

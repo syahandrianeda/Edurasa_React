@@ -1,28 +1,18 @@
 
 import { store } from "~/context-reduct/redux-provider";
 import { setFokusSerahTerimaDokumen } from "~/context-reduct/global-state/ui-fokus/ui-fokus-slice";
-import { getSessionApp } from "~/infrastructures/session-storage/app-session";
-import type{ UserPtk } from "~/types";
 import OrmSerahTerimaTransaksi from "~/domain/serah-terima/service/orm-serah-terima-transaksi";
 import DtoSerahTerimaDokumen from "~/dtos/dto-serah-terima-dokumen";
 import DtoTransaksiSerahTerimaDokumen from "~/dtos/dto-transaksi-serah-terima";
+import type { TransaksiSerahTerimaDokumenSliceType } from "~/context-reduct/global-state/galleries/transaksi-serah-terima-dokumen-slice";
+import type { SerahTerimaDokumenSliceType } from "~/context-reduct/global-state/galleries/serah-terima-dokumen-slice";
 
 
-export default function DispatchingResponseToFokusUi(){
-    // if(detailResponse?.namaTab === namaTab('serah_terima_dokumen')){
-            
-    //         store.dispatch(setSerahTerimaDokumen(data as unknown as SerahTerimaDokumenSheetType[]))
-    //     }
-    //     if(detailResponse?.namaTab === namaTab('transaksi_serah_terima')){
-            
-    //         store.dispatch(setTransaksiSerahTerimaDokumen(data as unknown as TransaksiSerahTerimaDokumenSheetType[]))
-    //     }
-
-    const exist = store.getState();
-    const user_id = getSessionApp<UserPtk>()?.id;
-    if(exist.serahTerimaDokumen.loaded && exist.transaksiSerahterimaDokumen.loaded){
-        const serahTerima = DtoSerahTerimaDokumen.arrayFromSheetToApp(exist.serahTerimaDokumen.data);
-        const transaksi = DtoTransaksiSerahTerimaDokumen.arrayFromSheetToApp(exist.transaksiSerahterimaDokumen.data);
+export default function DispatchingResponseToFokusUi(serahTerimaDokumen:SerahTerimaDokumenSliceType,transaksiSerahterimaDokumen:TransaksiSerahTerimaDokumenSliceType, user_id:number|null){
+    
+    if(serahTerimaDokumen.loaded && transaksiSerahterimaDokumen.loaded && user_id){
+        const serahTerima = DtoSerahTerimaDokumen.arrayFromSheetToApp(serahTerimaDokumen.data);
+        const transaksi = DtoTransaksiSerahTerimaDokumen.arrayFromSheetToApp(transaksiSerahterimaDokumen.data);
         const orm = new OrmSerahTerimaTransaksi(serahTerima, transaksi).build().data
         const own_orm = orm.filter(s=>s.akses_user.includes(user_id??0));//[orm.length - 1]
         const firstOrm = own_orm[own_orm.length-1];

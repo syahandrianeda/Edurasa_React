@@ -16,6 +16,18 @@ export default class EnsureLoadedApiRepository extends AppScriptSheet implements
         try{
             const respon = await this.postBody(param);
             console.log('repository sukses',{respon}, respon);
+
+            /**
+             * Google kadang membalas dengan halaman HTML error
+             * ("Sorry, unable to open the file at this time") alih-alih JSON,
+             * lewat HTTP 200. Kegagalan ini terjadi di infrastruktur Google
+             * (redirect exec -> echo) dan sifatnya SEMENTARA.
+             * Dilempar sebagai error supaya service melakukan retry.
+             */
+            if (typeof respon === 'string') {
+                throw new Error('GOOGLE_ERROR_PAGE: Google membalas dengan halaman HTML error, bukan JSON (sifatnya sementara)', {cause: respon})
+            }
+
             if(respon.collections){
                 return respon.collections.map(this.responActionRead);
             }else{

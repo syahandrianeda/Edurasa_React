@@ -5,7 +5,9 @@ import type { SiswaType } from "~/types/siswa";
 import { durasiMenit, filterByRentangUmurTahunSiswa } from "~/lib/date-helper";
 import type { BankSoalAppType } from "~/types/bank-soal/bank-soal-type";
 
-
+/**
+ * @deprecated
+ */
 export default class ResponAllSiswaInPublikasiPaket{
     private currentRespon:detailNilaiSiswaAppType[]=[];
     private daftarNilaiKolektifResponSiswa:SiswaWithNilaiSiswaAppType[]=[]
@@ -37,16 +39,36 @@ export default class ResponAllSiswaInPublikasiPaket{
         return this.allNilaiSiswaAppType.find(s=>s.siswa_id === token)
     }
     totalValidRespon(respon:RisponsePenilaianSiswa[]):number{
-        return respon.filter(s=>s.respon !=='' || s.respon !== null).length
+        return respon.filter(s=>s.respon !=='' && s.respon !== null).length
+        // return respon.filter(s=>s.respon !=='').length
     }
     build():this{
-        this.currentRespon = this.currentPublikasi.data_respons.map(m=>({...m, siswa:this.pesertaInPublikasi.find(s=>s.id === m.siswa_id), totalResponValid:this.totalValidRespon(m.respon), durasiPengerjaan:durasiMenit(m.start_time ?? '', m.end_time ?? '') })).sort((a,b)=>(a.siswa?.pd_nama??'').toString().localeCompare(b.siswa?.pd_nama??'','id-ID',{sensitivity:'base'}));
+        this.currentRespon = this.currentPublikasi.data_respons.map(m=>(
+            {
+                ...m, 
+                siswa:this.pesertaInPublikasi.find(s=>s.id === m.siswa_id), 
+                totalResponValid:this.totalValidRespon(m.respon), 
+                durasiPengerjaan:durasiMenit(m.start_time ?? '', m.end_time ?? '') 
+            })
+        )
+        .sort((a,b)=>(a.siswa?.pd_nama??'').toString().localeCompare(b.siswa?.pd_nama??'','id-ID',{sensitivity:'base'}));
+        
+        
         this.daftarNilaiKolektifResponSiswa = this.pesertaInPublikasi.map(m=>{
-            const dataResponsCurrentPublikasi = this.currentPublikasi.data_respons.filter(respon=>respon.siswa_id === m.id).map(nilaiRespon=>({...nilaiRespon, totalResponValid:this.totalValidRespon(nilaiRespon.respon), durasiPengerjaan:durasiMenit(nilaiRespon.start_time ?? '', nilaiRespon.end_time ?? '') }))
+            const dataResponsCurrentPublikasi = this.currentPublikasi.data_respons
+                                    .filter(respon=>respon.siswa_id === m.id)
+                                    .map(nilaiRespon=>(
+                                        {
+                                            siswa:m,    
+                                            ...nilaiRespon, 
+                                            totalResponValid:this.totalValidRespon(nilaiRespon.respon), 
+                                            durasiPengerjaan:durasiMenit(nilaiRespon.start_time ?? '', nilaiRespon.end_time ?? '') 
+                                        })
+                                    )
             return {
                 siswa:m,
-                publikasi_id: this.currentPublikasi.idbaris,
-                // currentPublikasi:this.currentPublikasi,
+                // publikasi_id: this.currentPublikasi,//.idbaris,
+                currentPublikasi:this.currentPublikasi,
                 data: dataResponsCurrentPublikasi
             }
         })

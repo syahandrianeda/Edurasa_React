@@ -5,16 +5,23 @@ import { sheetBankSoal_bankSoal, sheetBankSoal_paketSoal, sheetBankSoal_publikas
 import { defineDataSheetNeedFase } from "../kurikulum/fase-needed";
 import { CpNeeded } from "../kurikulum/cp-needed";
 import { getSessionRombel } from "~/infrastructures/session-storage/rombel-session";
-import { defineNilaiTabTagihanRespon } from "../nilai/nilai-rombel-needed";
+import { defineNilaiPerKategori, defineNilaiTabTagihanRespon } from "../nilai/nilai-rombel-needed";
 
 export function defineCreateItemSoalNeeded(rombel:string):DataSheetNeeeded[]{
     const siswaRombel = getSessionRombel();
     const fase = defineDataSheetNeedFase(rombel);
     const tabNilai = defineNilaiTabTagihanRespon(rombel ?? siswaRombel);
+    const tabNilaiHarian = defineNilaiPerKategori(rombel, 'harian');
+    const tabMidSemester = defineNilaiPerKategori(rombel, 'mid_semester');
+    const tabAkhirSemester = defineNilaiPerKategori(rombel, 'akhir_semester');
+    
     return [
         ...CpNeeded, 
         fase,
         tabNilai,
+        tabNilaiHarian,
+        // tabMidSemester,
+        // tabAkhirSemester,
         sheetKurikulum_prota,
         sheetKurikulum_jadwalMapel, 
         sheetKaldik_kalender,

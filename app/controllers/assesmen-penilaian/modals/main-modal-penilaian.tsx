@@ -39,7 +39,7 @@ export default function MainModalPenilaian(){
             'PREVIEW SEBARAN KOMPETENSI SERVER',
             'PREVIEW SEBARAN KOMPETENSI NON PAKET SOAL',
             'INFO RESPON TAGIHAN',
-            'KOREKSI SOAL',
+            'PRA KOREKSI SOAL',
             'IMPORT NILAI',
             'ANALLISIS SOAL',
             
@@ -112,7 +112,7 @@ function SwitchContentFormBankSoal ({state}:{state:ModalState}){
             return <ModalAsyncPublikasiPaketSoal state={state as unknown as ModalState<TagihanHasDataResponse>}><PreviewSebaranServer/></ModalAsyncPublikasiPaketSoal>
         case "INFO RESPON TAGIHAN":
             return <MainModalForm data={state.payload}><AllInfoResponTagihan/></MainModalForm>
-        case 'KOREKSI SOAL':
+        case 'PRA KOREKSI SOAL':
             return <MainModalForm data={state.payload}><PraKoreksiSoal/></MainModalForm>
         default:
             return <div className="w-full min-h-32 flex justify-center items-center lowercase first-letter:uppercase gap-2"><strong>{state.type}</strong>  <span>on Proses Development</span></div>

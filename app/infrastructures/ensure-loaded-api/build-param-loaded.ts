@@ -100,10 +100,57 @@ export default class BuildParamLoaded{
                     const jenjang = sheetRequest.replace('nilai_',"");
                     const jenjangNumber = Number(jenjang);
                     const foundData = this.state.responTagihan.data.find(s=>s.jenjang === jenjangNumber);
+                    const foundRekapHarian = this.state.harian.data.find(s=>s.jenjang === jenjangNumber)
+                    const foundRekapMidSemester = this.state.midSemester.data.find(s=>s.jenjang === jenjangNumber)
+                    const foundRekapAkhirSemester = this.state.akhirSemester.data.find(s=>s.jenjang === jenjangNumber)
+                    const foundRekapUs = this.state.us.data.find(s=>s.jenjang === jenjangNumber)
+                    const foundRekapRemedialPengayaan = this.state.remdialPengayaan.data.find(s=>s.jenjang === jenjangNumber)
                     
                     if(!foundData){
-                        this.sheetToBeParam.push(sheet);
+                        if(tab.includes('respon_tagihan_')){
+                            this.sheetToBeParam.push(sheet);
+                            continue;
+                        }
                     }
+
+                    if(!foundRekapHarian){
+                        if(tab === 'harian'){
+                        }
+                        this.sheetToBeParam.push(sheet);
+                        continue;
+                    } 
+                    
+                    if(!foundRekapMidSemester){
+                        if(tab === 'mid_semester'){
+                        }
+                        this.sheetToBeParam.push(sheet);
+                        continue;
+                    }
+                    if(!foundRekapAkhirSemester){
+                        if(tab === 'akhir_semester'){
+                        }
+                        this.sheetToBeParam.push(sheet);
+                        continue;
+                    }
+                    if(!foundRekapUs){
+                        if(tab === 'us'){
+                        }
+                        this.sheetToBeParam.push(sheet);
+                        continue;
+                    }
+                    if(!foundRekapUs){
+                        if(tab === 'us'){
+                        }
+                        this.sheetToBeParam.push(sheet);
+                        continue;
+                    }
+                    if(!foundRekapRemedialPengayaan){
+                        if(tab === 'remedial_pengayaan'){
+                        }
+                        this.sheetToBeParam.push(sheet);
+                        continue;
+                    }
+
                 }
 
             }else{

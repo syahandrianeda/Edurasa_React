@@ -49,6 +49,11 @@ import paketSoalReducer from './global-state/bank-soal/paket-soal-slice';
 import publikasiPaketReducer from './global-state/bank-soal/publikasi-paket-slice'
 
 import responTagihanReducer from "./global-state/respon-siswa/response-tagihan-slice"
+import harianReducers from "./global-state/respon-siswa/calculate-harian-slice";
+import midSemseterReducers from './global-state/respon-siswa/calculate-midSemester-slice';
+import akhirSemesterReducer from "./global-state/respon-siswa/calculate-akhirSemester-slice";
+import usReducer from "./global-state/respon-siswa/calculate-Us-slice";
+import remedialPengayaanReducer from "./global-state/respon-siswa/calculate-remedial-pengayaan-slice";
 
 const rootReducer = combineReducers({
     auth: authReducer,
@@ -91,7 +96,12 @@ const rootReducer = combineReducers({
     uiFokusToolbar: uiFokusReducer,
     paketSoal: paketSoalReducer,
     publikasiPaket: publikasiPaketReducer,
-    responTagihan: responTagihanReducer
+    responTagihan: responTagihanReducer,
+    harian: harianReducers,
+    midSemester: midSemseterReducers,
+    akhirSemester: akhirSemesterReducer, 
+    us: usReducer, 
+    remdialPengayaan: remedialPengayaanReducer,
 })
 
 export default rootReducer

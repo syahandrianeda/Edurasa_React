@@ -10,14 +10,14 @@ export default function ItemSoalPreview({data}:{data:DisplayFormatItemSoal}){
                 data.data_soal ? (
                         <>{
                             (data.showStimulus && data.data_soal?.stimulus && data.data_soal?.stimulus !=="") && (
-                                <div className="editor-document [&>p]:m-0 [&>img]:m-0"
+                                <div className="editor-document [&>p]:m-0 [&>img]:m-0 text-wrap"
                                     dangerouslySetInnerHTML={{__html:data.data_soal?.stimulus}}/>
                             )
 
                         }
             
                         {
-                            data.data_soal?.pertanyaan && <div className="editor-document [&>p]:m-0 [&>img]:m-0"
+                            data.data_soal?.pertanyaan && <div className="editor-document [&>p]:m-0 [&>img]:m-0 text-wrap"
                             dangerouslySetInnerHTML={{__html: data.data_soal?.pertanyaan}}/>
                         }
                         

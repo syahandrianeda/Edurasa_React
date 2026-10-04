@@ -1,6 +1,7 @@
 import type { SnapshotTabungan, TabunganAppType } from "~/types/tabungan/tabungan-app-type";
 import { resolveDate, resolveNumber, resolveString } from "./_resolver";
 import type { TabunganSheetType } from "~/types/tabungan/tabungan-sheet-type";
+import { formatDateTimeSheet } from "~/lib/date-helper";
 
 export default class DtoTabungan{
     static fromSheet(data:TabunganSheetType):TabunganAppType{
@@ -24,7 +25,7 @@ export default class DtoTabungan{
     static toSheet(data:TabunganAppType):TabunganSheetType{
         return {
             idbaris         : resolveNumber(data.idbaris),
-            time_stamp      : new Date(data.time_stamp).toString(),//.toLocaleDateString(),
+            time_stamp      : formatDateTimeSheet(data.time_stamp),//new Date(data.time_stamp).toString(),//.toLocaleDateString(),
             penginput       : resolveString(data.penginput),
             siswa_id        : resolveNumber(data.siswa_id),
             nama_siswa      : resolveString(data.nama_siswa),//string,

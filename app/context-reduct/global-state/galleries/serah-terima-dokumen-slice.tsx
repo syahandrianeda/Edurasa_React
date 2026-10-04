@@ -1,7 +1,7 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { SerahTerimaDokumenSheetType } from "~/types/galleries/serah-terima-dokumen-sheet-type";
 
-type SerahTerimaDokumenSliceType={
+export type SerahTerimaDokumenSliceType={
     data:SerahTerimaDokumenSheetType[],
     name:'serah_terima_dokumen',
     loaded:boolean

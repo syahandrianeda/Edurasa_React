@@ -251,20 +251,7 @@ export default function AppProviderLayoutService({
     const loadingRef = useRef(false);
     const loadedRef = useRef<Set<string>>(new Set());
 
-    /**
-     * ============================================================
-     * LOAD KEY
-     *
-     * Setiap kombinasi kebutuhan data mempunyai key sendiri.
-     *
-     * Contoh:
-     *
-     * 1A + sheet A,B  -> key A
-     * 1B + sheet A,B  -> key B
-     *
-     * Jadi ketika rombel berubah, request baru tetap bisa dilakukan.
-     * ============================================================
-     */
+  
 
     const loadKey = useMemo(() => {
 
@@ -413,58 +400,8 @@ export default function AppProviderLayoutService({
 
                 return;
             }
-            // console.log(param)
 
-            /**
-             * ====================================================
-             * API REQUEST
-             *
-             * Penting:
-             *
-             * await digunakan supaya kita benar-benar tahu
-             * kapan request selesai.
-             * ====================================================
-             */
-
-            // toast.promise(
-            //     api.callNeeded(param),
-            //     {
-            //         loading: textLoading +
-            //             textRombelFase,
-
-            //         success: data => {
-            //             // console.log('data respon', { data });
-            //             if (data && Array.isArray(data)) {
-
-            //                 const decidedRombel = loaderDataKiriman?.sourceKelas ? rombelKeuangan?.rombel : rombel;
-
-
-            //                 data.forEach(({ success, data, detailResponse, }) => {
-
-            //                     if (detailResponse) {
-            //                         DispatchingResponseToStore(
-            //                             success,
-            //                             data,
-            //                             detailResponse,
-            //                             decidedRombel
-            //                         );
-
-            //                         DispatchingResponseToFokusUi();
-            //                     }
-            //                 }
-            //                 );
-            //             }
-
-            //             return ("Pemanggilan data telah selesai");
-            //         },
-
-            //         error:  data=>`Gagal memuat data ${loaderDataKiriman.titleTambahan} \r`+ data,
-
-            //         closeButton: true,
-            //     }
-            // );
-            console.log({param})
-            toast.promise(
+            const reqPromise = toast.promise(
                 api.callNeeded(param),
                 {
                     loading: textLoading +
@@ -472,26 +409,6 @@ export default function AppProviderLayoutService({
 
                     success: data => {
                         console.log('data respon', data, {param});
-                         if (data && Array.isArray(data)) {
-
-                            const decidedRombel = loaderDataKiriman?.sourceKelas ? rombelKeuangan?.rombel : rombel;
-
-
-                            data.forEach(({ success, data, detailResponse, }) => {
-
-                                if (detailResponse) {
-                                    DispatchingResponseToStore(
-                                        success,
-                                        data,
-                                        detailResponse,
-                                        decidedRombel
-                                    );
-
-                                    DispatchingResponseToFokusUi();
-                                }
-                            }
-                            );
-                        }
                         
                         return ("Pemanggilan data telah selesai");
                     },
@@ -501,39 +418,24 @@ export default function AppProviderLayoutService({
                     closeButton: true,
                 }
             );
-            // const data = await reqPromise.unwrap();
-            // if (data && Array.isArray(data)) {
+            const data = await reqPromise.unwrap();
+            if (data && Array.isArray(data)) {
+                const decidedRombel = loaderDataKiriman?.sourceKelas ? rombelKeuangan?.rombel : rombel;
+                data.forEach(({ success, data, detailResponse, }) => {
 
-            //                 const decidedRombel = loaderDataKiriman?.sourceKelas ? rombelKeuangan?.rombel : rombel;
+                    if (detailResponse) {
+                        DispatchingResponseToStore(
+                            success,
+                            data,
+                            detailResponse,
+                            decidedRombel
+                        );
 
-
-            //                 data.forEach(({ success, data, detailResponse, }) => {
-
-            //                     if (detailResponse) {
-            //                         DispatchingResponseToStore(
-            //                             success,
-            //                             data,
-            //                             detailResponse,
-            //                             decidedRombel
-            //                         );
-
-            //                         DispatchingResponseToFokusUi();
-            //                     }
-            //                 }
-            //                 );
-            //             }
-
-            /**
-             * ====================================================
-             * REQUEST BERHASIL
-             *
-             * Baru di sini loadKey disimpan.
-             *
-             * Kalau request gagal, bagian ini tidak akan tercapai.
-             * Artinya request berikutnya masih boleh mencoba lagi.
-             * ====================================================
-             */
-
+                        DispatchingResponseToFokusUi(st.serahTerimaDokumen, st.transaksiSerahterimaDokumen, st.auth.user?.id ?? null);
+                    }
+                }
+                );
+            }
             loadedRef.current.add( loadKey );
 
 
@@ -606,21 +508,6 @@ export default function AppProviderLayoutService({
         buildStore,
     ]);
 
-
-    /**
-     * ============================================================
-     * RETURN
-     *
-     * Pertahankan return asli Anda di sini.
-     *
-     * Contoh:
-     *
-     * return <Outlet />;
-     *
-     * Jika provider Anda menggunakan JSX tertentu,
-     * gunakan return yang sekarang.
-     * ============================================================
-     */
 
     return (
         <SiswaCrudProvider service={sericeSiswa}>

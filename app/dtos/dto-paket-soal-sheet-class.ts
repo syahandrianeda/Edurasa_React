@@ -26,6 +26,9 @@ export default class DtoPaketSoalSheetClass extends DtoResolverTypeClass{
     ){
         super()
     }
+    get atp():AtpHasManySoalType[]{
+        return this.AtpHasBankSoal;
+    }
     get rombel():string{
         return this.rombelArg
     }

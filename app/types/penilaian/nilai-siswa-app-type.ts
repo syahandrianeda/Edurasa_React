@@ -1,11 +1,12 @@
 import type { JenisTagihanPenilaiantype } from "~/domain/asesmen-penilaian/jenis-tagihan-type"
 import type { KategoriTagihanType } from "~/domain/penilaian/type/KategoriTagihanType"
 import type { AtpAsOrm } from "../kurikulum/prota-orm"
-import type { BankSoalAppType } from "../bank-soal/bank-soal-type"
 import type { ListBentukSoalType } from "../bank-soal/bentuk-soal-type"
 import type { SiswaType } from "../siswa"
 import type { PublikasiPaketAppType } from "../bank-soal/entities/publikasi-paket-app-type"
-import type { TagihanHasDataResponse } from "~/domain/penilaian/type/tagihan-assesmen-type"
+import type { TagihanAsessmenType, TagihanHasDataResponse } from "~/domain/penilaian/type/tagihan-assesmen-type"
+import type { templateResponseKoreksi } from "~/domain/penilaian/type/templateResponseKoreksi"
+import type { TemplateKoreksiSiswaType } from "./TemplateKoreksiSiswaType"
 
 export interface NilaiSiswaAppType{
     idbaris: number,	
@@ -48,18 +49,21 @@ export interface RisponsePenilaianSiswa{
     soal_id?: number;//BankSoalAppType
 }
 
-export interface TotalResponseValidPenilaian extends NilaiSiswaAppType{
+export interface ResumeInfoResponse extends NilaiSiswaAppType{
+    siswa?:SiswaType;
     totalResponValid:number,
     durasiPengerjaan:number
 }
-export interface detailNilaiSiswaAppType extends TotalResponseValidPenilaian{
+export interface detailNilaiSiswaAppType extends ResumeInfoResponse{
     siswa? : SiswaType,
+    publikasi:TagihanAsessmenType,
+    templateKoreksiSiswa:TemplateKoreksiSiswaType[]
     
 }
 
 export interface SiswaWithNilaiSiswaAppType{
     siswa: SiswaType,
-    publikasi_id: number,
-    // currentPublikasi:TagihanHasDataResponse,
-    data: TotalResponseValidPenilaian[]
+    // publikasi_id: number,
+    currentPublikasi:TagihanHasDataResponse,
+    data: ResumeInfoResponse[]
 }

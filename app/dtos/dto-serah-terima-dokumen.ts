@@ -10,6 +10,7 @@ import { getEnumKey } from "~/lib/get-enum-key";
 
 export default class DtoSerahTerimaDokumen{
     static fromSheetToApp (data:Record<string, any>):SerahTerimaDokumenAppType {
+        
         return {
             idbaris         : resolveNumber(data.idbaris),
             nama_kegiatan   : resolveString(data.nama_kegiatan),

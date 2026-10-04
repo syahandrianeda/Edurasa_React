@@ -28,7 +28,10 @@ const ResponTagihanSlice = createSlice(
                 if(index === -1){
                     state.data.push(action.payload);
                 }else{
-                    state.data[index] = action.payload;
+                    // state.data[index] = action.payload;
+                    const dataTab = state.data[index]
+                    dataTab.data = [...dataTab.data, ...action.payload.data]
+                    state.data[index] = dataTab;
                 }
             },
             upsertResponTagihan(state, action:PayloadAction<ResponTagihanSlicer>){
@@ -36,7 +39,10 @@ const ResponTagihanSlice = createSlice(
                 if(index === -1){
                     state.data.push(action.payload);
                 }else{
-                    state.data[index] = action.payload;
+                    // state.data[index] = action.payload;
+                    const dataTab = state.data[index]
+                    dataTab.data = [...dataTab.data, ...action.payload.data]
+                    state.data[index] = dataTab;
                 }
             },
         }

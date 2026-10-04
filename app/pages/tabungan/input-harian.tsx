@@ -21,6 +21,8 @@ import { Loader } from "lucide-react";
 import { namaTab } from "~/lib/nama-tab-environment";
 import { isSameDay } from "node_modules/date-fns";
 import { useFilterContext } from "~/components/toolbars/state-toolbar/state-toolbar";
+import { useDispatch } from "react-redux";
+import { setTabunganRombel } from "~/context-reduct/global-state/tabungan/tabungan-slice";
 
 
 
@@ -31,6 +33,7 @@ export default function InputHarianTabungan(){
     }>();
     const penginput = useAppSelector(state=>state.auth.user?.name);
     const tabungan = useAppSelector(DtoDataTabunganCurrentRombel);
+    const dispatch = useDispatch()
     
     const keuangan = useAppSelector(FokusRombelKeuangan)
     const [nominal, setNominal] = useState<number>();
@@ -52,6 +55,7 @@ export default function InputHarianTabungan(){
     },[
         value
     ])
+    console.log({tabungan})
     const tabunganServer = useMemo(()=>tabungan.filter(s=>isSameDay(s.time_stamp, value?.extra?.currentTgalInput ??new Date()) && s.status === ""), [tabungan, value, value?.extra?.currentTgalInput]);
 
     const handleInputKeterangan = (e:React.ChangeEvent<HTMLInputElement>)=>{
@@ -106,7 +110,11 @@ export default function InputHarianTabungan(){
         if(response.success){
             const {success, data, detailResponse} = response;
             if(detailResponse){
-                DispatchingResponseToStore(success, data as TabunganSheetType[], detailResponse, keuangan?.rombel)
+                // DispatchingResponseToStore(success, data as TabunganSheetType[], detailResponse, keuangan?.rombel)
+                dispatch(setTabunganRombel({
+                    data: data as unknown as TabunganSheetType[], 
+                    nama_rombel: keuangan?.rombel!
+                }))
             }
             ShowToasterSuccess('Berhasil disimpan');
         }else{

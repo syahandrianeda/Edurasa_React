@@ -143,9 +143,20 @@ export default function useEnsureLoaded(sheetNeeded: unknown) {
                             detailResponse,
                             rombel
                         );
-
-                        DispatchingResponseToFokusUi();
                     }
+                );
+
+                /**
+                 * Baca state TERKINI (bukan snapshot render),
+                 * SETELAH loop dispatch di atas selesai,
+                 * supaya data serah-terima yang baru masuk ikut terhitung.
+                 */
+                const fresh = store.getState();
+
+                DispatchingResponseToFokusUi(
+                    fresh.serahTerimaDokumen,
+                    fresh.transaksiSerahterimaDokumen,
+                    fresh.auth.user?.id ?? null,
                 );
             }
 

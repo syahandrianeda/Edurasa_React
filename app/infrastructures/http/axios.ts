@@ -8,92 +8,128 @@ const axiosInstance = axios.create({
 })
 
 axiosInstance.interceptors.response.use(
-  response => {
-    // console.log('[AXIOS OK]', {
-    //   status: response.status,
-    //   url: response.config.url,
-    // })
+    response => response,
 
-    return response
-  },
+    error => {
+        console.error("[AXIOS ORIGINAL ERROR]", {
+            isAxiosError: axios.isAxiosError(error),
+            name: error?.name,
+            message: error?.message,
+            code: error?.code,
 
-  error => {
-     console.error('[AXIOS ERROR]', {
-    message: error.message,
-    code: error.code,
-    status: error.response?.status,
-    statusText: error.response?.statusText,
-    url: error.config?.url,
-    method: error.config?.method,
-    timeout: error.config?.timeout,
-    responseData: error.response?.data,
-    responseHeaders: error.response?.headers,
-    request: error.request,
-  })
+            status: error?.response?.status,
+            statusText: error?.response?.statusText,
+
+            url: error?.config?.url,
+            method: error?.config?.method,
+            timeout: error?.config?.timeout,
+
+            responseData: error?.response?.data,
+            responseHeaders: error?.response?.headers,
+        });
+
+        if (error.response) {
+            return Promise.reject(
+                new ApiErrors(
+                    error.response.status,
+                    error.response.data?.message ??
+                        `HTTP ${error.response.status}`,
+                    error.response.data
+                )
+            );
+        }
+
+        return Promise.reject(error);
+    }
+);
+
+// axiosInstance.interceptors.response.use(
+//   response => {
+//     // console.log('[AXIOS OK]', {
+//     //   status: response.status,
+//     //   url: response.config.url,
+//     // })
+
+//     return response
+//   },
+
+//   error => {
+//      console.error('[AXIOS ERROR]', {
+//     message: error.message,
+//     code: error.code,
+//     status: error.response?.status,
+//     statusText: error.response?.statusText,
+//     url: error.config?.url,
+//     method: error.config?.method,
+//     timeout: error.config?.timeout,
+//     responseData: error.response?.data,
+//     responseHeaders: error.response?.headers,
+//     request: error.request,
+//   })
 
   
-if (error.response) {
-  console.error(
-    '[AXIOS HTTP ERROR]',
-    {
-      status: error.response.status,
-      statusText: error.response.statusText,
-      url: error.config?.url,
-      method: error.config?.method,
-      responseData: error.response.data,
-      responseHeaders: error.response.headers,
-    }
-  )
+// if (error.response) {
+//   console.error(
+//     '[AXIOS HTTP ERROR]',
+//     {
+//       status: error.response.status,
+//       statusText: error.response.statusText,
+//       url: error.config?.url,
+//       method: error.config?.method,
+//       responseData: error.response.data,
+//       responseHeaders: error.response.headers,
+//     }
+//   )
 
-  console.error(
-    '[AXIOS RESPONSE DATA]',
-    error.response.data
-  )
+//   console.error(
+//     '[AXIOS RESPONSE DATA]',
+//     error.response.data
+//   )
 
-  return Promise.reject(
-    new ApiErrors(
-      error.response.status,
-      error.response.data?.message ??
-        `HTTP ${error.response.status}`,
-      error.response.data
-    )
-  )
+//   return Promise.reject(
+//     new ApiErrors(
+//       error.response.status,
+//       error.response.data?.message ??
+//         `HTTP ${error.response.status}`,
+//       error.response.data
+//     )
+//   )
 
-}
-    // console.error('[AXIOS ERROR]', {
-    //   message: error.message,
-    //   code: error.code,
-    //   status: error.response?.status,
-    //   url: error.config?.url,
-    //   method: error.config?.method,
-    //   response: error.response,
-    //   detaiL:error
-    // })
+// }
+//     // console.error('[AXIOS ERROR]', {
+//     //   message: error.message,
+//     //   code: error.code,
+//     //   status: error.response?.status,
+//     //   url: error.config?.url,
+//     //   method: error.config?.method,
+//     //   response: error.response,
+//     //   detaiL:error
+//     // })
 
-    // if (error.response) {
-    //   return Promise.reject(
-    //     new ApiErrors(
-    //       error.response.status,
-    //       error.response.data?.message ?? 'Server error',
-    //       error.response.data
-    //     )
-    //   )
-    // }
+//     // if (error.response) {
+//     //   return Promise.reject(
+//     //     new ApiErrors(
+//     //       error.response.status,
+//     //       error.response.data?.message ?? 'Server error',
+//     //       error.response.data
+//     //     )
+//     //   )
+//     // }
 
-    // if (error.request) {
-    //   return Promise.reject(
-    //     new ApiErrors(
-    //       0,
-    //       error.message
-    //     )
-    //   )
-    // }
+//     // if (error.request) {
+//     //   return Promise.reject(
+//     //     new ApiErrors(
+//     //       0,
+//     //       error.message
+//     //     )
+//     //   )
+//     // }
 
-    // return Promise.reject(
-    //   new ApiErrors(-1, error.message)
-    // )
-  }
-)
+//     // return Promise.reject(
+//     //   new ApiErrors(-1, error.message)
+//     // )
+//   }
+// )
 
 
 export default axiosInstance

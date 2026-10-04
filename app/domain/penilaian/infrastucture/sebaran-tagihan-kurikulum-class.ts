@@ -1,5 +1,6 @@
 import type { TagihanHasDataResponse } from "../type/tagihan-assesmen-type";
 import type { KategoriTagihanType } from "../type/KategoriTagihanType";
+import SwitchKategoriTagihan from "~/domain/asesmen-penilaian/switch-kategori-tagihan-class";
 
 /**
  * @info type ini memnginstansiasi properti kurikulum menjadi group dengan kategori assesmen rapor ('harian', 'midsemester', 'akhirsemester')
@@ -95,7 +96,7 @@ export default class SebaranTagihanKurikulumClass{
         
         for(const item of this.data){
             const kurikulum_tagihan = item.kurikulum_tagihan;
-            const namatagihan = this.switchTagihan(item.jenis_tagihan.kode);
+            const namatagihan = new SwitchKategoriTagihan(item.jenis_tagihan.kode).kategori;
 
             if(!tagihanMapParent.has(namatagihan)){
                 tagihanMapParent.set(namatagihan,
@@ -263,23 +264,23 @@ export default class SebaranTagihanKurikulumClass{
         return this;
     }
 
-    switchTagihan(kode:string):KategoriTagihanType{
-        switch (kode){
-            case 'Remedial':
-                return 'remedial_pengayaan';
-            case 'Pengayaan':
-                return 'remedial_pengayaan';
-            case 'PTS':
-                return 'mid_semester';
-            case 'PAS':
-                return 'akhir_semester';
-            case 'PAK':
-                return 'akhir_semester';
-            case 'PSAJ':
-                return 'ujian_sekolah';
-            default:
-                return 'harian'
-        }
+    // switchTagihan(kode:string):KategoriTagihanType{
+    //     switch (kode){
+    //         case 'Remedial':
+    //             return 'remedial_pengayaan';
+    //         case 'Pengayaan':
+    //             return 'remedial_pengayaan';
+    //         case 'PTS':
+    //             return 'mid_semester';
+    //         case 'PAS':
+    //             return 'akhir_semester';
+    //         case 'PAK':
+    //             return 'akhir_semester';
+    //         case 'PSAJ':
+    //             return 'ujian_sekolah';
+    //         default:
+    //             return 'harian'
+    //     }
         
-    }
+    // }
 }

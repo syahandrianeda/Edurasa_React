@@ -3,8 +3,12 @@ import type { AtpHasManySoalType } from "~/domain/bank-soal/relational-soal/type
 import type { PraSettingPaket } from "~/domain/paket-soal/entities/pra-setting-paket";
 import type { TypePaketSoal } from "~/domain/paket-soal/entities/type-paket";
 import type { AtpAsOrm } from "~/types/kurikulum/prota-orm";
-import type { NilaiSiswaAppType } from "~/types/penilaian/nilai-siswa-app-type";
+import type { detailNilaiSiswaAppType, NilaiSiswaAppType, SiswaWithNilaiSiswaAppType } from "~/types/penilaian/nilai-siswa-app-type";
 import type { SiswaType } from "~/types/siswa";
+import type { DetailTarget } from "./DetailTarget";
+import type { BankSoalAppType } from "~/types/bank-soal/bank-soal-type";
+import type { GroupSebaranNoSoalFromPropertyKurikulum } from "../model/grouping-kurikulum-by-bentuksoal";
+import type { templateResponseKoreksi } from "./templateResponseKoreksi";
 
 /** 
  * @info type ini sebenarnya salinan/tiruan dari PublikasiPaketAppType
@@ -47,30 +51,23 @@ export interface TagihanAsessmenType{
 export interface TagihanHasDataResponse extends TagihanAsessmenType{
     isMultiple          : boolean,
     detail_target       : DetailTarget[];
-    data_respons        : NilaiSiswaAppType[];//ResponsTagihan[]
+    data_respons        : detailNilaiSiswaAppType[];//NilaiSiswaAppType[];//ResponsTagihan[]
     koleksi_mapelName   : string[],
     kurikulum_tagihan   : AtpHasManySoalType[],
     peserta             : SiswaType[],
-    total_instrumen     : number
-}
-export interface DetailTarget{
-    rombel:string,
-    data_siswa:SiswaType[],
-    count:number;
-    current_rombel:boolean
-}
-
-interface ResponsTagihan{
-    idbaris         : number,
-    tokensiswa      : number,
-    tagihan_id      : number,
-    nilai           : NilaiTagihan[];
+    total_instrumen     : number,
+    bank_soal_collections: BankSoalAppType[],
+    sebaran_kurikulum_by_bentuk_soal: GroupSebaranNoSoalFromPropertyKurikulum,
+    templateKoreksi : templateResponseKoreksi[]
+    data_response_bySiswa : Data_response_bySiswaType[]//{siswa:SiswaType, data:detailNilaiSiswaAppType[]}
+    jumlahPerespon      :number,
+    jumlahDuplikat      :number
+    
 }
 
-interface NilaiTagihan{
-    no_soal     : number,
-    index_soal  : number
-    atp_id      : number,
-    skor        : number,
-
+interface Data_response_bySiswaType {
+    siswa: SiswaType, 
+    data:detailNilaiSiswaAppType[]
 }
+
+

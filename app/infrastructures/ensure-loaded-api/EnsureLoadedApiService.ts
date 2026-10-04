@@ -8,42 +8,42 @@ export default class EnsurLoadedApiService implements EnsureLoadedApiServiceInte
     constructor(public repo =  new EnsureLoadedApiRepository()){}
     
     async callNeeded(paramSheet: Record<string, any>[]): Promise<ApiResponse<any>> {
-        /** Kode ini  berhasil 
-         try{
-             const auth = this.repo.dataAuth();
-             // console.log(navigator.onLine)
-             const param = {
-                 action:'readMultipleTab',
-                 source:JSON.stringify(paramSheet),
-                 auth
-             }
+        
+        //  try{
+        //      const auth = this.repo.dataAuth();
+        //      // console.log(navigator.onLine)
+        //      const param = {
+        //          action:'readMultipleTab',
+        //          source:JSON.stringify(paramSheet),
+        //          auth
+        //      }
              
-             const data =  await this.repo.callNeeded(param);
+        //      const data =  await this.repo.callNeeded(param);
      
              
-             if(data){
-                 if(Array.isArray(data)){
-                     // console.log('respon service sukses, dan array', data);
-                     return data
-                 }else{
-                     // console.log('respon service sukses, dan bukan array', data);
-                     throw new Error(data.error?.message ?? 'Service Gagal',{cause:data})
-                 }
-             }else{
-                 // console.log('dilempar error, karena data.succes false/ undefine', data)
-                 throw new Error(data)
-             }
+        //      if(data){
+        //          if(Array.isArray(data)){
+        //              // console.log('respon service sukses, dan array', data);
+        //              return data
+        //          }else{
+        //              // console.log('respon service sukses, dan bukan array', data);
+        //              throw new Error(data.error?.message ?? 'Service Gagal',{cause:data})
+        //          }
+        //      }else{
+        //          // console.log('dilempar error, karena data.succes false/ undefine', data)
+        //          throw new Error(data)
+        //      }
  
-         }catch(er){
-             // console.log('error karena try catch', er)
-             // return this.repo.responActionError(new Error('gagal',{cause:er}))
-             // return new Error(er)
-             throw new Error(er as string,{cause:er})
-             // er
+        //  }catch(er){
+        //      // console.log('error karena try catch', er)
+        //      // return this.repo.responActionError(new Error('gagal',{cause:er}))
+        //      // return new Error(er)
+        //      throw er;// new Error(er as string,{cause:er})
+        //      // er
  
-         }
+        //  }
          
-        */
+        
         // try{
 
         //         /**
@@ -122,7 +122,7 @@ export default class EnsurLoadedApiService implements EnsureLoadedApiServiceInte
         //     console.log(er)
         //     throw new Error(er as string,{cause:er})
         // }
-
+        /** VERSI FREEBUFF */
           const auth = this.repo.dataAuth();
     
                 const param = {
@@ -132,31 +132,57 @@ export default class EnsurLoadedApiService implements EnsureLoadedApiServiceInte
                 };
     
     
-                const data = await this.repo.callNeeded(param);
-                console.log('data', {param, data})
-    
                 /**
                  * ========================================================
-                 * API BERHASIL
+                 * RETRY
                  *
-                 * Pertahankan perilaku existing.
+                 * Infrastruktur redirect Google (exec -> echo) kadang
+                 * membalas halaman HTML error yang sifatnya SEMENTARA
+                 * (bug Google yang diketahui, intermittent).
+                 * Request diulangi beberapa kali dengan jeda
+                 * sebelum benar-benar menyerah.
                  * ========================================================
                  */
-    
-                // if (data && Array.isArray(data) && data.some((item) => item.success)) {
-                // return data;
-                // }
-                 if(data){
+
+                const MAX_ATTEMPT = 4;
+                // const RETRY_DELAY_MS = [1200, 2400, 4000];
+                const RETRY_DELAY_MS = [12000, 16000, 40000];
+
+                let data: ApiResponse<any> | undefined;
+
+                for (let attempt = 1; attempt <= MAX_ATTEMPT; attempt++) {
+                    try {
+                        data = await this.repo.callNeeded(param);
+                        break;
+                    } catch (er) {
+                        if (attempt >= MAX_ATTEMPT) {
+                            /**
+                             * Gagal juga setelah percobaan terakhir.
+                             * Sertakan jumlah percobaan dan petunjuk
+                             * untuk gangguan redirect Google yang intermittent.
+                             */
+                            const text = er instanceof Error ? er.message : String(er);
+                            const status = (er as { status?: number }).status
+                                ?? (er as { cause?: { status?: number } }).cause?.status;
+                            const hint = status === 404 || status === 405 || /HTTP (404|405)/.test(text)
+                                ? " — Google membalas 404/405 pada redirect exec->echo (gangguan intermittent dari sisi Google; muat ulang halaman untuk mencoba lagi)"
+                                : "";
+                            throw new Error(`Gagal setelah ${MAX_ATTEMPT} percobaan: ${text}${hint}`, { cause: er });
+                        }
+                        const delay = RETRY_DELAY_MS[attempt - 1] ?? 40000;
+                        console.warn(`[ENSURE LOADED] percobaan ${attempt} gagal, ulangi dalam ${delay}ms`, er);
+                        await new Promise(resolve => setTimeout(resolve, delay));
+                    }
+                }
+
+                if(data){
                     if(Array.isArray(data)){
-                        // console.log('respon service sukses, dan array', data);
                         return data
                     }else{
-                        console.log('respon service sukses, dan bukan array', data);
                         throw new Error(data.error?.message ?? 'Service Gagal',{cause:data})
                     }
                 }else{
-                    console.log('dilempar error, karena data.succes false/ undefine', data)
-                    throw new Error(data)
+                    throw new Error('Respon kosong dari service')
                 }
             
     }

@@ -225,7 +225,34 @@ export function hydratePreloadedState(): Partial<RootState> {
       data:[],
       name:'respon_tagihan',
       loaded:false
+    },
+    harian:{
+      data:[],
+      name:'harian',
+      loaded:false,
+    },
+    midSemester:{
+      data:[],
+      name:'mid_semester',
+      loaded:false,
+    },
+    us:{
+      data:[],
+      name:'us',
+      loaded:false,
+    },
+    akhirSemester:{
+      data:[],
+      name:'akhir_semester',
+      loaded:false
+    },
+    remdialPengayaan:{
+      data:[],
+      name:'remedial_pengayaan',
+      loaded:false
     }
+
+
 
 
   };

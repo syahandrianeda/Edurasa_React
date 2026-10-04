@@ -10,7 +10,7 @@ import TriggerEditRespon from "../triggers/trigger-edit-respon";
 export default function TableDaftarTagihanPenilaian({instanceClass}:{instanceClass?: TagihanPenilaianClass}){ 
     const dataTagihan = instanceClass ? instanceClass?.dataTagihanHasResponse ?? []:[];
     const {actions} = useModal()
-    console.log({dataTagihan});
+    // console.log({dataTagihan});
     return (
         <TableWithScrolling className="text-[10px]">
             <thead>
@@ -122,13 +122,18 @@ export default function TableDaftarTagihanPenilaian({instanceClass}:{instanceCla
                                         }
                                     </ol>
                                     <div className={`flex w-full justify-between gap-2 text-[8px] mt-2 font-bold ${item.data_respons.length === item.peserta.length ?"text-green-600" : "text-amber-600"}`}>
-                                        <p>{item.data_respons.length}/{item.peserta.length}</p>
+                                        <p>{item.jumlahPerespon}/{item.peserta.length}</p>
                                         <p>Peserta Merespon</p>
 
                                     </div>
-                                    <div className={`flex w-full justify-between gap-2 text-[8px] font-bold ${item.data_respons.length === item.peserta.length ?"text-green-600" : "text-amber-600"}`}>
+                                    <div className={`flex w-full justify-between gap-2 text-[8px] font-bold ${item.data_respons.filter(s=>!s.needValidate).length === item.peserta.length ?"text-green-600" : "text-amber-600"}`}>
                                         <p>{item.data_respons.filter(s=>!s.needValidate).length}/{item.peserta.length}</p>
                                         <p>Telah divalidasi</p>
+
+                                    </div>
+                                    <div className={`flex w-full justify-between gap-2 text-[8px] font-bold ${item.data_respons.filter(s=>!s.needValidate).length === item.peserta.length ?"text-green-600" : "text-amber-600"}`}>
+                                        <p>{item.jumlahDuplikat}</p>
+                                        <p>Duplikat</p>
 
                                     </div>
                                 </TdEdura>

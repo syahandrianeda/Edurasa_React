@@ -2,7 +2,7 @@
 import { Outlet } from "react-router";
 import type { Route } from "./+types/app-provider-service";
 import { useAppSelector } from "~/context-reduct/hook";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import type { DataSheetNeeeded } from "~/domain/enloaded/data-sheet-needed-type";
 import { store } from "~/context-reduct/redux-provider";
 import { getSessionRombel } from "~/infrastructures/session-storage/rombel-session";
@@ -52,7 +52,6 @@ import { CrudSerahTerimaProvider } from "~/controllers/serah-terima-dokumen/crud
 import SerahTerimaDokumenService from "~/infrastructures/services/serah-terima-dokumen-service";
 import { CrudTransaksiSerahTerimaProvider } from "~/controllers/transaksi-serah-terima-dokumen/crud-provider-transaksi-serah-terima";
 import TransaksiSerahTerimaDokumenService from "~/infrastructures/services/transaksi-serah-terima-service";
-import DispatchingResponseToFokusUi from "~/lib/dispatching-response-to-fokus-ui";
 import { CrudBankSoalProvider } from "~/controllers/bank-soal/cruds/crud-provider-bank-soal";
 import BanksoalService from "~/infrastructures/services/bank-soal-service";
 import { CrudPaketSoalProvider } from "~/controllers/paket-soal/crud/paket-soal-crud-provider";
@@ -426,43 +425,44 @@ export default function AppProviderLayoutService({
              * ====================================================
              */
 
-            toast.promise(
-                api.callNeeded(param),
-                {
-                    loading: textLoading +
-                        textRombelFase,
+            /**
+             * Mulai request SEKALI saja.
+             *
+             * Promise yang sama dipakai dua kali:
+             * - toast.promise hanya untuk UI.
+             * - await di bawah menentukan kapan request benar-benar selesai,
+             *   sehingga catch dan loadedRef bekerja dengan benar.
+             */
 
-                    success: data => {
-                        // console.log('data respon', { data });
-                        if (data && Array.isArray(data)) {
+            const reqPromise = api.callNeeded(param);
 
-                            // const decidedRombel = loaderDataKiriman?.sourceKelas ? rombelKeuangan?.rombel : rombel;
+            toast.promise(reqPromise, {
+                loading: textLoading + textRombelFase,
 
+                success: () => "Pemanggilan data telah selesai",
 
-                            data.forEach(({ success, data, detailResponse, }) => {
+                error: data => `Gagal memuat data ${loaderDataKiriman.titleTambahan} \r` + data,
 
-                                if (detailResponse) {
-                                    DispatchingResponseToStore(
-                                        success,
-                                        data,
-                                        detailResponse,
-                                        // decidedRombel
-                                    );
+                closeButton: true,
+            });
 
-                                    DispatchingResponseToFokusUi();
-                                }
-                            }
-                            );
-                        }
+            const data = await reqPromise;
 
-                        return ("Pemanggilan data telah selesai");
-                    },
+            if (data && Array.isArray(data)) {
 
-                    error:  data=>`Gagal memuat data ${loaderDataKiriman.titleTambahan} \r`+ data,
+                data.forEach(({ success, data, detailResponse, }) => {
 
-                    closeButton: true,
+                    if (detailResponse) {
+                        DispatchingResponseToStore(
+                            success,
+                            data,
+                            detailResponse,
+                            rombel
+                        );
+                    }
                 }
-            );
+                );
+            }
 
 
             /**

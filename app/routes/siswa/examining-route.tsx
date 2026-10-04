@@ -1,15 +1,5 @@
 
-import ProfileUser from "~/pages/profile/profile-user";
-
-import { getSessionApp } from "~/infrastructures/session-storage/app-session";
-import type { UserSiswa } from "~/types/user-siswa";
 import type { Route } from "./+types/examining-route";
-import ReadTxtService from "~/infrastructures/services/read-txt-service";
-import { PaketSoalDesignParseDto } from "~/dtos/dto-parsing-paket-soal";
-import type { PaketSoalDesign } from "~/domain/paket-soal/result/paket-soal";
-import { useCurrentTime } from "~/hooks/use-current-time";
-import { useCountdown } from "~/hooks/use-count-down";
-import { getCountdown } from "~/lib/get-count-down";
 import { useAppSelector } from "~/context-reduct/hook";
 import { InstanceDataTagihanPenilaianSector } from "~/context-reduct/selectores/daftar-tagihan-penilaian-selector";
 import { useMemo } from "react";

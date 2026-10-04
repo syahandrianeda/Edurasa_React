@@ -1,5 +1,7 @@
 import type { BankSoalAppType } from "~/types/bank-soal/bank-soal-type";
 import type { ListBentukSoalType } from "~/types/bank-soal/bentuk-soal-type";
+import type { ScoreAccumulator } from "../infrastucture/ScoreAccumulator";
+import { ListBentukSoal } from "~/domain/bank-soal/list-bentuk-soal";
 
 // interface bentukSoalGroup{
 //     bentukSoal:ListBentukSoalType['name'],
@@ -7,6 +9,7 @@ import type { ListBentukSoalType } from "~/types/bank-soal/bentuk-soal-type";
 // }
 export interface PrediksiNoSoal extends BankSoalAppType{
     no_soal:number, 
+    skor:number
 
 }
 interface KoleksiBentukSoal{
@@ -39,4 +42,46 @@ export interface GroupBentukSoalPropertiKurikulumInPublikasiAssesmen{
     slotRow:number,
     dataCp: DataCp[]
 }
+type DataBentukSoalWithScore = {
+    bentukSoal: ListBentukSoalType['name'],
+    data: PrediksiNoSoal[]
+}
+type DataAtpMap = {
+    atp_id : number,
+    atp_description : string,
+    skor: number;
+    jumlahSoalDinilai: number;
+    dataBentukSoal: DataBentukSoalWithScore[]
+    
+};
+interface DataTpMap{
+    tp_id : number,
+    tp_description : string,
+    skor: number
+    jumlahSoalDinilai: number,
+    slotRow: number
+    dataAtp: DataAtpMap[]
+     
+}
+interface DataCpWithScore{
+    cp_id : number,
+    cp_description : string,
+    skor: number
+    jumlahSoalDinilai: number,
+    slotRow: number,
+    dataTp : DataTpMap[]
+   
+}
+export interface GroupBentukSoalPropertiKurikulumInPublikasiAssesmenWithScore{
+    kodeMapel: string,
+    mapelName : string,
+    skor: number,
+    jumlahSoalDinilai: number,
+    slotRow: number,
+    dataCp: DataCpWithScore[],
+    objekSkorKd: {[key:string]:number}[]
+    
+}
+
 export type GroupSebaranNoSoalFromPropertyKurikulum = {koleksiBentukSoal:ListBentukSoalType[], data:GroupBentukSoalPropertiKurikulumInPublikasiAssesmen[]}
+export type GroupSebaranNoSoalFromPropertyKurikulumWithScore = {koleksiBentukSoal:ListBentukSoalType[], data:GroupBentukSoalPropertiKurikulumInPublikasiAssesmenWithScore[]}

@@ -96,12 +96,15 @@ export default class DtoResponTagihanSiswa{
             /** key itu mengandung prefix 'pg_', 'isian_singkat_' */
             if(keyPrefix.some(item=>key.includes(item))){
                 let obj:RisponsePenilaianSiswa = Object.create(null);
+                /** misal key = "isian_singkat_1" */
                 const split = key.split("_");
-                
+                /** split dengan denominator "_", maka akan menghasilkan array: ['isian', 'singkat', '1'] */
+                /** ambil yang terakhir, berarti mengambil= '1' */
                 const number = split.pop()
                 obj.index = index;
                 obj.no_prefix = Number(number);
                 obj.respon = data[key] as string;
+                /** split saat ini mengalami mutasi, sehingga yang tersisa = ['isian', 'singkat'] */
                 obj.bentuk_soal = split.join('_')
 
                 result.push(obj);

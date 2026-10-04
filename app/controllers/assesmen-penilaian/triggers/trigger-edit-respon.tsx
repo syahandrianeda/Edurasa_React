@@ -15,7 +15,7 @@ export default function TriggerEditRespon({actions,data: m}:SwitchTriggerModalPr
             {
                 label: 'Koreksi Soal',
                 icon: BookOpenCheckIcon,
-                callback: (m) => actions.open('KOREKSI SOAL', m,{closeOnOutsideClick:false})
+                callback: (m) => actions.open('PRA KOREKSI SOAL', m,{closeOnOutsideClick:false})
             },
             {
                 label: 'Import Nilai',

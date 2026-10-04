@@ -24,10 +24,15 @@ const TabunganSlice = createSlice({
     reducers:{
         setTabunganRombel(state, action:PayloadAction<dataTabunganSlice>){
             const index = state.data.findIndex(s=>s.nama_rombel === action.payload.nama_rombel);
+            console.log(index, state.data)
             if(index === -1){
-                state.data.push(action.payload);
+                state.data.push(action.payload)
             }else{
-                state.data[index] = action.payload;
+                // state.data[index] = action.payload;
+                // state.data[index] = {...state.data[index], data:[{...action.payload.data}]}
+                const dataTab = state.data[index]
+                dataTab.data = [...dataTab.data, ...action.payload.data]
+                state.data[index] = dataTab;
             }
         },
         upsertTabunganRombel(state, action:PayloadAction<dataTabunganSlice>){
@@ -35,9 +40,12 @@ const TabunganSlice = createSlice({
             if(index === -1){
                 state.data.push(action.payload);
             }else{
-                state.data[index] = action.payload;
+                // state.data[index] = action.payload;
+                const dataTab = state.data[index]
+                dataTab.data = [...dataTab.data, ...action.payload.data]
+                state.data[index] = dataTab;
             }
-            state.loaded = action.payload.data.length > 0
+            // state.loaded = action.payload.data.length > 0
         }
     }
 })

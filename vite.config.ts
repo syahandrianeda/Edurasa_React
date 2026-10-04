@@ -15,12 +15,12 @@ export default defineConfig({
     VitePWA({
       registerType: "autoUpdate",
 
-      injectRegister: null,
+      injectRegister: false,//null,
 
       strategies: "injectManifest",
-      // devOptions: {
-      //   enabled: true,
-      // },
+      devOptions: {
+        enabled: true,
+      },
       srcDir: "app",
       filename: "sw.ts",
      
@@ -28,7 +28,7 @@ export default defineConfig({
         name: "Edurasa",
         short_name: "Edurasa",
         description:
-          "Platform e-MBS di SDN Ratujaya sebagai One Stop Service Schools",
+          "Platform e-MBS di SDN Ratujaya 1 sebagai One Stop Service Schools",
 
         start_url: "/",
         scope: "/",
@@ -69,6 +69,7 @@ export default defineConfig({
 
   build: {
     outDir: "build/client",
+    // target: "es2015"
   },
 
   resolve: {

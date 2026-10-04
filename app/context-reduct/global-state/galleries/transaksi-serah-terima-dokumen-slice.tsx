@@ -1,7 +1,7 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { TransaksiSerahTerimaDokumenSheetType } from "~/types/galleries/transaksi-serah-terima-dokumen";
 
-type TransaksiSerahTerimaDokumenSliceType={
+export type TransaksiSerahTerimaDokumenSliceType={
     data:TransaksiSerahTerimaDokumenSheetType[],
     name:'transaksi_serah_terima',
     loaded:boolean

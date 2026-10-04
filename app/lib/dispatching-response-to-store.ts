@@ -69,6 +69,8 @@ import { IndexDbTabNameRepository } from "~/infrastructures/iDb-vite/indexDb-tab
 import { getNumberFromString } from "./get-number";
 import { upsertResponTagihan } from "~/context-reduct/global-state/respon-siswa/response-tagihan-slice";
 import type { NilaiSiswaSheetType } from "~/types/penilaian/nilai-siswa-sheet-type";
+import { upsertRekapHarian } from "~/context-reduct/global-state/respon-siswa/calculate-harian-slice";
+import type { AkhirSemesterRekapSheetType, HarianRekapSheetType, MidSemesterRekapSheetType } from "~/types/penilaian/rekap_sementara_sheet_type";
 
 
 export default async function DispatchingResponseToStore(success:boolean, data:Record<string, any>[],detailResponse:Record<string,any>, rombelAktif?:string){
@@ -210,7 +212,7 @@ export default async function DispatchingResponseToStore(success:boolean, data:R
         /** tabungan */
         if(detailResponse?.namaTab === `${namaTab('tabungan_')}${rombelAktif}`){
             
-            store.dispatch(upsertTabunganRombel(
+            store.dispatch(setTabunganRombel(
                 {
                     nama_rombel:rombelAktif ?? getSessionRombel(),
                     data: detailResponse?.findTab? data as TabunganSheetType[]:[]
@@ -328,6 +330,25 @@ export default async function DispatchingResponseToStore(success:boolean, data:R
                     }
                 ))
             
+        }
+
+        if(detailResponse?.namaTab === namaTab('harian')){
+            store.dispatch(upsertRekapHarian({
+                jenjang,
+                data: detailResponse?.findTab? data as HarianRekapSheetType[]: []
+            }))
+        }
+        if(detailResponse?.namaTab === namaTab('mid_semester')){
+            store.dispatch(upsertRekapHarian({
+                jenjang,
+                data: detailResponse?.findTab? data as MidSemesterRekapSheetType[]: []
+            }))
+        }
+        if(detailResponse?.namaTab === namaTab('akhir_semester')){
+            store.dispatch(upsertRekapHarian({
+                jenjang,
+                data: detailResponse?.findTab? data as AkhirSemesterRekapSheetType[]: []
+            }))
         }
         
 

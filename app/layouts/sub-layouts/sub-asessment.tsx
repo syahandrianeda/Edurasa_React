@@ -16,6 +16,7 @@ import PrintAreaWithKopTtd from "~/components/toolbars/kop-ttd/print-area-kopttd
 import ModalProvider from "~/components/modals/modal-provider";
 import { Outlet } from "react-router";
 import MainModalPenilaian from "~/controllers/assesmen-penilaian/modals/main-modal-penilaian";
+import NextMainModalPenilaian from "~/controllers/assesmen-penilaian/modals/next-main-modal-penilaian";
 
 
 export default function SubPenilaianLayout({matches}:Route.ComponentProps) {
@@ -48,6 +49,7 @@ export default function SubPenilaianLayout({matches}:Route.ComponentProps) {
                                 <ModalProvider>
                                     <Outlet/>
                                     <MainModalPenilaian/>
+                                    <NextMainModalPenilaian/>
                                 </ModalProvider>
                             </PrintAreaWithKopTtd>
                             

@@ -1,3 +1,4 @@
+import SwitchKategoriTagihan from "~/domain/asesmen-penilaian/switch-kategori-tagihan-class";
 import type { AtpHasManySoalType } from "~/domain/bank-soal/relational-soal/type";
 import type { KategoriTagihanType } from "~/domain/penilaian/type/KategoriTagihanType";
 import type { TagihanHasDataResponse } from "~/domain/penilaian/type/tagihan-assesmen-type";
@@ -13,13 +14,15 @@ export default class BuildParanResponTagihanSiswa{
     }
     build():this{
         const obj = this.createSkorByAtp(this.dataRespon, this.dataSoal.kurikulum_tagihan);
-        const sebaran = this.distributedKontenReespon(this.dataRespon,this.dataSoal.kurikulum_tagihan)
+        const sebaran = this.distributedKontenReespon(this.dataRespon,this.dataSoal.kurikulum_tagihan);
+        const tipe_assesmen = new SwitchKategoriTagihan(this.dataSoal.jenis_tagihan.kode).kategori;
         this.dataNilaiSiswaSheetType = {
             idbaris: 0,
             publikasi_id: this.dataSoal.idbaris,
             siswa_id: this.user.id,
             jenis_tagihan: this.dataSoal.jenis_tagihan.kode,
-            tipe_assesmen: this.switchTagihan(this.dataSoal.jenis_tagihan.kode),
+            // tipe_assesmen: this.switchTagihan(this.dataSoal.jenis_tagihan.kode),
+            tipe_assesmen,
             sumber_respon: 'siswa',
             rombel: this.user.rombel,
             start_time: this.start.toString(),
@@ -47,25 +50,25 @@ export default class BuildParanResponTagihanSiswa{
         }
         return sebaran;
     }
-    switchTagihan(kode:string):KategoriTagihanType{
-           switch (kode){
-               case 'Remedial':
-                   return 'remedial_pengayaan';
-               case 'Pengayaan':
-                   return 'remedial_pengayaan';
-               case 'PTS':
-                   return 'mid_semester';
-               case 'PAS':
-                   return 'akhir_semester';
-               case 'PAK':
-                   return 'akhir_semester';
-               case 'PSAJ':
-                   return 'ujian_sekolah';
-               default:
-                   return 'harian'
-           }
+    // switchTagihan(kode:string):KategoriTagihanType{
+    //        switch (kode){
+    //            case 'Remedial':
+    //                return 'remedial_pengayaan';
+    //            case 'Pengayaan':
+    //                return 'remedial_pengayaan';
+    //            case 'PTS':
+    //                return 'mid_semester';
+    //            case 'PAS':
+    //                return 'akhir_semester';
+    //            case 'PAK':
+    //                return 'akhir_semester';
+    //            case 'PSAJ':
+    //                return 'ujian_sekolah';
+    //            default:
+    //                return 'harian'
+    //        }
            
-       }
+    //    }
         createSkorByAtp(
             dataRespon: RisponsePenilaianSiswa[],
             kurikulum_tagihan: AtpHasManySoalType[]

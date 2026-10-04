@@ -1,29 +1,32 @@
-import {Fragment, useMemo} from 'react';
+import {Fragment, useCallback, useMemo} from 'react';
 import { useFormEdura } from "~/components/form-custom/form-edura";
 import { TdEdura, TdEduraFreeze, ThEdura, THEduraFreeze, TRowEdura } from '~/components/tabels/tabel-components';
 import TableWithScrolling from '~/components/tabels/table-with-scrolling';
 import type { TagihanHasDataResponse } from "~/domain/penilaian/type/tagihan-assesmen-type";
-import ResponAllSiswaInPublikasiPaket from '~/domain/sistem-koreksi/respon-all-siswa-in-publikasi';
 import { getSessionRombel } from "~/infrastructures/session-storage/rombel-session";
 import TableSkorKd from '../tabel/tabel-skor-kd';
-import { ModalFooterEdura } from '~/components/modals/modal-components';
-import type { NilaiSiswaAppType } from '~/types/penilaian/nilai-siswa-app-type';
+import type { detailNilaiSiswaAppType } from '~/types/penilaian/nilai-siswa-app-type';
+import ButtonCommitAwesome from '~/components/button-awesome/commit-button';
+import { useModal } from '~/components/modals/modal-provider';
 
 export default function PraKoreksiSoal(){
     const {currentData} = useFormEdura<TagihanHasDataResponse>();
+    const {actions,state} = useModal<TagihanHasDataResponse>()
     const rombel = getSessionRombel();
     const dataRespon = useMemo(()=>{
         if(!currentData || !rombel) return [];
-        const instansiasi = new ResponAllSiswaInPublikasiPaket(currentData, rombel).build();
-        return instansiasi.dataKolektiResonseCurrentPublikasi.filter(s=>s.siswa.nama_rombel === rombel);
+        
+        return currentData.data_response_bySiswa.filter(s=>s.siswa.nama_rombel === rombel)
     },[rombel, currentData])
     
     const jumlahPerespon = useMemo(()=>{
-        const map = new Map(currentData.data_respons.map(m=>([m.siswa_id, m])));
-        return [...map.values()];
+        return currentData.jumlahPerespon;
     },[currentData.data_respons])
-    console.log({jumlahPerespon, dataRespon})
     
+    
+    const callTriggerModalKoreksi = useCallback((dataSheetResponTagihan:detailNilaiSiswaAppType)=>{
+        actions.open('KOREKSI SOAL',dataSheetResponTagihan, {closeOnOutsideClick:false, backToModalType: state})
+    },[])
     return (
         <>
             <div className='p-4 border border-black bg-white dark:text-black'>
@@ -60,11 +63,11 @@ export default function PraKoreksiSoal(){
                             </div>
                             <div className='flex w-full justify-between border-b border-sky-600 border-dashed'>
                                 <p>Responden</p>
-                                <p>{jumlahPerespon.length} Peserta</p>
+                                <p>{jumlahPerespon} Peserta</p>
                             </div>
                             <div className='flex w-full justify-between border-b border-sky-600 border-dashed'>
                                 <p>Duplikat</p>
-                                <p>{(currentData.data_respons.length - jumlahPerespon.length)} data</p>
+                                <p>{(currentData.data_respons.length - jumlahPerespon)} data</p>
                             </div>
                         </div>
                     </div>
@@ -106,10 +109,6 @@ export default function PraKoreksiSoal(){
                                                 <div className='flex w-full justify-between border-b border-sky-600 border-dashed'>
                                                     <p>Durasi Pengerjaan</p>
                                                     <p>{respon.durasiPengerjaan} menit</p>
-                                                </div>  
-                                                <div className='flex w-full justify-between border-b border-sky-600 border-dashed'>
-                                                    <p>Durasi Pengerjaan</p>
-                                                    <p>{respon.durasiPengerjaan} menit</p>
                                                 </div>
                                                 <div className='flex w-full justify-between border-b border-sky-600 border-dashed'>
                                                     <p>Waktu Mulai Pengerjaan</p>
@@ -127,7 +126,9 @@ export default function PraKoreksiSoal(){
                                             <TdEdura>
                                                 <TableSkorKd skor_kd={respon.skor_kd} className='[&_th]:border-black [&_td]:align-middle [&_td]:text-center  [&_td]:border-black'/>
                                             </TdEdura>
-                                            <TdEdura/>
+                                            <TdEdura>
+                                               <ButtonCommitAwesome className='px-4 py-0' labelButton='Koreksi' onClick={()=>callTriggerModalKoreksi(respon)}></ButtonCommitAwesome>
+                                            </TdEdura>
                                         </TRowEdura>
                                     )   
                                 ):(
@@ -137,7 +138,7 @@ export default function PraKoreksiSoal(){
                                         <TdEduraFreeze className='align-top' stateFreeze={true}>{data.siswa.pd_nama}</TdEduraFreeze>
                                         <TdEdura className='text-wrap'>Belum merespon</TdEdura>
                                         <TdEdura/>
-                                        <TdEdura/>
+                                        <TdEdura> </TdEdura>
                                     </TRowEdura>
                                 )
                             )

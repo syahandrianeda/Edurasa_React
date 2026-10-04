@@ -28,7 +28,10 @@ const Absensi = createSlice({
             if(index === -1){
                 state.dataAbsensi.push(action.payload);
             }else{
-                state.dataAbsensi[index] = action.payload;
+                // state.dataAbsensi[index] = action.payload;
+                const dataTab = state.dataAbsensi[index]
+                dataTab.data = [...dataTab.data, ...action.payload.data]
+                state.dataAbsensi[index] = dataTab;
             }
             
         },
@@ -37,7 +40,10 @@ const Absensi = createSlice({
             if(index === -1){
                 state.dataAbsensi.push(action.payload);
             }else{
-                state.dataAbsensi[index] = action.payload;
+                // state.dataAbsensi[index] = action.payload;
+                const dataTab = state.dataAbsensi[index]
+                dataTab.data = [...dataTab.data, ...action.payload.data]
+                state.dataAbsensi[index] = dataTab;
             }
             
         }

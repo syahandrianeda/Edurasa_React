@@ -50,9 +50,7 @@ export default function TableSebaranNoSoalPadaPublikasi ({data}:{data: GroupSeba
                                             koleksiBentukSoal.map((bentuk, iName)=>{
                                                 const founded = Atp.dataBentukSoal.find(s=>s.bentukSoal===bentuk.name)
                                                 return (
-                                                    <TdEdura className="text-wrap" key={bentuk.name}>{founded && founded.data.map((soal, iSoal)=>
-                                                        <span key={soal + '_'+iSoal}>{soal.no_soal}, </span>
-                                                    )}</TdEdura>
+                                                    <TdEdura className="text-wrap" key={bentuk.name}>{founded && founded.data.map(m=>m.no_soal).join(', ')}</TdEdura>
                                                 )
                                             }
                                             )
