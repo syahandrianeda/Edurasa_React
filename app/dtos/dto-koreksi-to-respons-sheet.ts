@@ -4,7 +4,7 @@ import type { detailNilaiSiswaAppType, RisponsePenilaianSiswa } from "~/types/pe
 import type { NilaiSiswaSheetType } from "~/types/penilaian/nilai-siswa-sheet-type";
 
 export default class DtoKoreksiToResponseSheet{
-    static fromGuruMengUpdateRespon(jawabanAsliSiswa:detailNilaiSiswaAppType, responUpdate:RisponsePenilaianSiswa[], skorKd:Record<string, number>):Partial<NilaiSiswaSheetType>{
+    static fromGuruMengUpdateRespon(jawabanAsliSiswa:detailNilaiSiswaAppType, responUpdate:RisponsePenilaianSiswa[], skorKd:Record<string, number>):NilaiSiswaSheetType{
         const jenis_tagihan   = jawabanAsliSiswa.publikasi.jenis_tagihan.kode
         const tipe_assesmen = new SwitchKategoriTagihan(jenis_tagihan).kategori;
         const sebaranRespon = DtoKoreksiToResponseSheet.buildResponseDistribution(responUpdate);
@@ -35,7 +35,7 @@ export default class DtoKoreksiToResponseSheet{
     }
     private static buildSkorDistribution(responUpdate:RisponsePenilaianSiswa[]): Record<string, number> {
         return responUpdate.reduce((acc, m) => {
-            const key = "skor_" + m.no_prefix;
+            const key = "skor_" + m.index;
             acc[key] = m.skor ?? 0;
             return acc;
         }, {} as Record<string, number>);

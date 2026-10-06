@@ -51,7 +51,7 @@ export function KoreksiIsianSingkat({template, handleUpdate}:{template:TemplateK
                         {
                             (soal?.stimulus !=="") && (
                                 <div className="editor-document [&>p]:m-0 [&>img]:m-0"
-                                    dangerouslySetInnerHTML={{__html:soal?.stimulus}}/>
+                                    dangerouslySetInnerHTML={{__html:soal?.stimulus ?? ''}}/>
                             )
 
                         }
@@ -62,20 +62,20 @@ export function KoreksiIsianSingkat({template, handleUpdate}:{template:TemplateK
                         }
                         <div className="bg-white dark:text-black p-2 whitespace-pre-wrap border-2 rounded-2xl border-dashed border-green-300">
                             <p className="font-bold">Pembahasan/Penskoran:</p>
-                            <div dangerouslySetInnerHTML={{__html:soal?.pembahasan_penskoran}} className="editor-document"/>
+                            <div dangerouslySetInnerHTML={{__html:soal?.pembahasan_penskoran ?? ''}} className="editor-document"/>
                         </div>
                         <div className="relative mt-4">
                             {/* <InputText readOnly type="text" value={respon?.respon ?? ''} label={`Respon Siswa No. ${no_prefix}`}/> */}
                             <div className="absolute -top-4 border-black border left-0 w-auto ps-1 pe-4 bg-white dark:text-black rounded-tr-2xl">Respon Siswa No. {no_prefix}</div>
                             <div className="rounded-b-2xl px-2 whitespace-pre-wrap bg-white min-h-12  max-h-36 overflow-y-auto scrol-h-custom border-black border editor-document" dangerouslySetInnerHTML={{__html:respon?.respon??''}} />
-                            <label htmlFor={"file_"+soal.bentuk_soal +'_'+ no_prefix} className="flex h-fit w-fit items-center justify-center gap-[0.5em] rounded-full bg-sky-700 px-4 py-0 text-[10px] text-white shadow-[inset_0px_-4px_4px_0px_var(--color-sky-600),0px_0px_4px_1px_var(--color-sky-100),0px_4px_0px_0px_var(--color-sky-800)] duration-250 hover:translate-y-[0.25em] active:translate-y-[0.5em] active:shadow-[inset_0px_-4px_4px_0px_var(--color-sky-600),1px_0px_2px_1px_#f9d1d1]">Upload Respon</label>
-                            <input type="file" id={"file_"+soal.bentuk_soal +'_'+ no_prefix} name={soal.bentuk_soal +'_'+ no_prefix} className="hidden" onChange={uploadFile}/>
+                            <label htmlFor={"file_"+soal?.bentuk_soal +'_'+ no_prefix} className="flex h-fit w-fit items-center justify-center gap-[0.5em] rounded-full bg-sky-700 px-4 py-0 text-[10px] text-white shadow-[inset_0px_-4px_4px_0px_var(--color-sky-600),0px_0px_4px_1px_var(--color-sky-100),0px_4px_0px_0px_var(--color-sky-800)] duration-250 hover:translate-y-[0.25em] active:translate-y-[0.5em] active:shadow-[inset_0px_-4px_4px_0px_var(--color-sky-600),1px_0px_2px_1px_#f9d1d1]">Upload Respon</label>
+                            <input type="file" id={"file_"+soal?.bentuk_soal +'_'+ no_prefix} name={soal?.bentuk_soal +'_'+ no_prefix} className="hidden" onChange={uploadFile}/>
                         </div>
                         <div className="flex w-full border justify-end mt-1 mb-3">
                             <div className="border flex gap-2 items-center">
-                                <label htmlFor={soal.bentuk_soal +'_'+ no_prefix} className="font-bold text-green-800 text-nowrap">SKOR {template.bentuk_soal.description} No. {no_prefix}</label>
+                                <label htmlFor={soal?.bentuk_soal +'_'+ no_prefix} className="font-bold text-green-800 text-nowrap">SKOR {template.bentuk_soal.description} No. {no_prefix}</label>
                                 <Input
-                                    id={soal.bentuk_soal +'_'+ no_prefix}
+                                    id={soal?.bentuk_soal +'_'+ no_prefix}
                                     className="min-w-15 bg-white dark:text-black"
                                     type="number"
                                     min={0}

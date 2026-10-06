@@ -3,9 +3,8 @@ import type { RootState } from "../store";
 import { PurePaketSoalSelector } from "./paket-soal-selector";
 import { AtpHasManySoalSelector } from "./bank-soal-selector";
 import { PublikasiPaketSoalAppStaticSelector } from "./publikasi-paket-soal";
-import DtoPaketSoalSheetClass from "~/dtos/dto-paket-soal-sheet-class";
 import TagihanPenilaianClass from "~/domain/penilaian/infrastucture/tagihan-penilian-class";
-import { DataSiswaAktifJenjang, DataSiswaAktifWithValidation, selectSiswaWithValidation } from "./data-siswa-aktif";
+import { selectSiswaWithValidation } from "./data-siswa-aktif";
 import { responTagihanCurrentJenjang } from "./daftar-tagihan-penilaian-siswa-selector";
 
 export const InstanceDataTagihanPenilaianSector = createSelector(

@@ -32,7 +32,7 @@ function switchJudulPublikasiSoal(state:ModalState){
     const type = state.type;
     switch(type){
         case 'KOREKSI SOAL':
-            return `KOREKSI <<>>${(state.payload as unknown as detailNilaiSiswaAppType)?.publikasi?.nama_publikasi}<<>>${(state.payload as unknown as detailNilaiSiswaAppType)?.siswa?.pd_nama}`
+            return `KOREKSI ][ ${(state.payload as unknown as detailNilaiSiswaAppType)?.publikasi?.nama_publikasi} ][ ${(state.payload as unknown as detailNilaiSiswaAppType)?.siswa?.pd_nama}`
        default:
             return  type as string
     }

@@ -50,6 +50,7 @@ type DataAtpMap = {
     atp_id : number,
     atp_description : string,
     skor: number;
+    total: number,
     jumlahSoalDinilai: number;
     dataBentukSoal: DataBentukSoalWithScore[]
     
@@ -58,6 +59,7 @@ interface DataTpMap{
     tp_id : number,
     tp_description : string,
     skor: number
+    total: number,
     jumlahSoalDinilai: number,
     slotRow: number
     dataAtp: DataAtpMap[]
@@ -67,6 +69,7 @@ interface DataCpWithScore{
     cp_id : number,
     cp_description : string,
     skor: number
+    total: number,
     jumlahSoalDinilai: number,
     slotRow: number,
     dataTp : DataTpMap[]
@@ -76,6 +79,7 @@ export interface GroupBentukSoalPropertiKurikulumInPublikasiAssesmenWithScore{
     kodeMapel: string,
     mapelName : string,
     skor: number,
+    total: number,
     jumlahSoalDinilai: number,
     slotRow: number,
     dataCp: DataCpWithScore[],

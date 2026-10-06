@@ -68,7 +68,7 @@ export default function AllInfoResponTagihan(){
                                     <TdEdura>{data.siswa?.id}</TdEdura>
                                     <TdEdura>{data.totalResponValid}</TdEdura>
                                     <TdEdura>
-                                        <TableSkorKd skor_kd={data.skor_kd}/>
+                                        <TableSkorKd skor_kd={data.skor_kd} data={data.skorKdSebaran}/>
                                     </TdEdura>
                                 </TRowEdura>
                             )

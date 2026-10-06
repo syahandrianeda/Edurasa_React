@@ -34,26 +34,119 @@ export default function ResumeSkorKdKoreksi({skorKd}:Props){
                         mapel.dataCp.map((cp, iCp)=>
                             cp.dataTp.map((tp, iTp)=>
                                 tp.dataAtp.map((atp, iAtp)=>
-                                    <TRowEdura className="text-wrap" key={iAtp+'_'+iTp+'_'+iCp+'_'+mapel.kodeMapel}>
+                                    <TRowEdura key={iAtp+'_'+iTp+'_'+iCp+'_'+mapel.kodeMapel}>
                                         {
                                             iCp === 0 && iTp === 0 && iAtp === 0 && (
-                                                <TdEdura className="text-wrap" rowSpan={mapel.slotRow}>{mapel.mapelName}</TdEdura>
+                                                <TdEdura className="text-wrap" rowSpan={mapel.slotRow}>
+                                                    {mapel.mapelName}
+                                                    
+                                                <div className="w-full min-w-32 border-t-2">
+                                                    <div className="w-full flex justify-between border-b font-bold text-[8px]">
+                                                        <p>Jumlah Skor</p>
+                                                        <p>{mapel.total}</p>
+                                                    </div>
+                                                    <div className="w-full flex justify-between border-b font-bold text-[8px]">
+                                                        <p>Jumlah Soal</p>
+                                                        <p>{mapel.jumlahSoalDinilai}</p>
+                                                    </div>
+                                                    <div className="w-full flex justify-end border-b">
+                                                        
+                                                        <p>{mapel.total}÷{mapel.jumlahSoalDinilai} = {mapel.skor}</p>
+                                                    </div>
+                                                    <div className="w-full flex justify-between border-b font-extrabold">
+                                                        <p>Skor Mapel</p>
+                                                        <p>{mapel.skor}</p>
+                                                    </div>
+                                                </div>
+                                                </TdEdura>
                                             )
                                             
                                         }
                                         {
                                             
                                             iTp === 0 && iAtp === 0 && (
-                                                <TdEdura className="text-wrap" rowSpan={cp.slotRow}>{cp.cp_description}</TdEdura>
+                                                <TdEdura className="text-wrap" rowSpan={cp.slotRow}>
+                                                    <div className="flex flex-col gap-2 justify-between items-center">
+                                                        <p>{cp.cp_description}</p>
+                                                        <div className="w-full border-t-2">
+                                                            <div className="w-full flex justify-between border-b font-bold text-[8px]">
+                                                                <p>Jumlah Skor</p>
+                                                                <p>{cp.total}</p>
+                                                            </div>
+                                                            <div className="w-full flex justify-between border-b font-bold text-[8px]">
+                                                                <p>Jumlah Soal</p>
+                                                                <p>{cp.jumlahSoalDinilai}</p>
+                                                            </div>
+                                                            <div className="w-full flex justify-end border-b">
+                                                                
+                                                                <p>{cp.total}÷{cp.jumlahSoalDinilai} = {cp.skor}</p>
+                                                            </div>
+                                                            <div className="w-full flex justify-between border-b font-extrabold">
+                                                                <p>Skor CP</p>
+                                                                <p>{cp.skor}</p>
+                                                            </div>
+
+                                                        </div>
+                                                        
+                                                    </div>
+                                                </TdEdura>
                                             )
                                         }
                                         {
                                             
                                               iAtp === 0 && (
-                                                <TdEdura className="text-wrap" rowSpan={tp.slotRow}>{tp.tp_description}</TdEdura>
+                                                <TdEdura className="text-wrap" rowSpan={tp.slotRow}>
+                                                    <div className="flex flex-col gap-2 justify-between items-center">
+                                                        <p> {tp.tp_description} </p>
+                                                        <div className="w-full border-t-2">
+                                                            <div className="w-full flex justify-between border-b font-bold text-[8px]">
+                                                                <p>Jumlah Skor</p>
+                                                                <p>{tp.total}</p>
+                                                            </div>
+                                                            <div className="w-full flex justify-between border-b font-bold text-[8px]">
+                                                                <p>Jumlah Soal</p>
+                                                                <p>{tp.jumlahSoalDinilai}</p>
+                                                            </div>
+                                                            <div className="w-full flex justify-end border-b">
+                                                                
+                                                                <p>{tp.total}÷{tp.jumlahSoalDinilai} = {tp.skor}</p>
+                                                            </div>
+                                                            <div className="w-full flex justify-between border-b font-extrabold">
+                                                                <p>Skor TP</p>
+                                                                <p>{tp.skor}</p>
+                                                            </div>
+
+                                                        </div>
+                                                        
+
+                                                    </div>
+                                                </TdEdura>
                                             )
                                         }
-                                        <TdEdura className="text-wrap">[{atp.atp_id}] {atp.atp_description}</TdEdura>
+                                        <TdEdura className="text-wrap">
+                                            <div className="flex flex-col gap-3 justify-between items-center">
+                                                <p> [{atp.atp_id}] {atp.atp_description} </p>
+                                                <div className="w-full border-t-2">
+                                                    <div className="w-full flex justify-between border-b font-bold text-[8px]">
+                                                        <p>Jumlah Skor</p>
+                                                        <p>{atp.total}</p>
+                                                    </div>
+                                                    <div className="w-full flex justify-between border-b font-bold text-[8px]">
+                                                        <p>Jumlah Soal</p>
+                                                        <p>{atp.jumlahSoalDinilai}</p>
+                                                    </div>
+                                                    <div className="w-full flex justify-end border-b">
+                                                        
+                                                        <p>{atp.total}÷{atp.jumlahSoalDinilai} = {atp.skor}</p>
+                                                    </div>
+                                                    <div className="w-full flex justify-between border-b font-extrabold">
+                                                        <p>Skor ATP</p>
+                                                        <p>{atp.skor}</p>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </TdEdura>
                                         {
                                             koleksiBentukSoal.map((bs, iBs)=>{
                                                 const dataSkor = atp.dataBentukSoal.find(s=>s.bentukSoal === bs.name);
@@ -67,6 +160,7 @@ export default function ResumeSkorKdKoreksi({skorKd}:Props){
                                                                 </div>
                                                             )
                                                         }
+
                                                     </TdEdura>
                                                 )
                                             }
@@ -76,10 +170,6 @@ export default function ResumeSkorKdKoreksi({skorKd}:Props){
                                             <div className="w-full flex justify-between border-b">
                                                 <p>Total Soal</p>
                                                 <p>{atp.jumlahSoalDinilai}</p>
-                                            </div>
-                                            <div className="w-full flex justify-between border-b font-extrabold">
-                                                <p>Skor ATP</p>
-                                                <p>{atp.skor}</p>
                                             </div>
                                         </TdEdura>
                                          {

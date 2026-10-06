@@ -25,26 +25,63 @@ const Absensi = createSlice({
     reducers:{
         setAbsensiRombel(state, action:PayloadAction<dataAbsensiTypeSlice>){
             const index = state.dataAbsensi.findIndex(s=>s.nama_rombel === action.payload.nama_rombel);
+            
             if(index === -1){
-                state.dataAbsensi.push(action.payload);
-            }else{
-                // state.dataAbsensi[index] = action.payload;
+                    state.dataAbsensi.push(action.payload);
+                    return;
+                }
+                
                 const dataTab = state.dataAbsensi[index]
-                dataTab.data = [...dataTab.data, ...action.payload.data]
-                state.dataAbsensi[index] = dataTab;
-            }
+                
+                action.payload.data.forEach(newItem => {
+                    const itemIndex = dataTab.data.findIndex(
+                        item => item.idbaris === newItem.idbaris
+                    );
+
+                    if (itemIndex === -1) {
+                        dataTab.data.push(newItem);
+                    } else {
+                        dataTab.data[itemIndex] = newItem;
+                    }
+                });
+            // if(index === -1){
+            //     state.dataAbsensi.push(action.payload);
+            // }else{
+            //     // state.dataAbsensi[index] = action.payload;
+            //     const dataTab = state.dataAbsensi[index]
+            //     dataTab.data = [...dataTab.data, ...action.payload.data]
+            //     state.dataAbsensi[index] = dataTab;
+            // }
             
         },
         upsertAbsensiRombel(state, action:PayloadAction<dataAbsensiTypeSlice>){
             const index = state.dataAbsensi.findIndex(s=>s.nama_rombel === action.payload.nama_rombel);
             if(index === -1){
-                state.dataAbsensi.push(action.payload);
-            }else{
-                // state.dataAbsensi[index] = action.payload;
+                    state.dataAbsensi.push(action.payload);
+                    return;
+                }
+                
                 const dataTab = state.dataAbsensi[index]
-                dataTab.data = [...dataTab.data, ...action.payload.data]
-                state.dataAbsensi[index] = dataTab;
-            }
+                
+                action.payload.data.forEach(newItem => {
+                    const itemIndex = dataTab.data.findIndex(
+                        item => item.idbaris === newItem.idbaris
+                    );
+
+                    if (itemIndex === -1) {
+                        dataTab.data.push(newItem);
+                    } else {
+                        dataTab.data[itemIndex] = newItem;
+                    }
+                });
+            // if(index === -1){
+            //     state.dataAbsensi.push(action.payload);
+            // }else{
+            //     // state.dataAbsensi[index] = action.payload;
+            //     const dataTab = state.dataAbsensi[index]
+            //     dataTab.data = [...dataTab.data, ...action.payload.data]
+            //     state.dataAbsensi[index] = dataTab;
+            // }
             
         }
     }

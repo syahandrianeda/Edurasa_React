@@ -1,22 +1,22 @@
 export interface ValidatedResponseSiswa{
-    idbaris: string,
-    siswa_id:string,
+    idbaris: number,
+    siswa_id:number,
     nama_siswa:string,
     rombel:string,
-    // [key:string]:  string,
+    [key:string]:  number|string,
 }
 export interface HarianRekapSheetType extends ValidatedResponseSiswa{
-    [key:string]:  string
+    // [key:string]:  string
 }
 export interface MidSemesterRekapSheetType extends ValidatedResponseSiswa{
-    [key:string]:  string
+    // [key:string]:  string
 }
 export interface AkhirSemesterRekapSheetType extends ValidatedResponseSiswa{
-    [key:string]:  string
+    // [key:string]:  string
 }
 export interface RemedialPengayaanRekapSheetType extends ValidatedResponseSiswa{
-    [key:string]:  string
+    // [key:string]:  string
 }
 export interface UsRekapSheetType extends ValidatedResponseSiswa{
-    [key:string]:  string
+    // [key:string]:  string
 }

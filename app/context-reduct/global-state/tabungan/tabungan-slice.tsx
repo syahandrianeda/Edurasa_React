@@ -24,27 +24,67 @@ const TabunganSlice = createSlice({
     reducers:{
         setTabunganRombel(state, action:PayloadAction<dataTabunganSlice>){
             const index = state.data.findIndex(s=>s.nama_rombel === action.payload.nama_rombel);
-            console.log(index, state.data)
+            
             if(index === -1){
-                state.data.push(action.payload)
-            }else{
-                // state.data[index] = action.payload;
-                // state.data[index] = {...state.data[index], data:[{...action.payload.data}]}
+                    state.data.push(action.payload);
+                    return;
+                }
+                
                 const dataTab = state.data[index]
-                dataTab.data = [...dataTab.data, ...action.payload.data]
-                state.data[index] = dataTab;
-            }
+                
+                action.payload.data.forEach(newItem => {
+                    const itemIndex = dataTab.data.findIndex(
+                        item => item.idbaris === newItem.idbaris
+                    );
+
+                    if (itemIndex === -1) {
+                        dataTab.data.push(newItem);
+                    } else {
+                        dataTab.data[itemIndex] = newItem;
+                    }
+                });
+            // const index = state.data.findIndex(s=>s.nama_rombel === action.payload.nama_rombel);
+            // console.log(index, state.data)
+            // if(index === -1){
+            //     state.data.push(action.payload)
+            // }else{
+            //     // state.data[index] = action.payload;
+            //     // state.data[index] = {...state.data[index], data:[{...action.payload.data}]}
+            //     const dataTab = state.data[index]
+            //     dataTab.data = [...dataTab.data, ...action.payload.data]
+            //     state.data[index] = dataTab;
+            // }
         },
         upsertTabunganRombel(state, action:PayloadAction<dataTabunganSlice>){
             const index = state.data.findIndex(s=>s.nama_rombel === action.payload.nama_rombel);
-            if(index === -1){
-                state.data.push(action.payload);
-            }else{
-                // state.data[index] = action.payload;
+
+                if(index === -1){
+                    state.data.push(action.payload);
+                    return;
+                }
+                
                 const dataTab = state.data[index]
-                dataTab.data = [...dataTab.data, ...action.payload.data]
-                state.data[index] = dataTab;
-            }
+                
+                action.payload.data.forEach(newItem => {
+                    const itemIndex = dataTab.data.findIndex(
+                        item => item.idbaris === newItem.idbaris
+                    );
+
+                    if (itemIndex === -1) {
+                        dataTab.data.push(newItem);
+                    } else {
+                        dataTab.data[itemIndex] = newItem;
+                    }
+                });
+            // const index = state.data.findIndex(s=>s.nama_rombel === action.payload.nama_rombel);
+            // if(index === -1){
+            //     state.data.push(action.payload);
+            // }else{
+            //     // state.data[index] = action.payload;
+            //     const dataTab = state.data[index]
+            //     dataTab.data = [...dataTab.data, ...action.payload.data]
+            //     state.data[index] = dataTab;
+            // }
             // state.loaded = action.payload.data.length > 0
         }
     }

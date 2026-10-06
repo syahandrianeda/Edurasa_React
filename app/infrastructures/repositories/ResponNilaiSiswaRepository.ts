@@ -25,13 +25,13 @@ export default class ResponNilaiSiswaRepository extends AppScriptSheet implement
 
         }
             const parameter = this.buildSheetNilaiTabTagihanRespon(param.rombel, addParameter);
-            console.log({parameter})
-             this.paramSheetBankSoalTabPublikasiPaket = param;
+            
+             
             const respon = await this.postBody(parameter);
             
             return this.responActionRead(respon)
 
-            return this.postBody(param);
+            // return this.postBody(param);
         }catch(er){
             throw er
         }

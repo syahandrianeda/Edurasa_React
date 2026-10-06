@@ -20,31 +20,64 @@ const UsSlice = createSlice(
         name:'remedial_pengayaan',
         initialState, 
         reducers: {
-            setUs(state, action:PayloadAction<RekapKategoriSementaraType<RemedialPengayaanRekapSheetType>>){
-                 const index = state.data.findIndex(s=>s.jenjang === action.payload.jenjang);
+            setRemedialPengayaan(state, action:PayloadAction<RekapKategoriSementaraType<RemedialPengayaanRekapSheetType>>){
+                const index = state.data.findIndex(s=>s.jenjang === action.payload.jenjang);
+
                 if(index === -1){
                     state.data.push(action.payload);
-                }else{
-                    // state.data[index] = action.payload;
-                    const dataTab = state.data[index]
-                    dataTab.data = [...dataTab.data, ...action.payload.data]
-                    state.data[index] = dataTab;
+                    return;
                 }
+                
+                const dataTab = state.data[index]
+                
+                action.payload.data.forEach(newItem => {
+                    const itemIndex = dataTab.data.findIndex(
+                        item => item.idbaris === newItem.idbaris
+                    );
+
+                    if (itemIndex === -1) {
+                        dataTab.data.push(newItem);
+                    } else {
+                        dataTab.data[itemIndex] = newItem;
+                    }
+                });
+                state.data[index].objekKosong = action.payload.objekKosong
             },
-            upsertUs(state, action:PayloadAction<RekapKategoriSementaraType<RemedialPengayaanRekapSheetType>>){
-                 const index = state.data.findIndex(s=>s.jenjang === action.payload.jenjang);
+            upsertRemedialPengayaan(state, action:PayloadAction<RekapKategoriSementaraType<RemedialPengayaanRekapSheetType>>){
+                const index = state.data.findIndex(s=>s.jenjang === action.payload.jenjang);
+
                 if(index === -1){
                     state.data.push(action.payload);
-                }else{
-                    // state.data[index] = action.payload;
-                    const dataTab = state.data[index]
-                    dataTab.data = [...dataTab.data, ...action.payload.data]
-                    state.data[index] = dataTab;
+                    return;
                 }
+                
+                const dataTab = state.data[index]
+                
+                action.payload.data.forEach(newItem => {
+                    const itemIndex = dataTab.data.findIndex(
+                        item => item.idbaris === newItem.idbaris
+                    );
+
+                    if (itemIndex === -1) {
+                        dataTab.data.push(newItem);
+                    } else {
+                        dataTab.data[itemIndex] = newItem;
+                    }
+                });
+                state.data[index].objekKosong = action.payload.objekKosong
+                //  const index = state.data.findIndex(s=>s.jenjang === action.payload.jenjang);
+                // if(index === -1){
+                //     state.data.push(action.payload);
+                // }else{
+                //     // state.data[index] = action.payload;
+                //     const dataTab = state.data[index]
+                //     dataTab.data = [...dataTab.data, ...action.payload.data]
+                //     state.data[index] = dataTab;
+                // }
             },
         }
     }
 )
 
-export const {setUs, upsertUs} = UsSlice.actions;
+export const {setRemedialPengayaan, upsertRemedialPengayaan} = UsSlice.actions;
 export default UsSlice.reducer;

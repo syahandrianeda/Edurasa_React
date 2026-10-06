@@ -111,7 +111,12 @@ export default class DtoResponTagihanSiswa{
                 index++;
             }
 
-            if(key.includes('skor_')){
+            // if(key.includes('skor_')){
+           
+        }
+
+        for(const key in data){
+             if (/^skor_\d+$/.test(key)) {
                 if(data[key]==="") continue;
                 const spliting = key.replace('skor_','');
                 const indexSkor = Number(spliting);
@@ -120,6 +125,7 @@ export default class DtoResponTagihanSiswa{
 
             }
         }
+
         const finalResult = result.map(m=>{
             const found= keySkor.find(s=>s.index === m.index);
             if(found){

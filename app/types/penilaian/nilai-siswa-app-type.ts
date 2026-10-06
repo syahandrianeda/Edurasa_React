@@ -7,6 +7,7 @@ import type { PublikasiPaketAppType } from "../bank-soal/entities/publikasi-pake
 import type { TagihanAsessmenType, TagihanHasDataResponse } from "~/domain/penilaian/type/tagihan-assesmen-type"
 import type { templateResponseKoreksi } from "~/domain/penilaian/type/templateResponseKoreksi"
 import type { TemplateKoreksiSiswaType } from "./TemplateKoreksiSiswaType"
+import type { GroupSebaranNoSoalFromPropertyKurikulumWithScore } from "~/domain/penilaian/model/grouping-kurikulum-by-bentuksoal"
 
 export interface NilaiSiswaAppType{
     idbaris: number,	
@@ -57,7 +58,8 @@ export interface ResumeInfoResponse extends NilaiSiswaAppType{
 export interface detailNilaiSiswaAppType extends ResumeInfoResponse{
     siswa? : SiswaType,
     publikasi:TagihanAsessmenType,
-    templateKoreksiSiswa:TemplateKoreksiSiswaType[]
+    templateKoreksiSiswa:TemplateKoreksiSiswaType[],
+    skorKdSebaran:GroupSebaranNoSoalFromPropertyKurikulumWithScore
     
 }
 

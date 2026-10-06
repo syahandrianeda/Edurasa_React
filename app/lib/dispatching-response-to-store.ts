@@ -70,7 +70,11 @@ import { getNumberFromString } from "./get-number";
 import { upsertResponTagihan } from "~/context-reduct/global-state/respon-siswa/response-tagihan-slice";
 import type { NilaiSiswaSheetType } from "~/types/penilaian/nilai-siswa-sheet-type";
 import { upsertRekapHarian } from "~/context-reduct/global-state/respon-siswa/calculate-harian-slice";
-import type { AkhirSemesterRekapSheetType, HarianRekapSheetType, MidSemesterRekapSheetType } from "~/types/penilaian/rekap_sementara_sheet_type";
+import type { AkhirSemesterRekapSheetType, HarianRekapSheetType, MidSemesterRekapSheetType, RemedialPengayaanRekapSheetType, UsRekapSheetType } from "~/types/penilaian/rekap_sementara_sheet_type";
+import { upsertRekapMidSemester } from "~/context-reduct/global-state/respon-siswa/calculate-midSemester-slice";
+import { upsertAkhirSemester } from "~/context-reduct/global-state/respon-siswa/calculate-akhirSemester-slice";
+import { upsertUs } from "~/context-reduct/global-state/respon-siswa/calculate-Us-slice";
+import { upsertRemedialPengayaan } from "~/context-reduct/global-state/respon-siswa/calculate-remedial-pengayaan-slice";
 
 
 export default async function DispatchingResponseToStore(success:boolean, data:Record<string, any>[],detailResponse:Record<string,any>, rombelAktif?:string){
@@ -335,19 +339,36 @@ export default async function DispatchingResponseToStore(success:boolean, data:R
         if(detailResponse?.namaTab === namaTab('harian')){
             store.dispatch(upsertRekapHarian({
                 jenjang,
-                data: detailResponse?.findTab? data as HarianRekapSheetType[]: []
+                data: detailResponse?.findTab? data as HarianRekapSheetType[]: [],
+                objekKosong:detailResponse?.objKosong
             }))
         }
         if(detailResponse?.namaTab === namaTab('mid_semester')){
-            store.dispatch(upsertRekapHarian({
+            store.dispatch(upsertRekapMidSemester({
                 jenjang,
-                data: detailResponse?.findTab? data as MidSemesterRekapSheetType[]: []
+                data: detailResponse?.findTab? data as MidSemesterRekapSheetType[]: [],
+                objekKosong:detailResponse?.objKosong
             }))
         }
         if(detailResponse?.namaTab === namaTab('akhir_semester')){
-            store.dispatch(upsertRekapHarian({
+            store.dispatch(upsertAkhirSemester({
                 jenjang,
-                data: detailResponse?.findTab? data as AkhirSemesterRekapSheetType[]: []
+                data: detailResponse?.findTab? data as AkhirSemesterRekapSheetType[]: [],
+                objekKosong:detailResponse?.objKosong
+            }))
+        }
+        if(detailResponse?.namaTab === namaTab('us')){
+            store.dispatch(upsertUs({
+                jenjang,
+                data: detailResponse?.findTab? data as UsRekapSheetType[]: [],
+                objekKosong:detailResponse?.objKosong
+            }))
+        }
+        if(detailResponse?.namaTab === namaTab('remedial_pengayaan')){
+            store.dispatch(upsertRemedialPengayaan({
+                jenjang,
+                data: detailResponse?.findTab? data as RemedialPengayaanRekapSheetType[]: [],
+                objekKosong:detailResponse?.objKosong
             }))
         }
         

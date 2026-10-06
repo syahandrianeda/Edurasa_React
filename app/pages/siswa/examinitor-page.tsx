@@ -20,7 +20,7 @@ import DispatchingResponseToStore from "~/lib/dispatching-response-to-store";
 import type { NilaiSiswaSheetType } from "~/types/penilaian/nilai-siswa-sheet-type";
 
 export default function ExaminatorPage({data}:{data:TagihanHasDataResponse}){
-    const {actions} = useCrudResponTagihanSiswa();
+    const {actions, state} = useCrudResponTagihanSiswa();
     const [paketSoal, setPaketSoal] = useState<PaketSoalDesign>();
     const [start, setStart] = useState<Date>(new Date());
     const [load, setLoad] = useState<string>('')
@@ -121,7 +121,7 @@ export default function ExaminatorPage({data}:{data:TagihanHasDataResponse}){
             {
                 paketSoal && (
                     <div className="sticky bottom-0 bg-sky-300 z-50 min-h-14 w-full flex justify-center items-center rounded-t-2xl">
-                        <ButtonCommitAwesome labelButton="Kirim Jawaban" onClick={onSubmit} className="text-[12px] px-4 py-0"/>
+                        <ButtonCommitAwesome disabled={state.isSubmitting} labelButton="Kirim Jawaban" onClick={onSubmit} className="text-[12px] px-4 py-0"/>
                     </div>
 
                 )
