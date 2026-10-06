@@ -42,7 +42,7 @@ export function KoreksiPgBody({ data, handleUpdate }: { data: DataTemplateKoreks
 
                                 return (
                                     <TdEdura key={opsi.index} className={cn('p-0 align-middle text-center',isSelected?'bg-green-400':'bg-inherit')}>
-                                        <label htmlFor={radioId} className="p-2 cursor-pointer">{abjad}</label>
+                                        <label htmlFor={radioId} className="p-2 text-[10px] cursor-pointer">{abjad}</label>
                                         <input
                                             type="radio"
                                             id={radioId}

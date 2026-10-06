@@ -79,7 +79,7 @@ export default function ExaminatorPage({data}:{data:TagihanHasDataResponse}){
        
         
     },[setDataRespon]);
-
+    
     const onSubmit = ()=>{
         const pesan = confirm('Ananda yakin?')
         if(!pesan) return;

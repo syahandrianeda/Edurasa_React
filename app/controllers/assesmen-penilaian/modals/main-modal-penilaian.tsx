@@ -41,7 +41,7 @@ export default function MainModalPenilaian(){
             'INFO RESPON TAGIHAN',
             'PRA KOREKSI SOAL',
             'IMPORT NILAI',
-            'ANALLISIS SOAL',
+            'ANALISIS SOAL',
             
         ].includes(state?.type!);
     return (

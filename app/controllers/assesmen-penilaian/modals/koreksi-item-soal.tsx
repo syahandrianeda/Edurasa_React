@@ -154,8 +154,10 @@ export default function KoreksiItemSoal(){
             <ResumeSkorKdKoreksi skorKd={skorKd} />
         </div>
             <ModalFooterEdura>
-                <ButtonCommitAwesome labelButton="Kembali" className="px-4 py-0" onClick={()=>actions.open(nextState?.type ?? 'PRA KOREKSI SOAL', nextState?.payload, {closeOnOutsideClick:false, backToModalType:nextState})}/>
-                <ButtonCommitAwesome labelButton="Simpan" className="px-4 py-0" onClick={onSubmit}/>
+                <div className="flex flex-row gap-2 w-full justify-center">
+                    <ButtonCommitAwesome labelButton="Kembali" className="px-4 py-0" onClick={()=>actions.open(nextState?.type ?? 'PRA KOREKSI SOAL', nextState?.payload, {closeOnOutsideClick:false, backToModalType:nextState})}/>
+                    <ButtonCommitAwesome labelButton="Simpan" className="px-4 py-0" onClick={onSubmit}/>
+                </div>
             </ModalFooterEdura>
         </>
     )

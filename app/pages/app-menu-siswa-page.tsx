@@ -15,7 +15,7 @@ export default function AppMenuSiswaPage() {
     const MenuPermission                = PermissionMenu(user?.permission ??[], DataMenu);
     const ormAbsen                      = useAppSelector(OrmAbsensiSelector);
     const {actions:modalActions}        = useModal();
-    const ts = useAppSelector(s=>s.absensiSiswa.dataAbsensi);
+    // const ts = useAppSelector(s=>s.absensiSiswa.dataAbsensi);
     // console.log('state Redux ts', ts)
     /**
       const kehadiranSiswaHariIni = useMemo(()=>{

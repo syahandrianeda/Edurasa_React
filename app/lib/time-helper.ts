@@ -48,3 +48,26 @@ export function filterTodayByTime<T extends {
             ),
         }));
 }
+
+export function filterAccessibleByTime<T extends {
+    start_time: Date;
+    end_time: Date;
+}>(
+    data: T[],
+    now = new Date()
+): WithTimeStatus<T>[] {
+    return data
+        .filter(
+            (item) =>
+                now >= item.start_time &&
+                now < item.end_time
+        )
+        .map((item) => ({
+            ...item,
+            timeStatus: getTimeStatus(
+                item.start_time,
+                item.end_time,
+                now
+            ),
+        }));
+}

@@ -40,7 +40,8 @@ function switchJudulPublikasiSoal(state:ModalState){
 
 function SwitchWidthByType(type:ModalType):string{
     switch(type){
-        
+        case 'KOREKSI SOAL':
+            return "sm:min-w-5xl  md:min-w-3xl lg:min-w-6xl gap-0 overflow-x-auto"
         default:
             return "sm:min-w-5xl  md:min-w-2xl lg:min-w-5xl gap-0 overflow-x-auto"
     }

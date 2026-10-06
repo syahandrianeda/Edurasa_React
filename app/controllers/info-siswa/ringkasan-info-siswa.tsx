@@ -8,7 +8,7 @@ import ButtonCommitAwesome from "~/components/button-awesome/commit-button";
 import { useModal, type ModalActions } from "~/components/modals/modal-provider";
 import type { PublikasiPaketAppType } from "~/types/bank-soal/entities/publikasi-paket-app-type";
 import { InstanceDataTagihanPenilaianSector } from "~/context-reduct/selectores/daftar-tagihan-penilaian-selector";
-import { filterTodayByTime, type WithTimeStatus } from "~/lib/time-helper";
+import { filterAccessibleByTime, filterTodayByTime, type WithTimeStatus } from "~/lib/time-helper";
 import type { TagihanHasDataResponse } from "~/domain/penilaian/type/tagihan-assesmen-type";
 import DigitalClock from "~/components/timer/jam-digital";
 import { useCurrentTime } from "~/hooks/use-current-time";
@@ -39,7 +39,8 @@ export default function RingkasanInfoSiswa({
     const  dataTagihan = useMemo(()=>{
         if(!instancPaketSoal?.dataPaketSoalApp || !user) return []
          const dataSoal = instancPaketSoal?.dataTagihanHasResponse;
-         const foundCurrent = filterTodayByTime(dataSoal?.filter(s=>s.peserta.some(siswa=>siswa.id === user.id)) , now);//dataSoal?.filter(s=>s.peserta.some(siswa=>siswa.id === user.id))
+        //  const foundCurrent = filterTodayByTime(dataSoal?.filter(s=>s.peserta.some(siswa=>siswa.id === user.id)) , now);//dataSoal?.filter(s=>s.peserta.some(siswa=>siswa.id === user.id))
+         const foundCurrent = filterAccessibleByTime(dataSoal?.filter(s=>s.peserta.some(siswa=>siswa.id === user.id)) , now);//dataSoal?.filter(s=>s.peserta.some(siswa=>siswa.id === user.id))
          return foundCurrent
         },[user, instancPaketSoal?.dataTagihanHasResponse, now])
 

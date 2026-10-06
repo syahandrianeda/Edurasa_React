@@ -60,5 +60,5 @@ export type ModalType =
     | 'PRA KOREKSI SOAL'
     | 'KOREKSI SOAL'
     | 'IMPORT NILAI'
-    | 'ANALLISIS SOAL'
+    | 'ANALISIS SOAL'
     | null;
