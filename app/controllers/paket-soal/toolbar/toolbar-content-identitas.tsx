@@ -3,7 +3,7 @@ import { InputText } from "~/components/fields/fields";
 import { useFilterContext } from "~/components/toolbars/state-toolbar/state-toolbar";
 import CalendarTime from "~/components/ui/calender-time";
 import { Field } from "~/components/ui/field";
-import type { PaketSoalDesign } from "~/domain/paket-soal/result/paket-soal";
+import type { PaketSoalDesign } from "~/domain/paket-soal/result/paket-soal-design-type";
 import { initialStringKop } from "./initial-kop";
 
 

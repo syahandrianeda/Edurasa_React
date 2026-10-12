@@ -1,5 +1,5 @@
 import { useFilterContext } from "~/components/toolbars/state-toolbar/state-toolbar"
-import type { PaketSoalDesign } from "~/domain/paket-soal/result/paket-soal"
+import type { PaketSoalDesign } from "~/domain/paket-soal/result/paket-soal-design-type"
 import { useDraftPaketSoal } from "~/hooks/use-draft-paket-soal"
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Button } from "~/components/ui/button";

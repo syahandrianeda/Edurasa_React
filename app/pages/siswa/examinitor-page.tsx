@@ -1,15 +1,15 @@
 import type { TagihanHasDataResponse } from "~/domain/penilaian/type/tagihan-assesmen-type";
 import { useCallback, useEffect, useState } from "react";
 import ReadTxtService from "~/infrastructures/services/read-txt-service";
-import type{ PaketSoalDesign } from "~/domain/paket-soal/result/paket-soal";
+import type{ PaketSoalDesign } from "~/domain/paket-soal/result/paket-soal-design-type";
 import {toast} from 'sonner';
 import { PaketSoalDesignParseDto } from "~/dtos/dto-parsing-paket-soal";
 import type { PraSettingPaket } from "~/domain/paket-soal/entities/pra-setting-paket";
-import { getGlobalIndex } from "~/domain/paket-soal/result/create-design";
+import { getGlobalIndex } from "~/domain/paket-soal/infrastructure/create-design";
 import ItemSoalPreview from "~/controllers/paket-soal/components/item-soal-preview";
 import PreviewSoalOnline from "~/controllers/respon-tagihan-siswa/preview-soal-online-siswa";
 import { useImmer } from "use-immer";
-import type { RisponsePenilaianSiswa } from "~/types/penilaian/nilai-siswa-app-type";
+import type { RisponsePenilaianSiswa } from "~/types/penilaian/RisponsePenilaianSiswaType";
 import type ResponSiswaTagihanPenilaian from "~/domain/penilaian/infrastucture/respon-siswa-tagihan-penilaian-class";
 import ButtonCommitAwesome from "~/components/button-awesome/commit-button";
 import { getSessionApp } from "~/infrastructures/session-storage/app-session";

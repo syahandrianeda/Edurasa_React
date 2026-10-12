@@ -1,5 +1,5 @@
-import type { PaketSoalAppType, PaketSoalAppWithPublikasi } from "~/types/bank-soal/entities/paket-soal-app-type";
-import type { PaketSoalSheetType } from "~/types/bank-soal/entities/paket-soal-sheet-type";
+import type { PaketSoalAppType, PaketSoalAppWithPublikasi } from "~/types/paket-soal/paket-soal-app-type";
+import type { PaketSoalSheetType } from "~/types/paket-soal/paket-soal-sheet-type";
 import DtoResolverTypeClass from "./dto-resolver-class";
 import type { PraSettingPaket } from "~/domain/paket-soal/entities/pra-setting-paket";
 import type { IdentitasKontenPaket } from "~/domain/paket-soal/entities/identitas-paket";
@@ -8,7 +8,7 @@ import type { AtpHasManySoalType } from "~/domain/bank-soal/relational-soal/type
 import { ListBentukSoal } from "~/domain/bank-soal/list-bentuk-soal";
 
 import { getNumberFromString } from "~/lib/get-number";
-import type { PublikasiPaketAppType, PublikasiPaketAppValidWithPaketSoal } from "~/types/bank-soal/entities/publikasi-paket-app-type";
+import type { PublikasiPaketAppType, PublikasiPaketAppValidWithPaketSoal } from "~/types/publikasi-paket-soal/publikasi-paket-app-type";
 import type { TagihanPenilaianType } from "~/domain/penilaian/type/tagihan-penilaian-type";
 import type { TagihanAsessmenType } from "~/domain/penilaian/type/tagihan-assesmen-type";
 import { ListJenisTagihan } from "~/domain/asesmen-penilaian/list-jenis-tagihan";

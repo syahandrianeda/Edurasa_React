@@ -5,7 +5,7 @@ import {
     indexToAbjad,
     upsertRespon,
 } from "~/domain/bank-soal/koreksi";
-import type { RisponsePenilaianSiswa } from "~/types/penilaian/nilai-siswa-app-type";
+import type { RisponsePenilaianSiswa } from "~/types/penilaian/RisponsePenilaianSiswaType";
 
 /** factory entri respon untuk keperluan test */
 const buatRespon = (over: Partial<RisponsePenilaianSiswa>): RisponsePenilaianSiswa => ({
@@ -13,6 +13,9 @@ const buatRespon = (over: Partial<RisponsePenilaianSiswa>): RisponsePenilaianSis
     respon: null,
     no_prefix: 1,
     bentuk_soal: 'pg',
+    soal: undefined as any,
+    soal_id: undefined as any,
+    atp: undefined as any,
     ...over,
 });
 

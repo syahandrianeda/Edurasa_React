@@ -11,7 +11,7 @@ import { OrmPromesInstanceSelector } from '~/context-reduct/selectores/orm-prome
 import QueryAtpHasItemSoal from '~/domain/bank-soal/relational-soal/services/query-atp-has-many-soal';
 import type { AtpHasManySoalType } from '~/domain/bank-soal/relational-soal/type';
 import {type PraSettingPaket } from "~/domain/paket-soal/entities/pra-setting-paket"
-import type { PaketSoalDesign } from '~/domain/paket-soal/result/paket-soal';
+import type { PaketSoalDesign } from '~/domain/paket-soal/result/paket-soal-design-type';
 import { useDraftPaketSoal } from '~/hooks/use-draft-paket-soal';
 import { getNumberFromString } from '~/lib/get-number';
 

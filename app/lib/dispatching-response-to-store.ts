@@ -62,9 +62,9 @@ import type { SerahTerimaDokumenSheetType } from "~/types/galleries/serah-terima
 import { setTransaksiSerahTerimaDokumen, upsertTransaksiSerahTerimaDokumen } from "~/context-reduct/global-state/galleries/transaksi-serah-terima-dokumen-slice";
 import type { TransaksiSerahTerimaDokumenSheetType } from "~/types/galleries/transaksi-serah-terima-dokumen";
 import { setPaketSoal, upsertPaketSoal } from "~/context-reduct/global-state/bank-soal/paket-soal-slice";
-import type { PaketSoalSheetType } from "~/types/bank-soal/entities/paket-soal-sheet-type";
+import type { PaketSoalSheetType } from "~/types/paket-soal/paket-soal-sheet-type";
 import { setPublikasiPaket, upsertPublikasiPaket } from "~/context-reduct/global-state/bank-soal/publikasi-paket-slice";
-import type { PublikasiPaketSheetType } from "~/types/bank-soal/entities/publikasi-paket-sheet-type";
+import type { PublikasiPaketSheetType } from "~/types/publikasi-paket-soal/publikasi-paket-sheet-type";
 import { IndexDbTabNameRepository } from "~/infrastructures/iDb-vite/indexDb-tabname-repository";
 import { getNumberFromString } from "./get-number";
 import { upsertResponTagihan } from "~/context-reduct/global-state/respon-siswa/response-tagihan-slice";

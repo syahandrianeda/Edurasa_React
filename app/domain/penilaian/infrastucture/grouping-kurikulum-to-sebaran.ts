@@ -4,7 +4,7 @@ import type { BankSoalAppType } from "~/types/bank-soal/bank-soal-type";
 import type { GroupBentukSoalPropertiKurikulumInPublikasiAssesmen, GroupSebaranNoSoalFromPropertyKurikulum, GroupSebaranNoSoalFromPropertyKurikulumWithScore, PrediksiNoSoal } from "../model/grouping-kurikulum-by-bentuksoal";
 import type { ListBentukSoalType } from "~/types/bank-soal/bentuk-soal-type";
 import { ListBentukSoal } from "~/domain/bank-soal/list-bentuk-soal";
-import type { RisponsePenilaianSiswa } from "~/types/penilaian/nilai-siswa-app-type";
+import type { RisponsePenilaianSiswa } from "~/types/penilaian/RisponsePenilaianSiswaType";
 import type { ScoreAccumulator, RefAtpHasManySoalType } from "./ScoreAccumulator";
 
 

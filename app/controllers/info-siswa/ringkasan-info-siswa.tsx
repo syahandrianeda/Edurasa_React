@@ -6,7 +6,7 @@ import type { User } from "~/types";
 import CardInfoItemSiswa from "./card-item-info-siswa";
 import ButtonCommitAwesome from "~/components/button-awesome/commit-button";
 import { useModal, type ModalActions } from "~/components/modals/modal-provider";
-import type { PublikasiPaketAppType } from "~/types/bank-soal/entities/publikasi-paket-app-type";
+import type { PublikasiPaketAppType } from "~/types/publikasi-paket-soal/publikasi-paket-app-type";
 import { InstanceDataTagihanPenilaianSector } from "~/context-reduct/selectores/daftar-tagihan-penilaian-selector";
 import { filterAccessibleByTime, filterTodayByTime, type WithTimeStatus } from "~/lib/time-helper";
 import type { TagihanHasDataResponse } from "~/domain/penilaian/type/tagihan-assesmen-type";

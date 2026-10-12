@@ -6,7 +6,7 @@ import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { syncPaketSoalData, } from "./paket-soal-data-sync";
 import { useFilterContext } from "~/components/toolbars/state-toolbar/state-toolbar";
-import type { PaketSoalDesign } from "~/domain/paket-soal/result/paket-soal";
+import type { PaketSoalDesign } from "~/domain/paket-soal/result/paket-soal-design-type";
 import type { ListBentukSoalType } from "~/types/bank-soal/bentuk-soal-type";
 import type { CountBentukSoalPaket } from "~/domain/paket-soal/entities/count-bentuk-soal-paket";
 import { ListBentukSoal } from "~/domain/bank-soal/list-bentuk-soal";

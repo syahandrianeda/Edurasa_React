@@ -1,7 +1,7 @@
 import type { ParamFile, ApiResponse } from "~/configs/appscript-config";
 import AppScriptSheet from "~/configs/appscript-sheet";
 import type { PaketSoalRepositoryInterface } from "~/domain/interfaces/paket-soal-repository-interface";
-import type { PaketSoalSheetType } from "~/types/bank-soal/entities/paket-soal-sheet-type";
+import type { PaketSoalSheetType } from "~/types/paket-soal/paket-soal-sheet-type";
 
 export default class PaketSoalRepository extends AppScriptSheet implements PaketSoalRepositoryInterface{
     constructor(){

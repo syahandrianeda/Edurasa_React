@@ -7,8 +7,8 @@ import { getSessionApp } from "~/infrastructures/session-storage/app-session"
 import { getSessionRombel } from "~/infrastructures/session-storage/rombel-session"
 import { getNumberFromString } from "~/lib/get-number"
 import type { UserPtk } from "~/types"
-import type { PaketSoalAppWithPublikasi } from "~/types/bank-soal/entities/paket-soal-app-type"
-import type { PublikasiPaketAppType } from "~/types/bank-soal/entities/publikasi-paket-app-type"
+import type { PaketSoalAppWithPublikasi } from "~/types/paket-soal/paket-soal-app-type"
+import type { PublikasiPaketAppType } from "~/types/publikasi-paket-soal/publikasi-paket-app-type"
 
 export default function  WrapperFormAddPublikasiPaket ({state, children}:{state:ModalState<PaketSoalAppWithPublikasi>, children:ReactNode
 

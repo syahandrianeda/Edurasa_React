@@ -5,7 +5,7 @@ import type { TagihanHasDataResponse } from "~/domain/penilaian/type/tagihan-ass
 import {toast} from 'sonner';
 import { useCrudPublikasiPaketSoal } from "~/controllers/publikasi-paket-soal/crud/crud-publikasi-paket-provider";
 import DispatchingResponseToStore from "~/lib/dispatching-response-to-store";
-import type { PublikasiPaketSheetType } from "~/types/bank-soal/entities/publikasi-paket-sheet-type";
+import type { PublikasiPaketSheetType } from "~/types/publikasi-paket-soal/publikasi-paket-sheet-type";
 import { useModal } from "~/components/modals/modal-provider";
 import { useFormEdura } from "~/components/form-custom/form-edura";
 import TableWithScrolling from "~/components/tabels/table-with-scrolling";

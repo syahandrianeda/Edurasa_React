@@ -1,4 +1,4 @@
-import type { PublikasiPaketAppValidWithPaketSoal } from "~/types/bank-soal/entities/publikasi-paket-app-type";
+import type { PublikasiPaketAppValidWithPaketSoal } from "~/types/publikasi-paket-soal/publikasi-paket-app-type";
 
 import { TdEdura, ThEdura, TRowEdura } from "~/components/tabels/tabel-components";
 import TableWithScrolling from "~/components/tabels/table-with-scrolling";

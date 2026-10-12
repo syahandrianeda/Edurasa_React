@@ -1,5 +1,5 @@
 import type { TagihanHasDataResponse } from "~/domain/penilaian/type/tagihan-assesmen-type";
-import type { PublikasiPaketSheetType } from "~/types/bank-soal/entities/publikasi-paket-sheet-type";
+import type { PublikasiPaketSheetType } from "~/types/publikasi-paket-soal/publikasi-paket-sheet-type";
 import { numberArrayToString, resolveDate, resolveNumber, stringArrayToString } from "./_resolver";
 import DtoPraSetingPaket from "./dto-praseting";
 

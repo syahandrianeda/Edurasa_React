@@ -3,7 +3,8 @@ import SwitchKategoriTagihan from "~/domain/asesmen-penilaian/switch-kategori-ta
 import type { KategoriTagihanType } from "~/domain/penilaian/type/KategoriTagihanType";
 import { formatDateTimeSheet } from "~/lib/date-helper";
 import type { ListBentukSoalType } from "~/types/bank-soal/bentuk-soal-type";
-import type { detailNilaiSiswaAppType, RisponsePenilaianSiswa } from "~/types/penilaian/nilai-siswa-app-type";
+import type { detailNilaiSiswaAppType } from "~/types/penilaian/nilai-siswa-app-type";
+import type { RisponsePenilaianSiswa } from "~/types/penilaian/RisponsePenilaianSiswaType";
 import type { NilaiSiswaSheetType } from "~/types/penilaian/nilai-siswa-sheet-type";
 import type { ValidatedResponseSiswa } from "~/types/penilaian/rekap_sementara_sheet_type";
 

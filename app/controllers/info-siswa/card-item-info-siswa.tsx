@@ -5,7 +5,7 @@ import type { dataAbsenBulanan } from "~/domain/absensi/orm-absensi-type";
 import type { TagihanHasDataResponse } from "~/domain/penilaian/type/tagihan-assesmen-type";
 import type { CountdownResult } from "~/lib/get-count-down";
 import type { WithTimeStatus } from "~/lib/time-helper";
-import type { PublikasiPaketAppType } from "~/types/bank-soal/entities/publikasi-paket-app-type";
+import type { PublikasiPaketAppType } from "~/types/publikasi-paket-soal/publikasi-paket-app-type";
 
 type Props = {
     id:number, 

@@ -1,6 +1,6 @@
-import type { DisplayFormatItemSoal } from "~/domain/paket-soal/result/display-format-item-soal";
+import type { DisplayFormatItemSoal } from "~/domain/paket-soal/result/display-format-item-soal-type";
 import InputOpsiJawabanOnline from "./input-opsi-jawaban-online";
-import type { RisponsePenilaianSiswa } from "~/types/penilaian/nilai-siswa-app-type";
+import type { RisponsePenilaianSiswa } from "~/types/penilaian/RisponsePenilaianSiswaType";
 
 type Props = {
     data:DisplayFormatItemSoal, 

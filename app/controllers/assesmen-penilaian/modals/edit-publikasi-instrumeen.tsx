@@ -11,7 +11,7 @@ import { Input } from '~/components/ui/input';
 import { getSessionRombel } from '~/infrastructures/session-storage/rombel-session';
 import { getNumberFromString } from '~/lib/get-number';
 import { Label } from '~/components/ui/label';
-import type { PublikasiPaketAppType } from '~/types/bank-soal/entities/publikasi-paket-app-type';
+import type { PublikasiPaketAppType } from '~/types/publikasi-paket-soal/publikasi-paket-app-type';
 import { ListJenisTagihan } from '~/domain/asesmen-penilaian/list-jenis-tagihan';
 import { currentTapelProperties } from '~/lib/current-tapel';
 import { useAppSelector } from '~/context-reduct/hook';
@@ -20,7 +20,7 @@ import { ModalFooterEdura } from '~/components/modals/modal-components';
 import ButtonCommitAwesome from '~/components/button-awesome/commit-button';
 import { useCrudPublikasiPaketSoal } from '~/controllers/publikasi-paket-soal/crud/crud-publikasi-paket-provider';
 import DispatchingResponseToStore from '~/lib/dispatching-response-to-store';
-import type { PublikasiPaketSheetType } from '~/types/bank-soal/entities/publikasi-paket-sheet-type';
+import type { PublikasiPaketSheetType } from '~/types/publikasi-paket-soal/publikasi-paket-sheet-type';
 import DtoPublikasiPaketStatic from '~/dtos/dto-publlikasi-paket-static';
 import {toast} from 'sonner'
 import { useModal } from '~/components/modals/modal-provider';

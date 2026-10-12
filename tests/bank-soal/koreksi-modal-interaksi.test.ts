@@ -7,7 +7,8 @@ import KoreksiItemSoal from "~/controllers/assesmen-penilaian/modals/koreksi-ite
 import type { BankSoalAppType } from "~/types/bank-soal/bank-soal-type";
 import type { ListBentukSoalType } from "~/types/bank-soal/bentuk-soal-type";
 import type { TemplateKoreksiSiswaType } from "~/types/penilaian/TemplateKoreksiSiswaType";
-import type { detailNilaiSiswaAppType, RisponsePenilaianSiswa } from "~/types/penilaian/nilai-siswa-app-type";
+import type { detailNilaiSiswaAppType } from "~/types/penilaian/nilai-siswa-app-type";
+import type { RisponsePenilaianSiswa } from "~/types/penilaian/RisponsePenilaianSiswaType";
 
 /**
  * Uji interaksi alur koreksi: PRA KOREKSI SOAL -> Koreksi -> radio PG & input skor essay/isian.

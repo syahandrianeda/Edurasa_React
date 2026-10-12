@@ -1,7 +1,7 @@
 import type { ApiResponse } from "~/configs/appscript-config";
 import AppScriptSheet from "~/configs/appscript-sheet";
 import type { PublikasiPaketRepositoryInterface } from "~/domain/interfaces/publikasi-paket-repository-interface";
-import type { PublikasiPaketSheetType } from "~/types/bank-soal/entities/publikasi-paket-sheet-type";
+import type { PublikasiPaketSheetType } from "~/types/publikasi-paket-soal/publikasi-paket-sheet-type";
 
 export default class PublikasiPaketRepository extends AppScriptSheet implements PublikasiPaketRepositoryInterface{
     constructor(){

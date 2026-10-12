@@ -3,9 +3,9 @@ import type { DataSoalDesignBaku } from "~/types/bank-soal/entities/DataSoalDesi
 import type { countBentukSoalPaketBaku } from "~/types/bank-soal/entities/countBentukSoalPaketBaku";
 import type { IdentitasKontenPaket } from "../entities/identitas-paket";
 import type { PraSettingPaket } from "../entities/pra-setting-paket";
-import type { PaketSoalDesign } from "../result/paket-soal";
-import type { DataSoalDesign } from "../result/session-soal";
-import type { DisplayFormatItemSoal } from "../result/display-format-item-soal";
+import type { PaketSoalDesign } from "../result/paket-soal-design-type";
+import type { DataSoalDesign } from "../result/section-soal-type";
+import type { DisplayFormatItemSoal } from "../result/display-format-item-soal-type";
 import type { KoleksiMapelPaketSoal } from "../entities/koleksi-mapel-paket-soal";
 import type { CountBentukSoalPaket } from "../entities/count-bentuk-soal-paket";
 

@@ -1,4 +1,5 @@
-import type { detailNilaiSiswaAppType, NilaiSiswaAppType, RisponsePenilaianSiswa, SiswaWithNilaiSiswaAppType } from "~/types/penilaian/nilai-siswa-app-type";
+import type { detailNilaiSiswaAppType, NilaiSiswaAppType, SiswaWithNilaiSiswaAppType } from "~/types/penilaian/nilai-siswa-app-type";
+import type { RisponsePenilaianSiswa } from "~/types/penilaian/RisponsePenilaianSiswaType";
 import type { TagihanHasDataResponse } from "../penilaian/type/tagihan-assesmen-type";
 import type { NilaiSiswaSheetType } from "~/types/penilaian/nilai-siswa-sheet-type";
 import type { SiswaType } from "~/types/siswa";

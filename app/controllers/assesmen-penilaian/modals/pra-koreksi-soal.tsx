@@ -5,7 +5,8 @@ import TableWithScrolling from '~/components/tabels/table-with-scrolling';
 import type { TagihanHasDataResponse } from "~/domain/penilaian/type/tagihan-assesmen-type";
 import { getSessionRombel } from "~/infrastructures/session-storage/rombel-session";
 import TableSkorKd from '../tabel/tabel-skor-kd';
-import type { detailNilaiSiswaAppType, RisponsePenilaianSiswa } from '~/types/penilaian/nilai-siswa-app-type';
+import type { detailNilaiSiswaAppType } from '~/types/penilaian/nilai-siswa-app-type';
+import type { RisponsePenilaianSiswa } from "~/types/penilaian/RisponsePenilaianSiswaType";
 import ButtonCommitAwesome from '~/components/button-awesome/commit-button';
 import { useModal } from '~/components/modals/modal-provider';
 import TooltipComp from '~/components/ui_edura/tooltip-comp';
@@ -19,6 +20,7 @@ import type { NilaiSiswaSheetType } from '~/types/penilaian/nilai-siswa-sheet-ty
 import type { SiswaType } from '~/types/siswa';
 import SwitchKategoriTagihan from '~/domain/asesmen-penilaian/switch-kategori-tagihan-class';
 import GroupingSebaranKurikulum from '~/domain/penilaian/infrastucture/grouping-kurikulum-to-sebaran';
+import RisponsePenilaianSiswaBuilder from "~/domain/penilaian/infrastucture/rispon-penilaian-siswa-builder";
 
 export default function PraKoreksiSoal(){
     const dataTagihan = useAppSelector(InstanceDataTagihanPenilaianSector);
@@ -89,7 +91,8 @@ export default function PraKoreksiSoal(){
         const kategori = new SwitchKategoriTagihan(jenis_tagihan).kategori;
         const idSoal = currentDataSelector.id_bank_soal;
         const settingTagihan = currentDataSelector.setting_tagihan?.count_bentuk_soal;//
-        const templateKoreksi = dataTagihan?.createTemplateKoreksiUsingSetingTagihan(idSoal,settingTagihan ?? [],[]) ;//(dataTagihan?.createTemplateKoreksiPerSiswa(kurikulum, idSoal) ?? {sebaran:[], respon:[]}) as unknown as {sebaran:detailNilaiSiswaAppType['templateKoreksiSiswa'],respon:RisponsePenilaianSiswa[]};
+        // const templateKoreksi = dataTagihan?.createTemplateKoreksiUsingSetingTagihan(idSoal,settingTagihan ?? [],[]) ;//(dataTagihan?.createTemplateKoreksiPerSiswa(kurikulum, idSoal) ?? {sebaran:[], respon:[]}) as unknown as {sebaran:detailNilaiSiswaAppType['templateKoreksiSiswa'],respon:RisponsePenilaianSiswa[]};
+        const templateKoreksi = RisponsePenilaianSiswaBuilder.build(currentDataSelector.bank_soal_collections,settingTagihan ?? [], [])
         const respon =  templateKoreksi?.respon ?? [];
         const templateKoreksiSiswa =  templateKoreksi?.sebaran ?? [];
         const Kur = currentDataSelector?.setting_tagihan?.kurikulum ?? [];

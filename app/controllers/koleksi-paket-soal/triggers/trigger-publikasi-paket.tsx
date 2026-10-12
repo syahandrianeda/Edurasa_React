@@ -1,7 +1,7 @@
 import { InfoIcon,  PencilIcon, Trash } from "lucide-react";
 import {  ActionButtonTableMini,  type TriggerTable } from "~/components/dropdowns/dropdown-action-table";
 import { useModal } from "~/components/modals/modal-provider";
-import type {  PublikasiPaketAppValidWithPaketSoal } from "~/types/bank-soal/entities/publikasi-paket-app-type";
+import type {  PublikasiPaketAppValidWithPaketSoal } from "~/types/publikasi-paket-soal/publikasi-paket-app-type";
 
 export default function TriggerItemPublikasi({data:m}:{data:PublikasiPaketAppValidWithPaketSoal}){
     const {actions} = useModal<PublikasiPaketAppValidWithPaketSoal>()

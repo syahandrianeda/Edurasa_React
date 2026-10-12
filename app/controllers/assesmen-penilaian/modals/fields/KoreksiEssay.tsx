@@ -21,7 +21,7 @@ export function KoreksiEssay({template, handleUpdate}:{template:TemplateKoreksiS
         
          const svc = new UploadGambarSoalService();
                 // const url = await svc.uploadFile(file, onProgress,opt);
-                // console.log({url})
+                
                 // return url;
         toast.promise(
             // UploadImageServiceCommon(file),
@@ -62,7 +62,7 @@ export function KoreksiEssay({template, handleUpdate}:{template:TemplateKoreksiS
                         }
                         <div className="bg-white dark:text-black p-2 whitespace-pre-wrap border-2 rounded-2xl border-dashed border-green-300">
                             <p className="font-bold">Pembahasan/Penskoran:</p>
-                            <div dangerouslySetInnerHTML={{__html:soal?.pembahasan_penskoran ?? ''}} className="editor-document"/>
+                            <div dangerouslySetInnerHTML={{__html:soal?.pembahasan_penskoran ?? ''}} className="editor-document whitespace-pre-wrap"/>
                         </div>
                         <div className="relative mt-4">
                             {/* <InputText readOnly type="text" value={respon?.respon ?? ''} label={`Respon Siswa No. ${no_prefix}`}/> */}

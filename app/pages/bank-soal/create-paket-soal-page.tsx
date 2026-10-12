@@ -5,10 +5,10 @@ import IdentitasPaketSoal from "~/controllers/paket-soal/components/identitas-pa
 import KolomNilaiPaket from "~/controllers/paket-soal/components/kolom-nilai";
 import PetunjukUmumPaketSoal from "~/controllers/paket-soal/components/petunjuk-umum";
 import { useImmer } from "use-immer";
-import type { PaketSoalDesign } from "~/domain/paket-soal/result/paket-soal";
-import { createPaketSoalDesign, getGlobalIndex, getNoSoal } from "~/domain/paket-soal/result/create-design";
+import type { PaketSoalDesign } from "~/domain/paket-soal/result/paket-soal-design-type";
+import { createPaketSoalDesign, getGlobalIndex, getNoSoal } from "~/domain/paket-soal/infrastructure/create-design";
 import { useModal } from "~/components/modals/modal-provider";
-import type { DisplayFormatItemSoal } from "~/domain/paket-soal/result/display-format-item-soal";
+import type { DisplayFormatItemSoal } from "~/domain/paket-soal/result/display-format-item-soal-type";
 import type { ListBentukSoalType } from "~/types/bank-soal/bentuk-soal-type";
 import type { InitialItemSoalImplemented } from "~/controllers/paket-soal/modal/initial-item-soal-implemented";
 import ItemSoalPreview from "~/controllers/paket-soal/components/item-soal-preview";
@@ -19,7 +19,7 @@ import { useCrudPaketSoalProvider } from "~/controllers/paket-soal/crud/paket-so
 import { useDraftPaketSoal } from "~/hooks/use-draft-paket-soal";
 import { ValidationPaketSoal } from "~/controllers/paket-soal/modal/validation-paket-soal";
 import TableSebaranKompetensiPaketSoal from "~/controllers/paket-soal/components/sebaran-kompetensi-paket-soal";
-import type { PaketSoalSheetType } from "~/types/bank-soal/entities/paket-soal-sheet-type";
+import type { PaketSoalSheetType } from "~/types/paket-soal/paket-soal-sheet-type";
 import DtoPaketSoalDesainType from "~/dtos/dto-paket-soal-desain";
 import { toast } from "sonner";
 import DispatchingResponseToStore from "~/lib/dispatching-response-to-store";

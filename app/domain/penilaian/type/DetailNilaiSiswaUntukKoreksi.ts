@@ -1,5 +1,6 @@
 import type { JenisTagihanPenilaiantype } from "~/domain/asesmen-penilaian/jenis-tagihan-type";
-import type { RisponsePenilaianSiswa, SkorKdResponSiswaType } from "~/types/penilaian/nilai-siswa-app-type";
+import type { SkorKdResponSiswaType } from "~/types/penilaian/nilai-siswa-app-type";
+import type { RisponsePenilaianSiswa } from "~/types/penilaian/RisponsePenilaianSiswaType";
 import type { KategoriTagihanType } from "./KategoriTagihanType";
 import type { SiswaType } from "~/types/siswa";
 import type { TagihanAsessmenType } from "./tagihan-assesmen-type";

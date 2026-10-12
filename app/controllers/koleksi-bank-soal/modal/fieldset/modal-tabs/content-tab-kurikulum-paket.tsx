@@ -8,7 +8,7 @@ import type { ListBentukSoalType } from "~/types/bank-soal/bentuk-soal-type";
 import type { AtpAsOrm } from "~/types/kurikulum/prota-orm";
 import KunciJawabanPreview from "~/controllers/koleksi-bank-soal/views/kunci-jawaban-preview";
 import { useFilterContext } from "~/components/toolbars/state-toolbar/state-toolbar";
-import { type PaketSoalDesign } from "~/domain/paket-soal/result/paket-soal";
+import { type PaketSoalDesign } from "~/domain/paket-soal/result/paket-soal-design-type";
 
 type Props = {
     currentData:BankSoalAppType,

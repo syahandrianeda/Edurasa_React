@@ -1,5 +1,5 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit"
-import type { PublikasiPaketSheetType } from "~/types/bank-soal/entities/publikasi-paket-sheet-type"
+import type { PublikasiPaketSheetType } from "~/types/publikasi-paket-soal/publikasi-paket-sheet-type"
 
 export type PublikasiPaketSliceType = {
     data: PublikasiPaketSheetType[],

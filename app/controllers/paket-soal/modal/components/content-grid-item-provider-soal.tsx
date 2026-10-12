@@ -2,7 +2,7 @@ import type { BankSoalAppType } from "~/types/bank-soal/bank-soal-type";
 import ControlTerapkanEdit from "./control-terapkan-dan-edit";
 import CardSoalPreviewDisplay from "./card-soal-privew-display";
 import { useFormEdura } from "~/components/form-custom/form-edura";
-import {type DisplayFormatItemSoal } from "~/domain/paket-soal/result/display-format-item-soal";
+import {type DisplayFormatItemSoal } from "~/domain/paket-soal/result/display-format-item-soal-type";
 import { useCallback, useState } from "react";
 import {type FormatElemen } from "~/types/bank-soal/bentuk-soal-type";
 import { useModal } from "~/components/modals/modal-provider";

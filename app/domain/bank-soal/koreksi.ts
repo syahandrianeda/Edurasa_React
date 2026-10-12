@@ -1,4 +1,4 @@
-import type { RisponsePenilaianSiswa } from "~/types/penilaian/nilai-siswa-app-type";
+import type { RisponsePenilaianSiswa } from "~/types/penilaian/RisponsePenilaianSiswaType";
 
 interface OpsiJawaban {
   id: number;

@@ -9,6 +9,7 @@ import type { DetailTarget } from "./DetailTarget";
 import type { BankSoalAppType } from "~/types/bank-soal/bank-soal-type";
 import type { GroupSebaranNoSoalFromPropertyKurikulum } from "../model/grouping-kurikulum-by-bentuksoal";
 import type { templateResponseKoreksi } from "./templateResponseKoreksi";
+import type { Data_response_bySiswaType } from "./Data_response_bySiswaType";
 
 /** 
  * @info type ini sebenarnya salinan/tiruan dari PublikasiPaketAppType
@@ -56,18 +57,12 @@ export interface TagihanHasDataResponse extends TagihanAsessmenType{
     kurikulum_tagihan   : AtpHasManySoalType[],
     peserta             : SiswaType[],
     total_instrumen     : number,
-    bank_soal_collections: BankSoalAppType[],
+    bank_soal_collections: (BankSoalAppType|undefined)[],
     sebaran_kurikulum_by_bentuk_soal: GroupSebaranNoSoalFromPropertyKurikulum,
-    templateKoreksi : templateResponseKoreksi[]
+    // templateKoreksi : templateResponseKoreksi[]
     data_response_bySiswa : Data_response_bySiswaType[]//{siswa:SiswaType, data:detailNilaiSiswaAppType[]}
     jumlahPerespon      :number,
     jumlahDuplikat      :number
     
 }
-
-interface Data_response_bySiswaType {
-    siswa: SiswaType, 
-    data:detailNilaiSiswaAppType[]
-}
-
 

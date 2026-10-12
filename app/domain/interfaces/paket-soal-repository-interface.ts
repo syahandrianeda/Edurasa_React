@@ -1,5 +1,5 @@
 import type { ApiResponse, ParamFile } from "~/configs/appscript-config"
-import type { PaketSoalSheetType } from "~/types/bank-soal/entities/paket-soal-sheet-type"
+import type { PaketSoalSheetType } from "~/types/paket-soal/paket-soal-sheet-type"
 
 export interface PaketSoalRepositoryInterface{
     uploadFile(param:ParamFile):Promise<Record<string, any>>

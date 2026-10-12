@@ -1,5 +1,5 @@
 import type { BankSoalAppType } from "../bank-soal/bank-soal-type";
-import type { RisponsePenilaianSiswa } from "./nilai-siswa-app-type";
+import type { RisponsePenilaianSiswa } from "./RisponsePenilaianSiswaType";
 
 export interface DataTemplateKoreksiSiswa {
     soal?: BankSoalAppType;

@@ -17,3 +17,4 @@ export interface PraSettingPaket {
     kurikulum           : AtpHasManySoalType[];//AtpAsOrm[]
     nomorSoalUrut       : boolean
 }
+

@@ -1,6 +1,6 @@
-import type { PublikasiPaketAppType } from "~/types/bank-soal/entities/publikasi-paket-app-type";
+import type { PublikasiPaketAppType } from "~/types/publikasi-paket-soal/publikasi-paket-app-type";
 import DtoPaketSoalSheetClass from "~/dtos/dto-paket-soal-sheet-class";
-import type { PaketSoalSheetType } from "~/types/bank-soal/entities/paket-soal-sheet-type";
+import type { PaketSoalSheetType } from "~/types/paket-soal/paket-soal-sheet-type";
 import type { AtpHasManySoalType } from "~/domain/bank-soal/relational-soal/type";
 import type { TagihanHasDataResponse } from "../type/tagihan-assesmen-type";
 import type { DetailTarget } from "../type/DetailTarget";
@@ -8,7 +8,8 @@ import type { SiswaWithValidation } from "~/context-reduct/selectores/data-siswa
 import { durasiMenit, getParseDateYYYYMMMDD } from "~/lib/date-helper";
 import SebaranTagihanKurikulumClass, { type SebaranTagihanAssesmenKurikulumType } from "./sebaran-tagihan-kurikulum-class";
 import type { PraSettingBaku } from "~/types/bank-soal/entities/PraSettingBaku";
-import type { detailNilaiSiswaAppType, NilaiSiswaAppType, RisponsePenilaianSiswa } from "~/types/penilaian/nilai-siswa-app-type";
+import type { detailNilaiSiswaAppType, NilaiSiswaAppType } from "~/types/penilaian/nilai-siswa-app-type";
+import type { RisponsePenilaianSiswa } from "~/types/penilaian/RisponsePenilaianSiswaType";
 import type { BankSoalAppType } from "~/types/bank-soal/bank-soal-type";
 import GroupingSebaranKurikulum from "./grouping-kurikulum-to-sebaran";
 import type { templateResponseKoreksi } from "../type/templateResponseKoreksi";
@@ -17,6 +18,13 @@ import type { GroupSebaranNoSoalFromPropertyKurikulum } from "../model/grouping-
 import type { CountBentukSoalPaket } from "~/domain/paket-soal/entities/count-bentuk-soal-paket";
 import type { TemplateKoreksiSiswaType } from "~/types/penilaian/TemplateKoreksiSiswaType";
 import type { DataTemplateKoreksiSiswa } from "~/types/penilaian/DataTemplateKoreksiSiswa";
+import BankSoalAppUndefined from "~/domain/bank-soal/orm/bank-soal-undifined";
+import RisponsePenilaianSiswaBuilder from "./rispon-penilaian-siswa-builder";
+import type { PaketSoalStruktur } from "~/domain/paket-soal/paket-soal-struktur/PaketSoalStrukturType";
+import { PaketSoalStrukturBuilder } from "~/domain/paket-soal/paket-soal-struktur/PaketSoalStrukturBuilder";
+import RisponseNilaiSiswaBuilder from "./RisponseNilaiSiswaBuilder";
+import TemplateKoreksiSiswaBuilder from "~/types/penilaian/TemplateKoreksiSiswaBuilder";
+
 
 /** 
  * @info Instansiasi pembuatan data KBM di fitur Guru _
@@ -98,7 +106,7 @@ export default class TagihanPenilaianClass extends DtoPaketSoalSheetClass{
                 }
             })
             
-            const bank_soal_collections = m.id_bank_soal.map(m=> this.koleksiSoalInAtp.find(s=>s.idbaris === m)!)
+            const bank_soal_collections = m.id_bank_soal.map(m=> this.koleksiSoalInAtp.find(s=>s.idbaris === m))
             const sebaran_kurikulum_by_bentuk_soal = GroupingSebaranKurikulum.buildGroupBentukSoalBasedOnKoleksiIdSoal( m.setting_tagihan?.kurikulum ?? [], m.id_bank_soal);
             
 
@@ -109,32 +117,16 @@ export default class TagihanPenilaianClass extends DtoPaketSoalSheetClass{
             const count_instrumen       = m.setting_tagihan?.count_bentuk_soal?.map(cbt=>cbt.count) ?? []
             const total_instrumen       = count_instrumen.length > 0 ? count_instrumen?.reduce((a, b)=>a+Number(b)):0;
             
-            const data_respons          =  this.responTagihan.filter(s=>s.publikasi_id === m.idbaris ).map(nilaiSiswa=>{
+            const data_respons          =  this.responTagihan.filter(s=>s.publikasi_id === m.idbaris && s.siswa_id).map(nilaiSiswa=>{
                 // const respon = nilaiSiswa.respon.slice(0,m.id_bank_soal.length).map((re,iRe)=>({...re, soal_id:bank_soal_collections[iRe]?.idbaris, atp:bank_soal_collections[iRe]?.kd_id}));
                 // const mapBentukSoal = respon.map(bs=>bs?.bentuk_soal) 
                 const sumber_respon = nilaiSiswa.sumber_respon
-                // const needValidate = this.needValidasiRespon(mapBentukSoal,sumber_respon);
-                // const templateKoreksiSiswa= sebaran_kurikulum_by_bentuk_soal.koleksiBentukSoal.map(bentuk_soal=>{
-                //     const data = bank_soal_collections.filter(s=>s.bentuk_soal === bentuk_soal.name).map((soal, iSoal)=>{
-                //         const frespon = respon.find(s=>s.bentuk_soal === bentuk_soal.name && s.no_prefix === (iSoal + 1))!
-                //         return {
-                //             soal,
-                //             no_prefix: (iSoal+1),
-                //             respon:frespon//{...frespon, soal_id:soal.idbaris, atp:soal.kd_id}
-                //         }
-                //     })
-                //     return {
-                //         bentuk_soal,
-                        
-                //         data
-                //     }
-                // })
-                const buildDataRespon = this.createTemplateKoreksiUsingSetingTagihan(m.id_bank_soal,m.setting_tagihan?.count_bentuk_soal ?? [], nilaiSiswa.respon.slice(0,m.id_bank_soal.length))
-                const respon = buildDataRespon.respon;
-
+                const StruturNaskah:PaketSoalStruktur[] = PaketSoalStrukturBuilder.buildFromCountBentukSoalPaket(bank_soal_collections, m.setting_tagihan?.count_bentuk_soal ?? []);
+                const respon:RisponsePenilaianSiswa[] = RisponseNilaiSiswaBuilder.build(StruturNaskah, nilaiSiswa.respon);
+                const templateKoreksiSiswa = TemplateKoreksiSiswaBuilder.build(StruturNaskah, respon)
+                
                 const mapBentukSoal = respon.map(bs=>bs.bentuk_soal);
                 const needValidate = this.needValidasiRespon(mapBentukSoal, sumber_respon);
-                const templateKoreksiSiswa = buildDataRespon.sebaran;
                 const siswa =peserta.find(s=>s.id === nilaiSiswa.siswa_id)
                 const durasiPengerjaan = ( nilaiSiswa.start_time &&  nilaiSiswa.end_time )? durasiMenit(nilaiSiswa.start_time, nilaiSiswa.end_time): 0 ;
                 const totalResponValid = this.totalValidRespon(respon);
@@ -152,29 +144,7 @@ export default class TagihanPenilaianClass extends DtoPaketSoalSheetClass{
                     skorKdSebaran
                 }
             })
-            
-            // const templateKoreksi:templateResponseKoreksi[] = []
-            const templateKoreksi : templateResponseKoreksi[] = sebaran_kurikulum_by_bentuk_soal.koleksiBentukSoal.map((bentuk_soal)=>{
-                const data:DataResponseKoreksi[] = bank_soal_collections.filter(s=>s?.bentuk_soal === bentuk_soal.name).map((soal, iSoal)=>{
-                    const respon = data_respons.map(res=>{
-                        const found = res.respon.find(s=>s.bentuk_soal === bentuk_soal.name && s.no_prefix === (iSoal+1));
-                        return {
-                            ...res,
-                            respon: found//{...found!, soal_id:soal.idbaris, atp:soal.kd_id} ,//;//
-                        }
-                    })
-                    return {
-                        soal,
-                        no_prefix:(iSoal+1),
-                        respon
-                    }
-                })
-                return {
-                    bentuk_soal,
-                    data
-                }
-            })
-            // templateKoreksi = this.createTemplateKoreksi()
+           
             const data_response_bySiswa = peserta.map(siswa=>{
                 const data = data_respons.filter(s=>s.siswa_id ===siswa.id)
                 return {
@@ -187,7 +157,7 @@ export default class TagihanPenilaianClass extends DtoPaketSoalSheetClass{
         return [...map.values()];
              */
             const jumlahPeresponMap = new Map(data_respons.map(r=>([r.siswa_id, r])));
-            const jumlahPerespon = [...jumlahPeresponMap.values()].length;
+            const jumlahPerespon = [...jumlahPeresponMap.keys()].length;
             const jumlahDuplikat = data_respons.length> jumlahPerespon ? data_respons.length-jumlahPerespon: 0
             
             return {
@@ -201,164 +171,77 @@ export default class TagihanPenilaianClass extends DtoPaketSoalSheetClass{
                 total_instrumen,
                 bank_soal_collections,
                 sebaran_kurikulum_by_bentuk_soal,
-                templateKoreksi,
+                // templateKoreksi,
                 data_response_bySiswa,
                 jumlahPerespon,
                 jumlahDuplikat
             }
         })
     } 
-    createTemplateKoreksiPerSiswa(kurikulum:AtpHasManySoalType[], id_bank_soal:number[] ){
+    // createTemplateKoreksiPerSiswa(kurikulum:AtpHasManySoalType[], id_bank_soal:number[] ){
         
-        // const respon = nilaiSiswa.respon.slice(0,m.id_bank_soal.length).map((re,iRe)=>({...re, soal_id:bank_soal_collections[iRe].idbaris, atp:bank_soal_collections[iRe].kd_id}));
-        const bank_soal_collections = id_bank_soal.map(m=> this.koleksiSoalInAtp.find(s=>s.idbaris === m)!);//.filter(Boolean)
-        const helperSet= new Map<string, number>();
-        let i:number = 0
-        const respon = bank_soal_collections.map((re,iRe)=>{
-            if(!helperSet.has(re?.bentuk_soal) && re?.bentuk_soal){
-                helperSet.set(re?.bentuk_soal, 1)
-                i = 0;
+    //     // const respon = nilaiSiswa.respon.slice(0,m.id_bank_soal.length).map((re,iRe)=>({...re, soal_id:bank_soal_collections[iRe].idbaris, atp:bank_soal_collections[iRe].kd_id}));
+    //     const bank_soal_collections = id_bank_soal.map(m=> this.koleksiSoalInAtp.find(s=>s.idbaris === m)!);//.filter(Boolean)
+    //     const helperSet= new Map<string, number>();
+    //     let i:number = 0
+    //     const respon = bank_soal_collections.map((re,iRe)=>{
+    //         if(!helperSet.has(re?.bentuk_soal) && re?.bentuk_soal){
+    //             helperSet.set(re?.bentuk_soal, 1)
+    //             i = 0;
 
                 
-            }
+    //         }
            
-            const bentukSoal = re?.bentuk_soal ;//?? 'bentukSoal_notFound';
-            const index = iRe;
-            i++;
+    //         const bentukSoal = re?.bentuk_soal ;//?? 'bentukSoal_notFound';
+    //         const index = iRe;
+    //         i++;
 
-            if(!re){
-                return {
-                index,
-                no_prefix: i,
-                respon:'',
-                bentuk_soal: bentukSoal,
-                soal_id:0,
-                atp:0,
-            }
-            }
-            return {
-                index,
-                no_prefix: i,
-                respon:'',
-                bentuk_soal: re.bentuk_soal,
-                soal_id:re.idbaris,
-                atp:re.kd_id,
-            }
-        })
+    //         if(!re){
+    //             return {
+    //             index,
+    //             no_prefix: i,
+    //             respon:'',
+    //             bentuk_soal: bentukSoal,
+    //             soal_id:0,
+    //             atp:0,
+    //         }
+    //         }
+    //         return {
+    //             index,
+    //             no_prefix: i,
+    //             respon:'',
+    //             bentuk_soal: re.bentuk_soal,
+    //             soal_id:re.idbaris,
+    //             atp:re.kd_id,
+    //         }
+    //     })
         
-        const sebaran_kurikulum_by_bentuk_soal: GroupSebaranNoSoalFromPropertyKurikulum = GroupingSebaranKurikulum.buildGroupBentukSoalBasedOnKoleksiIdSoal( kurikulum ?? [], id_bank_soal);
+    //     const sebaran_kurikulum_by_bentuk_soal: GroupSebaranNoSoalFromPropertyKurikulum = GroupingSebaranKurikulum.buildGroupBentukSoalBasedOnKoleksiIdSoal( kurikulum ?? [], id_bank_soal);
 
-        const sebaran =   sebaran_kurikulum_by_bentuk_soal.koleksiBentukSoal.map(bentuk_soal=>{
-                    const data = bank_soal_collections.filter(s=>s?.bentuk_soal === bentuk_soal.name).map((soal, iSoal)=>{
-                        const frespon = respon.find(s=>s.bentuk_soal === bentuk_soal.name && s.no_prefix === (iSoal + 1));
-                        return {
-                            soal,
-                            no_prefix: (iSoal+1),
-                            respon: frespon ? [frespon as any] : []
-                        }
-                    })
-                    return {
-                        bentuk_soal,
-                        data
-                    }
-                })
-        return { sebaran, respon}
+    //     const sebaran =   sebaran_kurikulum_by_bentuk_soal.koleksiBentukSoal.map(bentuk_soal=>{
+    //                 const data = bank_soal_collections.filter(s=>s?.bentuk_soal === bentuk_soal.name).map((soal, iSoal)=>{
+    //                     const frespon = respon.find(s=>s.bentuk_soal === bentuk_soal.name && s.no_prefix === (iSoal + 1));
+    //                     return {
+    //                         soal,
+    //                         no_prefix: (iSoal+1),
+    //                         respon: frespon ? [frespon as any] : []
+    //                     }
+    //                 })
+    //                 return {
+    //                     bentuk_soal,
+    //                     data
+    //                 }
+    //             })
+    //     return { sebaran, respon}
         
-    }
-    createTemplateKoreksiUsingSetingTagihan(id_bank_soal:number[],count_bentuk_soal:CountBentukSoalPaket[], responSiswa:RisponsePenilaianSiswa[]){
-        const bank_soal_collections = id_bank_soal.map(m=> this.koleksiSoalInAtp.find(s=>s.idbaris === m));//.filter(Boolean);
-        const respon:RisponsePenilaianSiswa[]=[];
-        const sebaran:TemplateKoreksiSiswaType[]=[]
-        
-        let startIndex:number = 0
-        for(const dataBentukSoalInPaket of count_bentuk_soal){
-            const bentukSoalName = dataBentukSoalInPaket.dataBentukSoal.name;
-            const count = dataBentukSoalInPaket.count;
-            let no_prefix:number = 0;
-            
-            const data:DataTemplateKoreksiSiswa[]=[]
-            Array.from({length:count}, (_, index)=>{
-                /**
-                 * mergingIndex untuk membuat `index` pada `RisponsePenilaianSiswa`;
-                 * digabungkan karena index-nya akan lanjut ketika bentuk soal berganti; bukan kembali ke nol = (0);
-                 */
-                const mergingIndex = index + startIndex;
-
-                /** 
-                 * i++ untuk menentukann `no_prefix`, dan harus dibuat increament
-                 */
-                no_prefix++;
-
-                /** berikut ini adalah banksoal pada mergingIndex */
-                const bankSoaIIndexing = bank_soal_collections[mergingIndex];
-
-                if(responSiswa.length === 0 ){
-                    /** responSiswa tidak ada, maka buat dataResponsePenilaianSiswa */
-                    const buildRisponsePenilaianSiswa: RisponsePenilaianSiswa = {
-                        index:mergingIndex,
-                        respon:'',
-                        no_prefix,
-                        bentuk_soal: bentukSoalName,
-                        skor:0,
-                        soal_id: bankSoaIIndexing?.idbaris,
-                        atp: bankSoaIIndexing?.kd_id
-                        
-
-                    }
-                    respon.push(buildRisponsePenilaianSiswa);
-                    /** sebaranItem */
-                    const dataItem:DataTemplateKoreksiSiswa = {
-                            soal: bankSoaIIndexing,
-                            no_prefix,
-                            respon:buildRisponsePenilaianSiswa
-                        }
-                    data.push(dataItem);
-                
-                }else{
-                    /** jika ada, maka ambil datanya */
-                    const foundRespon = responSiswa.find(s=>s.index === mergingIndex)!;
-
-                    /** gabungkan foundRespon untuk mengisi data banksoal */
-                    const mergeFoundRespon = {
-                        ...foundRespon, 
-                        bentuk_soal: bentukSoalName, // bentuk_soal, timpa. Karena pembentukan item publikasi bisa saja ada pengguna yang lupa memberikan soal;
-                        
-                        soal_id: bankSoaIIndexing?.idbaris,
-                        atp: bankSoaIIndexing?.kd_id
-                    }
-                    respon.push(mergeFoundRespon);
-                    /** sebaranItem */
-                    const dataItem:DataTemplateKoreksiSiswa = {
-                            soal: bankSoaIIndexing,
-                            no_prefix,
-                            respon:mergeFoundRespon
-                        }
-                    data.push(dataItem);
-                }
-
-               
-                
-            });
-
-            const  sebaranItem:TemplateKoreksiSiswaType = {
-                bentuk_soal: dataBentukSoalInPaket.dataBentukSoal,
-                data
-            }
-            sebaran.push(sebaranItem);
-            /** 
-             *  `startIndex` tambahkan sejumlah `count` dari masing-masing loop sebelumnya.
-             *  jika loop 1 dengan count 25, maka index-nya: [0, 1, 2, .... 24];
-             *  lalu loop 2, dengan ditambahkan 25; maka indexnya [25, 26, .... <no index akhir>]
-             */
-            startIndex+=count;
-        }
-        return {respon, sebaran}
-    }
+    // }
+    
     override init():this{
         super.init();
         this.buildDetailPesertaRombel();
         this.buildSebaranTagihanKurikulum();
         return this;
     }
+    
    
 }

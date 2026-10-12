@@ -2,7 +2,7 @@ import { Field, FieldContent, FieldGroup } from "~/components/ui/field";
 import WrapperContent from "./wrapper-content";
 import { InputText } from "~/components/fields/fields";
 import { useFormEdura } from "~/components/form-custom/form-edura";
-import {type PublikasiPaketAppType, type PublikasiPaketAppValidWithPaketSoal } from "~/types/bank-soal/entities/publikasi-paket-app-type";
+import {type PublikasiPaketAppType, type PublikasiPaketAppValidWithPaketSoal } from "~/types/publikasi-paket-soal/publikasi-paket-app-type";
 import CalendarTime from "~/components/ui/calender-time";
 import { useCallback, useEffect, useMemo, useState, type ChangeEvent } from "react";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "~/components/ui/select";
@@ -24,7 +24,7 @@ import { useModal } from "~/components/modals/modal-provider";
 import DtoPublikasiPaketStatic from "~/dtos/dto-publlikasi-paket-static";
 import {toast} from 'sonner';
 import DispatchingResponseToStore from "~/lib/dispatching-response-to-store";
-import type { PublikasiPaketSheetType } from "~/types/bank-soal/entities/publikasi-paket-sheet-type";
+import type { PublikasiPaketSheetType } from "~/types/publikasi-paket-soal/publikasi-paket-sheet-type";
 import validationAddPublikasi from "./validation-add-publikasi";
 
 

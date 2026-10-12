@@ -1,5 +1,5 @@
 import { useModal, type ModalState } from "~/components/modals/modal-provider";
-import type { PaketSoalDesign } from "~/domain/paket-soal/result/paket-soal";
+import type { PaketSoalDesign } from "~/domain/paket-soal/result/paket-soal-design-type";
 import {useMemo} from 'react';
 import DataKisiKisi from "~/domain/paket-soal/infrastructure/data-kisi-kisi-class";
 import SwitchVersioningKisiKisi from "./kisi-kisi/switch-versioning-tabel-kisi-kisi";

@@ -1,5 +1,5 @@
 import type { BankSoalAppType } from "~/types/bank-soal/bank-soal-type";
-import type { RisponsePenilaianSiswa } from "~/types/penilaian/nilai-siswa-app-type";
+import type { RisponsePenilaianSiswa } from "~/types/penilaian/RisponsePenilaianSiswaType";
 import { FormIsianSingkat } from "./FormIsianSingkat";
 import { FormPgOnline } from "./FormPgOnline";
 

@@ -1,13 +1,13 @@
 import { toast } from "sonner";
 import {useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { useModal, type ModalState } from "~/components/modals/modal-provider";
-import type { PaketSoalDesign } from "~/domain/paket-soal/result/paket-soal";
+import type { PaketSoalDesign } from "~/domain/paket-soal/result/paket-soal-design-type";
 import ReadTxtService from "~/infrastructures/services/read-txt-service";
 import DataKisiKisi from "~/domain/paket-soal/infrastructure/data-kisi-kisi-class";
 import loadingGif from "~/images/barloading.gif"
 import { FormEdura } from "~/components/form-custom/form-edura";
 import { PaketSoalDesignParseDto } from "~/dtos/dto-parsing-paket-soal";
-import type { PaketSoalAppType } from "~/types/bank-soal/entities/paket-soal-app-type";
+import type { PaketSoalAppType } from "~/types/paket-soal/paket-soal-app-type";
 import type { PraSettingPaket } from "~/domain/paket-soal/entities/pra-setting-paket";
 import type { TagihanHasDataResponse } from "~/domain/penilaian/type/tagihan-assesmen-type";
 

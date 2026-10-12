@@ -1,5 +1,5 @@
 import type { PraSettingPaket } from "~/domain/paket-soal/entities/pra-setting-paket";
-import type { PaketSoalDesign } from "~/domain/paket-soal/result/paket-soal";
+import type { PaketSoalDesign } from "~/domain/paket-soal/result/paket-soal-design-type";
 interface IdentitasKontenPaket {
     start_time: Date;
     end_time?: Date;

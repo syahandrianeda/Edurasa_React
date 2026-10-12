@@ -4,7 +4,7 @@ import { ModalFooterEdura } from "~/components/modals/modal-components";
 import { useModal } from "~/components/modals/modal-provider";
 import { useAppSelector } from "~/context-reduct/hook";
 import type { AtpHasManySoalType } from "~/domain/bank-soal/relational-soal/type";
-import type { DisplayFormatItemSoal } from "~/domain/paket-soal/result/display-format-item-soal";
+import type { DisplayFormatItemSoal } from "~/domain/paket-soal/result/display-format-item-soal-type";
 import { getSessionRombel } from "~/infrastructures/session-storage/rombel-session";
 import { getNumberFromString } from "~/lib/get-number";
 import type { BankSoalAppType, JsonAlatJawabTupple } from "~/types/bank-soal/bank-soal-type";

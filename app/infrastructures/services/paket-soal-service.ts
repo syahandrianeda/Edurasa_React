@@ -4,10 +4,10 @@ import PaketSoalRepository from "../repositories/paket-soal-repository";
 import { dataURLToFile, encodeFileToBase64, isImageFile } from "~/domain/image/file-uploader";
 import { resizeImageForUpload } from "~/domain/image/image-resizer";
 import type { ApiResponse, ParamFile } from "~/configs/appscript-config";
-import type { PaketSoalSheetType } from "~/types/bank-soal/entities/paket-soal-sheet-type";
+import type { PaketSoalSheetType } from "~/types/paket-soal/paket-soal-sheet-type";
 import { currentTapel, currentTapelProperties } from "~/lib/current-tapel";
 import DtoPaketSoalDesainType from "~/dtos/dto-paket-soal-desain";
-import type { PaketSoalDesign } from "~/domain/paket-soal/result/paket-soal";
+import type { PaketSoalDesign } from "~/domain/paket-soal/result/paket-soal-design-type";
 
 export default class PaketSoalService implements PaketSoalServiceInterface{
     constructor(public repo:PaketSoalRepositoryInterface = new PaketSoalRepository()){}

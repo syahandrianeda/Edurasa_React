@@ -1,4 +1,4 @@
-import type { PaketSoalDesign } from "~/domain/paket-soal/result/paket-soal";
+import type { PaketSoalDesign } from "~/domain/paket-soal/result/paket-soal-design-type";
 
 export type AlertPaketSoal = {
     isValid:boolean;

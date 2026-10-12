@@ -1,9 +1,9 @@
-import { getGlobalIndex } from "~/domain/paket-soal/result/create-design";
-import type { PaketSoalDesign } from "~/domain/paket-soal/result/paket-soal";
+import { getGlobalIndex } from "~/domain/paket-soal/infrastructure/create-design";
+import type { PaketSoalDesign } from "~/domain/paket-soal/result/paket-soal-design-type";
 import ItemSoalPreview from "../paket-soal/components/item-soal-preview";
 import { useCurrentTime } from "~/hooks/use-current-time";
 import FormITemSoalOnline from "./form-item-soal-online";
-import type { RisponsePenilaianSiswa } from "~/types/penilaian/nilai-siswa-app-type";
+import type { RisponsePenilaianSiswa } from "~/types/penilaian/RisponsePenilaianSiswaType";
 import TimerSoal from "./timer-soal";
 
 type Props={
@@ -35,7 +35,7 @@ export default function PreviewSoalOnline({paketSoal, collectionRespon, handleCh
                                         const dataSoal =  paketSoal?.data?.find( item => item.bentukSoal.name === soal.dataBentukSoal.name ) ?.dataSoal;
                                         
                                         return (
-                                                <li key={indexBentuk}><strong>{soal.dataBentukSoal.description}</strong>
+                                                <li key={indexBentuk + "_"+soal.dataBentukSoal.name}><strong>{soal.dataBentukSoal.description}</strong>
                                                     <ol start={cekStartNumber} className="list-decimal ps-4 marker:font-normal">
                                                         {Array.from(
                                                             { length: soal.count },
@@ -56,13 +56,14 @@ export default function PreviewSoalOnline({paketSoal, collectionRespon, handleCh
                                                                     bentuk_soal: dataItem?.bentuk_soal?.name ?? '',
                                                                     atp: dataItem?.data_soal?.kd_id,
                                                                     soal_id:dataItem?.data_soal?.idbaris,
+                                                                    
                                                                     respon:null,
                                                                     skor:0
-                                                                }
+                                                                } as RisponsePenilaianSiswa;
                                                                
                                                                 return (
                                                                     <li
-                                                                        key={indexSoal + (dataItem?.data_soal?.idbaris ?? 0)}
+                                                                        key={indexSoal +"_"+ (dataItem?.data_soal?.idbaris ?? 0)}
                                                                         
                                                                         className="cursor-pointer align-top mb-3"
                                                                     >

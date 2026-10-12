@@ -1,5 +1,5 @@
 import type { JsonAlatJawabTupple } from "~/types/bank-soal/bank-soal-type"
-import type { DisplayFormatItemSoal } from "../result/display-format-item-soal"
+import type { DisplayFormatItemSoal } from "../result/display-format-item-soal-type"
 
 export interface KisiKisiMapelType {
     kodeMapel:string,

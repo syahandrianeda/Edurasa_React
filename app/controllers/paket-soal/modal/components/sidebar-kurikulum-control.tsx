@@ -4,7 +4,7 @@ import { TdEdura, TRowEdura } from '~/components/tabels/tabel-components';
 import TableWithScrolling from '~/components/tabels/table-with-scrolling';
 import GroupedAtpHasManySOal from "~/domain/bank-soal/relational-soal/services/grouping-soal-atp-has-many-soal";
 import type { AtpHasManySoalType } from "~/domain/bank-soal/relational-soal/type";
-import {type DisplayFormatItemSoal } from "~/domain/paket-soal/result/display-format-item-soal";
+import {type DisplayFormatItemSoal } from "~/domain/paket-soal/result/display-format-item-soal-type";
 import type { BankSoalAppType } from '~/types/bank-soal/bank-soal-type';
 import PaginationSoalProvider from './pagination-soal-provider';
 import ModalFooterButtonTambahBaruItemSoal from './footer-button-tambah-baru-item-soal';

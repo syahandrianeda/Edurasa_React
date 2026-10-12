@@ -3,9 +3,9 @@ import { useModal, type ModalActions, type ModalState } from "~/components/modal
 import type { ModalType } from "~/components/modals/modal-type";
 import type { TagihanHasDataResponse } from "~/domain/penilaian/type/tagihan-assesmen-type";
 import MainModalForm from "./main-modal-form-penilaian";
-import type { PaketSoalAppType } from "~/types/bank-soal/entities/paket-soal-app-type";
+import type { PaketSoalAppType } from "~/types/paket-soal/paket-soal-app-type";
 import AddNonPaketSoalModal from "./add-non-paket-soal";
-import type { PublikasiPaketAppValidWithPaketSoal } from "~/types/bank-soal/entities/publikasi-paket-app-type";
+import type { PublikasiPaketAppValidWithPaketSoal } from "~/types/publikasi-paket-soal/publikasi-paket-app-type";
 import EditPublikasiPaketSoal from "~/controllers/publikasi-paket-soal/modal/edit-publikasi-paket";
 import WrapperFormPublikasiPaket from "~/controllers/publikasi-paket-soal/modal/wraper-form";
 import EditPublikasiInstrumenTagihan from "./edit-publikasi-instrumeen";
@@ -20,6 +20,8 @@ import HapusPubilikasiInstrumenSoal from "./hapus-publikasi-instrumen";
 import PreviewSebaranPaketNonSoal from "./preview-sebaran-non-paket-soal";
 import AllInfoResponTagihan from "./all-info-respon-tagiihan";
 import PraKoreksiSoal from "./pra-koreksi-soal";
+import AnalisisInstrumenModal from "./analisis-instrumen-modal";
+import AnalisisInstrumenModalLaporan from "./analisis-instrumen-modal-laporan";
 
 export default function MainModalPenilaian(){
     const {state, actions} = useModal()
@@ -42,6 +44,7 @@ export default function MainModalPenilaian(){
             'PRA KOREKSI SOAL',
             'IMPORT NILAI',
             'ANALISIS SOAL',
+            'LAPORAN ANALISIS SOAL'
             
         ].includes(state?.type!);
     return (
@@ -114,6 +117,10 @@ function SwitchContentFormBankSoal ({state}:{state:ModalState}){
             return <MainModalForm data={state.payload}><AllInfoResponTagihan/></MainModalForm>
         case 'PRA KOREKSI SOAL':
             return <MainModalForm data={state.payload}><PraKoreksiSoal/></MainModalForm>
+        case 'ANALISIS SOAL':
+            return <AnalisisInstrumenModal data={state.payload as TagihanHasDataResponse}/>
+        case 'LAPORAN ANALISIS SOAL':
+            return <AnalisisInstrumenModalLaporan data={state.payload as TagihanHasDataResponse}/>
         default:
             return <div className="w-full min-h-32 flex justify-center items-center lowercase first-letter:uppercase gap-2"><strong>{state.type}</strong>  <span>on Proses Development</span></div>
     }

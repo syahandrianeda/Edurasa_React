@@ -4,7 +4,7 @@ import { Button } from "~/components/ui/button";
 import type { FormatElemen } from "~/types/bank-soal/bentuk-soal-type";
 import type { Dispatch, SetStateAction } from "react";
 import { useFormEdura } from "~/components/form-custom/form-edura";
-import type { DisplayFormatItemSoal } from "~/domain/paket-soal/result/display-format-item-soal";
+import type { DisplayFormatItemSoal } from "~/domain/paket-soal/result/display-format-item-soal-type";
 
 type Props={
     modeDisplay:FormatElemen,

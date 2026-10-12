@@ -1,6 +1,6 @@
 import type { ApiResponse } from "~/configs/appscript-config"
 import type { PaketSoalRepositoryInterface } from "./paket-soal-repository-interface"
-import type { PaketSoalSheetType } from "~/types/bank-soal/entities/paket-soal-sheet-type"
+import type { PaketSoalSheetType } from "~/types/paket-soal/paket-soal-sheet-type"
 
 export interface PaketSoalServiceInterface{
     repo:PaketSoalRepositoryInterface

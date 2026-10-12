@@ -1,6 +1,6 @@
-import type { PublikasiPaketSheetType } from "~/types/bank-soal/entities/publikasi-paket-sheet-type";
+import type { PublikasiPaketSheetType } from "~/types/publikasi-paket-soal/publikasi-paket-sheet-type";
 import DtoResolverTypeClass from "./dto-resolver-class";
-import type { PublikasiPaketAppType } from "~/types/bank-soal/entities/publikasi-paket-app-type";
+import type { PublikasiPaketAppType } from "~/types/publikasi-paket-soal/publikasi-paket-app-type";
 import { resolveDate, resolveString, stringToArrayNumber, stringToArrayString } from "./_resolver";
 
 export default class DtoPublikasiPaketToAppType{

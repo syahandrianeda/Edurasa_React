@@ -1,6 +1,6 @@
 import { TRowEdura, ThEdura, TdEdura } from "~/components/tabels/tabel-components";
 import TableWithScrolling from "~/components/tabels/table-with-scrolling";
-import type { PaketSoalDesign } from "~/domain/paket-soal/result/paket-soal";
+import type { PaketSoalDesign } from "~/domain/paket-soal/result/paket-soal-design-type";
 import {useMemo} from 'react';
 import DataKisiKisi from "~/domain/paket-soal/infrastructure/data-kisi-kisi-class";
 import type { SebaranPropertyKurikulumNoSoalPaket } from "~/domain/paket-soal/entities/sebaran-property-no-soal-paket";

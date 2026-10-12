@@ -1,6 +1,6 @@
-import type { PaketSoalDesign } from "../result/paket-soal";
+import type { PaketSoalDesign } from "../result/paket-soal-design-type";
 import type { KisiKisiMapelType } from "../entities/kisi-kisi-nested-map-type";
-import type { DisplayFormatItemSoal } from "../result/display-format-item-soal";
+import type { DisplayFormatItemSoal } from "../result/display-format-item-soal-type";
 import type { SebaranPropertyKurikulumNoSoalPaket } from "../entities/sebaran-property-no-soal-paket";
 import PaketSoalDesignClass from "./paket-soal-design-class";
 

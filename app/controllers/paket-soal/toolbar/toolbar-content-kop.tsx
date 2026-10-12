@@ -10,7 +10,7 @@ import logoSekolah from '../../../images/ratujaya1.png';
 import { HtmlRenderer } from '~/components/editor-tip-tap/renderer/HtmlRenderer';
 import { initialKopSoal } from './initial-kop';
 import { renderNodeHtml } from '~/components/editor-tip-tap/renderer/NodeHtmlRenderer';
-import type { PaketSoalDesign } from '~/domain/paket-soal/result/paket-soal';
+import type { PaketSoalDesign } from '~/domain/paket-soal/result/paket-soal-design-type';
 
 
 export default function ToolbarContentKop(){

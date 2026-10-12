@@ -1,6 +1,7 @@
 import { useFormEdura } from "~/components/form-custom/form-edura";
 import { useModal } from "~/components/modals/modal-provider"
-import type { detailNilaiSiswaAppType, RisponsePenilaianSiswa } from "~/types/penilaian/nilai-siswa-app-type";
+import type { detailNilaiSiswaAppType } from "~/types/penilaian/nilai-siswa-app-type";
+import type { RisponsePenilaianSiswa } from "~/types/penilaian/RisponsePenilaianSiswaType";
 import KoreksiWrapper from "./fields/koreksi";
 import { ModalFooterEdura } from "~/components/modals/modal-components";
 import { useImmer } from "use-immer";
@@ -18,6 +19,7 @@ import { getSessionRombel } from "~/infrastructures/session-storage/rombel-sessi
 import { useAppSelector } from "~/context-reduct/hook";
 import { InstanceDataTagihanPenilaianSector } from "~/context-reduct/selectores/daftar-tagihan-penilaian-selector";
 import SwitchKategoriTagihan from "~/domain/asesmen-penilaian/switch-kategori-tagihan-class";
+import RisponsePenilaianSiswaBuilder from "~/domain/penilaian/infrastucture/rispon-penilaian-siswa-builder";
 
 export default function KoreksiItemSoal(){
     const dataTagihan = useAppSelector(InstanceDataTagihanPenilaianSector);
@@ -37,7 +39,7 @@ export default function KoreksiItemSoal(){
             const kategori = new SwitchKategoriTagihan(jenis_tagihan).kategori;
             const idSoal = rep?.id_bank_soal;
             const settingTagihan = rep?.setting_tagihan?.count_bentuk_soal;//
-            const templateKoreksi = dataTagihan?.createTemplateKoreksiUsingSetingTagihan(idSoal ?? [],settingTagihan ?? [],[]) ;//(dataTagihan?.createTemplateKoreksiPerSiswa(kurikulum, idSoal) ?? {sebaran:[], respon:[]}) as unknown as {sebaran:detailNilaiSiswaAppType['templateKoreksiSiswa'],respon:RisponsePenilaianSiswa[]};
+            const templateKoreksi = RisponsePenilaianSiswaBuilder.build(rep?.bank_soal_collections ?? [],settingTagihan ?? [],[]) ;//(dataTagihan?.createTemplateKoreksiPerSiswa(kurikulum, idSoal) ?? {sebaran:[], respon:[]}) as unknown as {sebaran:detailNilaiSiswaAppType['templateKoreksiSiswa'],respon:RisponsePenilaianSiswa[]};
              const respon =  templateKoreksi?.respon ?? [];
             const templateKoreksiSiswa =  templateKoreksi?.sebaran ?? [];
             const Kur = rep?.kurikulum_tagihan ?? []
@@ -105,7 +107,7 @@ export default function KoreksiItemSoal(){
         const skor_kd = skorKd.data.flatMap(m=>m.objekSkorKd)?.reduce((a,b)=>({...a, ...b}));
         const dtoParamUtama = DtoKoreksiToResponseSheet.fromGuruMengUpdateRespon(currentDataSelector!, updateRespon, skor_kd);
         const dtoKategoriAssesmen = DtoKoreksiToKategoriAssesmenTab.fromGuruMengUpdateRespon(currentDataSelector!, updateRespon, skor_kd)
-
+        console.log({updateRespon, skorKd, dtoParamUtama, currentDataSelector})
         const requeset = toast.promise(
             service.update(dtoParamUtama, dtoKategoriAssesmen),
             {

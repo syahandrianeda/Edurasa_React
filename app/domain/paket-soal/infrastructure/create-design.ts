@@ -1,6 +1,6 @@
 import type { PraSettingPaket } from "../entities/pra-setting-paket"
-import type { PaketSoalDesign } from "./paket-soal"
-import type { DataSoalDesign } from "./session-soal"
+import type { PaketSoalDesign } from "../result/paket-soal-design-type"
+import type { DataSoalDesign } from "../result/section-soal-type"
 
 export const createPaketSoalDesign = (
     setting: PraSettingPaket

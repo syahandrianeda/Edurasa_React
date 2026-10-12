@@ -2,7 +2,7 @@ import type { PublikasiPaketRepositoryInterface } from "~/domain/interfaces/publ
 import PublikasiPaketRepository from "../repositories/publikasi-paket-repository";
 import type { PublikasiPaketServiceInterface } from "~/domain/interfaces/publikasi-paket-service-interface";
 import type { ApiResponse } from "~/configs/appscript-config";
-import type { PublikasiPaketSheetType } from "~/types/bank-soal/entities/publikasi-paket-sheet-type";
+import type { PublikasiPaketSheetType } from "~/types/publikasi-paket-soal/publikasi-paket-sheet-type";
 
 export default class PubliksiPaketSoalService implements PublikasiPaketServiceInterface{
     constructor(public repo:PublikasiPaketRepositoryInterface = new PublikasiPaketRepository()){};

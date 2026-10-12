@@ -2,7 +2,8 @@ import SwitchKategoriTagihan from "~/domain/asesmen-penilaian/switch-kategori-ta
 import type { AtpHasManySoalType } from "~/domain/bank-soal/relational-soal/type";
 import type { KategoriTagihanType } from "~/domain/penilaian/type/KategoriTagihanType";
 import type { TagihanHasDataResponse } from "~/domain/penilaian/type/tagihan-assesmen-type";
-import type { NilaiSiswaAppType, RisponsePenilaianSiswa } from "~/types/penilaian/nilai-siswa-app-type";
+import type { NilaiSiswaAppType } from "~/types/penilaian/nilai-siswa-app-type";
+import type { RisponsePenilaianSiswa } from "~/types/penilaian/RisponsePenilaianSiswaType";
 import type { NilaiSiswaSheetType } from "~/types/penilaian/nilai-siswa-sheet-type";
 import type { UserSiswa } from "~/types/user-siswa";
 

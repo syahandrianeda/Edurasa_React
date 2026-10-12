@@ -145,8 +145,8 @@ export default class EnsurLoadedApiService implements EnsureLoadedApiServiceInte
                  */
 
                 const MAX_ATTEMPT = 4;
-                // const RETRY_DELAY_MS = [1200, 2400, 4000];
-                const RETRY_DELAY_MS = [12000, 16000, 40000];
+                const RETRY_DELAY_MS = [1200, 2400, 4000];
+                // const RETRY_DELAY_MS = [12000, 16000, 40000];
 
                 let data: ApiResponse<any> | undefined;
 

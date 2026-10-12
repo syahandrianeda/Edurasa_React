@@ -7,7 +7,7 @@ import type { CountBentukSoalPaket } from '~/domain/paket-soal/entities/count-be
 import SoalItemFlex from '~/controllers/bank-soal/modal/soal-item-flex';
 import TooltipComp from '~/components/ui_edura/tooltip-comp';
 import { Button } from '~/components/ui/button';
-import type { PaketSoalDesign } from '~/domain/paket-soal/result/paket-soal';
+import type { PaketSoalDesign } from '~/domain/paket-soal/result/paket-soal-design-type';
 import { data } from 'react-router';
 import { InfoToolbarMutasiLaporan } from '~/controllers/data-siswa-controller/config-toolbar';
 

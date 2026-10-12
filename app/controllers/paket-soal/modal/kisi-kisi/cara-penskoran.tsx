@@ -2,7 +2,7 @@ import type DataKisiKisi from "~/domain/paket-soal/infrastructure/data-kisi-kisi
 import {useMemo} from 'react';
 import TableWithScrolling from "~/components/tabels/table-with-scrolling";
 import { TdEdura, ThEdura, TRowEdura } from "~/components/tabels/tabel-components";
-import type { DataSoalDesign } from "~/domain/paket-soal/result/session-soal";
+import type { DataSoalDesign } from "~/domain/paket-soal/result/section-soal-type";
 import SoalItemFlex from "~/controllers/bank-soal/modal/soal-item-flex";
 import { formatCurrency } from "~/lib/currency-format";
 

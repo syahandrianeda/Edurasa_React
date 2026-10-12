@@ -1,5 +1,5 @@
-import type { PublikasiPaketAppType, PublikasiPaketAppValidWithPaketSoal } from "~/types/bank-soal/entities/publikasi-paket-app-type";
-import type { PublikasiPaketSheetType } from "~/types/bank-soal/entities/publikasi-paket-sheet-type";
+import type { PublikasiPaketAppType, PublikasiPaketAppValidWithPaketSoal } from "~/types/publikasi-paket-soal/publikasi-paket-app-type";
+import type { PublikasiPaketSheetType } from "~/types/publikasi-paket-soal/publikasi-paket-sheet-type";
 import {resolveDate, resolveString, stringArrayToString, stringToArrayNumber, stringToArrayString } from "./_resolver";
 import type { PraSettingBaku } from "~/types/bank-soal/entities/PraSettingBaku";
 import type { IdentitasKontenPaket } from "~/domain/paket-soal/entities/identitas-paket";

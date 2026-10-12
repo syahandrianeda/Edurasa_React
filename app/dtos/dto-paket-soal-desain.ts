@@ -2,15 +2,15 @@ import type { ParamFile } from "~/configs/appscript-config";
 import type { AlertPaketSoal } from "~/controllers/paket-soal/modal/validation-paket-soal";
 import type { PraSettingPaket } from "~/domain/paket-soal/entities/pra-setting-paket";
 import DataKisiKisi from "~/domain/paket-soal/infrastructure/data-kisi-kisi-class";
-import type { PaketSoalDesign } from "~/domain/paket-soal/result/paket-soal";
-import type { DataSoalDesign } from "~/domain/paket-soal/result/session-soal";
+import type { PaketSoalDesign } from "~/domain/paket-soal/result/paket-soal-design-type";
+import type { DataSoalDesign } from "~/domain/paket-soal/result/section-soal-type";
 import { getSessionApp } from "~/infrastructures/session-storage/app-session";
 import { currentTapel, currentTapelProperties } from "~/lib/current-tapel";
 import { normalizeFileName } from "~/lib/normalized-filename";
 import type{ UserPtk } from "~/types";
 import type { DataSoalDesignBaku } from "~/types/bank-soal/entities/DataSoalDesignBaku";
 // import type { DataSoalDesignBaku, PraSettingBaku } from "~/types/bank-soal/entities/paket-soal-app-type";
-import type { PaketSoalSheetType } from "~/types/bank-soal/entities/paket-soal-sheet-type";
+import type { PaketSoalSheetType } from "~/types/paket-soal/paket-soal-sheet-type";
 import type { PraSettingBaku } from "~/types/bank-soal/entities/PraSettingBaku";
 
 export default class DtoPaketSoalDesainType extends DataKisiKisi{

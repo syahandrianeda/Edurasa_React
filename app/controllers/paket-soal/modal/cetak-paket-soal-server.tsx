@@ -1,5 +1,5 @@
 import type DataKisiKisi from "~/domain/paket-soal/infrastructure/data-kisi-kisi-class";
-import { getGlobalIndex } from "~/domain/paket-soal/result/create-design";
+import { getGlobalIndex } from "~/domain/paket-soal/infrastructure/create-design";
 import IdentitasPaketSoal from "../components/identitas-paket-soal";
 import ItemSoalPreview from "../components/item-soal-preview";
 import KolomNilaiPaket from "../components/kolom-nilai";

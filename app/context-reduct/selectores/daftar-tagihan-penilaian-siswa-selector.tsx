@@ -19,6 +19,7 @@ export const responTagihanCurrentJenjang = createSelector(
         if(currentData){
             result = DtoResponTagihanSiswa.arrayFromSheetToApp(currentData.data);
         }
+        
         return result;
     }
 )

@@ -1,7 +1,8 @@
 
 
 import TableWithScrolling from "~/components/tabels/table-with-scrolling";
-import type { detailNilaiSiswaAppType, ResumeInfoResponse, RisponsePenilaianSiswa } from "~/types/penilaian/nilai-siswa-app-type";
+import type { detailNilaiSiswaAppType, ResumeInfoResponse } from "~/types/penilaian/nilai-siswa-app-type";
+import type { RisponsePenilaianSiswa } from "~/types/penilaian/RisponsePenilaianSiswaType";
 import type { TemplateKoreksiSiswaType } from "~/types/penilaian/TemplateKoreksiSiswaType";
 import type { HandleUpdateResponKoreksi } from "~/domain/bank-soal/koreksi";
 import { KoreksiPgHeader } from "./KoreksiPgHeader";

@@ -1,7 +1,7 @@
 import { Eye, FileCheck, FileCheckCorner, FileKey2Icon, Key, PencilIcon, Settings, Trash } from "lucide-react";
 import { ActionButtonTable, type TriggerTable } from "~/components/dropdowns/dropdown-action-table";
 import { useModal } from "~/components/modals/modal-provider";
-import type { PaketSoalAppWithPublikasi } from "~/types/bank-soal/entities/paket-soal-app-type";
+import type { PaketSoalAppWithPublikasi } from "~/types/paket-soal/paket-soal-app-type";
 
 export default function TriggerPaketSoal({data:m}:{data:PaketSoalAppWithPublikasi}){
     const {actions} = useModal<PaketSoalAppWithPublikasi>()

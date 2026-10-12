@@ -1,5 +1,6 @@
 import type { KategoriTagihanType } from "~/domain/penilaian/type/KategoriTagihanType";
-import type { DataSkorMapel, KeyScore, NilaiSiswaAppType, RisponsePenilaianSiswa, SkorKdResponSiswaType } from "~/types/penilaian/nilai-siswa-app-type";
+import type { DataSkorMapel, KeyScore, NilaiSiswaAppType, SkorKdResponSiswaType } from "~/types/penilaian/nilai-siswa-app-type";
+import type { RisponsePenilaianSiswa } from "~/types/penilaian/RisponsePenilaianSiswaType";
 import type { NilaiSiswaSheetType } from "~/types/penilaian/nilai-siswa-sheet-type";
 import { resolveDate } from "./_resolver";
 import { ListBentukSoal } from "~/domain/bank-soal/list-bentuk-soal";
@@ -89,10 +90,9 @@ export default class DtoResponTagihanSiswa{
         const result:RisponsePenilaianSiswa[]=[];
         const keyPrefix = ListBentukSoal.map(m=>m.name);
         const keySkor:KeyScore[]=[]
-        let index = 0;
+        
+        const bentukSoal = new Map<string,RisponsePenilaianSiswa[]>()
         for(const key in data){
-            
-            
             /** key itu mengandung prefix 'pg_', 'isian_singkat_' */
             if(keyPrefix.some(item=>key.includes(item))){
                 let obj:RisponsePenilaianSiswa = Object.create(null);
@@ -100,20 +100,38 @@ export default class DtoResponTagihanSiswa{
                 const split = key.split("_");
                 /** split dengan denominator "_", maka akan menghasilkan array: ['isian', 'singkat', '1'] */
                 /** ambil yang terakhir, berarti mengambil= '1' */
-                const number = split.pop()
-                obj.index = index;
-                obj.no_prefix = Number(number);
+                const number = split.pop();
+                const no = Number(number);
+                const bentuk_soal = split.join('_');
+                // obj.index = index;
+                obj.index = (no-1);
+                obj.no_prefix = no
+                // obj.no_prefix = Number(number);
                 obj.respon = data[key] as string;
                 /** split saat ini mengalami mutasi, sehingga yang tersisa = ['isian', 'singkat'] */
-                obj.bentuk_soal = split.join('_')
+                obj.bentuk_soal = bentuk_soal;
 
-                result.push(obj);
+                // result.push(obj);
+                if(!bentukSoal.has(bentuk_soal)){
+                    bentukSoal.set(bentuk_soal, [])
+                }
+                
+                bentukSoal.get(bentuk_soal)?.push(obj);
+            }
+        };
+
+        /** perbaiki index secara global; */
+        let index = 0;
+        for(const [bentuk_soal, respon] of bentukSoal.entries()){
+            respon.sort((a, b)=>a.no_prefix - b.no_prefix)
+            for(const itemRespon of respon){
+                const newRespon = {...itemRespon, index}
+                result.push(newRespon)
                 index++;
             }
-
-            // if(key.includes('skor_')){
-           
         }
+
+
 
         for(const key in data){
              if (/^skor_\d+$/.test(key)) {
@@ -128,11 +146,13 @@ export default class DtoResponTagihanSiswa{
 
         const finalResult = result.map(m=>{
             const found= keySkor.find(s=>s.index === m.index);
+            // const found= keySkor[m.index]
             if(found){
                 return {...m, skor:found.skor}
             }
             return m
-        })
+        }).sort((a,b)=>a.index - b.index);
+
         return finalResult;
     }
     static arrayFromSheetToApp(data:NilaiSiswaSheetType[]):NilaiSiswaAppType[]{

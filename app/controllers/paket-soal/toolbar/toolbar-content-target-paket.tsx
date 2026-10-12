@@ -8,7 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "~
 import { useAppSelector } from '~/context-reduct/hook';
 import {type PraSettingPaket } from "~/domain/paket-soal/entities/pra-setting-paket"
 import type { TypePaketSoal } from '~/domain/paket-soal/entities/type-paket';
-import type { PaketSoalDesign } from '~/domain/paket-soal/result/paket-soal';
+import type { PaketSoalDesign } from '~/domain/paket-soal/result/paket-soal-design-type';
 import { DataRombelUI } from '~/domain/rombel/data-rombel';
 import { getSessionRombel } from '~/infrastructures/session-storage/rombel-session';
 import { getNumberFromString } from '~/lib/get-number';

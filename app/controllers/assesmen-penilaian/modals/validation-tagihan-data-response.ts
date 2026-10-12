@@ -1,5 +1,5 @@
 import type { TagihanHasDataResponse } from "~/domain/penilaian/type/tagihan-assesmen-type";
-import type { PublikasiPaketAppType } from "~/types/bank-soal/entities/publikasi-paket-app-type";
+import type { PublikasiPaketAppType } from "~/types/publikasi-paket-soal/publikasi-paket-app-type";
 type warning = {
     isValid:boolean
     message?:string[]

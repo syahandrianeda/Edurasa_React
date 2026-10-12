@@ -30,7 +30,7 @@ import type { InitialItemSoalImplemented } from '~/controllers/paket-soal/modal/
 import SendSoalBaruPaket from '../crud/send-soal-baru-paket';
 import ContentTabSoalPaket from '~/controllers/koleksi-bank-soal/modal/fieldset/modal-tabs/conten-tab-soal-paket';
 import { useFilterContext } from '~/components/toolbars/state-toolbar/state-toolbar';
-import {type PaketSoalDesign } from '~/domain/paket-soal/result/paket-soal';
+import {type PaketSoalDesign } from '~/domain/paket-soal/result/paket-soal-design-type';
 
 export default function ModalEditItemSoalPaket({mode}:{mode?:string}){
     

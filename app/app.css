@@ -170,7 +170,10 @@
 }
 
 @layer components {
-
+    .editor-document {
+        /* white-space: pre-wrap; */
+        @apply whitespace-pre-wrap
+    }
     .editor-document h1 {
         @apply scroll-m-20 text-4xl font-extrabold tracking-tight;
     }

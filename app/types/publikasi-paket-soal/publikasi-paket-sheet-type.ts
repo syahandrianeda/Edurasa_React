@@ -1,6 +1,6 @@
 import type { TypePaketSoal } from "~/domain/paket-soal/entities/type-paket";
 import type { SiswaType } from "~/types/siswa";
-import type { BankSoalAppType } from "../bank-soal-type";
+import type { BankSoalAppType } from "../bank-soal/bank-soal-type";
 
 export interface PublikasiPaketSheetType{
     idbaris             : number,

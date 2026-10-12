@@ -1,9 +1,9 @@
 import type { CountBentukSoalPaket } from "~/domain/paket-soal/entities/count-bentuk-soal-paket";
-import type { DataSoalDesign } from "~/domain/paket-soal/result/session-soal";
+import type { DataSoalDesign } from "~/domain/paket-soal/result/section-soal-type";
 import type { TypePaketSoal } from "~/domain/paket-soal/entities/type-paket";
 import type { PraSettingPaket } from "~/domain/paket-soal/entities/pra-setting-paket";
-import type { PraSettingBaku } from "./PraSettingBaku";
-import type { PublikasiPaketAppType, PublikasiPaketAppValidWithPaketSoal } from "./publikasi-paket-app-type";
+import type { PraSettingBaku } from "../bank-soal/entities/PraSettingBaku";
+import type { PublikasiPaketAppType, PublikasiPaketAppValidWithPaketSoal } from "../publikasi-paket-soal/publikasi-paket-app-type";
 
 export interface PaketSoalAppType{
      idbaris:number,

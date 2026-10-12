@@ -3,7 +3,7 @@ import { usePagination } from "~/hooks/use-pagination";
 import type { BankSoalAppType } from "~/types/bank-soal/bank-soal-type";
 import WrapperGridPaginationSelectingItemSoal from "./wrapper-grid-pagination";
 import ContentGridItemProvider from "./content-grid-item-provider-soal";
-import type { DisplayFormatItemSoal } from "~/domain/paket-soal/result/display-format-item-soal";
+import type { DisplayFormatItemSoal } from "~/domain/paket-soal/result/display-format-item-soal-type";
 
 export default function PaginationSoalProvider({data, trigger}:{data:BankSoalAppType[], trigger:(v:DisplayFormatItemSoal)=>void}){
     const pagination = usePagination(data, {initialPageSize:5});

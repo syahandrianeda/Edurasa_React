@@ -1,6 +1,6 @@
 import type { CountBentukSoalPaket } from "~/domain/paket-soal/entities/count-bentuk-soal-paket";
-import type { DisplayFormatItemSoal } from "~/domain/paket-soal/result/display-format-item-soal";
-import type { DataSoalDesign } from "~/domain/paket-soal/result/session-soal";
+import type { DisplayFormatItemSoal } from "~/domain/paket-soal/result/display-format-item-soal-type";
+import type { DataSoalDesign } from "~/domain/paket-soal/result/section-soal-type";
 
 /**
  * Membuat satu slot soal kosong.

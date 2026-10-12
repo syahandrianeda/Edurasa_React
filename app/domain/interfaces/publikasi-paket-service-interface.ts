@@ -1,6 +1,6 @@
 import type { ApiResponse } from "~/configs/appscript-config";
 import type { PublikasiPaketRepositoryInterface } from "./publikasi-paket-repository-interface";
-import type { PublikasiPaketSheetType } from "~/types/bank-soal/entities/publikasi-paket-sheet-type";
+import type { PublikasiPaketSheetType } from "~/types/publikasi-paket-soal/publikasi-paket-sheet-type";
 
 export interface PublikasiPaketServiceInterface {
     repo:PublikasiPaketRepositoryInterface;

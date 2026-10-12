@@ -1,4 +1,4 @@
-import type { PaketSoalDesign } from "~/domain/paket-soal/result/paket-soal";
+import type { PaketSoalDesign } from "~/domain/paket-soal/result/paket-soal-design-type";
 import { getDraft, hasDraft, removeDraft, saveDraft } from "./draft-storage";
 import { DRAFT_STORAGE_KEY } from "./draft-soal";
 import { mapPaketSoalDesignDTO } from "./dto-paket-soal";

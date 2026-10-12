@@ -3,7 +3,7 @@ import {
     useEffect,
     useState
 } from "react";
-import type { PaketSoalDesign } from "~/domain/paket-soal/result/paket-soal";
+import type { PaketSoalDesign } from "~/domain/paket-soal/result/paket-soal-design-type";
 import { getPaketSoalDraft, removePaketSoalDraft, savePaketSoalDraft } from "~/infrastructures/session-storage/draft-paket-soal";
 
 export function useDraftPaketSoal() {

@@ -1,5 +1,5 @@
 import OpsiSoalPreview from "~/controllers/koleksi-bank-soal/views/opsi-soal-preview";
-import type { DisplayFormatItemSoal } from "~/domain/paket-soal/result/display-format-item-soal";
+import type { DisplayFormatItemSoal } from "~/domain/paket-soal/result/display-format-item-soal-type";
 
 export default function ItemSoalPreview({data}:{data:DisplayFormatItemSoal}){
     
