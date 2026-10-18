@@ -82,7 +82,7 @@ export default function TableTagihanKompetensi({data, showIdentitas=true}:{data?
                                                                                                 <p>{detailNaskah.koleksiNoSoal.length} soal</p>
                                                                                             </div>
                                                                                             <div className="flex w-full justify-between border-b">
-                                                                                                <p>No {detailNaskah.bentukSoal.description} </p>
+                                                                                                <p>No Soal </p>
                                                                                                 <p className="max-w-2/3 text-wrap text-end">{detailNaskah.koleksiNoSoal.join(', ')}</p>
                                                                                             </div>
                                                                                         </li>

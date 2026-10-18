@@ -131,6 +131,7 @@ export default class CountInstrumenSoalTiapAtpInPublikasiPaket{
                                     return {
                                         siswa_id: siswa.id,
                                         namaSiswa:siswa.pd_nama,
+                                        rombel:siswa.nama_rombel,
                                         total,
                                         dataRefrensiTabResponTagihanJenjang,
                                         dataPerBentukSoal,
@@ -143,6 +144,7 @@ export default class CountInstrumenSoalTiapAtpInPublikasiPaket{
                                 return {
                                         siswa_id: siswa.id,
                                         namaSiswa:siswa.pd_nama,
+                                        rombel:siswa.nama_rombel,
                                         total: 0,
                                         dataRefrensiTabResponTagihanJenjang:[],
                                         dataPerBentukSoal:[],
@@ -155,9 +157,11 @@ export default class CountInstrumenSoalTiapAtpInPublikasiPaket{
                             const dataSoalNaskah:DataSoalNaskah[]  = dataBentukSoal.map(bs=>{
                                 const bentukSoal = ListBentukSoal.find(s=>s.name === bs.bentukSoal)!;
                                 const koleksiNoSoal = bs.data.map(noSoal=>noSoal.no_soal);
+                                const koleksiJawaban = bs.data.map(jwbn=>jwbn.bentuk_soal === 'pg'?jwbn.jawaban.join(''):'')
                                 return {
                                     bentukSoal,
-                                    koleksiNoSoal
+                                    koleksiNoSoal,
+                                    koleksiJawaban
                                 }
                             })
 

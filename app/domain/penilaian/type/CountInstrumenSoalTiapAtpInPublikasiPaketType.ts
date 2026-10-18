@@ -23,6 +23,7 @@ export type SkorKdType = Record<string, number>;
 export type DataSkorSiswaByInstrumenType = {
     siswa_id:number,
     namaSiswa:string,
+    rombel:string,
     dataRefrensiTabResponTagihanJenjang: RefrensiTabResponTagihanJenjangType[],
     dataPerBentukSoal: DataRefrensiPerBentukSoal[]
     /** `total` = akumulasi skor pada `RefrensiTabResponTagihanType` */
@@ -39,7 +40,8 @@ export type DataSkorSiswaByInstrumenType = {
 
 export type DataSoalNaskah = {
     bentukSoal: ListBentukSoalType
-    koleksiNoSoal: number[]
+    koleksiNoSoal: number[],
+    koleksiJawaban:string[]
 }
 export type DetailPublikasiWithResponSiswaType = {
     namaPublikasi:string,

@@ -1,4 +1,4 @@
-import { TdEdura, ThEdura, TRowEdura } from "~/components/tabels/tabel-components";
+import { TdEdura, TdEduraFreeze, ThEdura, THEduraFreeze, TRowEdura } from "~/components/tabels/tabel-components";
 import TableWithScrolling from "~/components/tabels/table-with-scrolling";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "~/components/ui/sheet";
 import type { DataSkorSiswaByInstrumenType, DetailPublikasiWithResponSiswaType } from "~/domain/penilaian/type/CountInstrumenSoalTiapAtpInPublikasiPaketType";
@@ -22,7 +22,7 @@ export default function DetailResponsKdSelectedSheet({
             <SheetContent side="right" className=" w-full overflow-y-auto sm:max-w-xl" >
                 <SheetHeader>
                     <SheetTitle>
-                        Data siswa Yang merespon untuk kompoetensi ini (id={item.atp_id})
+                        Data siswa Yang merespon untuk kompetensi ini (id={item.atp_id})
                     </SheetTitle>
 
                     <SheetDescription>
@@ -36,7 +36,8 @@ export default function DetailResponsKdSelectedSheet({
                             <TRowEdura>
                                 <ThEdura rowSpan={2}>No</ThEdura>
                                 <ThEdura rowSpan={2} className="text-wrap max-w-5">Token Siswa</ThEdura>
-                                <ThEdura rowSpan={2}>Nama Siswa</ThEdura>
+                                <THEduraFreeze stateFreeze={true} rowSpan={2}>Nama Siswa</THEduraFreeze>
+                                <ThEdura rowSpan={2} className="text-wrap max-w-12">Kelas</ThEdura>
                                 {
                                     item.dataSoalNaskah.map((naskah, iNaskah)=>
                                         <ThEdura key={naskah.bentukSoal.name} colSpan={naskah.koleksiNoSoal.length}>{naskah.bentukSoal.description}</ThEdura>
@@ -49,7 +50,7 @@ export default function DetailResponsKdSelectedSheet({
                                 {
                                     item.dataSoalNaskah.map((naskah, iNaskah)=>
                                         naskah.koleksiNoSoal.map((noSoal, iNoSoal)=>
-                                            <ThEdura key={naskah.bentukSoal.name + '_'+noSoal}>{noSoal}</ThEdura>
+                                            <ThEdura key={naskah.bentukSoal.name + '_'+noSoal}>{noSoal}{naskah.bentukSoal.name==='pg' && (<p>{naskah.koleksiJawaban[iNoSoal]}</p>)}</ThEdura>
                                         )
                                     )
                                 }
@@ -60,12 +61,19 @@ export default function DetailResponsKdSelectedSheet({
                                 item.dataResponSiswa.map((respon, iRespon)=>
                                     <TRowEdura key={respon.siswa_id}>
                                         <TdEdura>{iRespon+1}</TdEdura>
-                                        <TdEdura>{respon.siswa_id}</TdEdura>
-                                        <TdEdura>{respon.namaSiswa}</TdEdura>
+                                        <TdEdura className="text-center">{respon.siswa_id}</TdEdura>
+                                        <TdEduraFreeze stateFreeze={true}>{respon.namaSiswa}</TdEduraFreeze>
+                                        <TdEdura className="text-center">{respon.rombel}</TdEdura>
                                         {
                                             respon.dataPerBentukSoal.map((nilaiSkor, iNilai)=>
                                                 nilaiSkor.data.map((itemNilai, iItem)=>
-                                                    <TdEdura key={nilaiSkor.bentukSoal+'_'+iNilai+'_'+itemNilai.noSoal} className="text-center">{itemNilai.skor}</TdEdura>
+                                                    <TdEdura key={nilaiSkor.bentukSoal+'_'+iNilai+'_'+itemNilai.noSoal} className="text-center">
+                                                        {
+                                                            nilaiSkor.bentukSoal === 'pg'?  (
+                                                                <div className="flex w-ful justify-between"><span>{itemNilai.responJawaban}</span><span>{itemNilai.skor}</span></div>
+                                                            ):itemNilai.skor 
+                                                        }
+                                                    </TdEdura>
                                                 )
                                             )
                                         }
