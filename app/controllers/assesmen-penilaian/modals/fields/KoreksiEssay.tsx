@@ -4,6 +4,8 @@ import type { HandleUpdateResponKoreksi } from "~/domain/bank-soal/koreksi";
 import UploadGambarSoalService from "~/infrastructures/services/upload-gambar-soal-service-implements";
 import type { TemplateKoreksiSiswaType } from "~/types/penilaian/TemplateKoreksiSiswaType";
 import {toast} from 'sonner';
+import { FilePreviewProvider, SectionPreview } from "~/components/form-custom/files-input";
+import { HtmlContent } from "~/controllers/string-html-converter/html-content";
 
 export function KoreksiEssay({template, handleUpdate}:{template:TemplateKoreksiSiswaType, handleUpdate: HandleUpdateResponKoreksi}){
     const data = template.data;
@@ -67,7 +69,12 @@ export function KoreksiEssay({template, handleUpdate}:{template:TemplateKoreksiS
                         <div className="relative mt-4">
                             {/* <InputText readOnly type="text" value={respon?.respon ?? ''} label={`Respon Siswa No. ${no_prefix}`}/> */}
                             <div className="absolute -top-4 border-black border left-0 w-auto ps-1 pe-4 bg-white dark:text-black rounded-tr-2xl">Respon Siswa No. {no_prefix}</div>
-                            <div className="rounded-b-2xl px-2 whitespace-pre-wrap max-h-36 overflow-y-auto scrol-h-custom bg-white min-h-12 border-black border editor-document" dangerouslySetInnerHTML={{__html:respon?.respon??''}} />
+                            <FilePreviewProvider>
+                                <HtmlContent html={respon?.respon??''} className="rounded-b-2xl px-2 whitespace-pre-wrap max-h-36 overflow-y-auto scrol-h-custom bg-white min-h-12 border-black border"/>
+                                <SectionPreview/>
+                                {/* <div className="rounded-b-2xl px-2 whitespace-pre-wrap max-h-36 overflow-y-auto scrol-h-custom bg-white min-h-12 border-black border editor-document" dangerouslySetInnerHTML={{__html:respon?.respon??''}} /> */}
+
+                            </FilePreviewProvider>
                             <label htmlFor={"file_"+soal?.bentuk_soal +'_'+ no_prefix} className="flex h-fit w-fit items-center justify-center gap-[0.5em] rounded-full bg-sky-700 px-4 py-0 text-[10px] text-white shadow-[inset_0px_-4px_4px_0px_var(--color-sky-600),0px_0px_4px_1px_var(--color-sky-100),0px_4px_0px_0px_var(--color-sky-800)] duration-250 hover:translate-y-[0.25em] active:translate-y-[0.5em] active:shadow-[inset_0px_-4px_4px_0px_var(--color-sky-600),1px_0px_2px_1px_#f9d1d1]">Upload Respon</label>
                             <input type="file" id={"file_"+soal?.bentuk_soal +'_'+ no_prefix} name={soal?.bentuk_soal +'_'+ no_prefix} className="hidden" onChange={uploadFile}/>
                         </div>

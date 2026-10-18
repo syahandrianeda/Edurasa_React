@@ -34,7 +34,7 @@ export function FormIsianSingkat({ data, no_prefix, dataRespon, handleChange }: 
                 success: (response)=>{
                     
                     // const komp = ImgDriveComp(response)
-                    const result =  `<img src="${response}" classe="aspect-ratio" referrerPolicy="no-referrer"/>`;
+                    const result =  `<img src="${response}" class="aspect-ratio" referrerPolicy="no-referrer"/>`;
                     setValueInput(result);
                     return 'Berhasil mengupload'
 
@@ -88,7 +88,7 @@ export function FormIsianSingkat({ data, no_prefix, dataRespon, handleChange }: 
             <label htmlFor={'upload_'+data.bentuk_soal + '_' + no_prefix + "_" + no_prefix}
                 className="flex h-fit w-full items-center justify-center gap-[0.5em] rounded-full bg-sky-700 px-4 py-0 text-white shadow-[inset_0px_-4px_4px_0px_var(--color-sky-600),0px_0px_4px_1px_var(--color-sky-100),0px_4px_0px_0px_var(--color-sky-800)] duration-250 hover:translate-y-[0.25em] active:translate-y-[0.5em] active:shadow-[inset_0px_-4px_4px_0px_var(--color-sky-600),1px_0px_2px_1px_#f9d1d1]" 
             >
-                Upload Gambar
+                Upload Gambar   
             </label>
             <input type="file" id={'upload_'+data.bentuk_soal + '_' + no_prefix + "_" + no_prefix} className="hidden" onChange={handleUpload}/>
         </div>

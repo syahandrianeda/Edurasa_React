@@ -1,6 +1,7 @@
 import { TdEdura, ThEdura, TRowEdura } from "~/components/tabels/tabel-components";
 import TableWithScrolling from "~/components/tabels/table-with-scrolling";
 import type { GroupBentukSoalPropertiKurikulumInPublikasiAssesmen, GroupSebaranNoSoalFromPropertyKurikulum } from "~/domain/penilaian/model/grouping-kurikulum-by-bentuksoal";
+import { cn } from "~/lib/utils";
 
 export default function TableSebaranNoSoalPadaPublikasi ({data}:{data: GroupSebaranNoSoalFromPropertyKurikulum}){
     const {koleksiBentukSoal, data:sourceData} = data
@@ -29,7 +30,7 @@ export default function TableSebaranNoSoalPadaPublikasi ({data}:{data: GroupSeba
                         mapel.dataCp.map((Cp, iCp)=>
                             Cp.dataTp.map((Tp, iTp)=>
                                 Tp.dataAtp.map((Atp, iAtp)=>
-                                    <TRowEdura key={iAtp+'_'+iTp+'_'+iCp+'_'+iMapel}>
+                                    <TRowEdura key={iAtp+'_'+iTp+'_'+iCp+'_'+iMapel} className={cn("", Atp.atp_id === 0?'odd:text-rose-500 even:text-rose-500 font-bold':'')}>
                                         {
                                             iCp === 0 && iTp === 0 && iAtp === 0 && (
                                                 <TdEdura className="text-wrap" rowSpan={mapel.slotRow}>{mapel.mapelName} ({Tp.dataAtp.length})</TdEdura>
@@ -49,6 +50,7 @@ export default function TableSebaranNoSoalPadaPublikasi ({data}:{data: GroupSeba
                                         {
                                             koleksiBentukSoal.map((bentuk, iName)=>{
                                                 const founded = Atp.dataBentukSoal.find(s=>s.bentukSoal===bentuk.name)
+                                                
                                                 return (
                                                     <TdEdura className="text-wrap" key={bentuk.name}>{founded && founded.data.map(m=>m.no_soal).join(', ')}</TdEdura>
                                                 )

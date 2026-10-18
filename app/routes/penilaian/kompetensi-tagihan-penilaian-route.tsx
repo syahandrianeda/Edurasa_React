@@ -4,6 +4,8 @@ import TableTagihanKompetensi from "~/controllers/assesmen-penilaian/tabel/tabel
 import { useAppSelector } from "~/context-reduct/hook";
 import { InstanceDataTagihanPenilaianSector } from "~/context-reduct/selectores/daftar-tagihan-penilaian-selector";
 import { defineCreateItemSoalNeeded } from "~/domain/enloaded/intial-enloaded/by-route-page/banksoal/create-item-soal-needed";
+import { isEqualArrayObject } from "~/lib/isEqualArrayObject";
+import CountInstrumenSoalTiapAtpInPublikasiPaket from "~/domain/penilaian/infrastucture/CountInstrumenSoalTiapAtpInPublikasi";
 
 
 export function meta({matches}: Route.MetaArgs) {
@@ -50,9 +52,12 @@ export function clientLoader({}:Route.ComponentProps){
 
 export default function KompetensiTagihanRoute() {
      const instancPaketSoal = useAppSelector(InstanceDataTagihanPenilaianSector)
-        const data = instancPaketSoal?.dataSebaranTagihanKurikulum
-        
-
+    //     const dataDeprecated = instancPaketSoal?.dataSebaranTagihanKurikulum
+        const byPaketPublikasi = instancPaketSoal?.dataTagihanHasResponse ;
+    //     const dataTes = CountInstrumenSoalTiapAtpInPublikasiPaket.build(byPaketPublikasi ?? []);
+    // console.log({data, byPaketPublikasi, dataTes})
+    const data = instancPaketSoal?.dataCountInstrumenSoalTiapAtpInPublikasiPaket;
+    console.log({data, byPaketPublikasi})
     return(
         <div className="p-1">
             <h3 className="text-2xl font-extrabold text-center">Daftar Kompetensi yang diukur dalam penilaian di Kelas {instancPaketSoal?.rombel}</h3>

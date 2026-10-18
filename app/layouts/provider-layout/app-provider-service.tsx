@@ -59,6 +59,8 @@ import { CrudPaketSoalProvider } from "~/controllers/paket-soal/crud/paket-soal-
 import PaketSoalService from "~/infrastructures/services/paket-soal-service";
 import { CrudPublikasiPaketSoalProvider } from "~/controllers/publikasi-paket-soal/crud/crud-publikasi-paket-provider";
 import PubliksiPaketSoalService from "~/infrastructures/services/publikasi-paket-service";
+import { CrudImportSkorKdProvider } from "~/controllers/assesmen-penilaian/crud/crud-import-skor-kd-provider";
+import ImportKategoriAssesmenSkorKdService from "~/infrastructures/services/ImportKategoriAssesmenSkorKdService";
 
 
 export default function AppProviderLayoutService({
@@ -154,7 +156,8 @@ export default function AppProviderLayoutService({
     const serviceTransaksiSerahTerimaDokumen    = new TransaksiSerahTerimaDokumenService();
     const serviceBankSoal                       = new BanksoalService();
     const servicePaketSOal                      = new PaketSoalService();
-    const servicePublikasiPaketSoal             = new PubliksiPaketSoalService()
+    const servicePublikasiPaketSoal             = new PubliksiPaketSoalService();
+    const serviceImportSkorKd                   = new ImportKategoriAssesmenSkorKdService();
 
    
 
@@ -530,7 +533,10 @@ export default function AppProviderLayoutService({
                                                                             <CrudBankSoalProvider service={serviceBankSoal}>
                                                                                 <CrudPaketSoalProvider service={servicePaketSOal}>
                                                                                     <CrudPublikasiPaketSoalProvider service={servicePublikasiPaketSoal}>
-                                                                                        <Outlet/>
+                                                                                        <CrudImportSkorKdProvider service={serviceImportSkorKd}>
+                                                                                            <Outlet/>
+
+                                                                                        </CrudImportSkorKdProvider>
                                                                                     </CrudPublikasiPaketSoalProvider>
                                                                                 </CrudPaketSoalProvider>
                                                                             </CrudBankSoalProvider>

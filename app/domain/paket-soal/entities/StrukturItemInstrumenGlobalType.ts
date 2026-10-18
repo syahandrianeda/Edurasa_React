@@ -1,3 +1,4 @@
+import type { AtpHasManySoalType } from "~/domain/bank-soal/relational-soal/type";
 import type { BankSoalAppType } from "~/types/bank-soal/bank-soal-type";
 import type { ListBentukSoalType } from "~/types/bank-soal/bentuk-soal-type";
 import type { AtpAsOrm } from "~/types/kurikulum/prota-orm";
@@ -13,8 +14,8 @@ export interface StrukturItemInstrumenGlobal {
     atp: number;
 
     /** soal_id = 0, jika `soal` undefined */
-    soal?: BankSoalAppType;
-    atp_soal?: AtpAsOrm;
+    soal: BankSoalAppType;
+    atp_soal: AtpAsOrm;
     bentuk_soal_detail?:ListBentukSoalType
 
 }

@@ -3,12 +3,7 @@ import { useFormEdura } from "~/components/form-custom/form-edura"
 import { TdEdura, ThEdura, TRowEdura } from '~/components/tabels/tabel-components';
 import TableWithScrolling from '~/components/tabels/table-with-scrolling';
 import type { TagihanHasDataResponse } from "~/domain/penilaian/type/tagihan-assesmen-type";
-import ResponAllSiswaInPublikasiPaket from '~/domain/sistem-koreksi/respon-all-siswa-in-publikasi';
 import { getSessionRombel } from "~/infrastructures/session-storage/rombel-session";
-import SebaranTagihanKurikulum from '../sebaran-kurikulum-tagihan';
-import SebaranTagihanKurikulumClass from '~/domain/penilaian/infrastucture/sebaran-tagihan-kurikulum-class';
-import TableTagihanKompetensi from '../tabel/tabel-tagihan-kompetensi-to-kategori';
-import GroupingSebaranKurikulum from '~/domain/penilaian/infrastucture/grouping-kurikulum-to-sebaran';
 import TableSebaranNoSoalPadaPublikasi from '../tabel/tabel-sebaran-no-soal-publikasi';
 import TableSkorKd from '../tabel/tabel-skor-kd';
 
@@ -17,19 +12,15 @@ export default function AllInfoResponTagihan(){
     const rombel = getSessionRombel();
     const dataRespon = useMemo(()=>{
         if(!currentData || !rombel) return [];
-        // const instansiasi = new ResponAllSiswaInPublikasiPaket(currentData, rombel).build();
-        // return instansiasi.dataResponCurrentRombel;
         return currentData.data_respons.filter(s=>s.rombel === rombel);
     },[rombel, currentData]);
-    // console.log({dataRespon, dataResponse2:currentData.data_respons}, JSON.stringify(dataRespon)===JSON.stringify(currentData.data_respons))
     
     const dataKurikulum = useMemo(()=>{
         if(!currentData) return ;
         
-        // return GroupingSebaranKurikulum.buildGroupBentukSoalBasedOnKoleksiIdSoal(currentData.kurikulum_tagihan,currentData.id_bank_soal)
         return currentData.sebaran_kurikulum_by_bentuk_soal
     },[currentData])
-    
+
     return (
         <div className="p-1">
             <h3 className='text-xl font-bold text-center'>Daftar Peserta Yang Merespon Tagihan Assesmen</h3>

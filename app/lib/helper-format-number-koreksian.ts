@@ -13,11 +13,12 @@ export function helperFormatNumberInResponTagihan(param: NilaiSiswaSheetType) {
     }
 
 export function helperFormatNumberInKategoriTagihan( param: Record<string, any> ) {
-            const result: Record<string, 'number'> = {};
+            const result: Record<string, string> = {};
 
             for (const key in param) {
                 if (/^.+_.+_\d+_\d+$/.test(key)) {
                     result[key] = 'number';
+                    // result[key] = 'numeric';
                 }
             }
 

@@ -8,6 +8,8 @@ import EditIndikatorSoalModal from '../edit-indikator-soal-modal';
 import {type Content, type JSONContent} from '@tiptap/react'
 import { useFormEdura } from '~/components/form-custom/form-edura';
 import KunciJawabanPreview from '~/controllers/koleksi-bank-soal/views/kunci-jawaban-preview';
+import CopyText from '~/components/copy-paste/inline-comp-clipboard';
+import TooltipComp from '~/components/ui_edura/tooltip-comp';
 
 type Props = {
     
@@ -21,7 +23,7 @@ export default function ContentTabIndikatorSoal({
         const {currentData, setCurrentData} = useFormEdura<BankSoalAppType>();
     return (
             <div className='flex flex-col md:flex-row md:px-2 gap-1 mt-2 text-sm pb-2 overflow-y-auto scrol-h-custom'>
-                <div className="md:w-72 hidden bg-sky-50 dark:bg-slate-400 pt-2 shadow-lg shadow-sky-500 border-sky-300 p-1 rounded-s-2xl gap-2 md:flex md:flex-col">
+                <div className="md:w-72 hidden bg-sky-50 dark:bg-slate-400 pt-2 shadow-lg shadow-sky-500 border-sky-300 p-1 rounded-s-2xl gap-2 md:flex md:flex-col h-94 overflow-y-auto scrol-h-custom">
                     <TableWithScrolling inModal={true} className='border-0  text-[10px]'>
                         <tbody>
                             <TRowEdura>
@@ -65,14 +67,9 @@ export default function ContentTabIndikatorSoal({
                     <TableWithScrolling className='text-[10px]'>
                             <tbody>
                             <TRowEdura>
-                                <TdEdura className='border-0 w-12'>Fase</TdEdura>
+                                <TdEdura className='border-0 w-12'>Kelas/Fase</TdEdura>
                                 <TdEdura className='border-0 w-5'>:</TdEdura>
-                                <TdEdura className='border-0'>{currentData.snapshot_kurikulum?.fase}</TdEdura>
-                            </TRowEdura>
-                            <TRowEdura>
-                                <TdEdura className='border-0 w-12'>Kelas</TdEdura>
-                                <TdEdura className='border-0 w-5'>:</TdEdura>
-                                <TdEdura className='border-0'>{currentData.snapshot_kurikulum?.kelas?.join(' dan ')}</TdEdura>
+                                <TdEdura className='border-0'>{currentData.snapshot_kurikulum?.kelas?.join(' dan ')} / {currentData.snapshot_kurikulum?.fase}</TdEdura>
                             </TRowEdura>
                             <TRowEdura>
                                 <TdEdura className='border-0'>Elemen</TdEdura>
@@ -80,14 +77,51 @@ export default function ContentTabIndikatorSoal({
                                 <TdEdura className='border-0 text-[8px] text-wrap w-36'>{currentData.snapshot_kurikulum?.elemen}</TdEdura>
                             </TRowEdura>
                             <TRowEdura>
+                                <TdEdura className='border-0'>CP</TdEdura>
+                                <TdEdura className='border-0'>:</TdEdura>
+                                <TdEdura className='border-0 w-36 text-[8px] text-wrap'>
+                                    {
+                                        currentData.snapshot_kurikulum?.cp_description && (
+                                            <CopyText text={currentData.snapshot_kurikulum?.cp_description}>
+                                                <TooltipComp content="Copy CP">
+                                                    <span>{currentData.snapshot_kurikulum?.cp_description}</span>
+                                                </TooltipComp>
+                                            </CopyText>
+                                        )
+                                    }
+                                    {/* {currentData.snapshot_kurikulum?.tp_as_cp_description} */}
+                                </TdEdura>
+                            </TRowEdura>
+                            <TRowEdura>
                                 <TdEdura className='border-0'>TP</TdEdura>
                                 <TdEdura className='border-0'>:</TdEdura>
-                                <TdEdura className='border-0 w-36 text-[8px] text-wrap'>{currentData.snapshot_kurikulum?.tp_as_cp_description}</TdEdura>
+                                <TdEdura className='border-0 w-36 text-[8px] text-wrap'>
+                                    {
+                                        currentData.snapshot_kurikulum?.tp_as_cp_description && (
+                                            <CopyText text={currentData.snapshot_kurikulum?.tp_as_cp_description}>
+                                                <TooltipComp content="Copy TP">
+                                                    <span>{currentData.snapshot_kurikulum?.tp_as_cp_description}</span>
+                                                </TooltipComp>
+                                            </CopyText>
+                                        )
+                                    }
+                                    {/* {currentData.snapshot_kurikulum?.tp_as_cp_description} */}
+                                </TdEdura>
                             </TRowEdura>
                             <TRowEdura>
                                 <TdEdura className='border-0'>ATP</TdEdura>
                                 <TdEdura className='border-0'>:</TdEdura>
-                                <TdEdura className='border-0 w-36 text-[8px] text-wrap'>{currentData.snapshot_kurikulum?.atp_as_tp_description}</TdEdura>
+                                <TdEdura className='border-0 w-36 text-[8px] text-wrap'>
+                                    {
+                                        currentData.snapshot_kurikulum?.atp_as_tp_description && (
+                                            <CopyText text={currentData.snapshot_kurikulum?.atp_as_tp_description}>
+                                                <TooltipComp content="Copy ATP">
+                                                    <span>{currentData.snapshot_kurikulum?.atp_as_tp_description}</span>
+                                                </TooltipComp>
+                                            </CopyText>
+                                        )
+                                    }
+                                </TdEdura>
                             </TRowEdura>
                             <TRowEdura>
                                 <TdEdura className='border-0'>Lingkup Materi</TdEdura>

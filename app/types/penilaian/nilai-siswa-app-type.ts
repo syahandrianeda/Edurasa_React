@@ -36,7 +36,7 @@ export interface DataSkorMapel{
     }
 export interface KeyScore {
     index:number,
-    skor:number
+    skor:number|null
 }
 export interface ResumeInfoResponse extends NilaiSiswaAppType{
     siswa?:SiswaType;
@@ -48,6 +48,9 @@ export interface detailNilaiSiswaAppType extends ResumeInfoResponse{
     publikasi:TagihanAsessmenType,
     templateKoreksiSiswa:TemplateKoreksiSiswaType[],
     skorKdSebaran:GroupSebaranNoSoalFromPropertyKurikulumWithScore
+
+    /** type untuk `skor_kd` pada sheet ['harian', 'mid_semester', 'akhir_semester'] */
+    objekKdSebaran: {[key:string]:number}
     
 }
 

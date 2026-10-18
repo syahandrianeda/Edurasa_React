@@ -1,8 +1,11 @@
+import AtpAsOrmUndefined from "~/domain/kurikulum/atpAsOrm-undefined";
 import type { BankSoalAppType } from "~/types/bank-soal/bank-soal-type";
+import type { AtpAsOrm } from "~/types/kurikulum/prota-orm";
 
 export default class BankSoalAppUndefined{
     static build(): BankSoalAppType{
-        const namaTidakDikenal:string = 'Soal tidak terdeteksi'
+        const namaTidakDikenal:string = 'Soal tidak terdeteksi';
+        const snapshot_kurikulum:AtpAsOrm= AtpAsOrmUndefined.build();
         return {
                 idbaris:0,
                 fase_jenjang:[],
@@ -32,7 +35,8 @@ export default class BankSoalAppUndefined{
                 refrensi:namaTidakDikenal,
                 //-------
                 auto_koreksi: 'manual',
-                status: ''
+                status: '',
+                snapshot_kurikulum
         }
     }
 }

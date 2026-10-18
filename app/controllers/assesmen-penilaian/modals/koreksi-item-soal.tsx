@@ -8,7 +8,6 @@ import { useImmer } from "use-immer";
 import { useCallback, useMemo } from "react";
 import { upsertRespon, type HandleUpdateResponKoreksi } from "~/domain/bank-soal/koreksi";
 import ButtonCommitAwesome from "~/components/button-awesome/commit-button";
-import GroupingSebaranKurikulum from "~/domain/penilaian/infrastucture/grouping-kurikulum-to-sebaran";
 import ResumeSkorKdKoreksi from "./fields/resume-skor-kd-koreksi";
 import DtoKoreksiToResponseSheet from "~/dtos/dto-koreksi-to-respons-sheet";
 import KoreksiGuruService from "~/infrastructures/services/koreksi-guru-service";
@@ -19,32 +18,42 @@ import { getSessionRombel } from "~/infrastructures/session-storage/rombel-sessi
 import { useAppSelector } from "~/context-reduct/hook";
 import { InstanceDataTagihanPenilaianSector } from "~/context-reduct/selectores/daftar-tagihan-penilaian-selector";
 import SwitchKategoriTagihan from "~/domain/asesmen-penilaian/switch-kategori-tagihan-class";
-import RisponsePenilaianSiswaBuilder from "~/domain/penilaian/infrastucture/rispon-penilaian-siswa-builder";
+import SkorKdSebaranBuilder from "~/domain/penilaian/infrastucture/SkorKdSebaranBuilder";
+import { PaketSoalStrukturBuilder } from "~/domain/paket-soal/paket-soal-struktur/PaketSoalStrukturBuilder";
+import TemplateKoreksiSiswaBuilder from "~/types/penilaian/TemplateKoreksiSiswaBuilder";
+import RisponseNilaiSiswaBuilder from "~/domain/penilaian/infrastucture/RisponseNilaiSiswaBuilder";
+import { findDifferences, isEqualValue } from "~/lib/isEqualArrayObject";
 
 export default function KoreksiItemSoal(){
     const dataTagihan = useAppSelector(InstanceDataTagihanPenilaianSector);
     const rombel = getSessionRombel();
     const{actions, state, nextState} = useModal();
     const {currentData, setCurrentData} = useFormEdura<detailNilaiSiswaAppType>();
+    
+    const dataTabelParent = useMemo(()=>{
+        if(!dataTagihan) return;
+        return dataTagihan?.dataTagihanHasResponse.find(s=>s.idbaris === currentData.publikasi_id)
+    },[currentData, dataTagihan]);
+
     const currentDataSelector = useMemo(()=>{
-        if(!dataTagihan) return ;
-        const dataTabelParent = dataTagihan?.dataTagihanHasResponse;
+        // if(!dataTagihan) return ;
+        if(!dataTabelParent) return ;
         
         /** currentData adalah data yang terpilih dan menjadi fokus modal */
-        const rep =  dataTabelParent?.find(s=>s.idbaris === currentData.publikasi_id);
-        
-        const resp =   rep?.data_respons.find(s=>s.idbaris === currentData.idbaris);
+        // const rep =  dataTabelParent?.find(s=>s.idbaris === currentData.publikasi_id);
+        const rep = dataTabelParent;
+        // const resp =   rep?.data_respons.find(s=>s.idbaris === currentData.idbaris);
+        const resp =   dataTabelParent.data_respons.find(s=>s.idbaris === currentData.idbaris);
         if(!resp){
             const jenis_tagihan =  rep?.jenis_tagihan?.kode ?? '';
             const kategori = new SwitchKategoriTagihan(jenis_tagihan).kategori;
             const idSoal = rep?.id_bank_soal;
             const settingTagihan = rep?.setting_tagihan?.count_bentuk_soal;//
-            const templateKoreksi = RisponsePenilaianSiswaBuilder.build(rep?.bank_soal_collections ?? [],settingTagihan ?? [],[]) ;//(dataTagihan?.createTemplateKoreksiPerSiswa(kurikulum, idSoal) ?? {sebaran:[], respon:[]}) as unknown as {sebaran:detailNilaiSiswaAppType['templateKoreksiSiswa'],respon:RisponsePenilaianSiswa[]};
-             const respon =  templateKoreksi?.respon ?? [];
-            const templateKoreksiSiswa =  templateKoreksi?.sebaran ?? [];
-            const Kur = rep?.kurikulum_tagihan ?? []
-            const skorKdSebaran =  GroupingSebaranKurikulum.buildGroupBentukSoalBasedOnKoleksiIdSoalWithScore(Kur,idSoal ?? [],respon);
-                    
+            const strukturNaskah = PaketSoalStrukturBuilder.buildFromCountBentukSoalPaket(rep.bank_soal_collections, settingTagihan ?? [])
+            const respon = RisponseNilaiSiswaBuilder.build(strukturNaskah,[])
+            const templateKoreksiSiswa = TemplateKoreksiSiswaBuilder.build(strukturNaskah,respon);// RisponsePenilaianSiswaBuilder.build(rep?.bank_soal_collections ?? [],settingTagihan ?? [],[]) ;//(dataTagihan?.createTemplateKoreksiPerSiswa(kurikulum, idSoal) ?? {sebaran:[], respon:[]}) as unknown as {sebaran:detailNilaiSiswaAppType['templateKoreksiSiswa'],respon:RisponsePenilaianSiswa[]};
+            const skorKdSebaran =  SkorKdSebaranBuilder.build(rep.sebaran_kurikulum_by_bentuk_soal, respon);
+            const objekKdSebaran = skorKdSebaran.data.map(m=>m.objekSkorKd).reduce((a,b)=>({...a,...b}))
 
             const data:detailNilaiSiswaAppType = {
                 idbaris: 0,	
@@ -65,15 +74,17 @@ export default function KoreksiItemSoal(){
                 durasiPengerjaan: 0,
                 publikasi: rep!,
                 templateKoreksiSiswa,
-                skorKdSebaran
+                skorKdSebaran,
+                objekKdSebaran
     
             }
             return data;
         }
 
         return resp;
-    }, [currentData, dataTagihan]);
-    
+    // }, [currentData, dataTagihan]);
+    }, [currentData, dataTabelParent]);
+    console.log(findDifferences(currentData, currentDataSelector), isEqualValue(currentData, currentDataSelector));
     // const dataRespon = useMemo(()=>{
     //     if(!currentDataSelector || !rombel) return []
 
@@ -96,18 +107,23 @@ export default function KoreksiItemSoal(){
     //     })
     // },[updateRespon, setCurrentData])
     const skorKd = useMemo(()=>{
-        const Kur = currentDataSelector?.publikasi?.setting_tagihan?.kurikulum ?? [];
-        const idSoal = currentDataSelector?.publikasi?.id_bank_soal
-        return GroupingSebaranKurikulum.buildGroupBentukSoalBasedOnKoleksiIdSoalWithScore(Kur,idSoal ?? [],updateRespon)
-    },[currentDataSelector, updateRespon])
+        if(!dataTabelParent) return;
+       
+        const sebaran_kurikulum_by_bentuk_soal = dataTabelParent.sebaran_kurikulum_by_bentuk_soal;
+        
+        return SkorKdSebaranBuilder.build(sebaran_kurikulum_by_bentuk_soal,updateRespon)
+    },[dataTabelParent, updateRespon])
     
     const onSubmit = async()=>{
-        
+        if(!skorKd) {
+            alert('skorKD belum terdeteksi');
+            return;
+        };
         const service = new KoreksiGuruService();
-        const skor_kd = skorKd.data.flatMap(m=>m.objekSkorKd)?.reduce((a,b)=>({...a, ...b}));
+        const skor_kd = skorKd.data.map(m=>m.objekSkorKd).reduce((a,b)=>({...a, ...b}));//.flatMap(m=>m.objekSkorKd)?.reduce((a,b)=>({...a, ...b}));
         const dtoParamUtama = DtoKoreksiToResponseSheet.fromGuruMengUpdateRespon(currentDataSelector!, updateRespon, skor_kd);
         const dtoKategoriAssesmen = DtoKoreksiToKategoriAssesmenTab.fromGuruMengUpdateRespon(currentDataSelector!, updateRespon, skor_kd)
-        console.log({updateRespon, skorKd, dtoParamUtama, currentDataSelector})
+        // console.log({updateRespon, skorKd, dtoParamUtama, currentDataSelector})
         const requeset = toast.promise(
             service.update(dtoParamUtama, dtoKategoriAssesmen),
             {
@@ -153,7 +169,9 @@ export default function KoreksiItemSoal(){
         {
             currentDataSelector && <KoreksiWrapper data={currentDataSelector} responSiswa={updateRespon} handleUpdate={handleChangeUpdateRespon}/>
         }
-            <ResumeSkorKdKoreksi skorKd={skorKd} />
+            {
+                skorKd && <ResumeSkorKdKoreksi skorKd={skorKd} />
+            }
         </div>
             <ModalFooterEdura>
                 <div className="flex flex-row gap-2 w-full justify-center">

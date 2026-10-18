@@ -8,6 +8,9 @@ import type { RisponsePenilaianSiswa } from "~/types/penilaian/RisponsePenilaian
 import type { ScoreAccumulator, RefAtpHasManySoalType } from "./ScoreAccumulator";
 
 
+/**
+ * @deprecated | lebih tepat menggunakan class GroupingSebaranInPaketSoal
+ */
 export default class  GroupingSebaranKurikulum{
     
     private static createScoreAccumulator(): ScoreAccumulator {
@@ -887,8 +890,7 @@ export default class  GroupingSebaranKurikulum{
          * 2. KOLEKSI SOAL
          * =========================================================
          */
-        const validSoalId =
-            new Set(dataIdSoal);
+        const validSoalId = new Set(dataIdSoal);
 
         /**
          * =========================================================
@@ -1733,8 +1735,8 @@ export default class  GroupingSebaranKurikulum{
                 });
 
         return {
-            data,
-            koleksiBentukSoal
+            koleksiBentukSoal,
+            data
         } as GroupSebaranNoSoalFromPropertyKurikulumWithScore;
     }
 }

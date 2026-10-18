@@ -60,7 +60,7 @@ export default class SebaranTagihanKurikulumClass{
     get sourceData():TagihanHasDataResponse[]{
         return this.data;
     }
-    
+   
     build():this{
         
         const mapelMap = new Map<string,{

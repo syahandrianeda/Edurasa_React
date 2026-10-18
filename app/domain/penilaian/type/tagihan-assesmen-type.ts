@@ -7,9 +7,13 @@ import type { detailNilaiSiswaAppType, NilaiSiswaAppType, SiswaWithNilaiSiswaApp
 import type { SiswaType } from "~/types/siswa";
 import type { DetailTarget } from "./DetailTarget";
 import type { BankSoalAppType } from "~/types/bank-soal/bank-soal-type";
-import type { GroupSebaranNoSoalFromPropertyKurikulum } from "../model/grouping-kurikulum-by-bentuksoal";
+import type { GroupSebaranNoSoalFromPropertyKurikulum, GroupSebaranNoSoalFromPropertyKurikulumWithScore } from "../model/grouping-kurikulum-by-bentuksoal";
 import type { templateResponseKoreksi } from "./templateResponseKoreksi";
 import type { Data_response_bySiswaType } from "./Data_response_bySiswaType";
+import type { ValidatedResponseSiswa } from "~/types/penilaian/rekap_sementara_sheet_type";
+import type { KeyLabelTemplateImport, TemplateImportSkorToKd } from "~/domain/import-skor-to-kd/TemplateImportSkorToKd-type";
+import type { KategoriTagihanType } from "./KategoriTagihanType";
+import type { DataSheetSkorKdKategoriAsesmenAppType } from "~/types/penilaian/DataSheetSkorKdKategoriAsesmenAppType";
 
 /** 
  * @info type ini sebenarnya salinan/tiruan dari PublikasiPaketAppType
@@ -57,12 +61,29 @@ export interface TagihanHasDataResponse extends TagihanAsessmenType{
     kurikulum_tagihan   : AtpHasManySoalType[],
     peserta             : SiswaType[],
     total_instrumen     : number,
-    bank_soal_collections: (BankSoalAppType|undefined)[],
+    bank_soal_collections: BankSoalAppType[];//(BankSoalAppType|undefined)[],
     sebaran_kurikulum_by_bentuk_soal: GroupSebaranNoSoalFromPropertyKurikulum,
     // templateKoreksi : templateResponseKoreksi[]
     data_response_bySiswa : Data_response_bySiswaType[]//{siswa:SiswaType, data:detailNilaiSiswaAppType[]}
     jumlahPerespon      :number,
-    jumlahDuplikat      :number
+    jumlahDuplikat      :number,
+
+    /** 
+     * tiap respon atas item tagihan, punya 'skor_kd 
+     * 'skor_kd` dibentuk dari `sebaran_kurikulum_by_bentuk_soal`.
+     * contoh pola-nya:
+     * = { "PKN_5":90, "PKN_23":80, ....}
+     * Sehingga, masing-masing key_SkorKd
+     * = ['PKN_5`, 'PKN_23', ...dst]
+     * keySkorKd dimanfaatkan untuk membentuk `TemplateImportSkorToKd`
+     * */
+    keySkorKD       : string[],
+    dataSkorKd  : TemplateImportSkorToKd[],
+    keyLabelRekapSkorKdSheet: KeyLabelTemplateImport[],
+    tipe_assesmen: KategoriTagihanType,
+    dataSkorKdSheet:DataSheetSkorKdKategoriAsesmenAppType[],
+    sebaranNoSoalFromPropertyKurikulumWithScore:GroupSebaranNoSoalFromPropertyKurikulumWithScore
     
 }
+
 

@@ -6,6 +6,7 @@ import { PublikasiPaketSoalAppStaticSelector } from "./publikasi-paket-soal";
 import TagihanPenilaianClass from "~/domain/penilaian/infrastucture/tagihan-penilian-class";
 import { selectSiswaWithValidation } from "./data-siswa-aktif";
 import { responTagihanCurrentJenjang } from "./daftar-tagihan-penilaian-siswa-selector";
+import { dtoSheetRekapAsli } from "./rekap-sheet-kategori-assesment-selector";
 
 export const InstanceDataTagihanPenilaianSector = createSelector(
     [
@@ -14,12 +15,13 @@ export const InstanceDataTagihanPenilaianSector = createSelector(
         (state:RootState)=>state.fokusRombel.value,
         PublikasiPaketSoalAppStaticSelector,
         selectSiswaWithValidation,
-        responTagihanCurrentJenjang
+        responTagihanCurrentJenjang,
+        dtoSheetRekapAsli
         
     ],
-    (paketSoal, atpHasBankSoal, rombel, publikasi,siswa, respon)=>{
+    (paketSoal, atpHasBankSoal, rombel, publikasi,siswa, respon, sheetRekap)=>{
         if(!atpHasBankSoal || !paketSoal || paketSoal.length===0 ||!rombel) return;
         
-        return  new TagihanPenilaianClass(paketSoal, atpHasBankSoal.data, rombel, publikasi, siswa, respon ).init();
+        return  new TagihanPenilaianClass(paketSoal, atpHasBankSoal.data, rombel, publikasi, siswa, respon, sheetRekap ).init();
     }
 )

@@ -32,6 +32,7 @@ export default class DataSumberResponBuilder{
             if(tinggiRendah.tinggi.has(m.siswa.id)){
                 namakelomppok = 'atas'
             }
+            
             if(tinggiRendah.rendah.has(m.siswa.id)){
                 namakelomppok= 'bawah';
             }

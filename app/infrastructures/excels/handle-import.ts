@@ -11,6 +11,7 @@ export async function handleExcelImport(
 
   try {
     const result = await readExcelFileToJson(file);
+    console.log(result.data)
     onSuccess(result.data);
   } catch (error) {
     onError?.(error as Error);

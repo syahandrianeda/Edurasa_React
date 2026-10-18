@@ -146,7 +146,6 @@ export default class DtoPaketSoalSheetClass extends DtoResolverTypeClass{
             id_bank_soal    ,
             nama_publikasi  ,
             oleh            ,
-            
             jenis_tagihan,
             setting_tagihan,
             is_validPaketSoal,
@@ -190,17 +189,7 @@ export default class DtoPaketSoalSheetClass extends DtoResolverTypeClass{
     parseSettingPaketSoal(value:string): PraSettingPaket{
         const praSettingBaku = this.parseJsonSettingBaku(value);
         return this.convertPraSettingBakuToPraSettingPaket(praSettingBaku)
-        // const kurikulum = this.AtpHasBankSoal.filter(item=>praSettingBaku.kurikulum.includes(item.atp_as_tp_id));//praSettingBaku.kurikulum?.map(m=> this.AtpHasBankSoal.find(s=>s.atp_as_tp_id === m)) ?? [];
-        // // const identitas = praSettingBaku.identitas!
-        // // const target_paket = praSettingBaku.data_target
-        // const count_bentuk_soal =   praSettingBaku.count_bentuk_soal.map(m=>{
-        //     const dataBentukSoal = ListBentukSoal.find(s=>s.name === m.dataBentukSoal)!
-        //     return {
-        //         ...m,
-        //         dataBentukSoal
-        //     }
-        // })
-        // return {...praSettingBaku,  kurikulum, count_bentuk_soal} as PraSettingPaket;
+       
     }
     /**
      * Mengubah string JSON Sheet menjadi

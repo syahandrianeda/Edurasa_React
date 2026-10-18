@@ -3,23 +3,9 @@ import { abjadToIndex, hitungSkorPgTunggal, type HandleUpdateResponKoreksi } fro
 import { cn } from "~/lib/utils";
 import type { DataTemplateKoreksiSiswa } from "~/types/penilaian/DataTemplateKoreksiSiswa";
 import PopoverPreviewSoalPgKoreksian from "./popover-preview-soal-pg-koreksian";
-import { useAppSelector } from "~/context-reduct/hook";
-import { DtoBankSoalSelector } from "~/context-reduct/selectores/bank-soal-selector";
-import { useMemo } from "react";
 
 export function KoreksiPgBody({ data, handleUpdate }: { data: DataTemplateKoreksiSiswa[]; handleUpdate: HandleUpdateResponKoreksi; }) {
-    // const bankSoal = useAppSelector(DtoBankSoalSelector);
-    // const data = useMemo(()=>{
-    //     if(!bankSoal) return [];
-        
-    //     return dataAsal.map(m=>{
-    //         const soal = bankSoal.find(s=>s.idbaris === m.soal?.idbaris)
-    //         return {
-    //             ...m,
-    //             soal
-    //         }
-    //     })
-    // },[dataAsal,bankSoal])
+    
     const countPg3 = data.every(m => m?.soal?.json_alat_jawab?.OpsiPilihanJawaban[3]?.content === '');
     
 
@@ -29,12 +15,13 @@ export function KoreksiPgBody({ data, handleUpdate }: { data: DataTemplateKoreks
                 const valid = soal?.json_alat_jawab?.valid as number[] | undefined;
                 const responSaatIni = respon?.respon ?? '';
                 const skorSaatIni = hitungSkorPgTunggal(valid, abjadToIndex(responSaatIni));
+                
                 return (
                     <TRowEdura key={no_prefix}>
                         <TdEdura>{no_prefix}</TdEdura>
                         {
 
-                            soal ? (soal?.json_alat_jawab?.OpsiPilihanJawaban?.map((opsi) => {
+                            soal?.json_alat_jawab ? (soal?.json_alat_jawab?.OpsiPilihanJawaban?.map((opsi) => {
                                 const abjad = String.fromCharCode(opsi.index + 65);
                                 const isSelected = abjad === responSaatIni;
                                 const radioId = "pg_" + no_prefix + "_" + abjad;

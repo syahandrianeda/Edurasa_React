@@ -21,6 +21,11 @@ import type { SiswaType } from '~/types/siswa';
 import SwitchKategoriTagihan from '~/domain/asesmen-penilaian/switch-kategori-tagihan-class';
 import GroupingSebaranKurikulum from '~/domain/penilaian/infrastucture/grouping-kurikulum-to-sebaran';
 import RisponsePenilaianSiswaBuilder from "~/domain/penilaian/infrastucture/rispon-penilaian-siswa-builder";
+import RisponseNilaiSiswaBuilder from '~/domain/penilaian/infrastucture/RisponseNilaiSiswaBuilder';
+import { PaketSoalStrukturBuilder } from '~/domain/paket-soal/paket-soal-struktur/PaketSoalStrukturBuilder';
+import TemplateKoreksiSiswaBuilder from '~/types/penilaian/TemplateKoreksiSiswaBuilder';
+import SkorKdSebaranBuilder from '~/domain/penilaian/infrastucture/SkorKdSebaranBuilder';
+import GroupingSebaranInPaketSoal from '~/domain/penilaian/infrastucture/grouping-sebaran-in-paket-soal';
 
 export default function PraKoreksiSoal(){
     const dataTagihan = useAppSelector(InstanceDataTagihanPenilaianSector);
@@ -92,12 +97,17 @@ export default function PraKoreksiSoal(){
         const idSoal = currentDataSelector.id_bank_soal;
         const settingTagihan = currentDataSelector.setting_tagihan?.count_bentuk_soal;//
         // const templateKoreksi = dataTagihan?.createTemplateKoreksiUsingSetingTagihan(idSoal,settingTagihan ?? [],[]) ;//(dataTagihan?.createTemplateKoreksiPerSiswa(kurikulum, idSoal) ?? {sebaran:[], respon:[]}) as unknown as {sebaran:detailNilaiSiswaAppType['templateKoreksiSiswa'],respon:RisponsePenilaianSiswa[]};
-        const templateKoreksi = RisponsePenilaianSiswaBuilder.build(currentDataSelector.bank_soal_collections,settingTagihan ?? [], [])
-        const respon =  templateKoreksi?.respon ?? [];
-        const templateKoreksiSiswa =  templateKoreksi?.sebaran ?? [];
+        // const templateKoreksi = RisponsePenilaianSiswaBuilder.build(currentDataSelector.bank_soal_collections,settingTagihan ?? [], [])
+        const StrukturPaket = PaketSoalStrukturBuilder.buildFromCountBentukSoalPaket(currentData.bank_soal_collections, settingTagihan ?? [])
+        // const templateKoreksi = RisponseNilaiSiswaBuilder.build(StrukturPaket, [])
+        // const respon =  templateKoreksi?.respon ?? [];
+        const respon =  RisponseNilaiSiswaBuilder.build(StrukturPaket, [])
+        const templateKoreksiSiswa = TemplateKoreksiSiswaBuilder.build(StrukturPaket,[]);// templateKoreksi?.sebaran ?? [];
         const Kur = currentDataSelector?.setting_tagihan?.kurikulum ?? [];
-        const skorKdSebaran =  GroupingSebaranKurikulum.buildGroupBentukSoalBasedOnKoleksiIdSoalWithScore(Kur,idSoal ?? [],respon);
-        
+        const StrukturKurikulum = GroupingSebaranInPaketSoal.build(StrukturPaket);
+        // const skorKdSebaran =  GroupingSebaranKurikulum.buildGroupBentukSoalBasedOnKoleksiIdSoalWithScore(Kur,idSoal ?? [],respon);
+        const skorKdSebaran =  SkorKdSebaranBuilder.build(StrukturKurikulum, respon)
+        const objekKdSebaran = skorKdSebaran.data.map(m=>m.objekSkorKd).reduce((a,b)=>({...a,...b}))
         const data:detailNilaiSiswaAppType = {
             idbaris: 0,	
             siswa_id: siswa.id,
@@ -117,7 +127,8 @@ export default function PraKoreksiSoal(){
             durasiPengerjaan: 0,
             publikasi: currentDataSelector,
             templateKoreksiSiswa,
-            skorKdSebaran
+            skorKdSebaran,
+            objekKdSebaran
 
         }
 

@@ -4,13 +4,23 @@ import type { BankSoalAppType } from "~/types/bank-soal/bank-soal-type";
 import type { PaketSoalStruktur } from "./PaketSoalStrukturType";
 import BankSoalAppUndefined from "~/domain/bank-soal/orm/bank-soal-undifined";
 import type { StrukturItemInstrumenGlobal } from "../entities/StrukturItemInstrumenGlobalType";
+import type { AtpAsOrm } from "~/types/kurikulum/prota-orm";
+import AtpAsOrmUndefined from "~/domain/kurikulum/atpAsOrm-undefined";
 
 export class PaketSoalStrukturBuilder{
+    /**
+     * 
+     * @param bankSoalCollections 
+     * @param strukturNaskah 
+     * @param atpAsOrm 
+     * @returns type (PaketSoalStruktur extends CountBentukSoalPaket)[]
+     */
     static buildFromCountBentukSoalPaket(
-        bankSoalCollections:(BankSoalAppType|undefined)[], 
-        strukturNaskah:CountBentukSoalPaket[]
+        bankSoalCollections:BankSoalAppType[], 
+        strukturNaskah:CountBentukSoalPaket[],
+        // atpAsOrm:AtpAsOrm[]
     ):PaketSoalStruktur[] {
-        const bankSoalUndefined = BankSoalAppUndefined.build();
+        // const bankSoalUndefined = BankSoalAppUndefined.build();
         const result:PaketSoalStruktur[]=[];
 
         let indexGlobal:number = 0;
@@ -26,25 +36,26 @@ export class PaketSoalStrukturBuilder{
                 /** no_prefix selalu dimulai angka 1 tiap bentuk soal */;
                 const no_prefix = (i + 1);
                 const index = indexGlobal;
-                const foundItemSoal = bankSoalCollections[indexGlobal];
-                const soal = foundItemSoal ? foundItemSoal : bankSoalUndefined;
+                const soal = bankSoalCollections[indexGlobal];
+                // const soal = foundItemSoal ? foundItemSoal : bankSoalUndefined;
+                // const atp_soal = atpAsOrm.find(s=>s.atp_as_tp_id === soal.kd_id) ?? AtpAsOrmUndefined.build();
+                
                 dataSoalPerBentukSoal.push({
                     index, 
                     no_prefix,
                     soal_id: soal.idbaris,// ?? 0,
                     atp: soal.kd_id ,//?? 0,
                     bentuk_soal: currentBentukSoal.name,
-
                     soal,
-                    bentuk_soal_detail:currentBentukSoal,
-                    atp_soal:soal.snapshot_kurikulum
+                    bentuk_soal_detail : currentBentukSoal,
+                    atp_soal : soal.snapshot_kurikulum! 
 
                 });
                 indexGlobal++;
             }
             result.push({
                 ...struktur,
-                soal: dataSoalPerBentukSoal
+                soal: dataSoalPerBentukSoal.sort((a,b)=>a.no_prefix - b.no_prefix)
                 } )
         }
         

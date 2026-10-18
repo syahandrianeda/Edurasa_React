@@ -82,20 +82,8 @@ export function AnalisisInstrumenDetailSheet({
 
 
     return (
-        <Sheet
-            open={open}
-            onOpenChange={onOpenChange}
-        >
-
-            <SheetContent
-                side="right"
-                className="
-                    w-full
-                    overflow-y-auto
-                    sm:max-w-xl
-                "
-            >
-
+        <Sheet open={open} onOpenChange={onOpenChange} >
+            <SheetContent side="right" className=" w-full overflow-y-auto sm:max-w-xl " >
                 <SheetHeader>
 
                     <SheetTitle>

@@ -83,9 +83,15 @@ export interface GroupBentukSoalPropertiKurikulumInPublikasiAssesmenWithScore{
     jumlahSoalDinilai: number,
     slotRow: number,
     dataCp: DataCpWithScore[],
-    objekSkorKd: {[key:string]:number}[]
+    objekSkorKd: {[key:string]:number}
     
 }
 
+/** detail data TEMPLATE SKOR dan penskorannya tiap item soal berdasarkan struktur naskahnya. Namun belum merefrensi ke skor respon siswa*/
 export type GroupSebaranNoSoalFromPropertyKurikulum = {koleksiBentukSoal:ListBentukSoalType[], data:GroupBentukSoalPropertiKurikulumInPublikasiAssesmen[]}
+
+/** detail data SKOR dan PENSKORANNYA tiap item soal berdasarkan struktur naskahnya dan SUDAH merefrensi skor asli respon siswa */
 export type GroupSebaranNoSoalFromPropertyKurikulumWithScore = {koleksiBentukSoal:ListBentukSoalType[], data:GroupBentukSoalPropertiKurikulumInPublikasiAssesmenWithScore[]}
+
+/** tipe yang sama dengan  `GroupSebaranNoSoalFromPropertyKurikulum` */
+export type KoleksiBentukSoalDanPropertyKurikulumBasedBentukSoal = GroupSebaranNoSoalFromPropertyKurikulum

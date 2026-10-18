@@ -52,8 +52,6 @@ export function clientLoader({}:Route.ComponentProps){
 export default function ListPenilaianRoute() {
     const instancPaketSoal = useAppSelector(InstanceDataTagihanPenilaianSector);
     
-    
-    // console.log({st})
     return(
         <div className="p-1">
             <h3 className="text-2xl font-extrabold text-center uppercase">Daftar Instrumen Tagihan Penilaian</h3>

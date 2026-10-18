@@ -13,7 +13,17 @@ export default class AtpOrmHasManySoal{
     constructor(private readonly kurikulum:AtpAsOrm[], private readonly koleksiSoal:BankSoalAppType[]){}
     
     build():this{
-        this._data =  this.kurikulum.map((atp)=>({...atp, hasSoal:this.koleksiSoal.filter(s=>s.kd_id === atp.atp_as_tp_id)}))
+        // this._data =  this.kurikulum.map((atp)=>({...atp, hasSoal:this.koleksiSoal.filter(s=>s.kd_id === atp.atp_as_tp_id)}))
+        
+        
+        this._data = this.kurikulum.map(atp=>{
+            const hasSoal = this.koleksiSoal.filter(s=>s.kd_id === atp.atp_as_tp_id)
+                            .map(soal=>({...soal, snapshot_kurikulum:atp }))
+            return {
+                ...atp,
+                hasSoal
+            }
+        })
         return this;
     }
     

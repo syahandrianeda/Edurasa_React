@@ -8,6 +8,7 @@ import { isDev, namaTab } from "~/lib/nama-tab-environment";
 import { helperFormatNumberInKategoriTagihan, helperFormatNumberInResponTagihan } from "~/lib/helper-format-number-koreksian";
 import { store } from "~/context-reduct/redux-provider";
 import type { KategoriTagihanType } from "~/domain/penilaian/type/KategoriTagihanType";
+import helperCreateTypeNumberFormatSpreadsheet from "~/lib/helper-create-type-number-format-spreadsheet";
 
 export default class KoreksiGuruService implements KoreksiGuruServiceInterface{
     constructor(
@@ -25,7 +26,8 @@ export default class KoreksiGuruService implements KoreksiGuruServiceInterface{
         const idss = this.Repo.repoIdsNilai(jenjang);
         const formatParamUtama = helperFormatNumberInResponTagihan(paramUtama);
 
-        const paramCheckKeyLanjutan  = this.helperMergeParamLanjutan(tipe_assesmen, paramLanjutan)
+        // const paramCheckKeyLanjutan  = this.helperMergeParamLanjutan(tipe_assesmen, paramLanjutan)
+        const paramCheckKeyLanjutan  = helperCreateTypeNumberFormatSpreadsheet(tipe_assesmen, paramLanjutan)
         const formatParamLanjutan = helperFormatNumberInKategoriTagihan(paramCheckKeyLanjutan );
         
         const data = [
@@ -66,37 +68,37 @@ export default class KoreksiGuruService implements KoreksiGuruServiceInterface{
         return await this.Repo.update(parameter)
     }
 
-    helperMergeParamLanjutan(tipe_assesmen:KategoriTagihanType, paramLanjutan:Record<string, any>){
-        const st = store.getState();
-        const rombel = paramLanjutan.rombel;
-        const jenjang = getNumberFromString(rombel);
-        switch (tipe_assesmen){
-            case 'harian' :{
-                const found = st.harian.data.find(s=>s.jenjang === jenjang)?.objekKosong;
-                return found ? {...found, ...paramLanjutan}:paramLanjutan;
-            }
-            case 'mid_semester' :{
-                const found = st.midSemester.data.find(s=>s.jenjang === jenjang)?.objekKosong;
-                return found ? {...found, ...paramLanjutan}:paramLanjutan;
-            }
-            case 'akhir_semester' :{
-                const found = st.akhirSemester.data.find(s=>s.jenjang === jenjang)?.objekKosong;
-                return found ? {...found, ...paramLanjutan}:paramLanjutan;
-            }
-            case 'ujian_sekolah' :{
-                const found = st.us.data.find(s=>s.jenjang === jenjang)?.objekKosong;
-                return found ? {...found, ...paramLanjutan}:paramLanjutan;
-            }
-            case 'remedial_pengayaan' :{
-                const found = st.remdialPengayaan.data.find(s=>s.jenjang === jenjang)?.objekKosong;
-                return found ? {...found, ...paramLanjutan}:paramLanjutan;
-            }
-            // default:{
-            //      const found = st.harian.data.find(s=>s.jenjang === jenjang)?.objekKosong;
-            //     return found ? {...found, ...paramLanjutan}:paramLanjutan;
-            // }
-        }
-    }
+    // helperMergeParamLanjutan(tipe_assesmen:KategoriTagihanType, paramLanjutan:Record<string, any>){
+    //     const st = store.getState();
+    //     const rombel = paramLanjutan.rombel;
+    //     const jenjang = getNumberFromString(rombel);
+    //     switch (tipe_assesmen){
+    //         case 'harian' :{
+    //             const found = st.harian.data.find(s=>s.jenjang === jenjang)?.objekKosong;
+    //             return found ? {...found, ...paramLanjutan}:paramLanjutan;
+    //         }
+    //         case 'mid_semester' :{
+    //             const found = st.midSemester.data.find(s=>s.jenjang === jenjang)?.objekKosong;
+    //             return found ? {...found, ...paramLanjutan}:paramLanjutan;
+    //         }
+    //         case 'akhir_semester' :{
+    //             const found = st.akhirSemester.data.find(s=>s.jenjang === jenjang)?.objekKosong;
+    //             return found ? {...found, ...paramLanjutan}:paramLanjutan;
+    //         }
+    //         case 'ujian_sekolah' :{
+    //             const found = st.us.data.find(s=>s.jenjang === jenjang)?.objekKosong;
+    //             return found ? {...found, ...paramLanjutan}:paramLanjutan;
+    //         }
+    //         case 'remedial_pengayaan' :{
+    //             const found = st.remdialPengayaan.data.find(s=>s.jenjang === jenjang)?.objekKosong;
+    //             return found ? {...found, ...paramLanjutan}:paramLanjutan;
+    //         }
+    //         // default:{
+    //         //      const found = st.harian.data.find(s=>s.jenjang === jenjang)?.objekKosong;
+    //         //     return found ? {...found, ...paramLanjutan}:paramLanjutan;
+    //         // }
+    //     }
+    // }
 
     async create(paramUtama: Record<string, any>, paramLanjutan:Record<string,any>): Promise<ApiResponse<NilaiSiswaSheetType>> {
         /** cari dulu `param` utama atau param yang hanya punya `key = tipe_assesmen` */

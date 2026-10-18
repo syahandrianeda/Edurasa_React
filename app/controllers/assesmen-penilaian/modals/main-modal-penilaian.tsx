@@ -22,6 +22,7 @@ import AllInfoResponTagihan from "./all-info-respon-tagiihan";
 import PraKoreksiSoal from "./pra-koreksi-soal";
 import AnalisisInstrumenModal from "./analisis-instrumen-modal";
 import AnalisisInstrumenModalLaporan from "./analisis-instrumen-modal-laporan";
+import ImportNilaiByKdToSheetKategori from "./Import-nilai-by-kd-to-sheet-kategori";
 
 export default function MainModalPenilaian(){
     const {state, actions} = useModal()
@@ -104,6 +105,7 @@ function SwitchContentFormBankSoal ({state}:{state:ModalState}){
         case 'HAPUS':
             return <MainModalForm data={state.payload}><HapusPubilikasiInstrumenSoal/></MainModalForm>
         case 'PREVIEW PAKET SOAL':
+            
             return <ModalAsyncPublikasiPaketSoal state={state as unknown as ModalState<TagihanHasDataResponse>}><PreviewPaketSoalServer/></ModalAsyncPublikasiPaketSoal>
         case 'PREVIEW KISI-KISI DAN SOALNYA SERVER':
             <ModalAsyncPublikasiPaketSoal state={state as unknown as ModalState<TagihanHasDataResponse>}><KisiKisiSoalServer version="v2"/></ModalAsyncPublikasiPaketSoal>
@@ -121,6 +123,8 @@ function SwitchContentFormBankSoal ({state}:{state:ModalState}){
             return <AnalisisInstrumenModal data={state.payload as TagihanHasDataResponse}/>
         case 'LAPORAN ANALISIS SOAL':
             return <AnalisisInstrumenModalLaporan data={state.payload as TagihanHasDataResponse}/>
+        case 'IMPORT NILAI':
+            return <MainModalForm data={(state as unknown as ModalState<TagihanHasDataResponse>).payload}><ImportNilaiByKdToSheetKategori/> </MainModalForm>
         default:
             return <div className="w-full min-h-32 flex justify-center items-center lowercase first-letter:uppercase gap-2"><strong>{state.type}</strong>  <span>on Proses Development</span></div>
     }

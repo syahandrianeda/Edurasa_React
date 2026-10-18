@@ -23,5 +23,5 @@ export interface RisponsePenilaianSiswa extends StrukturItemInstrumenGlobal{
      * skor di sini bukan untuk skor tiap dari tiap jawaban respon,  tapi numpang index
      * skor aslii tiap item soal harus dicari berdasarkan struktur naskah pada paket soal yang telah dipublikasikan;
     */
-    skor?: number;
+    skor?: number |null;
 }

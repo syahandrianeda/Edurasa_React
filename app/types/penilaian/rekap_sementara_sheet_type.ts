@@ -3,7 +3,7 @@ export interface ValidatedResponseSiswa{
     siswa_id:number,
     nama_siswa:string,
     rombel:string,
-    [key:string]:  number|string,
+    [key:string]:  number|string|null,
 }
 export interface HarianRekapSheetType extends ValidatedResponseSiswa{
     // [key:string]:  string

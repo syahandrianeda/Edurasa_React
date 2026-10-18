@@ -340,7 +340,6 @@ export default function ModalEditItemSoalPaket({mode}:{mode?:string}){
                             selectedAtpId={selectedAtpId}
                             promes={promes ?? []}
                             />
-                        
                     </TabsContent>
                     <TabsContent value="level">
                         <ContentTabLevelSoal
@@ -348,7 +347,6 @@ export default function ModalEditItemSoalPaket({mode}:{mode?:string}){
                             defineNameBentukSoal={defineNameBentukSoal!}
                             promes={promes ?? []}
                             />
-                        
                     </TabsContent>
                     <TabsContent value="result">
                         <ContentTabPratinjauSoalModal currentData={currentData}/>

@@ -1,4 +1,5 @@
-export type KategoriTagihanType = 'harian' |
+export type KategoriTagihanType = 
+    'harian' |
     'mid_semester' |
     'akhir_semester' |
     'remedial_pengayaan' |

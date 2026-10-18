@@ -42,11 +42,7 @@ export default function ToolbarContentJumlahSoal() {
      *   Essay   = 5
      * ]
      */
-    const [strukturSoal, setStrukturSoal] =
-        useState<CountBentukSoalPaket[]>(
-            value?.extra?.setting?.count_bentuk_soal ?? []
-        );
-
+    const [strukturSoal, setStrukturSoal] = useState<CountBentukSoalPaket[]>( value?.extra?.setting?.count_bentuk_soal ?? [] );
     /*
      * Apakah nomor soal setiap session kembali ke 1.
      *
