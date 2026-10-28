@@ -5,7 +5,7 @@ import { TabConfigKopTtd } from "~/components/toolbars/config-default-toolbar";
 import { Field } from "~/components/ui/field";
 import { setFokusMapel } from "~/context-reduct/global-state/kurikulum/fokus-mapel-slice";
 import { useAppDispatch, useAppSelector } from "~/context-reduct/hook";
-import { CurrentMapelInActiveRombel } from "~/context-reduct/selectores/mapel-rombel-selector";
+import { CurrentMapelInActiveRombel, MapelRaportCurrentRombel } from "~/context-reduct/selectores/mapel-rombel-selector";
 import { KoleksiMapel } from "~/domain/mapel/koleksi-mapel";
 import type { InterfaceMapel } from "~/types/mapel/mapel";
 
@@ -31,7 +31,8 @@ function TabSelectMapelApp(){
     const fokusMapel = useAppSelector(state=>state.fokusMapel.data);
     const disabled =  useAppSelector(state=>state.fokusMapel.disabled);
     const user = useAppSelector(state=>state.auth.user);
-    const mapelSelector = useAppSelector(CurrentMapelInActiveRombel);
+    const mapelSelector = useAppSelector(MapelRaportCurrentRombel);
+    
     const mapelRombel = useMemo(()=>{
         return mapelSelector.data?.map(m=>m.source);
     },[mapelSelector])

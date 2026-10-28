@@ -1,6 +1,6 @@
 import type { JenisTagihanPenilaiantype } from "~/domain/asesmen-penilaian/jenis-tagihan-type";
 import SwitchKategoriTagihan from "~/domain/asesmen-penilaian/switch-kategori-tagihan-class";
-import type { KategoriTagihanType } from "~/domain/penilaian/type/KategoriTagihanType";
+import type { KategoriTagihanType } from "~/domain/kategori-tagihan/types/entities/KategoriTagihanType";
 import { formatDateTimeSheet } from "~/lib/date-helper";
 import type { ListBentukSoalType } from "~/types/bank-soal/bentuk-soal-type";
 import type { detailNilaiSiswaAppType } from "~/types/penilaian/nilai-siswa-app-type";

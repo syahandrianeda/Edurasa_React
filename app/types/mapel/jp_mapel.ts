@@ -1,3 +1,4 @@
+import type { SiswaType } from "../siswa";
 import type { InterfaceMapel } from "./mapel";
 
 export interface jp_mapelSheet{
@@ -19,10 +20,11 @@ export interface jp_mapelSheet{
         status:string,
         nama_rombel?:string,
         index_in_rombel:number,
-
-}
-export interface jp_mapelApp extends jp_mapelSheet{
-    // idbaris:number,
+        
+    }
+    export interface jp_mapelApp extends jp_mapelSheet{
+        data_students:SiswaType[],
+        // idbaris:number,
     // idmapel:number,
     // namarombel:string,
     // jenjang:number,

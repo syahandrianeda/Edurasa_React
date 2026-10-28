@@ -120,6 +120,8 @@ export default class DtoPaketSoalSheetClass extends DtoResolverTypeClass{
                 id_bank_soal,
                 nama_publikasi,
                 oleh,
+                
+                
 
                 jenis_tagihan:sourceTagihan,
                 json_setting,

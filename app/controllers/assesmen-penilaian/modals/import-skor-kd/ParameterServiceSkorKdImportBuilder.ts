@@ -1,6 +1,6 @@
 import type { TemplateImportSkorToKd } from "~/domain/import-skor-to-kd/TemplateImportSkorToKd-type";
 import type { ParameterServiceSkorKdImport } from "./ParameterServiceSkorKdImport";
-import type { KategoriTagihanType } from "~/domain/penilaian/type/KategoriTagihanType";
+import type { KategoriTagihanType } from "~/domain/kategori-tagihan/types/entities/KategoriTagihanType";
 import type { ValidatedResponseSiswa } from "~/types/penilaian/rekap_sementara_sheet_type";
 import type { TagihanHasDataResponse } from "~/domain/penilaian/type/tagihan-assesmen-type";
 

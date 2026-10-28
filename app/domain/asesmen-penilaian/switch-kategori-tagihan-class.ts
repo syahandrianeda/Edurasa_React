@@ -1,4 +1,4 @@
-import type { KategoriTagihanType } from "../penilaian/type/KategoriTagihanType";
+import type { KategoriTagihanType } from "../kategori-tagihan/types/entities/KategoriTagihanType";
 
 export default class SwitchKategoriTagihan{
     

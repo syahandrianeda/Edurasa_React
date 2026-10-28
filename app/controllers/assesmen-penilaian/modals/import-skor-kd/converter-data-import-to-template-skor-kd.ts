@@ -64,7 +64,7 @@ export default class ConverterDataImportToTemplateSkorUI{
 
                 
                 const detailSkor:DetailSkorKdSource[] = key.map(skorKdKey=>{
-                    const fromSource = hasSkorKdSheet?'sheet':'respon';
+                    const fromSource = hasSkorKdSheet?tab
                     const skorSheet = foundSkorKdSheet?.data?.find(s=>s.skorKdKey === skorKdKey )?.skor ??   null;
                     const skorRespon = dataSkorTemplateImport[skorKdKey] ?? null;
                     // const source = hasSkorKdSheet ? foundSkorKdSheet : dataSkorTemplateImport;

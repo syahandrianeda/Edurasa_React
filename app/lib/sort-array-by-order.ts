@@ -44,3 +44,18 @@ function sortArrayByOrder<T>(array: T[], key: keyof T, order: number[]): T[] {
         return indexA - indexB;
     });
 }
+
+export function sortArrayObjectByOrder<T>(array:T[], key:keyof T, order:string[]):T[]{
+    /** mapping */;
+    const orderMap = new Map<string, number>();
+    order.forEach((keyString, index)=> orderMap.set(keyString, index));
+
+    return [...array].sort((a, b)=>{
+        const valA = a[key] as unknown as string;
+        const valB = b[key] as unknown as string;
+        const indexA = orderMap.has(valA)? orderMap.get(valA)!:Infinity;
+        const indexB = orderMap.has(valB)? orderMap.get(valB)!:Infinity;
+        return indexA - indexB
+
+    })
+}

@@ -7,6 +7,7 @@ import TagihanPenilaianClass from "~/domain/penilaian/infrastucture/tagihan-peni
 import { selectSiswaWithValidation } from "./data-siswa-aktif";
 import { responTagihanCurrentJenjang } from "./daftar-tagihan-penilaian-siswa-selector";
 import { dtoSheetRekapAsli } from "./rekap-sheet-kategori-assesment-selector";
+import { CurrentMapelInActiveRombel, MapelRaportCurrentRombel } from "./mapel-rombel-selector";
 
 export const InstanceDataTagihanPenilaianSector = createSelector(
     [
@@ -16,12 +17,13 @@ export const InstanceDataTagihanPenilaianSector = createSelector(
         PublikasiPaketSoalAppStaticSelector,
         selectSiswaWithValidation,
         responTagihanCurrentJenjang,
-        dtoSheetRekapAsli
+        dtoSheetRekapAsli,
+        MapelRaportCurrentRombel
         
     ],
-    (paketSoal, atpHasBankSoal, rombel, publikasi,siswa, respon, sheetRekap)=>{
-        if(!atpHasBankSoal || !paketSoal || paketSoal.length===0 ||!rombel) return;
+    (paketSoal, atpHasBankSoal, rombel, publikasi,siswa, respon, sheetRekap, mapelRaport)=>{
+        if(!atpHasBankSoal || !paketSoal || paketSoal.length===0 ||!rombel || !mapelRaport) return;
         
-        return  new TagihanPenilaianClass(paketSoal, atpHasBankSoal.data, rombel, publikasi, siswa, respon, sheetRekap ).init();
+        return  new TagihanPenilaianClass(paketSoal, atpHasBankSoal.data, rombel, publikasi, siswa, respon, sheetRekap, mapelRaport.data ).init();
     }
 )

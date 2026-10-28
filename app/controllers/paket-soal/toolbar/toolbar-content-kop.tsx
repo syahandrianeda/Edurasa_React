@@ -1,15 +1,7 @@
-import {useCallback, useEffect, useMemo, useState} from 'react';
-import TiptapEditorSoalSimple from "~/components/editor-tip-tap/rte-formulir/TiptapEditorSoalSimple"
-import type { kopColumn, kopKontentType } from "~/components/toolbars/kop-ttd/config-kop"
+import {useEffect, useState} from 'react';
 import { useFilterContext } from "~/components/toolbars/state-toolbar/state-toolbar"
-import {type PraSettingPaket } from "~/domain/paket-soal/entities/pra-setting-paket"
-import { type Content, type JSONContent } from '@tiptap/react';
-import { SampleDefaultKontenKop } from '~/components/toolbars/kop-ttd/default-kop';
 import logokota from '../../../images/kotadepok.webp'
 import logoSekolah from '../../../images/ratujaya1.png';
-import { HtmlRenderer } from '~/components/editor-tip-tap/renderer/HtmlRenderer';
-import { initialKopSoal } from './initial-kop';
-import { renderNodeHtml } from '~/components/editor-tip-tap/renderer/NodeHtmlRenderer';
 import type { PaketSoalDesign } from '~/domain/paket-soal/result/paket-soal-design-type';
 
 

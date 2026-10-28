@@ -1,12 +1,10 @@
 import {useCallback, useEffect, useMemo, useState, type ChangeEvent} from 'react';
-import { InputText } from '~/components/fields/fields';
 import { useFilterContext } from "~/components/toolbars/state-toolbar/state-toolbar"
 import { Field, FieldContent, FieldGroup } from "~/components/ui/field";
 import { Input } from '~/components/ui/input';
 import { Label } from '~/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "~/components/ui/select";
 import { useAppSelector } from '~/context-reduct/hook';
-import {type PraSettingPaket } from "~/domain/paket-soal/entities/pra-setting-paket"
 import type { TypePaketSoal } from '~/domain/paket-soal/entities/type-paket';
 import type { PaketSoalDesign } from '~/domain/paket-soal/result/paket-soal-design-type';
 import { DataRombelUI } from '~/domain/rombel/data-rombel';

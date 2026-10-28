@@ -1,5 +1,5 @@
 import type { JenisTagihanPenilaiantype } from "~/domain/asesmen-penilaian/jenis-tagihan-type"
-import type { KategoriTagihanType } from "~/domain/penilaian/type/KategoriTagihanType"
+import type { KategoriTagihanType } from "~/domain/kategori-tagihan/types/entities/KategoriTagihanType"
 import type { AtpAsOrm } from "../kurikulum/prota-orm"
 import type { SiswaType } from "../siswa"
 import type { PublikasiPaketAppType } from "../publikasi-paket-soal/publikasi-paket-app-type"

@@ -4,20 +4,18 @@ import { useFormEdura } from "~/components/form-custom/form-edura";
 import { ModalFooterEdura } from "~/components/modals/modal-components";
 import { useModal } from "~/components/modals/modal-provider";
 import ButtonPrintModal from "~/controllers/modal-cetak/control-export-print";
-import CaraPenskoran from "~/controllers/paket-soal/modal/kisi-kisi/cara-penskoran";
-import type DataKisiKisi from "~/domain/paket-soal/infrastructure/data-kisi-kisi-class";
 import SebaranTagihanKurikulumClass from "~/domain/penilaian/infrastucture/sebaran-tagihan-kurikulum-class";
 import type { TagihanHasDataResponse } from "~/domain/penilaian/type/tagihan-assesmen-type";
 import { useExportTarget } from "~/layouts/exports/export-target-provider";
 import TableTagihanKompetensi from "../tabel/tabel-tagihan-kompetensi-to-kategori";
+import CountInstrumenSoalTiapAtpInPublikasiPaket from "~/domain/penilaian/infrastucture/CountInstrumenSoalTiapAtpInPublikasi";
 
 export default function PreviewSebaranPaketNonSoal(){
     const {currentData} = useFormEdura<TagihanHasDataResponse>();
      const exportRef = useExportTarget('print-area-modal') as React.Ref<HTMLDivElement>;;
     const {actions} = useModal();
-    // const setting = KisiKisiInstance.designPaket.setting;
     const instansiasi = new  SebaranTagihanKurikulumClass([currentData]).build();
-    const data = instansiasi.dataSebaran;
+    const data = CountInstrumenSoalTiapAtpInPublikasiPaket.build([currentData])
     return (
         <>
             <div className="bg-linear-to-tr from-sky-500 to-purple-300 w-full md:h-[calc(100vh-11rem)] py-4 px-2  overflow-y-auto scrol-h-custom">

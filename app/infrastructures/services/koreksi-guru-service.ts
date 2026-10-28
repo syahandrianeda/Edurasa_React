@@ -7,7 +7,7 @@ import { getNumberFromString } from "~/lib/get-number";
 import { isDev, namaTab } from "~/lib/nama-tab-environment";
 import { helperFormatNumberInKategoriTagihan, helperFormatNumberInResponTagihan } from "~/lib/helper-format-number-koreksian";
 import { store } from "~/context-reduct/redux-provider";
-import type { KategoriTagihanType } from "~/domain/penilaian/type/KategoriTagihanType";
+import type { KategoriTagihanType } from "~/domain/kategori-tagihan/types/entities/KategoriTagihanType";
 import helperCreateTypeNumberFormatSpreadsheet from "~/lib/helper-create-type-number-format-spreadsheet";
 
 export default class KoreksiGuruService implements KoreksiGuruServiceInterface{

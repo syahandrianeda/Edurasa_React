@@ -3,14 +3,22 @@ import { TdEdura, ThEdura, TRowEdura } from "~/components/tabels/tabel-component
 import TableWithScrolling from "~/components/tabels/table-with-scrolling";
 import type TagihanPenilaianClass from "~/domain/penilaian/infrastucture/tagihan-penilian-class";
 import type { SebaranTagihanAssesmenKurikulumType } from "~/domain/penilaian/model/sebaran-tagihan-kuriklum-type";
-import type { CollactionMapelInAllPublikasiPaketType, DataSkorSiswaByInstrumenType, DetailPublikasiWithResponSiswaType } from "~/domain/penilaian/type/CountInstrumenSoalTiapAtpInPublikasiPaketType";
+import type { DataSkorSiswaByInstrumenType } from "~/domain/penilaian/type/collection-kurikulum-in-all-publikasi/DataSkorSiswaByInstrumenType";
+import type { DetailPublikasiWithResponSiswaType } from "~/domain/penilaian/type/collection-kurikulum-in-all-publikasi/DetailPublikasiWithResponSiswaType";
+import type { CollactionMapelInAllPublikasiPaketType } from "~/domain/penilaian/type/collection-kurikulum-in-all-publikasi/CollactionMapelInAllPublikasiPaketType";
 import { cn } from "~/lib/utils";
 import DetailResponsKdSelectedSheet from "../sheet/detail-respons-kd-selected";
+import { getSessionRombel } from "~/infrastructures/session-storage/rombel-session";
+import { getNumberFromString } from "~/lib/get-number";
+import { currentTapelProperties } from "~/lib/current-tapel";
 
 export default function TableTagihanKompetensi({data, showIdentitas=true}:{data?:CollactionMapelInAllPublikasiPaketType[], showIdentitas?:boolean}){
     // const data = instansiasi?.dataSebaranTagihanKurikulum;
-    const [selectedRespons, setSelectedRespons] = useState<DetailPublikasiWithResponSiswaType|null>(null)
-    
+    const [selectedRespons, setSelectedRespons] = useState<DetailPublikasiWithResponSiswaType|null>(null);
+    const rombelAktif = getSessionRombel();
+    const jenjang= getNumberFromString(rombelAktif);
+    const semester = currentTapelProperties({variant:'getSemester'})
+    const akhirSemester= (jenjang === 6 && semester === 2) ? 'Ujian Sekolah' : 'Akhir Semester';
     return (
         <>
         <TableWithScrolling className="text-[10px]">
@@ -26,7 +34,7 @@ export default function TableTagihanKompetensi({data, showIdentitas=true}:{data?
                 <TRowEdura>
                     <ThEdura className="text-wrap">Harian (Termasuk Praktek, Proyek, Produk)</ThEdura>
                     <ThEdura className="text-wrap">Mid Semester</ThEdura>
-                    <ThEdura className="text-wrap">Akhir Semester</ThEdura>
+                    <ThEdura className="text-wrap">{akhirSemester}</ThEdura>
                 </TRowEdura>
             </thead>
             <tbody>
@@ -57,7 +65,7 @@ export default function TableTagihanKompetensi({data, showIdentitas=true}:{data?
                                         }
                                         <TdEdura className="text-wrap">[{atp.atp_id}] {atp.atp_description}</TdEdura>
                                         {
-                                            atp.dataTipeAssesmen.filter(s=>['harian', 'mid_semester','akhir_semester'].includes(s.tipe_assesmen)).map((assesmen, iAssesmen)=>
+                                            atp.dataTipeAssesmen.map((assesmen, iAssesmen)=>
                                                 <TdEdura key={assesmen.tipe_assesmen} className="min-w-32">
                                                     {
                                                         assesmen.DetailPublikasiWithResponSiswa.length > 0 && (

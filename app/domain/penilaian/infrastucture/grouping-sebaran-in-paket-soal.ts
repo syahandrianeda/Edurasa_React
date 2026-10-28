@@ -29,16 +29,16 @@ export default class GroupingSebaranInPaketSoal{
                     }>();
 
         for(const {dataBentukSoal, soal:sourceSoal} of struktur){
-            // const sourceSoal = soal;//.map(m=>(m[m.atp_soal]));
+            const test = sourceSoal.map(m=>m.atp_soal!);
             for(const {atp_soal:item, soal, no_prefix }of sourceSoal){
-                const kodeMapel = item.kodemapel!;
-                const mapelName = item.mapelname!;
-                const cp_id = item.cp_id!;
-                const cp_description = item.cp_description!;
-                const tp_id = item.tp_as_cp_id!
-                const tp_description = item.tp_as_cp_description!;
-                const atp_id = item.atp_as_tp_id!
-                const atp_description = item.atp_as_tp_description!
+                const kodeMapel = item?.kodemapel!;
+                const mapelName = item?.mapelname!;
+                const cp_id = item?.cp_id!;
+                const cp_description = item?.cp_description!;
+                const tp_id = item?.tp_as_cp_id!
+                const tp_description = item?.tp_as_cp_description!;
+                const atp_id = item?.atp_as_tp_id!
+                const atp_description = item?.atp_as_tp_description!
 
                 if(!mappingMapel.has(kodeMapel)){
                     mappingMapel.set(kodeMapel, {
@@ -78,7 +78,7 @@ export default class GroupingSebaranInPaketSoal{
                     atp?.dataBentukSoal.set(dataBentukSoal, [])
                 }
                 const bentukSoal = atp?.dataBentukSoal.get(dataBentukSoal);
-                const prediksi = {...soal, no_soal:no_prefix, skor:0};
+                const prediksi = {...soal!, no_soal:no_prefix, skor:0};
                 
                 bentukSoal?.push(prediksi)
                 

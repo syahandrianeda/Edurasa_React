@@ -31,6 +31,7 @@ export default class DTOMapelRombel{
     static fromSheetTo_jp_mapelApp(data:jp_mapelSheet):jp_mapelApp{
         return {
             ...DTOMapelRombel.fromSheet(data),
+            data_students:[],
             source:undefined as any
         }
     }

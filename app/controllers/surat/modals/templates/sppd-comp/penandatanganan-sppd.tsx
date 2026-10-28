@@ -1,6 +1,4 @@
 
-import useDataAtasan, { type AtasanType } from "~/hooks/use-data-atasan";
-import { cn } from "~/lib/utils";
 import type { SppdAppType } from "~/types/surat/sppd-app-type";
 import TandatanganAtasan from "./tanda-tangan-atasan";
 
@@ -13,7 +11,7 @@ export default function PenandaTanganSppd({atasan, includeJabatan=true,className
     
     
     return <TandatanganAtasan 
-                tgl={atasan.ptk_starttgl} 
+                tgl={atasan?.ptk_starttgl} 
                 // atasanDari={atasan.ptk_jabatan as AtasanType}
                 atasanDari={'Guru Kelas'}
                 includeJabatan={includeJabatan}

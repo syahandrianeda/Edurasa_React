@@ -1,4 +1,3 @@
-import type { ValidatedResponseSiswa } from "~/types/penilaian/rekap_sementara_sheet_type"
 import type { JenisTagihanPenilaiantype } from "../asesmen-penilaian/jenis-tagihan-type";
 
 export interface DetailSkorKdSource{

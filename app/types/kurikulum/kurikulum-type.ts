@@ -53,7 +53,8 @@ export interface ormKurikulumInterface{
     mapel_kode_umum:string,
     mapel_khusus_penganut?:Agama|null,
     mapel_id:number, // digunakan untuk pengurutan di rapor
-    fase: faseOrm[]
+    fase: faseOrm[],
+    
 
 }
 export interface currentFase extends ormKurikulumInterface{

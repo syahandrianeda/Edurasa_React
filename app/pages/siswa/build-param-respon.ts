@@ -1,6 +1,6 @@
 import SwitchKategoriTagihan from "~/domain/asesmen-penilaian/switch-kategori-tagihan-class";
 import type { AtpHasManySoalType } from "~/domain/bank-soal/relational-soal/type";
-import type { KategoriTagihanType } from "~/domain/penilaian/type/KategoriTagihanType";
+import type { KategoriTagihanType } from "~/domain/kategori-tagihan/types/entities/KategoriTagihanType";
 import type { TagihanHasDataResponse } from "~/domain/penilaian/type/tagihan-assesmen-type";
 import type { NilaiSiswaAppType } from "~/types/penilaian/nilai-siswa-app-type";
 import type { RisponsePenilaianSiswa } from "~/types/penilaian/RisponsePenilaianSiswaType";

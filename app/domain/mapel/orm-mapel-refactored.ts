@@ -71,6 +71,7 @@ export default class OrmMapelRefactored {
             nama_mapel_ijazah: data.nama,
             jp_perminggu: jp,
             following_students: this.siswaAktifRombel.length,
+            data_students: this.siswaAktifRombel,
             status: '',
             nama_rombel: this.rombel,
             index_in_rombel: index,
@@ -96,8 +97,13 @@ export default class OrmMapelRefactored {
                     following_students: this.siswaInstance.countAgamaGenders(
                         [Gender.LAKI_LAKI, Gender.PEREMPUAN, Gender.UNKNOWN], 
                         data.penganut as Agama
-                    )
+                    ),
+                    data_students: this.siswaInstance.dataAgamaGenders(
+                        [Gender.LAKI_LAKI, Gender.PEREMPUAN, Gender.UNKNOWN], 
+                        data.penganut as Agama)
+                    
                 }));
+                // console.log({data,koleksiMapel} )
             });
 
         // 2. Mapel Umum Kurmer
@@ -184,7 +190,10 @@ export default class OrmMapelRefactored {
                 following_students: this.siswaInstance.countAgamaGenders(
                     [Gender.LAKI_LAKI, Gender.PEREMPUAN, Gender.UNKNOWN], 
                     a.penganut as Agama
-                )
+                ),
+                    data_students: this.siswaInstance.dataAgamaGenders(
+                        [Gender.LAKI_LAKI, Gender.PEREMPUAN, Gender.UNKNOWN], 
+                        a.penganut as Agama)
             }));
 
         return {
@@ -204,7 +213,10 @@ export default class OrmMapelRefactored {
                 following_students: this.siswaInstance.countAgamaGenders(
                     [Gender.LAKI_LAKI, Gender.PEREMPUAN, Gender.UNKNOWN],
                     resolveAgama(m.required_penganut) as Agama
-                ),
+                ), 
+                // data_students: this.siswaInstance.dataAgamaGenders(
+                //         [Gender.LAKI_LAKI, Gender.PEREMPUAN, Gender.UNKNOWN], 
+                //         m.required_penganut as Agama),
                 source
             } as jp_mapelApp;
         });
@@ -240,7 +252,11 @@ export default class OrmMapelRefactored {
                     following_students: this.siswaInstance.countAgamaGenders(
                         [Gender.LAKI_LAKI, Gender.PEREMPUAN, Gender.UNKNOWN],
                         data.penganut as Agama
-                    )
+                    ),
+                    data_students: this.siswaInstance.dataAgamaGenders(
+                        [Gender.LAKI_LAKI, Gender.PEREMPUAN, Gender.UNKNOWN], 
+                        data.penganut as Agama)
+                    
                 }));
             });
 
@@ -262,6 +278,7 @@ export default class OrmMapelRefactored {
                         nama_mapel: source.nama,
                         nama_mapel_ijazah: namaIjazah,
                         following_students: this.siswaAktifRombel.length,
+                        data_students:this.siswaAktifRombel,
                         source
                     } as jp_mapelApp);
                 }

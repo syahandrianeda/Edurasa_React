@@ -1,5 +1,5 @@
 import { store } from "~/context-reduct/redux-provider";
-import type { KategoriTagihanType } from "~/domain/penilaian/type/KategoriTagihanType";
+import type { KategoriTagihanType } from "~/domain/kategori-tagihan/types/entities/KategoriTagihanType";
 import { getNumberFromString } from "./get-number";
 
 export default function helperCreateTypeNumberFormatSpreadsheet(tipe_assesmen:KategoriTagihanType, paramLanjutan:Record<string, any>){

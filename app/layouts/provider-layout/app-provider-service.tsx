@@ -411,7 +411,7 @@ export default function AppProviderLayoutService({
                         textRombelFase,
 
                     success: data => {
-                        console.log('data respon', data, {param});
+                        // console.log('data respon', data, {param});
                         
                         return ("Pemanggilan data telah selesai");
                     },

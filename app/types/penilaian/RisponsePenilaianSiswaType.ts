@@ -18,7 +18,7 @@ export interface RisponsePenilaianSiswa extends StrukturItemInstrumenGlobal{
         - NilaiSiswaAppType dihasilksan dari `DtoResponTagihanSiswa`;
         - untuk skor, numpang index disini. Bukan skor asli tiap respons
      */
-    respon: string | null;
+    respon?: string | null;
     /** 
      * skor di sini bukan untuk skor tiap dari tiap jawaban respon,  tapi numpang index
      * skor aslii tiap item soal harus dicari berdasarkan struktur naskah pada paket soal yang telah dipublikasikan;

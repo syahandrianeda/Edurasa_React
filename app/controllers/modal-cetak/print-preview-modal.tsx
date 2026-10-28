@@ -12,13 +12,9 @@ export default function ModalPraCetak<T>(){
     const { state, actions, nextState } = useModal<T>();
     const open = state.isOpen && isPrintPreviewModal(state.type)
     const exportRef = useExportTarget('print-area-modal') as React.Ref<HTMLDivElement>;;
-//   return <div ref={exportRef}
-//           className={cn("bg-white text-black p-4 print:pt-16 print:shadow-none",className)}
-//           {...props}
-//           >{children}</div>
+
     return (
         <ModalEdura 
-            // state={state} 
             state={{
                 ...state,
                 isOpen: open

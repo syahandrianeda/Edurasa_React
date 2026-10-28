@@ -43,12 +43,12 @@ export class PaketSoalStrukturBuilder{
                 dataSoalPerBentukSoal.push({
                     index, 
                     no_prefix,
-                    soal_id: soal.idbaris,// ?? 0,
-                    atp: soal.kd_id ,//?? 0,
+                    soal_id: soal?.idbaris ?? 0,
+                    atp: soal?.kd_id ?? 0,
                     bentuk_soal: currentBentukSoal.name,
                     soal,
                     bentuk_soal_detail : currentBentukSoal,
-                    atp_soal : soal.snapshot_kurikulum! 
+                    atp_soal : soal?.snapshot_kurikulum! 
 
                 });
                 indexGlobal++;

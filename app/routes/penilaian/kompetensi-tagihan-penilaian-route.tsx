@@ -6,6 +6,9 @@ import { InstanceDataTagihanPenilaianSector } from "~/context-reduct/selectores/
 import { defineCreateItemSoalNeeded } from "~/domain/enloaded/intial-enloaded/by-route-page/banksoal/create-item-soal-needed";
 import { isEqualArrayObject } from "~/lib/isEqualArrayObject";
 import CountInstrumenSoalTiapAtpInPublikasiPaket from "~/domain/penilaian/infrastucture/CountInstrumenSoalTiapAtpInPublikasi";
+import KategoriTagihanRaportBuilder from "~/domain/kategori-tagihan/builder/KategoriTagihanRaportBuilder";
+import { MapelRaportCurrentRombel } from "~/context-reduct/selectores/mapel-rombel-selector";
+import KategoriTagihanHasManyPesertaMapelBuillder from "~/domain/kategori-tagihan/builder/KategoriTagihanHasManyPesertaMapelBuillder";
 
 
 export function meta({matches}: Route.MetaArgs) {
@@ -51,13 +54,10 @@ export function clientLoader({}:Route.ComponentProps){
 
 
 export default function KompetensiTagihanRoute() {
-     const instancPaketSoal = useAppSelector(InstanceDataTagihanPenilaianSector)
-    //     const dataDeprecated = instancPaketSoal?.dataSebaranTagihanKurikulum
-        const byPaketPublikasi = instancPaketSoal?.dataTagihanHasResponse ;
-    //     const dataTes = CountInstrumenSoalTiapAtpInPublikasiPaket.build(byPaketPublikasi ?? []);
-    // console.log({data, byPaketPublikasi, dataTes})
+    const instancPaketSoal = useAppSelector(InstanceDataTagihanPenilaianSector)
     const data = instancPaketSoal?.dataCountInstrumenSoalTiapAtpInPublikasiPaket;
-    console.log({data, byPaketPublikasi})
+    instancPaketSoal?.buildKategoriTagihanMapper()
+    // console.log({data})
     return(
         <div className="p-1">
             <h3 className="text-2xl font-extrabold text-center">Daftar Kompetensi yang diukur dalam penilaian di Kelas {instancPaketSoal?.rombel}</h3>

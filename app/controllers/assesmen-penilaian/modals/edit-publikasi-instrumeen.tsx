@@ -88,7 +88,7 @@ export default function EditPublikasiInstrumenTagihan(){
 
             // Pilih satu rombel
             setDataKelas([value]);
-        },[setDataKelas]);
+        },[setDataKelas,koleksiRombel]);
     
     const onChangeJenisTagihan = useCallback((kode:string)=>{
         setJenisTagihan(kode);
@@ -105,11 +105,22 @@ export default function EditPublikasiInstrumenTagihan(){
 
     useEffect(()=>{
         setCurrentData(draft=>{
+            /**
+             *  draft.durasi = durasi;
+            draft.start_time = startTime;
+            draft.end_time = endTime;
+            draft.target_person = koleksiIdSiswa,
+            draft.target_rombel = dataKelas
+            draft.target_type = targetPaket
+            draft.nama_publikasi = namaPublikasi
+             */
             draft.start_time = startTime;
             draft.end_time = endTime;
             draft.nama_publikasi = namaPublikasi;
             draft.target_type = targetPaket;
             draft.target_person = koleksiIdSiswa;
+            
+            draft.target_rombel = dataKelas
             draft.durasi = durasi;
             draft.jenis_tagihan = ListJenisTagihan.find(s=>s.kode === jenisTagihan)!;
 
@@ -121,7 +132,8 @@ export default function EditPublikasiInstrumenTagihan(){
         targetPaket,
         koleksiIdSiswa,
         durasi,
-        jenisTagihan
+        jenisTagihan,
+        dataKelas
     ])
 
     const onSubmit = (e: MouseEvent<HTMLButtonElement>)=>{
@@ -157,6 +169,7 @@ export default function EditPublikasiInstrumenTagihan(){
             )
                     
         }
+        console.log({dataKelas, currentData})
     return (
         <fieldset disabled={state.isSubmitting}>
             <WrapperContent className="grid md:grid-cols-2 grid-cols-1 gap-2 w-full text-sm">

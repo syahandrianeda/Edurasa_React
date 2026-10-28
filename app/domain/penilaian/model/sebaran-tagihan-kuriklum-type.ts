@@ -1,4 +1,7 @@
-/**@info Grouping properti kruikulum terhadap kategori tagihan (harian, midsemester, dan akhir semester) */
+/**
+ * 
+ * @info Grouping properti kruikulum terhadap kategori tagihan (harian, midsemester, dan akhir semester) 
+ * */
 export interface SebaranTagihanAssesmenKurikulumType{
     mapelName           : string, 
     mapelKode            : string,

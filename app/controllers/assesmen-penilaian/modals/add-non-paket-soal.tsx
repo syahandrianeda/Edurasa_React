@@ -32,6 +32,7 @@ import { AtpHasManySoalSelector } from '~/context-reduct/selectores/bank-soal-se
 import QueryAtpHasItemSoal from '~/domain/bank-soal/relational-soal/services/query-atp-has-many-soal';
 import type { AtpHasManySoalType } from '~/domain/bank-soal/relational-soal/type';
 import validationAddPublikasiNonPaket from '~/controllers/publikasi-paket-soal/modal/validation-add-publikasi-nonpaket';
+import { groupBy } from '~/lib/group-by';
 
 
 export default function AddNonPaketSoalModal(){
@@ -102,10 +103,16 @@ export default function AddNonPaketSoalModal(){
             draft.target_rombel = dataKelas
             draft.target_type = targetPaket
             draft.nama_publikasi = namaPublikasi;
-
+            const dataGroupMapel = groupBy(koleksiAtp,(item)=>item.mapelname ?? '');
+            const data = Object.keys(dataGroupMapel);
+            const koleksi_mapel = {
+                isMultiple: data.length >1,
+                data
+            }
             const setting = (draft.json_setting ?? {}) as NonNullable<typeof draft.json_setting>;
                 setting.kurikulum = koleksiAtp.map(m=>m.atp_as_tp_id);
-                setting.koleksi_mapel = {isMultiple:false, data:koleksiMapel?[koleksiMapel]:[]};
+                // setting.koleksi_mapel = {isMultiple:false, data:koleksiMapel?[koleksiMapel]:[]};
+                setting.koleksi_mapel = koleksi_mapel;
                 setting.count_bentuk_soal = [
                     {
                         dataBentukSoal: 'isian_singkat',
@@ -129,7 +136,6 @@ export default function AddNonPaketSoalModal(){
         koleksiMapel,
         setCurrentData
     ])
-    
     
     
     const checkedCollectionAtp = useCallback(( checked:boolean, value:AtpHasManySoalType,)=>{
@@ -215,7 +221,14 @@ export default function AddNonPaketSoalModal(){
                             </Select>
                         </Field>
                     </div>
-                    
+                    <div className='border-2 p-1 rounded bg-sky-50 text-[8px]'>
+                        <p className='font-bold'>Mapel terpilih:</p>
+                         {
+                            currentData.json_setting?.koleksi_mapel?.data.map((mapel, iMapel)=>
+                                <p key={mapel}>{mapel}</p>
+                            )
+                         }           
+                    </div>
                         {
                             targetPaket === 'siswa' && (
                                 <div className="relative mt-4">
@@ -256,7 +269,6 @@ export default function AddNonPaketSoalModal(){
                             Muatan Pelajaran
                         </div>
                         <Select
-                            
                                 value={koleksiMapel}
                                 onValueChange={onSelectMapel}
                             >
@@ -273,6 +285,14 @@ export default function AddNonPaketSoalModal(){
                             </SelectContent>
                         </Select>
                     </Field>
+                    <div className='border-2 p-1 rounded bg-sky-50 text-[8px]'>
+                        <p className='font-bold'>Mapel terpilih:</p>
+                         {
+                            currentData.json_setting?.koleksi_mapel?.data.map((mapel, iMapel)=>
+                                <p key={mapel}>{mapel}</p>
+                            )
+                         }           
+                    </div>
                     <div className='max-h-60 overflow-y-auto scrol-h-custom'>
                         <TableWithScrolling className='text-[10px]'>
                             <thead>

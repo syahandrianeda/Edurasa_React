@@ -126,6 +126,10 @@ export default class KesiswaanData{
     countAgamaGenders(gender:Gender[], agamaProp:Agama){
         return this.dataCurrent.filter(s=> gender.includes(s.pd_jk) && s.pd_agama === agamaProp).length;
     }
+    dataAgamaGenders(gender:Gender[], agamaProp:Agama){
+        return this.dataCurrent.filter(s=> gender.includes(s.pd_jk) && s.pd_agama === agamaProp)
+    }
+
     countGender(gender:Gender){
         return this.dataCurrent.filter(s=> s.pd_jk == gender).length;
     }

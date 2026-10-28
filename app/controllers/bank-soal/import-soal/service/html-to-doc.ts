@@ -1,4 +1,9 @@
+// @ts-ignore mammoth has no declaration file available in this project.
 import mammoth from "mammoth";
+
+const mammothApi = mammoth as {
+    convertToHtml(options: { arrayBuffer: ArrayBuffer }): Promise<{ value: string }>;
+};
 
 export async function docxToHtml(
     file: File
@@ -6,7 +11,7 @@ export async function docxToHtml(
     const buffer = await file.arrayBuffer();
     
     const result =
-        await mammoth.convertToHtml({
+        await mammothApi.convertToHtml({
             arrayBuffer: buffer,
         });
     

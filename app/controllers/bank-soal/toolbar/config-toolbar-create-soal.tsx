@@ -8,7 +8,7 @@ import { Field } from "~/components/ui/field";
 import { setFokusMapel } from "~/context-reduct/global-state/kurikulum/fokus-mapel-slice";
 import { setFokusAtp, setFokusBentukSoal, setFokusEditor } from "~/context-reduct/global-state/ui-fokus/ui-fokus-slice";
 import { useAppDispatch, useAppSelector } from "~/context-reduct/hook";
-import { CurrentMapelInActiveRombel } from "~/context-reduct/selectores/mapel-rombel-selector";
+import { CurrentMapelInActiveRombel, MapelRaportCurrentRombel } from "~/context-reduct/selectores/mapel-rombel-selector";
 import { OrmPromesInstanceSelector } from "~/context-reduct/selectores/orm-promes-selector";
 import { ListBentukSoal } from "~/domain/bank-soal/list-bentuk-soal";
 import { ListEditorSoal } from "~/domain/bank-soal/list-editor-soal";
@@ -38,7 +38,8 @@ function TabPraDesainItemSoal(){
     const fokusMapel = useAppSelector(state=>state.fokusMapel.data);
     const disabled =  useAppSelector(state=>state.fokusMapel.disabled);
     const user = useAppSelector(state=>state.auth.user);
-    const mapelSelector = useAppSelector(CurrentMapelInActiveRombel);
+    // const mapelSelector = useAppSelector(CurrentMapelInActiveRombel);
+    const mapelSelector = useAppSelector(MapelRaportCurrentRombel)
     const dispatch = useAppDispatch();
     const Prota = useAppSelector(OrmPromesInstanceSelector);
 

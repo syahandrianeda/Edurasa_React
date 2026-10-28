@@ -5,21 +5,21 @@ import type { AtpHasManySoalType } from "~/domain/bank-soal/relational-soal/type
 import type { TagihanHasDataResponse } from "../type/tagihan-assesmen-type";
 import type { DetailTarget } from "../type/DetailTarget";
 import type { SiswaWithValidation } from "~/context-reduct/selectores/data-siswa-aktif";
-import { durasiMenit, getParseDateYYYYMMMDD } from "~/lib/date-helper";
+import { durasiMenit } from "~/lib/date-helper";
 import SebaranTagihanKurikulumClass, { type SebaranTagihanAssesmenKurikulumType } from "./sebaran-tagihan-kurikulum-class";
 import type { PraSettingBaku } from "~/types/bank-soal/entities/PraSettingBaku";
-import type { detailNilaiSiswaAppType, NilaiSiswaAppType } from "~/types/penilaian/nilai-siswa-app-type";
+import type { NilaiSiswaAppType } from "~/types/penilaian/nilai-siswa-app-type";
 import type { RisponsePenilaianSiswa } from "~/types/penilaian/RisponsePenilaianSiswaType";
 import type { BankSoalAppType } from "~/types/bank-soal/bank-soal-type";
-import GroupingSebaranKurikulum from "./grouping-kurikulum-to-sebaran";
-import type { templateResponseKoreksi } from "../type/templateResponseKoreksi";
-import type { DataResponseKoreksi } from "../type/DataResponseKoreksi";
-import type { GroupSebaranNoSoalFromPropertyKurikulum } from "../model/grouping-kurikulum-by-bentuksoal";
-import type { CountBentukSoalPaket } from "~/domain/paket-soal/entities/count-bentuk-soal-paket";
-import type { TemplateKoreksiSiswaType } from "~/types/penilaian/TemplateKoreksiSiswaType";
-import type { DataTemplateKoreksiSiswa } from "~/types/penilaian/DataTemplateKoreksiSiswa";
-import BankSoalAppUndefined from "~/domain/bank-soal/orm/bank-soal-undifined";
-import RisponsePenilaianSiswaBuilder from "./rispon-penilaian-siswa-builder";
+// import GroupingSebaranKurikulum from "./grouping-kurikulum-to-sebaran";
+// import type { templateResponseKoreksi } from "../type/templateResponseKoreksi";
+// import type { DataResponseKoreksi } from "../type/DataResponseKoreksi";
+// import type { GroupSebaranNoSoalFromPropertyKurikulum } from "../model/grouping-kurikulum-by-bentuksoal";
+// import type { CountBentukSoalPaket } from "~/domain/paket-soal/entities/count-bentuk-soal-paket";
+// import type { TemplateKoreksiSiswaType } from "~/types/penilaian/TemplateKoreksiSiswaType";
+// import type { DataTemplateKoreksiSiswa } from "~/types/penilaian/DataTemplateKoreksiSiswa";
+// import BankSoalAppUndefined from "~/domain/bank-soal/orm/bank-soal-undifined";
+// import RisponsePenilaianSiswaBuilder from "./rispon-penilaian-siswa-builder";
 import type { PaketSoalStruktur } from "~/domain/paket-soal/paket-soal-struktur/PaketSoalStrukturType";
 import { PaketSoalStrukturBuilder } from "~/domain/paket-soal/paket-soal-struktur/PaketSoalStrukturBuilder";
 import RisponseNilaiSiswaBuilder from "./RisponseNilaiSiswaBuilder";
@@ -28,17 +28,27 @@ import GroupingSebaranInPaketSoal from "./grouping-sebaran-in-paket-soal";
 import DetailTargetBuilder from "./DetailTargetBuilder";
 import BankSoalCollectionsBuilder from "./BankSoalCollectionsBuilder";
 import SkorKdSebaranBuilder from "./SkorKdSebaranBuilder";
-import { findDifferences, isEqualValue } from "~/lib/isEqualArrayObject";
 import SkorKdBuilder from "./SkorKdBuilder";
-import type { ValidatedResponseSiswa } from "~/types/penilaian/rekap_sementara_sheet_type";
 import type { KeyLabelTemplateImport, TemplateImportSkorToKd } from "~/domain/import-skor-to-kd/TemplateImportSkorToKd-type";
 import TemplateImportSkorToKdBuilder from "~/domain/import-skor-to-kd/TemplateImportSkorToKd-builder";
 import type { DataSheetSkorKdSelectorType } from "~/context-reduct/selectores/rekap-sheet-kategori-assesment-selector";
 import SwitchKategoriTagihan from "~/domain/asesmen-penilaian/switch-kategori-tagihan-class";
-import type { KategoriTagihanType } from "../type/KategoriTagihanType";
+import type { KategoriTagihanType } from "../../kategori-tagihan/types/entities/KategoriTagihanType";
 import type { DataSheetSkorKdKategoriAsesmenAppType } from "~/types/penilaian/DataSheetSkorKdKategoriAsesmenAppType";
-import type { CollactionMapelInAllPublikasiPaketType } from "../type/CountInstrumenSoalTiapAtpInPublikasiPaketType";
+import type { CollactionMapelInAllPublikasiPaketType } from "../type/collection-kurikulum-in-all-publikasi/CollactionMapelInAllPublikasiPaketType";
 import CountInstrumenSoalTiapAtpInPublikasiPaket from "./CountInstrumenSoalTiapAtpInPublikasi";
+import { SanitizerOrderMapelBasedOnMapelRaport } from "~/domain/sanitizer/sanitizer-order-mapel";
+import type { jp_mapelApp } from "~/types/mapel/jp_mapel";
+import { SanitizerKodeMapelRaport } from "~/domain/sanitizer/sanitizer-kode-mapel-rapor";
+import { dataSiswaHasMapel, type DataSiswaHasMapelType } from "./dataSiswaHasMapel";
+import KategoriTagihanRaportBuilder from "~/domain/kategori-tagihan/builder/KategoriTagihanRaportBuilder";
+import KategoriTagihanHasManyPesertaMapelBuillder from "~/domain/kategori-tagihan/builder/KategoriTagihanHasManyPesertaMapelBuillder";
+import MapperTagihanHasDataRespon from "./MapperTagihanHasDataRespon";
+import type { DataTipeAssesmenMapper, MapelMapperInAllPublikasiPaket } from "../type/collection-kurikulum-in-all-publikasi/StrukturKurikulumMapper";
+import type { KategoriTagihanHasManyPesertaMapelType } from "~/domain/kategori-tagihan/types/kategori-tagihan-hasMany-respon-siswa/KategoriTagihanHasManyPesertaMapelType";
+import type { KategoriTagihanHasManyResponSiswaType } from "~/domain/kategori-tagihan/types";
+import KategoriAssesmenClass from "~/domain/kategori-tagihan/services/KategoriAssesmenClass";
+import AtMapperTagihanHasRespons from "~/domain/atp-mapper/AtMapperTagihanHasRespons";
 
 
 /** 
@@ -50,7 +60,16 @@ export default class TagihanPenilaianClass extends DtoPaketSoalSheetClass{
     private tagihanHasResponse:TagihanHasDataResponse[]=[];
     private sebaranTagihanKurikulum: SebaranTagihanAssesmenKurikulumType[]=[];
     private defaultJsonSettingBaku:PraSettingBaku|undefined = undefined
-    private colectionCountInstrumenSoalTiapAtpInPublikasiPaket: CollactionMapelInAllPublikasiPaketType[]=[]
+    private colectionCountInstrumenSoalTiapAtpInPublikasiPaket: CollactionMapelInAllPublikasiPaketType[]=[];
+    private memberMapel:DataSiswaHasMapelType[]=[]
+    /**
+     * @info:
+     * kategori ini ini untuk satu item publikasi paket soal
+     */
+    private KategoriTagihanHasManyPesertaMapel:KategoriTagihanHasManyPesertaMapelType[]=[];
+    private kategoriTagihanRaport:KategoriTagihanHasManyResponSiswaType[]=[];
+
+    private rekapSkorPerKategoriAsessmmen:KategoriTagihanHasManyPesertaMapelType[]=[];
     constructor(
             dataSheet:PaketSoalSheetType[],
             atpHasBankSoal:AtpHasManySoalType[],
@@ -59,12 +78,15 @@ export default class TagihanPenilaianClass extends DtoPaketSoalSheetClass{
             /** punya class ini sendiri */
             private readonly allSiswa:SiswaWithValidation[],
             private readonly responTagihan:NilaiSiswaAppType[],
-            private readonly sheetRekapKd:DataSheetSkorKdSelectorType
+            private readonly sheetRekapKd:DataSheetSkorKdSelectorType,
+            private readonly mapelRaport:jp_mapelApp[]
         ){
             super(dataSheet,atpHasBankSoal,rombel,publikasiPaket)
         }
     
-    
+    get ataMapelRaport():jp_mapelApp[]{
+        return this.mapelRaport
+    }
     get dataTagihanHasResponse():TagihanHasDataResponse[]{
         return this.tagihanHasResponse;
     };
@@ -85,16 +107,16 @@ export default class TagihanPenilaianClass extends DtoPaketSoalSheetClass{
     get koleksiSoalInAtp():BankSoalAppType[]{
         return this.atp.flatMap(m=>m.hasSoal)
     }
-    siswaInCurrentDate(tgl:Date):SiswaWithValidation[]{
-        return this.allSiswa.filter(({data, validation})=> {
+    // siswaInCurrentDate(tgl:Date):SiswaWithValidation[]{
+    //     return this.allSiswa.filter(({data, validation})=> {
             
-            const checkIn = getParseDateYYYYMMMDD(data.masuk_tgl);
-            const checkOut =getParseDateYYYYMMMDD(data.keluar_tgl) === 0 ? Infinity: getParseDateYYYYMMMDD(data.keluar_tgl);
-            const current = getParseDateYYYYMMMDD(tgl)
-            return (checkIn <= current && checkOut >= current && data.jenjang === this.jenjang)
+    //         const checkIn = getParseDateYYYYMMMDD(data.masuk_tgl);
+    //         const checkOut =getParseDateYYYYMMMDD(data.keluar_tgl) === 0 ? Infinity: getParseDateYYYYMMMDD(data.keluar_tgl);
+    //         const current = getParseDateYYYYMMMDD(tgl)
+    //         return (checkIn <= current && checkOut >= current && data.jenjang === this.jenjang)
             
-        })
-    }
+    //     })
+    // }
     buildSebaranTagihanKurikulum():void{
         const instansiasi = new SebaranTagihanKurikulumClass(this.tagihanHasResponse).build();
         this.sebaranTagihanKurikulum = instansiasi.dataSebaran;
@@ -134,131 +156,84 @@ export default class TagihanPenilaianClass extends DtoPaketSoalSheetClass{
         
         this.tagihanHasResponse =  this.dataTagihanPenilaian.map(m=>{
                 const jenisTagihan = m.jenis_tagihan
+                
                 const tipe_assesmen = new SwitchKategoriTagihan(jenisTagihan.kode).kategori;
                 const dataSheetSkorKd = this.swtichSkorKdSheet(tipe_assesmen);
-                const dataSkorKdSheet = dataSheetSkorKd.map(item=>({...item, data: item.data.filter(s=>s.publikasi_id === m.idbaris && s.jenisTagihan === jenisTagihan.kode && s.skor !== null)}))
-            
-                        // const detail_target:DetailTarget[] = m.target_rombel.map(rombel=>{
-                        //     const data_siswa = m.target_type === 'rombel' 
-                        //                         ? this.siswaInCurrentDate(m.end_time).map(siswa=>siswa.data).filter(s=> s.nama_rombel === rombel)
-                        //                         : this.siswaInCurrentDate(m.end_time).map(siswa=>siswa.data).filter(s=> m.target_person.includes(s.id))
-                        //     return {
-                        //         rombel,
-                        //         data_siswa,
-                        //         count: data_siswa.length,
-                        //         current_rombel: rombel === this.rombel,
-
-                        //     }
-                        // })
-                        const detail_target:DetailTarget[] = DetailTargetBuilder.build(this.allSiswa, m, this.rombel);
-
-                        // const bank_soal_collections = m.id_bank_soal.map(m=> this.koleksiSoalInAtp.find(s=>s.idbaris === m))
-                        const bank_soal_collections = BankSoalCollectionsBuilder.buildFromIdSoalCollection(m.id_bank_soal, this.koleksiSoalInAtp)
-                        // const sebaran_kurikulum_by_bentuk_soal2 = GroupingSebaranKurikulum.buildGroupBentukSoalBasedOnKoleksiIdSoal( m.setting_tagihan?.kurikulum ?? [], m.id_bank_soal);
-                        const StruturNaskah:PaketSoalStruktur[] = PaketSoalStrukturBuilder.buildFromCountBentukSoalPaket(bank_soal_collections, m.setting_tagihan?.count_bentuk_soal ?? []);
-                        const sebaran_kurikulum_by_bentuk_soal = GroupingSebaranInPaketSoal.build(StruturNaskah);
-
-                        const SkorKdCreated = SkorKdSebaranBuilder.build(sebaran_kurikulum_by_bentuk_soal,[]);
-                        const SkorKdTemplate = SkorKdBuilder.build(SkorKdCreated.data);
-                        const keySkorKD:string[] = Object.keys(SkorKdTemplate);
-                        const keyLabelSkorKd = keySkorKD.map(key=>({key, label:key, type:'number'}))
-                        const keyLabelRekapSkorKdSheet: KeyLabelTemplateImport[] = [
-                            {key:'index', label:'No', type:'number'},
-                            {key:'siswa_id', label:'Token Siswa', type:'number'},
-                            {key:'nama_siswa', label:'Nama Siswa', type:'string'},
-                            {key:'rombel', label:'Kelas', type:'string'},
-                            ...keyLabelSkorKd
-
-                        ]
-                        
-                        
-                        const isMultiple            = Boolean(m.setting_tagihan?.koleksi_mapel?.isMultiple);
-                        const koleksi_mapelName     = m.setting_tagihan?.koleksi_mapel?.data ?? [];
-                        const kurikulum_tagihan     = m.setting_tagihan?.kurikulum ?? []
-                        const peserta               = detail_target.flatMap(item=>item.data_siswa);//this.siswaInCurrentDate(m.end_time).map(siswa=>siswa.data).filter(s=> s.nama_rombel === this.rombel);
-                        const count_instrumen       = m.setting_tagihan?.count_bentuk_soal?.map(cbt=>cbt.count) ?? []
-                        const total_instrumen       = count_instrumen.length > 0 ? count_instrumen?.reduce((a, b)=>a+Number(b)):0;
-                        const data_respons          =  this.responTagihan.filter(s=>s.publikasi_id === m.idbaris && s.siswa_id).map(nilaiSiswa=>{
-                            // const respon = nilaiSiswa.respon.slice(0,m.id_bank_soal.length).map((re,iRe)=>({...re, soal_id:bank_soal_collections[iRe]?.idbaris, atp:bank_soal_collections[iRe]?.kd_id}));
-                            // const mapBentukSoal = respon.map(bs=>bs?.bentuk_soal) 
-                            const sumber_respon = nilaiSiswa.sumber_respon
-                            // const StruturNaskah:PaketSoalStruktur[] = PaketSoalStrukturBuilder.buildFromCountBentukSoalPaket(bank_soal_collections, m.setting_tagihan?.count_bentuk_soal ?? [], m.setting_tagihan?.kurikulum ?? []);
-                            const respon:RisponsePenilaianSiswa[] = RisponseNilaiSiswaBuilder.build(StruturNaskah, nilaiSiswa.respon);
-                            const templateKoreksiSiswa = TemplateKoreksiSiswaBuilder.build(StruturNaskah, respon)
-                            
-                            const mapBentukSoal = respon.map(bs=>bs.bentuk_soal);
-                            const needValidate = this.needValidasiRespon(mapBentukSoal, sumber_respon);
-                            const siswa =peserta.find(s=>s.id === nilaiSiswa.siswa_id)
-                            const durasiPengerjaan = ( nilaiSiswa.start_time &&  nilaiSiswa.end_time )? durasiMenit(nilaiSiswa.start_time, nilaiSiswa.end_time): 0 ;
-                            const totalResponValid = this.totalValidRespon(respon);
-                            // const skorKdSebaran = GroupingSebaranKurikulum.buildGroupBentukSoalBasedOnKoleksiIdSoalWithScore(kurikulum_tagihan,m.id_bank_soal,respon)
-                            const skorKdSebaran = SkorKdSebaranBuilder.build(sebaran_kurikulum_by_bentuk_soal,respon )
-                            const objekKdSebaran = SkorKdBuilder.build(skorKdSebaran.data);// skorKdSebaran.data.map(m=>m.objekSkorKd).reduce((a,b)=>({...a,...b}))
-                            // console.log({skorKdSebaran, sebaran_kurikulum_by_bentuk_soal, skorKdSebaran2}, findDifferences(skorKdSebaran, skorKdSebaran2), isEqualValue(skorKdSebaran, skorKdSebaran2))
-                            return {
-                                ...nilaiSiswa, 
-                                respon,//: nilaiSiswa.respon.slice(0,m.id_bank_soal.length),
-                                siswa,
-                                durasiPengerjaan,//:( nilaiSiswa.start_time &&  nilaiSiswa.end_time )? durasiMenit(nilaiSiswa.start_time, nilaiSiswa.end_time): 0 ,
-                                totalResponValid,//:this.totalValidRespon(respon), 
-                                publikasi: m,
-                                needValidate,
-                                templateKoreksiSiswa,
-                                skorKdSebaran,
-                                objekKdSebaran
-                            }
-                        })
-                    
-                        const data_response_bySiswa = peserta.map(siswa=>{
-                            const data = data_respons.filter(s=>s.siswa_id ===siswa.id)
-                            return {
-                                siswa,
-                                data
-                            }
-                        });
-                        /**
-                         *  
-                    const {data_response_bySiswa, sebaran_kurikulum_by_bentuk_soal} = currentData;
-                        const sourceObjekSkorKd = SkorKdSebaranBuilder.build(sebaran_kurikulum_by_bentuk_soal,[]);
-                        const skor_kd = SkorKdBuilder.build(sourceObjekSkorKd.data);
-                        const Obj = Object.keys(skor_kd);
-                        const keyLabelSkorKd = Obj.map(m=>({key:m, label:m}))
-                        
-                        // const data = TemplateImportSkorToKdBuilder.build(data_response_bySiswa, sebaran_kurikulum_by_bentuk_soal)
-                        const source = TemplateImportSkorToKdBuilder.build(data_response_bySiswa, skor_kd);
-                        const keyLabel = [
-                            { key:'index', label:'No' },
-                            { key:'siswa_id', label:'Token Siswa' },
-                            { key:'nama_siswa', label:'Nama Siswa' },
-                            { key:'rombel', label:'Kelas' },
-                            ...keyLabelSkorKd
-                        ];
-                        const data = source.map((m,i)=>{
-                            // const nilaiSebaran = Obj.map(v=>m.dataSkorTemplateImport[])
-                            return {
-                                index:(i+1),
-                                siswa_id: m.siswa_id,
-                                nama_siswa: m.nama_siswa,
-                                rombel: m.rombel,
-                                ...m.dataSkorTemplateImport
-
-                            }
-                        }
-                        )
+                const dataSkorKdSheet = dataSheetSkorKd.map(item=>({...item, data: item.data.filter(s=>s.publikasi_id === m.idbaris && s.jenisTagihan === jenisTagihan.kode && s.skor !== null)}));
+                const detail_target:DetailTarget[] = DetailTargetBuilder.build(this.allSiswa, m, this.rombel);
+                const kurikulum_tagihan     = m.setting_tagihan?.kurikulum ?? []
+                const bank_soal_collections = m.source === 'Paket Soal'? BankSoalCollectionsBuilder.buildFromIdSoalCollection(m.id_bank_soal, this.koleksiSoalInAtp):BankSoalCollectionsBuilder.buildFromStrukturKurikulumPublikasi(kurikulum_tagihan);
+                const StruturNaskah:PaketSoalStruktur[] = PaketSoalStrukturBuilder.buildFromCountBentukSoalPaket(bank_soal_collections, m.setting_tagihan?.count_bentuk_soal ?? []);
+                const sebaran_kurikulum_by_bentuk_soal = GroupingSebaranInPaketSoal.build(StruturNaskah);
+                const SkorKdCreated = SkorKdSebaranBuilder.build(sebaran_kurikulum_by_bentuk_soal,[]);
+                const SkorKdTemplate = SkorKdBuilder.build(SkorKdCreated.data);
+                const keySkorKD:string[] = Object.keys(SkorKdTemplate);
+                const keyLabelSkorKd = keySkorKD.map(key=>({key, label:key, type:'number'}))
+                const keyLabelRekapSkorKdSheet: KeyLabelTemplateImport[] = [
+                    {key:'index', label:'No', type:'number'},
+                    {key:'siswa_id', label:'Token Siswa', type:'number'},
+                    {key:'nama_siswa', label:'Nama Siswa', type:'string'},
+                    {key:'rombel', label:'Kelas', type:'string'},
+                    ...keyLabelSkorKd
+                ];
+                const isMultiple            = Boolean(m.setting_tagihan?.koleksi_mapel?.isMultiple);
+                const koleksi_mapelName     = m.setting_tagihan?.koleksi_mapel?.data ?? [];
                 
-                        */
+                const peserta               = detail_target.flatMap(item=>item.data_siswa);//this.siswaInCurrentDate(m.end_time).map(siswa=>siswa.data).filter(s=> s.nama_rombel === this.rombel);
+                const count_instrumen       = m.setting_tagihan?.count_bentuk_soal?.map(cbt=>cbt.count) ?? []
+                const total_instrumen       = count_instrumen.length > 0 ? count_instrumen?.reduce((a, b)=>a+Number(b)):0;
+                const data_respons          =  this.responTagihan.filter(s=>s.publikasi_id === m.idbaris && s.siswa_id).map(nilaiSiswa=>{
+                    const sumber_respon = nilaiSiswa.sumber_respon
+                    const respon:RisponsePenilaianSiswa[] = RisponseNilaiSiswaBuilder.build(StruturNaskah, nilaiSiswa.respon);
+                    const templateKoreksiSiswa = TemplateKoreksiSiswaBuilder.build(StruturNaskah, respon)
+                    const mapBentukSoal = respon.map(bs=>bs.bentuk_soal);
+                    const needValidate = this.needValidasiRespon(mapBentukSoal, sumber_respon);
+                    const siswa =peserta.find(s=>s.id === nilaiSiswa.siswa_id)
+                    const durasiPengerjaan = ( nilaiSiswa.start_time &&  nilaiSiswa.end_time )? durasiMenit(nilaiSiswa.start_time, nilaiSiswa.end_time): 0 ;
+                    const totalResponValid = this.totalValidRespon(respon);
+                    const skorKdSebaran = SkorKdSebaranBuilder.build(sebaran_kurikulum_by_bentuk_soal,respon )
+                    const objekKdSebaran = SkorKdBuilder.build(skorKdSebaran.data);// skorKdSebaran.data.map(m=>m.objekSkorKd).reduce((a,b)=>({...a,...b}))
 
-                        const jumlahPeresponMap = new Map(data_respons.map(r=>([r.siswa_id, r])));
-                        const jumlahPerespon = [...jumlahPeresponMap.keys()].length;
-                        const jumlahDuplikat = data_respons.length> jumlahPerespon ? data_respons.length-jumlahPerespon: 0
-                        /**
-                         * keySkorKD       : string[],
-                             rekapSkorKdSiswa  : ValidatedResponseSiswa[]
-                        */
-                        
-                        const dataSkorKd  : TemplateImportSkorToKd[] = TemplateImportSkorToKdBuilder.build(data_response_bySiswa, SkorKdTemplate, dataSkorKdSheet,jenisTagihan.kode, m.idbaris);
+                    return {
+                        ...nilaiSiswa, 
+                        respon,//: nilaiSiswa.respon.slice(0,m.id_bank_soal.length),
+                        siswa,
+                        durasiPengerjaan,//:( nilaiSiswa.start_time &&  nilaiSiswa.end_time )? durasiMenit(nilaiSiswa.start_time, nilaiSiswa.end_time): 0 ,
+                        totalResponValid,//:this.totalValidRespon(respon), 
+                        publikasi: m,
+                        needValidate,
+                        templateKoreksiSiswa,
+                        skorKdSebaran,
+                        objekKdSebaran
+                    }
+                })
+            
+                const data_response_bySiswa = peserta.map(siswa=>{
+                    const data = data_respons.filter(s=>s.siswa_id ===siswa.id)
+                    return {
+                        siswa,
+                        data
+                    }
+                });
+                
+
+                const jumlahPeresponMap = new Map(data_respons.map(r=>([r.siswa_id, r])));
+                const jumlahPerespon = [...jumlahPeresponMap.keys()].length;
+                const jumlahDuplikat = data_respons.length> jumlahPerespon ? data_respons.length-jumlahPerespon: 0
+                
+                const dataSkorKd  : TemplateImportSkorToKd[] = TemplateImportSkorToKdBuilder.build(data_response_bySiswa, SkorKdTemplate, dataSkorKdSheet,jenisTagihan.kode, m.idbaris);
+                const messageInvalid:string[] = [];// m.is_validPaketSoal?[]:['Sumber paket soal telah diubah, ini hanya peringatan saja'];
+                koleksi_mapelName.forEach(mapel=>{
+                    const foundMapelNotFound = this.mapelRaport.find(s=>s.nama_mapel === mapel);
+                    if(!foundMapelNotFound){
+                        messageInvalid.push(`Mapel ${mapel.toUpperCase()} tidak tersedia untuk rombel ini`)
+                    }
+                })
+            
             return {
                 ...m,
+                // is_validPaketSoal:true,
+                messageInvalid,
                 detail_target,
                 data_respons,
                 isMultiple,
@@ -279,18 +254,53 @@ export default class TagihanPenilaianClass extends DtoPaketSoalSheetClass{
                 dataSkorKdSheet,
                 sebaranNoSoalFromPropertyKurikulumWithScore:SkorKdCreated
             }
-        })
-    } 
-    
-    buildCounstInstrumen():void{
-        this.colectionCountInstrumenSoalTiapAtpInPublikasiPaket = CountInstrumenSoalTiapAtpInPublikasiPaket.build(this.tagihanHasResponse)
+        }).sort((a,b)=>(b.start_time.getTime()-a.start_time.getTime()))
     }
-    
+    get dataSiswaHasMapel():DataSiswaHasMapelType[]{
+        return this.memberMapel
+    } 
+    buildUtilitesJpMapel(){
+        const siswaCurrentRombel = this.allSiswa.filter(s=>s.data.nama_rombel === this.rombel && s.data.aktif === 'aktif').map(m=>m.data);
+        this.memberMapel = dataSiswaHasMapel(siswaCurrentRombel, this.mapelRaport);
+
+    }
+    buildCounstInstrumen(kategoriMapper:DataTipeAssesmenMapper, StrukturKurikulumMapper:Map<string, MapelMapperInAllPublikasiPaket>):void{
+        // this.colectionCountInstrumenSoalTiapAtpInPublikasiPaket = CountInstrumenSoalTiapAtpInPublikasiPaket.build(this.tagihanHasResponse)
+        // const source = CountInstrumenSoalTiapAtpInPublikasiPaket.build(this.tagihanHasResponse)
+        const source = CountInstrumenSoalTiapAtpInPublikasiPaket.buildFromMapper(kategoriMapper, StrukturKurikulumMapper);
+        const order = this.mapelRaport.map(m=>m.kode);
+        const sanitizeMapel = SanitizerKodeMapelRaport(source,order)
+        this.colectionCountInstrumenSoalTiapAtpInPublikasiPaket = SanitizerOrderMapelBasedOnMapelRaport<CollactionMapelInAllPublikasiPaketType>(sanitizeMapel, order);
+    }
+    get dataKategoriTagihanHasManyPesertaMapel():KategoriTagihanHasManyPesertaMapelType[]{
+        return this.KategoriTagihanHasManyPesertaMapel;
+    }
+    get dataKategoriTagihanRaport():KategoriTagihanHasManyResponSiswaType[]{
+        return this.kategoriTagihanRaport
+    }
+    builKategoriTagihan(kategoriMapper:DataTipeAssesmenMapper, StrukturKurikulumMapper:Map<string, MapelMapperInAllPublikasiPaket>):void{
+        const kategoriTagihanRaport = KategoriTagihanRaportBuilder.buildFromMapper(kategoriMapper, StrukturKurikulumMapper);
+        const koleksiMapel:string[] = this.mapelRaport.map(m=>m.kode);
+            this.kategoriTagihanRaport = kategoriTagihanRaport;
+            this.KategoriTagihanHasManyPesertaMapel = KategoriTagihanHasManyPesertaMapelBuillder.buildRaport(kategoriTagihanRaport,this.memberMapel ?? [],koleksiMapel)
+            
+    }
+    get dataRekapPerKategoriAssesmen():KategoriTagihanHasManyPesertaMapelType[]{
+        return this.rekapSkorPerKategoriAsessmmen;
+    }
+    buildKategoriTagihanMapper(){
+        
+        this.rekapSkorPerKategoriAsessmmen = new KategoriAssesmenClass(this.tagihanHasResponse,this.memberMapel,this.mapelRaport).init().result;
+    }
     override init():this{
         super.init();
         this.buildDetailPesertaRombel();
+        this.buildUtilitesJpMapel();
         this.buildSebaranTagihanKurikulum();
-        this.buildCounstInstrumen();
+        const {mapperKategoriTagihanPerAtpSkor, mapperStrukturKurikulum} = MapperTagihanHasDataRespon(this.tagihanHasResponse)
+        this.buildCounstInstrumen(mapperKategoriTagihanPerAtpSkor, mapperStrukturKurikulum);
+        this.builKategoriTagihan(mapperKategoriTagihanPerAtpSkor, mapperStrukturKurikulum);
+        this.buildKategoriTagihanMapper();
         return this;
     }
     

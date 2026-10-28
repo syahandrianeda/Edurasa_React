@@ -1,10 +1,11 @@
 import type { TagihanHasDataResponse } from "../type/tagihan-assesmen-type";
-import type { KategoriTagihanType } from "../type/KategoriTagihanType";
+import type { KategoriTagihanType } from "../../kategori-tagihan/types/entities/KategoriTagihanType";
 import SwitchKategoriTagihan from "~/domain/asesmen-penilaian/switch-kategori-tagihan-class";
 
 /**
  * @info type ini memnginstansiasi properti kurikulum menjadi group dengan kategori assesmen rapor ('harian', 'midsemester', 'akhirsemester')
  */
+
 export interface SebaranTagihanAssesmenKurikulumType{
     mapelName           : string, 
     mapelKode            : string,
@@ -47,6 +48,8 @@ interface dataInstrumen{
 }
 
 /**
+ * @deprecated | gunakan class **CountInstrumenSoalTiapAtpInPublikasi**, deprecated karena merujuk data
+ *  kurikulum di paket soal yang tidak selalu valid. seharusnya data kurikulum pada koleksi bank soal pada naskah paket soal.
  * @info
  * Class ini digunakan untuk menginstasiasi suatu data berbentuk Grouping Kurikulum. Fokusnya pada seluruh data sheet [publikasi_paket]
  */

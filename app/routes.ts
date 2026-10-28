@@ -140,6 +140,8 @@ export default [
                     route("kompetensi-tagihan-penilaian", "routes/penilaian/kompetensi-tagihan-penilaian-route.tsx"),
                     route("tagihan-harian", "routes/penilaian/tagihan-harian-route.tsx"),
                     route("remedial-pengayaan", "routes/penilaian/remedial-pengayaan-route.tsx"),
+                    route("tagihan-mid-semester", "routes/penilaian/tagihan-mid-semester-route.tsx"),
+                    route("tagihan-akhir-semester", "routes/penilaian/tagihan-tagihan-akhir-semester-route.tsx"),
                 ])
             ]),
             layout("layouts/sub-layouts/sub-tabungan-siswa.tsx",[

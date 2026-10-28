@@ -16,6 +16,7 @@ export default class DtoPembiasaanToMapelType{
             nama_rombel: resolveString(data.nama_rombel),
             index_in_rombel: resolveNumber(data.idbaris),//resolveNumber(data.index_in_rombel),
             source: data,
+            data_students:[]
         }
     }
     static arrayToMapelType(data:any[]):jp_mapelApp[]{

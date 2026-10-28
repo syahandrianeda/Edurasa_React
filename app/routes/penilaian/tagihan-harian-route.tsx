@@ -1,5 +1,13 @@
 import type { controlDropdownKelas } from "~/components/dropdowns/rombel-dropdown";
 import type { Route } from "./+types/tagihan-harian-route";
+import { useAppSelector } from "~/context-reduct/hook";
+import { InstanceDataTagihanPenilaianSector } from "~/context-reduct/selectores/daftar-tagihan-penilaian-selector";
+import { defineCreateItemSoalNeeded } from "~/domain/enloaded/intial-enloaded/by-route-page/banksoal/create-item-soal-needed";
+import { currentTapel, currentTapelProperties } from "~/lib/current-tapel";
+import RekapTagihanHarianPage from "~/pages/penilaian/rekap-tagihan-harian-page";
+import { useFilterContext } from "~/components/toolbars/state-toolbar/state-toolbar";
+import type { FormatKategoriAssesmenPreview } from "~/controllers/rekap-tagihan-harian/toolbar/RadioChooseFormatKategirAssesmen";
+import { ConfigToolbarKategoriAssesmen } from "~/controllers/rekap-tagihan-harian/toolbar/ConfigToolbarKategoriAssesmen";
 
 
 
@@ -33,23 +41,21 @@ export function clientLoader({}:Route.ComponentProps){
     return {
         titleTambahan:'Kategori Penilaian Harian',
         controlKelas: settingRombel,
-        toolbarTabs: undefined,// ConfigToolbarDesainPraSoal,//ConfigToolbarSelectMapel
+        toolbarTabs: ConfigToolbarKategoriAssesmen,
         showExport:true,
                 // pesanLoading:'Mempersiapkan ATP',
                 addPesanRombel:{isAdd:true, type:'rombel', includeFaseName:true},
-                // sheetNeeded: defineCreateItemSoalNeeded,
+                sheetNeeded: defineCreateItemSoalNeeded,
                 
     };
 }
 
 
 export default function PenilaianHarianRoute() {
-    
-        
-
+    const instancPaketSoal = useAppSelector(InstanceDataTagihanPenilaianSector)
+    const dataNilaiPerKategoriTagihan = instancPaketSoal?.dataRekapPerKategoriAssesmen?.find(s=>s.type === 'harian');
+   
     return(
-        <div className="p-1">
-            Hello World
-        </div>
-    )
+        <RekapTagihanHarianPage kategoriTagihan={dataNilaiPerKategoriTagihan}/>
+        )
 }

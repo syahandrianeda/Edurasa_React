@@ -112,7 +112,7 @@ export default function EditPublikasiPaketSoal(){
         targetPaket,
         namaPublikasi
     ])
-    
+    console.log({dataKelas})
     const onSubmit = useCallback(()=>{
         console.log(currentData.jenis_tagihan) 
         const dto = DtoPublikasiPaketStatic.fromAppValidationToSheet(currentData)

@@ -40,22 +40,29 @@ export default function TableDaftarTagihanPenilaian({instanceClass}:{instanceCla
                                         <TriggerEditTagihan actions={actions} data={item}/>
                                         <TriggerEditRespon actions={actions} data={item}/>
                                         {
-                                            !item.is_validPaketSoal && (
-                                                <p className="text-[8px] text-amber-600">Sumber paket soal telah diubah, periksa Paket Soal yang telah dipublikasikan.</p>
+                                            item.messageInvalid.length > 0 && (
+                                                item.messageInvalid.map((pesan, iPesan)=>
+                                                    <p key={pesan} className="text-[8px] text-amber-600">{pesan}</p>
+                                                )
                                             )
                                         }
 
-                                    </div>
+                                    </div> 
                                 </TdEdura>
                                 <TdEdura>{iItem + 1}</TdEdura>
                                 <TdEdura className="text-wrap">
                                     {
-                                        item.is_validPaketSoal ? (
+                                        item.messageInvalid.length === 0 ? (
                                             item.nama_publikasi
                                         ):(
                                             <>
                                                 <p className="line-through text-rose-600">{item.nama_publikasi}</p>
-                                                <p className="text-[8px] text-amber-800">Sumber paket soal telah diubah</p>
+                                                {
+                                                    
+                                                    item.messageInvalid.map((pesan, iPesan)=>
+                                                        <p key={pesan} className="text-[8px] text-amber-600">{pesan}</p>
+                                                    )
+                                                }
                                             </>
 
                                         )
@@ -68,7 +75,7 @@ export default function TableDaftarTagihanPenilaian({instanceClass}:{instanceCla
                                     {
                                         item.isMultiple ?
                                         (
-                                            <ol className="list-decimal">
+                                            <ol className="list-decimal ps-2 list-outside">
                                                 {
                                                     item.koleksi_mapelName.map((mapel, iMapel)=>
                                                             <li key={iMapel}>{mapel}</li>

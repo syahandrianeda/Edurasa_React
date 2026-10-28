@@ -1,7 +1,6 @@
 import { useCallback } from "react";
 import ButtonCommitAwesome from "~/components/button-awesome/commit-button";
 import { useFilterContext } from "~/components/toolbars/state-toolbar/state-toolbar";
-import { setPaketSoal } from "~/context-reduct/global-state/bank-soal/paket-soal-slice";
 import type { PaketSoalDesign } from "~/domain/paket-soal/result/paket-soal-design-type";
 import { useDraftPaketSoal } from "~/hooks/use-draft-paket-soal";
 import { createInitialSetting } from "~/pages/bank-soal/intialPaketSoal";

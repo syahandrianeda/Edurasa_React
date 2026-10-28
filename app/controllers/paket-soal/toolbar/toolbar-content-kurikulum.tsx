@@ -1,23 +1,21 @@
-import {useCallback, useEffect, useMemo, useState, type ChangeEvent, type SetStateAction} from 'react';
+import {useCallback, useEffect, useMemo, useState, type ChangeEvent} from 'react';
 import { InputText } from '~/components/fields/fields';
 import { TdEdura, ThEdura, TRowEdura } from '~/components/tabels/tabel-components';
 import TableWithScrolling from '~/components/tabels/table-with-scrolling';
 import { useFilterContext } from "~/components/toolbars/state-toolbar/state-toolbar"
 import { Field } from '~/components/ui/field';
 import { useAppSelector } from '~/context-reduct/hook';
-import { AtpHasManySoalSelector, KoleksiSoalInstanceSelector } from '~/context-reduct/selectores/bank-soal-selector';
+import { AtpHasManySoalSelector } from '~/context-reduct/selectores/bank-soal-selector';
 import { CurrentMapelInActiveRombel } from '~/context-reduct/selectores/mapel-rombel-selector';
 import { OrmPromesInstanceSelector } from '~/context-reduct/selectores/orm-promes-selector';
 import QueryAtpHasItemSoal from '~/domain/bank-soal/relational-soal/services/query-atp-has-many-soal';
 import type { AtpHasManySoalType } from '~/domain/bank-soal/relational-soal/type';
-import {type PraSettingPaket } from "~/domain/paket-soal/entities/pra-setting-paket"
 import type { PaketSoalDesign } from '~/domain/paket-soal/result/paket-soal-design-type';
 import { useDraftPaketSoal } from '~/hooks/use-draft-paket-soal';
 import { getNumberFromString } from '~/lib/get-number';
 
 export default function ToolbarContentKurikulum(){
     const mapelSelector = useAppSelector(CurrentMapelInActiveRombel);
-    const dataKurikulum = useAppSelector(OrmPromesInstanceSelector);
     const kurikulumHasManySoal = useAppSelector(AtpHasManySoalSelector);
     const {saveDraft} = useDraftPaketSoal()
     const currentJenjang = useAppSelector(s=>getNumberFromString(s.fokusRombel.value))

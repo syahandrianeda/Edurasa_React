@@ -35,6 +35,7 @@ import validationAddPublikasiNonPaket from '~/controllers/publikasi-paket-soal/m
 import type { TagihanHasDataResponse } from '~/domain/penilaian/type/tagihan-assesmen-type';
 import DtoTagihanHasDataResponse from '~/dtos/dto-tagihan-has-data-response';
 import validationTagihanHasDataResponse from './validation-tagihan-data-response';
+import { groupBy } from '~/lib/group-by';
 
 
 export default function EditNonPaketSoal(){
@@ -53,91 +54,97 @@ export default function EditNonPaketSoal(){
     const [startTime, setStartTime] = useState<Date>(currentData.start_time);
     const [targetPaket, setTargetPaket] = useState<TypePaketSoal>(currentData?.target_type);
     const [koleksiIdSiswa, setKoleksiIdSiswa] = useState<number[]>(currentData.target_person);
-    const [koleksiMapel, setKoleksiMapel] = useState<string[]>(currentData.setting_tagihan?.koleksi_mapel?.data ?? []);
+    // const [koleksiMapel, setKoleksiMapel] = useState<string[]>(currentData.setting_tagihan?.koleksi_mapel?.data ?? []);
+    const [koleksiMapel, setKoleksiMapel] = useState<string>(currentData.setting_tagihan?.koleksi_mapel?.data?.[0]??'');
     const [koleksiAtp, setKoleksiAtp] = useState<AtpHasManySoalType[]>(currentData.kurikulum_tagihan);
     const [jenisTagihan, setJenisTagihan] = useState<string>(currentData.jenis_tagihan.kode);
 
-    const koleksiListTagihan = useMemo(()=>ListJenisTagihan.filter(s=>s.kelas.includes(jenjang) && s.semester.includes(semester as number)),[jenjang, semester]);
-    const koleksiSiswaUI = useMemo(()=>siswa.filter(s=>s.jenjang === jenjang && dataKelas.includes(s.nama_rombel)),[dataKelas, jenjang]);
+     const koleksiListTagihan = useMemo(()=>ListJenisTagihan.filter(s=>s.kelas.includes(jenjang) && s.semester.includes(semester as number)),[jenjang, semester])
+        const koleksiSiswaUI = useMemo(()=>siswa.filter(s=>s.jenjang === jenjang && dataKelas.includes(s.nama_rombel)),[dataKelas, jenjang]);
+        
+        const onSelectTarget = useCallback((v:TypePaketSoal)=>{
+               setTargetPaket(v);
+               if(v === 'siswa'){
+                   // const awalKelas = currentData.target_rombel;
+                   setDataKelas([rombel])
+       
+               }
+               setKoleksiIdSiswa([])
+           },  [setTargetPaket, 
+            setDataKelas, setKoleksiIdSiswa
+        ]); 
+        const onSelectMapel = useCallback((v:string)=>{
+              setKoleksiMapel(v);
+           },  [ ]);
+        const kurikulumKelasUI = useMemo(()=>{
+                
+                if(!kurikulumHasManySoal || !koleksiMapel) return [];
+                const dataGroup = kurikulumHasManySoal.dataGroup;
+                const query = new QueryAtpHasItemSoal(dataGroup).filteringMapel(...[koleksiMapel]).get();
+                return query
+            },[kurikulumHasManySoal, 
+                koleksiMapel, 
+            ]);
     
-    const kurikulumKelasUI = useMemo(()=>{
-        if(!kurikulumHasManySoal || !koleksiMapel) return [];
-        const dataGroup = kurikulumHasManySoal.dataGroup;
-        const query = new QueryAtpHasItemSoal(dataGroup).filteringMapel(...koleksiMapel).get();
-        return query
-    },[kurikulumHasManySoal, 
-        koleksiMapel, 
-    ]);
-   
-    const mapel = useMemo(()=>koleksiMapel.length> 0 ? koleksiMapel[0] : '',[koleksiMapel])
     
-    const checkedCollectionAtp = useCallback(( checked:boolean, value:AtpHasManySoalType,)=>{
-        const newKoleksi = checked ? [...koleksiAtp, value] : koleksiAtp.filter(s=>s.atp_as_tp_id !== value.atp_as_tp_id);
-        setKoleksiAtp(newKoleksi)
-    }, [koleksiAtp, setKoleksiAtp])
+        const onChangeJenisTagihan = (v:string)=>{
+            setCurrentData(draft=>{
+                // draft.jenis_tagihan = v
+                setJenisTagihan(v);
+            })
+        }
+        const handleCheckeTargetPerson = (e: ChangeEvent<HTMLInputElement>)=>{
+                const {value, checked} = e.currentTarget;
+                const koleksi = checked 
+                                ? [...koleksiIdSiswa, Number(value)]
+                                : koleksiIdSiswa.filter(s=> s!==Number(value))
+                setKoleksiIdSiswa(koleksi)
+            };
+        
+        useEffect(()=>{
+            setCurrentData(draft=>{
+                draft.start_time = startTime;
+                draft.target_person = koleksiIdSiswa
+                draft.target_rombel = dataKelas
+                draft.target_type = targetPaket
+                draft.nama_publikasi = namaPublikasi;
+                draft.kurikulum_tagihan = koleksiAtp;
+                const dataGroupMapel = groupBy(koleksiAtp,(item)=>item.mapelname ?? '');
+                const data = Object.keys(dataGroupMapel);
+                const koleksi_mapel = {
+                    isMultiple: data.length >1,
+                    data
+                }
+                
+                const setting = (draft.setting_tagihan ?? {}) as NonNullable<typeof draft.setting_tagihan>;
+                    setting.kurikulum = koleksiAtp;//.map(m=>m.atp_as_tp_id);
+                    setting.koleksi_mapel = koleksi_mapel;
+                    setting.count_bentuk_soal = setting.count_bentuk_soal.map(m=>({
+                        ...m,
+                        count: koleksiAtp.length
+                    }));
+                draft.setting_tagihan = setting;
     
-    const onChangeJenisTagihan = (value: string) =>{
-        setJenisTagihan(value);
-    }
-
-    const onSelectTarget = useCallback((v:TypePaketSoal)=>{
-           setTargetPaket(v);
-           if(v === 'siswa'){
-               // const awalKelas = currentData.target_rombel;
-               setDataKelas([rombel])
-   
-           }
-           setKoleksiIdSiswa([])
-       },  [setTargetPaket, 
-        setDataKelas, setKoleksiIdSiswa
-    ]); 
-
-    const handleCheckeTargetPerson = (e: ChangeEvent<HTMLInputElement>)=>{
-            const {value, checked} = e.currentTarget;
-            const koleksi = checked 
-                            ? [...koleksiIdSiswa, Number(value)]
-                            : koleksiIdSiswa.filter(s=> s!==Number(value))
-            setKoleksiIdSiswa(koleksi)
-        };
-
-    const onSelectMapel = useCallback((v:string)=>{
-          setKoleksiMapel([v]);
-          setKoleksiAtp([]);
-       },  [ setKoleksiMapel, setKoleksiAtp]);
-
-     useEffect(()=>{
-        setCurrentData(draft=>{
-            draft.start_time = startTime;
-            draft.end_time = startTime;
-            draft.nama_publikasi = namaPublikasi;
-            draft.target_type = targetPaket;
-            draft.target_person = koleksiIdSiswa;
-            // draft.durasi = durasi;
-            draft.jenis_tagihan = ListJenisTagihan.find(s=>s.kode === jenisTagihan)!;
-            draft.kurikulum_tagihan = koleksiAtp;
-            draft.koleksi_mapelName = koleksiMapel
-            // draft.jenis_tagihan = jenisTagihan
-            const setting = (draft.setting_tagihan ?? {}) as NonNullable<typeof draft['setting_tagihan']>;
-            setting.koleksi_mapel = {...setting.koleksi_mapel, data:koleksiMapel};
-            setting.kurikulum = koleksiAtp,
-            setting.count_bentuk_soal = setting.count_bentuk_soal.map(m=>({
-                ...m,
-                count: koleksiAtp.length
-            }));
-            draft.setting_tagihan = setting;
-
-        })
-    },[
-        startTime,
-        // endTime,
-        namaPublikasi,
-        targetPaket,
-        koleksiIdSiswa,
-        // durasi,
-        koleksiAtp,
-        jenisTagihan,
-        koleksiMapel
-    ])
+    
+    
+    
+            })
+        },[
+            startTime, 
+            koleksiIdSiswa,
+            dataKelas,
+            targetPaket,
+            namaPublikasi,
+            koleksiAtp,
+            koleksiMapel,
+            setCurrentData
+        ])
+        
+        const checkedCollectionAtp = useCallback(( checked:boolean, value:AtpHasManySoalType,)=>{
+            const newKoleksi = checked ? [...koleksiAtp, value] : koleksiAtp.filter(s=>s.atp_as_tp_id !== value.atp_as_tp_id);
+            setKoleksiAtp(newKoleksi)
+        }, [koleksiAtp, setKoleksiAtp])
+    
     const onSubmit = useCallback(()=>{
         const dto = DtoTagihanHasDataResponse.fromTagihanHasDataResponseToPublikasiSheetType(currentData)
         const isValid = validationTagihanHasDataResponse(currentData);
@@ -259,7 +266,8 @@ export default function EditNonPaketSoal(){
                         </div>
                         <Select
                             
-                                value={mapel}
+                                // value={mapel}
+                                value={koleksiMapel}
                                 onValueChange={onSelectMapel}
                             >
                             <SelectTrigger className='bg-white w-full rounded-tl-none text-[10px]'>
@@ -275,6 +283,14 @@ export default function EditNonPaketSoal(){
                             </SelectContent>
                         </Select>
                     </Field>
+                    <div className='border-2 p-1 rounded bg-sky-50 text-[8px]'>
+                        <p className='font-bold'>Mapel terpilih:</p>
+                         {
+                            currentData.setting_tagihan?.koleksi_mapel?.data.map((mapel, iMapel)=>
+                                <p key={mapel}>{mapel}</p>
+                            )
+                         }           
+                    </div>
                     <div className='max-h-60 overflow-y-auto scrol-h-custom'>
                         <TableWithScrolling className='text-[10px]'>
                             <thead>
@@ -316,7 +332,6 @@ export default function EditNonPaketSoal(){
                                                 )
                                             )
                                         )
-                                    
                                 }
                             </tbody>
                         </TableWithScrolling>
@@ -334,3 +349,98 @@ export default function EditNonPaketSoal(){
         </fieldset>
     )
 }
+/**
+ * // const koleksiListTagihan = useMemo(()=>ListJenisTagihan.filter(s=>s.kelas.includes(jenjang) && s.semester.includes(semester as number)),[jenjang, semester]);
+    // const koleksiSiswaUI = useMemo(()=>siswa.filter(s=>s.jenjang === jenjang && dataKelas.includes(s.nama_rombel)),[dataKelas, jenjang]);
+    
+    // const kurikulumKelasUI = useMemo(()=>{
+    //     if(!kurikulumHasManySoal || !koleksiMapel) return [];
+    //     const dataGroup = kurikulumHasManySoal.dataGroup;
+    //     const query = new QueryAtpHasItemSoal(dataGroup).filteringMapel(...koleksiMapel).get();
+    //     return query
+    // },[kurikulumHasManySoal, 
+    //     koleksiMapel, 
+    // ]);
+   
+    // const mapel = useMemo(()=>koleksiMapel.length> 0 ? koleksiMapel[0] : '',[koleksiMapel])
+    
+    // const checkedCollectionAtp = useCallback(( checked:boolean, value:AtpHasManySoalType,)=>{
+    //     const newKoleksi = checked ? [...koleksiAtp, value] : koleksiAtp.filter(s=>s.atp_as_tp_id !== value.atp_as_tp_id);
+    //     setKoleksiAtp(newKoleksi)
+    // }, [koleksiAtp, setKoleksiAtp])
+    
+    // const onChangeJenisTagihan = (value: string) =>{
+    //     setJenisTagihan(value);
+    // }
+
+    // const onSelectTarget = useCallback((v:TypePaketSoal)=>{
+    //        setTargetPaket(v);
+    //        if(v === 'siswa'){
+    //            // const awalKelas = currentData.target_rombel;
+    //            setDataKelas([rombel])
+   
+    //        }
+    //        setKoleksiIdSiswa([])
+    //    },  [setTargetPaket, 
+    //     setDataKelas, setKoleksiIdSiswa
+    // ]); 
+
+    // const handleCheckeTargetPerson = (e: ChangeEvent<HTMLInputElement>)=>{
+    //         const {value, checked} = e.currentTarget;
+    //         const koleksi = checked 
+    //                         ? [...koleksiIdSiswa, Number(value)]
+    //                         : koleksiIdSiswa.filter(s=> s!==Number(value))
+    //         setKoleksiIdSiswa(koleksi)
+    //     };
+
+    // const onSelectMapel = useCallback((v:string)=>{
+    //       setKoleksiMapel([v]);
+    //       setKoleksiAtp([]);
+    //    },  [ setKoleksiMapel, setKoleksiAtp]);
+
+    //  useEffect(()=>{
+    //     setCurrentData(draft=>{
+    //         draft.start_time = startTime;
+    //         draft.end_time = startTime;
+    //         draft.nama_publikasi = namaPublikasi;
+    //         draft.target_type = targetPaket;
+    //         draft.target_person = koleksiIdSiswa;
+    //         // draft.durasi = durasi;
+    //         draft.jenis_tagihan = ListJenisTagihan.find(s=>s.kode === jenisTagihan)!;
+    //         draft.kurikulum_tagihan = koleksiAtp;
+    //         draft.koleksi_mapelName = koleksiMapel
+    //         // draft.jenis_tagihan = jenisTagihan
+            
+    //         // const setting = (draft.json_setting ?? {}) as NonNullable<typeof draft.json_setting>;
+    //         //     setting.kurikulum = koleksiAtp.map(m=>m.atp_as_tp_id);
+    //         //     // setting.koleksi_mapel = {isMultiple:false, data:koleksiMapel?[koleksiMapel]:[]};
+    //         //     setting.koleksi_mapel = koleksi_mapel;
+
+    //         const setting = (draft.setting_tagihan ?? {}) as NonNullable<typeof draft['setting_tagihan']>;
+    //         const dataGroupMapel = groupBy(koleksiAtp,(item)=>item.mapelname ?? '');
+    //         const data = Object.keys(dataGroupMapel);
+    //         const koleksi_mapel = {
+    //             isMultiple: data.length >1,
+    //             data
+    //         }
+    //         setting.koleksi_mapel = koleksi_mapel;//{...setting.koleksi_mapel, data:koleksiMapel};
+    //         setting.kurikulum = koleksiAtp,
+    //         setting.count_bentuk_soal = setting.count_bentuk_soal.map(m=>({
+    //             ...m,
+    //             count: koleksiAtp.length
+    //         }));
+    //         draft.setting_tagihan = setting;
+
+    //     })
+    // },[
+    //     startTime,
+    //     // endTime,
+    //     namaPublikasi,
+    //     targetPaket,
+    //     koleksiIdSiswa,
+    //     // durasi,
+    //     koleksiAtp,
+    //     jenisTagihan,
+    //     koleksiMapel
+    // ])
+ */

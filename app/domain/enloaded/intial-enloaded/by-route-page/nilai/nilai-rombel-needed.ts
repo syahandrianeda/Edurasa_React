@@ -1,4 +1,4 @@
-import type { KategoriTagihanType } from "~/domain/penilaian/type/KategoriTagihanType";
+import type { KategoriTagihanType } from "~/domain/kategori-tagihan/types/entities/KategoriTagihanType";
 import { getNumberFromString } from "~/lib/get-number";
 import { namaTab } from "~/lib/nama-tab-environment";
 

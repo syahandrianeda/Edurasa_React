@@ -14,8 +14,8 @@ export interface StrukturItemInstrumenGlobal {
     atp: number;
 
     /** soal_id = 0, jika `soal` undefined */
-    soal: BankSoalAppType;
-    atp_soal: AtpAsOrm;
+    soal?: BankSoalAppType;
+    atp_soal?: AtpAsOrm;
     bentuk_soal_detail?:ListBentukSoalType
 
 }

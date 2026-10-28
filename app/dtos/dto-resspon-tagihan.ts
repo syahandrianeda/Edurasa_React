@@ -1,4 +1,4 @@
-import type { KategoriTagihanType } from "~/domain/penilaian/type/KategoriTagihanType";
+import type { KategoriTagihanType } from "~/domain/kategori-tagihan/types/entities/KategoriTagihanType";
 import type { DataSkorMapel, KeyScore, NilaiSiswaAppType, SkorKdResponSiswaType } from "~/types/penilaian/nilai-siswa-app-type";
 import type { RisponsePenilaianSiswa } from "~/types/penilaian/RisponsePenilaianSiswaType";
 import type { NilaiSiswaSheetType } from "~/types/penilaian/nilai-siswa-sheet-type";

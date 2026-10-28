@@ -12,7 +12,7 @@ import type { templateResponseKoreksi } from "./templateResponseKoreksi";
 import type { Data_response_bySiswaType } from "./Data_response_bySiswaType";
 import type { ValidatedResponseSiswa } from "~/types/penilaian/rekap_sementara_sheet_type";
 import type { KeyLabelTemplateImport, TemplateImportSkorToKd } from "~/domain/import-skor-to-kd/TemplateImportSkorToKd-type";
-import type { KategoriTagihanType } from "./KategoriTagihanType";
+import type { KategoriTagihanType } from "../../kategori-tagihan/types/entities/KategoriTagihanType";
 import type { DataSheetSkorKdKategoriAsesmenAppType } from "~/types/penilaian/DataSheetSkorKdKategoriAsesmenAppType";
 
 /** 
@@ -82,7 +82,8 @@ export interface TagihanHasDataResponse extends TagihanAsessmenType{
     keyLabelRekapSkorKdSheet: KeyLabelTemplateImport[],
     tipe_assesmen: KategoriTagihanType,
     dataSkorKdSheet:DataSheetSkorKdKategoriAsesmenAppType[],
-    sebaranNoSoalFromPropertyKurikulumWithScore:GroupSebaranNoSoalFromPropertyKurikulumWithScore
+    sebaranNoSoalFromPropertyKurikulumWithScore:GroupSebaranNoSoalFromPropertyKurikulumWithScore,
+    messageInvalid:string[]
     
 }
 

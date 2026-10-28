@@ -1,7 +1,8 @@
 import { TdEdura, TdEduraFreeze, ThEdura, THEduraFreeze, TRowEdura } from "~/components/tabels/tabel-components";
 import TableWithScrolling from "~/components/tabels/table-with-scrolling";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "~/components/ui/sheet";
-import type { DataSkorSiswaByInstrumenType, DetailPublikasiWithResponSiswaType } from "~/domain/penilaian/type/CountInstrumenSoalTiapAtpInPublikasiPaketType";
+import type { DataSkorSiswaByInstrumenType } from "~/domain/penilaian/type/collection-kurikulum-in-all-publikasi/DataSkorSiswaByInstrumenType";
+import type { DetailPublikasiWithResponSiswaType } from "~/domain/penilaian/type/collection-kurikulum-in-all-publikasi/DetailPublikasiWithResponSiswaType";
 
 interface Props {
     item: DetailPublikasiWithResponSiswaType|null;
@@ -66,7 +67,7 @@ export default function DetailResponsKdSelectedSheet({
                                         <TdEdura className="text-center">{respon.rombel}</TdEdura>
                                         {
                                             respon.dataPerBentukSoal.map((nilaiSkor, iNilai)=>
-                                                nilaiSkor.data.map((itemNilai, iItem)=>
+                                                nilaiSkor.data.length > 0 ? (nilaiSkor.data.map((itemNilai, iItem)=>
                                                     <TdEdura key={nilaiSkor.bentukSoal+'_'+iNilai+'_'+itemNilai.noSoal} className="text-center">
                                                         {
                                                             nilaiSkor.bentukSoal === 'pg'?  (
@@ -74,11 +75,13 @@ export default function DetailResponsKdSelectedSheet({
                                                             ):itemNilai.skor 
                                                         }
                                                     </TdEdura>
+                                                )):(
+                                                    <TdEdura key={nilaiSkor+"_"+iNilai} colSpan={respon.countSoal}>Respon Tidak ada</TdEdura>
                                                 )
                                             )
                                         }
-                                        <TdEdura className="text-center font-bold">{respon.total}</TdEdura>
-                                        <TdEdura className="text-center font-bold">{respon.skor}</TdEdura>
+                                        <TdEdura className="text-center font-bold">{item.atp_id===0 ?null: respon.total}</TdEdura>
+                                        <TdEdura className="text-center font-bold">{item.atp_id===0 ?null: respon.skor}</TdEdura>
                                     </TRowEdura>
                                 )
                             }

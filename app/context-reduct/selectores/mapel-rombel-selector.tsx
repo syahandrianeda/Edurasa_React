@@ -32,8 +32,11 @@ export const CurrentMapelInActiveRombel = createSelector(
         // return orm.defaultMapelInActiveRombel();
         // return new OrmMapel(mapel, mapelRombel,siswaCurrentRombel,rombel).defaultMapelInActiveRombel()
         return new OrmMapelRefactored(mapel, mapelRombel,siswaCurrentRombel,rombel).defaultMapelInActiveRombel()
+        // return new OrmMapelRefactored(mapel, mapelRombel,siswaCurrentRombel,rombel).collectifMapelRaport()
     }
 ) 
+
+
 export const OrmMapelSelector = createSelector(
     [
         DataSiswaAktifRombel,
@@ -49,5 +52,23 @@ export const OrmMapelSelector = createSelector(
         // return orm.defaultMapelInActiveRombel();
         // return new OrmMapel(mapel, mapelRombel,siswaCurrentRombel,rombel);//.defaultMapelInActiveRombel()
         return new OrmMapelRefactored(mapel, mapelRombel,siswaCurrentRombel,rombel);//.defaultMapelInActiveRombel()
+    }
+) 
+export const MapelRaportCurrentRombel = createSelector(
+    [
+        OrmMapelSelector
+        // return new OrmMapelRefactored(mapel, mapelRombel,siswaCurrentRombel,rombel).defaultMapelInActiveRombel()
+    
+
+    ],
+    (data)=>{
+        // const orm = new OrmMapel(m
+        // apel, mapelRombel,siswaCurrentRombel,rombel='1A');
+        // const test = orm.defaultMapelInActiveRombel();
+        // console.log('test orm', test);
+        // return orm.defaultMapelInActiveRombel();
+        // return new OrmMapel(mapel, mapelRombel,siswaCurrentRombel,rombel);//.defaultMapelInActiveRombel()
+        return data.collectifMapelRaport();
+        
     }
 ) 

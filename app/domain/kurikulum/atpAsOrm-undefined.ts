@@ -14,7 +14,7 @@ export default class AtpAsOrmUndefined{
             elemen                  : stringBlangko,
             lingkup_materi          : stringBlangko,
             kelas                   : [],
-            kodemapel               : stringBlangko,
+            kodemapel               : 'mapel_notFound',
             mapelname               : stringBlangko,
             fase                    : stringBlangko,
             invalid                 : true,
