@@ -30,7 +30,8 @@ export default class SkorKdSebaranBuilder{
                     let skorTp:number = 0;
                     let total_tp:number = 0;
                     let jumlahSoalDinilai_tp:number = 0
-                    const dataAtp = branchTp.dataAtp.map(branchAtp=>{
+                    // const dataAtp = branchTp.dataAtp.map(branchAtp=>{
+                    const dataAtp = branchTp.dataAtp.filter(s=>s.atp_id !==0).map(branchAtp=>{
                         /**
                          * skor: number;
                             total: number,

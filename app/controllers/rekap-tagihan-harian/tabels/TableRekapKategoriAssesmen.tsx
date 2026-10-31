@@ -1,15 +1,20 @@
-import {useCallback, useMemo} from 'react';
+import {useCallback, useMemo, useState} from 'react';
 import { TdEdura, ThEdura, TRowEdura } from "~/components/tabels/tabel-components";
 import TableWithScrolling from "~/components/tabels/table-with-scrolling";
 import { useFilterContext } from '~/components/toolbars/state-toolbar/state-toolbar';
-import type { CollectionNilaiMapel, RekapAtpInKoleksiMapelOnRespoonseTiapKategoriTagihan } from '~/domain/kategori-tagihan/types';
+import type { CollectionNilaiMapel, RekapAtpInKoleksiMapelOnRespoonseTiapKategoriTagihan, SkorNilaiFromRespon, SkorNilaiFromSkorKdSheet } from '~/domain/kategori-tagihan/types';
 import type { DataSiswaBasedMapelInResponAllKategoriTagihanInterface } from '~/domain/kategori-tagihan/types/kategori-tagihan-hasMany-respon-siswa/DataSiswaBasedMapelInResponAllKategoriTagihanInterface';
 import type { KategoriTagihanHasManyPesertaMapelType } from '~/domain/kategori-tagihan/types/kategori-tagihan-hasMany-respon-siswa/KategoriTagihanHasManyPesertaMapelType';
 import type { StrukturAtpType } from '~/domain/trees-struktur-kurikulum';
 import type { InterfaceMapel } from '~/types/mapel/mapel';
 import type { FokusStrukturKurikulumPresentation, FokusStrukturKurikulumSelected } from '../toolbar/RadioChooseFokusStrukturKurikulum';
-import type { FormatKategoriAssesmenPreview, FormatKategoriAssesmenTable } from '../toolbar/RadioChooseFormatKategirAssesmen';
+import type { FormatKategoriAssesmenPreview } from '../toolbar/RadioChooseFormatKategirAssesmen';
+import type { FormatKategoriAssesmenTable } from "../toolbar/FormatKategoriAssesmenTable";
 import type { SkorKdNullableType } from '~/domain/penilaian/type/SkorKdType';
+import type { SheetPreview } from '../sheet/SheetDetailAccumalatorRekap';
+import SheetDetailAccumalatorRekap from '../sheet/SheetDetailAccumalatorRekap';
+import type { KoleksiPublikasiPaketPerMapel } from '~/domain/penilaian/type/collection-kurikulum-in-all-publikasi/StrukturKurikulumMapper';
+import type { KategoriTagihanType } from '~/domain/kategori-tagihan/types/entities/KategoriTagihanType';
 
 type keyLabelType = {
     key:string, 
@@ -19,31 +24,43 @@ type keyLabelType = {
 
 type dataPresentation = {
     headerTable:keyLabelType[];
-    data?: DataSiswaBasedMapelInResponAllKategoriTagihanInterface[]
+    data?: DataSiswaBasedMapelInResponAllKategoriTagihanInterface[],
+    koleksiSumberTagihan: KoleksiPublikasiPaketPerMapel[],
+    typeAsesmen: KategoriTagihanType
 }
 
 type Props = {
     fokusMapel:InterfaceMapel, 
     kategoriTagihan?:KategoriTagihanHasManyPesertaMapelType
+    collectionStrukturKurikulum?     :RekapAtpInKoleksiMapelOnRespoonseTiapKategoriTagihan,
+    
 };
 
 export default function TableRekapKategoriAssesmen({fokusMapel, kategoriTagihan}:Props){
     const {value} = useFilterContext<FokusStrukturKurikulumPresentation & FormatKategoriAssesmenPreview >();
+    const [selectedRespons, setSelectedRespons] = useState<SheetPreview|null>(null);
    
     const dataNilai:dataPresentation|undefined= useMemo(()=>{
         if(!kategoriTagihan || !value?.extra?.FokusStrukturKurikulum) return ;
+
         const {keyLabel, keyFokusStruktur, keyStrukturKurikulum} = value?.extra?.FokusStrukturKurikulum;
             const data = kategoriTagihan?.data?.find(s=> s.mapel===fokusMapel.kode)?.dataNilai ?? [];//.flatMap(m=>m.dataNilai);
-            const Mapel_IdStruktur = kategoriTagihan?.koleksiAtpInMapel?.find(s=>s.kodeMapel === fokusMapel.kode)
+            const Mapel_IdStruktur = kategoriTagihan?.koleksiAtpInMapel?.find(s=>s.kodeMapel === fokusMapel.kode);
+            const koleksiSumberTagihan = kategoriTagihan?.koleksiPaketSoal?.filter(s=>s.koleksiMapel.includes(fokusMapel.nama))
             const collectionStrukturKurikulum = kategoriTagihan?.koleksiAtpInMapel?.find(s=>s.kodeMapel === fokusMapel.kode);
             const fokusStrutktur = collectionStrukturKurikulum?.[keyFokusStruktur];
-            const headerTable = Array.isArray(fokusStrutktur)? fokusStrutktur.map(m=>({label:`${keyLabel} ${String((m as unknown as Record<string, unknown>)[keyStrukturKurikulum] ?? '')}`, key:keyLabel, idStruktur:(m as unknown as Record<string, number>)[keyStrukturKurikulum]})): []
+            const headerTable = Array.isArray(fokusStrutktur)? fokusStrutktur.map(m=>({label:`${keyLabel} ${String((m as unknown as Record<string, unknown>)[keyStrukturKurikulum] ?? '')}`, key:keyLabel, idStruktur:(m as unknown as Record<string, number>)[keyStrukturKurikulum]})): [];
+            const typeAsesmen = kategoriTagihan.type;
             return {
                 data,
-                headerTable
+                headerTable,
+                collectionStrukturKurikulum,
+                koleksiSumberTagihan,
+                typeAsesmen
             }
         },[fokusMapel.kode, kategoriTagihan, value?.extra?.FokusStrukturKurikulum]);
 
+    
     const getNilaiBasedOnTypeStruktur = useCallback((dataMapel:CollectionNilaiMapel, type:string, idStruktur:number):string|null=>{
         
         if(!value?.extra?.formatKategoriAssesmen || !dataMapel) return null;
@@ -55,6 +72,7 @@ export default function TableRekapKategoriAssesmen({fokusMapel, kategoriTagihan}
              skorKd_cp_sheet?:SkorKdNullableType
              skorKd_tp_sheet?:SkorKdNullableType
          */
+        const dexision = dataMapel;
         const keySheetKd = `skorKd_${type.toLowerCase()}_sheet` as keyof CollectionNilaiMapel;
         const keyRespon = `skorKd_${type.toLowerCase()}` as keyof CollectionNilaiMapel;
         const nilaiAkhirSheetKdNumberNull = (dataMapel[keySheetKd] as SkorKdNullableType | null | undefined)?.[mapel_id] ?? null;
@@ -73,6 +91,7 @@ export default function TableRekapKategoriAssesmen({fokusMapel, kategoriTagihan}
         }
 
     },[value?.extra?.formatKategoriAssesmen]);
+    
     const getNilaiMapel = useCallback((dataMapel?:CollectionNilaiMapel):string|null=>{
         
         if(!value?.extra?.formatKategoriAssesmen || !dataMapel) return null;
@@ -95,60 +114,95 @@ export default function TableRekapKategoriAssesmen({fokusMapel, kategoriTagihan}
         }
 
     },[value?.extra?.formatKategoriAssesmen])
+    
+    
+    
+    const handleSheet = useCallback((dataMapel?:DataSiswaBasedMapelInResponAllKategoriTagihanInterface)=>{
+        const format = value?.extra?.formatKategoriAssesmen;
+        const fokusStrukturKurikululum = value?.extra?.FokusStrukturKurikulum.keyLabel;
+        if(!dataMapel || !format || !fokusStrukturKurikululum || !dataNilai?.koleksiSumberTagihan) return;
         
+        setSelectedRespons({
+            source:format,
+            type: dataNilai?.typeAsesmen,
+            tagihanMapel: dataNilai?.koleksiSumberTagihan,
+            data:dataMapel,
+            
+
+        })
+    },[dataNilai?.koleksiSumberTagihan, value?.extra?.formatKategoriAssesmen,value?.extra?.FokusStrukturKurikulum.keyLabel])
     return (
-        <TableWithScrolling className='text-xs'>
-            <thead>
-                <TRowEdura>
-                    <ThEdura className='w-8' rowSpan={2}>No</ThEdura>
-                    <ThEdura className='w-12 text-wrap' rowSpan={2}>Token Siswa</ThEdura>
-                    <ThEdura className='max-w-5/12' rowSpan={2}>Nama Siswa</ThEdura>
-                    <ThEdura className='w-12 text-wrap' rowSpan={2}>Nilai Mapel</ThEdura>
-                    <ThEdura colSpan={dataNilai?.headerTable?.length===0?1:dataNilai?.headerTable?.length}>Data Nilai Per {value?.extra?.FokusStrukturKurikulum!.keyLabel ?? ''}</ThEdura>
-                </TRowEdura>
-                <TRowEdura>
+        <>
+            <p className='text-[8px] text-purple-600 text-center print:hidden'>Klik pada sel baris untuk melihat detail</p>
+            <TableWithScrolling className='text-xs'>
+                <thead>
+                    <TRowEdura>
+                        <ThEdura className='w-8' rowSpan={2}>No</ThEdura>
+                        <ThEdura className='w-12 text-wrap' rowSpan={2}>Token Siswa</ThEdura>
+                        <ThEdura className='max-w-5/12' rowSpan={2}>Nama Siswa</ThEdura>
+                        <ThEdura className='w-12 text-wrap' rowSpan={2}>Nilai Mapel</ThEdura>
+                        <ThEdura colSpan={dataNilai?.headerTable?.length===0?1:dataNilai?.headerTable?.length}>Data Nilai Per {value?.extra?.FokusStrukturKurikulum!.keyLabel ?? ''}</ThEdura>
+                    </TRowEdura>
+                    <TRowEdura>
+                        {
+                            dataNilai?.headerTable?.length === 0 ? (
+                                <ThEdura>Belum ada tagihan assesmen yang dilaksanakan</ThEdura>
+                            ):(
+                                dataNilai?.headerTable?.map((header, iHeader)=>
+                                    <ThEdura key={header+'_'+iHeader}>{header.label}</ThEdura>
+                                )
+                            )
+                            
+                        }
+                    </TRowEdura>
+                </thead>
+                <tbody>
                     {
-                        dataNilai?.headerTable?.length === 0 ? (
-                            <ThEdura>Belum ada tagihan assesmen yang dilaksanakan</ThEdura>
+                        dataNilai?.data?.length === 0 ? (
+                            <TRowEdura>
+                                <TdEdura colSpan={5} className="text-center">Tidak ada tagihan assesmen untuk mapel ini</TdEdura>
+                            </TRowEdura> 
                         ):(
-                            dataNilai?.headerTable?.map((header, iHeader)=>
-                                <ThEdura key={header+'_'+iHeader}>{header.label}</ThEdura>
+                            dataNilai?.data?.map((siswa, iSiswa)=>
+                                <TRowEdura 
+                                    key={siswa.idSiswa}
+                                    onClick={()=>{
+                                        handleSheet(siswa)
+                                    }}
+
+                                >
+                                    <TdEdura>{iSiswa+1}</TdEdura>
+                                    <TdEdura>{siswa.idSiswa}</TdEdura>
+                                    <TdEdura>{siswa.namaSiswa}</TdEdura>
+                                    <TdEdura>{getNilaiMapel(siswa?.mapel)}</TdEdura>
+                                    
+                                    {
+                                        dataNilai?.headerTable?.length === 0 ? (
+                                            <TdEdura>Belum ada tagihan assesm yang dilaksanakan</TdEdura>
+                                        ):(
+                                            dataNilai?.headerTable?.map((header, iHeader)=>
+                                                // <TdEdura key={header+'_'+iHeader}>{siswa?.mapel?.[header.key as keyof NonNullable<typeof siswa.mapel>] as string ?? ''}</TdEdura>
+                                                <TdEdura key={header+'_'+iHeader} className='text-center'>{siswa?.mapel &&getNilaiBasedOnTypeStruktur(siswa?.mapel,header.key, header.idStruktur)}</TdEdura>
+                                            )
+                                        )
+                                        
+                                    }
+                                </TRowEdura>
                             )
                         )
-                        
                     }
-                </TRowEdura>
-            </thead>
-            <tbody>
-                {
-                    dataNilai?.data?.length === 0 ? (
-                        <TRowEdura>
-                            <TdEdura colSpan={5} className="text-center">Tidak ada tagihan assesmen untuk mapel ini</TdEdura>
-                        </TRowEdura> 
-                    ):(
-                        dataNilai?.data?.map((siswa, iSiswa)=>
-                            <TRowEdura key={siswa.idSiswa}>
-                                <TdEdura>{iSiswa+1}</TdEdura>
-                                <TdEdura>{siswa.idSiswa}</TdEdura>
-                                <TdEdura>{siswa.namaSiswa}</TdEdura>
-                                <TdEdura>{getNilaiMapel(siswa?.mapel)}</TdEdura>
-                                
-                                {
-                                    dataNilai?.headerTable?.length === 0 ? (
-                                        <TdEdura>Belum ada tagihan assesm yang dilaksanakan</TdEdura>
-                                    ):(
-                                        dataNilai?.headerTable?.map((header, iHeader)=>
-                                            // <TdEdura key={header+'_'+iHeader}>{siswa?.mapel?.[header.key as keyof NonNullable<typeof siswa.mapel>] as string ?? ''}</TdEdura>
-                                            <TdEdura key={header+'_'+iHeader} className='text-center'>{siswa?.mapel &&getNilaiBasedOnTypeStruktur(siswa?.mapel,header.key, header.idStruktur)}</TdEdura>
-                                        )
-                                    )
-                                    
-                                }
-                            </TRowEdura>
-                        )
-                    )
-                }
-            </tbody>
-        </TableWithScrolling>
+                </tbody>
+            </TableWithScrolling>
+            <SheetDetailAccumalatorRekap
+                item={selectedRespons}
+                open={selectedRespons !== null}
+                onOpenChange={open => {
+                    if (!open) {
+                        setSelectedRespons(null);
+                    }
+                }}
+            />
+            
+        </>
     )
 };

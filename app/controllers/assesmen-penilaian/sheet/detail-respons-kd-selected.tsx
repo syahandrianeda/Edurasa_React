@@ -20,7 +20,7 @@ export default function DetailResponsKdSelectedSheet({
         return null;
     }return(
         <Sheet open={open} onOpenChange={onOpenChange} >
-            <SheetContent side="right" className=" w-full overflow-y-auto sm:max-w-xl" >
+            <SheetContent side="right" className=" w-full overflow-y-auto sm:max-w-xl scrol-h-custom" >
                 <SheetHeader>
                     <SheetTitle>
                         Data siswa Yang merespon untuk kompetensi ini (id={item.atp_id})

@@ -4,11 +4,6 @@ import TableTagihanKompetensi from "~/controllers/assesmen-penilaian/tabel/tabel
 import { useAppSelector } from "~/context-reduct/hook";
 import { InstanceDataTagihanPenilaianSector } from "~/context-reduct/selectores/daftar-tagihan-penilaian-selector";
 import { defineCreateItemSoalNeeded } from "~/domain/enloaded/intial-enloaded/by-route-page/banksoal/create-item-soal-needed";
-import { isEqualArrayObject } from "~/lib/isEqualArrayObject";
-import CountInstrumenSoalTiapAtpInPublikasiPaket from "~/domain/penilaian/infrastucture/CountInstrumenSoalTiapAtpInPublikasi";
-import KategoriTagihanRaportBuilder from "~/domain/kategori-tagihan/builder/KategoriTagihanRaportBuilder";
-import { MapelRaportCurrentRombel } from "~/context-reduct/selectores/mapel-rombel-selector";
-import KategoriTagihanHasManyPesertaMapelBuillder from "~/domain/kategori-tagihan/builder/KategoriTagihanHasManyPesertaMapelBuillder";
 
 
 export function meta({matches}: Route.MetaArgs) {

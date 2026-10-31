@@ -20,7 +20,7 @@ export default class BankSoalCollectionsBuilder{
             const bankSoalUndefined = BankSoalAppUndefined.build();
             const pertanyaan=`[${m.atp_as_tp_id}] ${m.atp_as_tp_description}`;
             const pembahasan_penskoran="Soal ini ditunjukkan untuk mengisi nilai KD "+pertanyaan;
-            return {...bankSoalUndefined, pertanyaan, pembahasan_penskoran, bentuk_soal:'isian_singkat', snapshot_kurikulum}
+            return {...bankSoalUndefined, kd_id:m.atp_as_tp_id, pertanyaan, pembahasan_penskoran, bentuk_soal:'isian_singkat', snapshot_kurikulum}
         })
 
     

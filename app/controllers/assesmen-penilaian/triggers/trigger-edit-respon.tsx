@@ -10,8 +10,8 @@ export default function TriggerEditRespon({actions,data: m}:SwitchTriggerModalPr
     const dataResponRombel = m.data_respons.filter(s=>s.rombel === rombel);
     const peserta = m.peserta.filter(s=>s.nama_rombel === rombel);
     const data_response_bySiswa = m.data_response_bySiswa.filter(s=>s.siswa.nama_rombel === rombel)
-
-    const targetRombel = {...m, data_respons:dataResponRombel,peserta, data_response_bySiswa, target_rombel:[rombel]}
+    const dataSkorKd = m.dataSkorKd.filter(s=>s.rombel === rombel);
+    const targetRombel = {...m, data_respons:dataResponRombel,peserta,dataSkorKd, data_response_bySiswa, target_rombel:[rombel]}
     
     const ActionTrigger: TriggerTable<TagihanHasDataResponse>[] = [
             
@@ -28,17 +28,17 @@ export default function TriggerEditRespon({actions,data: m}:SwitchTriggerModalPr
             {
                 label: 'Import Nilai',
                 icon: ImportIcon,
-                callback: (m) => actions.open('IMPORT NILAI', m,{closeOnOutsideClick:false})
+                callback: (m) => actions.open('IMPORT NILAI', targetRombel,{closeOnOutsideClick:false})
             },
             {
                 label: 'Analisis Soal',
                 icon: FileChartColumnIncreasing,
-                callback: (m) => actions.open('ANALISIS SOAL', m,{closeOnOutsideClick:false})
+                callback: (m) => actions.open('ANALISIS SOAL', targetRombel,{closeOnOutsideClick:false})
             },
             {
                 label: 'Laporan Analisis Soal',
                 icon: FileChartColumnIncreasing,
-                callback: (m) => actions.open('LAPORAN ANALISIS SOAL', m,{closeOnOutsideClick:false})
+                callback: (m) => actions.open('LAPORAN ANALISIS SOAL', targetRombel,{closeOnOutsideClick:false})
             },
         ];
     

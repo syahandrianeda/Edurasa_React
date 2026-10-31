@@ -4,6 +4,7 @@ import type { CollectionNilaiTp } from "./CollectionNilaiTp";
 export interface CollectionNilaiCp extends StrukturCpInterface{
     totalCp: number|null;
     skorCp: number|null;
+    slotCp:number,
     countSoalCp: number|null;
     koleksiTp: CollectionNilaiTp[]
 }

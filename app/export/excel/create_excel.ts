@@ -25,7 +25,7 @@ export async function MyCreateExcel(parse:ParsedElementEdura[],title:string){
             const row = worksheet.getRow(i+1);
             row.getCell(1).value = heading.text;
             row.getCell(1).font = {
-                size: Math.floor(heading.fontSize*0.5)||10,
+                size: Math.floor(heading.fontSize*0.5)||12,
                 bold: heading.isBold,
                 italic: heading.isItalic,
                 name: 'Arial Black',
@@ -163,7 +163,7 @@ export async function MyCreateExcel(parse:ParsedElementEdura[],title:string){
                         },
                         font: {
                             name: 'Arial',
-                            size: 8,
+                            size: 10,
                         }
                     }
                 }

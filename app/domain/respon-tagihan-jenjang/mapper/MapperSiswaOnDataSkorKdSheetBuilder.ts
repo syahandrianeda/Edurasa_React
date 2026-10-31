@@ -5,7 +5,16 @@ import type { DataSheetSkorKdKategoriAsesmenAppType } from "~/types/penilaian/Da
 
 // export type MapperSiswaOnDataSkorKdSheetType = Map<number,  {siswa_id:number, namaSiswa:string, rombel: string, collectionData:DataKdSheetApp[] ,refrensi:DataSheetSkorKdKategoriAsesmenAppType[]}>
 export type MapperSiswaOnDataSkorKdSheetType = Map<number,  {siswa_id:number, namaSiswa:string, rombel: string, collectionData:Map<number, {currentAtp: DataKdSheetApp[]}>}>
-
+export type SiswaHasDataSkorKdSheet = {
+    atp_id:number, 
+    currentAtp: DataKdSheetApp[]
+}
+export type DataSiswaOndDataSkorKDSheetType = {
+    siswaId: number,
+    namaSiswa:string, 
+    rombel:string,
+    collectionData: SiswaHasDataSkorKdSheet[]
+}
 export default class MapperSiswaOnDataSkorKdSheetBuilder{
     static build(dataSkorKdSheet:DataSheetSkorKdKategoriAsesmenAppType[]):MapperSiswaOnDataSkorKdSheetType{
         const result:MapperSiswaOnDataSkorKdSheetType = new Map();
@@ -32,5 +41,24 @@ export default class MapperSiswaOnDataSkorKdSheetBuilder{
             // currentSiswa.collectionData.push(...data);
         }
         return result;
+    }
+    static getDataSiswaOndDataSkorKDSheet(dataSkorKdSheet:DataSheetSkorKdKategoriAsesmenAppType[]){
+        const mapper = this.build(dataSkorKdSheet);
+        return [...mapper.values()].map(siswa=>{
+            const {siswa_id, namaSiswa, rombel, collectionData:sourceData} = siswa;
+            const collectionData = [...sourceData.entries()].map(([atp_id, dataAtp])=>{
+                const {currentAtp} = dataAtp;
+                return {
+                    atp_id,
+                    currentAtp
+                }
+            })
+            return {
+                siswa_id,
+                namaSiswa,
+                rombel,
+                collectionData
+            }
+        })
     }
 }

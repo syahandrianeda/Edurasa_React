@@ -30,7 +30,8 @@ export default class GroupingSebaranInPaketSoal{
 
         for(const {dataBentukSoal, soal:sourceSoal} of struktur){
             const test = sourceSoal.map(m=>m.atp_soal!);
-            for(const {atp_soal:item, soal, no_prefix }of sourceSoal){
+            for(const {atp_soal:item, atp:atpSource, soal, no_prefix }of sourceSoal){
+                // if(atpSource === 0) continue;
                 const kodeMapel = item?.kodemapel!;
                 const mapelName = item?.mapelname!;
                 const cp_id = item?.cp_id!;

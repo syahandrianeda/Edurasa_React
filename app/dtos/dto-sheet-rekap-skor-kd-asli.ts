@@ -33,6 +33,7 @@ export default class DTOSheetRekapSkorKdAsli{
                    const kategoriAssesmen = new SwitchKategoriTagihan(jenisTagihan).kategori;
                    const kolomKey = key;
                 //    console.log({key, splitKey})
+                if(atp_id !== 0){
                     result.push({
                         kolomKey,
                         jenisTagihan,
@@ -43,6 +44,7 @@ export default class DTOSheetRekapSkorKdAsli{
                         skor,
                         kategoriAssesmen
                     })
+                }
 
                 }
             }

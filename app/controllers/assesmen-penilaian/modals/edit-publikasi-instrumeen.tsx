@@ -141,6 +141,7 @@ export default function EditPublikasiInstrumenTagihan(){
             const dto = DtoTagihanHasDataResponse.fromTagihanHasDataResponseToPublikasiSheetType(currentData)
             const isValid = validationTagihanHasDataResponse(currentData);
             if(!isValid.isValid){
+                console.log({currentData, dto, isValid})
                 alert(isValid.message?.join('\r\n'));
                 return;
             }

@@ -4,6 +4,7 @@ import { currentTapel, currentTapelProperties } from '~/lib/current-tapel';
 import { useAppSelector } from '~/context-reduct/hook';
 import { getSessionRombel } from '~/infrastructures/session-storage/rombel-session';
 import SumberDataRekapTagihan from './sumber-data/sumber-data-rekap-tagihan';
+import { nameOfKategoriTagihan } from "~/domain/kategori-tagihan/builder/KategoriTagihanRaportCollections";
 
 export default function RekapTagihanHarianPage({kategoriTagihan}:{kategoriTagihan?: KategoriTagihanHasManyPesertaMapelType}){
     const dataTapel = currentTapel({variant:'full'});
@@ -13,14 +14,14 @@ export default function RekapTagihanHarianPage({kategoriTagihan}:{kategoriTagiha
     
     return (
         <div className="p-1">
-            <h3 className="text-2xl font-extrabold text-center">Rekapitulasi Nilai Harian Siswa</h3>
+            <h3 className="text-2xl font-extrabold text-center">Rekapitulasi {nameOfKategoriTagihan('harian')}</h3>
             <h4 className="text-xl text-center font-bold">Mata Pelajaran {fokusMapel.nama}</h4>
             <h4 className="text-center">{dataTapel} Semester {dataSemester}</h4>
             <h4 className="text-xl font-extrabold text-center mb-7">Kelas {rombel}</h4>
+            <TableRekapKategoriAssesmen fokusMapel={fokusMapel} kategoriTagihan={kategoriTagihan} />
             {
                 kategoriTagihan && <SumberDataRekapTagihan fokusMapel={fokusMapel} kategoriTagihan={kategoriTagihan}/>
             }
-            <TableRekapKategoriAssesmen fokusMapel={fokusMapel} kategoriTagihan={kategoriTagihan} />
         </div>
     )
 }

@@ -56,13 +56,15 @@ export default function ImportNilaiByKdToSheetKategori(){
     
     const callBackImport = (data:any[])=>{
         const convert = ConverterDataImportToTemplateSkorUI.convert(data as unknown as SkorKdFromImportExcelType[], currentData);
-        // console.log({data, convert}, findDifferences(convert, dataSkorKd));
+        
         setDataUi(convert);
     }
     const onSubmit = React.useCallback(()=>{
+        const konfirmasi = confirm('Anda yakin?');
+        if(!konfirmasi) return;
         const jenjang = getNumberFromString(rombel);
         const param = ParameterServiceSkorKdImportBuilder.build(dataUi, jenjang, currentData)
-        console.log(dataUi, currentData.tipe_assesmen, currentData.keySkorKD, {param});
+        
         toast.promise(
             api.update(param), {
                 loading:'Sedang mengimport data ke server',

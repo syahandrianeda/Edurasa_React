@@ -6,11 +6,12 @@ import type { StrukturMapeltype } from "./sturktur-mapel-type";
 /** sturkturKurikulum hanya relasi kodeMapel, cp_id, tp_id, dan atp_id saja! */
 export type StrukturKurikulumMapelType = StrukturMapeltype & {dataCp: StrukturKurikulumCpType[] };
 export type StrukturKurikulumCpType = StrukturCpType & { dataTp: StrukturKurikulumTpType[]};
+
 export type StrukturKurikulumTpType = StrukturTpType & {dataAtp: StrukturAtpType[]};
 
 
-export type StrukturKurikulumMapelWithSlotType = StrukturMapeltype & {slotMapel:number, dataCp: StrukturKurikulumCpType[] };
-export type StrukturKurikulumCpWithSlotType = StrukturCpType & {slotCp:number,  dataTp: StrukturKurikulumTpType[]};
+export type StrukturKurikulumMapelWithSlotType = StrukturMapeltype & {slotMapel:number, dataCp: StrukturKurikulumCpWithSlotType[] };
+export type StrukturKurikulumCpWithSlotType = StrukturCpType & {slotCp:number,  dataTp: StrukturKurikulumTpWithSlotType[]};
 export type StrukturKurikulumTpWithSlotType = StrukturTpType & {slotTp:number, dataAtp: StrukturAtpType[]};
 
 

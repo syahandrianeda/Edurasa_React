@@ -237,7 +237,7 @@ export default class  KategoriTagihanHasManyPesertaMapelBuillder{
                     
                     const dataNilai:DataSiswaBasedMapelInResponAllKategoriTagihanInterface[]=dataSiswaBasedOnMemberMapel.map(siswa=>{
                         const totalMapel:number|null= null
-                        const countSoalMapel:number|null= null;
+                        const countSoalMapel:number=0;
                         const skorMapel: number|null = null;
                         const dataCp: CollectionNilaiCp[]= []
                         const sumberPaketSoal:KoleksiPublikasiPaketPerMapel[]=[]
@@ -307,7 +307,15 @@ export default class  KategoriTagihanHasManyPesertaMapelBuillder{
                             sumberPaketSoal,
                             collection_atp_id,
                             collection_tp_id,
-                            collection_cp_id
+                            collection_cp_id,
+                            slotMapel:0,
+                            skorMapel_sheet:null,
+                            totalMapel_sheet:null,
+                            countSoalMapel_sheet:0,
+                            skorKd_cp_sheet:undefined,
+                            skorKd_tp_sheet: undefined,
+                            skorKd_atp: undefined,
+                            dataCp_sheet:[]
                         }
 
                         return {
@@ -371,6 +379,7 @@ export default class  KategoriTagihanHasManyPesertaMapelBuillder{
                             }
                         }
                     }
+                    
                     return {
                         idSiswa:dataSiswa.id,
                         namaSiswa: dataSiswa.pd_nama,

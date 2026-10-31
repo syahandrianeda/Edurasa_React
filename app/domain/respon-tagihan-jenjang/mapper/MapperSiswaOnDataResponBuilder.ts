@@ -19,7 +19,7 @@ export default class MapperSiswaOnDataResponBuilder{
                 siswa: respon?.siswa!,
                 // siswa,
                 // ref:[],
-                responAtpMapper: new Map()
+                responAtpMapper: new Map() as ResponAtpMapperType
             }));
             // currentSiswa.ref.push(respon);
             // respon.respon.forEach(rsp=>{
@@ -30,11 +30,16 @@ export default class MapperSiswaOnDataResponBuilder{
             
             sourceRespon.forEach(rsp=>{
                 const dd = getOrCreateMap(currentSiswa.responAtpMapper, rsp.atp, ()=>({
-                    ref:[],
-                    rispon:[]
+                    ref:[] as detailNilaiSiswaAppType[],
+                    rispon:[] as RisponsePenilaianSiswa[]
                 }));
                 dd.rispon.push(rsp);
-                dd.ref.push(respon)
+                
+                const notExist = dd.ref.some(r=>r.idbaris === respon.idbaris);
+                if(!notExist){
+                    dd.ref.push(respon)
+                    
+                }
             })
             
         }

@@ -11,17 +11,23 @@ export type TagihanWhoseKoleksiBankSoalWichCurrentAtp = {
 }
 export type AtpContainKoleksiBankSoalType = Map<number, {atpSoal:BankSoalAppType[]}>;
 export type AtpContanTagihanHasKoleksiBankSoalWhoseCurrentAtpType = Map<number, TagihanWhoseKoleksiBankSoalWichCurrentAtp[]>
-type atpMapperHelper = {tagihan:TagihanHasDataResponse, atpSoalMapperCurrentTagihan:AtpContainKoleksiBankSoalType}
+type atpMapperHelper = {tagihan:TagihanHasDataResponse, atpSoalMapperCurrentTagihan:AtpContainKoleksiBankSoalType};
+
+
 export default class AtMapperTagihanHasRespons{
     private AtpContainKoleksiBankSoalMapper:AtpContainKoleksiBankSoalType = new Map();
-    private AtpContainTagihanHasKoleksiBankSoalWhoseCurrentAtpMapper:AtpContanTagihanHasKoleksiBankSoalWhoseCurrentAtpType = new Map()
+    private AtpContainTagihanHasKoleksiBankSoalWhoseCurrentAtpMapper:AtpContanTagihanHasKoleksiBankSoalWhoseCurrentAtpType = new Map();
+    
     constructor (private readonly source: TagihanHasDataResponse[]){};
+    
     get mapperAtpBankSoal():AtpContainKoleksiBankSoalType{
         return this.AtpContainKoleksiBankSoalMapper
     }
+    
     get AtpContainTagihanHasKoleksiBankSoalWhoseCurrentAtp():AtpContanTagihanHasKoleksiBankSoalWhoseCurrentAtpType{
         return this.AtpContainTagihanHasKoleksiBankSoalWhoseCurrentAtpMapper
     }
+    
     build():this{
         const tagihanHasAtpSoalMapper:atpMapperHelper[]=[];
         const memberOfTagihan = MemberOfPublikasiPaketBuilder.buildMapper(this.source)
@@ -30,7 +36,7 @@ export default class AtMapperTagihanHasRespons{
             const koleksiBankSoal = tagihan.bank_soal_collections;
             const atpSoalMapperCurrentTagihan:AtpContainKoleksiBankSoalType = new Map();
             this.AtpContainKoleksiBankSoalTypeBuilder(koleksiBankSoal,atpSoalMapperCurrentTagihan)
-            this.AtpContainKoleksiBankSoalTypeBuilder(koleksiBankSoal,this.AtpContainKoleksiBankSoalMapper)
+            // this.AtpContainKoleksiBankSoalTypeBuilder(koleksiBankSoal,this.AtpContainKoleksiBankSoalMapper)
            
             const obj:atpMapperHelper = {
                 tagihan,
@@ -43,7 +49,11 @@ export default class AtMapperTagihanHasRespons{
             const {tagihan, atpSoalMapperCurrentTagihan} = itemTagihanHasAtpSoalMapper;
             const currentMemberTagihan = memberOfTagihan.get(tagihan.idbaris)?.dataSiswaMapper
             for(const [atp_id, atpSoal] of atpSoalMapperCurrentTagihan.entries()){
-                getOrCreateMap(this.AtpContainTagihanHasKoleksiBankSoalWhoseCurrentAtpMapper, atp_id,()=>([])).push({dataTagihan:tagihan, atpSoal:atpSoal.atpSoal, memberCurrentTagihanMapper:currentMemberTagihan})
+                const item = getOrCreateMap(this.AtpContainTagihanHasKoleksiBankSoalWhoseCurrentAtpMapper, atp_id,()=>([]));
+                item.push({dataTagihan:tagihan, atpSoal:atpSoal.atpSoal, memberCurrentTagihanMapper:currentMemberTagihan})
+                // const item = getOrCreateMap(this.AtpContainTagihanHasKoleksiBankSoalWhoseCurrentAtpMapper, atp_id, ()=>({
+
+                // }))
             }
             
         }

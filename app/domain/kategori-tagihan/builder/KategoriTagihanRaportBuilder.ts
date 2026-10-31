@@ -103,7 +103,7 @@ export default class KategoriTagihanRaportBuilder{
                     obMapel.mapelName = struktur.mapelName;
                     obMapel.sumberPaketSoal = sumberPaketSoal;
                     let totalMapel:number|null = null;
-                    let countSoalMapel:number|null = null;
+                    let countSoalMapel:number=0
 
                     const koleksiCp:CollectionNilaiCp[] = [];
                     const koleksiCpId: number[] = [...struktur.dataCpMapper.keys()];
@@ -318,7 +318,7 @@ export default class KategoriTagihanRaportBuilder{
                     obMapel.mapelName = struktur.mapelName;
                     obMapel.sumberPaketSoal = sumberPaketSoal;
                     let totalMapel:number|null = null;
-                    let countSoalMapel:number|null = null;
+                    let countSoalMapel:number=0;
 
                     const koleksiCp:CollectionNilaiCp[] = [];
                     const koleksiCpId: number[] = [...struktur.dataCpMapper.keys()];

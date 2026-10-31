@@ -35,7 +35,7 @@ export default function IdentitasInstrumenAnalisis({publikasi}:{publikasi:Tagiha
                     <li>
                         <KontentIdentitas 
                             keterangan="Jumlah Peserta Yang mengikuti"
-                            konten={<span>{publikasi.jumlahPerespon} siswa</span>}/>
+                            konten={<span>{publikasi.data_response_bySiswa.filter(s=>s.data.length>0).length} siswa</span>}/>
                     </li>
                     <li>
                         <KontentIdentitas 

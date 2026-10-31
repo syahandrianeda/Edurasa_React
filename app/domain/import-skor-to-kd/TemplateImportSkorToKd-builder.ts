@@ -9,6 +9,7 @@ import type { JenisTagihanPenilaiantype } from "../asesmen-penilaian/jenis-tagih
 export default class TemplateImportSkorToKdBuilder{
     static build(data_response_by_siswa:Data_response_bySiswaType[], objekKdSebaran:Record<string, number>, skorKdSheet:DataSheetSkorKdKategoriAsesmenAppType[], jenisTagihan:JenisTagihanPenilaiantype['kode'], publikasi_id:number): TemplateImportSkorToKd[]{
             const key = Object.keys(objekKdSebaran)
+            if(data_response_by_siswa.length === 0 || key.length === 0) return [];
            return data_response_by_siswa.map(({data, siswa})=>{
                 const siswa_id = siswa.id;
                 const nama_siswa = siswa.pd_nama;
@@ -18,7 +19,8 @@ export default class TemplateImportSkorToKdBuilder{
                 const foundSkorKdSheet = skorKdSheet.find(s=>s.siswa_id === siswa.id && s.data.length > 0);
                 const hasSkorKdSheet = Boolean(foundSkorKdSheet);
                 const skorResponNull = Boolean(hasRespon)? 0: null
-                let dataSkorTemplateImport = key.map(m=>({[m]:skorResponNull})).reduce((a,b)=>({...a, ...b}));
+                const mapping = key?.map(m=>({[m]:skorResponNull}));
+                let dataSkorTemplateImport = mapping.length > 0 ? mapping?.reduce((a,b)=>({...a, ...b})): {};
                 
                 if(lastData){
                     const objekKdSebaran = lastData.objekKdSebaran;

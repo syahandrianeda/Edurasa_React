@@ -346,8 +346,9 @@ export class AnalisisInstrumenMatrixBuilder {
         if (respon === null || respon === '') {
             return false;
         }
-
-        return respon.trim() !== '';
+        
+        // return respon?.trim() !== '';
+        return respon !== '';
     }
 
     /**

@@ -23,6 +23,7 @@ import PraKoreksiSoal from "./pra-koreksi-soal";
 import AnalisisInstrumenModal from "./analisis-instrumen-modal";
 import AnalisisInstrumenModalLaporan from "./analisis-instrumen-modal-laporan";
 import ImportNilaiByKdToSheetKategori from "./Import-nilai-by-kd-to-sheet-kategori";
+import InputNilaiSkorKdMassal from "./input-masal/input-nilai-skor-kd";
 
 export default function MainModalPenilaian(){
     const {state, actions} = useModal()
@@ -45,7 +46,9 @@ export default function MainModalPenilaian(){
             'PRA KOREKSI SOAL',
             'IMPORT NILAI',
             'ANALISIS SOAL',
-            'LAPORAN ANALISIS SOAL'
+            'LAPORAN ANALISIS SOAL',
+            'INPUT NILAI'
+
             
         ].includes(state?.type!);
     return (
@@ -125,6 +128,8 @@ function SwitchContentFormBankSoal ({state}:{state:ModalState}){
             return <AnalisisInstrumenModalLaporan data={state.payload as TagihanHasDataResponse}/>
         case 'IMPORT NILAI':
             return <MainModalForm data={(state as unknown as ModalState<TagihanHasDataResponse>).payload}><ImportNilaiByKdToSheetKategori/> </MainModalForm>
+        case 'INPUT NILAI':
+            return <MainModalForm data={(state as unknown as ModalState<TagihanHasDataResponse>).payload}><InputNilaiSkorKdMassal/> </MainModalForm>
         default:
             return <div className="w-full min-h-32 flex justify-center items-center lowercase first-letter:uppercase gap-2"><strong>{state.type}</strong>  <span>on Proses Development</span></div>
     }

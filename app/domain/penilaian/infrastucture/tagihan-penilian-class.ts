@@ -289,8 +289,9 @@ export default class TagihanPenilaianClass extends DtoPaketSoalSheetClass{
         return this.rekapSkorPerKategoriAsessmmen;
     }
     buildKategoriTagihanMapper(){
-        
+        // const test = new KategoriAssesmenClass(this.tagihanHasResponse,this.memberMapel,this.mapelRaport).initRefactor().result;
         this.rekapSkorPerKategoriAsessmmen = new KategoriAssesmenClass(this.tagihanHasResponse,this.memberMapel,this.mapelRaport).init().result;
+        // console.log({refactorTest:test, current:this.rekapSkorPerKategoriAsessmmen});
     }
     override init():this{
         super.init();
