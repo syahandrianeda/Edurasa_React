@@ -29,6 +29,19 @@ export class IndDbSiswaRepository {
       tx.onerror = () => reject(tx.error)
     })
   }
+
+  async save(data: SiswaType): Promise<void> {
+    const db = await IndexedDBManager.open()
+    const tx = db.transaction("datasiswa", "readwrite")
+    const store = tx.objectStore("datasiswa")
+    
+    store.put(data)
+
+    return new Promise((resolve, reject) => {
+      tx.oncomplete = () => resolve()
+      tx.onerror = () => reject(tx.error)
+    })
+  }
   async saveBulkAgain(data: SiswaType[]): Promise<void> {
     const db = await IndexedDBManager.open()
     const tx = db.transaction("datasiswa", "readwrite")

@@ -6,7 +6,7 @@ import { Loader } from "lucide-react";
 import { useModal } from "~/components/modals/modal-provider";
 import { ShowToasterError, ShowToasterSuccess } from "~/lib/toaster";
 import { useAppDispatch } from "~/context-reduct/hook";
-import { setAllSiswa } from "~/context-reduct/global-state/siswa-slice";
+import { setAllSiswa, upsertAllSiswa } from "~/context-reduct/global-state/siswa-slice";
 
 export function SendEdit(){
     const {currentData} = useFormEdura<SiswaType>();
@@ -23,7 +23,7 @@ export function SendEdit(){
         if(respon.success){
             modalActions.close();
             
-            dispatch(setAllSiswa({
+            dispatch(upsertAllSiswa({
                 loaded:true,
                 data: respon.data as SiswaType[],
                 name:'datasiswa',

@@ -18,10 +18,15 @@ export default function RekapTagihanHarianPage({kategoriTagihan}:{kategoriTagiha
             <h4 className="text-xl text-center font-bold">Mata Pelajaran {fokusMapel.nama}</h4>
             <h4 className="text-center">{dataTapel} Semester {dataSemester}</h4>
             <h4 className="text-xl font-extrabold text-center mb-7">Kelas {rombel}</h4>
-            <TableRekapKategoriAssesmen fokusMapel={fokusMapel} kategoriTagihan={kategoriTagihan} />
-            {
-                kategoriTagihan && <SumberDataRekapTagihan fokusMapel={fokusMapel} kategoriTagihan={kategoriTagihan}/>
-            }
+            <div className="flex flex-col-reverse">
+                {
+                    kategoriTagihan && <TableRekapKategoriAssesmen fokusMapel={fokusMapel} kategoriTagihan={kategoriTagihan} />
+
+                }
+                {
+                    kategoriTagihan && <SumberDataRekapTagihan fokusMapel={fokusMapel} kategoriTagihan={kategoriTagihan}/>
+                }
+            </div>
         </div>
     )
 }

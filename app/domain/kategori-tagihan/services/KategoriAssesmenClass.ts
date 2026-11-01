@@ -24,6 +24,7 @@ import type { CollectionNilaiAtp } from "../types/kategori-tagihan-hasMany-respo
 import type { RefrensiTabResponTagihanJenjangType } from "~/domain/penilaian/type/collection-kurikulum-in-all-publikasi/RefrensiTabResponTagihanJenjangType";
 import type { DataRefrensiPerBentukSoal } from "~/domain/penilaian/type/collection-kurikulum-in-all-publikasi/DataRefrensiPerBentukSoal";
 import desimalFormat from "~/lib/desimal-format";
+import { jmlAman, kaliAman, skalaDesimal } from "~/lib/helper-aritmetika-desimal";
 import SkorKdSheetMapper from "../infrastructures/SkorKdSheetMapper";
 import MapperPesertaTagihan from "../infrastructures/MapperPesertaTagihan";
 import DataSheetSkorKdKategoriAsesmenMapper from "../infrastructures/DataSheetSkorKdKategoriAsesmenMapper";
@@ -45,63 +46,6 @@ export default class KategoriAssesmenClass{
         return this._resultData;
     }
     
-    initNilaiAsli():this{
-        const koleksiKategoriAssesmen = KoleksiKategoriAssesmenOnJenjang.build();
-        const mapperKategoriAssesmen = KategoriAsessmenInPublikasiBuilder.buildMapper(this.data);
-        const koleksiPerKategori:KategoriTagihanHasManyPesertaMapelType[][] = [];;
-        const mapperKoleksi = new Map<KategoriTagihanType, KategoriTagihanHasManyPesertaMapelType>()
-
-        for(const kategoriAssesmen of koleksiKategoriAssesmen){
-            const map = mapperKategoriAssesmen.get(kategoriAssesmen)!;
-            if(!map) {
-                getOrCreateMap(mapperKoleksi, kategoriAssesmen,()=>{
-                    return {
-                        type:kategoriAssesmen,
-                        data:[],
-                        koleksiAtpInMapel:[],
-                        koleksiPaketSoal:[]
-                    }
-
-                })
-                continue;
-            }
-
-            const { dataPublikasiPaket, dataPublikasiPaketWithRespon }= map;
-            getOrCreateMap(mapperKoleksi, kategoriAssesmen, ()=>{
-                    const {mapperKategoriTagihanPerAtpSkor:kategoriMapper, mapperStrukturKurikulum:StrukturKurikulumMapper} = MapperTagihanHasDataRespon(dataPublikasiPaketWithRespon);
-                    const kategoriTagihanRaport = KategoriTagihanRaportBuilder.buildFromMapper(kategoriMapper, StrukturKurikulumMapper);
-                    const koleksiMapel:string[] = this.mapelRaport.map(m=>m.kode);
-                        //  this.kategoriTagihanRaport = kategoriTagihanRaport;
-                    const KategoriTagihanHasManyPesertaMapel = KategoriTagihanHasManyPesertaMapelBuillder.buildRaport(kategoriTagihanRaport,this.memberMapel ?? [],koleksiMapel)
-                    const found = KategoriTagihanHasManyPesertaMapel.find(s=>s.type === kategoriAssesmen);
-                    if(found){
-                        
-                        const refaktor:KategoriTagihanHasManyPesertaMapelType = {
-                            ...found, 
-                            data:found.data.map(m=>({...m, dataNilai: m.koleksiAtpInMapel ? m.dataNilai: []})), 
-                            koleksiAtpInMapel:Boolean(found.koleksiAtpInMapel)?found.koleksiAtpInMapel:[], 
-                            koleksiPaketSoal:Boolean(found.koleksiAtpInMapel)?found.koleksiPaketSoal:[]  
-                        };
-                        return refaktor;
-                        // return {...found, 
-                        //     data:found.koleksiAtpInMapel?found.data:[], 
-                        //     koleksiAtpInMapel:found.koleksiAtpInMapel?found.koleksiAtpInMapel:[], 
-                        //     koleksiPaketSoal:found.koleksiAtpInMapel?found.koleksiAtpInMapel:[]  
-                        // };
-                    };
-                return {
-                    type:kategoriAssesmen,
-                    data:[],
-                    koleksiAtpInMapel:[],
-                    koleksiPaketSoal:[]
-                }
-            });
-        }
-        
-        this._resultData = [...mapperKoleksi.values()];//.filter(s=>Boolean(s.koleksiAtpInMapel))
-        return this;
-    }
-   
     init():this{
         const koleksiKategoriAssesmen = KoleksiKategoriAssesmenOnJenjang.build();
         const mapperKategoriAssesmen = KategoriAsessmenInPublikasiBuilder.buildMapper(this.data);
@@ -152,18 +96,9 @@ export default class KategoriAssesmenClass{
             })
             
             /**
-             * ============ TEST REFAKTOR
-             */
-           
-            /**
              * ========= BUILD DATA ========
-             * data:KoleksiMapelBasedSiswaInResponAllKategoriTagihan;
-             * sumber refrensinya diambil dari `strukturKurikulumKategoriAssesmen` dimana berisi data:
-             *  - seluruh mapel tagihan yang dipublikasikan
-             *  - tiap tagihan sudah mempunyai `data_respon` dan `dataSheetKd`
-             *  - `data_respon` berasal dari tab `respon_tagihan_<Jenjang>
-             *  - `dataSheetKd` beradal dari tab ['harian', 'mid_semester', `akhir_semester`];
-            */
+             * struktur dari method `init()`; hanya kalkulasi desimalnya yang dibuat aman.
+             */
            
            
            for(const mapelRapor of this.mapelRaport){
@@ -172,14 +107,10 @@ export default class KategoriAssesmenClass{
                /** found Mapel in Struktur Kurikulum in current kategori assesmen */
                const foundCurrentMapelStruktur = strukturKurikulumKategoriAssesmen.find(s=>s.kodeMapel === kode);
               
-                /** 
-                 * kita hanya mengoleksi mapel yang telah dipublikasin, jadi `foundMapelStrukturKurikulum` 
-                 * yang  tidak terdeteksi, tidak dimasukkan 
-                 * */
                 if(foundCurrentMapelStruktur){
                     const {mapelName:mapelNameStruktur,kodeMapel:kodeMapelStruktur, dataCp:dataCpStruktur, slotMapel} = foundCurrentMapelStruktur;
                     const dataNilai:DataSiswaBasedMapelInResponAllKategoriTagihanInterface[] = [];
-                    const collection_Cp: StrukturCpType[] = dataCpStruktur.map(({cp_id, cp_description})=>({cp_id, cp_description}))//.map(m=>({}));
+                    const collection_Cp: StrukturCpType[] = dataCpStruktur.map(({cp_id, cp_description})=>({cp_id, cp_description}));
                     const collection_Tp: StrukturTpType[] = dataCpStruktur.flatMap(cp=>cp.dataTp.map(({tp_id, tp_description})=>({tp_id, tp_description})));
                     const collection_Atp: StrukturAtpType[] = dataCpStruktur.flatMap(m=>m.dataTp.flatMap(n=>n.dataAtp.map(({atp_id, atp_description})=>({atp_id, atp_description}))));
                     
@@ -196,7 +127,7 @@ export default class KategoriAssesmenClass{
                         
                         const refrensiResponTagihan = siswaHasDataResponMapper.get(idSiswa);
                        
-                        const refrensiSkorKdSheet = mapperDataSkorKdSheet.mapperSiswaHasDataSkorKdSheet.get(idSiswa);//.get(atpCurrentMapel.atp_id)?.belongsToSiswa.get(idSiswa)
+                        const refrensiSkorKdSheet = mapperDataSkorKdSheet.mapperSiswaHasDataSkorKdSheet.get(idSiswa);
                         const siswaPeserta = siswaAsPesertaTagihan.get(idSiswa);
                         /** proses kalkukasi */
                         let totalMapel:number|null = null;
@@ -259,8 +190,8 @@ export default class KategoriAssesmenClass{
                                             const {atp_id,publikasi_id,skor}=dataTabKd;
                                             const CountSoalThatSiswaAsPesertaInCurrentTegahan = siswaPeserta?.tagihanMapper.get(publikasi_id)?.atpSoalMapper?.get(atp_id)?.length ?? 0;
                                             if(skor !==null){
-                                                totalAtp_sheet = (totalAtp_sheet ?? 0) + ((skor ?? 0) * CountSoalThatSiswaAsPesertaInCurrentTegahan);
-                                                // countSoalAtp_sheet  += CountSoalThatSiswaAsPesertaInCurrentTegahan;
+                                                /** aritmetika aman: akumulasi skor * jumlah soal tanpa artefak floating-point */
+                                                totalAtp_sheet = jmlAman(totalAtp_sheet ?? 0, kaliAman(skor ?? 0, CountSoalThatSiswaAsPesertaInCurrentTegahan));
                                                 countSoalAtp_sheet +=  CountSoalThatSiswaAsPesertaInCurrentTegahan;
                                             }
 
@@ -271,13 +202,13 @@ export default class KategoriAssesmenClass{
                                         skorAtp_sheet = desimalFormat(totalAtp_sheet/countSoalAtp_sheet);
                                         skorKd_atp_sheet[keySkorKdAtpSheet] = skorAtp_sheet;
 
-                                        totalTp_sheet = desimalFormat((totalTp_sheet ?? 0) + totalAtp_sheet);
+                                        totalTp_sheet = Math.round(jmlAman(totalTp_sheet ?? 0, totalAtp_sheet));
                                         countTpSoal_sheet += countSoalAtp_sheet;
 
-                                        totalCp_sheet = desimalFormat((totalCp_sheet ?? 0) + totalAtp_sheet);
+                                        totalCp_sheet = Math.round(jmlAman(totalCp_sheet ?? 0, totalAtp_sheet));
                                         countSoalCp_sheet += countSoalAtp_sheet;
 
-                                        totalMapel_sheet = desimalFormat((totalMapel_sheet ?? 0) + totalAtp_sheet);
+                                        totalMapel_sheet = Math.round(jmlAman(totalMapel_sheet ?? 0, totalAtp_sheet));
                                         countSoalMapel_sheet += countSoalAtp_sheet;
 
                                     }
@@ -293,7 +224,8 @@ export default class KategoriAssesmenClass{
                                         for(const itemRispon of rispon){
                                             const {skor, no_prefix, bentuk_soal, bentuk_soal_detail} = itemRispon;
                                             if(skor!==null){
-                                                totalAtp = ((totalAtp ?? 0) + (skor ?? 0));
+                                                /** aritmetika aman: akumulasi skor respon tanpa artefak floating-point */
+                                                totalAtp = jmlAman(totalAtp ?? 0, skor ?? 0);
                                             }
                                             
                                         };
@@ -323,7 +255,8 @@ export default class KategoriAssesmenClass{
                                             let totalDetail:number|null = 0;
                                             
                                             for(const itemDetail of dataRefrensiTabResponTagihanJenjang){
-                                                totalDetail = (totalDetail ?? 0)+(itemDetail.skor ?? 0)
+                                                /** aritmetika aman: akumulasi detail skor tanpa artefak floating-point */
+                                                totalDetail = jmlAman(totalDetail ?? 0, itemDetail.skor ?? 0)
                                             }
 
                                             detail.push({
@@ -349,13 +282,14 @@ export default class KategoriAssesmenClass{
                                         const skorAtpRispon = desimalFormat(totalAtp/countSoalAtpRespon);
                                         skorKd_atp[keySkorKdAtpSheet] = skorAtpRispon;
 
-                                        totalTp = (totalTp ?? 0) + totalAtp;
+                                        /** aritmetika aman: akumulasi naik ke level TP tanpa artefak floating-point */
+                                        totalTp = jmlAman(totalTp ?? 0, totalAtp);
                                         countSoalTp += countSoalAtpRespon;
 
-                                        totalCp = (totalCp?? 0) + totalAtp;
+                                        totalCp = jmlAman(totalCp ?? 0, totalAtp);
                                         countSoalCp +=countSoalAtpRespon;
 
-                                        totalMapel= (totalMapel ?? 0) + totalAtp;
+                                        totalMapel = jmlAman(totalMapel ?? 0, totalAtp);
                                         countSoalMapel += countSoalAtpRespon;
 
                                     }
@@ -372,7 +306,7 @@ export default class KategoriAssesmenClass{
                                     koleksiAtpSheet.push({
                                         atp_id,
                                         atp_description,
-                                        totalAtp: totalAtp_sheet,
+                                        totalAtp: Math.round(totalAtp_sheet??0),
                                         countKeyAtp: countSoalAtp_sheet,
                                         skorAtp: skorAtp_sheet,
                                         
@@ -462,7 +396,7 @@ export default class KategoriAssesmenClass{
                         const mapel:CollectionNilaiMapel=Object.create(null);
                                 mapel.kodeMapel= kodeMapelStruktur;
                                 mapel.mapelName= mapelNameStruktur;
-                                mapel.totalMapel_sheet = totalMapel_sheet;//totalMapel_sheet===null ? undefined: totalMapel_sheet;
+                                mapel.totalMapel_sheet = totalMapel_sheet;
                                 mapel.countSoalMapel_sheet = countSoalMapel_sheet;
                                 mapel.skorMapel_sheet = skorMapel_sheet;
                                 mapel.dataCp_sheet = dataCp_sheet;
@@ -479,7 +413,6 @@ export default class KategoriAssesmenClass{
                                 mapel.skorMapel = skorMapel;
 
 
-                        // mapel.countSoalMapel_sheet = countSoalMapel_sheet
                         const memberOfTagihan = dataPublikasiPaketWithRespon.filter(s=>s.peserta.some(siswa=>siswa.id === idSiswa) && s.koleksi_mapelName.includes(mapelNameStruktur))
                         const obDataNilai:DataSiswaBasedMapelInResponAllKategoriTagihanInterface ={
                             idSiswa,

@@ -27,24 +27,11 @@ export default function TbodyDetailSkorSheetKd({dataCp}:Props){
                                     <div>
                                         [{atp.atp_id}] {atp.atp_description}
                                     </div>
-                                    {/* {
-                                        atp.detail?.map((itemDetail, iItem)=>
-                                            <CardKalkulasiSkorSheet 
-                                                key={itemDetail.dataSumberPublikasiPaket?.idbaris}
-                                                jumlahInstrumen={itemDetail.countSoal}
-                                                jumlahSkor={itemDetail.total}
-                                                skor={itemDetail.skor}
-                                                fokus="ATP"
-                                            >
-                                                <div className="font-bold text-center">{itemDetail.dataSumberPublikasiPaket?.nama_publikasi}</div>
-                                            </CardKalkulasiSkorSheet>
-                                        )
-                                    } */}
                                      <CardKalkulasiSkorSheet 
                                                 jumlahInstrumen={atp.countKeyAtp}
                                                 jumlahSkor={atp.totalAtp}
-                                                skor={tp.skorTp}
-                                                fokus="TP"
+                                                skor={atp.skorAtp}
+                                                fokus="ATP"
                                             />
                                 </TdEdura>
                                 {

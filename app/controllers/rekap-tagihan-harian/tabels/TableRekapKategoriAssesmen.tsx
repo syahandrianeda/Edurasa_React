@@ -115,7 +115,7 @@ export default function TableRekapKategoriAssesmen({fokusMapel, kategoriTagihan}
 
     },[value?.extra?.formatKategoriAssesmen])
     
-    
+    console.log({kategoriTagihan})
     
     const handleSheet = useCallback((dataMapel?:DataSiswaBasedMapelInResponAllKategoriTagihanInterface)=>{
         const format = value?.extra?.formatKategoriAssesmen;
