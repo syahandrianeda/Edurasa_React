@@ -1,9 +1,10 @@
 import type {  faseOrm, OrmAtp, OrmFaseKurikulumType, ormKurikulumInterface, OrmKurikulumMerdekaType, resourcesKurikulum } from "~/types/kurikulum/kurikulum-type";
 import type { InterfaceMapel } from "~/types/mapel/mapel";
+import type { JenisKurikulumType } from "./jenis-kurikulum-type";
 
 export default class OrmKurikulum{
     private dataKurikulum: ormKurikulumInterface[] = [];
-    private readonly namaKurikulum = 'kurmer'
+    private readonly namaKurikulum:JenisKurikulumType = 'kurmer'
     constructor(private dataSelector:resourcesKurikulum, private mapelKoleksi:InterfaceMapel[]){}
     createData(){
         const { cp, fase, atp } = this.dataSelector;

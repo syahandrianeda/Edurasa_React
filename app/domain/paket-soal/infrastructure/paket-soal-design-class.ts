@@ -8,9 +8,10 @@ import type { DataSoalDesign } from "../result/section-soal-type";
 import type { DisplayFormatItemSoal } from "../result/display-format-item-soal-type";
 import type { KoleksiMapelPaketSoal } from "../entities/koleksi-mapel-paket-soal";
 import type { CountBentukSoalPaket } from "../entities/count-bentuk-soal-paket";
+import type { BankSoalAppType } from "~/types/bank-soal/bank-soal-type";
 
 export default class PaketSoalDesignClass{
-    constructor(private readonly PaketSoal:PaketSoalDesign){}
+    constructor(private readonly PaketSoal:PaketSoalDesign, private readonly bankSoalSource:BankSoalAppType[] = []){}
 /**
      * @returns  : {  data: DataSoalDesign[],  setting?: PraSettingPaket 
      * }
@@ -137,7 +138,16 @@ export default class PaketSoalDesignClass{
      * @return PaketSoal.data = Array< {index:number, no_soal:number, data_soal:BankSoalAppType, formatElemen:elemenFormat, bentukSoal:ListBentukSoal}
      */
     get dataSoal():DisplayFormatItemSoal[]{
-        return this.dataKontenSoal?.map(m=>m.dataSoal)?.flat()
+        // return this.dataKontenSoal?.map(m=>m.dataSoal)?.flat();
+
+        return this.dataKontenSoal?.flatMap(m=>m.dataSoal.map(n=>{
+            const dataSoal = this.bankSoalSource.find(s=>s.idbaris === n.data_soal?.idbaris) ?? n.data_soal;
+            return {
+                ...n,
+                data_soal:dataSoal
+
+            }
+        }))
     }
     toDisplayFormatItemSoalbaku(soal:DisplayFormatItemSoal):DisplayFormatItemSoalBaku{
         const {index, no_soal, data_soal:sourceDataSoal, format_display, showStimulus } = soal;

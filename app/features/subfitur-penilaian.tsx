@@ -65,10 +65,10 @@ export const subFiturPenilaian:typeSidebarFiturKonten[]=[
         groupTitle: 'Rekapitulasi Penilaian',
         breadCrumbs: [
             {
-                title: 'Per Jenis Tagihan',
+                title: 'Nilai Raport Sementara',
                 href: '/penilaian/rekap-per-tagihan',
                 icon: FolderTree,
-                description: "Rekap nilai asli per jenis tagihan (harian, midsemester, dan akhir semester",
+                description: "Rekap nilai raport sementara",
                 permission: "view penilaian"
             },
             {

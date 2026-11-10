@@ -3,10 +3,7 @@ import type { Route } from "./+types/tagihan-harian-route";
 import { useAppSelector } from "~/context-reduct/hook";
 import { InstanceDataTagihanPenilaianSector } from "~/context-reduct/selectores/daftar-tagihan-penilaian-selector";
 import { defineCreateItemSoalNeeded } from "~/domain/enloaded/intial-enloaded/by-route-page/banksoal/create-item-soal-needed";
-import { currentTapel, currentTapelProperties } from "~/lib/current-tapel";
 import RekapTagihanHarianPage from "~/pages/penilaian/rekap-tagihan-harian-page";
-import { useFilterContext } from "~/components/toolbars/state-toolbar/state-toolbar";
-import type { FormatKategoriAssesmenPreview } from "~/controllers/rekap-tagihan-harian/toolbar/RadioChooseFormatKategirAssesmen";
 import { ConfigToolbarKategoriAssesmen } from "~/controllers/rekap-tagihan-harian/toolbar/ConfigToolbarKategoriAssesmen";
 
 

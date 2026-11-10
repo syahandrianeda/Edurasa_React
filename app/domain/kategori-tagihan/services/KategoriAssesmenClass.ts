@@ -9,14 +9,9 @@ import type { KoleksiPublikasiPaketPerMapel } from "~/domain/penilaian/type/coll
 import type { CollectionNilaiMapel, RekapAtpInKoleksiMapelOnRespoonseTiapKategoriTagihan } from "../types";
 import type { DataSiswaBasedMapelInResponAllKategoriTagihanInterface } from "../types/kategori-tagihan-hasMany-respon-siswa/DataSiswaBasedMapelInResponAllKategoriTagihanInterface";
 import MapperSiswaOnDataResponBuilder, { type MapperSiswaOnDataResponType } from "~/domain/respon-tagihan-jenjang/mapper/MapperSiswaOnDataResponBuilder";
-import type { KategoriTagihanType } from "../types/entities/KategoriTagihanType";
-import getOrCreateMap from "~/lib/getOrCreateMapper";
 import type { StrukturAtpType, StrukturCpType, StrukturTpType } from "~/domain/trees-struktur-kurikulum";
 import type { CollectionNilaiCp } from "../types/kategori-tagihan-hasMany-respon-siswa/CollectionNilaiCp";
 import type { SkorKdNullableType } from "~/domain/penilaian/type/SkorKdType";
-import MapperTagihanHasDataRespon from "~/domain/penilaian/infrastucture/MapperTagihanHasDataRespon";
-import KategoriTagihanRaportBuilder from "../builder/KategoriTagihanRaportBuilder";
-import KategoriTagihanHasManyPesertaMapelBuillder from "../builder/KategoriTagihanHasManyPesertaMapelBuillder";
 import type { jp_mapelApp } from "~/types/mapel/jp_mapel";
 import type { DataSkorSiswaByInstrumenType } from "~/domain/penilaian/type/collection-kurikulum-in-all-publikasi/DataSkorSiswaByInstrumenType";
 import type { CollectionNilaiTp } from "../types/kategori-tagihan-hasMany-respon-siswa/CollectionNilaiTp";
@@ -24,19 +19,19 @@ import type { CollectionNilaiAtp } from "../types/kategori-tagihan-hasMany-respo
 import type { RefrensiTabResponTagihanJenjangType } from "~/domain/penilaian/type/collection-kurikulum-in-all-publikasi/RefrensiTabResponTagihanJenjangType";
 import type { DataRefrensiPerBentukSoal } from "~/domain/penilaian/type/collection-kurikulum-in-all-publikasi/DataRefrensiPerBentukSoal";
 import desimalFormat from "~/lib/desimal-format";
-import { jmlAman, kaliAman, skalaDesimal } from "~/lib/helper-aritmetika-desimal";
+import { jmlAman, kaliAman } from "~/lib/helper-aritmetika-desimal";
 import SkorKdSheetMapper from "../infrastructures/SkorKdSheetMapper";
 import MapperPesertaTagihan from "../infrastructures/MapperPesertaTagihan";
 import DataSheetSkorKdKategoriAsesmenMapper from "../infrastructures/DataSheetSkorKdKategoriAsesmenMapper";
-import type { StrukturKurikulumMapelType } from "~/domain/trees-struktur-kurikulum/struktur-kurikulum-type";
-import type { SiswaType } from "~/types/siswa";
 import type { CollectionNilaiCpSheet } from "../types/kategori-tagihan-hasMany-respon-siswa/CollectionNilaiCpSheet";
 import type { CollectionNilaiTpSheet } from "../types/kategori-tagihan-hasMany-respon-siswa/CollectionNilaiTpSheet";
 import type { CollectionNilaiAtpSheet } from "../types/kategori-tagihan-hasMany-respon-siswa/CollectionNilaiAtpSheet";
+import RekapRaportAsal, { type MapelWithNilaiRaportRombel } from "~/domain/raport/RekapRaportAsal";
 
 
 export default class KategoriAssesmenClass{
-    private _resultData:KategoriTagihanHasManyPesertaMapelType[]=[]
+    private _resultData:KategoriTagihanHasManyPesertaMapelType[]=[];
+    private _raport:MapelWithNilaiRaportRombel[]=[]
     constructor(
         private readonly data:TagihanHasDataResponse[], 
         private readonly memberMapel:DataSiswaHasMapelType[],
@@ -45,7 +40,9 @@ export default class KategoriAssesmenClass{
     get result():KategoriTagihanHasManyPesertaMapelType[]{
         return this._resultData;
     }
-    
+    get raport():MapelWithNilaiRaportRombel[]{
+        return this._raport;
+    }
     init():this{
         const koleksiKategoriAssesmen = KoleksiKategoriAssesmenOnJenjang.build();
         const mapperKategoriAssesmen = KategoriAsessmenInPublikasiBuilder.buildMapper(this.data);
@@ -81,9 +78,6 @@ export default class KategoriAssesmenClass{
             const siswaHasDataResponMapper:MapperSiswaOnDataResponType = MapperSiswaOnDataResponBuilder.build(data_respons);
             const mapperDataSkorKdSheet = SkorKdSheetMapper.build(dataSkorKdSheet);
             const siswaAsPesertaTagihan = MapperPesertaTagihan.buildMapperSiswaHasTagihanMapper(dataPublikasiPaketWithRespon);
-
-            const mapperSkor = DataSheetSkorKdKategoriAsesmenMapper.build(dataSkorKdSheet,siswaAsPesertaTagihan)
-
             const koleksiPaketSoal: KoleksiPublikasiPaketPerMapel[] = dataPublikasiPaketWithRespon?.map(m=>{
                 const {idbaris, data_respons, data_response_bySiswa, nama_publikasi, koleksi_mapelName} = m
                 return {
@@ -279,8 +273,8 @@ export default class KategoriAssesmenClass{
 
                                     skorKd_atp[keySkorKdAtpSheet] = null;
                                     if(totalAtp!==null){
-                                        const skorAtpRispon = desimalFormat(totalAtp/countSoalAtpRespon);
-                                        skorKd_atp[keySkorKdAtpSheet] = skorAtpRispon;
+                                        skorAtp = desimalFormat(totalAtp/countSoalAtpRespon);
+                                        skorKd_atp[keySkorKdAtpSheet] = skorAtp;
 
                                         /** aritmetika aman: akumulasi naik ke level TP tanpa artefak floating-point */
                                         totalTp = jmlAman(totalTp ?? 0, totalAtp);
@@ -446,7 +440,10 @@ export default class KategoriAssesmenClass{
             objKategoriTagihanHasManyPesertaMapelType.koleksiAtpInMapel = koleksiAtpInMapel;
             result.push(objKategoriTagihanHasManyPesertaMapelType);
         }
+        const instansiasiRaport = new RekapRaportAsal(result, this.mapelRaport).init();
         this._resultData =result;
+        this._raport = instansiasiRaport.dataRapor;
+
         return this;
     }
 

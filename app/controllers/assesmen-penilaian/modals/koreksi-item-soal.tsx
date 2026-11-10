@@ -5,7 +5,7 @@ import type { RisponsePenilaianSiswa } from "~/types/penilaian/RisponsePenilaian
 import KoreksiWrapper from "./fields/koreksi";
 import { ModalFooterEdura } from "~/components/modals/modal-components";
 import { useImmer } from "use-immer";
-import { useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { upsertRespon, type HandleUpdateResponKoreksi } from "~/domain/bank-soal/koreksi";
 import ButtonCommitAwesome from "~/components/button-awesome/commit-button";
 import ResumeSkorKdKoreksi from "./fields/resume-skor-kd-koreksi";
@@ -94,7 +94,26 @@ export default function KoreksiItemSoal(){
 
 
     const [updateRespon, setUpdateRespon] = useImmer< RisponsePenilaianSiswa[]>(currentDataSelector?.respon ?? [])
-    
+    // useEffect(()=>{
+    //     if(!currentDataSelector?.respon) return;
+    //     currentDataSelector?.respon.forEach(m=>{
+    //         if(m.bentuk_soal === 'pg') {
+    //             const {atp, atp_soal, bentuk_soal, no_prefix, skor, soal,  respon} = m;
+    //              const valid = soal?.json_alat_jawab?.valid as number[] | undefined;
+    //             /**{
+    //                                                             respon: abjad,
+    //                                                             skor: hitungSkorPgTunggal(valid, opsi.index)
+    //                                                         } */
+    //             setUpdateRespon(draft=>{
+    //                 upsertRespon(draft, {bentuk_soal, no_prefix}, {
+    //                     respon,
+    //                     skor:hitungSkorPgTunggal(valid, opsi.index)
+    //                 });
+    //             })
+
+    //         }
+    //     })
+    // },[])
     const handleChangeUpdateRespon = useCallback<HandleUpdateResponKoreksi>((bentuk_soal, no_prefix, patch)=>{
         setUpdateRespon(draft=>{
             upsertRespon(draft, {bentuk_soal, no_prefix}, patch);

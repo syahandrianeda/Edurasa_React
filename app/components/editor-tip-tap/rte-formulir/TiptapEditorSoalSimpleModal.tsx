@@ -79,6 +79,7 @@ export default function TiptapEditorSoalSimpleModal({ valueJson, onChangeJson, c
                         },
                         
                     },
+                    
                 }), 
                 // MathInline,
                 PasteImage.configure({

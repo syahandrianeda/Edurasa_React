@@ -15,7 +15,10 @@ export function KoreksiPgBody({ data, handleUpdate }: { data: DataTemplateKoreks
                 const valid = soal?.json_alat_jawab?.valid as number[] | undefined;
                 const responSaatIni = respon?.respon ?? '';
                 const skorSaatIni = hitungSkorPgTunggal(valid, abjadToIndex(responSaatIni));
-                
+                handleUpdate('pg', no_prefix, {
+                                                
+                                                skor: skorSaatIni
+                                            })
                 return (
                     <TRowEdura key={no_prefix}>
                         <TdEdura>{no_prefix}</TdEdura>

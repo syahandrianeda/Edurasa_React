@@ -142,6 +142,7 @@ export default [
                     route("remedial-pengayaan", "routes/penilaian/remedial-pengayaan-route.tsx"),
                     route("tagihan-mid-semester", "routes/penilaian/tagihan-mid-semester-route.tsx"),
                     route("tagihan-akhir-semester", "routes/penilaian/tagihan-tagihan-akhir-semester-route.tsx"),
+                    route("rekap-per-tagihan", "routes/penilaian/rekap-per-tagihan-route.tsx"),
                 ])
             ]),
             layout("layouts/sub-layouts/sub-tabungan-siswa.tsx",[

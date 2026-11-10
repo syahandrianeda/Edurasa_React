@@ -13,6 +13,7 @@ import { Separator } from '~/components/ui/separator';
 import { Field, FieldGroup } from '~/components/ui/field';
 import ButtonCommitAwesome from '~/components/button-awesome/commit-button';
 import TooltipComp from '~/components/ui_edura/tooltip-comp';
+import { Sheet, SheetContent } from '~/components/ui/sheet';
 
 export default function PopoverFormulaLatex({editor, valueLatex, openPop, setOpenPop }:{editor:Editor, valueLatex?:string|null,openPop:boolean, setOpenPop: React.Dispatch<React.SetStateAction<boolean>>}){
     // const [openPop, setOpenPop] = React.useState(false);
@@ -50,8 +51,10 @@ export default function PopoverFormulaLatex({editor, valueLatex, openPop, setOpe
                     const mfEl = document.createElement('math-field') as any;
                     mfEl.setAttribute('virtual-keyboard-mode', 'manual');
                     mfEl.style.width = '360px';
-                    mfEl.style.minHeight = '120px';
+                    mfEl.style.minHeight = '180px';
                     mfEl.style.fontSize = '16px';
+                    mfEl.style.zIndex='1000';
+                    mfEl.style.position="relative";
                     
                     // set initial value
                     // if (formula) {
@@ -105,7 +108,7 @@ export default function PopoverFormulaLatex({editor, valueLatex, openPop, setOpe
                 </Button>
             </PopoverTrigger>
         </TooltipComp>
-        <PopoverContent className="w-full" align="end" 
+        <PopoverContent className="w-full" align="center" side='top'
         
             onInteractOutside={(event) => {
                     const target = event.target as HTMLElement;

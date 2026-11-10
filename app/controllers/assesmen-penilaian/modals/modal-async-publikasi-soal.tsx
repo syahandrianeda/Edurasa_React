@@ -10,12 +10,15 @@ import { PaketSoalDesignParseDto } from "~/dtos/dto-parsing-paket-soal";
 import type { PaketSoalAppType } from "~/types/paket-soal/paket-soal-app-type";
 import type { PraSettingPaket } from "~/domain/paket-soal/entities/pra-setting-paket";
 import type { TagihanHasDataResponse } from "~/domain/penilaian/type/tagihan-assesmen-type";
+import type { DataSoalDesign } from "~/domain/paket-soal/result/section-soal-type";
 
 
 export default function ModalAsyncPublikasiPaketSoal({state, children}:{state:ModalState<TagihanHasDataResponse>, children:ReactNode}){
     const data = state.payload;
     const idbaris = data?.idbaris ?? 0;
     const idFile = data?.id_file_setting
+    
+    
 
     const [paketSoal, setPaketSoal] = useState<PaketSoalDesign>();
     const {actions} = useModal();
@@ -78,7 +81,7 @@ export default function ModalAsyncPublikasiPaketSoal({state, children}:{state:Mo
     const KisiKisiInstance = useMemo(()=>{
             if(!paketSoal) return;
     
-            return new DataKisiKisi(paketSoal)
+            return new DataKisiKisi(paketSoal, data?.bank_soal_collections ?? [])
             },[paketSoal]);
     
   

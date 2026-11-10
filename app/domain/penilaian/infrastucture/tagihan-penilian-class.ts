@@ -11,15 +11,6 @@ import type { PraSettingBaku } from "~/types/bank-soal/entities/PraSettingBaku";
 import type { NilaiSiswaAppType } from "~/types/penilaian/nilai-siswa-app-type";
 import type { RisponsePenilaianSiswa } from "~/types/penilaian/RisponsePenilaianSiswaType";
 import type { BankSoalAppType } from "~/types/bank-soal/bank-soal-type";
-// import GroupingSebaranKurikulum from "./grouping-kurikulum-to-sebaran";
-// import type { templateResponseKoreksi } from "../type/templateResponseKoreksi";
-// import type { DataResponseKoreksi } from "../type/DataResponseKoreksi";
-// import type { GroupSebaranNoSoalFromPropertyKurikulum } from "../model/grouping-kurikulum-by-bentuksoal";
-// import type { CountBentukSoalPaket } from "~/domain/paket-soal/entities/count-bentuk-soal-paket";
-// import type { TemplateKoreksiSiswaType } from "~/types/penilaian/TemplateKoreksiSiswaType";
-// import type { DataTemplateKoreksiSiswa } from "~/types/penilaian/DataTemplateKoreksiSiswa";
-// import BankSoalAppUndefined from "~/domain/bank-soal/orm/bank-soal-undifined";
-// import RisponsePenilaianSiswaBuilder from "./rispon-penilaian-siswa-builder";
 import type { PaketSoalStruktur } from "~/domain/paket-soal/paket-soal-struktur/PaketSoalStrukturType";
 import { PaketSoalStrukturBuilder } from "~/domain/paket-soal/paket-soal-struktur/PaketSoalStrukturBuilder";
 import RisponseNilaiSiswaBuilder from "./RisponseNilaiSiswaBuilder";
@@ -48,7 +39,9 @@ import type { DataTipeAssesmenMapper, MapelMapperInAllPublikasiPaket } from "../
 import type { KategoriTagihanHasManyPesertaMapelType } from "~/domain/kategori-tagihan/types/kategori-tagihan-hasMany-respon-siswa/KategoriTagihanHasManyPesertaMapelType";
 import type { KategoriTagihanHasManyResponSiswaType } from "~/domain/kategori-tagihan/types";
 import KategoriAssesmenClass from "~/domain/kategori-tagihan/services/KategoriAssesmenClass";
-import AtMapperTagihanHasRespons from "~/domain/atp-mapper/AtMapperTagihanHasRespons";
+import type { MapelWithNilaiRaportRombel } from "~/domain/raport/RekapRaportAsal";
+import { CalclutatedNilaiRaport } from "~/domain/raport/infrastructures/accumulator-nilai/CalclutatedNilaiRaport";
+
 
 
 /** 
@@ -70,6 +63,7 @@ export default class TagihanPenilaianClass extends DtoPaketSoalSheetClass{
     private kategoriTagihanRaport:KategoriTagihanHasManyResponSiswaType[]=[];
 
     private rekapSkorPerKategoriAsessmmen:KategoriTagihanHasManyPesertaMapelType[]=[];
+    private _raportAsal:MapelWithNilaiRaportRombel[]=[];
     constructor(
             dataSheet:PaketSoalSheetType[],
             atpHasBankSoal:AtpHasManySoalType[],
@@ -159,7 +153,12 @@ export default class TagihanPenilaianClass extends DtoPaketSoalSheetClass{
                 
                 const tipe_assesmen = new SwitchKategoriTagihan(jenisTagihan.kode).kategori;
                 const dataSheetSkorKd = this.swtichSkorKdSheet(tipe_assesmen);
-                const dataSkorKdSheet = dataSheetSkorKd.map(item=>({...item, data: item.data.filter(s=>s.publikasi_id === m.idbaris && s.jenisTagihan === jenisTagihan.kode && s.skor !== null)}));
+                const dataSkorKdSheet = dataSheetSkorKd.map(item=>(
+                        {
+                            ...item, 
+                            data: item.data.filter(s=>s.publikasi_id === m.idbaris && s.jenisTagihan === jenisTagihan.kode && s.skor !== null)
+                        })
+                    );
                 const detail_target:DetailTarget[] = DetailTargetBuilder.build(this.allSiswa, m, this.rombel);
                 const kurikulum_tagihan     = m.setting_tagihan?.kurikulum ?? []
                 const bank_soal_collections = m.source === 'Paket Soal'? BankSoalCollectionsBuilder.buildFromIdSoalCollection(m.id_bank_soal, this.koleksiSoalInAtp):BankSoalCollectionsBuilder.buildFromStrukturKurikulumPublikasi(kurikulum_tagihan);
@@ -272,26 +271,35 @@ export default class TagihanPenilaianClass extends DtoPaketSoalSheetClass{
         const sanitizeMapel = SanitizerKodeMapelRaport(source,order)
         this.colectionCountInstrumenSoalTiapAtpInPublikasiPaket = SanitizerOrderMapelBasedOnMapelRaport<CollactionMapelInAllPublikasiPaketType>(sanitizeMapel, order);
     }
+
     get dataKategoriTagihanHasManyPesertaMapel():KategoriTagihanHasManyPesertaMapelType[]{
         return this.KategoriTagihanHasManyPesertaMapel;
     }
+
     get dataKategoriTagihanRaport():KategoriTagihanHasManyResponSiswaType[]{
         return this.kategoriTagihanRaport
     }
+
     builKategoriTagihan(kategoriMapper:DataTipeAssesmenMapper, StrukturKurikulumMapper:Map<string, MapelMapperInAllPublikasiPaket>):void{
         const kategoriTagihanRaport = KategoriTagihanRaportBuilder.buildFromMapper(kategoriMapper, StrukturKurikulumMapper);
         const koleksiMapel:string[] = this.mapelRaport.map(m=>m.kode);
             this.kategoriTagihanRaport = kategoriTagihanRaport;
             this.KategoriTagihanHasManyPesertaMapel = KategoriTagihanHasManyPesertaMapelBuillder.buildRaport(kategoriTagihanRaport,this.memberMapel ?? [],koleksiMapel)
-            
     }
+
     get dataRekapPerKategoriAssesmen():KategoriTagihanHasManyPesertaMapelType[]{
         return this.rekapSkorPerKategoriAsessmmen;
     }
+    
     buildKategoriTagihanMapper(){
-        // const test = new KategoriAssesmenClass(this.tagihanHasResponse,this.memberMapel,this.mapelRaport).initRefactor().result;
-        this.rekapSkorPerKategoriAsessmmen = new KategoriAssesmenClass(this.tagihanHasResponse,this.memberMapel,this.mapelRaport).init().result;
-        // console.log({refactorTest:test, current:this.rekapSkorPerKategoriAsessmmen});
+        
+        const instaniasiKategoriAssesmen = new KategoriAssesmenClass(this.tagihanHasResponse,this.memberMapel,this.mapelRaport).init();
+        this.rekapSkorPerKategoriAsessmmen = instaniasiKategoriAssesmen.result;
+        this._raportAsal = instaniasiKategoriAssesmen.raport;
+        
+    }
+    get raporAsal():MapelWithNilaiRaportRombel[]{
+        return this._raportAsal;
     }
     override init():this{
         super.init();
@@ -302,6 +310,9 @@ export default class TagihanPenilaianClass extends DtoPaketSoalSheetClass{
         this.buildCounstInstrumen(mapperKategoriTagihanPerAtpSkor, mapperStrukturKurikulum);
         this.builKategoriTagihan(mapperKategoriTagihanPerAtpSkor, mapperStrukturKurikulum);
         this.buildKategoriTagihanMapper();
+
+        /** test */
+        const instans = new CalclutatedNilaiRaport(this.tagihanHasResponse, this.mapelRaport).test()
         return this;
     }
     

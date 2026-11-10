@@ -64,6 +64,7 @@ export function skorKdNullableBuilder(skorKd: SkorKdNullableType): SkorKdNullabl
 }
 
 /**
+ * @deprecated
  * Membentuk `detail` (data per publikasi respon) pada level ATP:
  * - menyaring respon milik `atp_id` berjalan,
  * - memetakan template koreksi siswa ke referensi respon,

@@ -3,10 +3,11 @@ import type { KisiKisiMapelType } from "../entities/kisi-kisi-nested-map-type";
 import type { DisplayFormatItemSoal } from "../result/display-format-item-soal-type";
 import type { SebaranPropertyKurikulumNoSoalPaket } from "../entities/sebaran-property-no-soal-paket";
 import PaketSoalDesignClass from "./paket-soal-design-class";
+import type { BankSoalAppType } from "~/types/bank-soal/bank-soal-type";
 
 
 export default class DataKisiKisi extends PaketSoalDesignClass{
-    constructor(PaketSoal:PaketSoalDesign){ super(PaketSoal)}
+    constructor(PaketSoal:PaketSoalDesign,bankSoalSource:BankSoalAppType[] = [] ){ super(PaketSoal,bankSoalSource)}
     
     
 
@@ -46,6 +47,7 @@ export default class DataKisiKisi extends PaketSoalDesignClass{
                     } >();
         for(const data of this.dataSoal){
             const data_soal = data.data_soal; 
+            console.log({data_soal})
 
             const kodeMapel = data_soal?.kode_mapel ?? '';
             const mapelName = data_soal?.mapel_name ??'';

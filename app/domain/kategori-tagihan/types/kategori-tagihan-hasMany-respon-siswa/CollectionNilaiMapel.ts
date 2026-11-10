@@ -4,20 +4,24 @@ import type { KoleksiPublikasiPaketPerMapel } from "~/domain/penilaian/type/coll
 import type { SkorKdNullableType, SkorKdType } from "~/domain/penilaian/type/SkorKdType";
 import type { CollectionNilaiCpSheet } from "./CollectionNilaiCpSheet";
 
-export interface SkorNilaiFromRespon {
+export interface RefrenceAccumulatorNilaiMapelRespon {
     totalMapel:number|null,
     countSoalMapel:number
     skorMapel: number|null
+}
+export interface SkorNilaiFromRespon extends RefrenceAccumulatorNilaiMapelRespon {
     dataCp: CollectionNilaiCp[],
     skorKd_atp?:SkorKdNullableType
     skorKd_cp?:SkorKdNullableType
     skorKd_tp?:SkorKdNullableType
 }
 
-export interface SkorNilaiFromSkorKdSheet{
+export interface RefrenceAccumulatorNilaiMapelSkorKdSheet {
     totalMapel_sheet:number|null,
     countSoalMapel_sheet:number,
     skorMapel_sheet:number|null,
+}
+export interface SkorNilaiFromSkorKdSheet extends RefrenceAccumulatorNilaiMapelSkorKdSheet{
     dataCp_sheet: CollectionNilaiCpSheet[]
     skorKd_cp_sheet?:SkorKdNullableType
     skorKd_tp_sheet?:SkorKdNullableType

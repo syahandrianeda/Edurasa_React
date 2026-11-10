@@ -3,74 +3,39 @@ import getOrCreateMap from "~/lib/getOrCreateMapper";
 import type { AtpAsOrm } from "~/types/kurikulum/prota-orm";
 
 export default class StrukturKurikulumInKoleksiAtpAsOrmBuilder{
-        static build(atpAsOrm:AtpAsOrm[]):StrukturKurikulumMapelType[]{
-            const mapper = this.buildMapper(atpAsOrm);
-            return [...mapper.values()].map(levelMapel=>{
-                const {mapelName, kodeMapel, dataCpMapper}= levelMapel;
-                const dataCp = [...dataCpMapper.values()].map(levelCp=>{
-                    const {cp_id, cp_description,dataTpMapper} = levelCp;
-                    const dataTp = [...dataTpMapper.values()].map(levelTp=>{
-                        const {tp_id, tp_description, dataAtpMapper} = levelTp;
-                        const dataAtp = [...dataAtpMapper.values()]
-                        
-                        return {
-                            tp_id,
-                            tp_description,
-                            dataAtp
-                        }
-                    })
+    static build(atpAsOrm:AtpAsOrm[]):StrukturKurikulumMapelType[]{
+        const mapper = this.buildMapper(atpAsOrm);
+        return [...mapper.values()].map(levelMapel=>{
+            const {mapelName, kodeMapel, dataCpMapper}= levelMapel;
+            const dataCp = [...dataCpMapper.values()].map(levelCp=>{
+                const {cp_id, cp_description,dataTpMapper} = levelCp;
+                const dataTp = [...dataTpMapper.values()].map(levelTp=>{
+                    const {tp_id, tp_description, dataAtpMapper} = levelTp;
+                    const dataAtp = [...dataAtpMapper.values()]
+                    
                     return {
-                        cp_id,
-                        cp_description,
-                        dataTp
+                        tp_id,
+                        tp_description,
+                        dataAtp
                     }
                 })
                 return {
-                    mapelName,
-                    kodeMapel,
-                    dataCp
+                    cp_id,
+                    cp_description,
+                    dataTp
                 }
             })
-        }
-        static buildWithSlot(atpAsOrm:AtpAsOrm[]):StrukturKurikulumMapelWithSlotType[]{
-            const mapper = this.buildMapper(atpAsOrm);
-            return [...mapper.values()].map(levelMapel=>{
-                let slotMapel:number = 0;
-                const {mapelName, kodeMapel, dataCpMapper}= levelMapel;
-                const dataCp = [...dataCpMapper.values()].map(levelCp=>{
-                    let slotCp:number = 0
-                    const {cp_id, cp_description,dataTpMapper} = levelCp;
-                    const dataTp = [...dataTpMapper.values()].map(levelTp=>{
-                        let slotTp:number = 0
-                        const {tp_id, tp_description, dataAtpMapper} = levelTp;
-                        const dataAtp = [...dataAtpMapper.values()]
-                        dataAtp.forEach(item=>{
-                            slotTp++;
-                            slotCp++;
-                            slotMapel++;
-                        })
-                        return {
-                            tp_id,
-                            tp_description,
-                            slotTp,
-                            dataAtp
-                        }
-                    })
-                    return {
-                        cp_id,
-                        cp_description,
-                        slotCp,
-                        dataTp
-                    }
-                })
-                return {
-                    mapelName,
-                    kodeMapel,
-                    slotMapel,
-                    dataCp
-                }
-            })
-        }
+            return {
+                mapelName,
+                kodeMapel,
+                dataCp
+            }
+        })
+    }
+    static buildWithSlot(atpAsOrm:AtpAsOrm[]):StrukturKurikulumMapelWithSlotType[]{
+        const mapper = this.buildMapper(atpAsOrm);
+        return this.buildWithSlotFromMapper(mapper)
+    }
     static buildMapper(atpAsOrm:AtpAsOrm[]):StrukturKurikulumMapelMapperType{
         const result:StrukturKurikulumMapelMapperType = new Map();
         for(const atp of atpAsOrm){
@@ -106,5 +71,43 @@ export default class StrukturKurikulumInKoleksiAtpAsOrmBuilder{
         };
         return result;
         
+    }
+    static buildWithSlotFromMapper(mapper:StrukturKurikulumMapelMapperType):StrukturKurikulumMapelWithSlotType[]{
+        return [...mapper.values()].map(levelMapel=>{
+            let slotMapel:number = 0;
+            const {mapelName, kodeMapel, dataCpMapper}= levelMapel;
+            const dataCp = [...dataCpMapper.values()].map(levelCp=>{
+                let slotCp:number = 0
+                const {cp_id, cp_description,dataTpMapper} = levelCp;
+                const dataTp = [...dataTpMapper.values()].map(levelTp=>{
+                    let slotTp:number = 0
+                    const {tp_id, tp_description, dataAtpMapper} = levelTp;
+                    const dataAtp = [...dataAtpMapper.values()]
+                    dataAtp.forEach(item=>{
+                        slotTp++;
+                        slotCp++;
+                        slotMapel++;
+                    })
+                    return {
+                        tp_id,
+                        tp_description,
+                        slotTp,
+                        dataAtp
+                    }
+                })
+                return {
+                    cp_id,
+                    cp_description,
+                    slotCp,
+                    dataTp
+                }
+            })
+            return {
+                mapelName,
+                kodeMapel,
+                slotMapel,
+                dataCp
+            }
+        })
     }
 }

@@ -3,24 +3,29 @@ import type { TagihanHasDataResponse } from "../penilaian/type/tagihan-assesmen-
 import getOrCreateMap from "~/lib/getOrCreateMapper";
 import MemberOfPublikasiPaketBuilder from "../kategori-tagihan/builder/MemberOfPublikasiPaketBuilder";
 import type { SiswaType } from "~/types/siswa";
+import type { AtpContainKoleksiBankSoalMapperType } from "./AtpContainKoleksiBankSoalType";
+
 
 export type TagihanWhoseKoleksiBankSoalWichCurrentAtp = {
     dataTagihan: TagihanHasDataResponse,
     atpSoal: BankSoalAppType[],
     memberCurrentTagihanMapper?: Map<number, SiswaType>
 }
-export type AtpContainKoleksiBankSoalType = Map<number, {atpSoal:BankSoalAppType[]}>;
 export type AtpContanTagihanHasKoleksiBankSoalWhoseCurrentAtpType = Map<number, TagihanWhoseKoleksiBankSoalWichCurrentAtp[]>
-type atpMapperHelper = {tagihan:TagihanHasDataResponse, atpSoalMapperCurrentTagihan:AtpContainKoleksiBankSoalType};
+type atpMapperHelper = {tagihan:TagihanHasDataResponse, atpSoalMapperCurrentTagihan:AtpContainKoleksiBankSoalMapperType};
 
-
+/**
+ * @deprecated
+ * untuk mendapatkan data type mapper `AtpContainKoleksiBankSoalMapper:AtpContainKoleksiBankSoalMapperType`, gunakan `AtpWithBankSOal.build()`
+ * untuk mendapatkan data type mapper `AtpWithTagihanBankSoal.build()`;
+ */
 export default class AtMapperTagihanHasRespons{
-    private AtpContainKoleksiBankSoalMapper:AtpContainKoleksiBankSoalType = new Map();
+    private AtpContainKoleksiBankSoalMapper:AtpContainKoleksiBankSoalMapperType = new Map();
     private AtpContainTagihanHasKoleksiBankSoalWhoseCurrentAtpMapper:AtpContanTagihanHasKoleksiBankSoalWhoseCurrentAtpType = new Map();
     
     constructor (private readonly source: TagihanHasDataResponse[]){};
     
-    get mapperAtpBankSoal():AtpContainKoleksiBankSoalType{
+    get mapperAtpBankSoal():AtpContainKoleksiBankSoalMapperType{
         return this.AtpContainKoleksiBankSoalMapper
     }
     
@@ -34,9 +39,9 @@ export default class AtMapperTagihanHasRespons{
         for(const tagihan of this.source){
             /** mengkoleksi atp dari bank soal di tiap-tiap tagihan */;
             const koleksiBankSoal = tagihan.bank_soal_collections;
-            const atpSoalMapperCurrentTagihan:AtpContainKoleksiBankSoalType = new Map();
-            this.AtpContainKoleksiBankSoalTypeBuilder(koleksiBankSoal,atpSoalMapperCurrentTagihan)
-            // this.AtpContainKoleksiBankSoalTypeBuilder(koleksiBankSoal,this.AtpContainKoleksiBankSoalMapper)
+            const atpSoalMapperCurrentTagihan:AtpContainKoleksiBankSoalMapperType = new Map();
+            this.AtpContainKoleksiBankSoalMapperTypeBuilder(koleksiBankSoal,atpSoalMapperCurrentTagihan)
+            // this.AtpContainKoleksiBankSoalMapperTypeBuilder(koleksiBankSoal,this.AtpContainKoleksiBankSoalMapper)
            
             const obj:atpMapperHelper = {
                 tagihan,
@@ -50,7 +55,7 @@ export default class AtMapperTagihanHasRespons{
             const currentMemberTagihan = memberOfTagihan.get(tagihan.idbaris)?.dataSiswaMapper
             for(const [atp_id, atpSoal] of atpSoalMapperCurrentTagihan.entries()){
                 const item = getOrCreateMap(this.AtpContainTagihanHasKoleksiBankSoalWhoseCurrentAtpMapper, atp_id,()=>([]));
-                item.push({dataTagihan:tagihan, atpSoal:atpSoal.atpSoal, memberCurrentTagihanMapper:currentMemberTagihan})
+                item.push({dataTagihan:tagihan, atpSoal, memberCurrentTagihanMapper:currentMemberTagihan})
                 // const item = getOrCreateMap(this.AtpContainTagihanHasKoleksiBankSoalWhoseCurrentAtpMapper, atp_id, ()=>({
 
                 // }))
@@ -60,34 +65,13 @@ export default class AtMapperTagihanHasRespons{
         
         return this;
     }
-    AtpContainKoleksiBankSoalTypeBuilder(bankSoal:BankSoalAppType[], mapper:AtpContainKoleksiBankSoalType):AtpContainKoleksiBankSoalType{
+    AtpContainKoleksiBankSoalMapperTypeBuilder(bankSoal:BankSoalAppType[], mapper:AtpContainKoleksiBankSoalMapperType):AtpContainKoleksiBankSoalMapperType{
 
         for(const soal of bankSoal){
-            const currentSoal = getOrCreateMap(mapper, soal.kd_id, ()=>({
-                atpSoal:[]
-            }));
-            currentSoal.atpSoal.push(soal);
+            const currentSoal = getOrCreateMap(mapper, soal.kd_id, ()=>([]));
+            currentSoal.push(soal);
         }
         return mapper
     }
-    // AtpContainKoleksiBankSoalMapper():AtpContainKoleksiBankSoal{
-    //     const mapper:AtpContainKoleksiBankSoal = new Map()
-    //     for(const tagihan of this.source){
-    //         for(const soal of tagihan.bank_soal_collections){
-    //             const currentAtp = getOrCreateMap(mapper, soal.kd_id, ()=>({
-    //                 atpSoal:[]
-    //             }));
-    //             currentAtp.atpSoal.push(soal);
-    //         }
-          
-    //     }
-    //     return mapper;
-    // }
-    // AtpContanTagihanHasKoleksiBankSoalWhoseCurrentAtpMapper():AtpContanTagihanHasKoleksiBankSoalWhoseCurrentAtp{
-    //     const mapper:AtpContanTagihanHasKoleksiBankSoalWhoseCurrentAtp = new Map();
-    //     for(const tagihan of this.source){
-
-    //     }
-    //     return mapper;
-    // }
+    
 }

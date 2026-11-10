@@ -14,7 +14,7 @@ export default class MapperSiswaOnDataResponBuilder{
     static build(data_respons:detailNilaiSiswaAppType[]):MapperSiswaOnDataResponType{
         const result:MapperSiswaOnDataResponType = new Map();
         for(const respon of data_respons){
-            const {respon:sourceRespon, idbaris, siswa} = respon;
+            const {respon:sourceRespon, idbaris, siswa, siswa_id, templateKoreksiSiswa} = respon;
             const currentSiswa = getOrCreateMap(result,respon.siswa_id,()=>({
                 siswa: respon?.siswa!,
                 // siswa,

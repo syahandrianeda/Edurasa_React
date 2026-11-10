@@ -76,7 +76,7 @@ export default function ModalAsyncPaketSoal({state, children}:{state:ModalState<
     const KisiKisiInstance = useMemo(()=>{
             if(!paketSoal) return;
     
-            return new DataKisiKisi(paketSoal)
+            return new DataKisiKisi(paketSoal, [])
             },[paketSoal]);
     
   
