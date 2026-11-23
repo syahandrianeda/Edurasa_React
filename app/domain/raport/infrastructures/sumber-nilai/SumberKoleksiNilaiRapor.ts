@@ -1,20 +1,11 @@
-import AtpWitTagihanBankSoal from "~/domain/atp-mapper/AtpWithTagihanBankSoal";
 import MemberOfPublikasiPaketBuilder from "~/domain/kategori-tagihan/builder/MemberOfPublikasiPaketBuilder";
 import type { Data_response_bySiswaType } from "~/domain/penilaian/type/Data_response_bySiswaType";
 import type { TagihanHasDataResponse } from "~/domain/penilaian/type/tagihan-assesmen-type";
 import getOrCreateMap from "~/lib/getOrCreateMapper";
-import { groupBy } from "~/lib/group-by";
-import type { detailNilaiSiswaAppType } from "~/types/penilaian/nilai-siswa-app-type";
-import type { SiswaType } from "~/types/siswa";
-import {type MapperDataResponseAtp, type MapperDataResponseCp, type MapperDataResponseMapel, type MapperDataResponseTp, type mapperSiswaWithDetailNilaiResponAppType, type SourceGroupResponseCpNilaiSiswa, type SourceGroupResponseMapelNilaiSiswa, type SourceGroupResponseNilaiSiswa, type SourceGroupResponseTpNilaiSiswa, type sourceResponAtp, type sourceResponTp } from "./mapperSiswaWithDetailNilaiResponAppType";
+import {type MapperDataResponseAtp, type MapperDataResponseCp, type MapperDataResponseMapel, type MapperDataResponseTp, type mapperSiswaWithDetailNilaiResponAppType, type SourceGroupResponseCpNilaiSiswa, type SourceGroupResponseMapelNilaiSiswa, type SourceGroupResponseNilaiSiswa, type SourceGroupResponseTpNilaiSiswa } from "./mapperSiswaWithDetailNilaiResponAppType";
 import type { RisponsePenilaianSiswa } from "~/types/penilaian/RisponsePenilaianSiswaType";
-import type { KategoriTagihanType } from "~/domain/kategori-tagihan/types/entities/KategoriTagihanType";
 
 
-type siswaWithDetailNilaiSiswaAppType = {
-    siswa:SiswaType,
-    response:detailNilaiSiswaAppType[]
-}
 export default class SumberKoleksiNilaiRapor{
     // private readonly sumberResponsSiswa:detailNilaiSiswaAppType[]=[];
     private mapperSiswaWithDetailNilaiRespon: mapperSiswaWithDetailNilaiResponAppType =new Map();
@@ -289,101 +280,3 @@ export default class SumberKoleksiNilaiRapor{
     }
     
 }
-
-/**
- * 
- * 
- * 
-        type MapperResponseItem<T> = {
-            item: T;
-            respon: RisponsePenilaianSiswa[];
-
-            sourceRespon: {
-                tagihan: TagihanHasDataResponse;
-                currentRespon: RisponsePenilaianSiswa;
-            }[];
-
-            sourceResponGroupTagihan: Map<
-                number,
-                {
-                    tagihan: TagihanHasDataResponse;
-                    collectionCurrentRespon: RisponsePenilaianSiswa[];
-                }
-            >;
-
-            sourceResponGroupkategoriAssesmen: Map<
-                string,
-                Map<
-                    KategoriTagihanType,
-                    {
-                        tagihan: TagihanHasDataResponse;
-                        collectionCurrentRespon: RisponsePenilaianSiswa[];
-                    }
-                >
-            >;
-        };
-        type MapperConfig<T> = {
-            key: string | number;
-            item: T;
-        };
-    setMapper<T>(
-        mapperDataRespon: Map<number|string, MapperResponseItem<T>>,
-        tagihan: TagihanHasDataResponse,
-        responNilai: RisponsePenilaianSiswa,
-        config: MapperConfig<T>
-    ): void {
-
-        const { key, item } = config;
-
-        const currentItem = getOrCreateMap(
-            mapperDataRespon,
-            key,
-            () => ({
-                item,
-                respon: [],
-                sourceRespon: [],
-                sourceResponGroupTagihan: new Map(),
-                sourceResponGroupkategoriAssesmen: new Map(),
-            })
-        );
-
-        currentItem.respon.push(responNilai);
-
-        currentItem.sourceRespon.push({
-            tagihan,
-            currentRespon: responNilai,
-        });
-
-        // Group berdasarkan tagihan
-        const currentTagihan = getOrCreateMap(
-            currentItem.sourceResponGroupTagihan,
-            tagihan.idbaris,
-            () => ({
-                tagihan,
-                collectionCurrentRespon: [],
-            })
-        );
-
-        currentTagihan.collectionCurrentRespon.push(responNilai);
-
-        // Group berdasarkan kategori asesmen
-        const currentGroupAssesmen = getOrCreateMap(
-            currentItem.sourceResponGroupkategoriAssesmen,
-            tagihan.tipe_assesmen,
-            () => new Map()
-        );
-
-        const currentTagihanAssesmen = getOrCreateMap(
-            currentGroupAssesmen,
-            tagihan.idbaris,
-            () => ({
-                tagihan,
-                collectionCurrentRespon: [],
-            })
-        );
-
-        currentTagihanAssesmen.collectionCurrentRespon.push(responNilai);
-    }
-
-    
- */

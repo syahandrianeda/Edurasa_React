@@ -1,6 +1,5 @@
 import type { PaketSoalStruktur } from "~/domain/paket-soal/paket-soal-struktur/PaketSoalStrukturType";
 import type { GroupBentukSoalPropertiKurikulumInPublikasiAssesmen, GroupBentukSoalPropertiKurikulumInPublikasiAssesmenWithScore, GroupSebaranNoSoalFromPropertyKurikulum, KoleksiBentukSoalDanPropertyKurikulumBasedBentukSoal, PrediksiNoSoal } from "../model/grouping-kurikulum-by-bentuksoal";
-import type { AtpAsOrm, ItemAtpAsProtaEditable } from "~/types/kurikulum/prota-orm";
 import type { ListBentukSoalType } from "~/types/bank-soal/bentuk-soal-type";
 
 export default class GroupingSebaranInPaketSoal{

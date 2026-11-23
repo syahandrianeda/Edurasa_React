@@ -1,9 +1,15 @@
 import type { DataKdSheetApp } from "~/types/penilaian/DataKdSheetAppType";
 import type { TagihanHasDataResponse } from "../penilaian/type/tagihan-assesmen-type";
-import type { RefrenceAccumulatorNilaiMapelSkorKdSheet } from "../kategori-tagihan/types";
-import type { BankSoalAppType } from "~/types/bank-soal/bank-soal-type";
+import type { RisponsePenilaianSiswa } from "~/types/penilaian/RisponsePenilaianSiswaType";
+import type { PrediksiNoSoal } from "../penilaian/model/grouping-kurikulum-by-bentuksoal";
 
-export type DataKdSheetAppWithCountSoalTagihan = { countSoal: BankSoalAppType[]; tagihan: TagihanHasDataResponse; data: DataKdSheetApp; }
+export type DataSheetKdWithRefrenceSoal = {
+    data:DataKdSheetApp,
+    countSoal:PrediksiNoSoal[];//BankSoalAppType[]
+}
+export type DataSheetRefrenceWithRealResponse = DataSheetKdWithRefrenceSoal & { rispon: RisponsePenilaianSiswa []}
+// export type DataKdSheetAppWithCountSoalTagihan = { countSoal: BankSoalAppType[]; tagihan: TagihanHasDataResponse; data: DataKdSheetApp[]; }
+export type DataKdSheetAppWithCountSoalTagihan = { tagihan: TagihanHasDataResponse; data: DataSheetKdWithRefrenceSoal[] }
 
 export type MapperSiswaWithDetailNilaiSheetKdAppType = Map<number, {
     idbaris: number;

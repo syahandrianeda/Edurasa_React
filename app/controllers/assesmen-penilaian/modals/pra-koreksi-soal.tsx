@@ -6,7 +6,6 @@ import type { TagihanHasDataResponse } from "~/domain/penilaian/type/tagihan-ass
 import { getSessionRombel } from "~/infrastructures/session-storage/rombel-session";
 import TableSkorKd from '../tabel/tabel-skor-kd';
 import type { detailNilaiSiswaAppType } from '~/types/penilaian/nilai-siswa-app-type';
-import type { RisponsePenilaianSiswa } from "~/types/penilaian/RisponsePenilaianSiswaType";
 import ButtonCommitAwesome from '~/components/button-awesome/commit-button';
 import { useModal } from '~/components/modals/modal-provider';
 import TooltipComp from '~/components/ui_edura/tooltip-comp';
@@ -19,8 +18,6 @@ import DispatchingResponseToStore from '~/lib/dispatching-response-to-store';
 import type { NilaiSiswaSheetType } from '~/types/penilaian/nilai-siswa-sheet-type';
 import type { SiswaType } from '~/types/siswa';
 import SwitchKategoriTagihan from '~/domain/asesmen-penilaian/switch-kategori-tagihan-class';
-import GroupingSebaranKurikulum from '~/domain/penilaian/infrastucture/grouping-kurikulum-to-sebaran';
-import RisponsePenilaianSiswaBuilder from "~/domain/penilaian/infrastucture/rispon-penilaian-siswa-builder";
 import RisponseNilaiSiswaBuilder from '~/domain/penilaian/infrastucture/RisponseNilaiSiswaBuilder';
 import { PaketSoalStrukturBuilder } from '~/domain/paket-soal/paket-soal-struktur/PaketSoalStrukturBuilder';
 import TemplateKoreksiSiswaBuilder from '~/types/penilaian/TemplateKoreksiSiswaBuilder';
@@ -96,17 +93,12 @@ export default function PraKoreksiSoal(){
         const kategori = new SwitchKategoriTagihan(jenis_tagihan).kategori;
         const idSoal = currentDataSelector.id_bank_soal;
         const settingTagihan = currentDataSelector.setting_tagihan?.count_bentuk_soal;//
-        // const templateKoreksi = dataTagihan?.createTemplateKoreksiUsingSetingTagihan(idSoal,settingTagihan ?? [],[]) ;//(dataTagihan?.createTemplateKoreksiPerSiswa(kurikulum, idSoal) ?? {sebaran:[], respon:[]}) as unknown as {sebaran:detailNilaiSiswaAppType['templateKoreksiSiswa'],respon:RisponsePenilaianSiswa[]};
-        // const templateKoreksi = RisponsePenilaianSiswaBuilder.build(currentDataSelector.bank_soal_collections,settingTagihan ?? [], [])
         const StrukturPaket = PaketSoalStrukturBuilder.buildFromCountBentukSoalPaket(currentData.bank_soal_collections, settingTagihan ?? [])
-        // const templateKoreksi = RisponseNilaiSiswaBuilder.build(StrukturPaket, [])
-        // const respon =  templateKoreksi?.respon ?? [];
         const respon =  RisponseNilaiSiswaBuilder.build(StrukturPaket, [])
         const templateKoreksiSiswa = TemplateKoreksiSiswaBuilder.build(StrukturPaket,[]);// templateKoreksi?.sebaran ?? [];
         const Kur = currentDataSelector?.setting_tagihan?.kurikulum ?? [];
         const StrukturKurikulum = GroupingSebaranInPaketSoal.build(StrukturPaket);
-        // const skorKdSebaran =  GroupingSebaranKurikulum.buildGroupBentukSoalBasedOnKoleksiIdSoalWithScore(Kur,idSoal ?? [],respon);
-        const skorKdSebaran =  SkorKdSebaranBuilder.build(StrukturKurikulum, respon)
+        const skorKdSebaran =  SkorKdSebaranBuilder.build(StrukturKurikulum, respon, 'guru')
         const objekKdSebaran = skorKdSebaran.data.map(m=>m.objekSkorKd).reduce((a,b)=>({...a,...b}))
         const data:detailNilaiSiswaAppType = {
             idbaris: 0,	
@@ -120,22 +112,17 @@ export default function PraKoreksiSoal(){
             start_time: new Date(),
             end_time:new Date(),
             respon,
-            // skor_kd:[],
             needValidate:true,
-
             totalResponValid: 0,
             durasiPengerjaan: 0,
             publikasi: currentDataSelector,
             templateKoreksiSiswa,
             skorKdSebaran,
             objekKdSebaran
-
         }
 
-        // const dataFound =dataRespon.find(s=>s.siswa.id === siswa.id);
-        // const dataForm = {...dataFound, data}
-        
         actions.open('KOREKSI SOAL',data, {closeOnOutsideClick:false, backToModalType: state})
+
     },[actions,currentDataSelector,dataTagihan])
     
     return (

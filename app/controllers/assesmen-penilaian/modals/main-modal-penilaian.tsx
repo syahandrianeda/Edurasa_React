@@ -1,16 +1,11 @@
 import { ModalEdura } from "~/components/modals/modal-components";
-import { useModal, type ModalActions, type ModalState } from "~/components/modals/modal-provider";
+import { useModal, type ModalState } from "~/components/modals/modal-provider";
 import type { ModalType } from "~/components/modals/modal-type";
 import type { TagihanHasDataResponse } from "~/domain/penilaian/type/tagihan-assesmen-type";
 import MainModalForm from "./main-modal-form-penilaian";
-import type { PaketSoalAppType } from "~/types/paket-soal/paket-soal-app-type";
 import AddNonPaketSoalModal from "./add-non-paket-soal";
-import type { PublikasiPaketAppValidWithPaketSoal } from "~/types/publikasi-paket-soal/publikasi-paket-app-type";
-import EditPublikasiPaketSoal from "~/controllers/publikasi-paket-soal/modal/edit-publikasi-paket";
-import WrapperFormPublikasiPaket from "~/controllers/publikasi-paket-soal/modal/wraper-form";
 import EditPublikasiInstrumenTagihan from "./edit-publikasi-instrumeen";
 import EditNonPaketSoal from "./edit-non-paket-soal";
-import ModalAsyncPaketSoal from "~/controllers/koleksi-paket-soal/modal/modal-async";
 import PreviewPaketSoalServer from "~/controllers/koleksi-paket-soal/modal/peview-paket-soal";
 import ModalAsyncPublikasiPaketSoal from "./modal-async-publikasi-soal";
 import KisiKisiSoalServer from "~/controllers/koleksi-paket-soal/modal/kisi-kisi-soal-server";
@@ -73,7 +68,9 @@ function switchJudulPublikasiSoal(type:ModalType){
         case 'ADD PUBLIKASI NON PAKET SOAL':
             return 'Buat Baru Insrumen Penilaian non Paket Soal'
         case 'EDIT PUBLIKASI NON PAKET SOAL':
-            return 'Edit Insrumen Penilaian non Paket Soal'
+            return 'Edit Insrumen Penilaian non Paket Soal';
+        case 'PREVIEW SEBARAN KOMPETENSI NON PAKET SOAL':
+            return 'Sebaran Kompetensi yang Diukur/Diuji'
         default:
             return  type as string
     }

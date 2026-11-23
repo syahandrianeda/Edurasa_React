@@ -1,4 +1,3 @@
-import type AtpOrmHasManySoal from "~/domain/bank-soal/relational-soal/services/atp-has-many-soal";
 import type { AtpHasManySoalType } from "~/domain/bank-soal/relational-soal/type";
 import type { BankSoalAppType } from "~/types/bank-soal/bank-soal-type";
 import type { GroupBentukSoalPropertiKurikulumInPublikasiAssesmen, GroupSebaranNoSoalFromPropertyKurikulum, GroupSebaranNoSoalFromPropertyKurikulumWithScore, PrediksiNoSoal } from "../model/grouping-kurikulum-by-bentuksoal";

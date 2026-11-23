@@ -2,7 +2,8 @@ import desimalFormat from "~/lib/desimal-format";
 import getOrCreateMap from "~/lib/getOrCreateMapper";
 import type { DataKdSheetApp } from "~/types/penilaian/DataKdSheetAppType";
 import type { DataSheetSkorKdKategoriAsesmenAppType } from "~/types/penilaian/DataSheetSkorKdKategoriAsesmenAppType";
-import type { MapperPesertaHasTagihanMapperType, TagihanMapperInMapperSiswaHasTagihanMapper } from "./MapperPesertaTagihan";
+import type { MapperPesertaHasTagihanMapperType, TagihanMapperInMapperSiswaHasTagihanMapper } from "./_MapperPesertaTagihan";
+
 type currentSiswa= {
     idbaris:number,
     siswa_id:number, 
@@ -10,6 +11,7 @@ type currentSiswa= {
     rombel:string
 }
 export type DataSheetSkorKdKategoriAsesmenMapperType = Map<number, {currentSiswa: currentSiswa, atpMapper:Map<number, {refrence: DataKdSheetApp[], skor:number|null}>}>;
+
 export default class DataSheetSkorKdKategoriAsesmenMapper{
     static build(dataSheetSkorKd:DataSheetSkorKdKategoriAsesmenAppType[], siswaPeserta:MapperPesertaHasTagihanMapperType):DataSheetSkorKdKategoriAsesmenMapperType{
         const mapper:DataSheetSkorKdKategoriAsesmenMapperType = new Map()
@@ -34,6 +36,7 @@ export default class DataSheetSkorKdKategoriAsesmenMapper{
         const mapper = new Map<number, {refrence: DataKdSheetApp[], skor:number|null}>();
         
         const atp_skor = new Map<number, number[]>();
+        
         for(const dataSheet of dataSheets){
             const {kolomKey, kategoriAssesmen, jenisTagihan, atp_id, skor, skorKdKey, publikasi_id, kodeMapelKey} = dataSheet;
             const bankSoalCurrentAtpInPThisPublikasi = pesertaMember?.get(publikasi_id)?.atpSoalMapper.get(atp_id)

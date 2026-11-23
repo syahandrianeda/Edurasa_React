@@ -8,6 +8,7 @@ export type SkorKdSheetMapperType = {
     mapperAtpBelongsToSiswaHasDataSkorKdSheet:mapperAtpBelongsToSiswaHasDataSkorKdSheetType,
     mapperSiswaHasDataSkorKdSheet:mapperSiswaHasDataSkorKdSheetType;
 }
+
 export default class SkorKdSheetMapper{
     
     static build(dataSkorKdSheetInAllTagihan: DataSheetSkorKdKategoriAsesmenAppType[]):SkorKdSheetMapperType{

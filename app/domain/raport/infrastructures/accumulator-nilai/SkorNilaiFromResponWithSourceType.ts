@@ -30,8 +30,6 @@ export type SkorNilaiFromResponWithSource = SkorNilaiFromRespon & {
     sourceResponGroupTagihanLevelTp: SourceGroupResponseTpNilaiSiswa[];
     sourceResponGroupTagihanLevelCp: SourceGroupResponseCpNilaiSiswa[];
     sourceResponGroupTagihanLevelAtp: SourceGroupResponseNilaiSiswa[];
-    // sourceResponGroupTagihanLevelAtp: {atp_id:number, source:SourceResponAtpGroupTagihan[]}
-    // sourceResponGroupTagihanLevelCp: {cp_id:number, source:SourceResponAtpGroupTagihan[]}
     dataCpWithSource: DataCpWithSource[];
 };
 

@@ -51,8 +51,16 @@ export function clientLoader({}:Route.ComponentProps){
 export default function RekapPertagihanRoute() {
     const instancPaketSoal = useAppSelector(InstanceDataTagihanPenilaianSector)
     const dataNilaiPerKategoriTagihan = instancPaketSoal?.raporAsal;//?.find(s=>s.type === 'harian');
+    const memberMapel = instancPaketSoal?.dataSiswaHasMapel;
+    const mapelRaport = instancPaketSoal?.MapelRaport;
+    const kategoriAssesmenPattern = instancPaketSoal?.kaleksiKategoriAssesmen;
    
     return (
-        <RekapPerJenisTagihanPage raportAsal={dataNilaiPerKategoriTagihan}/>
+        <RekapPerJenisTagihanPage 
+            raportAsal={dataNilaiPerKategoriTagihan} 
+            memberMapel={memberMapel} 
+            mapelRaport={mapelRaport}
+            kategoriAssesmenPattern={kategoriAssesmenPattern ?? []}
+            />
         )
 }

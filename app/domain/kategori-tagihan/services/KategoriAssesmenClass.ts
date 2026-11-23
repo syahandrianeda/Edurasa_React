@@ -21,8 +21,7 @@ import type { DataRefrensiPerBentukSoal } from "~/domain/penilaian/type/collecti
 import desimalFormat from "~/lib/desimal-format";
 import { jmlAman, kaliAman } from "~/lib/helper-aritmetika-desimal";
 import SkorKdSheetMapper from "../infrastructures/SkorKdSheetMapper";
-import MapperPesertaTagihan from "../infrastructures/MapperPesertaTagihan";
-import DataSheetSkorKdKategoriAsesmenMapper from "../infrastructures/DataSheetSkorKdKategoriAsesmenMapper";
+import MapperPesertaTagihan from "../infrastructures/_MapperPesertaTagihan";
 import type { CollectionNilaiCpSheet } from "../types/kategori-tagihan-hasMany-respon-siswa/CollectionNilaiCpSheet";
 import type { CollectionNilaiTpSheet } from "../types/kategori-tagihan-hasMany-respon-siswa/CollectionNilaiTpSheet";
 import type { CollectionNilaiAtpSheet } from "../types/kategori-tagihan-hasMany-respon-siswa/CollectionNilaiAtpSheet";

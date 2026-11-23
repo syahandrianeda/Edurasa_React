@@ -1,7 +1,5 @@
 import type { BankSoalAppType } from "~/types/bank-soal/bank-soal-type";
 import type { ListBentukSoalType } from "~/types/bank-soal/bentuk-soal-type";
-import type { ScoreAccumulator } from "../infrastucture/ScoreAccumulator";
-import { ListBentukSoal } from "~/domain/bank-soal/list-bentuk-soal";
 
 // interface bentukSoalGroup{
 //     bentukSoal:ListBentukSoalType['name'],
@@ -9,7 +7,7 @@ import { ListBentukSoal } from "~/domain/bank-soal/list-bentuk-soal";
 // }
 export interface PrediksiNoSoal extends BankSoalAppType{
     no_soal:number, 
-    skor:number
+    skor:number|null
 
 }
 interface KoleksiBentukSoal{
@@ -42,9 +40,10 @@ export interface GroupBentukSoalPropertiKurikulumInPublikasiAssesmen{
     slotRow:number,
     dataCp: DataCp[]
 }
-type DataBentukSoalWithScore = {
+export type DataBentukSoalWithScore = {
     bentukSoal: ListBentukSoalType['name'],
-    data: PrediksiNoSoal[]
+    data: PrediksiNoSoal[],
+    source:string,//'siswa'|'guru'
 }
 type DataAtpMap = {
     atp_id : number,

@@ -1,12 +1,8 @@
-import type { AtpContainKoleksiBankSoalMapperType } from "~/domain/atp-mapper/AtpContainKoleksiBankSoalType";
-import type { GroupBentukSoalPropertiKurikulumInPublikasiAssesmenWithScore } from "~/domain/penilaian/model/grouping-kurikulum-by-bentuksoal";
-import type { StrukturMapeltype } from "~/domain/trees-struktur-kurikulum";
-import type { StrukturKurikulumCpType, StrukturKurikulumCpWithSlotType, StrukturKurikulumMapelType } from "~/domain/trees-struktur-kurikulum/struktur-kurikulum-type";
+import type { StrukturKurikulumCpWithSlotType } from "~/domain/trees-struktur-kurikulum/struktur-kurikulum-type";
 import type { mapperDetailNilaiResponType, SourceGroupResponseCpNilaiSiswa, SourceGroupResponseNilaiSiswa, SourceGroupResponseTpNilaiSiswa, SourceResponAtpGroupTagihan } from "../sumber-nilai/mapperSiswaWithDetailNilaiResponAppType";
 import Decimal from "decimal.js";
 import type { CollectionNilaiCp } from "~/domain/kategori-tagihan/types/kategori-tagihan-hasMany-respon-siswa/CollectionNilaiCp";
 import type { SkorKdNullableType } from "~/domain/penilaian/type/SkorKdType";
-import type SumberKoleksiNilaiRapor from "../sumber-nilai/SumberKoleksiNilaiRapor";
 import type { CollectionNilaiTp } from "~/domain/kategori-tagihan/types/kategori-tagihan-hasMany-respon-siswa/CollectionNilaiTp";
 import type { CollectionNilaiAtp } from "~/domain/kategori-tagihan/types/kategori-tagihan-hasMany-respon-siswa/CollectionNilaiAtp";
 import type { InterfaceMapel } from "~/types/mapel/mapel";
@@ -14,13 +10,13 @@ import type { SkorNilaiFromResponWithSource, DataCpWithSource, SourceKategoriAss
 import type { RefrensiTabResponTagihanJenjangType } from "~/domain/penilaian/type/collection-kurikulum-in-all-publikasi/RefrensiTabResponTagihanJenjangType";
 import type { DataRefrensiPerBentukSoal } from "~/domain/penilaian/type/collection-kurikulum-in-all-publikasi/DataRefrensiPerBentukSoal";
 import type { DataSkorSiswaByInstrumenType } from "~/domain/penilaian/type/collection-kurikulum-in-all-publikasi/DataSkorSiswaByInstrumenType";
-import type { SkorNilaiFromSkorKdSheet } from "~/domain/kategori-tagihan/types";
 import type { CollectionNilaiCpSheet } from "~/domain/kategori-tagihan/types/kategori-tagihan-hasMany-respon-siswa/CollectionNilaiCpSheet";
-import type { MapperSiswaWithDetailNilaiSheetKdAppType } from "~/domain/TagihanHasDataResponMapper/MapperSiswaWithDetailNilaiSheetKdAppType";
+import type { DataSheetKdWithRefrenceSoal, MapperSiswaWithDetailNilaiSheetKdAppType } from "~/domain/TagihanHasDataResponMapper/MapperSiswaWithDetailNilaiSheetKdAppType";
 import type { CollectionNilaiTpSheet } from "~/domain/kategori-tagihan/types/kategori-tagihan-hasMany-respon-siswa/CollectionNilaiTpSheet";
 import type { CollectionNilaiAtpSheet } from "~/domain/kategori-tagihan/types/kategori-tagihan-hasMany-respon-siswa/CollectionNilaiAtpSheet";
-import type { SkorNilaiFromSheetKdWithSource, SourceSheetAtpGroupTagihan } from "./SkorNilaiFromSheetKdWithSource";
-import type { TagihanHasDataResponse } from "~/domain/penilaian/type/tagihan-assesmen-type";
+import type { DataCpSheetWithSource, KoleksiAtpSheetWithSource, KoleksiTpSheetWithSource, SkorNilaiFromSheetKdWithSource, SourceGroupKategoriAssesmenWithTagihanSheetKd, SourceSheetAtpGroupTagihan, SourceSheetAtpWithScore, SourceSheetCpWithScore, SourceSheetTpWithScore, TagihanWithDataKdSheetAppDetail, TagihanWithDataKdSheetAppDetailMapper } from "./SkorNilaiFromSheetKdWithSource";
+import type { KategoriTagihanType } from "~/domain/kategori-tagihan/types/entities/KategoriTagihanType";
+import getOrCreateMap from "~/lib/getOrCreateMapper";
 
 export default class CalculatedNilaiStrukturKurikulum{
    
@@ -45,9 +41,6 @@ export default class CalculatedNilaiStrukturKurikulum{
             skorMapel:null,
             dataCp:[],
             dataCpWithSource:[],
-            // skorKd_atp,
-            // skorKd_tp,
-            // skorKd_cp,
             sourceResponGroupTagihanLevelTp:[],
             sourceResponGroupTagihanLevelCp:[],
             sourceResponGroupTagihanLevelAtp:[],
@@ -97,6 +90,7 @@ export default class CalculatedNilaiStrukturKurikulum{
                 skorRespon
             }
         }) : [];
+        
         const sourceResponGroupTagihanLevelCp: SourceGroupResponseCpNilaiSiswa[]=sumberDataCp ? [...sumberDataCp.values()].filter(s=>idCps.includes(s.cp.cp_id)).map(res=>{
             const koleksiSkor = res.respon.map(n=>Decimal(n.skor?? 0));
             const skorRespon = Decimal.sum(...koleksiSkor).div(koleksiSkor.length).toDecimalPlaces(2).toNumber();
@@ -105,6 +99,7 @@ export default class CalculatedNilaiStrukturKurikulum{
                 skorRespon
             }
         }) : [];
+
         const sourceResponGroupTagihanLevelAtp: SourceGroupResponseNilaiSiswa[]=sumberDataAtp? [...sumberDataAtp.values()].filter(s=>idAtps.includes(s.atp.atp_id)).map(res=>{
             const koleksiSkor = res.respon.map(n=>Decimal(n.skor?? 0));
             const skorRespon = Decimal.sum(...koleksiSkor).div(koleksiSkor.length).toDecimalPlaces(2).toNumber();
@@ -155,20 +150,21 @@ export default class CalculatedNilaiStrukturKurikulum{
                         }
                     })
                     :[];
+
                 const sourcesByGroupTagihanLevelTp: SourceResponAtpGroupTagihan[] = getSourceTp?
                     [...getSourceTp.sourceResponGroupTagihan.entries()].map(([tagihan, collectionCurrentTagihanAtp])=>{
                     
                         return collectionCurrentTagihanAtp
                     })
-                    :[]
+                    :[];
 
                 /** space tp */
                 let totalTp:number|null = null;
                 let countSoalTp:number = 0;
                 let skorTp:number|null = null;
                 const koleksiAtpWithSource: KoleksiAtpWithSource[]=[]
-                
                 const koleksiAtp:CollectionNilaiAtp[] = [];
+
                 for(const atp of dataAtp){
                     /**
                      * `atp_id` selalu bukan nol karena telah diatasi oleh class `BankSoalCollectionsBuilder`;
@@ -200,11 +196,7 @@ export default class CalculatedNilaiStrukturKurikulum{
                      */
                     if(!dataNilaiCurrentSiswa) continue;
                     
-                    /** 
-                     * koleksi soal yang tidak diisi (null) dianggap nol. Nilai ini sudah melewati tahap filtering
-                     * apakah siswa tersebut adalah peserta tagihan atau tidak. Class yang mengatur penyediaan nilai repson 
-                     * berada di class `SumberKoleksiNilaiRapor`;
-                     */
+                    /** koleksi soal yang tidak diisi (null) dianggap nol. Nilai ini sudah melewati tahap filtering */
                     const koleksiSkor = dataNilaiCurrentSiswa?.respon?.map(m=>m.skor ?? 0);
                     
                     const sumber = [...dataNilaiCurrentSiswa.sourceResponGroupTagihan.values()];//.map(([tagihan, collectionResponAtp])=>({tagihan, collectionResponAtp}));
@@ -224,32 +216,24 @@ export default class CalculatedNilaiStrukturKurikulum{
                     countSoalCp= Decimal.sum(countSoalCp, koleksiSkor.length).toNumber();
                     
                     const sourcesByGroupKategoriAssesmen:SourceKategoriAssesmenWithTagihanRespon[] = [...dataNilaiCurrentSiswa.sourceResponGroupkategoriAssesmen.entries()].map(([type, tagihanWithResponMap])=>{
-                        const tagihanWithRespon=[...tagihanWithResponMap.values()].flat()
+                        const tagihanWithRespon=[...tagihanWithResponMap.values()].flat();
                         return {
                             type,
                             tagihanWithRespon
                         }
                     });
+
                     /** build detail */
                     const currentRespon = sumberSiswaHasDataDetilNilaiRespon?.responAtpMapper.get(atp.atp_id);
                     
                     // let totalAtpRespon:number|null = null;
                     let skorAtpRespon:number|null = null;
                     let countSoalAtpRespon:number = 0
-                    const detail: DataSkorSiswaByInstrumenType[] = []
+                    const detail: DataSkorSiswaByInstrumenType[] = [];
+
                     if(currentRespon){
                         const {ref, rispon} =currentRespon;
-                        const koleksiNilaiRef = rispon.map(m=>Decimal(m.skor ?? 0));
-                        // totalAtpRespon = Decimal.sum(Decimal(totalAtpRespon ?? 0), ...koleksiNilaiRef).toNumber();
-                        // for(const itemRispon of rispon){
-                        //     const {skor, no_prefix, bentuk_soal, bentuk_soal_detail} = itemRispon;
-                        //     if(skor!==null){
-                        //         /** aritmetika aman: akumulasi skor respon tanpa artefak floating-point */
-                        //         totalAtp = jmlAman(totalAtp ?? 0, skor ?? 0);
-                        //     }
-                            
-                        // };
-                        // countSoalAtpRespon+=rispon.length;
+
                         for(const itemRef of ref){
                             const {publikasi,siswa_id,skor_kd, siswa, respon, idbaris, templateKoreksiSiswa, objekKdSebaran, skorKdSebaran}=itemRef;
                             const dataRefrensiTabResponTagihanJenjang:RefrensiTabResponTagihanJenjangType[] = respon.filter(s=>s.atp === atp_id).map(m=>{
@@ -262,9 +246,9 @@ export default class CalculatedNilaiStrukturKurikulum{
                                         kunciJawabanPg:m.bentuk_soal === 'pg'? (m.soal?.jawaban as string[])?.[0] ?? '':'',
                                         dataPublikasi: publikasi,
                                         responJawaban:m.respon ?? '',
-
                                     } 
                                 });
+
                             const dataPerBentukSoal: DataRefrensiPerBentukSoal[] = templateKoreksiSiswa.map(m=>{
                                 return {
                                     bentukSoal:m.bentuk_soal.name,
@@ -277,12 +261,13 @@ export default class CalculatedNilaiStrukturKurikulum{
                             
                             for(const itemDetail of dataRefrensiTabResponTagihanJenjang){
                                 /** aritmetika aman: akumulasi detail skor tanpa artefak floating-point */
-                                // totalDetail = jmlAman(totalDetail ?? 0, itemDetail.skor ?? 0)
                                 totalDetail = Decimal.sum(totalDetail?? 0, Decimal(itemDetail.skor ?? 0)).toNumber();
                             }
+                            
                             if(totalDetail !==null){
                                 skorDetail = Decimal(totalDetail ?? 0).div(dataRefrensiTabResponTagihanJenjang.length).toDecimalPlaces(2).toNumber();
                             }
+                            
                             detail.push({
                                 siswa_id,
                                 namaSiswa: siswa?.pd_nama ?? '',
@@ -294,32 +279,10 @@ export default class CalculatedNilaiStrukturKurikulum{
                                 dataSumberPublikasiPaket:publikasi,
                                 skor:skorDetail ?? 0,
                                 skorKd:{[keyMapel_AtpId]:skorAtp}
-
-
-
                             })
                         }
                     }
-                    //  const dataRefrensiTabResponTagihanJenjang:RefrensiTabResponTagihanJenjangType[] = dataNilaiCurrentSiswa?.respon.map(m=>{
-                    //         return {
-                    //             // responId: m.idbaris,
-                    //             noSoal: m.no_prefix,
-                    //             skor:m.skor??null,
-                    //             bentukSoal:m.bentuk_soal,
-                    //             atp_id,
-                    //             kunciJawabanPg:m.bentuk_soal === 'pg'? (m.soal?.jawaban as string[])?.[0] ?? '':'',
-                    //             // dataPublikasi: publikasi,
-                    //             responJawaban:m.respon ?? '',
-
-                    //         } 
-                    //     });
-                    // const dataPerBentukSoal: DataRefrensiPerBentukSoal[] = templateKoreksiSiswa.map(m=>{
-                    //     return {
-                    //         bentukSoal:m.bentuk_soal.name,
-                    //         data: m.data.map(mm=> dataRefrensiTabResponTagihanJenjang.find(s=>s.noSoal === mm.no_prefix && s.bentukSoal === mm.soal?.bentuk_soal)!)
-                    //     }
-                    // });
-
+                    
                     koleksiAtp.push({
                         atp_id, 
                         atp_description, 
@@ -338,16 +301,14 @@ export default class CalculatedNilaiStrukturKurikulum{
                         detail,
                         sourcesByGroupTagihan:sumber,
                         sourcesByGroupKategoriAssesmen
-                        
                     })
-                   
-                    // sourceResponGroupTagihanLevelMapel.push(...sumber)
-
                 }
+
                 if(totalTp !== null){
                     skorTp = Decimal(totalTp).div(countSoalTp).toDecimalPlaces(2).toNumber();
                     obSkorKd_tp[keyMapel_TpId] = skorTp;
                 }
+
                 koleksiTp.push({
                     tp_id, 
                     tp_description, 
@@ -370,13 +331,13 @@ export default class CalculatedNilaiStrukturKurikulum{
                     sourcesByGroupKategoriAssesmen:sourcesByGroupKategoriAssesmenLevelTp,
                     koleksiAtpWithSource
                 });
-
             }
 
             if(totalCp !== null){
                 skorCp = Decimal(totalCp).div(countSoalCp).toDecimalPlaces(2).toNumber();
                 obSkorKd_cp[keyMapel_CpId] = skorCp;
             }
+
             dataCp.push({
                 cp_id, 
                 cp_description, 
@@ -386,6 +347,7 @@ export default class CalculatedNilaiStrukturKurikulum{
                 skorCp,
                 koleksiTp
             });
+
             dataCpWithSource.push({
                 cp_id, 
                 cp_description, 
@@ -398,7 +360,6 @@ export default class CalculatedNilaiStrukturKurikulum{
                 sourcesByGroupTagihan:sourcesByGroupTagihanLevelCp,
                 sourcesByGroupKategoriAssesmen:sourcesByGroupKategoriAssesmenLevelCp
             })
-
         }
         
         if(totalMapel !==null){
@@ -408,6 +369,7 @@ export default class CalculatedNilaiStrukturKurikulum{
         const skorKd_atp = Object.keys(obSkorKd_atp).length > 0 ? obSkorKd_atp : undefined;
         const skorKd_tp = Object.keys(obSkorKd_tp).length > 0 ? obSkorKd_tp : undefined;
         const skorKd_cp = Object.keys(obSkorKd_cp).length > 0 ? obSkorKd_cp : undefined;
+
         return {
             totalMapel,
             countSoalMapel,
@@ -423,7 +385,6 @@ export default class CalculatedNilaiStrukturKurikulum{
             sourceResponGroupTagihan:sourceResponGroupTagihanLevelMapel,
             sourcesByGroupKategoriAssesmen:sourcesByGroupKategoriAssesmenLevelMapel
         }
-
     }
    
     static getNilaiFromSheetKd(
@@ -432,28 +393,38 @@ export default class CalculatedNilaiStrukturKurikulum{
         kodeMapelInterface:InterfaceMapel,
         instSumberKoleksiNilai?:MapperSiswaWithDetailNilaiSheetKdAppType,
     ):SkorNilaiFromSheetKdWithSource{
+
         const currentSiswaSheetKd = instSumberKoleksiNilai?.get(siswaId);
+
         if(!instSumberKoleksiNilai || !currentSiswaSheetKd){
             return {
                 totalMapel_sheet:null,
                 countSoalMapel_sheet:0,
                 skorMapel_sheet:null,
                 dataCp_sheet:[],
-                sourceSheetKdGroupTagihan: []
+                dataCpSheetWithSource:[],
+                sourceSheetKdGroupTagihan: [],
+                sourceSheetKdGroupTagihanLevelAtp:[],
+                sourceSheetKdGroupTagihanLevelTp: [],
+                sourceSheetKdGroupTagihanLevelCp:[],
+                sourcesByGroupKategoriAssesmen:new Map()
             }
         };
+
         let totalMapel_sheet:number|null = null;
         let countSoalMapel_sheet:number = 0;
         let skorMapel_sheet:number|null = null;
         const dataCp_sheet:CollectionNilaiCpSheet[] = [];
-        // const sourceSheetKdGroupTagihan: SourceSheetAtpGroupTagihan[]=[...currentSiswaSheetKd.atpMapperWithSource.entries()].map(([tagihanSource,tagihanMapper])=>{
-        //      return [...tagihanMapper.tagihanMapper.values()].flatMap(m=>({tagihan:m.tagihan, collectionCurrentTagihanAtp:m.data})).flat(2);
-            
-        // });
+        const dataCpSheetWithSource:DataCpSheetWithSource[]=[]
+        const sourcesByGroupKategoriAssesmen: SourceGroupKategoriAssesmenWithTagihanSheetKd = new Map()
+        const sourceSheetKdGroupTagihanPerAtp: SourceSheetAtpGroupTagihan[]=[]
+        const sourceSheetKdGroupTagihanLevelAtp: SourceSheetAtpWithScore[]=[];
+        const sourceSheetKdGroupTagihanLevelTp: SourceSheetTpWithScore[] = [];
+        const sourceSheetKdGroupTagihanLevelCp: SourceSheetCpWithScore[]=[];
+        const sourceDataKdSheetCp: SourceSheetAtpGroupTagihan[]=[]
         const ob_skorKd_atp_sheet:SkorKdNullableType = Object.create(null);
         const ob_skorKd_tp_sheet: SkorKdNullableType = Object.create(null);
         const ob_skorKd_cp_sheet: SkorKdNullableType = Object.create(null);
-        
 
         for(const cp of strukturDataCp){
             const {cp_id, slotCp, dataTp, cp_description} = cp;
@@ -462,6 +433,12 @@ export default class CalculatedNilaiStrukturKurikulum{
             let countSoalCp_sheet:number = 0;
             let skorCp_sheet:number|null = null;
             const koleksiTp: CollectionNilaiTpSheet[]=[];
+            const koleksiTpSheetWithSource: KoleksiTpSheetWithSource[]=[]
+
+            /** mapper Cp */
+            const sourceKategoriAssesmenDataKdSheetMapperCp = new Map<KategoriTagihanType, TagihanWithDataKdSheetAppDetailMapper>();
+            const sourceTagihanDataKdSheetMapperCp= new Map<number, TagihanWithDataKdSheetAppDetail>()
+
             for(const tp of dataTp){
                 const {tp_id, tp_description, dataAtp, slotTp}=tp;
                 const keyMapelTpId = `${kodeMapelInterface.kode}_${tp_id}`;
@@ -469,6 +446,11 @@ export default class CalculatedNilaiStrukturKurikulum{
                 let countSoalTp_sheet:number = 0;
                 let skorTp_sheet: number|null = null;
                 const koleksiAtp:CollectionNilaiAtpSheet[]=[];
+                const  koleksiAtpSheet: KoleksiAtpSheetWithSource[]=[]
+                const sourceKategoriAssesmenDataKdSheetMapperTp = new Map<KategoriTagihanType, TagihanWithDataKdSheetAppDetailMapper>();
+                const sourceTagihanDataKdSheetMapperTp= new Map<number, TagihanWithDataKdSheetAppDetail>();
+                const sourceDataKdSheetTp: SourceSheetAtpGroupTagihan[] = []
+
                 for(const atp of dataAtp){
                     const {atp_id, atp_description}=atp; 
                     const currentAtp = currentSiswaSheetKd.atpMapperWithSource.get(atp_id);
@@ -476,40 +458,143 @@ export default class CalculatedNilaiStrukturKurikulum{
                     let currentTotalSkorAtp:number|null = null;
                     let countSoalCurrentAtp:number = 0;
                     let skorAtp_sheet:number|null = null;
+                    const sourceTagihanDataKdSheetMapper=new Map<number, TagihanWithDataKdSheetAppDetail>();
+                    const sourceKategoriAssesmenDataKdSheetMapper = new Map<KategoriTagihanType, TagihanWithDataKdSheetAppDetailMapper>();
+                    const sourceDataKdSheet:SourceSheetAtpGroupTagihan[]= [];
+
                     if(currentAtp){
                         for(const [publikasi_id, dataNilai] of currentAtp.tagihanMapper.entries()){
-                            const {countSoal, data, tagihan} = dataNilai;
-                            const {skor, skorKdKey, kodeMapelKey,}=data;
-                            if(skor!==null){
-                                const currentTotalSkorAtpInTagihan = Decimal(skor??0).times(countSoal.length).toNumber();
-                                currentTotalSkorAtp = Decimal.sum(currentTotalSkorAtp??0, currentTotalSkorAtpInTagihan).toNumber();
-                                
-                            };
-                            countSoalCurrentAtp = Decimal.sum(countSoalCurrentAtp, countSoal.length).toNumber();
+                                const { data, tagihan} = dataNilai;
+                                /** define Mapper Atp */
+                                const currentTagihan = getOrCreateMap(sourceTagihanDataKdSheetMapper, tagihan.idbaris, ()=>({
+                                    tagihan,
+                                    collectionCurrentTagihanAtp:[]
+                                }));
+                                const currentKategoriAssesem = getOrCreateMap(sourceKategoriAssesmenDataKdSheetMapper, tagihan.tipe_assesmen, ()=>({
+                                    tagihanMapper: new Map<number, {collectionCurrentTagihanAtp:DataSheetKdWithRefrenceSoal[]}>()
+                                }));
+                                const currentKategoriTagihan = getOrCreateMap(currentKategoriAssesem.tagihanMapper, tagihan.idbaris, ()=>({
+                                    collectionCurrentTagihanAtp:[]
+                                }));
 
-                            /** koleksi sumber berdasarkan sumber tagihannya */
-                            // sourceSheetKdGroupTagihan.push({
-                            //     tagihan,
-                            //     collectionCurrentTagihanAtp: data
-                            // })
-                            
+                                /** define Mapper TP */
+                                const currentTagihanTp = getOrCreateMap(sourceTagihanDataKdSheetMapperTp, tagihan.idbaris, ()=>({
+                                    tagihan,
+                                    collectionCurrentTagihanAtp:[]
+                                }))
+                                const currentSourceKategoriTp = getOrCreateMap(sourceKategoriAssesmenDataKdSheetMapperTp,tagihan.tipe_assesmen, ()=>({
+                                    tagihanMapper: new Map<number, {collectionCurrentTagihanAtp:DataSheetKdWithRefrenceSoal[]}>()
+                                }));
+                                const currentTagihanSourceKategoriTp = getOrCreateMap(currentSourceKategoriTp.tagihanMapper, tagihan.idbaris, ()=>({
+                                    collectionCurrentTagihanAtp:[]
+                                }));
+
+                                /** kategoriAssesmenAll */
+                                const kategoriAsseesmenAll = getOrCreateMap(sourcesByGroupKategoriAssesmen, tagihan.tipe_assesmen, ()=>({
+                                    type: tagihan.tipe_assesmen,
+                                    tagihanWithSheetKd:[]
+
+                                }) )
+                                const newTagihanFilteringBankSoal = {
+                                    ...tagihan,
+                                    bank_soal_collections: tagihan.bank_soal_collections.filter(s=>s.kd_id === atp_id)
+                                }
+                                const ObSourceSheetAtpGroupTagihan:SourceSheetAtpGroupTagihan = {
+                                        atp: {atp_id, atp_description},
+                                        tagihan: newTagihanFilteringBankSoal,
+                                        collectionCurrentTagihanAtp: []
+                                    }
+                                
+                                /** define mapper Cp */
+                                const tagihanMapperCp = getOrCreateMap(sourceTagihanDataKdSheetMapperCp, tagihan.idbaris, ()=>({
+                                    tagihan,
+                                    collectionCurrentTagihanAtp:[]
+                                }))
+                                const kategoriAssesmenCp = getOrCreateMap(sourceKategoriAssesmenDataKdSheetMapperCp, tagihan.tipe_assesmen, ()=>({
+                                    tagihanMapper: new Map<number, {collectionCurrentTagihanAtp:DataSheetKdWithRefrenceSoal[]}>()
+                                }));
+                                const currentKategoriAssesmenCp = getOrCreateMap(kategoriAssesmenCp.tagihanMapper, tagihan.idbaris, ()=>({
+                                    collectionCurrentTagihanAtp:[]
+                                }));
+
+
+                                for(const {data:source, countSoal} of data){
+                                    const {skor} = source;
+                                    const currentTotalSkorAtpInTagihan = Decimal(skor??0).times(countSoal.length).toNumber();
+
+                                    currentTotalSkorAtp = Decimal.sum(currentTotalSkorAtp??0, currentTotalSkorAtpInTagihan).toDecimalPlaces(0).toNumber();
+                                    countSoalCurrentAtp = Decimal.sum(countSoalCurrentAtp, countSoal.length).toNumber();
+
+                                    ObSourceSheetAtpGroupTagihan.collectionCurrentTagihanAtp.push(source);
+                                    
+                                    currentTagihan.collectionCurrentTagihanAtp.push({
+                                        data:source,
+                                        countSoal:countSoal,
+                                    });
+                                    currentKategoriTagihan.collectionCurrentTagihanAtp.push({
+                                        data:source,
+                                        countSoal:countSoal
+                                    });
+
+                                    /** TP */
+                                    currentTagihanTp.collectionCurrentTagihanAtp.push({
+                                        data:source,
+                                        countSoal:countSoal
+                                    });
+                                    currentTagihanSourceKategoriTp.collectionCurrentTagihanAtp.push({
+                                        data:source,
+                                        countSoal:countSoal
+                                    });
+                                    
+                                    /** CP */
+                                    currentKategoriAssesmenCp.collectionCurrentTagihanAtp.push({
+                                        data:source,
+                                        countSoal:countSoal
+                                    });
+                                    tagihanMapperCp.collectionCurrentTagihanAtp.push({
+                                        data:source,
+                                        countSoal:countSoal
+                                    });
+                                }
+
+                                sourceDataKdSheet.push(ObSourceSheetAtpGroupTagihan);
+                                sourceDataKdSheetTp.push(ObSourceSheetAtpGroupTagihan);
+                                sourceDataKdSheetCp.push(ObSourceSheetAtpGroupTagihan);
+
+                                kategoriAsseesmenAll.tagihanWithSheetKd.push(ObSourceSheetAtpGroupTagihan)
+                               
+
+                               
                         }
-                        // sourceSheetKdGroupTagihan = [...currentAtp.tagihanMapper.entries()].map(([tagihan, collectionNilaiTagihanAtp])=>({tagihan, collectionNilaiTagihanAtp}));
+           
                     }
 
                     if(currentTotalSkorAtp !== null){
                         const skor = Decimal(currentTotalSkorAtp).div(countSoalCurrentAtp).toDecimalPlaces(2).toNumber();;
-                        skorAtp_sheet = skor;
+                            skorAtp_sheet = skor;
                         ob_skorKd_atp_sheet[keyMapelAtpId] = skor;
 
                         totalMapel_sheet = Decimal.sum(totalMapel_sheet??0, currentTotalSkorAtp).toNumber();
                         totalCp_sheet = Decimal.sum(totalCp_sheet??0, currentTotalSkorAtp).toNumber();
                         totalTp_sheet = Decimal.sum(totalTp_sheet??0, currentTotalSkorAtp).toNumber();
                     }
-
+                    
                     countSoalMapel_sheet = Decimal.sum(countSoalMapel_sheet, countSoalCurrentAtp).toNumber();
                     countSoalCp_sheet = Decimal.sum(countSoalCp_sheet, countSoalCurrentAtp).toNumber();
                     countSoalTp_sheet = Decimal.sum(countSoalTp_sheet, countSoalCurrentAtp).toNumber();
+
+                    const dataSkorAtp:SourceSheetAtpWithScore = {
+                                atp_id,
+                                atp_description,
+                                totalAtp: currentTotalSkorAtp,
+                                countKeyAtp: countSoalCurrentAtp,
+                                skorAtp: skorAtp_sheet,
+                                sourceDataKdSheet,
+                                sourceTagihanDataKdSheetMapper,
+                                sourceKategoriAssesmenDataKdSheetMapper
+                           };
+
+                    sourceSheetKdGroupTagihanLevelAtp.push(dataSkorAtp);
 
                     koleksiAtp.push({
                         atp_id,
@@ -519,15 +604,29 @@ export default class CalculatedNilaiStrukturKurikulum{
                         totalAtp: currentTotalSkorAtp
                     });
 
-                    
-
+                    koleksiAtpSheet.push({
+                        atp_id,
+                        atp_description,
+                        skorAtp: skorAtp_sheet,
+                        countKeyAtp: countSoalCurrentAtp,
+                        totalAtp: currentTotalSkorAtp,
+                        sourceSheetKdGroupTagihan:[...sourceDataKdSheet.values()],
+                        sourcesByGroupKategoriAssesmen: [...sourceKategoriAssesmenDataKdSheetMapper.keys()].map(type=>{
+                                return {
+                                    type,
+                                    tagihanWithSheetKd: sourceDataKdSheet.filter(source => source.tagihan.tipe_assesmen === type)
+                                }
+                            })
+                        });
                 }
+
                 if(totalTp_sheet !== null){
                     const skor = Decimal(totalTp_sheet).div(countSoalTp_sheet).toDecimalPlaces(2).toNumber();
                     skorTp_sheet = skor;
                     ob_skorKd_tp_sheet[keyMapelTpId] = skor;
                    
                 }
+
                 koleksiTp.push({
                     tp_id, 
                     tp_description, 
@@ -536,15 +635,51 @@ export default class CalculatedNilaiStrukturKurikulum{
                     totalTp:totalTp_sheet,
                     skorTp:skorTp_sheet,
                     koleksiAtp
-                })
+                });
 
+                koleksiTpSheetWithSource.push({
+                    tp_id, 
+                    tp_description, 
+                    slotTp,
+                    countKeyTp:countSoalTp_sheet,
+                    totalTp:totalTp_sheet,
+                    skorTp:skorTp_sheet,
+                    koleksiAtp, 
+                    koleksiAtpSheet,
+                    // sourceSheetKdGroupTagihan:[],
+                    // sourcesByGroupKategoriAssesmen:[],
+                    sourceSheetKdGroupTagihan:[...sourceDataKdSheetTp.values()],
+                    sourcesByGroupKategoriAssesmen: [...sourceKategoriAssesmenDataKdSheetMapperTp.keys()].map(type=>{
+                        return {
+                            type,
+                            tagihanWithSheetKd: sourceDataKdSheetTp.filter(source => source.tagihan.tipe_assesmen === type)
+                        }
+                    })
+                    
+                });
+
+                /** ob_SourceSheetTpWithScore */
+                const ob_SourceSheetTpWithScore:SourceSheetTpWithScore={
+                    tp_id, 
+                    tp_description, 
+                    totalTp:totalTp_sheet,
+                    countKeyTp:countSoalTp_sheet,
+                    skorTp:skorTp_sheet,
+                    sourceDataKdSheet:sourceDataKdSheetTp,
+                    sourceKategoriAssesmenDataKdSheetMapper:sourceKategoriAssesmenDataKdSheetMapperTp,
+                    sourceTagihanDataKdSheetMapper:sourceTagihanDataKdSheetMapperTp
+                };
+
+                sourceSheetKdGroupTagihanLevelTp.push(ob_SourceSheetTpWithScore)
             }
+
             if(totalCp_sheet!==null){
                 const skor = Decimal(totalCp_sheet).div(countSoalCp_sheet).toDecimalPlaces(2).toNumber();
                 skorCp_sheet = skor;
                 ob_skorKd_cp_sheet[keyMapelCpId] = skor;
 
             }
+
             dataCp_sheet.push({
                 cp_id,
                 cp_description,
@@ -553,40 +688,70 @@ export default class CalculatedNilaiStrukturKurikulum{
                 totalCp:totalCp_sheet,
                 countKeyCp:countSoalCp_sheet,
                 koleksiTp
-            })
+            });
+
+            dataCpSheetWithSource.push({
+                cp_id,
+                cp_description,
+                skorCp:skorCp_sheet,
+                slotCp,
+                totalCp:totalCp_sheet,
+                countKeyCp:countSoalCp_sheet,
+                koleksiTp,
+                /**
+                 * koleksiTpSheetWithSource: KoleksiTpSheetWithSource[]
+                     sourceSheetKdGroupTagihan: SourceSheetAtpGroupTagihan[];
+                     sourcesByGroupKategoriAssesmen: SourceGroupKategoriAssesmenWithTagihanSheetKd;
+                 }
+                 */
+                koleksiTpSheetWithSource,
+                sourceSheetKdGroupTagihan:[...sourceDataKdSheetCp.values()],
+                sourcesByGroupKategoriAssesmen: [...sourceKategoriAssesmenDataKdSheetMapperCp.keys()].map(type=>{
+                    return {
+                        type,
+                        tagihanWithSheetKd: sourceDataKdSheetCp.filter(source => source.tagihan.tipe_assesmen === type)
+                    }
+                })
+            });
+            
+            const obSourceSheetKdGroupTagihanLevelCp:SourceSheetCpWithScore  ={
+                cp_id,
+                cp_description,
+                totalCp: totalCp_sheet,
+                countKeyCp: countSoalCp_sheet,
+                skorCp: skorCp_sheet,
+                sourceDataKdSheet:sourceDataKdSheetCp,
+                sourceKategoriAssesmenDataKdSheetMapper: sourceKategoriAssesmenDataKdSheetMapperCp,
+                sourceTagihanDataKdSheetMapper: sourceTagihanDataKdSheetMapperCp
+            };
+
+            sourceSheetKdGroupTagihanLevelCp.push(obSourceSheetKdGroupTagihanLevelCp)
         }
+        
         if(totalMapel_sheet!==null){
             skorMapel_sheet = Decimal(totalMapel_sheet).div(countSoalMapel_sheet).toDecimalPlaces(0).toNumber();
         }
-
-        // const dataCpWithSource:number = ;
-        // const skorKd_atp:number = ;
-        // const skorKd_tp:number = ;
-        // const skorKd_cp:number = ;
-        // const sourceResponGroupTagihanLevelTp:number = ;
-        // const sourceResponGroupTagihanLevelCp:number = ;
-        // const sourceResponGroupTagihanLevelAtp:number = ;
-        // const sourceResponGroupTagihan:sourceResponGroupTagihanLevelMapel:number = ;
-        // const sourcesByGroupKategoriAssesmen:sourcesByGroupKategoriAssesmenLevelMape:number = ;
+        
         const skorKd_atp_sheet=Object.keys(ob_skorKd_atp_sheet).length === 0?undefined:ob_skorKd_atp_sheet;
         const skorKd_tp_sheet=Object.keys(ob_skorKd_tp_sheet).length === 0?undefined:ob_skorKd_tp_sheet;
         const skorKd_cp_sheet=Object.keys(ob_skorKd_cp_sheet).length === 0?undefined:ob_skorKd_cp_sheet;
+
         return {
             totalMapel_sheet,
             countSoalMapel_sheet,
             skorMapel_sheet,
             dataCp_sheet,
-            // dataCpWithSource,
+            dataCpSheetWithSource,
             skorKd_atp_sheet,
             skorKd_tp_sheet,
             skorKd_cp_sheet,
-            sourceSheetKdGroupTagihan:[],
-
-            // sourceResponGroupTagihanLevelTp,
-            // sourceResponGroupTagihanLevelCp,
-            // sourceResponGroupTagihanLevelAtp,
-            // sourceResponGroupTagihan:sourceResponGroupTagihanLevelMapel,
-            // sourcesByGroupKategoriAssesmen:sourcesByGroupKategoriAssesmenLevelMapel
+            sourceSheetKdGroupTagihan:sourceSheetKdGroupTagihanPerAtp,
+            sourcesByGroupKategoriAssesmen,
+            sourceSheetKdGroupTagihanLevelAtp:sourceSheetKdGroupTagihanLevelAtp,
+            sourceSheetKdGroupTagihanLevelTp,
+            sourceSheetKdGroupTagihanLevelCp
         }
     }
+
+
 }

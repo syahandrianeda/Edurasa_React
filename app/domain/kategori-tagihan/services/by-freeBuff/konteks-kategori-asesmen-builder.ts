@@ -14,7 +14,7 @@ import type { StrukturKurikulumMapelWithSlotType } from "~/domain/trees-struktur
 import type { KategoriTagihanType } from "../../types/entities/KategoriTagihanType";
 import type { KategoriTagihanHasManyPesertaMapelType } from "../../types/kategori-tagihan-hasMany-respon-siswa/KategoriTagihanHasManyPesertaMapelType";
 import SkorKdSheetMapper, { type SkorKdSheetMapperType } from "../../infrastructures/SkorKdSheetMapper";
-import MapperPesertaTagihan, { type MapperPesertaHasTagihanMapperType } from "../../infrastructures/MapperPesertaTagihan";
+import MapperPesertaTagihan, { type MapperPesertaHasTagihanMapperType } from "../../infrastructures/_MapperPesertaTagihan";
 import DataSheetSkorKdKategoriAsesmenMapper, { type DataSheetSkorKdKategoriAsesmenMapperType } from "../../infrastructures/DataSheetSkorKdKategoriAsesmenMapper";
 
 /** nilai hasil `mapperKategoriAssesmen.get(type)` */

@@ -1,6 +1,6 @@
 import getOrCreateMap from "~/lib/getOrCreateMapper";
 import type { TagihanHasDataResponse } from "../penilaian/type/tagihan-assesmen-type";
-import type { AtpContainKoleksiBankSoalMapperType, AtpContainKoleksiBankSoalType } from "./AtpContainKoleksiBankSoalType";
+import type { AtpContainKoleksiBankSoalMapperType } from "./AtpContainKoleksiBankSoalType";
 
 export default class AtpWithBankSoal{
     static buildMapper(sumberTagihan:TagihanHasDataResponse[]):AtpContainKoleksiBankSoalMapperType{

@@ -5,7 +5,7 @@ import type { RisponsePenilaianSiswa } from "~/types/penilaian/RisponsePenilaian
 import KoreksiWrapper from "./fields/koreksi";
 import { ModalFooterEdura } from "~/components/modals/modal-components";
 import { useImmer } from "use-immer";
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { upsertRespon, type HandleUpdateResponKoreksi } from "~/domain/bank-soal/koreksi";
 import ButtonCommitAwesome from "~/components/button-awesome/commit-button";
 import ResumeSkorKdKoreksi from "./fields/resume-skor-kd-koreksi";
@@ -51,8 +51,8 @@ export default function KoreksiItemSoal(){
             const settingTagihan = rep?.setting_tagihan?.count_bentuk_soal;//
             const strukturNaskah = PaketSoalStrukturBuilder.buildFromCountBentukSoalPaket(rep.bank_soal_collections, settingTagihan ?? [])
             const respon = RisponseNilaiSiswaBuilder.build(strukturNaskah,[])
-            const templateKoreksiSiswa = TemplateKoreksiSiswaBuilder.build(strukturNaskah,respon);// RisponsePenilaianSiswaBuilder.build(rep?.bank_soal_collections ?? [],settingTagihan ?? [],[]) ;//(dataTagihan?.createTemplateKoreksiPerSiswa(kurikulum, idSoal) ?? {sebaran:[], respon:[]}) as unknown as {sebaran:detailNilaiSiswaAppType['templateKoreksiSiswa'],respon:RisponsePenilaianSiswa[]};
-            const skorKdSebaran =  SkorKdSebaranBuilder.build(rep.sebaran_kurikulum_by_bentuk_soal, respon);
+            const templateKoreksiSiswa = TemplateKoreksiSiswaBuilder.build(strukturNaskah,respon);
+            const skorKdSebaran =  SkorKdSebaranBuilder.build(rep.sebaran_kurikulum_by_bentuk_soal, respon,'');
             const objekKdSebaran = skorKdSebaran.data.map(m=>m.objekSkorKd).reduce((a,b)=>({...a,...b}))
 
             const data:detailNilaiSiswaAppType = {
@@ -130,7 +130,7 @@ export default function KoreksiItemSoal(){
        
         const sebaran_kurikulum_by_bentuk_soal = dataTabelParent.sebaran_kurikulum_by_bentuk_soal;
         
-        return SkorKdSebaranBuilder.build(sebaran_kurikulum_by_bentuk_soal,updateRespon)
+        return SkorKdSebaranBuilder.build(sebaran_kurikulum_by_bentuk_soal,updateRespon,'guru')
     },[dataTabelParent, updateRespon])
     
     const onSubmit = async()=>{

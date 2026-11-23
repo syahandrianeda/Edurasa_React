@@ -1,5 +1,4 @@
 import type { BankSoalAppType } from "~/types/bank-soal/bank-soal-type";
-import type { TagihanHasDataResponse } from "../penilaian/type/tagihan-assesmen-type";
 import getOrCreateMap from "~/lib/getOrCreateMapper";
 
 export default class AtpMapperBankSoalCollections{

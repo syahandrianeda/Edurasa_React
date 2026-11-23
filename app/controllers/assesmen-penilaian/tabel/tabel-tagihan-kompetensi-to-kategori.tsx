@@ -1,9 +1,6 @@
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import { TdEdura, ThEdura, TRowEdura } from "~/components/tabels/tabel-components";
 import TableWithScrolling from "~/components/tabels/table-with-scrolling";
-import type TagihanPenilaianClass from "~/domain/penilaian/infrastucture/tagihan-penilian-class";
-import type { SebaranTagihanAssesmenKurikulumType } from "~/domain/penilaian/model/sebaran-tagihan-kuriklum-type";
-import type { DataSkorSiswaByInstrumenType } from "~/domain/penilaian/type/collection-kurikulum-in-all-publikasi/DataSkorSiswaByInstrumenType";
 import type { DetailPublikasiWithResponSiswaType } from "~/domain/penilaian/type/collection-kurikulum-in-all-publikasi/DetailPublikasiWithResponSiswaType";
 import type { CollactionMapelInAllPublikasiPaketType } from "~/domain/penilaian/type/collection-kurikulum-in-all-publikasi/CollactionMapelInAllPublikasiPaketType";
 import { cn } from "~/lib/utils";
@@ -13,7 +10,6 @@ import { getNumberFromString } from "~/lib/get-number";
 import { currentTapelProperties } from "~/lib/current-tapel";
 
 export default function TableTagihanKompetensi({data, showIdentitas=true}:{data?:CollactionMapelInAllPublikasiPaketType[], showIdentitas?:boolean}){
-    // const data = instansiasi?.dataSebaranTagihanKurikulum;
     const [selectedRespons, setSelectedRespons] = useState<DetailPublikasiWithResponSiswaType|null>(null);
     const rombelAktif = getSessionRombel();
     const jenjang= getNumberFromString(rombelAktif);
@@ -55,12 +51,12 @@ export default function TableTagihanKompetensi({data, showIdentitas=true}:{data?
                                         }
                                         {
                                             (iTp === 0 && iAtp === 0 )&& (
-                                                <TdEdura className="text-wrap" rowSpan={cp.slotRow}>{cp.cp_description}</TdEdura>
+                                                <TdEdura className="text-wrap" rowSpan={cp.slotRow}>[{cp.cp_id}] {cp.cp_description}</TdEdura>
                                             )
                                         }
                                         {
                                             (iAtp === 0) && (
-                                                <TdEdura className="text-wrap" rowSpan={tp.slotRow}>{tp.tp_description}</TdEdura>
+                                                <TdEdura className="text-wrap" rowSpan={tp.slotRow}>[{tp.tp_id}] {tp.tp_description}</TdEdura>
                                             )
                                         }
                                         <TdEdura className="text-wrap">[{atp.atp_id}] {atp.atp_description}</TdEdura>

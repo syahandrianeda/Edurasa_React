@@ -4,7 +4,7 @@ import type { TagihanHasDataResponse } from "../../type/tagihan-assesmen-type";
 
 
 
-// export interface StrukturKurikulumInKategoriAssesmenInterface extends SebaranTagihanAssesmenKurikulumType { }
+
 export interface StrukturKurikulumInKategoriAssesmenInterface extends StrukturMapelInterface{
     slotMapel:number,
     dataCp: StrukturCpInKategoriAssesmenAssesmenInterface[]

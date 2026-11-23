@@ -5,6 +5,7 @@ type Props = {
     jumlahSkor:number|null
     skor:number|null,
     fokus:string,
+    pembulatan?:number,
     children?:ReactNode
 
 }
@@ -13,7 +14,8 @@ export default function CardKalkulasiSkorSheet ({
     jumlahSkor,
     fokus,
     children,
-    skor
+    skor,
+    pembulatan=2
 }:Props){
     return (
         <div className="mt-4 mb-2 rounded shadow-md shadow-slate-400 p-1 min-h-18 min-w-28 outline-1 text-[8px] flex flex-col gap-1">
@@ -30,7 +32,7 @@ export default function CardKalkulasiSkorSheet ({
             </div>
             <div className="flex w-full justify-between items-end brder-b mt-2 font-bold border-b border-dotted border-sky-400">
                 <p>NIlai {fokus}</p>
-                <p className="text-md">{skor?.toFixed(2)}</p>
+                <p className="text-md">{skor?.toFixed(pembulatan)}</p>
             </div>
 
         </div>

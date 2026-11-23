@@ -1,5 +1,4 @@
-import NamaSiswa from "~/controllers/data-siswa-controller/forms/fields/nama-siswa";
-import AtpMapperBankSoalCollections from "~/domain/atp-mapper/AtpMapperBanSoalCollections";
+import AtpMapperBankSoalCollections from "~/domain/atp-mapper/_AtpMapperBanSoalCollections";
 import type { TagihanHasDataResponse } from "~/domain/penilaian/type/tagihan-assesmen-type";
 import getOrCreateMap from "~/lib/getOrCreateMapper";
 import type { BankSoalAppType } from "~/types/bank-soal/bank-soal-type";

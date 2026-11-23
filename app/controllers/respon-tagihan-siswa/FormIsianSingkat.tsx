@@ -1,10 +1,7 @@
 import { InputTextArea } from "~/components/fields/fields";
 import type { Props } from "./input-opsi-jawaban-online";
-import {useCallback, useEffect, useState, type ChangeEvent, type FormEvent, type InputEventHandler} from 'react';
-import UploadImageServiceCommon from "~/infrastructures/services/upload-image-commons";
+import {useEffect, useState, type ChangeEvent} from 'react';
 import {toast} from 'sonner';
-import urlImgDrive from "~/lib/url-img-drive";
-import ImgDriveComp from "~/components/image-from-drive/img-drive";
 import UploadGambarSoalService from "~/infrastructures/services/upload-gambar-soal-service-implements";
 
 export function FormIsianSingkat({ data, no_prefix, dataRespon, handleChange }: Props) {

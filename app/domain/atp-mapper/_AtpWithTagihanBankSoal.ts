@@ -1,16 +1,9 @@
 import type { BankSoalAppType } from "~/types/bank-soal/bank-soal-type";
 import type { TagihanHasDataResponse } from "../penilaian/type/tagihan-assesmen-type";
 import getOrCreateMap from "~/lib/getOrCreateMapper";
-import type { AtpContainKoleksiBankSoalMapperType, AtpContainKoleksiBankSoalType } from "./AtpContainKoleksiBankSoalType";
-import type { AtpAsOrm } from "~/types/kurikulum/prota-orm";
+import type { AtpContainKoleksiBankSoalMapperType } from "./AtpContainKoleksiBankSoalType";
 import AtpAsOrmUndefined from "../kurikulum/atpAsOrm-undefined";
 import type { StrukturAtpType, StrukturCpType, StrukturMapeltype, StrukturTpType } from "../trees-struktur-kurikulum";
-import { data } from "react-router";
-import type { SiswaType } from "~/types/siswa";
-import type AtpWithBankSoal from "./AtpWithBankSoal";
-import AtpMapper from "../mapper/atp/AtpMapper";
-import type { RisponsePenilaianSiswa } from "~/types/penilaian/RisponsePenilaianSiswaType";
-import type { jp_mapelApp } from "~/types/mapel/jp_mapel";
 
 export type TagihanBankSoalCurrentAtp = {
     tagihan:TagihanHasDataResponse,
@@ -30,7 +23,7 @@ type AtpWithBankSoalType = {
     atpSoal:BankSoalAppType[]
 };//AtpContainKoleksiBankSoalMapperType;
 
-type MapelMapWithPesertaAtpType =Map<string, {pesertaMapper:Map<number, {siswa:SiswaType, atpMapper:AtpContainKoleksiBankSoalMapperType, atpRespon:Map<number, RisponsePenilaianSiswa[]>}>}>
+// type MapelMapWithPesertaAtpType =Map<string, {pesertaMapper:Map<number, {siswa:SiswaType, atpMapper:AtpContainKoleksiBankSoalMapperType, atpRespon:Map<number, RisponsePenilaianSiswa[]>}>}>
 function atpContainKoleksiBankSoalMapper (mapper:AtpWithTagihanBankSoalMapperType, mapperResult:AtpContainKoleksiBankSoalMapperType):void {
     for(const [atp_id, sourceAtp] of mapper.entries()){
             const atp_soal = sourceAtp?.data?.flatMap(m=>m.atpSoal);

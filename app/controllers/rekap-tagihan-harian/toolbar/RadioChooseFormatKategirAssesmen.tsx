@@ -24,7 +24,7 @@ export default function RadioChooseFormatKategoriAssesmen(){
         }
     },[])
     return (
-            <RadioGroup value={value?.extra?.formatKategoriAssesmen} onValueChange={handleChange} className="flex flex-col md:flex-row shadow-md shadow-sky-700 p-1">
+            <RadioGroup value={value?.extra?.formatKategoriAssesmen ?? 'decision'} onValueChange={handleChange} className="flex flex-col md:flex-row shadow-md shadow-sky-700 p-1">
                 <div className="w-full space-y-2 bg-sky-50 rounded text-xs h-fit p-1 shadow-md shadow-sky-600">
                     <div className="flex items-center gap-3">
                         <RadioGroupItem value="decision" id="decision" />

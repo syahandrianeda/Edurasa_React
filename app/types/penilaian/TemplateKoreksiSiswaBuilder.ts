@@ -1,5 +1,3 @@
-import RisponsePenilaianSiswaBuilder from "~/domain/penilaian/infrastucture/rispon-penilaian-siswa-builder"
-import RisponseNilaiSiswaBuilder from "~/domain/penilaian/infrastucture/RisponseNilaiSiswaBuilder"
 import type { RisponsePenilaianSiswa } from "./RisponsePenilaianSiswaType"
 import type { TemplateKoreksiSiswaType } from "./TemplateKoreksiSiswaType"
 import type { PaketSoalStruktur } from "~/domain/paket-soal/paket-soal-struktur/PaketSoalStrukturType"

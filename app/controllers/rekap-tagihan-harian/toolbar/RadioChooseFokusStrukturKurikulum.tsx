@@ -1,5 +1,4 @@
 import { useFilterContext } from "~/components/toolbars/state-toolbar/state-toolbar"
-import { Field, FieldContent, FieldDescription, FieldLabel, FieldTitle, } from "~/components/ui/field";
 import { Label } from "~/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group";
 import {useCallback, useEffect} from 'react';
@@ -54,7 +53,7 @@ export default function RadioChooseFokusStrukturKurikulum(){
         }
     },[])
     return (
-            <RadioGroup value={value?.extra?.FokusStrukturKurikulum?.keyLabel} onValueChange={handleChange} className="flex flex-col md:flex-row shadow-md shadow-sky-700 p-1">
+            <RadioGroup value={value?.extra?.FokusStrukturKurikulum?.keyLabel ?? 'Atp'} onValueChange={handleChange} className="flex flex-col md:flex-row shadow-md shadow-sky-700 p-1">
                 <div className="w-full space-y-1 bg-sky-50 rounded text-xs h-fit p-1 shadow-md shadow-sky-600">
                     {
                         dataControls.map((struktur, iStruktur)=>

@@ -1,7 +1,5 @@
 import { getGlobalIndex } from "~/domain/paket-soal/infrastructure/create-design";
 import type { PaketSoalDesign } from "~/domain/paket-soal/result/paket-soal-design-type";
-import ItemSoalPreview from "../paket-soal/components/item-soal-preview";
-import { useCurrentTime } from "~/hooks/use-current-time";
 import FormITemSoalOnline from "./form-item-soal-online";
 import type { RisponsePenilaianSiswa } from "~/types/penilaian/RisponsePenilaianSiswaType";
 import TimerSoal from "./timer-soal";

@@ -22,7 +22,7 @@ import type { detailNilaiSiswaAppType } from "~/types/penilaian/nilai-siswa-app-
 import type { DataKdSheetApp } from "~/types/penilaian/DataKdSheetAppType";
 import type { DataSheetSkorKdKategoriAsesmenAppType } from "~/types/penilaian/DataSheetSkorKdKategoriAsesmenAppType";
 import type { SiswaType } from "~/types/siswa";
-import type { TagihanMapperInMapperSiswaHasTagihanMapper } from "../../infrastructures/MapperPesertaTagihan";
+import type { TagihanMapperInMapperSiswaHasTagihanMapper } from "../../infrastructures/_MapperPesertaTagihan";
 import type { CollectionNilaiMapel } from "../../types";
 import type { CollectionNilaiCp } from "../../types/kategori-tagihan-hasMany-respon-siswa/CollectionNilaiCp";
 import type { CollectionNilaiTp } from "../../types/kategori-tagihan-hasMany-respon-siswa/CollectionNilaiTp";

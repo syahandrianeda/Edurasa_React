@@ -250,9 +250,8 @@ export default class KategoriTagihanRaportBuilder{
          
     }
     static buildFromMapper(mapperKategoriTagihanPerAtpSkor:DataTipeAssesmenMapper,mapperStrukturKurikulum:Map<string, MapelMapperInAllPublikasiPaket>):KategoriTagihanHasManyResponSiswaType[]{
-        //  const {mapperKategoriTagihanPerAtpSkor, mapperStrukturKurikulum} = MapperTagihanHasDataRespon(data);
-        //  console.log({mapperKategoriTagihanPerAtpSkor,mapperStrukturKurikulum});
-          const koleksiAtpInMapel:RekapAtpInKoleksiMapelOnRespoonseTiapKategoriTagihan[] = [...mapperStrukturKurikulum.values()].map(mapel=>{
+        
+            const koleksiAtpInMapel:RekapAtpInKoleksiMapelOnRespoonseTiapKategoriTagihan[] = [...mapperStrukturKurikulum.values()].map(mapel=>{
                 const {dataCpMapper} = mapel
                 const collection_Cp:StrukturCpType[] = [];
                 const collection_Tp:StrukturTpType[] = [];

@@ -15,7 +15,9 @@ import type { MapperTagihanHasDataResponWithKategoriTagihan } from "./MapperTagi
 import dtoTagihanAssesmenTypeFromTagihanHasDataRespon from "../struktur-tagihan-respon/infrastructure/dtoTagihanAssesmenTypeFromTagihanHasDataRespon";
 // import { dtoTagihanAssesmenTypeFromTagihanHasDataRespon } from "../struktur-tagihan-respon/services/dtoTagihanAssesmenTypeFromTagihanHasDataRespon";
 
-
+/** 
+ * @deprecated
+ */
 export default function MapperTagihanHasDataRespon(data:TagihanHasDataResponse[]):MapperTagihanHasDataResponWithKategoriTagihan{
     const koleksi = data.map(m=>({
                 idbaris: m.idbaris,
@@ -179,7 +181,7 @@ export default function MapperTagihanHasDataRespon(data:TagihanHasDataResponse[]
                                         koleksiJawaban
                                     }
                                 })
-                                const countResponByPublikasi = data_respons.length;
+                                const countResponByPublikasi =data_response_bySiswa.filter(s=>s.data.length> 0).length ;//data_respons.length;
                                 const dataPublikasiPaket:DetailPublikasiWithResponSiswaType = {
                                     idbaris:idbaris,
                                     namaPublikasi: nama_publikasi,

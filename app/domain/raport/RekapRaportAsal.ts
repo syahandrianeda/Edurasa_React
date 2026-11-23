@@ -1,13 +1,18 @@
 import type { jp_mapelApp } from "~/types/mapel/jp_mapel";
 import type { KategoriTagihanHasManyPesertaMapelType } from "../kategori-tagihan/types/kategori-tagihan-hasMany-respon-siswa/KategoriTagihanHasManyPesertaMapelType";
-import type { AtpDescriptionRefrence, MakMinAtp, MakMinCp, MakMinTp, NilaiRaportInterface, RaportIntarface, SourceNilaiKatetoriTagihanType } from "./types/RaportIntarface";
+import type { MakMinAtp, MakMinCp, MakMinTp, NilaiRaportInterface, SourceNilaiKatetoriTagihanType } from "./types/RaportIntarface";
 import type { InterfaceMapel } from "~/types/mapel/mapel";
 import KoleksiKategoriAssesmenOnJenjang from "../kategori-tagihan/builder/KoleksiKategoriAssesmenOnJenjang";
-import { jmlAman } from "~/lib/helper-aritmetika-desimal";
 import type { KategoriTagihanType } from "../kategori-tagihan/types/entities/KategoriTagihanType";
 import { getMinMax } from "~/lib/get-min-max-on-array-object";
 import type { SiswaType } from "~/types/siswa";
 import type { StrukturKurikulumMapelWithSlotType } from "../trees-struktur-kurikulum/struktur-kurikulum-type";
+import type { TagihanHasDataResponse } from "../penilaian/type/tagihan-assesmen-type";
+import type TagihanHasDataResponseMapperBuilder from "../TagihanHasDataResponMapper/TagihanHasDataResponMapperBuilder";
+import CalculatedNilaiStrukturKurikulum from "./infrastructures/accumulator-nilai/CalculatedNilaiStrukturKurikulum";
+import { CalclutatedNilaiRaport } from "./infrastructures/accumulator-nilai/CalclutatedNilaiRaport";
+import Decimal from "node_modules/decimal.js/decimal";
+import type { StrukturAtpType, StrukturCpType, StrukturTpType } from "../trees-struktur-kurikulum";
 
 
 // export type RaportRombelAsal = Pick<RaportIntarface, 'dataSiswa'|'dataNilaiRaportResponSiswa'|'dataNilaiRaportSheetKd'>
@@ -19,7 +24,11 @@ export type RaportRombelAsal = {
 export type MapelWithNilaiRaportRombel = {
     mapel:InterfaceMapel,
     raportSiswa: RaportRombelAsal[] 
-    strukturKurikulumRaport?: StrukturKurikulumMapelWithSlotType
+    strukturKurikulumRaport?: StrukturKurikulumMapelWithSlotType,
+    sourceTagihan:TagihanHasDataResponse[],
+    collectionAtp:StrukturAtpType[],
+    collectionTp:StrukturTpType[],
+    collectionCp:StrukturCpType[],
 }
 
 export default class RekapRaportAsal{
@@ -61,11 +70,18 @@ export default class RekapRaportAsal{
                raportSiswa.push(objRaportRombel)
                 
             }
-
+            const collectionAtp :StrukturAtpType[]=[]
+            const collectionTp  :StrukturTpType[]=[]
+            const collectionCp  :StrukturCpType[]=[]
+            
             this.dataNilaiRaportRombel.push({
                 mapel:mapelInterface,
                 raportSiswa,
-                
+                sourceTagihan:[],
+                collectionAtp,
+                collectionTp ,
+                collectionCp 
+
             });
         }
     }
@@ -101,7 +117,8 @@ export default class RekapRaportAsal{
                         if(collectionNIlaiMapel){
                             const {skorMapel, totalMapel, countSoalMapel} = collectionNIlaiMapel
                             nilai = skorMapel;
-                            totalMapelAccumulator = jmlAman((totalMapelAccumulator ?? 0) , (totalMapel ?? 0));
+                            // totalMapelAccumulator = jmlAman((totalMapelAccumulator ?? 0) , (totalMapel ?? 0));
+                            totalMapelAccumulator = Decimal.sum((totalMapelAccumulator ?? 0) , (totalMapel ?? 0)).toNumber();
                             countInstrumen += countSoalMapel;
                         }
                         source.push({
@@ -174,28 +191,22 @@ export default class RekapRaportAsal{
             max: maxCp
         }
 
-        // dataNilaiRaportResponSiswa.push({
-        //     mapel:mapelInterface,
-        //     nilaiRaport: tempNilaiRaporRespon,
-        //     atpDescriptionRefrence: getMaxMinAtp,
-        //     tpDescriptionRefrence: getMaxMinTp,
-        //     cpDescriptionRefrence: getMaxMinCp,
-        //     source
-        //     // kdMaks,
-        //     // kdMin,
-        //     // kdMaksDescription,
-        //     // kdMinDescription,
-        //     // idKdMaks,
-        //     // idKdMin,
-        // });
-        // return dataNilaiRaportResponSiswa
+        const collectionAtp:StrukturAtpType[]=[];
+        const collectionCp: StrukturCpType[]=[];
+        const collectionTp: StrukturTpType[]=[];
         return {
             mapel:mapelInterface,
             nilaiRaport: tempNilaiRaporRespon,
             atpDescriptionRefrence: getMaxMinAtp,
             tpDescriptionRefrence: getMaxMinTp,
             cpDescriptionRefrence: getMaxMinCp,
-            source
+            source,
+            nilaiRaportAtp:null,
+            nilaiRaportTp:null,
+            nilaiRaportCp:null,
+            collectionAtp,
+            collectionTp,
+            collectionCp,
             // kdMaks,
             // kdMin,
             // kdMaksDescription,
@@ -230,7 +241,8 @@ export default class RekapRaportAsal{
                         if(collectionNIlaiMapel){
                             const {totalMapel_sheet:totalMapel, skorMapel_sheet:skorMapel, countSoalMapel_sheet:countSoalMapel} = collectionNIlaiMapel
                             nilai = skorMapel;
-                            totalMapelAccumulator = jmlAman((totalMapelAccumulator ?? 0) , (totalMapel ?? 0));
+                            // totalMapelAccumulator = jmlAman((totalMapelAccumulator ?? 0) , (totalMapel ?? 0));
+                            totalMapelAccumulator = Decimal.sum((totalMapelAccumulator ?? 0) , (totalMapel ?? 0)).toNumber();
                             countInstrumen += countSoalMapel;
                         }
                         source.push({
@@ -299,24 +311,23 @@ export default class RekapRaportAsal{
             max: maxCp
         }
 
-        // dataNilaiRaportSheetKd.push({
-        //     mapel:mapelInterface,
-        //     nilaiRaport: tempNilaiRaporRespon,
-        //     atpDescriptionRefrence: getMaxMinAtp,
-        //     tpDescriptionRefrence: getMaxMinTp,
-        //     cpDescriptionRefrence: getMaxMinCp,
-        //     source
-
-           
-        // });
-        // return dataNilaiRaportSheetKd
+        
+        const collectionAtp:StrukturAtpType[] = [];
+        const collectionTp:StrukturTpType[]=[];
+        const collectionCp:StrukturCpType[]=[];
         return {
             mapel:mapelInterface,
             nilaiRaport: tempNilaiRaporRespon,
             atpDescriptionRefrence: getMaxMinAtp,
             tpDescriptionRefrence: getMaxMinTp,
             cpDescriptionRefrence: getMaxMinCp,
-            source
+            source,
+            nilaiRaportAtp:null,
+            nilaiRaportCp:null,
+            nilaiRaportTp:null,
+            collectionAtp,
+            collectionTp,
+            collectionCp
 
            
         }
@@ -327,5 +338,73 @@ export default class RekapRaportAsal{
         this.buildNilaiRaportRombel();
         return this;
     }
+
+
+    static RekapRaporFromMapper(mapper:TagihanHasDataResponseMapperBuilder, mapelRombel:jp_mapelApp[]):MapelWithNilaiRaportRombel[]{
+        
+        const koleksiMapelMapper = mapper.mapelMapperWithTagihanHasDataResponse;
+        const strukturKurikulumRaport = mapper.strukturKurikulumWithSlot;
+        const sumberRespon = mapper.siswaAsRespondenHasResponTagihan;
+        const sumberSheetKd = mapper.siswaHasSheetKd;
+         const dataMapelWithNilaiRaportSiswa:MapelWithNilaiRaportRombel[]=[];
+        for(const mapel of mapelRombel){
+            const {source:mapelInterface, data_students, kode}= mapel;
+            const raportSiswa:RaportRombelAsal[] = [];
+            const kurikulumCurrentMapel = strukturKurikulumRaport.find(s=>s.kodeMapel === kode);
+            const currentKoleksiTagihan = koleksiMapelMapper.get(kode);
+
+            for(const siswaa of data_students){
+                const sumberResponCurrentSiswa = sumberRespon?.get(siswaa.id);
+                const sumberSheetKdCurrentSiswa =  sumberSheetKd;//.get(siswaa.id);
+                
+                // if(!sumberResponCurrentSiswa) continue;
+                // const sumberNilai = CalculatedNilaiStrukturKurikulum(
+                //                         );
+                const nilaiRespon = CalculatedNilaiStrukturKurikulum.getNilaiFromResponse(
+                                                            kurikulumCurrentMapel?.dataCp ?? [],
+                                                            siswaa.id,
+                                                            mapelInterface,
+                                                            sumberResponCurrentSiswa);
+                const nilaiSheetKd = CalculatedNilaiStrukturKurikulum.getNilaiFromSheetKd(
+                                                            kurikulumCurrentMapel?.dataCp ?? [],
+                                                            siswaa.id,
+                                                            mapelInterface,
+                                                            sumberSheetKdCurrentSiswa );
+
+                const dataNilaiRaportResponSiswa= CalclutatedNilaiRaport.calculatedNilairespon(mapelInterface, nilaiRespon);
+                const dataNilaiRaportSheetKd:NilaiRaportInterface = CalclutatedNilaiRaport.calculatedNilaiSheetKd(mapelInterface, nilaiSheetKd);
+                
+                // /** SELESAI */
+                const objRaportSiswa:RaportRombelAsal = {
+                    dataSiswa:siswaa,
+                    dataNilaiRaportResponSiswa,
+                    dataNilaiRaportSheetKd,
+                    // nilaiSheetKd,
+                    // nilaiRespon,
+                    
+                }
+        
+                raportSiswa.push(objRaportSiswa);
+            }
+             
+            
+            const collectionAtp :StrukturAtpType[]=[];
+            const collectionCp  : StrukturCpType[]=[];
+            const collectionTp  : StrukturTpType[]=[];
+            const objCurrentMapel:MapelWithNilaiRaportRombel ={
+                mapel:mapelInterface,
+                raportSiswa,
+                strukturKurikulumRaport:kurikulumCurrentMapel,
+                sourceTagihan: currentKoleksiTagihan ?? [],
+                collectionAtp,
+                collectionCp ,
+                collectionTp 
+            };
+        
+            dataMapelWithNilaiRaportSiswa.push(objCurrentMapel);
+        }
+        return dataMapelWithNilaiRaportSiswa;
+    }
+
 
 }

@@ -1,5 +1,4 @@
 import type { KategoriTagihanType } from "~/domain/kategori-tagihan/types/entities/KategoriTagihanType";
-import type { TagihanHasDataResponse } from "../../type/tagihan-assesmen-type";
 import type { DataInstrumenPerKategoriAssesmen } from "./StrukturKurikulumInKategoriAssesmenInterface";
 
 export type StrukturKurikulumInKategoriAssesmenMapperInterface      = Map<KategoriTagihanType,{strukturKurikulumMapper:StrukturMapelInKategoriAssesmenMapperInterface}>;

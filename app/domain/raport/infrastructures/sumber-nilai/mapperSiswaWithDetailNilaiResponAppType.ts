@@ -2,7 +2,6 @@ import type { KategoriTagihanType } from "~/domain/kategori-tagihan/types/entiti
 import type { TagihanHasDataResponse } from "~/domain/penilaian/type/tagihan-assesmen-type";
 import type { MapperSiswaOnDataResponType } from "~/domain/respon-tagihan-jenjang/mapper/MapperSiswaOnDataResponBuilder";
 import type { StrukturAtpType, StrukturCpType, StrukturTpType } from "~/domain/trees-struktur-kurikulum";
-import type { InterfaceMapel } from "~/types/mapel/mapel";
 import type { RisponsePenilaianSiswa } from "~/types/penilaian/RisponsePenilaianSiswaType";
 import type { SiswaType } from "~/types/siswa";
 

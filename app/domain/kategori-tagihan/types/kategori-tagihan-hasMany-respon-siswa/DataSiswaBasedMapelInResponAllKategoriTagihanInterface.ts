@@ -1,6 +1,6 @@
 import type { TagihanHasDataResponse } from "~/domain/penilaian/type/tagihan-assesmen-type";
 import type { CollectionNilaiMapel } from "./CollectionNilaiMapel";
-import type { DataResponSiswaTiapKategoriTagihan, RekapAtpInKoleksiMapelOnRespoonseTiapKategoriTagihan } from "./DataResponSiswaTiapKategoriTagihan";
+import type { RekapAtpInKoleksiMapelOnRespoonseTiapKategoriTagihan } from "./DataResponSiswaTiapKategoriTagihan";
 
 export interface DataSiswaBasedMapelInResponAllKategoriTagihanInterface {
     idSiswa: number;

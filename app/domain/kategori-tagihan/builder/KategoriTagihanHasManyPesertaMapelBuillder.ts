@@ -1,8 +1,6 @@
-import type { jp_mapelApp } from "~/types/mapel/jp_mapel";
 import type { DataSiswaBasedMapelInResponAllKategoriTagihanInterface } from "../types/kategori-tagihan-hasMany-respon-siswa/DataSiswaBasedMapelInResponAllKategoriTagihanInterface";
-import type { CollectionNilaiMapel, DataResponSiswaTiapKategoriTagihan, KategoriTagihanHasManyResponSiswaType, RekapAtpInKoleksiMapelOnRespoonseTiapKategoriTagihan } from "../types";
+import type { CollectionNilaiMapel, KategoriTagihanHasManyResponSiswaType, RekapAtpInKoleksiMapelOnRespoonseTiapKategoriTagihan } from "../types";
 import type { KategoriTagihanHasManyPesertaMapelType } from "../types/kategori-tagihan-hasMany-respon-siswa/KategoriTagihanHasManyPesertaMapelType";
-import { dataSiswaInMapel } from "~/domain/penilaian/infrastucture/DataSiswaPerMapel";
 import type { DataSiswaHasMapelType } from "~/domain/penilaian/infrastucture/dataSiswaHasMapel";
 import type { KoleksiMapelBasedSiswaInResponAllKategoriTagihan } from "../types/kategori-tagihan-hasMany-respon-siswa/KoleksiMapelBasedSiswaInResponAllKategoriTagihan";
 import { getSessionRombel } from "~/infrastructures/session-storage/rombel-session";
@@ -13,7 +11,7 @@ import type { DataTipeAssesmenMapper, KoleksiPublikasiPaketPerMapel, MapelMapper
 import type { DetailPublikasiWithResponSiswaType } from "~/domain/penilaian/type/collection-kurikulum-in-all-publikasi/DetailPublikasiWithResponSiswaType";
 import type { DataSkorSiswaByInstrumenType } from "~/domain/penilaian/type/collection-kurikulum-in-all-publikasi/DataSkorSiswaByInstrumenType";
 import type { RefrensiTabResponTagihanJenjangType } from "~/domain/penilaian/type/collection-kurikulum-in-all-publikasi/RefrensiTabResponTagihanJenjangType";
-import type { StrukturAtpType, StrukturCpType, StrukturMapeltype, StrukturTpType } from "~/domain/trees-struktur-kurikulum";
+import type { StrukturAtpType, StrukturCpType, StrukturTpType } from "~/domain/trees-struktur-kurikulum";
 import type { KategoriTagihanType } from "../types/entities/KategoriTagihanType";
 import type { SiswaType } from "~/types/siswa";
 import type { CollectionNilaiCp } from "../types/kategori-tagihan-hasMany-respon-siswa/CollectionNilaiCp";

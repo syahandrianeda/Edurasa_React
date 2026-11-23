@@ -1,4 +1,4 @@
-import {useMemo} from 'react';
+import {useCallback, useMemo} from 'react';
 import TableWithScrolling from '~/components/tabels/table-with-scrolling';
 import { TdEdura, ThEdura, TRowEdura } from '~/components/tabels/tabel-components';
 import type { InterfaceMapel } from '~/types/mapel/mapel';
@@ -9,6 +9,7 @@ import TriggerRekapSkorKd from '~/controllers/rekap-tagihan-harian/triggers/trig
 import { useModal } from '~/components/modals/modal-provider';
 import type { TagihanHasDataResponse } from '~/domain/penilaian/type/tagihan-assesmen-type';
 import TagihanHasDataResponseBasedCurrentMapel from './tagihanHasDataResponsBasedCurrentMapel';
+import { KategoriAsseemenApp } from '~/domain/kategori-tagihan/builder/KategoriTagihanRaportCollections';
 
 
 type Props = {
@@ -22,11 +23,14 @@ export default function SumberDataRekapTagihan({fokusMapel, kategoriTagihan}:Pro
     const sumberTagihan = useMemo(()=>{
         if(!kategoriTagihan) return []
         return kategoriTagihan?.koleksiPaketSoal?.filter(s=>s.koleksiMapel.includes(fokusMapel.nama))??[];
-    },[fokusMapel, kategoriTagihan])
-        
+    },[fokusMapel, kategoriTagihan]);
+    
+    const callTagihanHasDataResponseBasedCurrentMapel = useCallback((detail:TagihanHasDataResponse )=>{
+        return TagihanHasDataResponseBasedCurrentMapel(detail,fokusMapel, rombel)
+    },[fokusMapel, rombel, TagihanHasDataResponseBasedCurrentMapel])
     return (
         <div className="print:hidden shadow-sm rounded shadow-sky-300 p-1 text-sm my-2">
-            <h5 className='text-center uppercase'>Sumber data Tagihan Instrumen</h5>
+            <h5 className='text-center uppercase'>Sumber data Instrumen Tagihan {KategoriAsseemenApp[kategoriTagihan.type]}</h5>
             
             <TableWithScrolling className='text-[10px]'>
                 <thead>
@@ -65,7 +69,7 @@ export default function SumberDataRekapTagihan({fokusMapel, kategoriTagihan}:Pro
                         ):(
                             sumberTagihan.map((tagihan, iTagihan)=>
                                 <TRowEdura key={tagihan.idbaris}>
-                                    <TdEdura><TriggerRekapSkorKd actions={actions} data={TagihanHasDataResponseBasedCurrentMapel(tagihan.detail!,fokusMapel, rombel)}/></TdEdura>
+                                    <TdEdura><TriggerRekapSkorKd actions={actions} data={callTagihanHasDataResponseBasedCurrentMapel(tagihan.detail!)}/></TdEdura>
                                     <TdEdura>{iTagihan+1}</TdEdura>
                                     <TdEdura className='text-wrap'>{tagihan.namaPublikasi}</TdEdura>
                                     <TdEdura className='text-wrap'>{tagihan.detail?.jenis_tagihan.name}</TdEdura>

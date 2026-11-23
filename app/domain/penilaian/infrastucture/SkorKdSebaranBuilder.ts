@@ -4,7 +4,8 @@ import type { GroupBentukSoalPropertiKurikulumInPublikasiAssesmenWithScore, Grou
 export default class SkorKdSebaranBuilder{
     static build(
         StrukturKurikulumPaketSoal:KoleksiBentukSoalDanPropertyKurikulumBasedBentukSoal,
-        sumberRespon:RisponsePenilaianSiswa[]
+        sumberRespon:RisponsePenilaianSiswa[],
+        sumnber_respon:string
     ):GroupSebaranNoSoalFromPropertyKurikulumWithScore{
         const dataResult:GroupBentukSoalPropertiKurikulumInPublikasiAssesmenWithScore[] = StrukturKurikulumPaketSoal.data.map(branchMapel=>{
             const objekSkorKd= Object.create(null);
@@ -61,12 +62,14 @@ export default class SkorKdSebaranBuilder{
 
                                 return {
                                     ...soal,
-                                    skor
+                                    skor,
+                                    
                                 }
                             })
                             return {
                                 ...item,
-                                data
+                                data,
+                                source:sumnber_respon
                             }
                         })
                         SkorAtp = Number((totalATP/jumlahSoalDinilai_atp).toFixed(2));

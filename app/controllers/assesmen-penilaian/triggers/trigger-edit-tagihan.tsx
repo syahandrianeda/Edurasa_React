@@ -1,4 +1,4 @@
-import { Eye, FileCheckCornerIcon, FileCog2, FileKeyIcon, FileQuestionMark, GalleryVertical, PencilIcon, Settings, Settings2, Trash, Wrench } from "lucide-react";
+import { FileCheckCornerIcon, FileCog2, FileKeyIcon, FileQuestionMark, Settings, Trash, Wrench } from "lucide-react";
 import { useMemo } from "react";
 import { ActionButtonTable, type TriggerTable } from "~/components/dropdowns/dropdown-action-table";
 import type { SwitchTriggerModalProps } from "~/controllers/surat/modals/trigers/trigger-modal-props";
@@ -60,7 +60,8 @@ export default function TriggerEditTagihan({actions,data: m}:SwitchTriggerModalP
                 {
                     label: 'Kompetensi yang Diukur',
                     icon: FileCog2,
-                    callback: (m) => actions.open('PREVIEW SEBARAN KOMPETENSI SERVER', m,{closeOnOutsideClick:false})
+                    // callback: (m) => actions.open('PREVIEW SEBARAN KOMPETENSI SERVER', m,{closeOnOutsideClick:false})
+                    callback: (m) => actions.open('PREVIEW SEBARAN KOMPETENSI NON PAKET SOAL', m,{closeOnOutsideClick:false})
                 },
                 {
                     label: 'Hapus',

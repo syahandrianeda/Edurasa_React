@@ -51,7 +51,7 @@ export function clientLoader({}:Route.ComponentProps){
 export default function KompetensiTagihanRoute() {
     const instancPaketSoal = useAppSelector(InstanceDataTagihanPenilaianSector)
     const data = instancPaketSoal?.dataCountInstrumenSoalTiapAtpInPublikasiPaket;
-    instancPaketSoal?.buildKategoriTagihanMapper()
+    // instancPaketSoal?.buildKategoriTagihanMapper()
     // console.log({data})
     return(
         <div className="p-1">

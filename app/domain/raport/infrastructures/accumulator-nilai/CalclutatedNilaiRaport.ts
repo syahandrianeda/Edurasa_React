@@ -2,27 +2,23 @@ import type { TagihanHasDataResponse } from "~/domain/penilaian/type/tagihan-ass
 import type { jp_mapelApp } from "~/types/mapel/jp_mapel";
 import type { InterfaceMapel } from "~/types/mapel/mapel";
 import MapelUmumRaportBuilder from "../mapper/MapperKodeUmumMapelType";
-import AtpWitTagihanBankSoal from "~/domain/atp-mapper/AtpWithTagihanBankSoal";
 import type { MapelWithNilaiRaportRombel, RaportRombelAsal } from "../../RekapRaportAsal";
 import type { MakMinAtp, MakMinCp, MakMinTp, NilaiRaportInterface, SourceNilaiKatetoriTagihanType } from "../../types/RaportIntarface";
-import StrukturKurikulumInTagihanHasDataResponBuilder from "~/domain/struktur-kurikulum/tagihan-has-data-response/StrukturKurikulumInTagihanHasDataResponBuilder";
-import SumberKoleksiNilaiRapor from "../sumber-nilai/SumberKoleksiNilaiRapor";
-import { type sourceResponAtp } from "../sumber-nilai/mapperSiswaWithDetailNilaiResponAppType";
-import type { detailNilaiSiswaAppType } from "~/types/penilaian/nilai-siswa-app-type";
 import Decimal from 'decimal.js';
 import CalculatedNilaiStrukturKurikulum from "./CalculatedNilaiStrukturKurikulum";
 import TagihanHasDataResponseMapperBuilder from "~/domain/TagihanHasDataResponMapper/TagihanHasDataResponMapperBuilder";
-import type { StrukturKurikulumMapelWithSlotType } from "~/domain/trees-struktur-kurikulum/struktur-kurikulum-type";
-import type { CollectionNilaiMapel, RekapAtpInKoleksiMapelOnRespoonseTiapKategoriTagihan } from "~/domain/kategori-tagihan/types";
-import type { StrukturAtpType, StrukturCpType, StrukturTpType } from "~/domain/trees-struktur-kurikulum";
-import { getMinMax } from "~/lib/get-min-max-on-array-object";
+// import { getMinMax } from "~/lib/get-min-max-on-array-object";
 import type { SkorNilaiFromResponWithSource } from "./SkorNilaiFromResponWithSourceType";
+import type { SkorNilaiFromSheetKdWithSource } from "./SkorNilaiFromSheetKdWithSource";
+import KoleksiKategoriAssesmenOnJenjang from "~/domain/kategori-tagihan/builder/KoleksiKategoriAssesmenOnJenjang";
+import { getMinMax } from "~/lib/get-min-max-on-array-object";
+import calculateNilaiRaportKompetensi from "./CalculateNilaiRaportKompetensi";
 
 export class CalclutatedNilaiRaport{
     
     constructor(private readonly tagihan:TagihanHasDataResponse[], private readonly mapelRombel:jp_mapelApp[]){};
 
-   
+   public dataRaport:MapelWithNilaiRaportRombel[]=[];
     get koleksiKodeMapelRaport():InterfaceMapel['kode'][]{
         return this.mapelRombel.map(m=>m.kode)
     }
@@ -34,11 +30,13 @@ export class CalclutatedNilaiRaport{
 
   
     test():this{
-        const mapper= new TagihanHasDataResponseMapperBuilder(this.tagihan, this.mapelRombel).build();
+        const koleksiAssesmenKelas = KoleksiKategoriAssesmenOnJenjang.build();
+        const mapper= new TagihanHasDataResponseMapperBuilder(this.tagihan, this.mapelRombel, koleksiAssesmenKelas).build();
 
         const kodeUmumMapel = MapelUmumRaportBuilder.buildMapper(this.mapelRombel);
-        const strukturKurikulumRaport = mapper.strukturKurikulumWithSlot;//StrukturKurikulumInTagihanHasDataResponBuilder.buildWithSlot(this.tagihan);
-        const sumberRespon = mapper.siswaAsRespondenHasResponTagihan;//new SumberKoleksiNilaiRapor(this.tagihan).build();//.mapperSiswaRespon
+        const koleksiMapelMapper = mapper.mapelMapperWithTagihanHasDataResponse;
+        const strukturKurikulumRaport = mapper.strukturKurikulumWithSlot;
+        const sumberRespon = mapper.siswaAsRespondenHasResponTagihan;
         const sumberSheetKd = mapper.siswaHasSheetKd;
         
         const dataMapelWithNilaiRaportSiswa:MapelWithNilaiRaportRombel[]=[];
@@ -46,6 +44,7 @@ export class CalclutatedNilaiRaport{
             const {source:mapelInterface, data_students, kode}= mapel;
             const raportSiswa:RaportRombelAsal[] = [];
             const kurikulumCurrentMapel = strukturKurikulumRaport.find(s=>s.kodeMapel === kode);
+            const currentKoleksiTagihan = koleksiMapelMapper.get(kode);
 
             for(const siswaa of data_students){
                 const sumberResponCurrentSiswa = sumberRespon?.get(siswaa.id);
@@ -65,8 +64,8 @@ export class CalclutatedNilaiRaport{
                                                             mapelInterface,
                                                             sumberSheetKdCurrentSiswa );
 
-                const dataNilaiRaportResponSiswa= this.calculatedNilairespon(mapelInterface, nilaiRespon);
-                const dataNilaiRaportSheetKd:NilaiRaportInterface = Object.create(null);
+                const dataNilaiRaportResponSiswa= CalclutatedNilaiRaport.calculatedNilairespon(mapelInterface, nilaiRespon);
+                const dataNilaiRaportSheetKd:NilaiRaportInterface = CalclutatedNilaiRaport.calculatedNilaiSheetKd(mapelInterface, nilaiSheetKd);
                 
                 // /** SELESAI */
                 const objRaportSiswa:RaportRombelAsal = {
@@ -84,12 +83,16 @@ export class CalclutatedNilaiRaport{
             const objCurrentMapel:MapelWithNilaiRaportRombel ={
                 mapel:mapelInterface,
                 raportSiswa,
-                strukturKurikulumRaport:kurikulumCurrentMapel
+                strukturKurikulumRaport:kurikulumCurrentMapel,
+                sourceTagihan: currentKoleksiTagihan ?? [],
+                collectionAtp:[],
+                collectionCp :[],
+                collectionTp :[]
             };
         
             dataMapelWithNilaiRaportSiswa.push(objCurrentMapel);
         }
-        
+        this.dataRaport = dataMapelWithNilaiRaportSiswa;
         console.log({
             // kodeMapel: this.koleksiKodeMapelRaport, 
             // mapelUmum: [...kodeUmumMapel.values()],
@@ -100,7 +103,7 @@ export class CalclutatedNilaiRaport{
 
         return this;
     }
-    calculatedNilairespon(mapelInterface:InterfaceMapel, nilaiRespon: SkorNilaiFromResponWithSource):NilaiRaportInterface{
+    static calculatedNilairespon(mapelInterface:InterfaceMapel, nilaiRespon: SkorNilaiFromResponWithSource):NilaiRaportInterface{
         const {
                     totalMapel, 
                     countSoalMapel, 
@@ -152,6 +155,10 @@ export class CalclutatedNilaiRaport{
                 }
                 
                 /** e nd */
+                
+                const nilaiRaportAtp = calculateNilaiRaportKompetensi(skorKd_atp);
+                const nilaiRaportCp = calculateNilaiRaportKompetensi(skorKd_cp);
+                const nilaiRaportTp = calculateNilaiRaportKompetensi(skorKd_tp);
                 return  {
                     mapel:mapelInterface,
                     nilaiRaport: skorMapel,
@@ -162,9 +169,87 @@ export class CalclutatedNilaiRaport{
                     skorKd_atp,
                     skorKd_cp,
                     skorKd_tp,
-                    sourceResponse:nilaiRespon
+                    sourceResponse:nilaiRespon,
+                    nilaiRaportAtp,
+                    nilaiRaportTp,
+                    nilaiRaportCp,
+                    collectionAtp:[],
+                    collectionTp:[],
+                    collectionCp:[]
+                    
                 }
 
 
     }
+    
+    static calculatedNilaiSheetKd(mapelInterface:InterfaceMapel, nilaiSheetKd: SkorNilaiFromSheetKdWithSource):NilaiRaportInterface{
+        const {
+            totalMapel_sheet,
+            skorMapel_sheet,
+            countSoalMapel_sheet,
+            sourceSheetKdGroupTagihan,
+            skorKd_atp_sheet:skorKd_atp,
+            skorKd_tp_sheet: skorKd_tp,
+            skorKd_cp_sheet: skorKd_cp,
+            sourceSheetKdGroupTagihanLevelAtp,
+            sourceSheetKdGroupTagihanLevelTp,
+            sourceSheetKdGroupTagihanLevelCp,
+            sourcesByGroupKategoriAssesmen
+        } = nilaiSheetKd;
+ 
+        const source:SourceNilaiKatetoriTagihanType[] = [...sourcesByGroupKategoriAssesmen.entries()].map(([type,valueType])=>{
+            return {
+                type,
+                nilai:skorMapel_sheet
+            }
+        });
+        
+        /** max/min atp */
+        const atpDescriptionRefrenceSource = sourceSheetKdGroupTagihanLevelAtp.map(({atp_id, atp_description, skorAtp})=>(({atp_id, atp_description, skorAtp:skorAtp??0})))
+        const {min:minAtp, max:maxAtp} = getMinMax(atpDescriptionRefrenceSource, 'skorAtp');
+        const atpDescriptionRefrence = {
+            min:minAtp,
+            max:maxAtp
+        };
+        
+        /** max/min tp */
+        const tpDescriptionRefrenceSource = sourceSheetKdGroupTagihanLevelTp.map(({tp_id, tp_description, skorTp})=>(({tp_id, tp_description, skorTp:skorTp??0})));
+        const {min:minTp, max:maxTp} = getMinMax(tpDescriptionRefrenceSource, 'skorTp');
+        const tpDescriptionRefrence = {
+            min:minTp,
+            max:maxTp
+        };
+
+        /** max/min cp */
+        const cpDescriptionRefrenceSource = sourceSheetKdGroupTagihanLevelCp.map(({cp_id, cp_description, skorCp})=>(({cp_id, cp_description, skorCp:skorCp??0})));
+        const {min:minCp, max:maxCp} = getMinMax(cpDescriptionRefrenceSource, 'skorCp');
+        const cpDescriptionRefrence = {
+            min:minCp,
+            max:maxCp
+        };
+        const nilaiRaportAtp = calculateNilaiRaportKompetensi(skorKd_atp);
+        const nilaiRaportCp = calculateNilaiRaportKompetensi(skorKd_cp);
+        const nilaiRaportTp = calculateNilaiRaportKompetensi(skorKd_tp);
+        return  {
+            mapel:mapelInterface,
+            nilaiRaport: skorMapel_sheet,
+            source,
+            atpDescriptionRefrence,
+            tpDescriptionRefrence,
+            cpDescriptionRefrence,
+            skorKd_atp,
+            skorKd_cp,
+            skorKd_tp,
+            sourceResponse:nilaiSheetKd,
+            nilaiRaportAtp,
+            nilaiRaportTp,
+            nilaiRaportCp, 
+            collectionAtp:[],
+            collectionTp:[],
+            collectionCp:[],
+            
+        }
+    }
+    
+    
 }

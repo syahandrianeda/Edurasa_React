@@ -3,9 +3,6 @@ import { useModal, type ModalActions, type ModalState } from "~/components/modal
 import type { ModalType } from "~/components/modals/modal-type";
 
 
-import ModalProviderForm from "~/controllers/koleksi-bank-soal/modal/modal-provider-form";
-import ModalEditItemSoal from "~/controllers/koleksi-bank-soal/modal/edit-item-soal";
-import HapusItemKoleksiSoal from "~/controllers/koleksi-bank-soal/modal/hapus-item-soal";
 import FormModalAbsen from "~/controllers/absensi-controllers/modals/modal-absen";
 
 export default function ModalResponTagihanSiswa(){

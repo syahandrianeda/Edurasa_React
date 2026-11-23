@@ -20,7 +20,6 @@ export default function PreviewSebaranPaketNonSoal(){
                 <div ref={exportRef} className="w-11/12 min-h-100 bg-white mx-auto shadow-lg shadow-gray-400  print:bg-white  print:shadow-none p-2">
                 <h3 className="text-[10px] text-center uppercase">Data Sebaran Kompetensi di tiap soal</h3>
                 <h4 className="text-[10px] text-center uppercase">{currentData.nama_publikasi}</h4>
-                {/* {KisiKisiInstance && <CaraPenskoran KisiKisiInstance={KisiKisiInstance} modeCountSebaran={true} />} */}
                 <TableTagihanKompetensi data={data} showIdentitas={false} />
                 </div>
             </div>

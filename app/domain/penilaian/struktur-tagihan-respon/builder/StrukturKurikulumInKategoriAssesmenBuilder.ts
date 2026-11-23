@@ -1,8 +1,7 @@
 import getOrCreateMap from "~/lib/getOrCreateMapper";
 import type { TagihanHasDataResponse } from "../../type/tagihan-assesmen-type";
 import type { DataInstrumenPerKategoriAssesmen, StrukturKurikulumInKategoriAssesmenInterface } from "../types/StrukturKurikulumInKategoriAssesmenInterface";
-import type { StrukturAtpInKategoriAssesmenMapperInterface, StrukturKurikulumInKategoriAssesmenMapperInterface } from "../types/StrukturKurikulumInKategoriAssesmenMapperType";
-import type { KategoriAssesmenInPublikasiMapperType } from "../types/KategoriAssesmenInPublikasiMapperType";
+import type { StrukturKurikulumInKategoriAssesmenMapperInterface } from "../types/StrukturKurikulumInKategoriAssesmenMapperType";
 
 export default class StrukturKurikulumInKategoriAssesmenBuilder{
     static build(data:TagihanHasDataResponse[]):StrukturKurikulumInKategoriAssesmenInterface[]{

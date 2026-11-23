@@ -1,6 +1,4 @@
-import { SelectField } from "~/components/fields/fields";
 import { Field } from "~/components/ui/field";
-import { Label } from "~/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "~/components/ui/select";
 import { useAppSelector } from "~/context-reduct/hook"
 import { InstanceOfRiwayatRombel } from "~/context-reduct/selectores/riwayat-rombel-selector"

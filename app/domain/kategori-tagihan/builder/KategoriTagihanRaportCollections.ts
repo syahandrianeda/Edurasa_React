@@ -1,4 +1,12 @@
-import type { KategoriTagihanType } from "../types/entities/KategoriTagihanType";
+import type { KategoriAssesmenTagihanApp, KategoriTagihanType } from "../types/entities/KategoriTagihanType";
+
+export const KategoriAsseemenApp:KategoriAssesmenTagihanApp = {
+    harian: 'Nilai Harian Siswa',
+    mid_semester: 'Nilai Sumatif Tengah Semester',
+    akhir_semester: 'Nilai Sumatif Akhir Semester',
+    ujian_sekolah: 'Penilaian Sumatif Akhir Jenjang',
+    remedial_pengayaan: 'Remedial/Pengayaan'
+}
 
 export function koleksiKategoriTagihanRaport(jenjang:number, semester:number):KategoriTagihanType[]{
     if(jenjang === 6 && semester === 2){
@@ -19,16 +27,17 @@ export function koleksiKategoriTagihanRaport(jenjang:number, semester:number):Ka
 export function nameOfKategoriTagihan(type:KategoriTagihanType):string|null{
     switch(type){
         case 'harian':
-            return 'Nilai Harian Siswa';
+            return KategoriAsseemenApp.harian;//'Nilai Harian Siswa';
         case 'mid_semester':
-            return 'Nilai Sumatif Tengah Semester';
+            return KategoriAsseemenApp.mid_semester;//'Nilai Sumatif Tengah Semester';
         case 'akhir_semester':
-            return 'Nilai Sumatif Akhir Semester';
+            return KategoriAsseemenApp.akhir_semester;//'Nilai Sumatif Akhir Semester';
         case 'ujian_sekolah':
-            return 'Penilaian Sumatif Akhir Jenjang';
+            return KategoriAsseemenApp.ujian_sekolah ;//Penilaian Sumatif Akhir Jenjang';
         case 'remedial_pengayaan':
-            return 'Remedial/Pengayaan';
+            return KategoriAsseemenApp.remedial_pengayaan;//Remedial/Pengayaan';
         default:
             return null
     }
 }
+

@@ -267,23 +267,5 @@ export default class SebaranTagihanKurikulumClass{
         return this;
     }
 
-    // switchTagihan(kode:string):KategoriTagihanType{
-    //     switch (kode){
-    //         case 'Remedial':
-    //             return 'remedial_pengayaan';
-    //         case 'Pengayaan':
-    //             return 'remedial_pengayaan';
-    //         case 'PTS':
-    //             return 'mid_semester';
-    //         case 'PAS':
-    //             return 'akhir_semester';
-    //         case 'PAK':
-    //             return 'akhir_semester';
-    //         case 'PSAJ':
-    //             return 'ujian_sekolah';
-    //         default:
-    //             return 'harian'
-    //     }
-        
-    // }
+   
 }

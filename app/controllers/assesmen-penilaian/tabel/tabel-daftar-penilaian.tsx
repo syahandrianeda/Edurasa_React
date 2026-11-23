@@ -1,4 +1,3 @@
-import ButtonCommitAwesome from "~/components/button-awesome/commit-button";
 import { useModal } from "~/components/modals/modal-provider";
 import { TdEdura, ThEdura, TRowEdura } from "~/components/tabels/tabel-components";
 import TableWithScrolling from "~/components/tabels/table-with-scrolling";
@@ -153,45 +152,7 @@ export default function TableDaftarTagihanPenilaian({instanceClass}:{instanceCla
                         </TRowEdura>
                     )
                 }
-                {/* <TRowEdura>
-                    <TdEdura></TdEdura>
-                    <TdEdura>1.</TdEdura>
-                    <TdEdura>Sampel Identitas</TdEdura>
-                    <TdEdura>Penilaian Harian</TdEdura>
-                    <TdEdura>Tidak</TdEdura>
-                    <TdEdura>{new Date(2027,7,10).toLocaleString('id-ID', {dateStyle:'full'})}</TdEdura>
-                    <TdEdura>Rombel <br/>32 Siswa</TdEdura>
-                    <TdEdura>ATP description</TdEdura>
-                    <TdEdura>PG: 10, isian: 5</TdEdura>
-                    <TdEdura>Paket Soal</TdEdura>
-                    <TdEdura>5 Siswa belum dikoreksi</TdEdura>
-                </TRowEdura>
-                <TRowEdura>
-                    <TdEdura></TdEdura>
-                    <TdEdura>2.</TdEdura>
-                    <TdEdura>Sampel Identitas 2</TdEdura>
-                    <TdEdura>Remedial</TdEdura>
-                    <TdEdura>Ya</TdEdura>
-                    <TdEdura>{new Date(2027,7,11).toLocaleString('id-ID', {dateStyle:'full'})}</TdEdura>
-                    <TdEdura>Sebagian Siswa <br/>18 Siswa</TdEdura>
-                    <TdEdura>ATP description</TdEdura>
-                    <TdEdura>PG: 10, isian: 5</TdEdura>
-                    <TdEdura>Paket Soal</TdEdura>
-                    <TdEdura>5 Siswa belum dikoreksi</TdEdura>
-                </TRowEdura>
-                <TRowEdura>
-                    <TdEdura></TdEdura>
-                    <TdEdura>3.</TdEdura>
-                    <TdEdura>Sampel Identitas 3</TdEdura>
-                    <TdEdura>Proyek</TdEdura>
-                    <TdEdura>Ya</TdEdura>
-                    <TdEdura>{new Date(2027,11,15).toLocaleString('id-ID', {dateStyle:'full'})}</TdEdura>
-                    <TdEdura>Rombel <br/>32 Siswa</TdEdura>
-                    <TdEdura className="text-wrap">ATP description 1, ATP description 2, dst</TdEdura>
-                    <TdEdura>Essay: 5</TdEdura>
-                    <TdEdura>Nonpaket soal</TdEdura>
-                    <TdEdura>5 Siswa belum dikoreksi</TdEdura>
-                </TRowEdura> */}
+                
             </tbody>
         </TableWithScrolling>
     )

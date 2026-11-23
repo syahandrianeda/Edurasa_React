@@ -4,9 +4,11 @@ import type { JenisKurikulumType } from "../../kurikulum/jenis-kurikulum-type";
 import type { InterfaceMapel } from "~/types/mapel/mapel";
 import type { KategoriTagihanType } from "~/domain/kategori-tagihan/types/entities/KategoriTagihanType";
 import type { CollectionNilaiMapel, RekapAtpInKoleksiMapelOnRespoonseTiapKategoriTagihan } from "~/domain/kategori-tagihan/types";
-import type { StrukturAtpInterface, StrukturCpInterface, StrukturTpInterface } from "~/domain/trees-struktur-kurikulum";
+import type { StrukturAtpInterface, StrukturAtpType, StrukturCpInterface, StrukturCpType, StrukturTpInterface, StrukturTpType } from "~/domain/trees-struktur-kurikulum";
 import type { SkorKdNullableType } from "~/domain/penilaian/type/SkorKdType";
 import type { SkorNilaiFromResponWithSource } from "../infrastructures/accumulator-nilai/SkorNilaiFromResponWithSourceType";
+import type { SkorNilaiFromSheetKdWithSource } from "../infrastructures/accumulator-nilai/SkorNilaiFromSheetKdWithSource";
+import type { KoleksiSktrukturWithSourceSkorAndStateMaxMin, KoleksiStrukturWithSourceSkor } from "../infrastructures/builder/KoleksiStrukturWithSourceSkor";
 
 export type TypeStrukturRefrenceDescription =  'cp'|'tp'|'atp';
 export interface RefrenceDescriptionNilaiRaport{
@@ -54,21 +56,54 @@ export interface MakMinCp {
 export interface NilaiRaportInterface{
     mapel: InterfaceMapel,
     nilaiRaport: number|null;
+    nilaiRaportAtp:number|null;
+    nilaiRaportCp:number|null;
+    nilaiRaportTp:number|null;
     
     atpDescriptionRefrence?: MakMinAtp
     tpDescriptionRefrence?: MakMinTp
     cpDescriptionRefrence?: MakMinCp
 
     typeStruktur?: TypeStrukturRefrenceDescription,
+
     source: SourceNilaiKatetoriTagihanType[],
-    sourceResponse?:SkorNilaiFromResponWithSource,
+    sourceResponse?:SkorNilaiFromResponWithSource|SkorNilaiFromSheetKdWithSource,
+    collectionAtp:StrukturAtpType[],
+    collectionTp:StrukturTpType[],
+    collectionCp:StrukturCpType[],
+
+    // sourceKoleksiStrukturAtp?:KoleksiStrukturWithSourceSkor[]
+    // sourceKoleksiStrukturTp?:KoleksiStrukturWithSourceSkor[]
+    // sourceKoleksiStrukturCp?:KoleksiStrukturWithSourceSkor[]
+    
+    sourceKoleksiStrukturAtp?:KoleksiSktrukturWithSourceSkorAndStateMaxMin[]
+    sourceKoleksiStrukturTp?:KoleksiSktrukturWithSourceSkorAndStateMaxMin[]
+    sourceKoleksiStrukturCp?:KoleksiSktrukturWithSourceSkorAndStateMaxMin[]
+    
+
+
     
     skorKd_atp?      : SkorKdNullableType,
     skorKd_tp?       : SkorKdNullableType,
     skorKd_cp?       : SkorKdNullableType,
+    
+    /**
+     * skorKdSheet_atp dkk ini seharusnya tidak ada dn tetap menggunakaan skorKd_atp (tanpa `sheet`) saja
+     * karena ini berlaku untuk data dari `respon` mapun `sheetKd`
+     */
+
+    /**
+     * @deprecated
+     */
     skorKdSheet_atp? : SkorKdNullableType,
+    /**
+     * @deprecated
+     */
     skorKdSheet_tp?  : SkorKdNullableType,
+    /** @deprecated */
     skorKdSheet_cp?  : SkorKdNullableType,
+
+    
 }
 export interface TinggiBadanRaportInterface{
     semester:number,

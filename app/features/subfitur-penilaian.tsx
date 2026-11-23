@@ -71,13 +71,13 @@ export const subFiturPenilaian:typeSidebarFiturKonten[]=[
                 description: "Rekap nilai raport sementara",
                 permission: "view penilaian"
             },
-            {
-                title: "per Kompetensi",
-                href: "/penilaian/rekap-nilai-kompetensi",
-                icon: FolderGit2,
-                description: "Rekapitulasi nilai asli tiap kompetensi yang diperoleh siswa",
-                permission: "view penilaian"
-            }
+            // {
+            //     title: "per Kompetensi",
+            //     href: "/penilaian/rekap-nilai-kompetensi",
+            //     icon: FolderGit2,
+            //     description: "Rekapitulasi nilai asli tiap kompetensi yang diperoleh siswa",
+            //     permission: "view penilaian"
+            // }
         ]
     }
 ]

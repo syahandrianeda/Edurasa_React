@@ -2,12 +2,11 @@ import {useCallback, useMemo, useState} from 'react';
 import { TdEdura, ThEdura, TRowEdura } from "~/components/tabels/tabel-components";
 import TableWithScrolling from "~/components/tabels/table-with-scrolling";
 import { useFilterContext } from '~/components/toolbars/state-toolbar/state-toolbar';
-import type { CollectionNilaiMapel, RekapAtpInKoleksiMapelOnRespoonseTiapKategoriTagihan, SkorNilaiFromRespon, SkorNilaiFromSkorKdSheet } from '~/domain/kategori-tagihan/types';
+import type { CollectionNilaiMapel, RekapAtpInKoleksiMapelOnRespoonseTiapKategoriTagihan } from '~/domain/kategori-tagihan/types';
 import type { DataSiswaBasedMapelInResponAllKategoriTagihanInterface } from '~/domain/kategori-tagihan/types/kategori-tagihan-hasMany-respon-siswa/DataSiswaBasedMapelInResponAllKategoriTagihanInterface';
 import type { KategoriTagihanHasManyPesertaMapelType } from '~/domain/kategori-tagihan/types/kategori-tagihan-hasMany-respon-siswa/KategoriTagihanHasManyPesertaMapelType';
-import type { StrukturAtpType } from '~/domain/trees-struktur-kurikulum';
 import type { InterfaceMapel } from '~/types/mapel/mapel';
-import type { FokusStrukturKurikulumPresentation, FokusStrukturKurikulumSelected } from '../toolbar/RadioChooseFokusStrukturKurikulum';
+import type { FokusStrukturKurikulumPresentation } from '../toolbar/RadioChooseFokusStrukturKurikulum';
 import type { FormatKategoriAssesmenPreview } from '../toolbar/RadioChooseFormatKategirAssesmen';
 import type { FormatKategoriAssesmenTable } from "../toolbar/FormatKategoriAssesmenTable";
 import type { SkorKdNullableType } from '~/domain/penilaian/type/SkorKdType';
@@ -58,7 +57,7 @@ export default function TableRekapKategoriAssesmen({fokusMapel, kategoriTagihan}
                 koleksiSumberTagihan,
                 typeAsesmen
             }
-        },[fokusMapel.kode, kategoriTagihan, value?.extra?.FokusStrukturKurikulum]);
+        },[fokusMapel, kategoriTagihan, value?.extra]);
 
     
     const getNilaiBasedOnTypeStruktur = useCallback((dataMapel:CollectionNilaiMapel, type:string, idStruktur:number):string|null=>{
@@ -132,7 +131,7 @@ export default function TableRekapKategoriAssesmen({fokusMapel, kategoriTagihan}
         })
     },[dataNilai?.koleksiSumberTagihan, value?.extra?.formatKategoriAssesmen,value?.extra?.FokusStrukturKurikulum.keyLabel])
     return (
-        <>
+        <div>
             <p className='text-[8px] text-purple-600 text-center print:hidden'>Klik pada sel baris untuk melihat detail</p>
             <TableWithScrolling className='text-xs'>
                 <thead>
@@ -203,6 +202,6 @@ export default function TableRekapKategoriAssesmen({fokusMapel, kategoriTagihan}
                 }}
             />
             
-        </>
+        </div>
     )
 };

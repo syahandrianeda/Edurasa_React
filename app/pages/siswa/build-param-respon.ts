@@ -1,11 +1,10 @@
 import SwitchKategoriTagihan from "~/domain/asesmen-penilaian/switch-kategori-tagihan-class";
 import type { AtpHasManySoalType } from "~/domain/bank-soal/relational-soal/type";
-import type { KategoriTagihanType } from "~/domain/kategori-tagihan/types/entities/KategoriTagihanType";
 import type { TagihanHasDataResponse } from "~/domain/penilaian/type/tagihan-assesmen-type";
-import type { NilaiSiswaAppType } from "~/types/penilaian/nilai-siswa-app-type";
 import type { RisponsePenilaianSiswa } from "~/types/penilaian/RisponsePenilaianSiswaType";
 import type { NilaiSiswaSheetType } from "~/types/penilaian/nilai-siswa-sheet-type";
 import type { UserSiswa } from "~/types/user-siswa";
+import Decimal from "decimal.js";
 
 export default class BuildParanResponTagihanSiswa{
     private dataNilaiSiswaSheetType:NilaiSiswaSheetType|undefined = undefined;
@@ -115,14 +114,15 @@ export default class BuildParanResponTagihanSiswa{
                     continue;
                 }
 
-                const total = daftarSkor.reduce(
-                    (sum, skor) => sum + skor,
-                    0
-                );
+                // const total = daftarSkor.reduce(
+                //     (sum, skor) => sum + skor,
+                //     0
+                // );
+                // const total = Decimal.sum(...daftarSkor).toNumber();
 
-                const rataRata = total / daftarSkor.length;
+                const rataRata = Decimal.sum(...daftarSkor).div(daftarSkor.length).toDecimalPlaces(2).toNumber();//total / daftarSkor.length;
 
-                result[`${kodemapel}_${atpId}`] = Number(rataRata.toFixed(2));
+                result[`${kodemapel}_${atpId}`] =rataRata;// Number(rataRata.toFixed(2));
             }
 
             return result;

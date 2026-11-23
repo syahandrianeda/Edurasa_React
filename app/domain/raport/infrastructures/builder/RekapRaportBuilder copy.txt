@@ -1,0 +1,709 @@
+import TagihanHasDataResponseMapperBuilder from "~/domain/TagihanHasDataResponMapper/TagihanHasDataResponMapperBuilder";
+import type { jp_mapelApp } from "~/types/mapel/jp_mapel";
+import type { MapelWithNilaiRaportRombel, RaportRombelAsal } from "../../RekapRaportAsal";
+import type { MakMinAtp, NilaiRaportInterface } from "../../types/RaportIntarface";
+import Decimal from "node_modules/decimal.js/decimal";
+import type { StrukturAtpType, StrukturCpType, StrukturTpType } from "~/domain/trees-struktur-kurikulum";
+import type { SkorKdNullableType } from "~/domain/penilaian/type/SkorKdType";
+import AtpWitTagihanBankSoal from "~/domain/atp-mapper/_AtpWithTagihanBankSoal";
+import AtpWithBankSoal from "~/domain/atp-mapper/_AtpWithBankSoal";
+import type { DataBentukSoalWithScore, PrediksiNoSoal } from "~/domain/penilaian/model/grouping-kurikulum-by-bentuksoal";
+import type { TagihanInstrumenSoalCurrentAtp } from "~/domain/TagihanHasDataResponMapper/MapperSiswaHasInstrumenWithSkor";
+import type { DataCurrentInstrumen, KoleksiSktrukturWithSourceSkorAndStateMaxMin, KoleksiStrukturWithSourceSkor, SourceInstrumenSkor } from "./KoleksiStrukturWithSourceSkor";
+import type { RisponsePenilaianSiswa } from "~/types/penilaian/RisponsePenilaianSiswaType";
+import type { DataKdSheetApp } from "~/types/penilaian/DataKdSheetAppType";
+import { getMinMax, type MinMaxResult } from "~/lib/get-min-max-on-array-object";
+import calculateNilaiRaportKompetensi from "../accumulator-nilai/CalculateNilaiRaportKompetensi";
+
+export default class RekapRaportBuilder{
+
+    static buildFromMapperTagihanBuilder(mapper:TagihanHasDataResponseMapperBuilder):MapelWithNilaiRaportRombel[]{
+        const result:MapelWithNilaiRaportRombel[] = [];
+        const koleksiMapelRombel = mapper.ListMapelRaport;
+        const kurikulumMapperByMapel = mapper.strukturKurikulum;
+        const siswaHasInstrumenSkor = mapper.SiswaHasInstrumenWithSkor;
+        const mapelHasTagihan = mapper.mapelMapperWithTagihanHasDataResponse;
+        const mapelHasKategoriAssesmen = mapper.kategoriAssesmenHasTagihan
+        console.log({siswaHasInstrumenSkor})
+
+        for(const mapel of koleksiMapelRombel){
+            /** 
+             * mapel ini mempunya beberapa data, salah satunya adalah `data_students` yang mengindikasikan siswa tersebut 
+             * adalah member dari mapel tersebut.
+             * 
+             * `source` adalah data detail mapel, termasuk nama kelompok, jenis mapel, penganut, dll.
+            */
+            const {source, data_students:memberMapel} = mapel;
+
+            /** tentukan struktur kurikulum pada mapel ini yang sudah dilakukan di seluruh tagihan */
+            const currentKurikulumMapel = kurikulumMapperByMapel.get(mapel.kode);
+
+            /** mapel ini mempunyai sumber tagihan sbb: Kemudian `push` ke result sebagai sourceTagihan itu sendiri */
+            const sourceTagihan = mapelHasTagihan.get(mapel.kode) ?? [];
+
+            /** definisikan raportSiswa sebagai data Raport mapel ini di masing-masing siswa */
+            
+            
+            const raportSiswa: RaportRombelAsal[] = [];
+            
+        
+            for(const siswa of memberMapel){
+                
+                /** set siswa saat ini yang mempunyai data respon (siswa yang mengikuti seluruh tagihan)  
+                 * baik itu mengerjakan langsung tagihan atau dibantu guru, termasuk import nilai;
+                 * semua data siswa tetap terdeteksi, baik siswa yang belum pernah sama sekali mengerjakan semua tagihan
+                */
+                const currentSiswaWhoseHaveSkor = siswaHasInstrumenSkor.get(siswa.id);
+                
+                /** property yang harus dimiliki `raportSiswa` */
+                const dataNilaiRaportResponSiswa:NilaiRaportInterface = Object.create(null);
+                const dataNilaiRaportSheetKd:NilaiRaportInterface = Object.create(null);
+
+                /** definisikan mapel aja dulu */
+                dataNilaiRaportResponSiswa.mapel = source;
+                dataNilaiRaportSheetKd.mapel = source;
+
+                /** 
+                 * property `nilaiRaport` berikut sebenarnya tidak berlaku.  Awalnya ini digunakan untuk 
+                 * mendapatkan niali akhir raport yang dihasilkan dari perhitungan rata-rata dari jumlah skor tiap instrumen soal.
+                 * Data ini masih bisa digunakan ketika untuk mengetahui nilai akhir dari instrumen soal (nilai real)
+                 * Sementara itu, NILAI AKHIR YANG BERLAKU mengikuti aturan dari Panduan Penilaian Kemendikdasmen. Dan itu berdasarkan
+                 * struktur kurikulum yang dipilih user
+                 * 
+                */
+                const nilaiRapor:number|null = null;
+                /**
+                 * property berikut adalah milik type `NilaiRaportInterface`
+                 * ------------------------------------------------------
+                     nilaiRaport: number|null;
+                     nilaiRaportAtp:number|null;
+                     nilaiRaportCp:number|null;
+                     nilaiRaportTp:number|null;
+                     
+                     atpDescriptionRefrence?: MakMinAtp
+                     tpDescriptionRefrence?: MakMinTp
+                     cpDescriptionRefrence?: MakMinCp
+
+                 
+                 */
+                
+                
+                const respon_koleksiAtp: KoleksiStrukturWithSourceSkor[]=[];
+                const respon_koleksiTp: KoleksiStrukturWithSourceSkor[]=[];
+                const respon_koleksiCp: KoleksiStrukturWithSourceSkor[]=[];
+
+                const sheet_koleksiAtp: KoleksiStrukturWithSourceSkor[]=[];
+                const sheet_koleksiTp: KoleksiStrukturWithSourceSkor[]=[];
+                const sheet_koleksiCp: KoleksiStrukturWithSourceSkor[]=[];
+                
+                if(currentKurikulumMapel){
+                    const {kodeMapel, mapelName, dataCpMapper} = currentKurikulumMapel;
+                    const collectionAtp:StrukturAtpType[]=[];
+                    const collectionTp:StrukturTpType[]=[];
+                    const collectionCp:StrukturCpType[]=[];
+
+                   /** levelCp */
+                   for(const cpMapper of dataCpMapper.values()){
+                        const {cp_id, cp_description, dataTpMapper} = cpMapper;
+                        const koleksiTotalSkorCp:number[]=[];
+                        let countSoalCurrentCp:number = 0;
+                        const koleksiInstrumenCurrentCp:TagihanInstrumenSoalCurrentAtp[] = [];
+                        const koleksiSkorCpTiapAtp:(number|null)[]=[];
+                        const koleksiTotalSkorCpFromCp: (number|null)[]=[];
+                        const sourceItemInstrumenSkorResponCp:SourceInstrumenSkor[] = [];
+                        const currentInstrumenCp:DataCurrentInstrumen[]=[];
+                        const sourceResponCp: RisponsePenilaianSiswa[]=[]
+                        const sourceSheetKdCp: DataKdSheetApp[]=[]
+                        let countSoalCurrentCpSheet:number = 0;
+
+                        collectionCp.push({ cp_id, cp_description })
+
+                        
+                        
+                        /** levelTP */
+                        for(const tpMapper of dataTpMapper.values()){
+                            const {tp_id, tp_description, dataAtpMapper} = tpMapper;
+                            const koleksiTotalSkorTp:number[]=[];
+                            let countSoalCurrentTp:number = 0;
+                            const koleksiInstrumenCurrentTp:TagihanInstrumenSoalCurrentAtp[] = [];
+                            const koleksiSkorTpTiapAtp:(number|null)[]=[];
+                            const koleksiSkorTpTiapAtpSheet:(number|null)[] = [];
+                            const sourceItemInstrumenSkorResponTp:SourceInstrumenSkor[] = [];
+                            const currentInstrumenTp:DataCurrentInstrumen[]=[];
+                            const sourceResponTp: RisponsePenilaianSiswa[]=[]
+                            const sourceSheetKdTp: DataKdSheetApp[]=[]
+                            
+                            let countSoalCurrentTpSheetnumber:number = 0;
+
+                            collectionTp.push({tp_id,tp_description});
+                            
+                            /**levelATP */
+                            for(const atpAmpper of dataAtpMapper.values()){
+                                const {atp_id, atp_description} =atpAmpper;
+                                collectionAtp.push(atpAmpper)
+
+                                /**
+                                 * WORKSPCE
+                                 * ----------------
+                                 */
+
+                                const sumberNilaiCurrentSiswa = currentSiswaWhoseHaveSkor?.atpMapperTagihanWithInstrumen.get(atp_id);
+                                // const tagihanMapper = currentSiswaWhoseHaveSkor?.tagihanMapper.get(atp_id);
+                                const dataRespon = sumberNilaiCurrentSiswa?.sourceRespon ?? [];
+                                const dataSheetKd = sumberNilaiCurrentSiswa?.sourceSheetKd ?? [];
+                                const tagihan = sumberNilaiCurrentSiswa?.tagihan ?? [];
+                                const instrumen = sumberNilaiCurrentSiswa?.instrumenSoal ?? [];
+                                const instrumenSheet = sumberNilaiCurrentSiswa?.instrumenSoalSheet ?? [];
+                                const instrumenMapper = currentSiswaWhoseHaveSkor?.tagihanMapper
+                                const koleksiSoalByAtpInTagihan = AtpWithBankSoal.buildMapper(tagihan);
+
+                                sourceResponTp.push(...dataRespon);
+                                sourceSheetKdTp.push(...dataSheetKd);
+                                sourceResponCp.push(...dataRespon);
+                                sourceSheetKdCp.push(...dataSheetKd);
+
+
+                                /** 
+                                 * respon :TIDAK ADA NULL UNTUK SKOR PADA RISPON;
+                                 * -----------
+                                 * ~untuk perhitungan, nilai~ `null` adalah nilai yang tidak dikerjakan siswa. Artinya siswa tidak mendapatkan nilai
+                                 * atau sama dengan nol = 0.
+                                 * Namun, jika semua data skor adalah null, maka akumulasi tidak dikerjkan (lewati)~
+                                 * 
+                                 * */
+
+                                const koleksiSkor = dataRespon.map(m=>m.skor ?? null);
+                                // const sourceInstrumenSkor = instrumen
+                                const sourceKoleksiSkorTiapInstrumen:number[] = [] ;
+                                // const sourceItemInstrumenSkorRespon: DataCurrentInstrumen[] = []
+                                const sourceItemInstrumenSkorRespon: SourceInstrumenSkor[] = [];
+                                const currentInstrumen:DataCurrentInstrumen[]=[];
+                                for(const itemInstrumen of instrumen){
+                                    const {tagihan, soalSkor}=itemInstrumen;
+                                    const resultSoalSkor:DataCurrentInstrumen[]=[]
+                                    for(const itemSoal of soalSkor){
+                                        const {bentukSoal, data} = itemSoal;
+                                        for(const itemData of data){
+                                            const {no_soal, bentuk_soal, skor, kd_id} = itemData;
+                                            const obCurrentInstrumen:DataCurrentInstrumen= {
+                                                atp_id: kd_id,
+                                                no_soal,
+                                                skor,
+                                                tagihan,
+                                                bentuk_soal,
+                                                skorSheetKd:null,
+                                            }
+                                            sourceKoleksiSkorTiapInstrumen.push(skor);
+                                            // sourceItemInstrumenSkorRespon.push(obCurrentInstrumen);
+                                            resultSoalSkor.push(obCurrentInstrumen);
+                                            currentInstrumen.push(obCurrentInstrumen);
+
+                                        }
+                                    }
+                                    sourceItemInstrumenSkorRespon.push({
+                                        tagihan,
+                                        soalSkor: resultSoalSkor
+                                    })
+                                };
+                                currentInstrumenTp.push(...currentInstrumen);
+                                currentInstrumenCp.push(...currentInstrumen);
+
+                                // if(koleksiSkor.every(n=> n === null)) {
+                                //     respon_koleksiAtp.push({
+                                //             type:'atp',
+                                //             struktur: atpAmpper,
+                                //             totalSkor: null,
+                                //             countInstrumen:0,
+                                //             skor:null,
+                                //             sourceInstrumenSkor:instrumen,
+                                //             sourceKoleksiSkorTiapInstrumen:sourceKoleksiSkorTiapInstrumen
+                                //         });
+                                    
+                                //         continue;
+                                // }
+                                
+                                const koleksiSkorCurrentAtp = (koleksiSkor.every(n=> n === null))?[]: koleksiSkor.map(n=> n ?? 0);
+                                const totalSkorCurrentAtp = koleksiSkor.every(n=> n === null)?null: Decimal.sum(...koleksiSkorCurrentAtp).toNumber();
+                                /**  
+                                 * `dataRespon diambil dari data bertype `RisponNilaiSiswaAppType`, artinya data tersebut terkirim berdasarkan 
+                                 * jumlah instrumen pada tagihan. Sehingga, total instrumen SEHARUSNYA sama dengan JUMLAH INSTRUMEN:
+                                * Namun, bagaimana jika siswa tidak menjawab salah satu instrumen tersebut? Apakah jumlah instrumen sudah sesuai dengan
+                                * jumlah pada tagihan. Hebatnya, RisponNilaiSiswaAppType didesain dengan merujuk pada data naskah tagihan
+                                * */
+                               
+                               const countInstrumenAtp = koleksiSkorCurrentAtp.length;
+                            
+                               
+                               const skorAtp = (koleksiSkorCurrentAtp.length === 0 || koleksiSkor.every(n=> n === null))? null : Decimal.sum(...koleksiSkorCurrentAtp).div(countInstrumenAtp).toDecimalPlaces(2).toNumber();
+
+                               respon_koleksiAtp.push({
+                                    type:'atp',
+                                    struktur: atpAmpper,
+                                    totalSkor: totalSkorCurrentAtp,
+                                    countInstrumen:countInstrumenAtp,
+                                    skor:skorAtp,
+                                    sourceInstrumenSkor:sourceItemInstrumenSkorRespon,
+                                    sourceKoleksiSkorTiapInstrumen,
+                                    sourceItemInstrumenSkor:currentInstrumen,//sourceItemInstrumenSkorRespon,
+                                    sourceRespon: dataRespon,
+                                    sourceSheetKd: dataSheetKd
+                               });
+
+                               /** tp */
+                               koleksiInstrumenCurrentTp.push(...instrumen);
+                               koleksiTotalSkorTp.push(...sourceKoleksiSkorTiapInstrumen);
+                               koleksiSkorTpTiapAtp.push(skorAtp);
+                               sourceItemInstrumenSkorResponTp.push(...sourceItemInstrumenSkorRespon);
+                               countSoalCurrentTp = Decimal.sum(countSoalCurrentTp, countInstrumenAtp).toNumber();
+
+
+                               /** cp */
+                               koleksiInstrumenCurrentCp.push(...instrumen)
+                               koleksiTotalSkorCp.push(...sourceKoleksiSkorTiapInstrumen);
+                               koleksiSkorCpTiapAtp.push(skorAtp);
+                               sourceItemInstrumenSkorResponCp.push(...sourceItemInstrumenSkorRespon);
+                               countSoalCurrentCp = Decimal.sum(countSoalCurrentCp, countInstrumenAtp).toNumber();
+
+                               /**
+                                * SHEETKD
+                                * ----------
+                                */
+                               const koleksiSkorSheet:(number|null)[] = [];
+                               const koleksiShadowTotalSkorSheet:(number|null)[] = [];
+                               const sourceItemInstrumenSkorSheet:DataCurrentInstrumen[]=[]
+                               let countSoalCurrentAtpSheet:number = 0;
+                            //    let skorTiapInstrumen:number|null = null;
+                               dataSheetKd.forEach(nilai=>{
+                                    const {skor, atp_id:atp_idDataSheet,jenisTagihan,kategoriAssesmen, publikasi_id} = nilai;
+                                    const koleksiBankSoalCurrentAtp = koleksiSoalByAtpInTagihan.get(atp_idDataSheet);
+                                    const totalSkorCurrentAtpSheet = Decimal(skor??0).times(koleksiBankSoalCurrentAtp?.length ?? 0).toNumber();
+                                    // const skorTiapInstrumen = (skor===null)?null:Decimal(skor).times(koleksiBankSoalCurrentAtp?.length ?? 0).div(koleksiBankSoalCurrentAtp?.length ?? 0).toDecimalPlaces(2).toNumber();
+                                    const skorTiapInstrumen = (skor===null)?null:Decimal(skor).times(koleksiBankSoalCurrentAtp?.length ?? 0).div(koleksiBankSoalCurrentAtp?.length ?? 0).toDecimalPlaces(2).toNumber();
+                                    
+                                    koleksiSkorSheet?.push(totalSkorCurrentAtpSheet);
+                                    
+                                    // countSoalCurrentAtpSheet = Decimal.sum(countSoalCurrentAtpSheet, (koleksiBankSoalCurrentAtp?.length ?? 0)).toNumber();
+                                    
+                                    /** untuk mengisi nilai tiap instrumen soal dan skornya, bisa
+                                     * ditentukan berdasarkan:
+                                     * jika `totalSkorCurrentAtp` sama dengan `totalSkorCurrentAtpSheet`, nilai tiap item instrumen SEHARUSNYA SAMA
+                                     * artinya, ini benar-benar dilakukan via koreksi.
+                                     * jika TIDAK SAMA, kemungkinannya ada 2:
+                                     *  - bantu isi, atau
+                                     *  - import
+                                     */
+
+                                    for(const itemInstrumen of instrumenSheet){
+                                       
+                                        const {tagihan, soalSkor} = itemInstrumen;
+
+                                        if(tagihan.idbaris === publikasi_id && kategoriAssesmen === tagihan.tipe_assesmen){
+                                            if(!soalSkor){
+                                                koleksiShadowTotalSkorSheet.push(null);
+                                                // sourceItemInstrumenSkorSheet.push({
+                                                //     atp_id: 0,
+                                                //     no_soal:0,
+                                                //     skor:null,
+                                                //     skorSheetKd:null,
+                                                //     tagihan,
+                                                //     bentuk_soal:''
+                                                // });
+                                                continue;
+                                            }
+                                            for(const itemSoalSkor of soalSkor){
+                                                const {bentukSoal, data, source} = itemSoalSkor;
+                                                countSoalCurrentAtpSheet = Decimal.sum(countSoalCurrentAtpSheet, data.length).toNumber();
+                                                for(const itemData of data){
+                                                    const {no_soal, bentuk_soal, skor:skorInstrumenRespon, kd_id,} = itemData;
+                                                    // via koreksi:
+                                                    if(skor === skorAtp){
+                                                        koleksiShadowTotalSkorSheet.push(skorInstrumenRespon);
+                                                        // sourceItemInstrumenSkorSheet.push({
+                                                        //     atp_id: kd_id,
+                                                        //     no_soal,
+                                                        //     skor:skorInstrumenRespon,
+                                                        //     skorSheetKd:skorTiapInstrumen,
+                                                        //     tagihan,
+                                                        //     bentuk_soal
+                                                        // });
+                                                        
+                                                    }else{
+                                                        /** jika tidak sama, artinya? 
+                                                         * tiap item soal itu
+                                                        */
+                                                        koleksiShadowTotalSkorSheet.push(skorTiapInstrumen)
+                                                        // sourceItemInstrumenSkorSheet.push({
+                                                        //     atp_id: kd_id,
+                                                        //     no_soal,
+                                                        //     skor:skorTiapInstrumen,
+                                                        //     skorSheetKd:skorTiapInstrumen,
+                                                        //     tagihan,
+                                                        //     bentuk_soal
+                                                        // });
+                                                    }
+                                                    // sourceItemInstrumenSkorSheet.push({
+                                                    //         atp_id: kd_id,
+                                                    //         no_soal,
+                                                    //         skor:skorInstrumenRespon,
+                                                    //         tagihan,
+                                                    //         bentuk_soal,
+                                                    //         skorSheetKd:skorTiapInstrumen
+                                                    //     });
+                                                }
+                                            }
+
+                                        }
+                                    }
+
+                                    // const dataInstrumen = instrumen.flatMap(m=>m.soalSkor?.flatMap(n=>n.data.map(o=>({atp_id:o.kd_id, skor: o.skor, noSoal:o.no_soal, bentukSoal:o.bentuk_soal, tagihan:m.tagihan}))));
+
+
+                                    // const itemSkorCurrentAtp = Decimal(skor??0).times(koleksiBankSoalCurrentAtp?.length ?? 0).div(koleksiBankSoalCurrentAtp?.length ?? 0).toDecimalPlaces(2).toNumber();
+                                    
+                                    // const instrumenCurrentAtp = instrumen.filter(s=>s.soalSkor.some(m=>m.data.filter(n=>n.kd_id === atp_idDataSheet).length > 0));
+                                    // for(const instrumen of instrumenCurrentAtp){
+                                        
+                                    // }
+                                    
+                                    
+                               });
+
+                               const koleksiSkorSheetNumber = (koleksiSkorSheet.length === 0 || koleksiSkorSheet.every(n=> n === null) ) ? [] : koleksiShadowTotalSkorSheet.map(n=>n ?? 0);
+                                const totalSkorSheet:number|null = (koleksiSkorSheet.length === 0 || koleksiSkorSheet.every(n=> n === null)) ? null : Decimal.sum(...koleksiSkorSheetNumber).toNumber();
+                                const skorAtpSheet:number|null = (koleksiSkorSheet.length === 0 || koleksiSkorSheet.every(n=> n === null) || countSoalCurrentAtpSheet === 0) ? null : Decimal.sum(...koleksiSkorSheetNumber).div(countSoalCurrentAtpSheet).toDecimalPlaces(2).toNumber();
+                                
+                               for(const itemInstrumen of instrumenSheet){
+                                   const {tagihan, soalSkor} = itemInstrumen;
+                                   for(const itemSoalSkor of soalSkor){
+                                        const {bentukSoal, data, source} = itemSoalSkor;
+                                        
+                                        const skor =skorAtpSheet;
+                                        for(const itemData of data){
+                                             const {no_soal, bentuk_soal, skor:skorInstrumenRespon, kd_id,} = itemData;
+                                             if(skorAtpSheet=== skorAtp){
+                                                // koleksiShadowTotalSkorSheet.push(skorInstrumenRespon);
+                                                sourceItemInstrumenSkorSheet.push({
+                                                    atp_id: kd_id,
+                                                    no_soal,
+                                                    skor:skor,
+                                                    skorSheetKd:skor,
+                                                    tagihan,
+                                                    bentuk_soal
+                                                });
+                                                
+                                            }else{
+                                                /** jika tidak sama, artinya? 
+                                                 * tiap item soal itu
+                                                */
+                                                // koleksiShadowTotalSkorSheet.push(skor)
+                                                sourceItemInstrumenSkorSheet.push({
+                                                    atp_id: kd_id,
+                                                    no_soal,
+                                                    skor:skor,
+                                                    skorSheetKd:skor,
+                                                    tagihan,
+                                                    bentuk_soal
+                                                });
+                                            }
+                                        }
+
+                                   }
+
+                                   
+                               }
+                                       
+                                //
+                                
+                                sheet_koleksiAtp.push({
+                                    type:'atp',
+                                    struktur:atpAmpper,
+                                    totalSkor: totalSkorSheet,
+                                    countInstrumen:countSoalCurrentAtpSheet,
+                                    skor: skorAtpSheet,
+                                    sourceInstrumenSkor:instrumenSheet ,
+                                    sourceItemInstrumenSkor: sourceItemInstrumenSkorSheet,
+                                    sourceKoleksiSkorTiapInstrumen: koleksiShadowTotalSkorSheet,
+                                    sourceRespon:dataRespon,
+                                    sourceSheetKd:dataSheetKd,
+                                    instrumenSheet
+                                    
+                                });
+
+                                /** tpSheet */
+                                koleksiSkorTpTiapAtpSheet.push(...koleksiSkorSheetNumber);
+                                countSoalCurrentTpSheetnumber = Decimal.sum(countSoalCurrentTpSheetnumber, countSoalCurrentAtpSheet).toNumber();
+
+                                /** levelCpSheet */
+                                koleksiTotalSkorCpFromCp.push(...koleksiSkorSheetNumber);
+                                countSoalCurrentCpSheet = Decimal.sum(countSoalCurrentCpSheet, countSoalCurrentAtpSheet).toNumber();
+
+
+                            }
+                            
+                            const totalSkor = koleksiTotalSkorTp.length === 0 ? null : Decimal.sum(...koleksiTotalSkorTp).toNumber();
+                            const skor = koleksiTotalSkorTp.length === 0 ? null : Decimal.sum(...koleksiTotalSkorTp).div(countSoalCurrentTp).toDecimalPlaces(2).toNumber();
+                            respon_koleksiTp.push({
+                                type:'tp',
+                                struktur: {tp_id, tp_description},
+                                totalSkor,
+                                countInstrumen:countSoalCurrentTp,
+                                skor,
+                                sourceInstrumenSkor:sourceItemInstrumenSkorResponTp,//koleksiInstrumenCurrentTp,
+                                sourceKoleksiSkorTiapInstrumen:koleksiSkorTpTiapAtp,
+                                sourceItemInstrumenSkor:currentInstrumenTp,//sourceItemInstrumenSkorResponTp,
+                                sourceRespon: sourceResponTp,
+                                sourceSheetKd: sourceSheetKdTp
+                            });
+
+                            
+                            const sanitizeNullToNumberLevelTp  = (koleksiSkorTpTiapAtpSheet.length === 0 || koleksiSkorTpTiapAtpSheet.every(m=>m === null))? []: koleksiSkorTpTiapAtpSheet.map(n=>n ?? 0);
+                            const totalSkorSheet = (koleksiSkorTpTiapAtpSheet.length === 0 || koleksiSkorTpTiapAtpSheet.every(m=>m === null))? null: Decimal.sum(...sanitizeNullToNumberLevelTp).toNumber();
+                            const skorTpSheet = (koleksiSkorTpTiapAtpSheet.length === 0 || koleksiSkorTpTiapAtpSheet.every(m=>m === null))? null: Decimal.sum(...sanitizeNullToNumberLevelTp).div(countSoalCurrentTpSheetnumber).toDecimalPlaces(2).toNumber();
+                            
+                            sheet_koleksiTp.push({
+                                type:'tp',
+                                struktur: {tp_id, tp_description},
+                                totalSkor:totalSkorSheet,
+                                countInstrumen: countSoalCurrentTpSheetnumber,
+                                skor: skorTpSheet,
+                                sourceInstrumenSkor:koleksiInstrumenCurrentTp,
+                                sourceKoleksiSkorTiapInstrumen:koleksiSkorTpTiapAtpSheet,
+                                sourceItemInstrumenSkor:[],
+                                sourceRespon: sourceResponTp,
+                                sourceSheetKd: sourceSheetKdTp
+                            })
+                        }
+                        
+                        const totalSkor = koleksiTotalSkorCp.length === 0 ? null : Decimal.sum(...koleksiTotalSkorCp).toNumber();
+                        const skor = koleksiTotalSkorCp.length === 0 ? null :Decimal.sum(...koleksiTotalSkorCp).div(countSoalCurrentCp).toDecimalPlaces(2).toNumber();
+
+                        respon_koleksiCp.push({
+                                type:'cp',
+                                struktur: {cp_id, cp_description},
+                                totalSkor,
+                                countInstrumen:countSoalCurrentCp,
+                                skor,
+                                sourceInstrumenSkor:sourceItemInstrumenSkorResponCp,//koleksiInstrumenCurrentCp,
+                                sourceKoleksiSkorTiapInstrumen:koleksiSkorCpTiapAtp,
+                                sourceItemInstrumenSkor:currentInstrumenCp,//sourceItemInstrumenSkorResponCp,
+                                sourceRespon: sourceResponCp,
+                                sourceSheetKd: sourceSheetKdCp
+                            });
+                        
+                        const sanitizeNullToNumberLevelCp  = koleksiTotalSkorCpFromCp.map(n=>n ?? 0);
+                        const totalSkorSheetCp = (koleksiTotalSkorCpFromCp.length === 0 || koleksiTotalSkorCpFromCp.every(m=>m === null))? null: Decimal.sum(...sanitizeNullToNumberLevelCp).toNumber();
+                        const skorCpSheet = (koleksiTotalSkorCpFromCp.length === 0 || koleksiTotalSkorCpFromCp.every(m=>m === null))? null: Decimal.sum(...sanitizeNullToNumberLevelCp).div(countSoalCurrentCpSheet).toDecimalPlaces(2).toNumber();
+                        
+                        sheet_koleksiCp.push({
+                            type:'cp',
+                            struktur: {cp_id, cp_description},
+                            totalSkor:totalSkorSheetCp,
+                            countInstrumen: countSoalCurrentCpSheet,
+                            skor: skorCpSheet,
+                            sourceInstrumenSkor:koleksiInstrumenCurrentCp,
+                            sourceKoleksiSkorTiapInstrumen:koleksiTotalSkorCpFromCp,
+                            sourceItemInstrumenSkor:[],
+                            sourceRespon: sourceResponCp,
+                            sourceSheetKd: sourceSheetKdCp
+                        })
+                   }
+
+                
+                   dataNilaiRaportResponSiswa.skorKd_atp  = this.buildSkorKdNullable(kodeMapel, respon_koleksiAtp);
+                   dataNilaiRaportResponSiswa.skorKd_tp  = this.buildSkorKdNullable(kodeMapel, respon_koleksiTp);
+                   dataNilaiRaportResponSiswa.skorKd_cp  = this.buildSkorKdNullable(kodeMapel, respon_koleksiCp);
+                   let koleksiTotalSkor = respon_koleksiAtp.map(m=>m.totalSkor);
+                   let totalInstrumen = Decimal.sum(...respon_koleksiAtp.map(n=>n.countInstrumen))
+                   let nilaiRaportBasedOnInstrumen = (koleksiTotalSkor.length === 0 || koleksiTotalSkor.every(m=>m === null))? null : Decimal.sum(...koleksiTotalSkor.map(n=>n ?? 0)).div(totalInstrumen).toNumber();
+                   dataNilaiRaportResponSiswa.nilaiRaport = nilaiRaportBasedOnInstrumen;
+                   dataNilaiRaportResponSiswa.nilaiRaportAtp =calculateNilaiRaportKompetensi(this.buildSkorKdNullable(kodeMapel, respon_koleksiAtp))
+                   dataNilaiRaportResponSiswa.nilaiRaportTp =calculateNilaiRaportKompetensi(this.buildSkorKdNullable(kodeMapel, respon_koleksiTp))
+                   dataNilaiRaportResponSiswa.nilaiRaportCp =calculateNilaiRaportKompetensi(this.buildSkorKdNullable(kodeMapel, respon_koleksiCp))
+
+                   const MaxMinAtp = getMinMax(respon_koleksiAtp, 'skor');
+                   const MaxMinTp = getMinMax(respon_koleksiTp, 'skor');
+                   const MaxMinCp = getMinMax(respon_koleksiCp, 'skor');
+                   
+                   dataNilaiRaportResponSiswa.sourceKoleksiStrukturAtp= this.buildMaxMinKoleksiStruktur(MaxMinAtp, respon_koleksiAtp);
+                   dataNilaiRaportResponSiswa.sourceKoleksiStrukturTp= this.buildMaxMinKoleksiStruktur(MaxMinTp,respon_koleksiTp);
+                   dataNilaiRaportResponSiswa.sourceKoleksiStrukturCp= this.buildMaxMinKoleksiStruktur(MaxMinCp,respon_koleksiCp);
+                   dataNilaiRaportResponSiswa.collectionAtp=collectionAtp;
+                   dataNilaiRaportResponSiswa.collectionTp=collectionTp;
+                   dataNilaiRaportResponSiswa.collectionCp=collectionCp;
+                   
+
+
+                   const skorKd_atp_respon = this.buildSkorKdNullable(kodeMapel, sheet_koleksiAtp);
+                   const skorKd_tp_respon = this.buildSkorKdNullable(kodeMapel, sheet_koleksiTp);
+                   const skorKd_cp_respon = this.buildSkorKdNullable(kodeMapel, sheet_koleksiCp);
+
+                   dataNilaiRaportSheetKd.skorKd_atp    = skorKd_atp_respon;
+                   dataNilaiRaportSheetKd.skorKd_tp     = skorKd_tp_respon;
+                   dataNilaiRaportSheetKd.skorKd_cp     = skorKd_cp_respon;
+
+                   let koleksiTotalSkorSheet = sheet_koleksiAtp.map(m=>m.totalSkor);
+                   let totalInstrumenSheet = Decimal.sum(...sheet_koleksiAtp.map(n=>n.countInstrumen))
+                   let nilaiRaportBasedOnInstrumenSheet = (koleksiTotalSkorSheet.length === 0 || koleksiTotalSkorSheet.every(m=>m === null))? null : Decimal.sum(...koleksiTotalSkorSheet.map(n=>n ?? 0)).div(totalInstrumenSheet).toNumber();
+                   dataNilaiRaportSheetKd.nilaiRaport = nilaiRaportBasedOnInstrumenSheet;
+                   
+
+
+
+                   dataNilaiRaportSheetKd.nilaiRaportAtp     = calculateNilaiRaportKompetensi(skorKd_atp_respon);
+                   dataNilaiRaportSheetKd.nilaiRaportTp     = calculateNilaiRaportKompetensi(skorKd_tp_respon);
+                   dataNilaiRaportSheetKd.nilaiRaportCp     = calculateNilaiRaportKompetensi(skorKd_cp_respon);
+
+                   const MaxMinAtpSheet  = getMinMax(sheet_koleksiAtp, 'skor');
+                   const MaxMinTpSheet  = getMinMax(sheet_koleksiTp, 'skor');
+                   const MaxMinCpSheet  = getMinMax(sheet_koleksiCp, 'skor');
+
+                   dataNilaiRaportSheetKd.sourceKoleksiStrukturAtp= this.buildMaxMinKoleksiStruktur(MaxMinAtpSheet,sheet_koleksiAtp);
+                   dataNilaiRaportSheetKd.sourceKoleksiStrukturTp= this.buildMaxMinKoleksiStruktur(MaxMinTpSheet,sheet_koleksiTp);
+                   dataNilaiRaportSheetKd.sourceKoleksiStrukturCp= this.buildMaxMinKoleksiStruktur(MaxMinCpSheet,sheet_koleksiCp);
+                   dataNilaiRaportSheetKd.collectionAtp=collectionAtp;
+                   dataNilaiRaportSheetKd.collectionTp=collectionTp;
+                   dataNilaiRaportSheetKd.collectionCp=collectionCp;
+               }
+
+                /** 
+                 * Pada akhir, looping ini menghasilkan satu data siswa untuk siswa saat ini
+                */
+               const obRaportSiswa:RaportRombelAsal = {
+                dataSiswa: siswa,
+                dataNilaiRaportResponSiswa,
+                dataNilaiRaportSheetKd,
+                // sheet_koleksiAtp,
+                
+               };
+               raportSiswa.push(obRaportSiswa);
+
+        
+            }
+               
+            
+            /**
+             * Build COllection level Mapel
+             */
+            
+            const collectionAtp:StrukturAtpType[]=[];
+            const collectionTp:StrukturTpType[]=[];
+            const collectionCp:StrukturCpType[]=[];
+            if(currentKurikulumMapel?.dataCpMapper){
+                for(const {cp_id, cp_description, dataTpMapper} of currentKurikulumMapel?.dataCpMapper.values() ){
+                    collectionCp.push({cp_id, cp_description});
+                    for(const {tp_id, tp_description, dataAtpMapper} of dataTpMapper.values()) {
+                        collectionTp.push({tp_id, tp_description})
+                        for(const {atp_id, atp_description} of dataAtpMapper.values()){
+                            collectionAtp.push({atp_id,atp_description})
+                        }
+                    }
+                    
+                }
+            }
+            result.push({
+                mapel: source,
+                raportSiswa,
+                sourceTagihan,
+                collectionAtp,
+                collectionTp,
+                collectionCp,
+            })
+        }
+        return result
+    }
+    private static buildSkorKdNullable(kodeMapel:string, koleksiNilaiStruktur:KoleksiStrukturWithSourceSkor[]):SkorKdNullableType|undefined{
+        if(koleksiNilaiStruktur.length === 0) return;
+        const result:SkorKdNullableType = Object.create(null);
+        koleksiNilaiStruktur.forEach(m=>{
+            let id: string | number | undefined;
+
+            switch (m.type) {
+                case 'atp':
+                    id = (m.struktur as StrukturAtpType).atp_id;
+                    break;
+                case 'tp':
+                    id = (m.struktur as StrukturTpType).tp_id;
+                    break;
+                case 'cp':
+                    id = (m.struktur as StrukturCpType).cp_id;
+                    break;
+            }
+
+            if (id === undefined) return;
+
+            const key = `${kodeMapel}_${id}`;
+            result[key] = m.skor ?? null;
+        })
+        return result;
+    }
+    private static buildMaxMinKoleksiStruktur(
+        MaxMinAtpCurrent: MinMaxResult<KoleksiStrukturWithSourceSkor>,
+        sources:KoleksiStrukturWithSourceSkor[]
+    ):KoleksiSktrukturWithSourceSkorAndStateMaxMin[] {
+        const result:KoleksiSktrukturWithSourceSkorAndStateMaxMin[]=[];
+        const {max, min} = MaxMinAtpCurrent;
+        /** 
+         * jika sources/koleksinya cuman ada satu, isMax dan isMinnya 
+         * 
+        */
+       const sourceKoleksiSkorTiapInstrumen = sources.flatMap(m=>m.sourceKoleksiSkorTiapInstrumen)
+       if(sourceKoleksiSkorTiapInstrumen.length === 1){
+        return sources.map(m=>{
+            return {
+                ...m, 
+                isMax:false, 
+                isMin:false
+            }
+        })
+       }
+        for(const item of sources){
+            const {struktur, type} = item
+            let isMax:boolean = false;
+            let isMin:boolean = false;
+            switch(type){
+                case 'atp':{
+                    const maxStruktur = (max?.struktur as StrukturAtpType);
+                    const minStruktur = (min?.struktur as StrukturAtpType);
+                    const strukturData = struktur as StrukturAtpType;
+                    if(strukturData.atp_id === maxStruktur?.atp_id){
+                        isMax = true;
+                    }
+                    if(strukturData.atp_id === minStruktur?.atp_id){
+                        isMin = true;
+                    }
+                }
+                break;
+                case 'tp':{
+                    const maxStruktur = (max?.struktur as StrukturTpType);
+                    const minStruktur = (min?.struktur as StrukturTpType);
+                    const strukturData = struktur as StrukturTpType;
+                    if(strukturData.tp_id === maxStruktur?.tp_id){
+                        isMax = true;
+                    }
+                    if(strukturData.tp_id === minStruktur?.tp_id){
+                        isMin = true;
+                    }
+                }
+                break;
+                case 'cp':{
+                    const maxStruktur = (max?.struktur as StrukturCpType);
+                    const minStruktur = (min?.struktur as StrukturCpType);
+                    const strukturData = struktur as StrukturCpType;
+                    if(strukturData.cp_id === maxStruktur?.cp_id){
+                        isMax = true;
+                    }
+                    if(strukturData.cp_id === minStruktur?.cp_id){
+                        isMin = true;
+                    }
+                }
+                break;
+            }
+            result.push( {
+                ...item, 
+                isMax,
+                isMin
+            })
+        }
+        return result;
+    }
+}

@@ -1,6 +1,5 @@
 import type { TagihanHasDataResponse } from "~/domain/penilaian/type/tagihan-assesmen-type"
 import getOrCreateMap from "~/lib/getOrCreateMapper"
-import type { PublikasiPaketAppType } from "~/types/publikasi-paket-soal/publikasi-paket-app-type"
 import type { SiswaType } from "~/types/siswa"
 
 export type MemberOfPublikasiPaket = {
