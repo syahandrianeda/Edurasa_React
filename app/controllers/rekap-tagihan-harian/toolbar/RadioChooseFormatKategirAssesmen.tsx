@@ -22,7 +22,7 @@ export default function RadioChooseFormatKategoriAssesmen(){
                 draft.formatKategoriAssesmen = 'decision';
             })
         }
-    },[])
+    },[updateExtra, value?.extra?.formatKategoriAssesmen])
     return (
             <RadioGroup value={value?.extra?.formatKategoriAssesmen ?? 'decision'} onValueChange={handleChange} className="flex flex-col md:flex-row shadow-md shadow-sky-700 p-1">
                 <div className="w-full space-y-2 bg-sky-50 rounded text-xs h-fit p-1 shadow-md shadow-sky-600">

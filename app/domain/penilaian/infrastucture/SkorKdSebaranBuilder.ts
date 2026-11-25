@@ -1,5 +1,6 @@
 import type { RisponsePenilaianSiswa } from "~/types/penilaian/RisponsePenilaianSiswaType";
 import type { GroupBentukSoalPropertiKurikulumInPublikasiAssesmenWithScore, GroupSebaranNoSoalFromPropertyKurikulumWithScore, KoleksiBentukSoalDanPropertyKurikulumBasedBentukSoal } from "../model/grouping-kurikulum-by-bentuksoal";
+import Decimal from "decimal.js";
 
 export default class SkorKdSebaranBuilder{
     static build(
@@ -48,31 +49,34 @@ export default class SkorKdSebaranBuilder{
                                 const updateSkor = sumberRespon.find(s=>s.no_prefix === soal.no_soal && s.bentuk_soal === item.bentukSoal);
                                 const skor = updateSkor?.skor ?? 0;
 
-                                totalATP+=skor;
+                                // totalATP+=skor;
+                                // total_tp += skor;
+                                // total_cp += skor;
+                                // total_mapel+=skor
+                                totalATP = Decimal.sum(totalATP, skor).toDecimalPlaces(0).toNumber();
+                                total_tp = Decimal.sum(total_tp, skor).toDecimalPlaces(0).toNumber();
+                                total_cp = Decimal.sum(total_cp, skor).toDecimalPlaces(0).toNumber();
+                                total_mapel = Decimal.sum(total_mapel, skor).toDecimalPlaces(0).toNumber();
+
                                 jumlahSoalDinilai_atp++;
-
-                                total_tp += skor;
                                 jumlahSoalDinilai_tp++;
-
-                                total_cp += skor;
                                 jumlahSoalDinilai_cp++
-
-                                total_mapel+=skor
                                 jumlahSoalDinilai_mapel++;
 
                                 return {
                                     ...soal,
                                     skor,
-                                    
                                 }
                             })
+
                             return {
                                 ...item,
                                 data,
                                 source:sumnber_respon
                             }
                         })
-                        SkorAtp = Number((totalATP/jumlahSoalDinilai_atp).toFixed(2));
+                        // SkorAtp = Number((totalATP/jumlahSoalDinilai_atp).toFixed(2));
+                        SkorAtp = Decimal(totalATP).div(jumlahSoalDinilai_atp).toDecimalPlaces(2).toNumber();
                         const keyKodeMapel_idAtp =  `${branchMapel.kodeMapel}_${branchAtp.atp_id}`;
                         objekSkorKd[keyKodeMapel_idAtp] = SkorAtp;
                         return {
@@ -83,7 +87,8 @@ export default class SkorKdSebaranBuilder{
                             dataBentukSoal
                         }
                     })
-                    skorTp = Number((total_tp/jumlahSoalDinilai_tp).toFixed(2))
+                    // skorTp = Number((total_tp/jumlahSoalDinilai_tp).toFixed(2))
+                    skorTp = Decimal(total_tp).div(jumlahSoalDinilai_tp).toDecimalPlaces(2).toNumber();
                     return {
                         ...branchTp,
                         skor:skorTp,
@@ -92,7 +97,8 @@ export default class SkorKdSebaranBuilder{
                         dataAtp
                     }
                 })
-                skor_cp = Number((total_cp/jumlahSoalDinilai_cp).toFixed(2))
+                // skor_cp = Number((total_cp/jumlahSoalDinilai_cp).toFixed(2))
+                skor_cp = Decimal(total_cp).div(jumlahSoalDinilai_cp).toDecimalPlaces(2).toNumber();
                 return {
                     ...branchCp,
                     total: total_cp,
@@ -101,8 +107,9 @@ export default class SkorKdSebaranBuilder{
                     dataTp
                 }
             });
-            skorMapel = Number((total_mapel/jumlahSoalDinilai_mapel).toFixed(2));
+            // skorMapel = Number((total_mapel/jumlahSoalDinilai_mapel).toFixed(2));
             // const {mapelName, kodeMapel, slotRow} = branchMapel
+            skorMapel = Decimal(total_mapel).div(jumlahSoalDinilai_mapel).toDecimalPlaces(2).toNumber();
             return {
                 ...branchMapel,
                 skor: skorMapel,

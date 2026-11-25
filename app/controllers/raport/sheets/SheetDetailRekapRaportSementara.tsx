@@ -28,7 +28,7 @@ type Props ={
 export default function SheetDetailRekapRaportSementara({
     item, open, onOpenChange
 }:Props){
-    console.log({item})
+    
     return (
         <Sheet 
             open={open}

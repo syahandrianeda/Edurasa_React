@@ -16,7 +16,8 @@ export type DataCurrentInstrumen = {
     skor:number|null,
     skorSheetKd:number|null;
     bentuk_soal:ListBentukSoalType['name'],
-    tagihan:TagihanHasDataResponse
+    tagihan:TagihanHasDataResponse,
+    source:string
 }
 export type SourceInstrumenSkor={
     tagihan:TagihanHasDataResponse,

@@ -96,7 +96,7 @@ export function HeadingTableEduraWithSort<T >({
                       key={colIndex}
                       colSpan={col.colSpan ?? 1}
                       rowSpan={col.rowSpan ?? 1}
-                      className={col.className ?? ''}
+                      className={cn('text-wrap',col.className)}
                       style={style}
                     >
                       <div className="flex items-center gap-1 justify-around">

@@ -29,6 +29,7 @@ import { useCrudImportSkorKdProvider } from "../crud/crud-import-skor-kd-provide
 import {toast} from 'sonner';
 import DispatchingResponseToStore from "~/lib/dispatching-response-to-store";
 import type { ValidatedResponseSiswa } from "~/types/penilaian/rekap_sementara_sheet_type";
+import { getStoreKategoriAssesmenResource } from "~/lib/helper-create-type-number-format-spreadsheet";
 
 
 // type KeyLabel={
@@ -50,9 +51,12 @@ export default function ImportNilaiByKdToSheetKategori(){
     const {actions:api, state} = useCrudImportSkorKdProvider();
     const {keySkorKD,keyLabelRekapSkorKdSheet,dataSkorKd} = currentData;
     const rombel = getSessionRombel();
+    const jenjang = getNumberFromString(rombel);
     
-    const [dataUi, setDataUi] = React.useState<TemplateImportSkorToKd[]>(dataSkorKd)
     
+    const [dataUi, setDataUi] = React.useState<TemplateImportSkorToKd[]>(dataSkorKd);
+    const dataStor = getStoreKategoriAssesmenResource(currentData.tipe_assesmen, jenjang )
+    console.log({dataUi, currentData, dataStor})
     
     const callBackImport = (data:any[])=>{
         const convert = ConverterDataImportToTemplateSkorUI.convert(data as unknown as SkorKdFromImportExcelType[], currentData);
@@ -62,9 +66,8 @@ export default function ImportNilaiByKdToSheetKategori(){
     const onSubmit = React.useCallback(()=>{
         const konfirmasi = confirm('Anda yakin?');
         if(!konfirmasi) return;
-        const jenjang = getNumberFromString(rombel);
         const param = ParameterServiceSkorKdImportBuilder.build(dataUi, jenjang, currentData)
-        
+        console.log({param})
         toast.promise(
             api.update(param), {
                 loading:'Sedang mengimport data ke server',

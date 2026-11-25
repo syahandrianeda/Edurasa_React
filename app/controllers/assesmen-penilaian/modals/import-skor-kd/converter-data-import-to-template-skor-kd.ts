@@ -2,6 +2,7 @@ import type { DataSkorTemplateImport, DetailSkorKdSource, KeyLabelTemplateImport
 import type { SkorKdFromImportExcelType } from "./skor-kd-from-import-excel-type";
 import type { JenisTagihanPenilaiantype } from "~/domain/asesmen-penilaian/jenis-tagihan-type";
 import type { TagihanHasDataResponse } from "~/domain/penilaian/type/tagihan-assesmen-type";
+import { getNumberFromString } from "~/lib/get-number";
 
 export default class ConverterDataImportToTemplateSkorUI{
     static convert(data:SkorKdFromImportExcelType[], currentData:TagihanHasDataResponse):TemplateImportSkorToKd[]{
@@ -21,8 +22,9 @@ export default class ConverterDataImportToTemplateSkorUI{
               
               /** data ini sebagai data `sheet`, anggap data ini adalah data server */
               // const data:DataSkorTemplateImport = keySkorKd.map(key=>({[key]:Number(item[key])})).reduce((a,b)=>({...a,...b}));
+            
               const data:DataSkorTemplateImport = keySkorKd.map(key=> {
-                const nilai = item[key] ? Number(item[key]):null;
+                const nilai = item[key] ?  getNumberFromString(item[key]):null;
                 return {
                   [key]:nilai
                 }

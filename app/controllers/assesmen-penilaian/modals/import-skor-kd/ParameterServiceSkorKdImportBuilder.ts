@@ -3,9 +3,12 @@ import type { ParameterServiceSkorKdImport } from "./ParameterServiceSkorKdImpor
 import type { KategoriTagihanType } from "~/domain/kategori-tagihan/types/entities/KategoriTagihanType";
 import type { ValidatedResponseSiswa } from "~/types/penilaian/rekap_sementara_sheet_type";
 import type { TagihanHasDataResponse } from "~/domain/penilaian/type/tagihan-assesmen-type";
+import { store } from "~/context-reduct/redux-provider";
+import { getStoreKategoriAssesmenResource } from "~/lib/helper-create-type-number-format-spreadsheet";
 
 export default class ParameterServiceSkorKdImportBuilder{
     static build(dataSource:TemplateImportSkorToKd[],jenjang: number,currentData: TagihanHasDataResponse):ParameterServiceSkorKdImport{
+        
         const tab = currentData.tipe_assesmen;
         const jenis_tagihan = currentData.jenis_tagihan.kode;
         const publikasi_id = currentData.idbaris;
@@ -16,25 +19,50 @@ export default class ParameterServiceSkorKdImportBuilder{
                     [newKey]: 0
                 }
         }).reduce((a,b)=>({...a,...b}));
-
-        const data:ValidatedResponseSiswa[] = dataSource.map(m=>{
-            const {siswa_id, nama_siswa, rombel, dataSkorDecision, jenisTagihan, publikasi_id} = m;
-            const sebaran = Object.entries(dataSkorDecision).map(([key,value])=>{
-                const newKey = jenisTagihan+'_'+key + '_' + publikasi_id
-                return {
-                    [newKey]: value===null?undefined:value
+        const dataStor = getStoreKategoriAssesmenResource(tab, jenjang )?.data;
+        const data:ValidatedResponseSiswa[] = dataStor.map(m=>{
+            const updateStor = dataSource.find(s=>s.siswa_id === m.siswa_id);
+            const sebaran = Object.create(null);
+            if(updateStor){
+                const {siswa_id, nama_siswa, rombel, dataSkorDecision, jenisTagihan, publikasi_id} = updateStor;
+                for(const [key,value] of Object.entries(dataSkorDecision)){
+                       const newKey = jenisTagihan+'_'+key + '_' + publikasi_id;
+                               sebaran[newKey]= value===null?undefined:value
                 }
-            }).reduce((a,b)=>({...a,...b}));
-
+                // sebaran = Object.entries(dataSkorDecision).map(([key,value])=>{
+                //     const newKey = jenisTagihan+'_'+key + '_' + publikasi_id;
+                    
+                //     return {
+                //         [newKey]: value===null?undefined:value
+                //     }
+                // }).reduce((a,b)=>({...a,...b}));
+                
+            }
             return {
-                idbaris: 0,
-                siswa_id,
-                nama_siswa,
-                rombel,
+                ...m,
                 ...sebaran
             }
         })
-        console.log({dataSource, data})
+        // const data:ValidatedResponseSiswa[] = dataSource.map(m=>{
+        //     const {siswa_id, nama_siswa, rombel, dataSkorDecision, jenisTagihan, publikasi_id} = m;
+        //     const asalStor = dataStor.find(s=>s.siswa_id === siswa_id)
+        //     const sebaran = Object.entries(dataSkorDecision).map(([key,value])=>{
+        //         const newKey = jenisTagihan+'_'+key + '_' + publikasi_id;
+                
+        //         return {
+        //             [newKey]: value===null?undefined:value
+        //         }
+        //     }).reduce((a,b)=>({...a,...b}));
+
+        //     return {
+        //         idbaris: 0,
+        //         siswa_id,
+        //         nama_siswa,
+        //         rombel,
+        //         ...sebaran
+        //     }
+        // })
+        // console.log({dataSource, data})
         return {
             data,
             jenjang,

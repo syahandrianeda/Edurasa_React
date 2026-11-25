@@ -350,8 +350,8 @@ export default class TagihanPenilaianClass extends DtoPaketSoalSheetClass{
         /** create mapper  */
         const mapper = new TagihanHasDataResponseMapperBuilder(this.tagihanHasResponse, this.mapelRaport, this.kaleksiKategoriAssesmen).build();
          this._raportAsal = RekapRaportBuilder.buildFromMapperTagihanBuilder(mapper);// RekapRaportAsal.RekapRaporFromMapper(mapper, this.mapelRaport)
-        const testRaport = RekapRaportBuilder.buildFromMapperTagihanBuilder(mapper);
-        console.log({testRaport, tagihanHasResponse:this.tagihanHasResponse})
+        
+        
         // this.buildSebaranTagihanKurikulum();
 
         

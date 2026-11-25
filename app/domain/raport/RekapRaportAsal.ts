@@ -334,7 +334,7 @@ export default class RekapRaportAsal{
     }
     
     init():this{
-        console.log({kategoriAssesmen: this.dataKategoriAssesmen})
+        
         this.buildNilaiRaportRombel();
         return this;
     }

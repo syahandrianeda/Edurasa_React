@@ -193,7 +193,7 @@ export default function RekapPerJenisTagihanPage( {raportAsal, memberMapel, mape
         ).filter(s=>s.kodeMapel === fokusMapel.kode);
     },[fokusMapel, raportAsal]);
 
-    console.log({raportAsal, dataRaport})
+    
     
     return (
         <div className="p-1">

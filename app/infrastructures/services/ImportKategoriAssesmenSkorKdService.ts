@@ -7,6 +7,7 @@ import type { ValidatedResponseSiswa } from "~/types/penilaian/rekap_sementara_s
 import { helperFormatNumberInKategoriTagihan } from "~/lib/helper-format-number-koreksian";
 import type { ParameterServiceSkorKdImport } from "~/controllers/assesmen-penilaian/modals/import-skor-kd/ParameterServiceSkorKdImport";
 import { isDev, namaTab } from "~/lib/nama-tab-environment";
+import helperCreateTypeNumberFormatSpreadsheet, { helperCreateTypeNumberFormatSpreadsheetFromStore } from "~/lib/helper-create-type-number-format-spreadsheet";
 
 export default class ImportKategoriAssesmenSkorKdService implements ImportKategoriAssesmenSkorKdServiceInterface{
     constructor(
@@ -16,7 +17,13 @@ export default class ImportKategoriAssesmenSkorKdService implements ImportKatego
     }
     async update(param: ParameterServiceSkorKdImport): Promise<ApiResponse<ValidatedResponseSiswa>> {
         try{
-            const formatParamLanjutan = helperFormatNumberInKategoriTagihan(param.keyNumeric)
+            /**
+             * 
+            const formatParamLanjutan = helperFormatNumberInKategoriTagihan(paramCheckKeyLanjutan );
+            */
+           
+            const mergeParam = {...param.data.at(-1), ...param.keyNumeric}
+            const formatParamLanjutan = helperFormatNumberInKategoriTagihan(mergeParam)
             const idss = this.repo.createIdssJenjang(param.jenjang)
             const tab = namaTab(param.tab)
             const dataParam = param.data;
@@ -43,7 +50,9 @@ export default class ImportKategoriAssesmenSkorKdService implements ImportKatego
         }
     }
     async create(param: ParameterServiceSkorKdImport): Promise<ApiResponse<ValidatedResponseSiswa>> {
-        const formatParamLanjutan = helperFormatNumberInKategoriTagihan(param.keyNumeric)
+         const paramCheckKeyLanjutan  = helperCreateTypeNumberFormatSpreadsheetFromStore(param.tab,param.keyNumeric)
+            // const formatParamLanjutan = helperFormatNumberInKategoriTagihan(param.keyNumeric)
+            const formatParamLanjutan = helperFormatNumberInKategoriTagihan(paramCheckKeyLanjutan)
         const idss = this.repo.createIdssJenjang(param.jenjang)
         const tab = param.tab;//isDev? 'trial_'+ param.tab: param.tab;
         const dataParam = param.data;

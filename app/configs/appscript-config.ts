@@ -122,7 +122,7 @@ export class AppScriptConfig {
         }
         
         const id= this.currentMacro?.[key];// ?? "edurasa_crud";
-        console.log(testRombel, key, id)
+        
         return id;//this.currentMacro?.[key];// ?? "edurasa_crud";
     }
 
@@ -148,7 +148,7 @@ export class AppScriptConfig {
             
              this.checkAkun(pos.auth);
         }
-        console.log({pos})
+        
         return pos
     }
     async getBody(param:Record<string, any>){
@@ -159,7 +159,7 @@ export class AppScriptConfig {
     async postBody(param:Record<string, any>){
         
         try{
-            console.log('this.appCrudUrl',this.appCrudUrl, param)
+            
             const pos = await axios.post(this.appCrudUrl,
                         // param, 
                         new URLSearchParams(
@@ -180,15 +180,14 @@ export class AppScriptConfig {
                     }
             );
             
-            console.log({pos})
+            
             //reponse axios data yang dibutuhkan, biarkan class turuunannya yang membungkus type data response-nya
             if(pos?.data && pos?.data?.hasOwnProperty('auth')){
                 
                 this.checkAkun(pos.data.auth);
                 
             }
-            // console.log('pos axios status 200', pos)
-            // if(pos?.data && pos.data?.success){
+            
             if(pos?.data){
                 return pos.data
             }else{
@@ -238,125 +237,6 @@ export class AppScriptConfig {
         
     }
     
-     /** === method post dengan axios */
-    //  async postBody(param:Record<string, any>){
-    //     const start = performance.now();
-    //     try{
-    //         console.log('this.appCrudUrl',this.appCrudUrl, param)
-    //         const pos = await axios.post(this.appCrudUrl,
-    //                     // param, 
-    //                     new URLSearchParams(
-    //                         Object.entries(param).reduce<Record<string, string>>(
-    //                             (acc, [key, value]) => {
-    //                                 acc[key] = String(value);
-    //                                 return acc;
-    //                             },
-    //                             {}
-    //                         )
-    //                     ),
-                        
-    //                     {
-    //                     headers: {
-    //                         'Content-Type': 'application/x-www-form-urlencoded' 
-    //                         // 'Content-Type': 'application/json'
-    //                     }
-    //                 }
-    //         );
-    //         //   console.log(
-    //         //     "REQUEST SUCCESS",
-    //         //     `${((performance.now() - start) / 1000).toFixed(3)} s`,
-    //         //     pos.status
-    //         // );
-    //         console.log({pos})
-    //         //reponse axios data yang dibutuhkan, biarkan class turuunannya yang membungkus type data response-nya
-    //         if(pos?.data && pos?.data?.hasOwnProperty('auth')){
-                
-    //             this.checkAkun(pos.data.auth);
-                
-    //         }
-    //         // console.log('pos axios status 200', pos)
-    //         // if(pos?.data && pos.data?.success){
-    //         if(pos?.data){
-    //             return pos.data
-    //         }else{
-    //             throw new Error(pos?.data?.message , {cause: pos})
-    //         }
-    //         throw new Error(pos?.data?.message ?? 'Script Berhasil merespon, tapi gagal dikembalikan', {cause: pos})
-    //         // if(pos.status === 200 && pos.data){
-    //         //     if(pos.data){
-    //         //         console.log('pos.data', pos)
-    //         //         return pos.data;
-                    
-    //         //     }else{
-                    
-    //         //         console.log('non pos.data', pos)
-    //         //         return pos;
-    //         //     }
-    //         // }else{
-                
-    //         //     console.log('sukses status non 200', pos)
-    //         //     return new Error(pos.data.message)
-    //         // }
-    //         } catch (error) {
-    //             console.error("[REQUEST ERROR]", {
-    //                 elapsed: `${((performance.now() - start) / 1000).toFixed(3)} s`,
-    //                 error,
-    //                 name: error instanceof Error ? error.name : undefined,
-    //                 message: error instanceof Error ? error.message : String(error),
-
-    //                 // Axios
-    //                 code: isAxiosError(error) ? error.code : undefined,
-    //                 status: isAxiosError(error)
-    //                     ? error.response?.status
-    //                     : undefined,
-
-    //                 url: isAxiosError(error)
-    //                     ? error.config?.url
-    //                     : undefined,
-
-    //                 method: isAxiosError(error)
-    //                     ? error.config?.method
-    //                     : undefined,
-
-    //                 timeout: isAxiosError(error)
-    //                     ? error.config?.timeout
-    //                     : undefined,
-
-    //                 responseData: isAxiosError(error)
-    //                     ? error.response?.data
-    //                     : undefined,
-
-    //                 responseHeaders: isAxiosError(error)
-    //                     ? error.response?.headers
-    //                     : undefined,
-
-    //                 cause: error instanceof Error
-    //                     ? error.cause
-    //                     : undefined,
-    //             });
-
-    //             throw error;
-    //         }
-    //     // } catch (error) {
-    //     //             console.log(
-    //     //                 "REQUEST ERROR",
-    //     //                 `${((performance.now() - start) / 1000).toFixed(3)} s`,
-    //     //                 error
-    //     //             );
-
-            
-    //     //     throw new Error(error instanceof Error ? error.message : String(error), { cause: [error]})
-    //     //     // throw error
-    //     // }
-    //     // const pos = await axios.post(this.appCrudUrl,param, {
-    //     //     headers: {
-    //     //         'Content-Type': 'application/x-www-form-urlencoded' 
-    //     //     }
-    //     // }
-    //     // );
-        
-    //     // return pos.data;
-    // }
     checkAkun(auth:Record<string, any>){
         const rombel = getSessionRombel();
         if(auth){
@@ -430,59 +310,8 @@ export class AppScriptConfig {
             detailResponse:respon.info
         }
     }
-    
-    // responActionError<T>(error: unknown): ApiResponse<T> {
-    //         if (error instanceof ApiErrors) {
-    //             return {
-    //                 success: false,
-    //                 message: error.message,
-    //                 error: {
-    //                     code: `HTTP_${error.status ?? 'UNKNOWN'}`,
-    //                     message: error.message,
-    //                     details: error.payload
-    //                 },
-    //                 source: 'API'
-    //             };
-    //         }
-
-    //         // if (isAxiosError(error)) {
-    //         //     return {
-    //         //         success: false,
-    //         //         message: error.message,
-    //         //         error: {
-    //         //             code: error.code ?? 'AXIOS_ERROR',
-    //         //             message: error.message,
-    //         //             details: error.response?.data
-    //         //         },
-    //         //         source: 'API'
-    //         //     };
-    //         // }
-
-    //         return {
-    //             success: false,
-    //             message: error instanceof Error ? error.message : 'Unknown error',
-    //             error: {
-    //                 code: 'UNKNOWN_ERROR',
-    //                 message: error instanceof Error ? error.message : String(error),
-    //                 details: error
-    //             },
-    //             source: 'API'
-    //         };
-    //     }
     responActionError<T>(error: unknown): ApiResponse<T> {
-                      
-//   if (isAxiosError(error)) {
-//     console.log('[API ERROR]', {
-//       code: error.code,
-//       message: error.message,
-//       status: error.response?.status,
-//       data: error.response?.data,
-//       url: error.config?.url,
-//       method: error.config?.method,
-//     });
-//   }
-
-//   throw error;
+    
         if (error instanceof ApiErrors) {
                 return {
                     success: false,
@@ -530,11 +359,9 @@ export class AppScriptConfig {
             const FixParam = Object.assign(defaultParam,param);
             
             const respon =  await this.postBody(FixParam);
-            // console.log('upload dokumen di siswa', respon)
+            
             return {
                 ...respon,
-            // success: true,
-            // data: respon.data,
             message:'Upload berhasil',
             source:'API'
         }

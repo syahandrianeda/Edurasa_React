@@ -370,12 +370,12 @@ export default class TagihanHasDataResponseMapperBuilder{
                                 dataInstrumen:dataBentukSoal
                             }));
                         
-                        currentSiswaHasInstrumen?.atpMapperTagihanWithInstrumen.get(atp_id)?.instrumenSoal.push({
-                            tagihan,
-                            soalSkor: dataBentukSoal,
-                            koleksiSkor: dataBentukSoal.flatMap(m=>m.data.map(n=>n.skor))
+                        // currentSiswaHasInstrumen?.atpMapperTagihanWithInstrumen.get(atp_id)?.instrumenSoal.push({
+                        //     tagihan,
+                        //     soalSkor: dataBentukSoal,
+                        //     koleksiSkor: dataBentukSoal.flatMap(m=>m.data.map(n=>n.skor))
                             
-                        });
+                        // });
                         
                         // currentSiswaMapperHelperSisswaHasInstrumenSoalCurrentTagihan.atpMapperHelper.get(atp_id)?.dataInsrumen.push({
                         //     tagihan,

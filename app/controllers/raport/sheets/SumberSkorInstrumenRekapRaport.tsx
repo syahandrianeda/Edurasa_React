@@ -62,35 +62,6 @@ export default function SumberSkorInstrumenRekapRaport({data,keyKompetensi}:Prop
                                 </TRowEdura>
                             )
                         )
-                        // struktur.sourceItemInstrumenSkor.map((dataSkor, iDataSkor)=>
-                        //     <TRowEdura key={struktur.idType + '_'+iStruktur+'_'+iDataSkor}>
-                        //         {
-                        //              iDataSkor === 0 && <TdEdura rowSpan={struktur.countInstrumen} className="text-wrap">[{struktur.idType}] {struktur.description}</TdEdura>
-                        //         }
-                        //         <TdEdura className="text-wrap">{dataSkor.tagihan.nama_publikasi}</TdEdura>
-                        //         <TdEdura>
-                        //                 <div className="w-full flex justify-between min-w-24">
-                        //                     <p>{dataSkor.bentuk_soal}</p>
-                        //                     <p>No. {dataSkor.no_soal}</p>
-                        //                 </div>
-                        //         </TdEdura>
-                        //         <TdEdura className="text-center">
-                        //             {dataSkor.skor}
-                        //         </TdEdura>
-                        //         <TdEdura className="text-center">
-                        //             {dataSkor.skorSheetKd}
-                        //         </TdEdura>
-                                
-                        //         {
-                        //             iDataSkor === 0 && <TdEdura rowSpan={struktur.countInstrumen} className="text-wrap text-center">{struktur.totalSkor}</TdEdura>
-                        //         }
-                                
-                        //         {
-                        //             iDataSkor === 0 && <TdEdura rowSpan={struktur.countInstrumen} className="text-wrap text-center">{struktur.skor}</TdEdura>
-                        //         }
-                                
-                        //     </TRowEdura>
-                        // )
                     )
                 }
                

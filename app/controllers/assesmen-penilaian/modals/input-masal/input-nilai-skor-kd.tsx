@@ -54,6 +54,7 @@ export default function InputNilaiSkorKdMassal(){
         const jenjang = getNumberFromString(rombel);
         const param = ParameterServiceSkorKdImportBuilder.build(nilaiSkorKd, jenjang, currentData)
         console.log({nilaiSkorKd, tipeAssesmen:currentData.tipe_assesmen, keySkorKD, param});
+        console.log('ini harus sama dengan yang di service',{param});
         toast.promise(
             api.update(param), {
                 loading:'Sedang mengimport data ke server',

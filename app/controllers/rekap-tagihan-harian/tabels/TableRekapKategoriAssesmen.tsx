@@ -114,7 +114,7 @@ export default function TableRekapKategoriAssesmen({fokusMapel, kategoriTagihan}
 
     },[value?.extra?.formatKategoriAssesmen])
     
-    console.log({kategoriTagihan})
+    
     
     const handleSheet = useCallback((dataMapel?:DataSiswaBasedMapelInResponAllKategoriTagihanInterface)=>{
         const format = value?.extra?.formatKategoriAssesmen;
@@ -129,7 +129,8 @@ export default function TableRekapKategoriAssesmen({fokusMapel, kategoriTagihan}
             
 
         })
-    },[dataNilai?.koleksiSumberTagihan, value?.extra?.formatKategoriAssesmen,value?.extra?.FokusStrukturKurikulum.keyLabel])
+    },[dataNilai?.koleksiSumberTagihan, value?.extra?.formatKategoriAssesmen,value?.extra?.FokusStrukturKurikulum.keyLabel]);
+    
     return (
         <div>
             <p className='text-[8px] text-purple-600 text-center print:hidden'>Klik pada sel baris untuk melihat detail</p>

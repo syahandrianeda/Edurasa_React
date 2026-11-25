@@ -8,7 +8,7 @@ import { isDev, namaTab } from "~/lib/nama-tab-environment";
 import { helperFormatNumberInKategoriTagihan, helperFormatNumberInResponTagihan } from "~/lib/helper-format-number-koreksian";
 import { store } from "~/context-reduct/redux-provider";
 import type { KategoriTagihanType } from "~/domain/kategori-tagihan/types/entities/KategoriTagihanType";
-import helperCreateTypeNumberFormatSpreadsheet from "~/lib/helper-create-type-number-format-spreadsheet";
+import { helperCreateTypeNumberFormatSpreadsheetFromStore } from "~/lib/helper-create-type-number-format-spreadsheet";
 
 export default class KoreksiGuruService implements KoreksiGuruServiceInterface{
     constructor(
@@ -27,9 +27,9 @@ export default class KoreksiGuruService implements KoreksiGuruServiceInterface{
         const formatParamUtama = helperFormatNumberInResponTagihan(paramUtama);
 
         // const paramCheckKeyLanjutan  = this.helperMergeParamLanjutan(tipe_assesmen, paramLanjutan)
-        const paramCheckKeyLanjutan  = helperCreateTypeNumberFormatSpreadsheet(tipe_assesmen, paramLanjutan)
+        const paramCheckKeyLanjutan  = helperCreateTypeNumberFormatSpreadsheetFromStore(tipe_assesmen, paramLanjutan)
         const formatParamLanjutan = helperFormatNumberInKategoriTagihan(paramCheckKeyLanjutan );
-        
+        console.log({paramCheckKeyLanjutan, formatParamLanjutan})
         const data = [
             {
                 idss,

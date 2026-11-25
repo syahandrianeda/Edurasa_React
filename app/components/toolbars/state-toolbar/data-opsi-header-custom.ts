@@ -157,5 +157,34 @@ export const OptionsDesignTableDefaultProps:OptionDesignTableToolbar<SiswaType>[
         classNamesColumn: ['text-center'],
         resolverNode: (row)=>row.pd_namaibu,
         
+    },
+    {
+        labelDefault: 'Melanjutkan Ke',
+        type: 'field',
+        key:'smp_ke',
+        classNamesHeader: ['text-center'],
+        classNamesColumn: ['text-center'],
+        resolverNode: (row)=>row.smp_ke,
+        
+    },
+    {
+        labelDefault: 'Tanggal Keluar/Lulus',
+        type: 'field',
+        key:'keluar_tgl',
+        classNamesHeader: ['text-center'],
+        classNamesColumn: ['text-start'],
+        resolverSort:(row) => getParseDateYYYYMMMDD(row.keluar_tgl) as number,
+        resolverNode: (row)=>formatTanggalIndonesia(row.keluar_tgl,{dateStyle:'long'}),
+        
+    },
+    {
+        labelDefault: 'Tanggal Masuk',
+        type: 'field',
+        key:'masuk_tgl',
+        classNamesHeader: ['text-center'],
+        classNamesColumn: ['text-start'],
+        resolverSort:(row) => getParseDateYYYYMMMDD(row.masuk_tgl) as number,
+        resolverNode: (row)=>formatTanggalIndonesia(row.masuk_tgl,{dateStyle:'long'}),
+        
     }
 ] 

@@ -10,6 +10,7 @@ import type { RisponsePenilaianSiswa } from "~/types/penilaian/RisponsePenilaian
 import type { DataKdSheetApp } from "~/types/penilaian/DataKdSheetAppType";
 import { getMinMax, type MinMaxResult } from "~/lib/get-min-max-on-array-object";
 import calculateNilaiRaportKompetensi from "../accumulator-nilai/CalculateNilaiRaportKompetensi";
+import { collectingSkorResponPerInstrumenAllTagihan, collectingSkorSheetKdPerInstrumenAllTagihan } from "./ResolveSkorSheetKd";
 
 export default class RekapRaportBuilder{
 
@@ -20,7 +21,7 @@ export default class RekapRaportBuilder{
         const siswaHasInstrumenSkor = mapper.SiswaHasInstrumenWithSkor;
         const mapelHasTagihan = mapper.mapelMapperWithTagihanHasDataResponse;
         const mapelHasKategoriAssesmen = mapper.kategoriAssesmenHasTagihan
-        console.log({siswaHasInstrumenSkor})
+        
 
         for(const mapel of koleksiMapelRombel){
             /** 
@@ -158,134 +159,212 @@ export default class RekapRaportBuilder{
                                 sourceSheetKdTp.push(...dataSheetKd);
                                 sourceResponCp.push(...dataRespon);
                                 sourceSheetKdCp.push(...dataSheetKd);
+                                /** respon */
+                                let respon_countInstrumen:number = 0;
+                                const respon_sourceInstrumenSkor: SourceInstrumenSkor[] = [];
+                                const respon_sourceItemInstrumenSkor: DataCurrentInstrumen[] = [];
+                                const respon_sourceKoleksiSkorTiapInstrumen: (number | null)[] = [];
                                 /** sheet*/
                                 let sheet_countInstrumen:number =0
                                 const sheet_sourceInstrumenSkor: SourceInstrumenSkor[] = [];
                                 const sheet_sourceItemInstrumenSkor: DataCurrentInstrumen[] = []
                                 const sheet_sourceKoleksiSkorTiapInstrumen: (number | null)[] = [];
                                 
+                                const respon_koleksiSkorInstrumen:(Decimal|null)[] = collectingSkorResponPerInstrumenAllTagihan(siswa.id, atp_id, instrumenSheet);
+                                const sheet_koleksiSkorInstrumen:(Decimal|null)[] = collectingSkorSheetKdPerInstrumenAllTagihan(siswa.id, atp_id, instrumenSheet);
+                            
+                                const respon_koleksiSkorSkipNull = respon_koleksiSkorInstrumen.filter(s=>s!==null);
+                                const sheet_koleksiSkorSkipNull = sheet_koleksiSkorInstrumen.filter(s=>s!==null);
+                            
+                                const respon_jumlahSkor = respon_koleksiSkorSkipNull.length === 0? 0 : Decimal.sum(...respon_koleksiSkorSkipNull).toDecimalPlaces(0).toNumber();
+                                const sheet_jumlahSkor = sheet_koleksiSkorSkipNull.length === 0? 0: Decimal.sum(...sheet_koleksiSkorSkipNull).toDecimalPlaces(0).toNumber();
+                                const isEqual = respon_jumlahSkor === sheet_jumlahSkor;
                                 for(const sheet_instrumen of instrumenSheet){
                                     const {koleksiSkor, soalSkor, tagihan} = sheet_instrumen;
-                                    const foundKoleksiSkorInstrumen = instrumen.find(s=>s.tagihan.idbaris === tagihan.idbaris);
-                                    const dataSkorInstrumen = foundKoleksiSkorInstrumen?.koleksiSkor;
-                                    const koleksiSkorResponNumber = dataSkorInstrumen?.map(Number) ?? [];
-                                    const jumlahSkorRespon  = (koleksiSkorResponNumber.length === 0 || dataSkorInstrumen?.every(m=>m === null)) ? 0 : Decimal.sum(...koleksiSkorResponNumber).toNumber();
-                                    const koleksiSkorSheetNumber = koleksiSkor.map(Number);
-                                    const koleksiSoalSheet = soalSkor.flatMap(m=>m.data)
-                                    const jumlahSkorSheetKd = koleksiSkor.length === 0 || koleksiSkor.every(m=>m === null) ?  0 : Decimal.sum(...koleksiSkorSheetNumber).times(koleksiSoalSheet.length).toDecimalPlaces(0).toNumber();
-                                    const skorPerInstrumen = Decimal(jumlahSkorSheetKd).div(koleksiSkor.length).toDecimalPlaces(2).toNumber();
-                                    const koleksiSoalSkor:DataCurrentInstrumen[] = []
+                                   
+                                    /**
+                                     * Misal, suatu respon dengan currentAtp ini memiliki data skor tiap instrumen sbb: 
+                                     * [100, 0, 100] = 200 di tagihan A,
+                                     * [100, 90] = 190;
+                                     * total jumlah = 390, dan skornya 390/5 = 78;
+                                     * maka skor 78 itu skor seluruhanya di seluruh tagihan.
+                                     * sementara itu, untuk `tagihan` saat ini (nilai 200 atau 190), kita harus mendeteksinya di currentTagihan saat ini;
+                                     */
+                                    
+                                    const currentDataSheetKd = tagihan.dataSkorKdSheet.find(s=>s.siswa_id === siswa.id)?.data ?? [];
+                                    const currentDataRespon = tagihan.data_response_bySiswa.find(s=>s.siswa.id === siswa.id)?.data?.at(-1);
+                                    
+                                    const jumlahSoalCurrentAtpInThisTagihan = tagihan.bank_soal_collections.filter(s=>s.kd_id === atp_id).length;
+
+                                    const skorTiapInstrumen =dataSheetKd.find(s=>s.publikasi_id ===  tagihan.idbaris)?.skor ?? null;
+
+                                    const koleksiSoalSkor:DataCurrentInstrumen[] = [];
 
                                     for(const itemSoalSkor of soalSkor){
                                         const {bentukSoal, data, source} = itemSoalSkor;
 
+                                        
                                         for(const bankSoalWIthNoSoalAndSkor of data){
                                             const {no_soal, skor, kd_id, bentuk_soal} = bankSoalWIthNoSoalAndSkor;
-                                            const realRespon = dataRespon.find(s=>s.atp === kd_id && s.bentuk_soal === bentuk_soal && s.no_prefix === no_soal)?.skor ?? null;
-                                            const skorImport = realRespon === null && skor == null ? 0:  skor?? skorPerInstrumen;
-                                            const skorFinal = (jumlahSkorRespon === jumlahSkorSheetKd? realRespon : skor) 
-                                            const ob:DataCurrentInstrumen = {
+                                            const skorRealCurrentInstrumen =  dataRespon.find(s=>s.atp === kd_id && 
+                                                    s.no_prefix === no_soal && 
+                                                    s.bentuk_soal === bentuk_soal
+                                                )?.skor ?? null;
+
+                                            
+                                            let skorFinal:number|null = null;
+                                            
+                                            if(isEqual){
+                                                skorFinal = skorRealCurrentInstrumen
+                                                
+                                            }else{
+                                                if(source === 'siswa'){
+                                                    if(dataSheetKd.length>0){
+                                                        skorFinal = skorTiapInstrumen
+                                                    }else{
+                                                        skorFinal=null;
+                                                    }
+                                                }else{
+                                                    if(respon_jumlahSkor === sheet_jumlahSkor){
+                                                        skorFinal = skorRealCurrentInstrumen
+
+                                                    }else{
+                                                        skorFinal = skorTiapInstrumen
+
+                                                    }
+                                                }
+                                            }
+                                            let ob:DataCurrentInstrumen = {
                                                     atp_id:kd_id,
                                                     tagihan,
                                                     no_soal,
-                                                    skor:realRespon ,
+                                                    skor:skorRealCurrentInstrumen ,
                                                     skorSheetKd: skorFinal ,//skorPerInstrumen ,
-                                                    bentuk_soal
+                                                    bentuk_soal,
+                                                    source
                                                 }
+
                                             sheet_sourceKoleksiSkorTiapInstrumen.push(skorFinal);
                                             sheet_sourceKoleksiSkorTiapInstrumenTp.push(skorFinal);
                                             sheet_sourceKoleksiSkorTiapInstrumenCp.push(skorFinal);
                                             sheet_sourceItemInstrumenSkor.push(ob);
                                             sheet_sourceItemInstrumenSkorCp.push(ob)
                                             sheet_sourceItemInstrumenSkorTp.push(ob);
-                                            koleksiSoalSkor.push(ob)
+                                            koleksiSoalSkor.push(ob);
+
+                                            if(currentDataRespon){
+                                                respon_sourceKoleksiSkorTiapInstrumen.push(skorRealCurrentInstrumen)
+                                                respon_sourceKoleksiSkorTiapInstrumenTp.push(skorRealCurrentInstrumen)
+                                                respon_sourceKoleksiSkorTiapInstrumenCp.push(skorRealCurrentInstrumen)
+                                                
+                                                
+                                                sheet_sourceItemInstrumenSkor.push(ob);
+                                                sheet_sourceItemInstrumenSkorTp.push(ob);
+                                                sheet_sourceItemInstrumenSkorCp.push(ob);
+                                            }
+
+
                                         }
+
+                                        
                                         sheet_countInstrumen = Decimal.sum(sheet_countInstrumen, data.length).toNumber();
                                         sheet_countInstrumenTp = Decimal.sum(sheet_countInstrumenTp, data.length).toNumber();
                                         sheet_countInstrumenCp = Decimal.sum(sheet_countInstrumenCp, data.length).toNumber();
+                                        if(currentDataRespon){
+                                            respon_countInstrumen = Decimal.sum(respon_countInstrumen, data.length).toNumber();
+                                            respon_countInstrumenTp = Decimal.sum(respon_countInstrumenTp, data.length).toNumber();
+                                            respon_countInstrumenCp = Decimal.sum(respon_countInstrumenCp, data.length).toNumber();
+                                        }
                                         
                                     };
                                     sheet_sourceInstrumenSkor.push({ tagihan, soalSkor:koleksiSoalSkor });
                                     sheet_sourceInstrumenSkorTp.push({ tagihan, soalSkor:koleksiSoalSkor });
                                     sheet_sourceInstrumenSkorCp.push({ tagihan, soalSkor:koleksiSoalSkor });
                                     
-                                    
+                                    if(currentDataRespon){
+                                        respon_sourceInstrumenSkor.push({tagihan,soalSkor:koleksiSoalSkor})
+                                        respon_sourceInstrumenSkorTp.push({tagihan,soalSkor:koleksiSoalSkor})
+                                        respon_sourceInstrumenSkorCp.push({tagihan,soalSkor:koleksiSoalSkor})
+
+                                    }
 
                                 };
 
                                 const sheet_sourceKoleksiSkorTiapInstrumenNumber = sheet_sourceKoleksiSkorTiapInstrumen.map(m=>Number(m));
                                 const sheet_totalSkor:number|null = (sheet_sourceKoleksiSkorTiapInstrumen.length === 0|| sheet_sourceKoleksiSkorTiapInstrumen.every(s=>s === null))?null
-                                : Decimal.sum(...sheet_sourceKoleksiSkorTiapInstrumenNumber).toNumber();
+                                : Decimal.sum(...sheet_sourceKoleksiSkorTiapInstrumenNumber).toDecimalPlaces(0).toNumber();
                                 ;
                                 const sheet_skor:number|null = sheet_totalSkor === null? null : Decimal(sheet_totalSkor).div(sheet_countInstrumen).toDecimalPlaces(2).toNumber();
                                 
                                 
                                 /** sheet*/
-                                let respon_countInstrumen:number = 0;
+                                // let respon_countInstrumen:number = 0;
                                 
-                                const respon_sourceInstrumenSkor: SourceInstrumenSkor[] = [];
-                                const respon_sourceItemInstrumenSkor: DataCurrentInstrumen[] = [];
-                                const respon_sourceKoleksiSkorTiapInstrumen: (number | null)[] = [];
+                                // const respon_sourceInstrumenSkor: SourceInstrumenSkor[] = [];
+                                // const respon_sourceItemInstrumenSkor: DataCurrentInstrumen[] = [];
+                                // const respon_sourceKoleksiSkorTiapInstrumen: (number | null)[] = [];
                                 
-                                for(const inst of instrumen){
-                                    const {koleksiSkor, soalSkor, tagihan} = inst;
+                                // for(const inst of instrumen){
+                                //     const {koleksiSkor, soalSkor, tagihan} = inst;
                                     
-                                    /** */
-                                    const foundKoleksiSkorInstrumen = instrumenSheet.find(s=>s.tagihan.idbaris === tagihan.idbaris);
-                                    const dataSkorInstrumen = foundKoleksiSkorInstrumen?.koleksiSkor;
-                                    const koleksiSkorResponNumber = dataSkorInstrumen?.map(Number) ?? [];
-                                    const jumlahSkorRespon  = (koleksiSkorResponNumber.length === 0 || dataSkorInstrumen?.every(m=>m === null)) ? 0 : Decimal.sum(...koleksiSkorResponNumber).times(koleksiSkor.length).toDecimalPlaces(0).toNumber();
-                                    const skorPerInstrumen = Decimal(jumlahSkorRespon).div(koleksiSkorResponNumber.length).toDecimalPlaces(2).toNumber();
+                                //     /** */
+                                //     const foundKoleksiSkorInstrumen = instrumenSheet.find(s=>s.tagihan.idbaris === tagihan.idbaris);
+                                //     const dataSkorInstrumen = foundKoleksiSkorInstrumen?.koleksiSkor;
+                                //     const koleksiSkorResponNumber = dataSkorInstrumen?.map(Number) ?? [];
+                                //     const jumlahSkorRespon  = (koleksiSkorResponNumber.length === 0 || dataSkorInstrumen?.every(m=>m === null)) ? 0 : Decimal.sum(...koleksiSkorResponNumber).times(koleksiSkor.length).toDecimalPlaces(0).toNumber();
+                                //     const skorPerInstrumen = Decimal(jumlahSkorRespon).div(koleksiSkorResponNumber.length).toDecimalPlaces(2).toNumber();
 
-                                    const koleksiSkorSheetNumber = koleksiSkor.map(Number);
-                                    const koleksiSoalSheet = soalSkor.flatMap(m=>m.data)
-                                    const jumlahSkorSheetKd = koleksiSkor.length === 0 || koleksiSkor.every(m=>m === null) ?  0 : Decimal.sum(...koleksiSkorSheetNumber).toDecimalPlaces(0).toNumber();
-                                    /** */
+                                //     const koleksiSkorSheetNumber = koleksiSkor.map(Number);
+                                //     const koleksiSoalSheet = soalSkor.flatMap(m=>m.data)
+                                //     const jumlahSkorSheetKd = koleksiSkor.length === 0 || koleksiSkor.every(m=>m === null) ?  0 : Decimal.sum(...koleksiSkorSheetNumber).toDecimalPlaces(0).toNumber();
+                                //     /** */
 
-                                    for(const itemSoalSkor of soalSkor){
-                                        const {bentukSoal, data, source} = itemSoalSkor
-                                        respon_countInstrumen = Decimal.sum(respon_countInstrumen, data.length).toNumber();
-                                        respon_countInstrumenTp = Decimal.sum(respon_countInstrumenTp, data.length).toNumber();
-                                        respon_countInstrumenCp = Decimal.sum(respon_countInstrumenCp, data.length).toNumber();
-                                        /** */
+                                //     for(const itemSoalSkor of soalSkor){
+                                //         const {bentukSoal, data, source} = itemSoalSkor
+                                //         respon_countInstrumen = Decimal.sum(respon_countInstrumen, data.length).toNumber();
+                                //         respon_countInstrumenTp = Decimal.sum(respon_countInstrumenTp, data.length).toNumber();
+                                //         respon_countInstrumenCp = Decimal.sum(respon_countInstrumenCp, data.length).toNumber();
+                                //         /** */
                                         
-                                        /** */
-                                        const koelksiSoalSkorRespon:DataCurrentInstrumen[]=[]
-                                        for(const bankSoalWIthNoSoalAndSkor of data){
-                                            const {no_soal, skor, kd_id, bentuk_soal} = bankSoalWIthNoSoalAndSkor;
+                                //         /** */
+                                //         const koelksiSoalSkorRespon:DataCurrentInstrumen[]=[]
+                                //         for(const bankSoalWIthNoSoalAndSkor of data){
+                                //             const {no_soal, skor, kd_id, bentuk_soal} = bankSoalWIthNoSoalAndSkor;
                                             
-                                            // respon_totalSkor = Decimal.sum(respon_totalSkor??0, skor??0).toNumber();
+                                //             // respon_totalSkor = Decimal.sum(respon_totalSkor??0, skor??0).toNumber();
 
-                                            respon_sourceKoleksiSkorTiapInstrumen.push(skor);
-                                            respon_sourceKoleksiSkorTiapInstrumenTp.push(skor);
-                                            respon_sourceKoleksiSkorTiapInstrumenCp.push(skor);
-                                            const skorFinal = jumlahSkorRespon === jumlahSkorSheetKd ? skor : skorPerInstrumen
-                                            const obDataCurrentInstrumen:DataCurrentInstrumen = {
-                                                atp_id:kd_id,
-                                                no_soal,
-                                                bentuk_soal,
-                                                tagihan,
-                                                skor,
-                                                skorSheetKd: source === 'siswa' ? skor : skorFinal
-                                            }
-                                            respon_sourceItemInstrumenSkor.push(obDataCurrentInstrumen);
-                                            respon_sourceItemInstrumenSkorTp.push(obDataCurrentInstrumen);
-                                            respon_sourceItemInstrumenSkorCp.push(obDataCurrentInstrumen);
+                                //             respon_sourceKoleksiSkorTiapInstrumen.push(skor);
+                                //             respon_sourceKoleksiSkorTiapInstrumenTp.push(skor);
+                                //             respon_sourceKoleksiSkorTiapInstrumenCp.push(skor);
+                                //             const skorFinal = jumlahSkorRespon === jumlahSkorSheetKd ? skor : skorPerInstrumen
+                                //             const obDataCurrentInstrumen:DataCurrentInstrumen = {
+                                //                 atp_id:kd_id,
+                                //                 no_soal,
+                                //                 bentuk_soal,
+                                //                 tagihan,
+                                //                 skor,
+                                //                 skorSheetKd:  skorFinal,
+                                //                 source
+                                //             }
+                                //             respon_sourceItemInstrumenSkor.push(obDataCurrentInstrumen);
+                                //             respon_sourceItemInstrumenSkorTp.push(obDataCurrentInstrumen);
+                                //             respon_sourceItemInstrumenSkorCp.push(obDataCurrentInstrumen);
                                           
-                                            koelksiSoalSkorRespon.push(obDataCurrentInstrumen);
-                                          };
-                                        respon_sourceInstrumenSkor.push({ tagihan, soalSkor:koelksiSoalSkorRespon })
-                                        respon_sourceInstrumenSkorTp.push({ tagihan, soalSkor:koelksiSoalSkorRespon })
-                                        respon_sourceInstrumenSkorCp.push({ tagihan, soalSkor:koelksiSoalSkorRespon })
+                                //             koelksiSoalSkorRespon.push(obDataCurrentInstrumen);
+                                //           };
+                                //         respon_sourceInstrumenSkor.push({ tagihan, soalSkor:koelksiSoalSkorRespon })
+                                //         respon_sourceInstrumenSkorTp.push({ tagihan, soalSkor:koelksiSoalSkorRespon })
+                                //         respon_sourceInstrumenSkorCp.push({ tagihan, soalSkor:koelksiSoalSkorRespon })
 
-                                    }
-                                }
+                                //     }
+                                // }
                             const respon_totalSkorNumber = respon_sourceKoleksiSkorTiapInstrumen.map(Number);
                             const respon_totalSkor:number|null = (respon_sourceKoleksiSkorTiapInstrumen.length === 0|| respon_sourceKoleksiSkorTiapInstrumen.every(s=>s === null))?null
                                     : Decimal.sum(...respon_totalSkorNumber).toNumber();
                             const respon_skor:number|null = respon_totalSkor === null? null : Decimal(respon_totalSkor).div(respon_countInstrumen).toDecimalPlaces(2).toNumber();;
                             
                                 respon_koleksiAtp.push({
+                                    //--------------
                                     type:'atp',
                                     struktur:atpAmpper,
                                     totalSkor: respon_totalSkor,

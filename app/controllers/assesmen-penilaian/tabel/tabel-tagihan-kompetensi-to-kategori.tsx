@@ -15,6 +15,7 @@ export default function TableTagihanKompetensi({data, showIdentitas=true}:{data?
     const jenjang= getNumberFromString(rombelAktif);
     const semester = currentTapelProperties({variant:'getSemester'})
     const akhirSemester= (jenjang === 6 && semester === 2) ? 'Ujian Sekolah' : 'Akhir Semester';
+    
     return (
         <>
         <TableWithScrolling className="text-[10px]">

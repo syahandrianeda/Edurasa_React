@@ -344,6 +344,7 @@ export default async function DispatchingResponseToStore(success:boolean, data:R
             }))
         }
         if(detailResponse?.namaTab === namaTab('mid_semester')){
+            
             store.dispatch(upsertRekapMidSemester({
                 jenjang,
                 data: detailResponse?.findTab? data as MidSemesterRekapSheetType[]: [],

@@ -31,7 +31,7 @@ export default function SheetDetailAccumalatorRekap({
     open,
     onOpenChange,
 }: Props) {
-    console.log({item});
+    
     
     if (!item) {
         return null;

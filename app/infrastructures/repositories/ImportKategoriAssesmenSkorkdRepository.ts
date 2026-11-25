@@ -11,7 +11,7 @@ export default class ImportKategoriAssesmenSkorKdRepository extends AppScriptShe
     async update(param: Record<string, any>): Promise<ApiResponse<ValidatedResponseSiswa>> {
         try{
             const respon = await this.postBody(param);
-            console.log(respon)
+            
             if(respon.success){
                 return this.responActionRead(respon);
             }

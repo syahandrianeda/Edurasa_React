@@ -13,6 +13,7 @@ export function helperFormatNumberInResponTagihan(param: NilaiSiswaSheetType) {
     }
 
 export function helperFormatNumberInKategoriTagihan( param: Record<string, any> ) {
+    
             const result: Record<string, string> = {};
 
             for (const key in param) {

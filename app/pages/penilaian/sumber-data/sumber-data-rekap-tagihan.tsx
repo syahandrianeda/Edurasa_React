@@ -10,6 +10,8 @@ import { useModal } from '~/components/modals/modal-provider';
 import type { TagihanHasDataResponse } from '~/domain/penilaian/type/tagihan-assesmen-type';
 import TagihanHasDataResponseBasedCurrentMapel from './tagihanHasDataResponsBasedCurrentMapel';
 import { KategoriAsseemenApp } from '~/domain/kategori-tagihan/builder/KategoriTagihanRaportCollections';
+import { useFilterContext } from '~/components/toolbars/state-toolbar/state-toolbar';
+import type { FormatKategoriAssesmenPreview } from '~/controllers/rekap-tagihan-harian/toolbar/RadioChooseFormatKategirAssesmen';
 
 
 type Props = {
@@ -18,6 +20,7 @@ type Props = {
 }
 
 export default function SumberDataRekapTagihan({fokusMapel, kategoriTagihan}:Props){
+     const {value} = useFilterContext<FormatKategoriAssesmenPreview >();
     const rombel = getSessionRombel();
     const {actions} = useModal<TagihanHasDataResponse>()
     const sumberTagihan = useMemo(()=>{
@@ -69,7 +72,9 @@ export default function SumberDataRekapTagihan({fokusMapel, kategoriTagihan}:Pro
                         ):(
                             sumberTagihan.map((tagihan, iTagihan)=>
                                 <TRowEdura key={tagihan.idbaris}>
-                                    <TdEdura><TriggerRekapSkorKd actions={actions} data={callTagihanHasDataResponseBasedCurrentMapel(tagihan.detail!)}/></TdEdura>
+                                    <TdEdura>
+                                        <TriggerRekapSkorKd actions={actions} data={callTagihanHasDataResponseBasedCurrentMapel(tagihan.detail!)}/>
+                                    </TdEdura>
                                     <TdEdura>{iTagihan+1}</TdEdura>
                                     <TdEdura className='text-wrap'>{tagihan.namaPublikasi}</TdEdura>
                                     <TdEdura className='text-wrap'>{tagihan.detail?.jenis_tagihan.name}</TdEdura>

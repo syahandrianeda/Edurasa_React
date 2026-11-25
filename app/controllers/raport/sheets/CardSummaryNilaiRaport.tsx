@@ -2,8 +2,7 @@ import { cn } from "~/lib/utils";
 import type { DataRekapRaportSementaraSheetPreview } from "./SheetDetailRekapRaportSementara";
 
 export default function CardSummaryNilaiRaport({item}:{item: DataRekapRaportSementaraSheetPreview | null}){
-    console.log('cardSummaryNilaiRaport',{item});
-    // const dat = 
+    
     return (
         <div className="mt-4 mb-2 rounded shadow-md shadow-slate-400 p-1 min-h-18 min-w-28 outline-1 flex gap-2 md:flex-row flex-col">
             <div className="flex md:flex-col border rounded-lg p-1 gap-2 justify-evenly">

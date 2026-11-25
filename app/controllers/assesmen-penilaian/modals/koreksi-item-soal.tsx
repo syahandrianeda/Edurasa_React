@@ -84,7 +84,7 @@ export default function KoreksiItemSoal(){
         return resp;
     // }, [currentData, dataTagihan]);
     }, [currentData, dataTabelParent]);
-    console.log(findDifferences(currentData, currentDataSelector), isEqualValue(currentData, currentDataSelector));
+    // console.log(findDifferences(currentData, currentDataSelector), isEqualValue(currentData, currentDataSelector));
     // const dataRespon = useMemo(()=>{
     //     if(!currentDataSelector || !rombel) return []
 
