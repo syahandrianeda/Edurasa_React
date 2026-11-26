@@ -9,6 +9,7 @@ import TitleKunciJawabanPembahasan from "./kisi-kisi/title-kunci-jawaban";
 import type DataKisiKisi from "~/domain/paket-soal/infrastructure/data-kisi-kisi-class";
 import { useExportTarget } from "~/layouts/exports/export-target-provider";
 import { useModal } from "~/components/modals/modal-provider";
+import ButtonExportWordModal from "~/controllers/modal-cetak/control-export-word-modal";
 
 export default function CetakPembahasanDanPenskoran({KisiKisiInstance}:{KisiKisiInstance:DataKisiKisi}){
     const exportRef = useExportTarget('print-area-modal') as React.Ref<HTMLDivElement>;;
@@ -39,6 +40,11 @@ export default function CetakPembahasanDanPenskoran({KisiKisiInstance}:{KisiKisi
                         <StepBackIcon size={12} className="self-center"/>
                     </ButtonDeleteAwesome>
                     <ButtonPrintModal className="mx-auto px-4 py-0" type="portrait"/>
+                    <ButtonExportWordModal
+                                            className="px-4 py-0"
+                                            type="portrait"
+                                            fileName={`Paket-Soal-${setting?.identitas?.nama ?? 'Dokumen'}`}
+                                        />
                 </div>
             </ModalFooterEdura>
         </>

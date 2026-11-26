@@ -9,6 +9,7 @@ import { ModalFooterEdura } from "~/components/modals/modal-components"
 import ButtonPrintModal from "~/controllers/modal-cetak/control-export-print"
 import { useExportTarget } from "~/layouts/exports/export-target-provider"
 import { useModal } from "~/components/modals/modal-provider"
+import ButtonExportWordModal from "~/controllers/modal-cetak/control-export-word-modal"
 
 type Props = {
     version:'v1'|'v2',
@@ -42,6 +43,11 @@ export default function CetakKisiKisiSoal({KisiKisiInstance, version}:Props ){
                         <StepBackIcon size={12} className="self-center"/>
                     </ButtonDeleteAwesome>
                     <ButtonPrintModal className="mx-auto px-4 py-0" type="landscape"/>
+                    <ButtonExportWordModal
+                                            className="px-4 py-0"
+                                            type="portrait"
+                                            fileName={`Paket-Soal-${setting?.identitas?.nama ?? 'Dokumen'}`}
+                                        />
                 </div>
             </ModalFooterEdura>
         </>

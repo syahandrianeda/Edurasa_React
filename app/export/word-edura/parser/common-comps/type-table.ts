@@ -1,6 +1,46 @@
 import type { ImageNodeExcel } from "~/export/excel/parser/parse-image-excel"
-import type { ImageNodeEdura, paragraphEdura, } from "./type-comp"
+import type { headingComp, ImageNodeEdura, paragraphEdura, TableKop, TableTtd } from "./type-comp"
 import type { OklchColorResult, RgbColorResult } from "~/lib/color-hack"
+
+/** format penomoran list yang dikenali dari tailwind / computed style */
+export type ListFormat =
+    | 'decimal'
+    | 'upper-alpha'
+    | 'lower-alpha'
+    | 'upper-roman'
+    | 'lower-roman'
+    | 'bullet'
+
+/** metadata satu instance list (satu reference = satu penomoran Word) */
+export type ListInfo = {
+    format: ListFormat,
+    start: number,
+    reference: string,
+    indentLeft: number, // twip
+    hanging: number,    // twip
+    markerBold: boolean
+}
+
+export type listItemEdura = {
+    spacingBefore: number, // px
+    spacingAfter: number,  // px
+    blocks: ListBlockEdura[]
+}
+
+export type listNodeEdura = {
+    type: 'list',
+    info: ListInfo,
+    items: listItemEdura[]
+}
+
+export type ListBlockEdura =
+    | paragraphEdura
+    | headingComp
+    | ImageNodeEdura
+    | TableKop
+    | TableTtd
+    | TableParseCommon
+    | listNodeEdura
 
 export type TableParseCommon = {
     type:'table',
@@ -64,4 +104,9 @@ export type cellsTableCommon=
     | paragraphEdura
     | CellContentTypeNode  
     | ImageNodeExcel
+    | listNodeEdura
+    | headingComp
+    | TableParseCommon
+    | TableKop
+    | TableTtd
     ;

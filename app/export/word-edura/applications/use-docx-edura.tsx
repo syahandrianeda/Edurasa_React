@@ -9,22 +9,35 @@ type OptionsEduraWord = {
     fileName: string,
 }
 export type orientationWord = 'portrait'|'landscape';
-type ExportWordEdura = {
-    executeWord:void,
-    setOrientation:()=>void
+
+/** Membersihkan nama file dari karakter yang tidak valid di Windows. */
+export function sanitizeWordFileName(fileName: string) {
+    const cleaned = fileName
+        .replace(/[\\/:*?"<>|]/g, "-")
+        .replace(/\s+/g, " ")
+        .trim();
+
+    if (!cleaned) return "document.docx";
+    return /\.docx$/i.test(cleaned) ? cleaned : `${cleaned}.docx`;
 }
+
 export default function UseDocxEdura({fileName}:OptionsEduraWord){
     const dispatcher = useAppDispatch();
     const [orientation, setOrientation] = useState<orientationWord>('portrait');
-    
-    const _setOrientation = useCallback((v:orientationWord)=>{
-        return setOrientation(v);
-    },[orientation])
+    const [isExporting, setIsExporting] = useState(false);
 
-    const executeWord = async(element: HTMLElement | null,orientation:orientationWord) =>{
-        if(!element) return ;
+    const _setOrientation = useCallback((v:orientationWord)=>{
+        setOrientation(v);
+    },[])
+
+    const executeWord = useCallback(async(
+        element: HTMLElement | null,
+        orientation: orientationWord = 'portrait'
+    ) => {
+        if(!element || isExporting) return;
 
         _setOrientation(orientation);
+        setIsExporting(true);
 
         try{
             dispatcher(setloadedApi({
@@ -32,18 +45,20 @@ export default function UseDocxEdura({fileName}:OptionsEduraWord){
             }));
             /** parsing element html ke data yang diinginkan */
             const parsedHtml = await ParsingPrintArea(element);
-            
+
             const doc = await MapRootParsedDocx(parsedHtml,orientation);
-            await exportDocx(doc, fileName ?? "document.docx")
+            await exportDocx(doc, sanitizeWordFileName(fileName ?? "document.docx"));
         }finally{
+            setIsExporting(false);
             dispatcher(setloadedApi({
                 loaded:false, name:'loaded_animation'
             }));
         }
+    }, [dispatcher, fileName, isExporting, _setOrientation])
 
-    }
     return {
         executeWord,
-        setOrientation:_setOrientation
+        setOrientation:_setOrientation,
+        isExporting,
     }
 }

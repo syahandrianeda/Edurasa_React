@@ -1,5 +1,5 @@
 
-import { parseImage } from "~/export/docx/parser/img-parser";
+import loadImageAsPng from "~/export/docx/parser/image-blob";
 import type { cellsTableKop, TableTtd } from "../common-comps/type-comp";
 
 export default async function parseTtd(table:HTMLTableElement):Promise<TableTtd>{
@@ -44,7 +44,7 @@ async function walkNode(
   if (node instanceof HTMLImageElement) {
     if (node.classList.contains("print:hidden")) return;
     
-    const src = await parseImage(node as  HTMLImageElement)
+    const src = await loadImageAsPng(node as HTMLImageElement)
     
     if(src){
       contents.push(src);

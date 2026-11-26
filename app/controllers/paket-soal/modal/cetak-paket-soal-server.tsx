@@ -12,6 +12,7 @@ import { StepBackIcon } from "lucide-react";
 import ButtonDeleteAwesome from "~/components/button-awesome/delete-button";
 import { ModalFooterEdura } from "~/components/modals/modal-components";
 import ButtonPrintModal from "~/controllers/modal-cetak/control-export-print";
+import ButtonExportWordModal from "~/controllers/modal-cetak/control-export-word-modal";
 import { useModal } from "~/components/modals/modal-provider";
 
 export default function CetakPaketSoalServer({InstanceDataKisikisi}:{InstanceDataKisikisi:DataKisiKisi}){
@@ -129,6 +130,11 @@ export default function CetakPaketSoalServer({InstanceDataKisikisi}:{InstanceDat
                         <StepBackIcon size={12} className="self-center"/>
                     </ButtonDeleteAwesome>
                     <ButtonPrintModal className="mx-auto px-4 py-0" type="portrait"/>
+                    <ButtonExportWordModal
+                        className="px-4 py-0"
+                        type="portrait"
+                        fileName={`Paket-Soal-${setting?.identitas?.nama ?? 'Dokumen'}`}
+                    />
                 </div>
             </ModalFooterEdura>
         </>

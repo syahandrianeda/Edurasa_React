@@ -44,6 +44,24 @@ export type cellsTableKop=
     | paragraphEdura;
 
 
+export type InlineRunEdura = {
+    text: string,
+    isBold?: boolean,
+    isItalic?: boolean,
+    isUnderline?: boolean,
+    isUppercase?: boolean,
+    fontSize?: number,
+    fontFamily?: string,
+    color?: string,
+    break?: number
+}
+
+export type spacingEdura = {
+    before?: number,
+    after?: number,
+    line?: number
+}
+
 export type paragraphEdura={
     text: string,
     type:'paragraph',
@@ -55,7 +73,9 @@ export type paragraphEdura={
     isUppercase:boolean,
     isBold:boolean,
     isItalic:boolean,
-    isUnderline?:boolean
+    isUnderline?:boolean,
+    runs?:InlineRunEdura[],
+    spacing?:spacingEdura
 }
 export interface ImageNodeEdura {
     type: "image";

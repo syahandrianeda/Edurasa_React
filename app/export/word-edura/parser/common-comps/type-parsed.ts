@@ -1,6 +1,5 @@
-
 import type { headingComp, ImageNodeEdura, paragraphEdura,  TableKop, TableTtd } from "./type-comp";
-import type { TableParseCommon } from "./type-table";
+import type { listNodeEdura, TableParseCommon } from "./type-table";
 
 export type ParsedElementEdura = 
     | headingComp
@@ -9,5 +8,5 @@ export type ParsedElementEdura =
     | ImageNodeEdura
     | TableParseCommon
     | paragraphEdura
+    | listNodeEdura
     ;
-
