@@ -2,6 +2,7 @@ import { Button } from "~/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "~/components/ui/popover";
 import ItemSoalPreview from "~/controllers/paket-soal/components/item-soal-preview";
 import UbahKunciJawabanDiKoreksian from "./Ubah-kunci-jawaban-di-popover";
+import UbahKunciJawabanPgKompleksDiKoreksian from "./UbahKunciJawabanPgKompleksDiKoreksian";
 import type { BankSoalAppType } from "~/types/bank-soal/bank-soal-type";
 import { useState } from "react";
 
@@ -9,11 +10,20 @@ type Props={
     no_prefix:number,
     index: number,
     soal?:BankSoalAppType,
+    /** teks kunci yang ditampilkan; default perilaku pg: soal.jawaban.join('') */
+    kunciTeks?:string,
+    /** mode editor kunci: `single` untuk pg, `multiple` untuk pg_kompleks */
+    modeKunci?:'single'|'multiple',
+    /** callback kunci tersimpan (mode multiple) agar parent bisa refresh tanpa menutup popover */
+    onKunciBerubah?:(valid:number[])=>void,
 }
 export default function PopoverPreviewSoalPgKoreksian({
     no_prefix, 
     index,
-    soal
+    soal,
+    kunciTeks,
+    modeKunci = 'single',
+    onKunciBerubah
 }:Props){
     const [open, setOpen] = useState<boolean>()
     return (
@@ -33,11 +43,13 @@ export default function PopoverPreviewSoalPgKoreksian({
                     </h4>
                     <div className="text-wrap">
                         <ItemSoalPreview data={{index, no_soal:no_prefix, data_soal:soal,showStimulus:true, format_display:'vertical' }}/>
-                        <p className="border-t-2">Jawaban: {soal?.jawaban.join('')}</p>
+                        <p className="border-t-2">Jawaban: {kunciTeks ?? soal?.jawaban.join('')}</p>
                         <div className="editor-dokument" dangerouslySetInnerHTML={{__html:soal?.pembahasan_penskoran ?? ''}}/>
                     </div>
                     {
-                        soal && <UbahKunciJawabanDiKoreksian dataSoal={soal} setOpen={(bol)=>setOpen(bol)}/>
+                        soal && (modeKunci === 'multiple'
+                            ? <UbahKunciJawabanPgKompleksDiKoreksian dataSoal={soal} onBerhasil={onKunciBerubah}/>
+                            : <UbahKunciJawabanDiKoreksian dataSoal={soal} setOpen={(bol)=>setOpen(bol)}/>)
                     }
                 </div>
             </PopoverContent>

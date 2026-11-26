@@ -9,6 +9,7 @@ import { KoreksiPgHeader } from "./KoreksiPgHeader";
 import { KoreksiPgBody } from "./KoreksiPgBody";
 import { KoreksiIsianSingkat } from "./KoreksiIsianSingkat";
 import { KoreksiEssay } from "./KoreksiEssay";
+import { KoreksiPgKompleks } from "./KoreksiPgKompleks";
 
 type Props={
     data:detailNilaiSiswaAppType,
@@ -52,6 +53,12 @@ function SwitchFieldKoreksiByBentukSoal({data, handleUpdate}:{data:TemplateKorek
                 </TableWithScrolling>   
                 </div>
                         
+
+        case 'pg_kompleks':
+            return <div className="md:col-span-2 col-span-1 text-[10px]">
+                <p className="text-base">{data.bentuk_soal.description}</p>
+                <KoreksiPgKompleks template={data} handleUpdate={handleUpdate}/>
+            </div>
 
         case 'essay':
             return <div className="md:col-span-2 col-span-1">

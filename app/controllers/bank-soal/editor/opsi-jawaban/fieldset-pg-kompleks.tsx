@@ -6,6 +6,7 @@ import CountOpsi from "./count-opsi";
 import { useCallback, useEffect, useState } from "react";
 import type { OpsiPilihanJawabanType } from "~/types/bank-soal/bentuk-soal/json-alat-jawab-type";
 import EditorOpsiJawabanPgKompleks from "./editor-pg-kompleks";
+import { indexToAbjad } from "~/domain/bank-soal/koreksi";
 
 export default function FieldsetPgKompleks({data, action, bentukSoal}:CreateItemSoalContextProps & {bentukSoal:ListBentukSoalType}){
     const [countOpsi, setCountOpsi] = useState<number>();
@@ -65,7 +66,7 @@ export default function FieldsetPgKompleks({data, action, bentukSoal}:CreateItem
             type:'set_item_soal',
             payload:{
                 json_alat_jawab: {OpsiPilihanJawaban, valid, formatOpsi:'vertical'},
-                jawaban:valid.map(m=>'opsi ' + (m+1))
+                jawaban:valid.map(indexToAbjad)
 
             }
         })
