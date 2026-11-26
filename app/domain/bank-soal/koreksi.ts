@@ -1,9 +1,5 @@
 import type { RisponsePenilaianSiswa } from "~/types/penilaian/RisponsePenilaianSiswaType";
-
-interface OpsiJawaban {
-  id: number;
-  isCorrect: boolean; // true jika ini jawaban yang benar, false jika pengecoh
-}
+import type { OpsiPilihanJawabanType } from "~/types/bank-soal/bentuk-soal/json-alat-jawab-type";
 
 /** ===== Koreksi Pilihan Ganda Tunggal ===== */
 
@@ -24,6 +20,32 @@ export function abjadToIndex(abjad: string): number {
  */
 export function indexToAbjad(index: number): string {
     return String.fromCharCode(index + 65);
+}
+
+/**
+ * Konversi daftar abjad dari respon siswa (`"A,C"`, `"a, c"`) menjadi indeks 0-based.
+ * Urut, unik, dan mengabaikan bagian yang bukan abjad tunggal yang valid.
+ */
+export function abjadListToIndexes(respon: string | null | undefined): number[] {
+    if (!respon) return [];
+    const result = new Set<number>();
+    for (const part of respon.split(',')) {
+        const index = abjadToIndex(part);
+        if (index >= 0) result.add(index);
+    }
+    return [...result].sort((a, b) => a - b);
+}
+
+/**
+ * Konversi indeks 0-based menjadi daftar abjad terurut tanpa spasi (`"A,C"`),
+ * format respon yang disimpan pada sheet untuk bentuk soal `pg_kompleks`.
+ */
+export function indexesToAbjadList(indexes: number[]): string {
+    return [...new Set(indexes)]
+        .filter(index => index >= 0)
+        .sort((a, b) => a - b)
+        .map(indexToAbjad)
+        .join(',');
 }
 
 /**
@@ -99,34 +121,42 @@ export function upsertRespon(
 }
 
 /**
- * Helper untuk menghitung skor Pilihan Ganda Kompleks
- * @param opsiDipilihSiswa - Array ID opsi yang diceklis oleh siswa
- * @param semuaOpsiSoal - Array semua objek opsi yang ada pada soal tersebut
+ * Helper untuk menghitung skor Pilihan Ganda Kompleks.
+ *
+ * Rumus: `(proporsiBenar - proporsiSalah) * skorMaksimal`, minimal 0.
+ * - `semuaOpsi` memakai opsi yang benar-benar tampil ke siswa (`content !== ""`).
+ * - `kunciValid` adalah `json_alat_jawab.valid` (indeks posisi opsi yang benar).
+ *
+ * @param opsiDipilih - Indeks opsi yang diceklis oleh siswa
+ * @param semuaOpsi - Semua objek opsi pada soal tersebut
+ * @param kunciValid - Indeks opsi yang benar
  * @param skorMaksimal - Total skor jika benar semua (default 100)
  */
 export function hitungSkorPGK(
-    opsiDipilihSiswa: number[],
-    semuaOpsiSoal: OpsiJawaban[],
+    opsiDipilih: number[],
+    semuaOpsi: Pick<OpsiPilihanJawabanType, "index" | "content">[],
+    kunciValid: number[] | undefined | null,
     skorMaksimal: number = 100
     ): number {
     // 1. Hitung total opsi yang benar dan salah berdasarkan kunci jawaban
-    const totalBenar = semuaOpsiSoal.filter(o => o.isCorrect).length;
-    const totalSalah = semuaOpsiSoal.filter(o => !o.isCorrect).length;
+    const opsiTampil = semuaOpsi.filter(o => o.content !== "");
+    const kunci = new Set(kunciValid ?? []);
+    const totalBenar = opsiTampil.filter(o => kunci.has(o.index)).length;
+    const totalSalah = opsiTampil.length - totalBenar;
 
     let userBenar = 0;
     let userSalah = 0;
 
-    // 2. Hitung apa saja yang diceklis oleh siswa
-    opsiDipilihSiswa.forEach(id => {
-        const opsi = semuaOpsiSoal.find(o => o.id === id);
-        if (opsi) {
-        if (opsi.isCorrect) {
+    // 2. Hitung apa saja yang diceklis oleh siswa (abaikan opsi yang tidak tampil)
+    for (const index of new Set(opsiDipilih)) {
+        const opsi = opsiTampil.find(o => o.index === index);
+        if (!opsi) continue;
+        if (kunci.has(opsi.index)) {
             userBenar++;
         } else {
             userSalah++;
         }
-        }
-    });
+    }
 
     // 3. Hitung proporsi (mencegah pembagian dengan angka 0 jika soal tidak valid)
     const proporsiBenar = totalBenar > 0 ? userBenar / totalBenar : 0;
