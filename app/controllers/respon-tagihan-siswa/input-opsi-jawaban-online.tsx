@@ -1,6 +1,7 @@
 import type { BankSoalAppType } from "~/types/bank-soal/bank-soal-type";
 import type { RisponsePenilaianSiswa } from "~/types/penilaian/RisponsePenilaianSiswaType";
 import { FormIsianSingkat } from "./FormIsianSingkat";
+import { FormPgKompleksOnline } from "./FormPgKompleksOnline";
 import { FormPgOnline } from "./FormPgOnline";
 
 export type Props={
@@ -13,6 +14,8 @@ export default function InputOpsiJawabanOnline({data, no_prefix, dataRespon, han
     switch(data.bentuk_soal){
         case  'pg':
             return <FormPgOnline data={data} no_prefix={no_prefix} dataRespon={dataRespon} handleChange={handleChange}/>
+        case  'pg_kompleks':
+            return <FormPgKompleksOnline data={data} no_prefix={no_prefix} dataRespon={dataRespon} handleChange={handleChange}/>
         case  'isian_singkat':
             return <FormIsianSingkat data={data} no_prefix={no_prefix} dataRespon={dataRespon} handleChange={handleChange}/>
         case  'essay':

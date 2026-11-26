@@ -1,8 +1,11 @@
 import { describe, expect, it } from "vitest";
 import {
+    abjadListToIndexes,
     abjadToIndex,
+    hitungSkorPGK,
     hitungSkorPgTunggal,
     indexToAbjad,
+    indexesToAbjadList,
     upsertRespon,
 } from "~/domain/bank-soal/koreksi";
 import type { RisponsePenilaianSiswa } from "~/types/penilaian/RisponsePenilaianSiswaType";
@@ -56,6 +59,99 @@ describe('indexToAbjad', () => {
         for (let i = 0; i <= 4; i++) {
             expect(abjadToIndex(indexToAbjad(i))).toBe(i);
         }
+    });
+});
+
+describe('abjadListToIndexes', () => {
+    it('mengonversi daftar abjad menjadi indeks terurut', () => {
+        expect(abjadListToIndexes('A,C')).toEqual([0, 2]);
+        expect(abjadListToIndexes('a, c')).toEqual([0, 2]);
+        expect(abjadListToIndexes('C,A')).toEqual([0, 2]);
+    });
+
+    it('menghilangkan duplikat dan bagian tidak valid', () => {
+        expect(abjadListToIndexes('A,A,B')).toEqual([0, 1]);
+        expect(abjadListToIndexes('A,1,,AB')).toEqual([0]);
+    });
+
+    it('mengembalikan array kosong untuk respon kosong', () => {
+        expect(abjadListToIndexes('')).toEqual([]);
+        expect(abjadListToIndexes(null)).toEqual([]);
+        expect(abjadListToIndexes(undefined)).toEqual([]);
+    });
+});
+
+describe('indexesToAbjadList', () => {
+    it('mengonversi indeks menjadi abjad terurut tanpa spasi', () => {
+        expect(indexesToAbjadList([2, 0])).toBe('A,C');
+        expect(indexesToAbjadList([0, 1, 4])).toBe('A,B,E');
+    });
+
+    it('menghilangkan duplikat dan indeks negatif', () => {
+        expect(indexesToAbjadList([0, 0, 2, -1])).toBe('A,C');
+        expect(indexesToAbjadList([])).toBe('');
+    });
+
+    it('roundtrip dengan abjadListToIndexes', () => {
+        expect(abjadListToIndexes(indexesToAbjadList([0, 2, 3]))).toEqual([0, 2, 3]);
+    });
+});
+
+describe('hitungSkorPGK', () => {
+    /** kunci benar A dan C */
+    const opsi = [
+        { index: 0, content: 'A' },
+        { index: 1, content: 'B' },
+        { index: 2, content: 'C' },
+        { index: 3, content: 'D' },
+    ];
+    const kunci = [0, 2];
+
+    it('skor 100 jika semua opsi benar dipilih', () => {
+        expect(hitungSkorPGK([0, 2], opsi, kunci)).toBe(100);
+    });
+
+    it('skor parsial untuk sebagian opsi benar', () => {
+        expect(hitungSkorPGK([0], opsi, kunci)).toBe(50);
+        expect(hitungSkorPGK([2], opsi, kunci)).toBe(50);
+    });
+
+    it('skor 0 jika campuran benar dan salah seimbang', () => {
+        expect(hitungSkorPGK([0, 1], opsi, kunci)).toBe(0);
+    });
+
+    it('tidak pernah negatif meskipun banyak opsi salah', () => {
+        expect(hitungSkorPGK([1], opsi, kunci)).toBe(0);
+        expect(hitungSkorPGK([1, 3], opsi, kunci)).toBe(0);
+    });
+
+    it('skor 0 jika tidak ada pilihan', () => {
+        expect(hitungSkorPGK([], opsi, kunci)).toBe(0);
+    });
+
+    it('skor 0 jika kunci kosong atau tidak tersedia', () => {
+        expect(hitungSkorPGK([0, 2], opsi, undefined)).toBe(0);
+        expect(hitungSkorPGK([0, 2], opsi, null)).toBe(0);
+        expect(hitungSkorPGK([0, 2], opsi, [])).toBe(0);
+    });
+
+    it('mengabaikan opsi yang tidak tampil (content kosong)', () => {
+        const denganOpsiKosong = [
+            { index: 0, content: 'A' },
+            { index: 1, content: 'B' },
+            { index: 2, content: '' },
+            { index: 3, content: '' },
+        ];
+        expect(hitungSkorPGK([0], denganOpsiKosong, [0, 2])).toBe(100);
+    });
+
+    it('mengabaikan pilihan di luar opsi yang tampil', () => {
+        expect(hitungSkorPGK([0, 99], opsi, kunci)).toBe(50);
+    });
+
+    it('menghormati skorMaksimal dan pembulatan 2 desimal', () => {
+        expect(hitungSkorPGK([0], opsi, kunci, 50)).toBe(25);
+        expect(hitungSkorPGK([0], opsi, [0, 2, 3])).toBe(33.33);
     });
 });
 

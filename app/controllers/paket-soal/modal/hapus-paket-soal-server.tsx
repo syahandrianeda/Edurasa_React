@@ -1,5 +1,4 @@
 import { TriangleAlert } from "lucide-react";
-import PratinjauItemSoalModal from "~/controllers/koleksi-bank-soal/views/pratinjau-soal-di-modal";
 import type DataKisiKisi from "~/domain/paket-soal/infrastructure/data-kisi-kisi-class";
 import { getGlobalIndex } from "~/domain/paket-soal/infrastructure/create-design";
 import IdentitasPaketSoal from "../components/identitas-paket-soal";
@@ -9,10 +8,6 @@ import KopPaketSoal from "../components/kop-paket-soal";
 import PetunjukUmumPaketSoal from "../components/petunjuk-umum";
 import TableSebaranKompetensiPaketSoal from "../components/sebaran-kompetensi-paket-soal";
 import { ModalFooterEdura } from "~/components/modals/modal-components";
-import ButtonCommitAwesome from "~/components/button-awesome/commit-button";
-import { useFilterContext } from "~/components/toolbars/state-toolbar/state-toolbar";
-import type{ PaketSoalDesign } from "~/domain/paket-soal/result/paket-soal-design-type";
-import { Navigate, redirect, useNavigate } from "react-router";
 import { useModal } from "~/components/modals/modal-provider";
 import ButtonDeleteAwesome from "~/components/button-awesome/delete-button";
 import {toast} from 'sonner';
