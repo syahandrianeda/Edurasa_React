@@ -2,7 +2,7 @@ import { TRowEdura, ThEdura } from "~/components/tabels/tabel-components";
 import type { DataTemplateKoreksiSiswa } from "~/types/penilaian/DataTemplateKoreksiSiswa";
 
 export function KoreksiPgHeader({ data }: { data: DataTemplateKoreksiSiswa[]; }) {
-    const countPg3 = data.every(m => m?.soal?.json_alat_jawab?.OpsiPilihanJawaban[3]?.content === '');
+    const countPg3 = data.every(m => m?.soal?.json_alat_jawab?.OpsiPilihanJawaban[3]?.content === '') || data.every(m=>m.soal?.json_alat_jawab?.OpsiPilihanJawaban?.length === 3);
     return (
         <thead>
             <TRowEdura>
