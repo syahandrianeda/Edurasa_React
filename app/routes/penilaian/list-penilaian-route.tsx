@@ -1,11 +1,8 @@
 import type { controlDropdownKelas } from "~/components/dropdowns/rombel-dropdown";
 import type { Route } from "./+types/list-penilaian-route";
-import TableDaftarTagihanPenilaian from "~/controllers/assesmen-penilaian/tabel/tabel-daftar-penilaian";
 import { useAppSelector } from "~/context-reduct/hook";
 import { defineCreateItemSoalNeeded } from "~/domain/enloaded/intial-enloaded/by-route-page/banksoal/create-item-soal-needed";
-import { instancePaketSoalSheet } from "~/context-reduct/selectores/paket-soal-selector";
 import { InstanceDataTagihanPenilaianSector } from "~/context-reduct/selectores/daftar-tagihan-penilaian-selector";
-import ButtonCommitAwesome from "~/components/button-awesome/commit-button";
 import ListpenilaianPage from "~/pages/penilaian/list-penilaian-page";
 
 export function meta({matches}: Route.MetaArgs) {

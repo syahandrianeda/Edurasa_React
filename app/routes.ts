@@ -145,6 +145,12 @@ export default [
                     route("rekap-per-tagihan", "routes/penilaian/rekap-per-tagihan-route.tsx"),
                 ])
             ]),
+            layout("layouts/sub-layouts/sub-buku-raport.tsx", [
+                ...prefix('raport',[
+                    index('routes/raport/redirect-sampul-raport.tsx'),
+                    route('sampul-raport','routes/raport/sampul-raport-route.tsx')
+                ])
+            ]),
             layout("layouts/sub-layouts/sub-tabungan-siswa.tsx",[
                 ...prefix('tabungan',[
                     index('routes/tabungan/redirect-tabungan.tsx'),

@@ -93,6 +93,7 @@ export const DataMenu: typeKoleksiMenu[] = [
         routeName: "raport",
         urlIcon: MenuIcons["raport"],
         permission: 'view raport',
+        hasRoute:true
     },
     {
         title: "Buku Induk", 
