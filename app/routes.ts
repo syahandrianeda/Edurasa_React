@@ -148,7 +148,8 @@ export default [
             layout("layouts/sub-layouts/sub-buku-raport.tsx", [
                 ...prefix('raport',[
                     index('routes/raport/redirect-sampul-raport.tsx'),
-                    route('sampul-raport','routes/raport/sampul-raport-route.tsx')
+                    route('sampul-raport','routes/raport/sampul-raport-route.tsx'),
+                    route('Halaman-isi','routes/raport/halaman-isi-raport-route.tsx')
                 ])
             ]),
             layout("layouts/sub-layouts/sub-tabungan-siswa.tsx",[
