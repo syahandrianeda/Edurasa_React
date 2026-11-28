@@ -2,7 +2,7 @@ import { TdEdura, ThEdura, TRowEdura } from "~/components/tabels/tabel-component
 import TableWithScrolling from "~/components/tabels/table-with-scrolling";
 import { useAppSelector } from "~/context-reduct/hook";
 import { DtoMapelSelector } from "~/context-reduct/selectores/mapel-selector";
-import {Fragment, useMemo} from 'react';
+import {Fragment, useCallback, useMemo} from 'react';
 import type { InterfaceMapel } from "~/types/mapel/mapel";
 import type { SiswaType } from "~/types/siswa";
 import getOrCreateMap from "~/lib/getOrCreateMapper";
@@ -12,15 +12,28 @@ import type { jp_mapelApp } from "~/types/mapel/jp_mapel";
 type Props = {
     siswa:SiswaType|null
 }
+type DataMapelUI = {
+    noUrut:number,
+    data:jp_mapelApp
+}
+type KoleksiMapelUi = {
+    kelompok:string,
+    dataMapel:DataMapelUI[]
+}
 export default function DataNilaiRaport({siswa}:Props){
     const mapelSelector = useAppSelector(MapelRaportCurrentRombel)?.data;
-    const koleksiMapel = useMemo(()=>{
+    const koleksiMapel:KoleksiMapelUi[] = useMemo(()=>{
         if(!mapelSelector) return [];
         const mapelSiswa = mapelSelector?.filter(s=>s.data_students.some(peserta=>peserta.id === siswa?.id));
-        const mapperKelompok = new Map<string, jp_mapelApp[]>();
+        const mapperKelompok = new Map<string, DataMapelUI[]>();
+        let no:number = 1
         for(const mapel of mapelSiswa){
             const currentMapel = getOrCreateMap(mapperKelompok, mapel.source.grup, ()=>([]));
-            currentMapel.push(mapel)
+            currentMapel.push({
+                noUrut:no,
+                data:mapel
+            })
+            no++;
         }
         return [...mapperKelompok.entries()].map(([kelompok, dataMapel])=>{
             return {
@@ -28,7 +41,8 @@ export default function DataNilaiRaport({siswa}:Props){
                 dataMapel
             }
         })
-    }, [mapelSelector, siswa])
+    }, [mapelSelector, siswa]);
+
     return(
         <TableWithScrolling className="w-full">
             <thead>
@@ -44,7 +58,7 @@ export default function DataNilaiRaport({siswa}:Props){
                     koleksiMapel.map((mapel, iMapel)=>
                         mapel.dataMapel.map((dataMapel, iData)=>
 
-                        <Fragment key={mapel.kelompok + iMapel + dataMapel.kode + iData}>
+                        <Fragment key={mapel.kelompok + iMapel + dataMapel.noUrut + iData}>
                             {
                                 iData === 0 && (
                                     <TRowEdura>
@@ -53,8 +67,8 @@ export default function DataNilaiRaport({siswa}:Props){
                                 )
                             }
                             <TRowEdura>
-                                <TdEdura className="text-center">{dataMapel.index_in_rombel +1}</TdEdura>
-                                <TdEdura className="text-wrap">{dataMapel.nama_mapel_ijazah}</TdEdura>
+                                <TdEdura className="text-center">{dataMapel.noUrut}.</TdEdura>
+                                <TdEdura className="text-wrap">{dataMapel.data.nama_mapel}</TdEdura>
                                 <TdEdura/>
                                 <TdEdura/>
                             </TRowEdura>

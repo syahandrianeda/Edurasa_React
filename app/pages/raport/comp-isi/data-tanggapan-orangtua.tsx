@@ -1,14 +1,18 @@
-import { TdEdura, ThEdura } from "~/components/tabels/tabel-components";
+import { TdEdura, ThEdura, TRowEdura } from "~/components/tabels/tabel-components";
 import TableWithScrolling from "~/components/tabels/table-with-scrolling";
 
 export default function DataTanggapanOrangTua(){
     return (
         <TableWithScrolling>
             <thead>
-                <ThEdura>Tanggapan Orang Tua/Wali Murid</ThEdura>
+                <TRowEdura>
+                    <ThEdura>Tanggapan Orang Tua/Wali Murid</ThEdura>
+                </TRowEdura>
             </thead>
             <tbody>
-                <TdEdura className="h-16">-</TdEdura>
+                <TRowEdura>
+                    <TdEdura className="h-16">-</TdEdura>
+                </TRowEdura>
             </tbody>
         </TableWithScrolling>
     )

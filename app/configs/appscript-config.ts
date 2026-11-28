@@ -242,6 +242,7 @@ export class AppScriptConfig {
         if(auth){
             const {authenticated, data} = auth;
             if(authenticated){
+                console.log('cek usernya dong ada id_ttd ga',{data})
                 const updateUser =  DTOUser.fromResponAkun(data);
                 saveSessionApp(updateUser);
                 /** test dulu */

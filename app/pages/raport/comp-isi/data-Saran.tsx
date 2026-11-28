@@ -1,14 +1,18 @@
-import { TdEdura, ThEdura } from "~/components/tabels/tabel-components";
+import { TdEdura, ThEdura, TRowEdura } from "~/components/tabels/tabel-components";
 import TableWithScrolling from "~/components/tabels/table-with-scrolling";
 
 export default function DataSaran(){
     return (
         <TableWithScrolling>
             <thead>
-                <ThEdura>Catatan Wali Kelas</ThEdura>
+                <TRowEdura>
+                    <ThEdura>Catatan Wali Kelas</ThEdura>
+                </TRowEdura>
             </thead>
             <tbody>
-                <TdEdura className="min-h-18">-</TdEdura>
+                <TRowEdura>
+                    <TdEdura className="min-h-18">-</TdEdura>
+                </TRowEdura>
             </tbody>
         </TableWithScrolling>
     )

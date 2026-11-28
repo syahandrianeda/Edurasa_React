@@ -21,6 +21,7 @@ export default class DTOUser{
             nip: dto.guru_nip,
             kelas_ampu: dto.kelasampu.split(','),
             kode_mapel_ampu: dto.kelas,
+            id_ttd:dto.id_ttd,
             roles: dto.gurukelas_gmp,
             permission: dto.permission,
             friends: DTOUser.parseFriends(dto.friends),
@@ -65,6 +66,7 @@ export default class DTOUser{
             kelas_ampu: dto.kelasampu.split(','),
             kode_mapel_ampu: dto.kelas,
             roles: dto.gurukelas_gmp,
+            id_ttd:dto.id_ttd
         }
     }
 

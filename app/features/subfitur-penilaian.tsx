@@ -1,4 +1,4 @@
-import { BadgeQuestionMarkIcon, CalendarCheck2, CloudSyncIcon, FolderGit2, FolderTree, ListCheckIcon, PackageSearchIcon, StarHalfIcon, Stars } from "lucide-react";
+import { BadgeQuestionMarkIcon, CalendarCheck2, CloudSyncIcon, FolderGit2, FolderTree, ListCheckIcon, PackageSearchIcon, StarHalfIcon, Stars, Tags } from "lucide-react";
 import type { typeSidebarFiturKonten } from "~/types";
 
 export const subFiturPenilaian:typeSidebarFiturKonten[]=[
@@ -10,6 +10,13 @@ export const subFiturPenilaian:typeSidebarFiturKonten[]=[
                 href: '/penilaian/list-penilaian',
                 icon: BadgeQuestionMarkIcon,
                 description: 'Daftar tagihan penilaian yang Anda laksanakan/publikasikan di kelas',
+                permission: 'view penilaian'
+            },
+            {
+                title: 'Predikat Nilai',
+                href: '/penilaian/predikat-nilai-skor',
+                icon: Tags,
+                description:'Atur predikat dari suatu nilai yang diperoleh siswa dan batas nilai untuk mengikuti pengayaan',
                 permission: 'view penilaian'
             },
             {

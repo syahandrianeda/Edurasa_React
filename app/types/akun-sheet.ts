@@ -27,6 +27,7 @@ export interface AkunSheet{
     jenjang:string,
     idabsen:number,
     aktif:string,
+    id_ttd:string,
     permission:AccesUser[],
     friends:FriendSheet[]
 
@@ -52,6 +53,7 @@ export interface FriendSheet{
         jenjang:string,
         idabsen:number,
         aktif:string,
+        id_ttd:string,
 }
 
 

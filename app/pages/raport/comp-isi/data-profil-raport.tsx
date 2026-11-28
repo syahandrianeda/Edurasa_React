@@ -10,7 +10,7 @@ type Props = {
 }
 export default function DataProfilRaport({siswa}:Props){
     const tapel = currentTapel({variant:'onlyTapel'})
-    const semester = currentTapelProperties({variant:'getSemester'})
+    const semester = currentTapelProperties({variant:'getSemesterWithGanjilGenap'})
     return (
             <div className="flex gap-2 flex-row border-b-2 border-black border-double text-sm">
                 <table className="w-full leading-3">

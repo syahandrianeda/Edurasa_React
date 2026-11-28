@@ -42,6 +42,13 @@ export const subFiturBukuRaport:typeSidebarFiturKonten[]=[
                 permission: 'view raport'
             },
             {
+                title: 'Refrensi Deskripsi Raport',
+                href: '/raport/refrensi-deskripsi-raport',
+                icon: Tags,
+                description: 'Atur Kompetensi mana yang akan digunakan sebagai deskripsi raport (ATP, TP, atau CP), byDefault adalah TP',
+                permission: 'view raport'
+            },
+            {
                 title: 'Predikat Nilai Rapor',
                 href: '/raport/setting-predikat',
                 icon: Tags,

@@ -1,9 +1,7 @@
 import type { controlDropdownKelas } from "~/components/dropdowns/rombel-dropdown";
 import type { Route } from "./+types/sampul-raport-route";
-import SampulRaportPage from "~/pages/raport/sampul-raport-page";
 import { sheetAkun_dataSiswa } from "~/domain/enloaded/intial-enloaded/by-sheet/akun";
 import HalamanIsiRaportPage from "~/pages/raport/halaman-isi-raport-page";
-import { mapelNeeded } from "~/domain/enloaded/intial-enloaded/by-route-page/kurikulum/mapel-needed";
 import { JadwalPelajaranNeeded } from "~/domain/enloaded/intial-enloaded/by-route-page/kurikulum/jadwal-pelajaran-needed";
 
 
@@ -35,13 +33,14 @@ export function clientLoader({}:Route.ComponentProps){
         
 
     return {
-        titleTambahan:'Sampul Raport',
+        titleTambahan:'Data Nilai Raport',
         controlKelas: settingRombel,
         toolbarTabs: undefined,// ConfigToolbarDesainPraSoal,//ConfigToolbarSelectMapel
         showExport:false,
         pesanLoading:'Mempersiapkan Data Nilai Raport',
         addPesanRombel:{isAdd:true, type:'jenjang', includeFaseName:false},
-        sheetNeeded: [sheetAkun_dataSiswa, ...JadwalPelajaranNeeded]
+        sheetNeeded: [sheetAkun_dataSiswa, ...JadwalPelajaranNeeded],
+        mustLoadSheetNeedSiswaIfExist:true
         
                 
     };

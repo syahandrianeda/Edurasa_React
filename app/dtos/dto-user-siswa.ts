@@ -42,57 +42,57 @@ export default class DTOUserSiswa{
         }
     }
     
-    private static parseFriends(raw: any): UserFriends[] {
-        if (!raw) return []
+    // private static parseFriends(raw: any): UserFriends[] {
+    //     if (!raw) return []
 
-        // 1️⃣ Sudah array object
-        if (Array.isArray(raw) && typeof raw[0] === "object") {
-        return raw.map(this.normalizeFriends)
-        }
+    //     // 1️⃣ Sudah array object
+    //     if (Array.isArray(raw) && typeof raw[0] === "object") {
+    //     return raw.map(this.normalizeFriends)
+    //     }
 
-        // 2️⃣ JSON string
-        if (typeof raw === "string") {
-        try {
-            const parsed = JSON.parse(raw)
-            if (Array.isArray(parsed)) {
-            return parsed.map(this.normalizeFriends)
-            }
-        } catch {
-            // 3️⃣ CSV / pipe string fallback
-            return []
-        }
-        }
+    //     // 2️⃣ JSON string
+    //     if (typeof raw === "string") {
+    //     try {
+    //         const parsed = JSON.parse(raw)
+    //         if (Array.isArray(parsed)) {
+    //         return parsed.map(this.normalizeFriends)
+    //         }
+    //     } catch {
+    //         // 3️⃣ CSV / pipe string fallback
+    //         return []
+    //     }
+    //     }
 
-        return []
-    }
+    //     return []
+    // }
     
-    private static normalizeFriends(dto: any): UserFriends {
-        return {
-            id: Number(dto.id),
-            name: dto.guru_namalengkap,
-            email: dto.email,
-            sekolah: dto.sekolah,
-            kepsek_name: dto.kepsek_namalengkap,
-            kepsek_nip: dto.kepsek_nip,
-            avatar: dto.idpoto_potoguru ? urlImgDrive(dto.idpoto_potoguru) : undefined,
-            jabatan: dto.gurukelas_gmp,
-            nip: dto.guru_nip,
-            kelas_ampu: dto.kelasampu.split(','),
-            kode_mapel_ampu: dto.kelas,
-            roles: dto.gurukelas_gmp,
-        }
-    }
+    // private static normalizeFriends(dto: any): UserFriends {
+    //     return {
+    //         id: Number(dto.id),
+    //         name: dto.guru_namalengkap,
+    //         email: dto.email,
+    //         sekolah: dto.sekolah,
+    //         kepsek_name: dto.kepsek_namalengkap,
+    //         kepsek_nip: dto.kepsek_nip,
+    //         avatar: dto.idpoto_potoguru ? urlImgDrive(dto.idpoto_potoguru) : undefined,
+    //         jabatan: dto.gurukelas_gmp,
+    //         nip: dto.guru_nip,
+    //         kelas_ampu: dto.kelasampu.split(','),
+    //         kode_mapel_ampu: dto.kelas,
+    //         roles: dto.gurukelas_gmp,
+    //     }
+    // }
 
-    static normalizeInfoPersonalPtk(data:IdAkunDanPangkat):InfoPersonalPtk{
-        return {
-            ...data,
-            gol_ruang: data.current_golongan_pangkat?.golongan +'/'+ data.current_golongan_pangkat?.ruang,
-            pangkat: data.current_golongan_pangkat?.pangkat,
-            status_ptk: data.asn,
-            pangkat_gol_ruang: data.current_golongan_pangkat?.pangkat +'-'+ data.current_golongan_pangkat?.golongan +'/'+ data.current_golongan_pangkat?.ruang,
-        }
-    }
-    static arrayNormalizeInfoPersonalPtk(data:IdAkunDanPangkat[]):InfoPersonalPtk[]{
-        return data.map(this.normalizeInfoPersonalPtk);
-    }
+    // static normalizeInfoPersonalPtk(data:IdAkunDanPangkat):InfoPersonalPtk{
+    //     return {
+    //         ...data,
+    //         gol_ruang: data.current_golongan_pangkat?.golongan +'/'+ data.current_golongan_pangkat?.ruang,
+    //         pangkat: data.current_golongan_pangkat?.pangkat,
+    //         status_ptk: data.asn,
+    //         pangkat_gol_ruang: data.current_golongan_pangkat?.pangkat +'-'+ data.current_golongan_pangkat?.golongan +'/'+ data.current_golongan_pangkat?.ruang,
+    //     }
+    // }
+    // static arrayNormalizeInfoPersonalPtk(data:IdAkunDanPangkat[]):InfoPersonalPtk[]{
+    //     return data.map(this.normalizeInfoPersonalPtk);
+    // }
 }

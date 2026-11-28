@@ -2,6 +2,7 @@
 import ImgDriveComp from "~/components/image-from-drive/img-drive";
 import ImgStempelCom from "~/components/ttd/img-stempel-comp";
 import ImgTtdKepsek from "~/components/ttd/img-ttd-kepsek";
+import SelTtdKepsek from "~/components/ttd/sel-ttd-kepsek";
 import { KABUPATEN_KOTA } from "~/domain/identitas_aplikasi/identitas-aplikasi";
 import { INSTANSI_PEMERINTAH } from "~/domain/identitas_sekolah/identitas-sekolah";
 import { getSessionApp } from "~/infrastructures/session-storage/app-session";
@@ -101,7 +102,7 @@ export default function IdentitasRaportMurid({showTtd=false, showStempel, showPo
                             <td className="p-1">{siswa?.pd_namaayah ??''}</td>
                         </tr>
                         <tr>
-                            <td className="p-1 indent-5">a. Ibu</td>
+                            <td className="p-1 indent-5">b. Ibu</td>
                             <td className="p-1">:</td>
                             <td className="p-1">{siswa?.pd_namaibu ?? ''}</td>
                         </tr>
@@ -116,7 +117,7 @@ export default function IdentitasRaportMurid({showTtd=false, showStempel, showPo
                             <td className="p-1">{siswa?.dapo_pekerjaanayah || '-'}</td>
                         </tr>
                         <tr>
-                            <td className="p-1 indent-5">a. Ibu</td>
+                            <td className="p-1 indent-5">b. Ibu</td>
                             <td className="p-1">:</td>
                             <td className="p-1">{siswa?.dapo_pekerjaanibu || '-'}</td>
                         </tr>
@@ -131,14 +132,14 @@ export default function IdentitasRaportMurid({showTtd=false, showStempel, showPo
                             <td className="p-1">{siswa?.dapo_namawali || '-'}</td>
                         </tr>
                         <tr>
-                            <td className="p-1 indent-5">a. Pekerjaan</td>
+                            <td className="p-1 indent-5">b. Pekerjaan</td>
                             <td className="p-1">:</td>
                             <td className="p-1">{siswa?.dapo_pekerjaanwali || '-'}</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            <div className="flex flex-row min-h-40">
+            <div className="flex flex-row">
                 <div className="flex justify-end items-center w-full">
                     <div className={cn("w-[3cm] border h-[4cm] flex justify-center items-center border-black", )}>
                         {
@@ -152,7 +153,8 @@ export default function IdentitasRaportMurid({showTtd=false, showStempel, showPo
                     
                     </div>
                 </div>
-                <div className="flex flex-col justify-between w-full text-center relative">
+                <SelTtdKepsek showStempel={showStempel} typeTitimangsa='titimangsa' showTtd={showTtd} titimangsa={siswa?.masuk_tgl ?? new Date()}/>
+                {/* <div className="flex flex-col justify-between w-full text-center relative">
                     {
                         showStempel && ( <ImgStempelCom className="absolute top-0 -left-7 w-50"/> ) }
 
@@ -168,7 +170,7 @@ export default function IdentitasRaportMurid({showTtd=false, showStempel, showPo
                         <p className="font-bold underline mb-0">{user?.kepsek_name ?? '-'}</p>
                         <p className="text-base">NIP. {user?.kepsek_nip ?? ''}</p>
                     </div>
-                </div>
+                </div> */}
             </div>
         </div>
     )

@@ -17,20 +17,23 @@ import DataAbsensiRaport from "./comp-isi/data-absensi";
 import KeputusanKenaikanKelulusan from "./comp-isi/keputusan-kenaikan-kelulusan";
 import DataSaran from "./comp-isi/data-Saran";
 import DataTanggapanOrangTua from "./comp-isi/data-tanggapan-orangtua";
+import TtdRaport from "./comp-isi/ttd-raport";
+import { currentTapelProperties } from "~/lib/current-tapel";
 
 export default function HalamanIsiRaportPage(){
     const exportRef = useExportTarget('print-area-modal') as React.Ref<HTMLDivElement>;;
     const dataSiswa = useAppSelector(DataSiswaAktifRombel);
     
     const [showTtd, setShowTtd] = useState<boolean>(true)
+    const [showTtdWalas, setShowTtdWalas] = useState<boolean>(true)
     const [showStempel, setShowStempel] = useState<boolean>(true)
     const [siswa, setSiswa] = useState<SiswaType|null>(dataSiswa[0]??null);
-    
+    const semester = currentTapelProperties({variant:'getSemester'})
 
     return (
         <>
             <div ref={exportRef}  className="flex flex-col gap-1 mb-5">
-                <div className="border w-[210mm] print:w-[210mm] mb-12 break-inside-avoid print:border-0 min-h-[297mm] p-2 flex flex-col justify-start mx-auto" >
+                <div className="border w-[210mm] print:w-[210mm] print:px-4 print:py-3 mb-12 break-inside-avoid print:border-0 min-h-[297mm] p-2 flex flex-col justify-start mx-auto" >
                     <h3 className="font-extrabold text-center text-2xl uppercase mb-7">Laporan Hasil Belajar</h3>
                     <DataProfilRaport siswa={siswa}/>
                     <ol className="list-[upper-alpha] list-outside pl-5 mt-3 marker:font-bold">
@@ -69,6 +72,7 @@ export default function HalamanIsiRaportPage(){
                     </ol>
                     <KeputusanKenaikanKelulusan namaSiswa={siswa?.pd_nama ?? ''} keputusan="Naik Ke kelas 6"/>
                     <DataTanggapanOrangTua/>
+                    <TtdRaport showStempel={showStempel} showTtdKepsek={showTtd} showTtdWalas={showTtdWalas} titimangsa={new Date()}/>
                 </div>
             </div>
             <div className="border sticky bottom-0 flex flex-row items-center rounded-t-xl p-2 bg-linear-to-b from-sky-300 to-sky-200 gap-2">
@@ -77,25 +81,40 @@ export default function HalamanIsiRaportPage(){
                         <Field orientation={'horizontal'} className="text-[10px] w-fit">
                             <input
                                 type="checkbox"
-                                checked={showTtd}
-                                onChange={()=>setShowTtd(val=>!val)}
-                                id="showTtd"
+                                checked={showTtdWalas}
+                                onChange={()=>setShowTtdWalas(val=>!val)}
+                                id="showTtdWalas"
                                 />
-                            <label htmlFor="showTtd" className="text-nowrap">
-                                Tampilkan Ttd Kepsek
+                            <label htmlFor="showTtdWalas" className="text-nowrap">
+                                Tampilkan Ttd Wali Kelas
                             </label>
                         </Field>
-                        <Field orientation={'horizontal'} className="text-[10px] w-fit">
-                            <input
-                                type="checkbox"
-                                checked={showStempel}
-                                onChange={()=>setShowStempel(val=>!val)}
-                                id="showStempel"
-                                />
-                            <label htmlFor="showStempel" className="text-nowrap">
-                                Tampilkan Stempel
-                            </label>
-                        </Field>
+                        {
+                            semester === 2 && (<>
+                                <Field orientation={'horizontal'} className="text-[10px] w-fit">
+                                    <input
+                                        type="checkbox"
+                                        checked={showTtd}
+                                        onChange={()=>setShowTtd(val=>!val)}
+                                        id="showTtd"
+                                        />
+                                    <label htmlFor="showTtd" className="text-nowrap">
+                                        Tampilkan Ttd Kepsek
+                                    </label>
+                                </Field>
+                                <Field orientation={'horizontal'} className="text-[10px] w-fit">
+                                    <input
+                                        type="checkbox"
+                                        checked={showStempel}
+                                        onChange={()=>setShowStempel(val=>!val)}
+                                        id="showStempel"
+                                        />
+                                    <label htmlFor="showStempel" className="text-nowrap">
+                                        Tampilkan Stempel
+                                    </label>
+                                </Field>
+                            </>)
+                        }
 
                     </FieldContent>
                 </FieldGroup>

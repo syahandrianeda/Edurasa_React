@@ -57,6 +57,7 @@ export interface UserFriends extends User{
     sekolah: string,
     kepsek_name: string,
     kepsek_nip: string,
+    id_ttd:string
 }
 
 export interface UserPtk extends UserFriends{

@@ -7,7 +7,7 @@ type Props = {
 }
 export default function KeputusanKenaikanKelulusan({namaSiswa, keputusan}:Props){
     const semester = currentTapelProperties({variant:'getSemester'});
-    if(semester == 2){
+    if(semester == 1){
         return null;
     }
     return (

@@ -522,6 +522,7 @@ export default function AppProviderLayoutService({
                                 <CrudAtpProvider service={serviceAtp}>
                                     <SettingJadwalCrudProvider service={serviceSettingJadwal}>
                                         <SebaranJadwalCrudProvider service={serviceSebaranJadwal}>
+
                                             <CrudProtaProvider service={serviceProta}>
                                                 <CrudTabunganProvider service={serviceTabungan}>
                                                     <SuratKeluarCrudProvider service={serviceSuratKeluar}>
@@ -548,6 +549,7 @@ export default function AppProviderLayoutService({
                                                     </SuratKeluarCrudProvider>
                                                 </CrudTabunganProvider>
                                             </CrudProtaProvider>
+                                            
                                         </SebaranJadwalCrudProvider>
                                     </SettingJadwalCrudProvider>
                                 </CrudAtpProvider>

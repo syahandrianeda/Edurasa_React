@@ -38,7 +38,8 @@ export function clientLoader({}:Route.ComponentProps){
         showExport:false,
         pesanLoading:'Mempersiapkan Data Perjenjang',
         addPesanRombel:{isAdd:true, type:'jenjang', includeFaseName:false},
-        sheetNeeded: [sheetAkun_dataSiswa]
+        sheetNeeded: [sheetAkun_dataSiswa],
+        mustLoadSheetNeedSiswaIfExist:true
         
                 
     };

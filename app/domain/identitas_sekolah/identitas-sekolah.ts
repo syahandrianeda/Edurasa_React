@@ -16,3 +16,5 @@ export const EMAIL_SEKOLAH:string = import.meta.env.VITE_EMAIL;
 export const WEB_SEKOLAH:string = import.meta.env.VITE_WEB;
 export const ALAMAT_DIGITAL:string = import.meta.env.VITE_ALAMAT_KOP_3;
 export const DAERAH_INDUK = import.meta.env.VITE_DAERAH_INDUK
+
+export const UPTD_NAMASEKOLAH:string = uptd +' '+ namasekolah

@@ -1,4 +1,4 @@
-import { Bookmark, Calendar, CalendarCheck, ClipboardClock, GitForkIcon, LandPlotIcon, LocateFixed, Target, TargetIcon } from "lucide-react";
+import { Bookmark, Calendar, CalendarCheck, ClipboardClock, GitForkIcon, LandPlotIcon, LocateFixed, Tags, Target, TargetIcon } from "lucide-react";
 import type { typeSidebarFiturKonten } from "~/types";
 
 
@@ -54,6 +54,25 @@ export const SubfiturKurikulum: typeSidebarFiturKonten[] = [
                 permission: 'view alokasi mapel'
             },
         ]   
+    },
+    {
+        groupTitle:'KKTP',
+        breadCrumbs:[
+            {
+                title: 'KKTP',
+                href: '/kurikulum/setting-kktp',
+                icon: TargetIcon,
+                description:'Setting KKTP di sini',
+                permission: 'view kurikulum'
+            },
+            {
+                title: 'Predikat Nilai',
+                href: '/kurikulum/predikat-nilai-skor',
+                icon: Tags,
+                description:'Atur predikat dari suatu nilai yang diperoleh siswa dan batas nilai untuk mengikuti pengayaan',
+                permission: 'view kurikulum'
+            },
+        ]
     },
     {
         groupTitle:'Program Pembelajaran',

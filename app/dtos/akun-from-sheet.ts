@@ -30,6 +30,7 @@ export default class DTOSheetUser{
             aktif:dto.aktif,
             permission:DTOSheetUser.parsePermission(dto.permission),
             friends:DTOSheetUser.parseFriends(dto.friends),
+            id_ttd:dto.id_ttd
 
 
         }
@@ -120,6 +121,7 @@ export default class DTOSheetUser{
             jenjang:dto.jenjang,
             idabsen:Number(dto.idabsen),
             aktif:dto.aktif,
+            id_ttd:dto.id_ttd
         }
     }
 }

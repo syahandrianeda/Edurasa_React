@@ -149,7 +149,9 @@ export default [
                 ...prefix('raport',[
                     index('routes/raport/redirect-sampul-raport.tsx'),
                     route('sampul-raport','routes/raport/sampul-raport-route.tsx'),
-                    route('Halaman-isi','routes/raport/halaman-isi-raport-route.tsx')
+                    route('Halaman-isi','routes/raport/halaman-isi-raport-route.tsx'),
+                    route('e-raport-helper','routes/raport/e-raport-helper-route.tsx'),
+                    route('setting-kktp','routes/raport/setting-kktp-route.tsx'),
                 ])
             ]),
             layout("layouts/sub-layouts/sub-tabungan-siswa.tsx",[
